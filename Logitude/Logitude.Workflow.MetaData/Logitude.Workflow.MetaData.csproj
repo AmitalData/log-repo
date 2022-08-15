@@ -59,7 +59,9 @@
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
     <None Include="DBTables\WorkFlow.dxml" />
+    <None Include="DBTables\WorkFlowStatus.dxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
+    <None Include="EntityFiles\WorkFlowStatus.lxml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AutoGenerators\WorkflowClassesGenerator.tt">

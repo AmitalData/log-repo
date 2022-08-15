@@ -74,12 +74,15 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "5fc33c191a37e5bddfc75c282b7dc1e6";
+		public const string HashString = "d1978e1766f6c436ec94c349a90ee5fe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Workflow",
-			      				    Code =  "a057",
+			      				    Code =  "156a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Workflow",
@@ -171,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Workflow",
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -217,7 +220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -232,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -242,6 +246,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
+					  						ListFieldLable =  "CreatedByUserIdListLable",
+					  						ListLableDefaultText =  "Created By",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -291,7 +297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Workflow",
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -337,7 +343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -352,6 +358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -362,6 +369,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
+					  						ListFieldLable =  "UpdatedByUserIdListLable",
+					  						ListLableDefaultText =  "Updated By",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -411,7 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Workflow",
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -456,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  200,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -471,6 +480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -481,6 +491,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -571,7 +583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -586,6 +598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -596,6 +609,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
 					  						DefaultText =  "OwnerId",
+					  						ListFieldLable =  "OwnerIdListLable",
+					  						ListLableDefaultText =  "Owner",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "Owner",
@@ -613,10 +628,415 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusCode",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "WorkFlowStatus",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusCode",
+					  						ListPropertyPath =  "StatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusCode",
+					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusCodeListLable",
+					  						ListLableDefaultText =  "Status",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "WorkFlowStatus",
+					  						NavigationPropertyName =  "Status",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusName",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusName",
+					  						ListPropertyPath =  "StatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusName",
+					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusNameListLable",
+					  						ListLableDefaultText =  "Status",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OwnerName",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OwnerName",
+					  						ListPropertyPath =  "OwnerName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OwnerName",
+					  						DefaultText =  "Owner",
+					  						ListFieldLable =  "OwnerNameListLable",
+					  						ListLableDefaultText =  "Owner",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByUserName",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "Created By",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  "Created By",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "UpdatedByUserName",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "UpdatedByUserName",
+					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "UpdatedByUserName",
+					  						DefaultText =  "Updated By",
+					  						ListFieldLable =  "UpdatedByUserNameListLable",
+					  						ListLableDefaultText =  "Updated By",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FlowJson",
+					  						ObjectTableName =  "WorkFlow",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FlowJson",
+					  						ListPropertyPath =  "FlowJson",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FlowJson",
+					  						DefaultText =  "Flow Json",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup WorkFlowQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "156a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup WorkFlowQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7af6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable WorkFlowObjectTable = objectTables.ContainsKey("WorkFlow") ? objectTables["WorkFlow"] : null;
+            if (WorkFlowObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                WorkFlowObjectTable = objectContext.ObjectTables.Where(d => d.Name == "WorkFlow" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode WorkFlowTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WorkFlow.Q.ALWO", DefaultText = @"All Workflows",LocalDefaultText = "", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WorkFlowFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlow.Q.ALWO", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowFeatures.ALWO", NameTextCodeDefaultText = "ALWO", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WorkFlowObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ALWOQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WorkFlowTextCode_0.Id, NameTextCodeCode = WorkFlowTextCode_0.Code, ObjectTableName = "WorkFlow", Code = "ALWO",  QueryGroupCode = "156a", IndexOrder = 0, Tenant = 0, ObjectTableId = WorkFlowObjectTable.Id, QuerySection = "WorkFlow", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WorkFlowFeature_0.Id,FeatureUniqeCode= WorkFlowFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ALWOQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlow.Name" , ColumnWidth = 400 }, addedQueryColumns);
+
+			 QueryColumn ALWOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
+
+			 QueryColumn ALWOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
+
+			 QueryColumn ALWOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
+
+			 QueryColumn ALWOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlow.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

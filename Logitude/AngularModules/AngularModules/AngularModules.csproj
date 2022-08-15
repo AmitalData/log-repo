@@ -7998,10 +7998,14 @@
     <TypeScriptCompile Include="Workflow\Components\NodeProperties\LoopNodePropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\NodeProperties\SetValueNodePropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowStatusList.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowStatusPM.ts" />
     <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
     <TypeScriptCompile Include="Workflow\ModuleWorkflow.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowStatusListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowPMService.ts" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 
 import { WorkFlowListService } from './Services/StandardLists/WorkFlowListService';
+import { WorkFlowStatusListService } from './Services/StandardLists/WorkFlowStatusListService';
 import { WorkFlowPMService } from './Services/StandardPMs/WorkFlowPMService';
 
 export class ModuleProviders {
@@ -10,6 +11,7 @@ export class ModuleProviders {
         switch (name) {
             // List
             case "WorkFlowListService": { service = new WorkFlowListService(); break; }
+            case "WorkFlowStatusListService": { service = new WorkFlowStatusListService(); break; }
 
             // PM
             case "WorkFlowPMService": { service = new WorkFlowPMService(); break; }

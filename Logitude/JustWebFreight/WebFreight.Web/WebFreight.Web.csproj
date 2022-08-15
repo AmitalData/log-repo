@@ -1186,6 +1186,7 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowController.Generated.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
@@ -3410,6 +3411,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseReleaseStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseReleaseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WithholdingTaxDeductionTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AnalyzeQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\ApiCredintialsUpdateClass.cs" />

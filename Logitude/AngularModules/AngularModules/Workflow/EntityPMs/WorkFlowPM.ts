@@ -74,6 +74,36 @@ export class WorkFlowPM {
     public set OwnerId(newValue: string) { if (this.ownerId != newValue) { this.ownerId = newValue; this.MarkAsDirty("OwnerId"); } }
        
 	 
+    private statusCode: string;
+    public get StatusCode() { return this.statusCode; }
+    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private ownerName: string;
+    public get OwnerName() { return this.ownerName; }
+    public set OwnerName(newValue: string) { if (this.ownerName != newValue) { this.ownerName = newValue; this.MarkAsDirty("OwnerName"); } }
+       
+	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private flowJson: string;
+    public get FlowJson() { return this.flowJson; }
+    public set FlowJson(newValue: string) { if (this.flowJson != newValue) { this.flowJson = newValue; this.MarkAsDirty("FlowJson"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

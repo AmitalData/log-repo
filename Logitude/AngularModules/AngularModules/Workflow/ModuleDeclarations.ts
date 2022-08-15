@@ -2,12 +2,14 @@ import { LogitudeWorkflowComponent } from "./Components/LogitudeWorkflow/Logitud
 import { ConditionNodePropertiesComponent } from './Components/NodeProperties/ConditionNodePropertiesComponent';
 import { LoopNodePropertiesComponent } from './Components/NodeProperties/LoopNodePropertiesComponent';
 import { SetValueNodePropertiesComponent } from './Components/NodeProperties/SetValueNodePropertiesComponent';
+import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 
 export const Components = [
     LogitudeWorkflowComponent,
     ConditionNodePropertiesComponent,
     LoopNodePropertiesComponent,
-    SetValueNodePropertiesComponent
+    SetValueNodePropertiesComponent,
+    FieldTemplateComponent,
 ];
 
 export class ModuleDeclarations {
@@ -18,6 +20,7 @@ export class ModuleDeclarations {
             case "ConditionNodePropertiesComponent": { myResult = ConditionNodePropertiesComponent; break; }
             case "LoopNodePropertiesComponent": { myResult = LoopNodePropertiesComponent; break; }
             case "SetValueNodePropertiesComponent": { myResult = SetValueNodePropertiesComponent; break; }
+            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
         }
         return myResult;
     }

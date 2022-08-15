@@ -1,0 +1,26 @@
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- WorkFlow  -->
+                <table *ngIf="ObjectTableName == 'WorkFlow'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'StatusName'">
+                                    <div [style.font-weight]="'bold'" [style.color]="StatusColor">
+                                        {{Entity[FieldName]}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+</table>

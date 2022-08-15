@@ -2327,6 +2327,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 });
                             });
                     }
+                    else if (myObjectTableName == "WorkFlow") {
+                        SessionLocator.DynamicLoader.Load("./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                //cmpRef.instance.Run();
+                                //cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                    // this.isEditControlOpened = false;
+                                    // this.OnBackFromEdit(selectedEntityId, $event)
+                                    // this.RefreshBtnClick();
+                                //});
+                            });
+                    }
                     else if (this.ObjectTableName =="Customs.DeclarationReferantData")
                     {
                         var customFile = "";

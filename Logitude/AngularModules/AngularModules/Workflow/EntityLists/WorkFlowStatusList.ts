@@ -6,24 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class WorkFlowList {
+export class WorkFlowStatusList {
    
-	Id: string;
-	Tenant: number;
-	CreateDate: Date;
-	CreatedByUserId: string;
-	UpdateDate: Date;
-	UpdatedByUserId: string;
-	SearchFields: string;
+	Code: string;
 	Name: string;
-	Description: string;
-	OwnerId: string;
-	StatusCode: string;
-	StatusName: string;
-	OwnerName: string;
-	CreatedByUserName: string;
-	UpdatedByUserName: string;
-	FlowJson: string;
+	SearchFields: string;
 	
 }
  

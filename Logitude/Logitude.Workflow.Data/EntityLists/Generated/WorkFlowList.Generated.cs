@@ -34,6 +34,18 @@ namespace Logitude.Workflow.Data.EntityLists
        public string Description  { get; set; }
        [DataMember]
        public string OwnerId  { get; set; }
+       [DataMember]
+       public string StatusCode  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
+       [DataMember]
+       public string OwnerName  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string FlowJson  { get; set; }
    }
 
 }

@@ -31,7 +31,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId,
+	         OwnerId, 
+	         StatusCode, 
+	         FlowJson,
 	      }
 
 
@@ -47,7 +49,13 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId,
+	         OwnerId, 
+	         StatusCode, 
+	         StatusName, 
+	         OwnerName, 
+	         CreatedByUserName, 
+	         UpdatedByUserName, 
+	         FlowJson,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +107,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OwnerId))
             {
 				entityPOCO.OwnerId = entityPM.OwnerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
+            {
+				entityPOCO.FlowJson = entityPM.FlowJson;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -157,6 +175,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.OwnerId = entityPOCO.OwnerId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FlowJson))
+            {
+					entityPM.FlowJson = entityPOCO.FlowJson;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -208,6 +236,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 oldEntityPM.OwnerId = entityPM.OwnerId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
+            {
+                oldEntityPM.FlowJson = entityPM.FlowJson;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WorkFlowPM entityPM)
@@ -228,6 +266,10 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
             {
                 entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FlowJson)) //T4 find type == nText 
+            {
+                entityPM.FlowJson = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FlowJson));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

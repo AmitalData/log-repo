@@ -18,6 +18,7 @@ namespace Logitude.Workflow.Data
     {
    
        	 IDbSet<WorkFlow> WorkFlows { get; }
+		 IDbSet<WorkFlowStatus> WorkFlowStatuses { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

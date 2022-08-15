@@ -72,6 +72,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FlowJson"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -86,5 +100,10 @@
     ForeignKeyColumn="OwnerId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusCode"
+    ReferencedTable="WorkFlowStatuses"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

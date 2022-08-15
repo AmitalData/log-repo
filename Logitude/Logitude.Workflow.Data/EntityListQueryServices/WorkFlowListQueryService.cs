@@ -44,14 +44,24 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					                          Description = a.Description,
 					
 					                          OwnerId = a.OwnerId,
-					
-		                    	            });
+
+											  StatusCode = a.StatusCode,
+
+											  StatusName = a.Status != null ? a.Status.Name : null,
+
+											  OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : null : null,
+
+											  CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
+
+											  UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : null : null,
+
+											});
             return query;
 		}
 
 		private IQueryable<WorkFlow> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<WorkFlow> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<WorkFlow> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<WorkFlow> iQueryable, int tenant)
         {
