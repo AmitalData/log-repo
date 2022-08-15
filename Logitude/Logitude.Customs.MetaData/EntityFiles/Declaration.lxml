@@ -23098,6 +23098,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;DCR&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;Declaration Created From Recovery&quot;"
+      LocalName="&quot;ההצהרה הוקמה כתוצאה משחזור&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
