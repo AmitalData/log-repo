@@ -32,7 +32,7 @@ export class DeclarationRestoreComponent
     implements OnInit, AfterViewInit, IRequestsSheetMassagingComponent {
     public DataContext: DeclarationRestoreComponent = this;
     public ObjectTableName: string = "Customs.Declaration";
-
+    public CustomFileLable ="תיק עמילת / מכס";
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
 
@@ -84,7 +84,6 @@ export class DeclarationRestoreComponent
         this.ValidationErrorsList = [];
     }
     CustomFileNoTextChanged(searchtext) {
-
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return;
         }
