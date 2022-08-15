@@ -1,19 +1,73 @@
 <style>
     .logitude-workflow-component-container {
-      width: 100%;
-      height: 100%;
+        width: 100%;
+        height: 100%;
     }
 </style>
+
 <div class="MediaFillAbsolute" style="background: white;">
     <div class="MarginAbsolute10">
         <table>
+
+            <tr style="height: 1px;">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:10px">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 1px;">
+                                <BackButton [Text]="BackButtonLable" (click)="backButtonClicked()"></BackButton>
+                            </td>
+
+                            <td style="width:10px">
+                                <div></div>
+                            </td>
+
+                            <td style="width:1px;">
+                                <div class="TabTitleRow TextTrimming">
+                                    {{WorkflowName}}
+                                </div>
+                            </td>
+
+                            <td style="width:10px">
+                                <div></div>
+                            </td>
+
+                            <td style="width:20px;float:left;padding-top:2px">
+                                <IconButton [Name]="'Edit'" [Title]="'Edit Workflow'" (click)="editWorkflowClicked()"></IconButton>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="height: 5px;">
+                <td></td>
+            </tr>
+
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <td>
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                </td>
+            </tr>
+
             <tr>
                 <td>
                     <div class="MediaFill CurvedArea">
-                         <div #logitudeWorkflowComponentContainer LocationDirective class="logitude-workflow-component-container"></div>
+                        <div #logitudeWorkflowComponentContainer class="logitude-workflow-component-container"></div>
                     </div>
                 </td>
             </tr>
+
+
         </table>
     </div>
 </div>
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

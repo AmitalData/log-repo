@@ -2331,7 +2331,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         SessionLocator.DynamicLoader.Load("./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
-                                //cmpRef.instance.Run();
+                                cmpRef.instance.Run({
+                                    ObjectTableName: 'WorkFlow',
+                                    EntityId: $event.rowData.Id
+                                });
                                 //cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     // this.isEditControlOpened = false;
                                     // this.OnBackFromEdit(selectedEntityId, $event)
