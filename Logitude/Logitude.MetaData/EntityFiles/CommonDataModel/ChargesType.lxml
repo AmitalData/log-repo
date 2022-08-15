@@ -2171,7 +2171,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="true"
@@ -2201,6 +2201,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Description&quot;"
     DefaultText="&quot;Description&quot;"
+    ListFieldLable="&quot;DescriptionListLable&quot;"
+    ListLableDefaultText="&quot;Description&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6113,7 +6115,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;ChargesType&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
