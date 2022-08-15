@@ -383,6 +383,9 @@
   <ItemGroup>
     <Content Include="bin\Debug\MeatadataGeneratorTool.exe" />
     <Content Include="bin\Debug\MeatadataGeneratorTool.pdb" />
+    <Resource Include="Resources\question_mark_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <None Include="ToolVersion\Version.vxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
