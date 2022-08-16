@@ -1,27 +1,30 @@
-import { LogitudeWorkflowComponent } from "./Components/LogitudeWorkflow/LogitudeWorkflowComponent";
-import { ConditionNodePropertiesComponent } from './Components/NodeProperties/ConditionNodePropertiesComponent';
-import { LoopNodePropertiesComponent } from './Components/NodeProperties/LoopNodePropertiesComponent';
-import { SetValueNodePropertiesComponent } from './Components/NodeProperties/SetValueNodePropertiesComponent';
+import { WorkflowBuilderComponent } from "./Components/WorkflowBuilder/WorkflowBuilderComponent";
+import { ConditionPropertiesComponent } from './Components/Properties/ConditionPropertiesComponent';
+import { LoopPropertiesComponent } from './Components/Properties/LoopPropertiesComponent';
+import { SetValuePropertiesComponent } from './Components/Properties/SetValuePropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
+import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/CreateEditWorkflowComponent";
 
 export const Components = [
-    LogitudeWorkflowComponent,
-    ConditionNodePropertiesComponent,
-    LoopNodePropertiesComponent,
-    SetValueNodePropertiesComponent,
+    WorkflowBuilderComponent,
+    ConditionPropertiesComponent,
+    LoopPropertiesComponent,
+    SetValuePropertiesComponent,
     FieldTemplateComponent,
+    CreateEditWorkflowComponent,
 ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
-        var myResult: any = null;
+        var result: any = null;
         switch (name) {
-            case "LogitudeWorkflowComponent": { myResult = LogitudeWorkflowComponent; break; }
-            case "ConditionNodePropertiesComponent": { myResult = ConditionNodePropertiesComponent; break; }
-            case "LoopNodePropertiesComponent": { myResult = LoopNodePropertiesComponent; break; }
-            case "SetValueNodePropertiesComponent": { myResult = SetValueNodePropertiesComponent; break; }
-            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
+            case "WorkflowBuilderComponent": { result = WorkflowBuilderComponent; break; }
+            case "ConditionPropertiesComponent": { result = ConditionPropertiesComponent; break; }
+            case "LoopPropertiesComponent": { result = LoopPropertiesComponent; break; }
+            case "SetValuePropertiesComponent": { result = SetValuePropertiesComponent; break; }
+            case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
+            case "CreateEditWorkflowComponent": { result = CreateEditWorkflowComponent; break; }
         }
-        return myResult;
+        return result;
     }
 }

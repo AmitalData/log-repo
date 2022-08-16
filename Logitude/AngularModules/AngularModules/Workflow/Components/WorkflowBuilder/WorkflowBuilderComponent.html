@@ -1,5 +1,5 @@
 <style>
-    .logitude-workflow-component-container {
+    .workflow-builder-component-container {
         width: 100%;
         height: 100%;
     }
@@ -36,11 +36,38 @@
                             </td>
 
                             <td style="width:20px;float:left;padding-top:2px">
-                                <IconButton [Name]="'Edit'" [Title]="'Edit Workflow'" (click)="editWorkflowClicked()"></IconButton>
+                                <IconButton [Name]="'Edit'" [Title]="'Edit Workflow'" (click)="editWorkflowClicked()">
+                                </IconButton>
                             </td>
 
                             <td>
                                 <div></div>
+                            </td>
+
+                            <td style="float:right;width:60px;">
+                                <table>
+                                    <tr>
+                                        <td style="width: 55px;">
+
+                                            <button *ngIf="!HasChanges" class="Button" style="width:60px"
+                                                (click)="saveWorkflow()">
+                                                <img [ngStyle]="{'margin-left': '2px'}" style="width:13px"
+                                                    src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
+                                                <span style="line-height: 19px;vertical-align:middle;"
+                                                    [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                            </button>
+
+                                            <button *ngIf="HasChanges" class="EntityChangesButton" style="width:60px"
+                                                (click)="saveWorkflow()">
+                                                <img src="./Images/Buttons/Save.Red.png" style="width:13px"
+                                                    [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
+                                                <span style="line-height: 19px;vertical-align:middle;"
+                                                    [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
@@ -60,7 +87,7 @@
             <tr>
                 <td>
                     <div class="MediaFill CurvedArea">
-                        <div #logitudeWorkflowComponentContainer class="logitude-workflow-component-container"></div>
+                        <div #workflowBuilderComponentContainer class="workflow-builder-component-container"></div>
                     </div>
                 </td>
             </tr>

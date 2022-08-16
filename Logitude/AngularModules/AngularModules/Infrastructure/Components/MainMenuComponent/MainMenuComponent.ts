@@ -320,10 +320,6 @@ export class MainMenuComponent {
                         myComponentPath = "./TasksApp/Components/TasksAppComponent";
                         break;
                     }
-                    // case "General.MH.Workflow": {
-                    //     myComponentPath = "./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent";
-                    //     break;
-                    // }
                     case "General.MH.Quotes": {
                         ServiceLocator.SendTotangoUserActivity("Quote", "List View");
                         myComponentPath = "./Quote/Components/Workspaces/QuotesComponent";

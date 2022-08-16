@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;8270&quot;"
+  Code="&quot;1ff6&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5155,12 +5155,6 @@
       LocalDefaultText="&quot;Container Tracking Settings&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MH.Workflows&quot;"
-      DefaultText="&quot;Workflows&quot;"
-      LocalDefaultText="&quot;Workflows&quot;"
-      TextCodeTypeCode="&quot;MH&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7329,15 +7323,6 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.MultiPrint&quot;"
       FeatureDefaultText="&quot;Batch Print&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;WORKFLOWS&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.WORKFLOWS&quot;"
-      FeatureDefaultText="&quot;Workflows&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

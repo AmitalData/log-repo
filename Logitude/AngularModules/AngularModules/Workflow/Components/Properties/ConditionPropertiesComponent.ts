@@ -3,10 +3,10 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 @Component({
-    templateUrl: "./ConditionNodePropertiesComponent.html"
+    templateUrl: "./ConditionPropertiesComponent.html"
 })
 
-export class ConditionNodePropertiesComponent extends BaseComponent {
+export class ConditionPropertiesComponent extends BaseComponent {
 
     private CurrentSession = SessionLocator.SelectedSession;
 

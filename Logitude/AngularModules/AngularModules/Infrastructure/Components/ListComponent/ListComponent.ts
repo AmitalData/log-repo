@@ -130,7 +130,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode,Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode, Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
@@ -186,7 +186,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     ApplyPreDefinedFilters() {
         if (this.SelectedQuery != null) {
-            this.MethodName =  this.GetMethodName();
+            this.MethodName = this.GetMethodName();
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
 
@@ -284,7 +284,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         filterOperator = "LessThan";
                     }
                 }
-              var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
+                var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                 if (field) {
                     this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                 }
@@ -513,7 +513,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-     
+
     }
 
     name: string;
@@ -612,12 +612,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (filters.TextValue == "Less than Today") {
                 filters.TextValue = TodayDate;
                 filters.MyName = "Less than Today";
-                filterOperator ="LessThan";
+                filterOperator = "LessThan";
             }
             else if (filters.TextValue == "Less than or equal Today") {
                 filters.TextValue = TommorowDate;
                 filters.MyName = "Less than or equal Today";
-                filterOperator ="LessThan";
+                filterOperator = "LessThan";
             }
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
@@ -803,7 +803,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
-   View:string;
+    View: string;
     RunComponent() {
 
 
@@ -824,9 +824,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTable.Name == "Customer") {
-          this.View ="View"
+            this.View = "View"
         }
-else{ this.View = TextCodeTranslator.Translate("General.O.View");}
+        else { this.View = TextCodeTranslator.Translate("General.O.View"); }
         if (FeatureLocator.HasFeaturePermession("General", "EXPORTEXCEL")) {
             if (!AppTool.IsNullOrEmpty(this.ObjectTable.DownloadToExcelFeatureCode)) {
                 if (FeatureLocator.HasFeaturePermession(this.ObjectTable.Name, this.ObjectTable.DownloadToExcelFeatureCode)) {
@@ -941,7 +941,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
-  MenuTableQuerySection: string;
+    MenuTableQuerySection: string;
     Run(args: ListComponentArgs) {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
@@ -1013,7 +1013,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
             this.ResourcesLoaded = true;
@@ -1053,13 +1053,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
 
-        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id ).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         allQueries = this.FilterQuerysByQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
-        if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature){
-            this.Queries = allQueries.filter(x =>  FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) );
+        if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
+            this.Queries = allQueries.filter(x => FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode));
 
         }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
@@ -1072,15 +1072,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-           if(this.QueryCode.includes(this.ObjectTableName+".")){
-               this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (/*this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+*/this.QueryCode))[0];
-               if (this.SelectedQuery == null) {
-                   this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
-               }
-           }
-           else{
-               this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
-           }
+            if (this.QueryCode.includes(this.ObjectTableName + ".")) {
+                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (/*this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+*/this.QueryCode))[0];
+                if (this.SelectedQuery == null) {
+                    this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
+                }
+            }
+            else {
+                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
+            }
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
@@ -1106,8 +1106,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.SelectedQuery = this.Queries[0];
         }
 
-       this.CheckIfQueriesConatinDefaultPerspectiveQuery();
-        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
+        this.CheckIfQueriesConatinDefaultPerspectiveQuery();
+        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs");
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
             let existSelectedQuery: boolean = false;
@@ -1160,7 +1160,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 }
             }
             //console.log("dataSource", this.dataSource);
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
                 this.ResourcesLoaded = true;
                 this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
@@ -1175,16 +1175,16 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
 
-    CheckIfQueriesConatinDefaultPerspectiveQuery(){
-        if(this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)){
-            var isQueriesConatinDefaultPerspective:boolean=false;
-            for(let i=0 ; i < this.Queries.length ; i++){
-                if(this.Queries[i].UniqueCode == this.SelectedQuery.UniqueCode){
-                    isQueriesConatinDefaultPerspective=true;
+    CheckIfQueriesConatinDefaultPerspectiveQuery() {
+        if (this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)) {
+            var isQueriesConatinDefaultPerspective: boolean = false;
+            for (let i = 0; i < this.Queries.length; i++) {
+                if (this.Queries[i].UniqueCode == this.SelectedQuery.UniqueCode) {
+                    isQueriesConatinDefaultPerspective = true;
                     break;
                 }
             }
-            if(!isQueriesConatinDefaultPerspective){
+            if (!isQueriesConatinDefaultPerspective) {
                 this.Queries.push(this.SelectedQuery);
             }
         }
@@ -1227,7 +1227,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     ClearMySearch: boolean = false;
     QueryValueChanged(Args) {
-         this.AdvanceFilters = new ApiQueryFilters();
+        this.AdvanceFilters = new ApiQueryFilters();
         if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             if (Args.IgnoreSearchFields != true) {
                 this.searchFields = "";
@@ -1240,14 +1240,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.columnsObjectFields = [];
         if (this.Queries == null || this.Queries.length == 0) {
             var MyQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-            this.SelectedQuery = MyQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
+            this.SelectedQuery = MyQueries.filter(x => x.UniqueCode === Args.QueryCode)[0];
         }
         else {
-            this.SelectedQuery = this.Queries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
+            this.SelectedQuery = this.Queries.filter(x => x.UniqueCode === Args.QueryCode)[0];
         }
 
         if (this.SelectedQuery == null) {
-            this.SelectedQuery = this.UserQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
+            this.SelectedQuery = this.UserQueries.filter(x => x.UniqueCode === Args.QueryCode)[0];
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.UniqueCode;
@@ -1390,11 +1390,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "Less than Today") {
                             value1 = TodayDate;
-                            filterOperator ="LessThan";
+                            filterOperator = "LessThan";
                         }
                         else if (value1 == "Less than or equal Today") {
                             value1 = TommorowDate;
-                            filterOperator ="LessThan";
+                            filterOperator = "LessThan";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1417,7 +1417,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //console.log("QueryValueChanged()", queryId);
         //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
         //this.GetQueryColumns(queryId, this.UserId);
-        this.SelectedQueryCode =  Args.QueryCode;
+        this.SelectedQueryCode = Args.QueryCode;
         //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
@@ -1430,24 +1430,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
             },
         };
-          if (this.FiltersMenu) {
-                this.FiltersMenu.AdditionalFilters.forEach((filter, key) => {
-                    if (Args.Filters && filter.IgnoreFilter) {
+        if (this.FiltersMenu) {
+            this.FiltersMenu.AdditionalFilters.forEach((filter, key) => {
+                if (Args.Filters && filter.IgnoreFilter) {
+                    Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+                }
+                else {
+                    if (Args.Filters == null) {
+                        Args.Filters = new ApiQueryFilters();
+                    }
+                    if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
                         Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                     }
-                    else {
-                        if (Args.Filters == null) {
-                            Args.Filters = new ApiQueryFilters();
-                        }
-                        if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
-                            Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
-                        }
-                        Args.Filters.AdditionalFilters.push(filter);
-                        //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
-                    }
-                });
+                    Args.Filters.AdditionalFilters.push(filter);
+                    //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
+                }
+            });
 
-            }
+        }
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: Args.Filters, Reload: true });
         this.SetNewEntityButton();
         this.SetAddButton();
@@ -1634,11 +1634,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "Less than Today") {
                             value1 = TodayDate;
-                            filterOperator ="LessThan";
+                            filterOperator = "LessThan";
                         }
                         else if (value1 == "Less than or equal Today") {
                             value1 = TommorowDate;
-                            filterOperator ="LessThan";
+                            filterOperator = "LessThan";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1677,7 +1677,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     filterAgrs.AdditionalFilters.push(filter);
                 });
             }
-            var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
+            var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_', '');
             //this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
             this.FilterChangedEvent.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
@@ -1710,10 +1710,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
-                if(!((filter.FieldDataType == "Decimal" || filter.FieldDataType == "DateTime") && filter.FieldValue == "")) {
-                        MyFilters.AdditionalFilters.push(filter);
-                }
-            
+            if (!((filter.FieldDataType == "Decimal" || filter.FieldDataType == "DateTime") && filter.FieldValue == "")) {
+                MyFilters.AdditionalFilters.push(filter);
+            }
+
         });
         //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
@@ -1739,7 +1739,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
-        
+
         return this._entityListService.getByFilters(this.ObjectTableName, MyFilters, this.MethodName == undefined ? null : this.MethodName);
     }
 
@@ -1758,26 +1758,26 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             return;
         }
 
-        if(this.SelectedQuery.Code == "LedgerTransactions") {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: $event.rowData.JournalId, ObjectTableName: 'Journal' });
-                    });
+        if (this.SelectedQuery.Code == "LedgerTransactions") {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: $event.rowData.JournalId, ObjectTableName: 'Journal' });
+                });
             return;
         }
 
         var myObjectTableName = this.ObjectTableName;
 
-        if (this.ObjectTableName ==  "OccasionContact"){
+        if (this.ObjectTableName == "OccasionContact") {
             myObjectTableName = "Contact";
         }
 
-         if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
-             this._ListComponentArgs.SuppressOnRowSelectedField = false;
-             console.log("SuppressOnRowSelectedField");
-             return;
-         }
+        if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
+            this._ListComponentArgs.SuppressOnRowSelectedField = false;
+            console.log("SuppressOnRowSelectedField");
+            return;
+        }
 
         if ($event != null) {
             if (!this.isEditControlOpened) {
@@ -1947,9 +1947,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                         else if (myObjectTableName == "Customs.CourierMaster") {
                             var windowArgs: any = {};
-                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
-                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -2017,7 +2017,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                                     break;
                                 }
-                                case 'Customer': 
+                                case 'Customer':
                                 case 'Card': {
                                     var windowArgs: any = {};
                                     if (this.listArgs.IsDigitalPortalMenuClicked) {
@@ -2042,7 +2042,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.Client': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response: any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -2076,8 +2076,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.CustomsVendor': {
                                     if (!AppTool.IsNullOrEmpty(selectedEntityId)) {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response: any) => {
                                                 this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                     res.subscribe((myResponse: any) => {
 
@@ -2131,11 +2131,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.CustomsCollateral': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
-                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response: any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
+                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
 
 
                                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
@@ -2176,7 +2176,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.ProceduralFault': {
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe((response: any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -2251,8 +2251,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.DeclarationCargoSplit': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response: any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                                             this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
 
@@ -2328,24 +2328,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             });
                     }
                     else if (myObjectTableName == "WorkFlow") {
-                        SessionLocator.DynamicLoader.Load("./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load("./Workflow/Components/WorkflowBuilder/WorkflowBuilderComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
                                     ObjectTableName: 'WorkFlow',
                                     EntityId: $event.rowData.Id
                                 });
-                                //cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                    // this.isEditControlOpened = false;
-                                    // this.OnBackFromEdit(selectedEntityId, $event)
-                                    // this.RefreshBtnClick();
-                                //});
+
+                                cmpRef.instance.BackCompleted.subscribe(() => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                    //this.RefreshBtnClick();
+                                });
                             });
                     }
-                    else if (this.ObjectTableName =="Customs.DeclarationReferantData")
-                    {
+                    else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
-                        if ($event != null)customFile = $event.rowData.CustomFileNo;
+                        if ($event != null) customFile = $event.rowData.CustomFileNo;
                         let myViewModelName = "FieldTemplateComponent.ts-ShowCFIUFILEFromDeclarationReferantData";
                         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
                             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -2484,18 +2484,17 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     else if (myObjectTableName == "GLAccount") {
 
                         GLAccountSecurityLevelService.CheckLevel(selectedEntityId)
-                        .then(hasAccess=>{
+                            .then(hasAccess => {
 
-                            if(hasAccess){
-                                this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
-                            }
-                            else
-                            {
-                                this.isEditControlOpened = false;
-                                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
-                                return;
-                            }
-                        });
+                                if (hasAccess) {
+                                    this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
+                                }
+                                else {
+                                    this.isEditControlOpened = false;
+                                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                                    return;
+                                }
+                            });
 
                     }
                     else {
@@ -2526,11 +2525,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
     }
 
-    private OpenEditComponent(selectedEntityId: any, myObjectTableName: string, $event: any)
-    {
+    private OpenEditComponent(selectedEntityId: any, myObjectTableName: string, $event: any) {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef =>
-            {
+            .then(cmpRef => {
                 var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -2539,8 +2536,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     BackButtonLabel: label,
                     QuerySection: this.MenuTableQuerySection
                 });
-                cmpRef.instance.BackCompleted.subscribe(($event1: any) =>
-                {
+                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                     this.isEditControlOpened = false;
                     this.OnBackFromEdit(selectedEntityId, $event);
                 });
@@ -2583,8 +2579,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {
                         console.warn('$event.rowIndex is null' + aa.Result)
                     } else {
-                        if(this.MyLogGridComponent){this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
-                        if(this.MyLogGridComponentV2){this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
+                        if (this.MyLogGridComponent) { this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex }); }
+                        if (this.MyLogGridComponentV2) { this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex }); }
 
                     }
 
@@ -2657,7 +2653,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 isVisible = true;
             }
 
-            else if (FeatureLocator.HasFeaturePermession("Warehouse", "AddWarehouses")){
+            else if (FeatureLocator.HasFeaturePermession("Warehouse", "AddWarehouses")) {
                 isVisible = true;
             }
         }
@@ -2682,47 +2678,47 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (this.HaveFeatureNewExportDeclararion()) {
             this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
         } else
-        if (this.listArgs.NewButtonLabel != null) {
-            this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
-        }
-
-        else if (this.ObjectTableName == "Currency") {
-            this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
-        }
-        // else if (this.ObjectTableName == "UserDefinedReport") {
-        //     this.NewEntityButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
-        // }
-        else {
-            //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
-            if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
-                var tempText = TextCodeTranslator.Translate(this.listArgs.ObjectTableName + ".NewButton");
-                if (!AppTool.IsNullOrEmpty(tempText) ) {
-                    this.listArgs.NewButtonLabel = tempText;
-                }
+            if (this.listArgs.NewButtonLabel != null) {
+                this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
             }
-            if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
-                var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-                if (useLocal == true ) {
-                    var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+
+            else if (this.ObjectTableName == "Currency") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
+            }
+            // else if (this.ObjectTableName == "UserDefinedReport") {
+            //     this.NewEntityButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
+            // }
+            else {
+                //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
+                    var tempText = TextCodeTranslator.Translate(this.listArgs.ObjectTableName + ".NewButton");
+                    if (!AppTool.IsNullOrEmpty(tempText)) {
+                        this.listArgs.NewButtonLabel = tempText;
+                    }
+                }
+                if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
+                    var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+                    if (useLocal == true) {
+                        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
 
                         var ChangedText = GeneralText.split('%')[0];
                         var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                         var FinalText = NewText + " " + ChangedText;
-                    if (this.ObjectTableName == "Customer") {
-                        FinalText = "New" + " " + NewText;
-                    }
-                    this.NewEntityButtonLabel = FinalText;//TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+                        if (this.ObjectTableName == "Customer") {
+                            FinalText = "New" + " " + NewText;
+                        }
+                        this.NewEntityButtonLabel = FinalText;//TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
 
+                    }
+                    else {
+                        this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+                    }
                 }
                 else {
-                    this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+                    this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
                 }
-            }
-            else {
-                this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
-            }
 
-        }
+            }
     }
     private SetNewEntityButtonDisabled() {
         var isEnabled = false;
@@ -2845,7 +2841,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.IsNewEntityButtonVisible = isVisible;
     }
     HaveFeatureNewExportDeclararion(): boolean {
-        let b1=FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
+        let b1 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
         let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
 
         return b1 && b2;
@@ -2883,7 +2879,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
-                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
                     this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
@@ -3097,7 +3093,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         break;
                     }
                 case "UserDefinedReport":
-                     {
+                    {
                         logWindow.Width = 400;
                         logWindow.Height = 200;
                         break;
@@ -3285,7 +3281,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             //}
 
             //else {
-                logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+            logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
             //}
 
             logWindow.Show(componentPath);
@@ -3478,11 +3474,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             }
                             else if (value1 == "Less than Today") {
                                 value1 = TodayDate;
-                                filterOperator ="LessThan";
+                                filterOperator = "LessThan";
                             }
                             else if (value1 == "Less than or equal Today") {
                                 value1 = TommorowDate;
-                                filterOperator ="LessThan";
+                                filterOperator = "LessThan";
                             }
                         }
                         var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -3574,7 +3570,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult: any) => {
                         });
                     }
                     else {
@@ -3593,7 +3589,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult: any) => {
                         });
                         // });
                     }
@@ -3604,7 +3600,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     RunNewJournalWizard() {
         var windowTitle = "New Journal";
         var entityPM: JournalPM = new JournalPM();
-        entityPM.IsNew=true;
+        entityPM.IsNew = true;
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -3773,26 +3769,26 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 console.log(ids);
 
 
-        var selectedEntityId = ids[0];
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-          .then(cmpRef => {
-            var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
-            cmpRef.instance.ComponentRef = cmpRef;
-            cmpRef.instance.Run({
-              EntityId: selectedEntityId,///$event.rowData.Id
-              ObjectTableName: this.ObjectTableName,
-              BackButtonLabel: label,
-              NavigationIds: ids,
+                var selectedEntityId = ids[0];
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({
+                            EntityId: selectedEntityId,///$event.rowData.Id
+                            ObjectTableName: this.ObjectTableName,
+                            BackButtonLabel: label,
+                            NavigationIds: ids,
 
-            });
-            cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-              this.isEditControlOpened = false;
-              this.DestroyMe = false;
-              // this.OnBackFromEdit(selectedEntityId, $event)
-            });
-            //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
-            this.DestroyMe = true;
-            //}
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                            this.isEditControlOpened = false;
+                            this.DestroyMe = false;
+                            // this.OnBackFromEdit(selectedEntityId, $event)
+                        });
+                        //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
+                        this.DestroyMe = true;
+                        //}
 
                     });
             });

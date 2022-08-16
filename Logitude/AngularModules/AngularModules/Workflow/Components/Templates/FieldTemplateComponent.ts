@@ -28,16 +28,16 @@ export class FieldTemplateComponent {
             let statusCode = this.Entity["StatusCode"];
             switch (statusCode) {
                 case "DRFT":
-                    this.StatusColor = "blue";
+                    this.StatusColor = "#258bee";
                     break;
                 case "PUED":
-                    this.StatusColor = "green";
+                    this.StatusColor = "#54aa41";
                     break;
                 case "PAED":
-                    this.StatusColor = "black";
+                    this.StatusColor = "#000000";
                     break;
                 default:
-                    this.StatusColor = "black";
+                    this.StatusColor = "#000000";
                     break;
             }
         }
