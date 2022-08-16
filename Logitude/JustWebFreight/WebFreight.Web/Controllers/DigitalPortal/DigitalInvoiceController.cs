@@ -117,11 +117,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return resultClass;
         }
         
-        public List<ARInvoiceList> PostFilteredDigitalARInvoices(int tenant, InvoiceFilters filters)
+        public List<ARInvoiceList> PostFilteredDigitalARInvoices(InvoiceFilters filters)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckDigitalUserAuthentication(tenant, filters.PartnerId);
             TenantQuery tenantQuery = new TenantQuery(tenant);
