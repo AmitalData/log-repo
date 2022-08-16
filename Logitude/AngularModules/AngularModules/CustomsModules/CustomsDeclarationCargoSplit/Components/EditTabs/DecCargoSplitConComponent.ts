@@ -92,6 +92,17 @@ export class DecCargoSplitConComponent extends BaseComponent {
     declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
 
+    ChangeRequestReason(RequestReasonName , RequestReason){
+        for (let conItem of this.EntityPM.DecCargoSplitConsItems) {
+
+            if(conItem.RequestReasonName == null)
+            {
+                conItem.RequestReasonName = RequestReasonName;
+                conItem.RequestReasonCode = RequestReason; 
+            }
+        }
+    }
+
     RefreshTabs(direction , isDataFromFile) {
         this.DeclarationDirection = direction;
         this.IsDataFromFile= isDataFromFile;
@@ -186,7 +197,6 @@ export class DecCargoSplitConComponent extends BaseComponent {
         if(!(this.EntityPM?.EntityParentPM.direction !="E" &&  this.DeclarationDirection !="E" && this.declarationCargoSplitPM.Direction!="E"))
             {
 
-        this.ItemsList.Clear();
         if (this.declarationCargoSplitPM != null) {
             this.declarationExtendedListService = new DeclarationExtendedListService();
             this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
@@ -416,11 +426,14 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     if(this.DeclarationDirection == "E"){
                         item.GrossMassMeasure = this.ParentCargoConsinmentItemList[0].GrossMassMeasure;
                         item.CargoDescription = this.ParentCargoConsinmentItemList[0].MarksNumbers;
-                        item.RequestReasonName=item.EntityParentPM.entityParentPM?.RequestReasonName;
+                        item.RequestReasonName = item.EntityParentPM.entityParentPM?.RequestReasonName;
+                        item.RequestReasonCode = item.EntityParentPM.entityParentPM?.RequestReason;
+                        
+                        
                 }
 
             }
-        
+
             if (!this.EntityPM.DecCargoSplitConsItems.includes(item)) {
                 this.EntityPM.AddDecCargoSplitConsItem(item);
                 var line = new DecCargoSplitConsItemModel(item);

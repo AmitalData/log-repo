@@ -658,6 +658,9 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.ThirdCargoID = '';
         this.EntityPM.RequestRemarks = '';
         this.ImporterCode = '';
+        this.RequestReason = null
+        this.RequestReasonName = null
+        this.ValidationErrorsList = null   
         
         for (let i = this.Tabs.length - 1; i >= 0; i--) {
             this.DeleteTabs(this.Tabs[i]);
@@ -874,8 +877,7 @@ export class CargoSplitGeneralTabComponent
 
     CustomFileNoTextChanged(searchtext) {
         this.setRequired();
-        
-        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I',this.IsDataFromFile));
+               
         var errorMessage = "";
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.IsCustomsFileRetrieved = false;
@@ -943,6 +945,8 @@ export class CargoSplitGeneralTabComponent
                                 return;
                             }  
                         }
+
+                        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I',this.IsDataFromFile));
                         this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
@@ -1059,11 +1063,15 @@ export class CargoSplitGeneralTabComponent
     set RequestReason(value: string) {
         if(value != this.EntityPM.RequestReason ){
          this.EntityPM.RequestReason = value; 
-         this.splitOrMergeReasonListService.getSingle(value).subscribe(res=>{
+         this.splitOrMergeReasonListService.getSingle(value).subscribe(res=>{ 
             if(res != null){
-                this.EntityPM.RequestReasonName = res.Result.LocalName
+                this.EntityPM.RequestReasonName = res.Result.LocalName;
+                if(this.IsExportDeclaration)
+                this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.ChangeRequestReason(this.EntityPM.RequestReasonName,this.EntityPM.RequestReason))
             }
          });
+         
+         
         }
     }
     //public get RequestReasonName() { return this.EntityPM.RequestReasonName; }
