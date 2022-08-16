@@ -100,10 +100,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
                 };
 
-                var customfilters = new CustomerCustomFilter(authToken.Tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-                var myFilter = new CustomerBusinessUnitFilter(authToken.Tenant);
-                entityPocos = myFilter.RunFilter(entityPocos);
+                //var customfilters = new CustomerCustomFilter(authToken.Tenant);
+                //entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                //var myFilter = new CustomerBusinessUnitFilter(authToken.Tenant);
+                //entityPocos = myFilter.RunFilter(entityPocos);
                 entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
                 IQueryable<CustomerList> entityLists = customerQuery.GetDigitalIQueryableEntityList(entityPocos);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
