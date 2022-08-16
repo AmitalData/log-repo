@@ -33,6 +33,7 @@ using Simplog.Data.InvoiceModel;
 using WebFreight.Web.DataContracts;
 using System.Data.Entity;
 using System.Net;
+using Logitude.Extensions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -219,14 +220,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpPost]
         [Route("DigitalInvoice/GetByFilters")]
-        public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
+        public IHttpActionResult GetByFilters(GeneralFilters newFilters)
         {
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
-
                 var myTenantRepository = new TenantRepository(authToken.Tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
 
@@ -243,16 +243,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     PageSize = newFilters.PageSize,
                     QuerySection = "ARInvoices",
                     SortByColumnName = newFilters.SortBy,
-                    SortDirectin = newFilters.SortDirection,
-                    QueryFilterItems = new List<QueryFilterItem>(),
+                    SortDirectin = newFilters.SortDirection
                 };
 
                 queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
 
-                if (!string.IsNullOrEmpty(newFilters.CardId))
+                if (!string.IsNullOrWhiteSpace(newFilters.CardId))
                 {
                     queryOperations.SetFilter("BillToId", newFilters.CardId, false, "InList", null, false);
                 }
+
                 var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
 
                 if (newFilters.AdditionalFilters.Any())
@@ -279,30 +279,33 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ARInvoiceAPiHelper.AddFilters(queryOperations, authToken.Tenant);
                 var genericFilter = new GenericFilter();
                 var MyContext = InvoiceContext.GetContext(authToken.Tenant);
+
+                var nonListQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+                };
+
+                var listQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+                };
+
                 var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-                var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
                 var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-                var nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-                var listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+                var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
 
                 var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
                 entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, authToken.Tenant);
-                entityPocos = genericFilter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, entityPocos);
-                int skippedEntities = queryOperations.PageIndex;
+                entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+
                 var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
-                entityLists = genericFilter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
-                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
                 {
-                    PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
-
-
-                    ObjectField objectField = (from a in ARInvoiceObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
+                    ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault( a => a.FieldName == queryOperations.SortByColumnName);
 
                     if (objectField != null)
                     {
@@ -360,26 +363,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
                 }
 
-                var response = new ServiceResponse();
-
-                if (newFilters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
-
-                entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
-                entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
-                List<ARInvoiceList> listQuery = listQuery = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-                customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listQuery.Cast<object>().ToList());
-                response.Result = listQuery;
-                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-
-                return reponseMessage;
+                var res = entityLists.GetPaged(queryOperations.PageIndex, queryOperations.PageSize);
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
 
@@ -414,7 +403,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
                 {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
@@ -453,7 +442,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
                 {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
