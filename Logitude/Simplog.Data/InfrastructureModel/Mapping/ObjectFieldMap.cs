@@ -8,6 +8,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
     {
         public ObjectFieldMap()
         {
+            this.HasEntitySetName("ObjectFields");
             this.HasKey(t => t.Id);
            
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
