@@ -309,8 +309,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8250",
 "2892",
 "2450",
-
-"UCUDO", 
 "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
@@ -335,7 +333,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
-            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode))
+            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) && !(requestInProgressParams.InterfaceTypeCode == "UCUDO"))
             {
                 return new List<CustomsRequestsSheetPM>();
             }
@@ -448,7 +446,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
 "9079",//"שאילתא לשחזור נתוני הצהרת יצוא"
-"UCUDO", 
  "UCB8212"
  ,"2892" ,
  "ClosePending",//סגירה גורפת ל-Pending
