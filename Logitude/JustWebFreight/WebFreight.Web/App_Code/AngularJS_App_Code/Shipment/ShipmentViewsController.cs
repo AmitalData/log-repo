@@ -160,7 +160,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                shipmentRepository.SetSecondDBforContext(tenant);
+              //  if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+               // {
+                    shipmentRepository.SetSecondDBforContext(tenant);
+               // }
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
                 GenericFilter genericFilter = new GenericFilter();
