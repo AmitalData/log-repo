@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string PendingRemarks  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+       [DataMember]
+       public bool? Approval  { get; set; }
    }
 
 }

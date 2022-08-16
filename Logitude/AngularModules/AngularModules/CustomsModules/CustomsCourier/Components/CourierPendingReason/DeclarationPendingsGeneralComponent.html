@@ -97,7 +97,18 @@
                                     </log-cell-template>
 </ng-template>
                                 </log-column>
-
+                                <log-column [header]="'Customs.DeclarationPending.F.Approval' | TextCodeTranslationPipe" [binding]="'Approval'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.Approval}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <RadioButton [Name]="'Approval'" [IsChecked]="item.Approval"></RadioButton>
+                                            </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <ng-template let-item>
