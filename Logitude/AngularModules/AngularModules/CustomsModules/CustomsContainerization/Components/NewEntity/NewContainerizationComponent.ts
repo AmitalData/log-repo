@@ -639,6 +639,8 @@ export class NewContainerizationComponent extends BaseComponent {
                 this.declarationPM = windowArgs.EntityPM;
                 this.ExportFile = this.declarationPM.ExportFile;
 
+                this.selectedValue=this.declarationPM.TransportModeId;
+
                 this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
                 this.containerizationExtendedListService.SelectedDeclarations = true;
             } else {
