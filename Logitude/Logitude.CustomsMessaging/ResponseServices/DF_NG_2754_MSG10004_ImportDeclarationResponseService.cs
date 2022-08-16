@@ -1260,8 +1260,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     InterfaceTypeCode = "2755",
                                     LoggingUserId = requestParams.LoggingUserId,
                                     RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    LoggingEntityReference = "AutoPayment",
-                                };
+                                 };
                                 if (requestDate != DateTime.MinValue)
                                 {
                                     requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
