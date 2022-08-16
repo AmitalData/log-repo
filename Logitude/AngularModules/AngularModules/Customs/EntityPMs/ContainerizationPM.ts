@@ -134,6 +134,11 @@ export class ContainerizationPM {
     public set ContainerizationCargoID(newValue: string) { if (this.containerizationCargoID != newValue) { this.containerizationCargoID = newValue; this.MarkAsDirty("ContainerizationCargoID"); } }
        
 	 
+    private transportModeId: string;
+    public get TransportModeId() { return this.transportModeId; }
+    public set TransportModeId(newValue: string) { if (this.transportModeId != newValue) { this.transportModeId = newValue; this.MarkAsDirty("TransportModeId"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		
