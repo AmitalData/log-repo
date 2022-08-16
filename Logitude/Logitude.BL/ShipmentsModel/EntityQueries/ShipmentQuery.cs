@@ -2649,14 +2649,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void CheckInvoicedFields(ShipmentPM shipmentPM)
         {
-            shipmentPM.IsPartiallyInvoiced = false;
             shipmentPM.IsFullInvoiced = false;
             if(shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
                 return;
             }
-            shipmentPM.IsPartiallyInvoiced  = !shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null && a.ShipmentReceivableLineStatusCode != "ACCT").Any();
-            shipmentPM.IsFullInvoiced = !shipmentPM.IsPartiallyInvoiced;
+            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
