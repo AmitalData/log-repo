@@ -694,7 +694,7 @@ namespace WebFreight.Web
                                 }
                             default:
                                 {
-                                    query2 = query2.OrderByDescending(d => d.StatusDate);
+                                    query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
                                     break;
                                 }
                         }
@@ -708,7 +708,7 @@ namespace WebFreight.Web
             else
             {
                 //query2 = query2.OrderByDescending(d => d.LastStatusLogDate);
-                query2 = query2.OrderByDescending(d => d.StatusDate);
+                query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
             }
 
 
@@ -763,7 +763,7 @@ namespace WebFreight.Web
 
 
                 query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
-                query2 = query2.OrderByDescending(d => d.StatusDate);
+                query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
                 listQuery = query2.ToList();
 
                 BuildUnssenFollowedShipment(tenant, listQuery, table, filters.ContactId, contactsUnseenRepository, sharedFollowedShipmentRepository, SharedFollowedShipmentListIds);
@@ -987,6 +987,7 @@ namespace WebFreight.Web
                              ProjectNumber = f.ProjectNumber,
                              Tenant = f.Tenant,
                              IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                             ComputedStatusDate = f.ComputedStatusDate,
 
                          };
 
