@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -28,7 +29,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<TranslationHeader> TranslationHeaders { get; }
         DbSet<TextCode> TextCodes { get; }
         IDbSet<ObjectTable> ObjectTables { get; }
-        DbSet<ObjectField> ObjectFields { get; }
+        DbSet<ObjectField> ObjectFieldsDbSet { get; }
+        IQueryable<ObjectField> ObjectFields { get; }
         IDbSet<Screen> Screens { get; }
         IDbSet<ScreenField> ScreenFields { get; }
         IDbSet<TextCodeType> TextCodeTypes { get; }

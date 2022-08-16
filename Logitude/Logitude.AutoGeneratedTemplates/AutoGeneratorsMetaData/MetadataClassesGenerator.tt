@@ -628,13 +628,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 		isCustomField = (field.Attribute(XName.Get("IsCustom")).Value.ToLower() == "true");
     }
 
-	bool noObjectField = false;
-	if(field.Attribute(XName.Get("NoMetaDataField")) != null)
-    {
-		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
-    }
-
-	if( noObjectField || isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
+	if(isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
     {
 		return;
     }
@@ -652,7 +646,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					 <#+
 		   foreach (XAttribute p in field.Attributes())
 				{  
-					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
+					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "IsComposition" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
 					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName" && p.Name != "OldNames"
 					&& p.Name != "FullNameTextCodeId"

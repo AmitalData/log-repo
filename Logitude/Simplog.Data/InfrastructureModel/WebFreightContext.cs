@@ -20,6 +20,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
+using System.Linq;
 //using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel
@@ -467,7 +468,8 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public DbSet<ObjectField> ObjectFields
+        public IQueryable<ObjectField> ObjectFields { get { return ObjectFieldsDbSet.Where(x => !x.ForMetaDataOnly); } }
+        public DbSet<ObjectField> ObjectFieldsDbSet
         {
             get;
             set;
