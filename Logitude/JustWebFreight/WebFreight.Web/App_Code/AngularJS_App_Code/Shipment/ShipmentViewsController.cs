@@ -160,7 +160,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
+                shipmentRepository.SetSecondDBforContext(tenant);
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
                 GenericFilter genericFilter = new GenericFilter();
@@ -298,7 +298,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         parameters.Add(new SqlParameter(item.Name, item.Value));
                     }
                     IShipmentsContext context = ShipmentsContext.GetContext(tenant);
-                    context = ShipmentsContext.GetSecContext(tenant);
                     ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
                     //var mylistQuery = activeContext.Database.SqlQuery<ShipmentDataView>(MySql.TSQL, parameters.ToArray()).AsQueryable();
                     listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
