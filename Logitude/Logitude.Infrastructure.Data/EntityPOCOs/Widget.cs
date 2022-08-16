@@ -36,6 +36,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string StartPotistion { get; set; }
         [Column("EndPosition")]
 	    public string EndPosition { get; set; }
+        [ForeignKey("WidgetType")]
+        [Column("TypeCode")]
+	    public string TypeCode { get; set; }
+	      
+        public virtual WidgetType WidgetType { get; set; }
     }
 }
 	 

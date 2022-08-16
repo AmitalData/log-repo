@@ -36,6 +36,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.StartPotistion).HasColumnName("StartPotistion").IsRequired().HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.EndPosition).HasColumnName("EndPosition").IsRequired().HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.TypeCode).HasColumnName("TypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
         }
     }
 }

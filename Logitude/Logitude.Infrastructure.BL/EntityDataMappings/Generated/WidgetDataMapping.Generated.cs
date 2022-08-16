@@ -28,7 +28,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         GroupBy, 
 	         DashboardId, 
 	         StartPotistion, 
-	         EndPosition,
+	         EndPosition, 
+	         TypeCode,
 	      }
 
 
@@ -41,7 +42,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         GroupBy, 
 	         DashboardId, 
 	         StartPotistion, 
-	         EndPosition,
+	         EndPosition, 
+	         TypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +80,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndPosition))
             {
 				entityPOCO.EndPosition = entityPM.EndPosition;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
+            {
+				entityPOCO.TypeCode = entityPM.TypeCode;
 			}
 			}
 
@@ -119,6 +126,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.EndPosition = entityPOCO.EndPosition;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TypeCode))
+            {
+					entityPM.TypeCode = entityPOCO.TypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -153,6 +165,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndPosition))
             {
                 oldEntityPM.EndPosition = entityPM.EndPosition;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
+            {
+                oldEntityPM.TypeCode = entityPM.TypeCode;
             }
 			
 		}

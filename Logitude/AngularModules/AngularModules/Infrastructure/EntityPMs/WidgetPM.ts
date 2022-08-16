@@ -62,6 +62,11 @@ export class WidgetPM {
     public set EndPosition(newValue: string) { if (this.endPosition != newValue) { this.endPosition = newValue; this.MarkAsDirty("EndPosition"); } }
        
 	 
+    private typeCode: string;
+    public get TypeCode() { return this.typeCode; }
+    public set TypeCode(newValue: string) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

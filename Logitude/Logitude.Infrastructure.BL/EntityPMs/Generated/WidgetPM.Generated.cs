@@ -181,6 +181,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string typeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeCode  
+	   {
+	    
+	     get
+		{
+		   return typeCode;
+		 }
+		 set
+		 {
+		   if(typeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeCode",OldValue=typeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   typeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

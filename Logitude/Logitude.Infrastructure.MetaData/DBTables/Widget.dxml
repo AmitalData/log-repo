@@ -53,9 +53,21 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DashboardId"
     ReferencedTable="Dashboards"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TypeCode"
+    ReferencedTable="WidgetTypes"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>
