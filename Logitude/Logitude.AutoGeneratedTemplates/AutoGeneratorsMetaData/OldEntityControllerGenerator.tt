@@ -1205,7 +1205,11 @@ else
 if(tableName == "ARInvoice")
 {
 #>              
-                MyContext = <#= contextName #>.GetSecContext(<#= contextTenantParam #>);
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = <#= contextName #>.GetSecContext(<#= contextTenantParam #>);
+                }
 <#+
 }#>
                 <#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
