@@ -1089,8 +1089,10 @@ namespace Logitude.Customs.Data.Repsitories
       public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
             try { 
-           
-               var query1 = (from a in context.Consignments
+               var query = (from a in context.Declarations
+                           where declarationList.Contains(a.Id) 
+                           select a);
+                var query1 = (from a in context.Consignments
                             where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null && !string.IsNullOrEmpty(a.CargoTypeCode) && !string.IsNullOrEmpty(a.ManifestNumber)
                              select a);
                var query2 = (from b in context.Containerizations
@@ -1119,6 +1121,7 @@ namespace Logitude.Customs.Data.Repsitories
                      ThirdCargoId = cont.ThirdCargoID,
                      IsNew=false,
                      Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode?.ToLower() + cont.ManifestNumber?.ToLower() + cont.SecondCargoID?.ToLower() + cont.ThirdCargoID?.ToLower())).Select(y=>y.Id).FirstOrDefault().ToString(),
+                  
                })).ToList();
                
                var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
@@ -1128,7 +1131,8 @@ namespace Logitude.Customs.Data.Repsitories
                    ManifestNumber = cont.ManifestNumber,
                    SecondCargoId = cont.SecondCargoID,
                    ThirdCargoId = cont.ThirdCargoID,
-                   IsNew = true
+                   IsNew = true,
+                   TransportModeId = query.Where(t => t.Id == cont.DeclarationId).Select(y => y.TransportModeId).FirstOrDefault().ToString(),
                })).ToList();
                
                return q4.Union(q5).ToList();
@@ -1157,7 +1161,8 @@ namespace Logitude.Customs.Data.Repsitories
     {
         public string Id { get; set; }
         public string Key { get; set; }
-       
+        public string TransportModeId { get; set; }
+
     }
     public class DeclarationId
     {
@@ -1268,6 +1273,7 @@ namespace Logitude.Customs.Data.Repsitories
         public string DeclarationId { get; set; }
         public bool IsNew { get; set; }
         public string Id { get; set; }
+        public string TransportModeId { get; set; }    
 
     }
 
