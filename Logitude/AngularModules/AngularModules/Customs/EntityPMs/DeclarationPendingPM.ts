@@ -57,6 +57,11 @@ export class DeclarationPendingPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+    private approval: boolean;
+    public get Approval() { return this.approval; }
+    public set Approval(newValue: boolean) { if (this.approval != newValue) { this.approval = newValue; this.MarkAsDirty("Approval"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPendingPM;
 	

@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string UnifreightStatusCode { get; set; }
         [Column("MamanSuspendedCode")]
 	    public string MamanSuspendedCode { get; set; }
+        [Column("RequiresApproval")]
+	    public bool? RequiresApproval { get; set; }
     }
 }
 	 
