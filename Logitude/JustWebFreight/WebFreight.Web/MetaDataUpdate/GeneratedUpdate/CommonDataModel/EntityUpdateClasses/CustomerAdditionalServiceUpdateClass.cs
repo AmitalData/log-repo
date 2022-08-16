@@ -131,6 +131,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Potential",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						FieldsDataType =  "Boolean",
+					  						PMPropertyPath =  "Potential",
+					  						ListPropertyPath =  "Potential",
+					  						FullFieldLable =  "Potential",
+					  						DefaultText =  "Potential",
+					  						FullLocalDefaultText =  "Potential",
+					  						ListFieldLable =  "PotentialListLable",
+					  						ListLableDefaultText =  "Potential",
+					  						ListLocalDefaultText =  "Potential",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Notes",
 					  						ObjectTableName =  "CustomerAdditionalService",
 					  						FieldsDataType =  "nText",
@@ -145,6 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "CustomerAdditionalService",
 					  						IsRequired =  false,
 					  						DisplayInList =  false,
+					  						NoMetaDataField =  false,
 					  						Code =  "Notes",
 					  						MaxLength =  500,
 					  						IsCustom =  false,
@@ -243,6 +288,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Customer",
+					  						NavigationPropertyName =  "Customer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -302,6 +351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "AdditionalService",
+					  						NavigationPropertyName =  "AdditionalService",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -360,6 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -418,6 +472,149 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "CustomerName",
+					  						PMPropertyPath =  "CustomerName",
+					  						ListPropertyPath =  "CustomerName",
+					  						FullFieldLable =  "CustomerName",
+					  						DefaultText =  "CustomerName",
+					  						FullLocalDefaultText =  "CustomerName",
+					  						ListFieldLable =  "CustomerNameListLable",
+					  						ListLableDefaultText =  "CustomerName",
+					  						ListLocalDefaultText =  "CustomerName",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "Salesman",
+					  						PMPropertyPath =  "Salesman",
+					  						ListPropertyPath =  "Salesman",
+					  						FullFieldLable =  "Salesman",
+					  						DefaultText =  "Salesman",
+					  						FullLocalDefaultText =  "Salesman",
+					  						ListFieldLable =  "SalesmanListLable",
+					  						ListLableDefaultText =  "Salesman",
+					  						ListLocalDefaultText =  "Salesman",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "PrimaryContact",
+					  						PMPropertyPath =  "PrimaryContact",
+					  						ListPropertyPath =  "PrimaryContact",
+					  						FullFieldLable =  "PrimaryContact",
+					  						DefaultText =  "PrimaryContact",
+					  						FullLocalDefaultText =  "PrimaryContact",
+					  						ListFieldLable =  "PrimaryContactListLable",
+					  						ListLableDefaultText =  "PrimaryContact",
+					  						ListLocalDefaultText =  "PrimaryContact",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "SalesmanUserId",
+					  						PMPropertyPath =  "SalesmanUserId",
+					  						ListPropertyPath =  "SalesmanUserId",
+					  						FullFieldLable =  "SalesmanUserId",
+					  						DefaultText =  "SalesmanUserId",
+					  						FullLocalDefaultText =  "SalesmanUserId",
+					  						ListFieldLable =  "SalesmanUserIdListLable",
+					  						ListLableDefaultText =  "SalesmanUserId",
+					  						ListLocalDefaultText =  "SalesmanUserId",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "BusinessUnitId",
+					  						PMPropertyPath =  "BusinessUnitId",
+					  						ListPropertyPath =  "BusinessUnitId",
+					  						FullFieldLable =  "BusinessUnitId",
+					  						DefaultText =  "BusinessUnitId",
+					  						FullLocalDefaultText =  "BusinessUnitId",
+					  						ListFieldLable =  "BusinessUnitIdListLable",
+					  						ListLableDefaultText =  "BusinessUnitId",
+					  						ListLocalDefaultText =  "BusinessUnitId",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "ChangeSetOp",
+					  						PMPropertyPath =  "ChangeSetOp",
+					  						ListPropertyPath =  "ChangeSetOp",
+					  						FullFieldLable =  "ChangeSetOp",
+					  						DefaultText =  "ChangeSetOp",
+					  						FullLocalDefaultText =  "ChangeSetOp",
+					  						ListFieldLable =  "ChangeOpListLable",
+					  						ListLableDefaultText =  "ChangeSetOp",
+					  						ListLocalDefaultText =  "ChangeSetOp",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NotesRightToLeft",
+					  						ObjectTableName =  "CustomerAdditionalService",
+					  						FieldsDataType =  "Boolean",
+					  						PMPropertyPath =  "NotesRightToLeft",
+					  						ListPropertyPath =  "NotesRightToLeft",
+					  						FullFieldLable =  "NotesRightToLeft",
+					  						DefaultText =  "NotesRightToLeft",
+					  						FullLocalDefaultText =  "NotesRightToLeft",
+					  						ListFieldLable =  "NotesRightToLeftListLable",
+					  						ListLableDefaultText =  "NotesRightToLeft",
+					  						ListLocalDefaultText =  "NotesRightToLeft",
+					  						ValidForQuerySection1 =  "CustomerAdditionalService",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
