@@ -482,6 +482,9 @@ namespace CommunicationWorkerRole
 
                                                         shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                     }
+
+                                                    shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                    shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                     //if (TakeDate)
                                                     //{
                                                     //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -720,6 +723,9 @@ namespace CommunicationWorkerRole
 
                                                         shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                     }
+
+                                                    shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                    shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                     //if (TakeDate)
                                                     //{
                                                     //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -986,6 +992,15 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                 Thread.Sleep(10000);
             }
+        }
+
+        private string GetFirstReferenceFromUNFSideOnly(string customerReference)
+        {
+            if (!string.IsNullOrEmpty(customerReference))
+            {
+                return customerReference.Split(',')[0];
+            }
+            return customerReference;
         }
 
         private void ConnectClient()
