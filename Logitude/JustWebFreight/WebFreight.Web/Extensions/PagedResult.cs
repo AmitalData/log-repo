@@ -81,14 +81,6 @@ namespace Logitude.Extensions
 
                 var pageCount = (double)resultPerGroup.Pagination.RowCount / pageSize;
                 resultPerGroup.Pagination.PageCount = (int)Math.Ceiling(pageCount);
-
-                var pagedAssessment = new PagedAssessments<T>
-                {
-                    Data = query[group.Key].ToList(),
-                    Pagination = resultPerGroup.Pagination
-                };
-
-                result.AssessmentsGroup.Add(group.Key, pagedAssessment);
             }
 
             return result;
