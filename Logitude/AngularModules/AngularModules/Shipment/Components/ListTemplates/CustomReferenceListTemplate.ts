@@ -47,7 +47,7 @@ export class CustomReferenceListTemplate {
 
 
     private GetAgentShipmentsCustomerReferenceColumn() {
-        this.MyLabel = this.GetCustomerReference3Or1And2(); 
+        this.MyLabel = this.rowData['CustomerReference3']; 
     }
 
     private GetMyShipmentsCustomerReferenceColumn() {
@@ -59,7 +59,11 @@ export class CustomReferenceListTemplate {
     private GetLogboxReferenceLabel() {
         if (this.isPrivateLabel) return;
 
-        this.MyLabel = this.GetCustomerReference3Or1And2();
+        if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber'])) {
+            this.MyLabel = this.GetCustomerReference3Or1And2();
+        } else {
+            this.MyLabel = this.rowData['CustomerReference3']; 
+        }
     }
 
     private GetCustomerReference3Or1And2() {
