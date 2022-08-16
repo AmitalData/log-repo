@@ -26,7 +26,13 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.Infrastructure.Data.Repsitories;
-
+using System.Net.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
+using Simplog.Data.InvoiceModel;
+using WebFreight.Web.DataContracts;
+using System.Data.Entity;
+using System.Net;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -115,173 +121,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             resultClass.ARCharges = aRCharges;
             resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
             return resultClass;
-        }
-        
-        public List<ARInvoiceList> PostFilteredDigitalARInvoices(int tenant, InvoiceFilters filters)
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(tenant, filters.PartnerId);
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
-            QueryOperations queryOperations = new QueryOperations();
-            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
-            queryOperations.SetFilter("BillToId", filters.PartnerId, false, "Equals", null, false);
-            //queryOperations.SetFilter("SearchFields", filters.SearchField, false, "Contains", null, false);
-            GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
-            InvoiceCustomFilter customfilters = new InvoiceCustomFilter(tenant);
-            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
-            IQueryable<ARInvoice> invoices = aRInvoiceRepository.GetIQueryableInvoices(tenant);
-            invoices = customfilters.GetFilteredQuery(queryOperations, invoices);
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-            invoices = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, invoices);
-            int skippedShipments = queryOperations.PageIndex;
-            var query2 = from entity in invoices
-                         select new ARInvoiceList()
-                         {
-                             IsClosed = entity.IsClosed,
-                             BillToAddressId = entity.BillToAddressId,
-                             BillToId = entity.BillToId,
-                             VatNumber = entity.VatNumber,
-                             CancelledByARInvoiceId = entity.CancelledByARInvoiceId,
-                             DueDate = entity.DueDate,
-                             AmountInInvoiceCurrency = entity.AmountInInvoiceCurrency,
-                             AmountInLocalCurrency = entity.AmountInLocalCurrency,
-                             Id = entity.Id,
-                             InternalNotes = entity.InternalNotes,
-                             InvoiceCurrencyId = entity.InvoiceCurrencyId,
-                             InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.InvoiceNumber,
-                             StatusCode = entity.StatusCode,
-                             InvoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate,
-                             ARInvoiceTypeCode = entity.ARInvoiceTypeCode,
-                             IsAutoCredit = entity.IsAutoCredit,
-                             IsCancelled = entity.IsCancelled,
-                             IssuedByUserId = entity.IssuedByUserId,
-                             LocalCurrencyId = entity.LocalCurrencyId,
-                             PrintNotes = entity.PrintNotes,
-                             PrintByUserId = entity.PrintByUserId,
-                             PrintDate = entity.PrintDate,
-                             SubTotalInInvoiceCurrency = entity.SubTotalInInvoiceCurrency,
-                             SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
-                             Tenant = entity.Tenant,
-                             BillToName = entity.BillTo.EnglishName,
-                             BillToPartnerName = entity.BillTo.PartnerType.Name,
-                             BillToPartnerId = entity.BillTo.PartnerTypeId,
-                             CreateDate = entity.CreateDate,
-                             CreatedByUserName = entity.CreatedByUser.Contact.EnglishName,
-                             InvoiceCurrencyCode = entity.InvoiceCurrency.Code,
-                             StatusName = entity.Status.Name,
-                             ARInvoiceTypeName = entity.ARInvoiceType.Name,
-                             CreatedByUserId = entity.CreatedByUserId,
-                             IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                             LocalCurrencyCode = entity.LocalCurrency.Code,
-                             SearchFields = entity.SearchFields,
-                             PrintByUserName = entity.PrintByUser != null ? entity.PrintByUser.Contact.EnglishName : null,
-                             MainEntityReference = entity.MainEntityReference,
-                             Sent = entity.Sent,
-                             PaymentTermId = entity.PaymentTermId,
-                             PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
-                             IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
-                             AmountDue = entity.AmountDue,
-                             ExpectedPaymentDate = entity.ExpectedPaymentDate,
-                             DraftNumber = entity.DraftNumber,
-                             IsPrinted = entity.IsPrinted,
-                             ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
-                             AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
-                             AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
-                             Field1 = entity.Field1,
-                             Field2 = entity.Field2,
-                             Field3 = entity.Field3,
-                             Field4 = entity.Field4,
-                             Field5 = entity.Field5,
-                             Field6 = entity.Field6,
-                             Field7 = entity.Field7,
-                             Field8 = entity.Field8,
-                             Field9 = entity.Field9,
-                             Field10 = entity.Field10,
-                             TransferStatusCode = entity.TransferStatusCode,
-                             TransferStatusName = entity.TransferStatus == null ? "" : entity.TransferStatus.Name,
-                             ReadyForTransfer = entity.TransferStatusCode == "RD",
-                             DebitAccount = entity.DebitAccount,
-                             TransferError = entity.TransferError,
-                             AmountInProfitCurrency = entity.AmountInProfitCurrency,
-                             AccountingExternalCode = entity.AccountingExternalCode,
-                         };
-
-            query2 = filter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, query2);
-            query2 = query2.Where(d => d.StatusCode != "VD");
-            if (filters.FilterName == "UnpaidInvoices")
-            {
-                query2 = query2.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
-            }
-
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-            {
-                PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> invoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant).ToList();
-                ObjectField objectField = (from a in invoiceObjectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
-                                           select a).FirstOrDefault();
-                if (objectField != null)
-                {
-                    switch (objectField.DataTypeCode.ToLower())
-                    {
-                        case "text":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, query2);
-                                break;
-                            }
-                        case "double":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, query2);
-                                break;
-                            }
-                        case "datetime":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, query2);
-                                break;
-                            }
-                        case "integer":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, query2);
-                                break;
-                            }
-                        case "lookup":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, query2);
-                                break;
-                            }
-                        case "boolean":
-                            {
-                                query2 = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, query2);
-                                break;
-                            }
-                        default:
-                            {
-                                query2 = query2.OrderByDescending(d => d.InvoiceDate);
-                                break;
-                            }
-                    }
-                }
-            }
-            else
-            {
-                query2 = query2.OrderByDescending(d => d.InvoiceDate);
-            }
-
-            query2 = query2.Skip(0);
-            query2 = query2.Take(filters.PageSize);
-            List<ARInvoiceList> listQuery = query2.ToList();
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-            customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, listQuery.Cast<object>().ToList());
-            return listQuery;
         }
         
         public List<ARPaymentList> GetFilteredDigitalARPayments(string arInvoiceId, int tenant)
@@ -376,6 +215,172 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant);
 
             return entityPM;
+        }
+
+        [HttpPost]
+        [Route("DigitalInvoice/GetByFilters")]
+        public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+
+                var myTenantRepository = new TenantRepository(authToken.Tenant);
+                var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
+
+                var filters = new ApiQueryFilters()
+                {
+                    Filter1Value = newFilters.CardId,
+                    Filter2Value = newFilters.CardType
+                };
+
+                var queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "ARInvoice",
+                    PageIndex = newFilters.PageIndex,
+                    PageSize = newFilters.PageSize,
+                    QuerySection = "ARInvoices",
+                    SortByColumnName = newFilters.SortBy,
+                    SortDirectin = newFilters.SortDirection,
+                    QueryFilterItems = new List<QueryFilterItem>(),
+                };
+
+                queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+
+                if (!string.IsNullOrEmpty(newFilters.CardId))
+                {
+                    queryOperations.SetFilter("BillToId", newFilters.CardId, false, "InList", null, false);
+                }
+                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
+
+                if (newFilters.AdditionalFilters.Any())
+                {
+                    foreach (var filter in newFilters.AdditionalFilters)
+                    {
+                        var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue?.ToString();
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                            string valuestring2 = filter.FieldValue2?.ToString();
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+
+                ARInvoiceAPiHelper.AddFilters(queryOperations, authToken.Tenant);
+                var genericFilter = new GenericFilter();
+                var MyContext = InvoiceContext.GetContext(authToken.Tenant);
+                var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
+                var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
+                var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+                var nonListQueryOperation = new QueryOperations();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                var listQueryOperation = new QueryOperations();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+                var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, authToken.Tenant);
+                entityPocos = genericFilter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, entityPocos);
+                int skippedEntities = queryOperations.PageIndex;
+                var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+                entityLists = genericFilter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, entityLists);
+
+                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                {
+                    PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
+
+
+                    ObjectField objectField = (from a in ARInvoiceObjectFields
+                                               where a.FieldName == queryOperations.SortByColumnName
+                                               select a).FirstOrDefault();
+
+                    if (objectField != null)
+                    {
+                        var sortClass = new GenericSort();
+
+                        if (!objectField.IsCustom)
+                        {
+                            switch (objectField.DataTypeCode.ToLower())
+                            {
+                                case "text":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "double":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "datetime":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "integer":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "lookup":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "boolean":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+                                        break;
+                                    }
+                            }
+                        }
+                        else
+                        {
+                            entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                        }
+                    }
+                }
+                else
+                {
+                    entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+                }
+
+                var response = new ServiceResponse();
+
+                if (newFilters.GetCount)
+                {
+                    response.Count = entityLists.Count();
+                }
+
+                entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
+                entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
+                List<ARInvoiceList> listQuery = listQuery = entityLists.ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listQuery.Cast<object>().ToList());
+                response.Result = listQuery;
+                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
         #region private 
