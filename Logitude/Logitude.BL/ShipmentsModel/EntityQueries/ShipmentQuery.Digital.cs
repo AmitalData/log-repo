@@ -659,55 +659,338 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
 
-            ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
-            {
-                LegHeader = "MainRoute",
-            };
-            routingLegs.Add(mainRouteInformation);
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
 
-            // PreCarriage 
-            ShipmentRoutingLeg preCarriageLeg = new PreOnCarriageLeg()
+            if (isInlandDomesticShipment)
             {
-                LegHeader = "PreCarriage",
-            };
-            routingLegs.Add(preCarriageLeg);
-
-            //MainCarriage
-            ShipmentRoutingLeg mainCarriageLeg = new MainCarriageLeg()
+                routingLegs = GetDigitalShipmentRoutingLegsForInlandDomesticShipment(shipment);
+            }
+            else
             {
-                LegHeader = "MainCarriage",
-            };
-            routingLegs.Add(mainCarriageLeg);
-
-            //Transshipment1
-            ShipmentRoutingLeg transshipment1 = new MainCarriageLeg()
-            {
-                LegHeader = "Transshipment1",
-            };
-            routingLegs.Add(transshipment1);
-
-            //Transshipment2
-            ShipmentRoutingLeg transshipment2 = new MainCarriageLeg()
-            {
-                LegHeader = "Transshipment2",
-            };
-            routingLegs.Add(transshipment2);
-
-            //Transshipment3
-            ShipmentRoutingLeg transshipment3 = new MainCarriageLeg()
-            {
-                LegHeader = "Transshipment3",
-            };
-            routingLegs.Add(transshipment3);
-
-            //OnCarriage
-            ShipmentRoutingLeg onCarriageLeg = new PreOnCarriageLeg()
-            {
-                LegHeader = "OnCarriage",
-            };
-            routingLegs.Add(onCarriageLeg);
+                routingLegs = GetDigitalShipmentRoutingLegsForShipment(shipment);
+            }
 
             return routingLegs;
+        }
+
+        private List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegsForInlandDomesticShipment(ShipmentPM shipment)
+        {
+            var routingLegs = new List<ShipmentRoutingLeg>();
+           
+            return routingLegs;
+        }
+
+        private List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegsForShipment(ShipmentPM shipment)
+        {
+            var routingLegs = new List<ShipmentRoutingLeg>();
+
+            // Main Info
+            ShipmentRoutingLeg mainRouteInformation = AddMainRouteInformation(shipment);
+            if (mainRouteInformation != null)
+            {
+                routingLegs.Add(mainRouteInformation);
+            }
+
+            // PreCarriage 
+            ShipmentRoutingLeg preCarriageLeg = AddPreCarriageLegLeg(shipment);
+            if (preCarriageLeg != null)
+            {
+                routingLegs.Add(preCarriageLeg);
+            }
+
+            //MainCarriage
+            ShipmentRoutingLeg mainCarriage = AddMainCarriageLeg(shipment);
+            if (mainCarriage != null)
+            {
+                routingLegs.Add(mainCarriage);
+            }
+
+            //Transshipment shipments 
+            ShipmentRoutingLeg transshipment1Leg = AddTransshipment1Leg(shipment);
+            if (transshipment1Leg != null)
+            {
+                routingLegs.Add(transshipment1Leg);
+            }
+
+            ShipmentRoutingLeg transshipment2Leg = AddTransshipment2Leg(shipment);
+            if (transshipment2Leg != null)
+            {
+                routingLegs.Add(transshipment2Leg);
+            }
+
+            ShipmentRoutingLeg transshipment3Leg = AddTransshipment3Leg(shipment);
+            if (transshipment3Leg != null)
+            {
+                routingLegs.Add(transshipment3Leg);
+            }
+
+            //OnCarriage
+            ShipmentRoutingLeg onCarriageLeg = AddOnCarriageLegLeg(shipment);
+            if (onCarriageLeg != null)
+            {
+                routingLegs.Add(onCarriageLeg);
+            }
+
+            return routingLegs;
+        }
+
+        private ShipmentRoutingLeg AddMainRouteInformation(ShipmentPM shipment)
+        {
+            // Main Info
+            ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
+            {
+                Title = "Main Route Info",
+                LegHeader = "MainRoute",
+                Master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master,
+                MasterLabel = GetMasterTextCode(shipment),
+                LoadingPortLabel = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
+                DischargePortLabel = shipment.TransportModeId == "A" ? "Destination" : "Port of discharge",
+                LoadingPort = GetLoadingPort(shipment),
+                DischargePort = GetDischargePort(shipment),
+                TransitTime = GetTransitTime(shipment),
+            };
+
+            return mainRouteInformation;
+        }
+
+        private string GetLoadingPort(ShipmentPM shipment)
+        {
+            string loadingPort = null;
+            if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
+            {
+                loadingPort = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode;
+            }
+            else
+            {
+                loadingPort = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode;
+            }
+
+            return loadingPort;
+        }
+        private string GetDischargePort(ShipmentPM shipment)
+        {
+            string dischargePort = null;
+            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            {
+                dischargePort = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode;
+            }
+            else
+            {
+                dischargePort = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode;
+            }
+
+            return dischargePort;
+        }
+
+        private string GetTransitTime(ShipmentPM shipment)
+        {
+            string transitTime = null;
+            var portOfLoadingDate = GetPortOfLoadingDate(shipment);
+            var portOfDischargeDate = GetPortOfDischargeDate(shipment);
+
+
+            return transitTime;
+        }
+
+        private DateTime? GetPortOfLoadingDate(ShipmentPM shipment)
+        {
+            DateTime? portOfLoadingDate = null;
+            return portOfLoadingDate;
+        }
+
+        private DateTime? GetPortOfDischargeDate(ShipmentPM shipment)
+        {
+            DateTime? portOfDischargeDate = null;
+            return portOfDischargeDate;
+        }
+
+        private ShipmentRoutingLeg AddPreCarriageLegLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg preCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "Pre Carriage Info.",
+                LegHeader = "PreCarriage",
+                FromPortCode = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode,
+                ToPortCode = shipment.PreCarriageToPortCode + "," + shipment.PreCarriageToPortCountryCode,
+                TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
+                DepartureDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
+                Carrier = shipment.PreCarriageCarrierName,
+                CarrierNumber = shipment.PreCarriageCarrierNumber,
+                VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
+            };
+
+            return preCarriageLeg;
+        }
+
+        private ShipmentRoutingLeg AddMainCarriageLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg mainCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "Main Carriage Info.",
+                LegHeader = "MainCarriage",
+                FromPortCode = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode,
+                ToPortCode = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode,
+                Carrier = shipment.MainCarriageCarrierName,
+                CarrierNumber = shipment.MainCarriageCarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
+                DepartureDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+            };
+            return mainCarriageLeg;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment1Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment1 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 1 Info.",
+                LegHeader = "Transshipment1",
+                FromPortCode = shipment.Transshipment1FromPortCode + "," + shipment.Transshipment1FromPortCountryCode,
+                ToPortCode = shipment.Transshipment1ToPortCode + "," + shipment.Transshipment1ToPortCountryCode,
+                Carrier = shipment.Transshipment1CarrierName,
+                CarrierNumber = shipment.Transshipment1CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment1VesselName : null,
+                DepartureDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
+            };
+
+            return transshipment1;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment2Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment2 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 2 Info.",
+                LegHeader = "Transshipment2",
+                FromPortCode = shipment.Transshipment2FromPortCode + "," + shipment.Transshipment2FromPortCountryCode,
+                ToPortCode = shipment.Transshipment2ToPortCode + "," + shipment.Transshipment2ToPortCountryCode,
+                Carrier = shipment.Transshipment2CarrierName,
+                CarrierNumber = shipment.Transshipment2CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment2VesselName : null,
+                DepartureDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
+            };
+
+            return transshipment2;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment3Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment3 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 3 Info.",
+                LegHeader = "Transshipment3",
+                FromPortCode = shipment.Transshipment3FromPortCode + "," + shipment.Transshipment3FromPortCountryCode,
+                ToPortCode = shipment.Transshipment3ToPortCode + "," + shipment.Transshipment3ToPortCountryCode,
+                Carrier = shipment.Transshipment3CarrierName,
+                CarrierNumber = shipment.Transshipment3CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment3VesselName : null,
+                DepartureDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
+            };
+
+            return transshipment3;
+        }
+
+        private ShipmentRoutingLeg AddOnCarriageLegLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg onCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "On Carriage Info.",
+                LegHeader = "OnCarriage",
+                FromPortCode = shipment.OnCarriageFromPortCode + "," + shipment.OnCarriageFromPortCountryCode,
+                ToPortCode = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode,
+                TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
+                DepartureDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
+                Carrier = shipment.OnCarriageCarrierName,
+                CarrierNumber = shipment.OnCarriageCarrierNumber,
+                VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
+            };
+
+            return onCarriageLeg;
+        }
+        private string GetMasterTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "MAWB";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "OBL";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "CMR/RWB#";
+            }
+
+            return null;
+        }
+
+        private string GetCarrierTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "Airline";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "Shipping Line";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "Trucker";
+            }
+
+            return null;
+        }
+        private string GetCarrierNumberTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "Flight Number";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "Voyage Number";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "Trucker Number";
+            }
+
+            return null;
+        }
+
+        private string GetTransportModeName(string transportModeId)
+        {
+            if (transportModeId == "A")
+            {
+                return "Air";
+            }
+
+            if (transportModeId == "O")
+            {
+                return "Ocean";
+            }
+
+            if (transportModeId == "I")
+            {
+                return "Inland";
+            }
+
+            return null;
         }
     }
 }
