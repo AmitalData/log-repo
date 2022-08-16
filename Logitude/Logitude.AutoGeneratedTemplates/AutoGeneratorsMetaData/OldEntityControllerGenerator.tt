@@ -1201,6 +1201,13 @@ else
 				#>
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= contextTenantParam #>);
+<#+ 
+if(tableName == "ARInvoice")
+{
+#>              
+                MyContext = <#= contextName #>.GetSecContext(<#= contextTenantParam #>);
+<#+
+}#>
                 <#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
                 IQueryable<<#= tableName #>> entityPocos = <#= repositoryName #>.Get<#= dBTableName #>(<#= filterTenantParam #>);
 

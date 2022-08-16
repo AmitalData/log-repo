@@ -28,7 +28,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             shipmentsContext = ShipmentsContext.GetContext(tenant);
         }
-
+        public void SetSecondDBforContext(int tenant)
+        {
+            shipmentsContext = ShipmentsContext.GetSecContext(tenant);
+        }
         public ShipmentRepository()
         {
             shipmentsContext = new ShipmentsContext();

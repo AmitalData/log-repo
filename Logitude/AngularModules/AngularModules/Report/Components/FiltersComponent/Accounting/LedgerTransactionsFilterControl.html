@@ -445,6 +445,20 @@
 
                 </tr>
 
+                <!-- Row 5 [hidden]="!IsSchedulerReport"-->
+                <tr  [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:150px">
+                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'" [ObjectTableName]="'GLAccount'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:245px">
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'" [InputType]="'decimal'" 
+                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency"
+                        >
+                                </LogTextBox>
+                    </td>
+                </tr>
+
                 <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
                     <div></div>
                 </tr>
