@@ -1188,6 +1188,7 @@ export class ShipmentsQueriesCountsArgs {
 export class ShipmentsForAutomaticRequest {    
     ShipmentId: string;
     ShipmentNumber: string;
+    ContainerNumber: string;
     NumberOfContainers: string;
     SentSuccesfully: boolean;
     ErrorMessage: string;

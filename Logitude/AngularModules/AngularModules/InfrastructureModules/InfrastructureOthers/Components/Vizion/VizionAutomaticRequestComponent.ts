@@ -4,6 +4,8 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ShipmentDomainService, ShipmentsForAutomaticRequest } from '../../../../Shipment/Services/ShipmentDomainService';
+import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from '../../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 
 @Component({
     templateUrl: './VizionAutomaticRequestComponent.html',
@@ -93,12 +95,66 @@ export class VizionAutomaticRequestComponent extends BaseComponent implements On
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Sending...");
             this.vizionService.SendVizionAutomaticRequests(this.ShipmentsNumbersRequestText).subscribe((response: ServiceResponse) => {
+                //if (!response.HasError) {
+                //    this.LogsItemsSource = response.Result;
+                //}
+
                 if (!response.HasError) {
-                    this.LogsItemsSource = response.Result;
+                    var batchTaskExecutionId: string = response.Result;
+
+                    this.StopTimer();
+
+                    this.timer = setInterval(() => {
+                        this.CheckBatchTaskExecution(batchTaskExecutionId);
+                    }, this.timerInterval);
                 }
 
                 this.CurrentSession.StopBusyIndicator();
             });
         }
+    }
+
+    timer: any;
+    timerInterval: number = 1000;
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.StopTimer();                    
+                    this.CurrentSession.StopBusyIndicator();
+
+                    this.LogsItemsSource = JSON.parse(list.PrametersXml);
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.StopTimer();
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var errors: string[] = [];
+                    errors.push(list.ErrorLog);
+                    this.ValidationErrorsList = errors;
+                }
+
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StartBusyIndicator("Sending...");
+                }
+            }
+
+            else {
+                this.StopTimer();
+                this.CurrentSession.StopBusyIndicator();
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });
     }
 }
