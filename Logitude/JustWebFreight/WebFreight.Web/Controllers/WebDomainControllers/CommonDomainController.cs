@@ -3088,6 +3088,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 PrimaryContactId = a.PrimaryContactId,
                             }).FirstOrDefault();
 
+            var ownerId = customer?.SalesmanUserId;
+            if (string.IsNullOrEmpty(ownerId))
+            {
+                var poolUser = (from a in commonDataContext.Contacts
+                                where a.Tenant == crmTenant && a.Email == "pool@logitudeworld.com"
+                                select a).FirstOrDefault();
+                ownerId = poolUser?.Id;
+            }
+
             var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
 
             var type = (from a in crmContext.OpportunityTypes
@@ -3103,13 +3112,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Tenant = crmTenant,
                 CustomerId = customer?.Id,
                 ContactId = customer?.PrimaryContactId,
-                OwnerId = customer?.SalesmanUserId,
+                OwnerId = ownerId,
                 Subject = stockType,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CreatedByUserId = userId,
                 UpdatedByUserId = userId,
                 OpportunityTypeId = type?.Id,
-                StageId = stage?.Id
+                StageId = stage?.Id,
+               
             };
 
             OpportunityUpdateService service = new OpportunityUpdateService(crmContext, new Dictionary<string, IContext>(), crmTenant);
