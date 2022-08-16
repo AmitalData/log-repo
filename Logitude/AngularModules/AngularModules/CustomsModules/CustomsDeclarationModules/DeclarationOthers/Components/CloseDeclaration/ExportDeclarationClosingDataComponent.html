@@ -62,7 +62,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'תםריך המרםה בפועל'" [ObjectFieldName]="'FlightDate'"
+                                    <LogLabel [Text]="DecPM.TransportModeId == 'O' ? ActualSailingDate : ActualTakeOffDate" [ObjectFieldName]="'FlightDate'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
