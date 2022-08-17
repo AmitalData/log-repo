@@ -208,7 +208,7 @@ namespace WebFreight.Web.ContainerTracking
 
             var containerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
             var containerQuery = new ContainerQuery(containerRepository);
-            var containerPM = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerTrackingRequest.ContainerNumber, containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
+            var containerPM = containerQuery.GetSinglePM(containerTrackingRequest.ContainerId, containerTrackingRequest.Tenant);
             return containerPM;
 
         }
