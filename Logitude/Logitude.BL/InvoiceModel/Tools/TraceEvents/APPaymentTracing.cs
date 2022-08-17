@@ -77,7 +77,6 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     });
                 }
             }
-
             else if(entityPM.InternalNotes != payment.InternalNotes || entityPM.PrintNotes != payment.PrintNotes)
             {
                 var isInternalNotesChanged  = entityPM.InternalNotes != payment.InternalNotes;
@@ -110,7 +109,20 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     Notes = notes
                 });
             }
-
+            else if (entityPM.DontIncludeInDeductionReport != payment.DontIncludeInDeductionReport)
+            {
+                string notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + payment.DontIncludeInDeductionReport + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.DontIncludeInDeductionReport;
+                
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "DIDR",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
             else
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
