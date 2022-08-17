@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using Simplog.Data.CommonDataModel;
@@ -13,7 +12,6 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers;
 using Logitude.BL.InvoiceModel.EntityLists;
@@ -23,16 +21,11 @@ using WebFreight.Web.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.Infrastructure.Data.Repsitories;
-using System.Net.Http;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using Simplog.Data.InvoiceModel;
-using WebFreight.Web.DataContracts;
-using System.Data.Entity;
-using System.Net;
 using Logitude.Extensions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
@@ -182,40 +175,44 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return result;
         }
-        
-        public ARInvoicePM GetSingleDigitalARInvoicePM(string invoiceId, int tenant)
+
+        [HttpGet]
+        [Route("DigitalInvoice/GetSingle")]
+        public IHttpActionResult GetSingle(string id, string cardId)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
-            ARInvoicePM entityPM = entityQuery.GetSinglePM(invoiceId, tenant);
+            var entityQuery = new ARInvoiceQuery(authToken.Tenant);
 
-            string documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode);
-            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
-            DocumentTypeQuery query = new DocumentTypeQuery(tenant);
-            DocumentTypePM docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, tenant);
+            var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
 
-            string docId = "";
-            DocumentOutPM docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, tenant);
+            string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode);
+            var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
+            var query = new DocumentTypeQuery(authToken.Tenant);
+            var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+
+            var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, authToken.Tenant);
+            
             if (docsOutData != null)
             {
-                docId = docsOutData.Id;
+                var docId = docsOutData.Id;
+
                 if (docsOutData.DocumentOutCopies.Count() > 0)
                 {
                     docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
                 }
+
+                string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id;
+                entityPM.ReportUrl = url;
             }
 
-            string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + entityPM.Id;
-            entityPM.ReportUrl = url;
-            entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
+            entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
 
-            CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant);
+            CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, authToken.Tenant);
 
-            return entityPM;
+            return Ok(entityPM);
         }
 
         [HttpPost]
