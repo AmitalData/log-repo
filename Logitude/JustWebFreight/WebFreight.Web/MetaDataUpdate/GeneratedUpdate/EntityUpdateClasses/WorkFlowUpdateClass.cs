@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "aeb8eb1f7a167d60b2e7c413593246eb";
+		public const string HashString = "b9fbb859ced64ac37ec9c092bba580d4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1015,24 +1015,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode WorkFlowTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WorkFlow.Q.ALWO", DefaultText = @"All Workflows",LocalDefaultText = "", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature WorkFlowFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlow.Q.ALWO", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowFeatures.ALWO", NameTextCodeDefaultText = "ALWO", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WorkFlowObjectTable, addedFeatures, addedTextCodes);
+			   TextCode WorkFlowTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WorkFlow.Q.AllWorkflows", DefaultText = @"All Workflows",LocalDefaultText = "All Workflows", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WorkFlowFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlow.Q.AllWorkflows", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowFeatures.AllWorkflows", NameTextCodeDefaultText = "All Workflows", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WorkFlowObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALWOQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WorkFlowTextCode_0.Id, NameTextCodeCode = WorkFlowTextCode_0.Code, ObjectTableName = "WorkFlow", Code = "ALWO",  QueryGroupCode = "156a", IndexOrder = 0, Tenant = 0, ObjectTableId = WorkFlowObjectTable.Id, QuerySection = "WorkFlow", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WorkFlowFeature_0.Id,FeatureUniqeCode= WorkFlowFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllWorkflowsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WorkFlowTextCode_0.Id, NameTextCodeCode = WorkFlowTextCode_0.Code, ObjectTableName = "WorkFlow", Code = "All Workflows",  QueryGroupCode = "156a", IndexOrder = 0, Tenant = 0, ObjectTableId = WorkFlowObjectTable.Id, QuerySection = "WorkFlow", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WorkFlowFeature_0.Id,FeatureUniqeCode= WorkFlowFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ALWOQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlow.Name" , ColumnWidth = 400 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlow.Name" , ColumnWidth = 400 }, addedQueryColumns);
 
-			 QueryColumn ALWOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn ALWOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn ALWOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn ALWOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALWOQuery.Id,QueryCode = ALWOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlow.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlow.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

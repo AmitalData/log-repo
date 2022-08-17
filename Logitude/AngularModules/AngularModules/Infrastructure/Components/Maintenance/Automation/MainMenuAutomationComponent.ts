@@ -52,7 +52,7 @@ export class MainMenuAutomationComponent implements OnInit {
         if (item.ObjectTableName === "WorkFlow") {
 
             let listArgs = new ListComponentArgs();
-            listArgs.QueryCode = "ALWO";
+            listArgs.QueryCode = "All Workflows";
             listArgs.ObjectTableName = "WorkFlow";
             listArgs.DisplayTitle = "Workflows";
             listArgs.BackButtonTitle = "Automations";

@@ -1223,9 +1223,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;ALWO&quot;"
+    Code="&quot;All Workflows&quot;"
     TextCode="&quot;All Workflows&quot;"
-    LocalTextCode="&quot;&quot;"
+    LocalTextCode="&quot;All Workflows&quot;"
     QueryGroupCode="&quot;156a&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;WorkFlow&quot;"
@@ -1238,27 +1238,27 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ALWO&quot;"
+        QueryCode="&quot;All Workflows&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Name&quot;"
         ColumnWidth="400" />
       <QueryColumn
-        QueryCode="&quot;ALWO&quot;"
+        QueryCode="&quot;All Workflows&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OwnerName&quot;"
         ColumnWidth="350" />
       <QueryColumn
-        QueryCode="&quot;ALWO&quot;"
+        QueryCode="&quot;All Workflows&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="350" />
       <QueryColumn
-        QueryCode="&quot;ALWO&quot;"
+        QueryCode="&quot;All Workflows&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;UpdateDate&quot;"
         ColumnWidth="350" />
       <QueryColumn
-        QueryCode="&quot;ALWO&quot;"
+        QueryCode="&quot;All Workflows&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;UpdatedByUserName&quot;"
         ColumnWidth="350" />

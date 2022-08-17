@@ -71,6 +71,7 @@
     <Compile Include="EntityQueryServices\Generated\WorkFlowStatusQueryService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\WorkFlowUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\WorkflowValidationClass.cs" />
     <Compile Include="Validators\WorkflowClassLevelValidator.cs" />
