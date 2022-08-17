@@ -358,7 +358,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<LedgerTransactionList> query2 = from a in iQueryable.Include("JournalLine").Include("Currency").Include("Journal")
+            IQueryable<LedgerTransactionList> query2 = from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
                                                         select new LedgerTransactionList()
                                                         {
                                                             Id = a.Id,
@@ -374,6 +374,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             ExchangeRate = a.ExchangeRate,
                                                             ForeignAmountCredit = a.ForeignAmountCredit,
                                                             ForeignAmountDebit = a.ForeignAmountDebit,
+                                                            ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                            ReconcileMethodCode = a.Account.ReconcileMethodCode,
                                                             JournalId = a.JournalId,
                                                             JournalNumber = a.JournalLine.Journal.JournalNumber,
                                                             Source = a.JournalLine.Journal.AccountingEntityReference,
@@ -399,6 +401,11 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             IsReconciled = a.IsReconciled,
                                                             IsExternalReconcile = a.IsExternalReconcile,
                                                             InReconcileProgress = a.InReconcileProgress,
+                                                            AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
+                                                            AccountLocalName = a.Account != null ? a.Account.LocalName : null,
+                                                            OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
+                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
+                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                         };
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);
