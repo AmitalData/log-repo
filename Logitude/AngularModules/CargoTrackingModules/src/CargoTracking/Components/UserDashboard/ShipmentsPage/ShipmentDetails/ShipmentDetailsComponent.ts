@@ -263,6 +263,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private BuildShipmentReferences() {
         this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d=>d) : [];
+        this.ShipmentReferences = this.ShipmentReferences.filter((el, i, a) => i === a.indexOf(el));
         if (this.cargoTrackingShipmentPM.EntityType == 'O') {
             this.AddShipmentReferencesForOrderShipment();
         }
