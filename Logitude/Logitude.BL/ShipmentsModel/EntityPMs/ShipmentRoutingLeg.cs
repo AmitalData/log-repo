@@ -6,12 +6,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
     {
         public string Title { get; set; }
         public string LegHeader { get; set; }
-        public string FromCountryCode { get; set; }
-        public string FromPortCode { get; set; }
-        public string FromPortName { get; set; }
-        public string ToCountryCode { get; set; }
-        public string ToPortCode { get; set; }
-        public string ToPortName { get; set; }
+        public string FromPort { get; set; }
+        public string ToPort { get; set; }
         public string TransportMode { get; set; }
         public string Carrier { get; set; }
         public string CarrierLabel { get; set; }
