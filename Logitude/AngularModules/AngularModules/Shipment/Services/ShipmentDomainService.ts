@@ -988,7 +988,6 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
-
     GetPickupDeliveryValidForInlandDomestic(pickupDeliveryId: string) {
         var url = this._apiUrl + '/GetPickupDeliveryValidForInlandDomestic?pickupDeliveryId=' + pickupDeliveryId;
         return defer(() => {
@@ -1027,7 +1026,38 @@ export class ShipmentDomainService extends BaseService  {
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
-    }   
+    }
+
+    GetShipmentsForAutomaticRequest() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetShipmentsForAutomaticRequest';
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    SendVizionAutomaticRequests(request: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetSendVizionAutomaticRequests?request=' + request;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ShipmentsSummary {
@@ -1124,7 +1154,6 @@ export class ShipmentConnectedEntity {
     public Salesman: string;
     public ExpirationDate: Date;
 }
-
 export class ExcelPackageFilter {
     Tenant: number;
     FileData: string;
@@ -1146,7 +1175,6 @@ export class ExcelPackage {
     IsRefrigerated: boolean;
     HasErrors: boolean;
 }
-
 export class ShipmentsQueriesCountsArgs {
     Tenant: number;
     TransportModeId: string;
@@ -1156,4 +1184,12 @@ export class ShipmentsQueriesCountsArgs {
     TypeCode: string = null;
     ForwarderPartnerId: string;
     DirectionOperator: string;
+}
+export class ShipmentsForAutomaticRequest {    
+    ShipmentId: string;
+    ShipmentNumber: string;
+    ContainerNumber: string;
+    NumberOfContainers: string;
+    SentSuccesfully: boolean;
+    ErrorMessage: string;
 }

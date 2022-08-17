@@ -5,6 +5,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -60,6 +61,13 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.ShipmentsModel.DomainServices;
+using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Newtonsoft.Json;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -3252,6 +3260,116 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return state.Id;
         }
+
+        public HttpResponseMessage GetShipmentsForAutomaticRequest()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+
+                List<ShipmentsForAutomaticRequest> myResult = this.GetShipmentsForAutomaticRequest(myTenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private List<ShipmentsForAutomaticRequest> GetShipmentsForAutomaticRequest(int tenant)
+        {
+            List<ShipmentsForAutomaticRequest> myResult = new List<ShipmentsForAutomaticRequest>();
+            myTenant = tenant;
+            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+
+            List<string> supportedCarriers = this.GetVizionCarriers();
+
+            DateTime myDateFilter = DateTime.Now.AddDays(14);
+
+            IQueryable<ContainerTrackingRequest> previousReqesuts = shipmentRepository.context.ContainerTrackingRequests
+            .Where(e => e.Tenant == myTenant && e.Status == "Active");
+
+            IQueryable<Shipment> myShipments = shipmentRepository.GetShipmentsWithoutIncludes(myTenant);
+            myShipments = myShipments.Where(d => !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.Master) && string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ShipmentId).Contains(d.Id));
+
+            return (from shipment in myShipments
+                    join sm in shipmentRepository.context.ShipmentMasterDatas
+                    on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
+                    from master in shipmentJoin.DefaultIfEmpty()
+                    join sc in shipmentRepository.context.Containers
+                    on shipment.Id equals sc.ShipmentId into containerJoin
+                    from container in containerJoin.DefaultIfEmpty()
+                    where shipment.NumberOfContainers > 0
+                    && (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "MyGO")
+                    && !shipment.IsCancelled
+                    && !shipment.IsOperationalClosed
+                    && master.MainCarriageATA == null
+                    && master.MainCarriageETA != null
+                    && master.MainCarriageETA >= DateTime.Now
+                    && master.MainCarriageETA <= myDateFilter
+                    && !string.IsNullOrEmpty(container.ContainerNumber)
+                    && supportedCarriers.Contains(master.MainCarriageCarrierCard.ShippingLine.SCACCode)
+                    && !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ContainerId).Contains(container.Id)
+                    select new ShipmentsForAutomaticRequest()
+                    {
+                        ShipmentId = shipment.Id,
+                        ShipmentNumber = shipment.ShipmentNumber,
+                        NumberOfContainers = shipment.NumberOfContainers,
+                    }).Distinct().ToList();
+        }
+        private List<string> GetVizionCarriers()
+        {
+            VizionService vizionService = new VizionService();
+            List<VizionCarrier> supportedCarriers = vizionService.GetAllCarriers();
+            return supportedCarriers.Select(s => s.scac).ToList();
+        }
+
+        public HttpResponseMessage GetSendVizionAutomaticRequests(string request)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+
+                BatchTaskExecutionPM batchPrintTask = CreateBatchTask(request);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(myTenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), myTenant);
+                bteUpdateService.Update(batchPrintTask, true);
+
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", batchPrintTask.Id },
+                    { "Tenant", myTenant.ToString() }
+                }, myTenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchPrintTask.Id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private BatchTaskExecutionPM CreateBatchTask(string xmlParameters)
+        {
+            return new BatchTaskExecutionPM()
+            {
+                Subject = "Vizion - Pilot Customer",
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "WebFreight.Web.Helpers.VizionPilotCustomerDataGenerator,WebFreight.Web",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+                ProgressPercentage = 0
+            };
+        }
     }
 }
 
@@ -3281,7 +3399,6 @@ public class ExcelPackageType
 {
     public string Code { get; set; }
 }
-
 public class ShipmentConnectedEntity
 {
     public string EntityId { get; set; }
@@ -3296,7 +3413,6 @@ public class ShipmentConnectedEntity
     public string Salesman { get; set; }
     public DateTime? ExpirationDate { get; set; }
 }
-
 public class ShipmentTransferSummary
 {
     public int BlockedOceanShipmentsCount { get; set; }
