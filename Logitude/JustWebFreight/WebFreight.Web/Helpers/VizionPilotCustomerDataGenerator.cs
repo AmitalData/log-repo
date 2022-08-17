@@ -136,12 +136,12 @@ namespace WebFreight.Web.Helpers
             {
                 ContainerId = container?.Id,
                 ContainerNumber = container?.ContainerNumber,
-                IsFromContainer = false,
+                IsFromContainer = (container != null),
                 ShipmentId = shipmentId,
                 Tenant = myTenant,
                 IsSimulator = false,
                 Data = null,
-                ContainerStatusSourceCode = "VZN"
+                ContainerStatusSourceCode = "VZN",                
             };
         }
         private Container GetContainerForSinding(string shipmentId)
