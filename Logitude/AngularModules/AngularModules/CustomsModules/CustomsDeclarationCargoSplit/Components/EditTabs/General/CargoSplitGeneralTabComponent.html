@@ -228,7 +228,7 @@
                     </tr>
                 </table>
             </td>
-            <td [class.disabled]="!TransportmodeId" style="width: 700px;">
+            <td style="width: 700px;">
                 <table>
       
                     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -236,7 +236,7 @@
                             <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
                         </td>
                     </tr>
-                    <tr> 
+                    <tr [class.disabled]="!TransportmodeId"> 
                         <td colspan="2">
                             <!--<div class="TableHolder" [class.NoPadding]="IsWindowMode">-->
                             <table style="height: 410px;padding-top: 10px;float:right;">
@@ -504,7 +504,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="IsExportDeclaration">
+                    <tr *ngIf="IsExportDeclaration" [class.disabled]="!TransportmodeId">
                         <td colspan="2" style=" height: 100%;">
                             <div class="CellContent">
                                 <table style="width: 700px;height: 70px;float:right;">
@@ -703,7 +703,7 @@
                                         <div></div>
                                     </td>
                                     <!--[IsDisabled]="!OKButtonEnabled"-->
-                                    <td style="width: 57px;vertical-align: bottom;">
+                                    <td [class.disabled]="!TransportmodeId" style="width: 57px;vertical-align: bottom;">
                                         <button class="RedButton" (click)="OkButtonClicked()"
                                             [disabled]="!OKButtonEnabled">{{'General.B.Save' |
                                             TextCodeTranslationPipe}}</button>
@@ -712,7 +712,7 @@
                                         <div></div>
                                     </td>
                                     <!--[IsDisabled]="!SendButtonEnabled"-->
-                                    <td style="width:110px;  vertical-align: bottom;">
+                                    <td [class.disabled]="!TransportmodeId" style="width:110px;  vertical-align: bottom;">
                                         <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
                                             #MyCustomSendOptionsComponent
                                             (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
