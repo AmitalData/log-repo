@@ -176,9 +176,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return result;
         }
 
-        [HttpPost]
-        [Route("DigitalInvoice/GetSingleDigitalARInvoice")]
-        public IHttpActionResult GetSingleDigitalARInvoicePM(string invoiceId, string cardId)
+        [HttpGet]
+        [Route("DigitalInvoice/GetSingle")]
+        public IHttpActionResult GetSingle(string id, string cardId)
         {
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -186,7 +186,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var entityQuery = new ARInvoiceQuery(authToken.Tenant);
 
-            var entityPM = entityQuery.GetSinglePM(invoiceId, authToken.Tenant);
+            var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
 
             string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode);
             var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
