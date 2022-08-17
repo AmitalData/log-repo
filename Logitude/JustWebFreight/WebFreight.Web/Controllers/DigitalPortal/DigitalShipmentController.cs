@@ -312,7 +312,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetShipmentRoutingLegs")]
-        public HttpResponseMessage GetShipmentRoutingLegs(string shipmentId)
+        public IHttpActionResult GetShipmentRoutingLegs(string shipmentId)
         {
             try
             {
@@ -321,11 +321,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, routingLegs);
+                return Ok(routingLegs);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
     }
