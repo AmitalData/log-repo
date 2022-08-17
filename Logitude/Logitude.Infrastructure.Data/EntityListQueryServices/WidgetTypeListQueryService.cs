@@ -37,7 +37,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
 		private IQueryable<WidgetType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<WidgetType> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<WidgetType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<WidgetType> iQueryable)
         {
