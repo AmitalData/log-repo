@@ -874,11 +874,16 @@ export class CargoSplitGeneralTabComponent
 
         }
     }
-
     CustomFileNoTextChanged(searchtext) {
+        
+        if(this._LastFetchDeclarationList?.CustomFileNo == searchtext)
+            return
+        
         this.setRequired();
                
         var errorMessage = "";
+        this.ValidationErrorsList = null   
+
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.IsCustomsFileRetrieved = false;
             this.EntityPM.DeclarationId = null;
@@ -887,8 +892,10 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
         }
         else {
+
             this.IsCustomsFileRetrieved = true;
             this.CurrentSession.StartBusyIndicator("")
+
             this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
                 .subscribe((myDeclarationResponse: ServiceResponse) => {
 
@@ -896,6 +903,7 @@ export class CargoSplitGeneralTabComponent
                     if (myDeclarationResponse.Result == null || (myDeclarationResponse.Result != null && AppTool.IsNullOrEmpty(myDeclarationResponse.Result.Id))) {
                         this.CustomFileNo = "";
                         this.EntityPM.DeclarationId = null;
+
                         if (this.IsExportDeclaration) {
                             errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile");
                         }
@@ -926,21 +934,25 @@ export class CargoSplitGeneralTabComponent
                         }
                         this.IsDataFromFile = true;
                         if (!this.IsFromDeclaration && this.IsNewEntity) {
+
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="A" && !this.isTransportA) {
                                 errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
+                                this.EntityPM.CustomFileNo = "";
                                 this.IsDataFromFile = false;
                                 return;
                             }
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="O" && !this.isTransportO) {
                                 errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
+                                this.EntityPM.CustomFileNo = "";
                                 this.IsDataFromFile = false;
                                 return;
                             } 
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="L" && !this.isTransportL) {
                                 errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
+                                this.EntityPM.CustomFileNo = "";
                                 this.IsDataFromFile = false;
                                 return;
                             }  
@@ -988,6 +1000,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     FetchConsignment(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
+        
         this._LastFetchConsignmentPMList = myResponse.Result
         if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
             var pm = this._LastFetchConsignmentPMList[0]
@@ -1010,12 +1023,31 @@ export class CargoSplitGeneralTabComponent
             this.ManifestNumber = pm.ManifestNumber;
             this.SecondCargoID = pm.SecondCargoID;
             this.ThirdCargoID = pm.ThirdCargoID;
+
+            if(pm.ConsignmentPackages.length == 1 && !AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems) 
+                    && this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && this.IsNewEntity && !this.IsFromDeclaration && this.IsExportDeclaration)
+                {
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].ParentCargoConsinmentItem = pm.ConsignmentPackages[0].SequenceNumeric.toString();
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].GrossMassMeasure = pm.ConsignmentPackages[0].GrossMassMeasure;
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].CargoDescription = pm.ConsignmentPackages[0].MarksNumbers;
+                }
+                else if(!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems) 
+                    && this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && this.IsNewEntity && !this.IsFromDeclaration && this.IsExportDeclaration)
+                {
+
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].ParentCargoConsinmentItem=null;
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].GrossMassMeasure=null;
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].CargoDescription=null;
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].RequestReasonCode=null;
+                    this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems[0].RequestReasonName=null;
+
+                }
             if (this._LastFetchDeclarationList != null) this.EntityPM.DeclarationId = this._LastFetchDeclarationList.Id;
         } else {
 
             this.NoConnectedConsignmentEnableField();
         }
-    }
+    } 
 
     MessageCustomsFileWindow(message: string) {
         var messageWindow = new MessageWindow();
@@ -1064,8 +1096,8 @@ export class CargoSplitGeneralTabComponent
         if(value != this.EntityPM.RequestReason ){
          this.EntityPM.RequestReason = value; 
          this.splitOrMergeReasonListService.getSingle(value).subscribe(res=>{ 
-            if(res != null){
-                this.EntityPM.RequestReasonName = res.Result.LocalName;
+            if(res != null && res.Result != null){
+                this.EntityPM.RequestReasonName = res.Result?.LocalName;
                 if(this.IsExportDeclaration)
                 this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.ChangeRequestReason(this.EntityPM.RequestReasonName,this.EntityPM.RequestReason))
             }

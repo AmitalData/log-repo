@@ -207,8 +207,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     this.decCargoSplitConExtendedPMService.GetConsiPackageSequeList(response.Result.Id).subscribe((responseCon: any) => {
                         if (responseCon != null) {
                             this.ParentCargoConsinmentItemList = responseCon.Result;
-
-                            if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems) && !isInsert && this.ItemsList.Length == 0  ) {
+                            if ((!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems) && !isInsert && this.ItemsList.Length == 0))  {
                                 this.AddItem();
                             } 
                         }
@@ -552,6 +551,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     ParentCargoConsinmentItemSelectionChanged(currentItem, selectedValue) {
+
         if (currentItem != null) {
             var selectedItem = this.ParentCargoConsinmentItemList.filter(t => t.SequenceNumeric == selectedValue)[0];
                     currentItem.ParentCargoConsinmentItem = selectedItem?.SequenceNumeric;
