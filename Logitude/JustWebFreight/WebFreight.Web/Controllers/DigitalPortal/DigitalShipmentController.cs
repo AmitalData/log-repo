@@ -309,5 +309,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return result;
         }
+
+        [HttpGet]
+        [Route("DigitalShipment/GetShipmentRoutingLegs")]
+        public IHttpActionResult GetShipmentRoutingLegs(string shipmentId, string cardId)
+        {
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var shipmentQuery = new ShipmentQuery(tenant);
+                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant);
+                return Ok(routingLegs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
     }
 }

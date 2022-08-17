@@ -138,6 +138,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "ViewOrder",
+					  						ObjectTableName =  "VatFormatType",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "ViewOrder",
+					  						ListPropertyPath =  "ViewOrder",
+					  						FullFieldLable =  "ViewOrder",
+					  						DefaultText =  "ViewOrder",
+					  						FullLocalDefaultText =  "ViewOrder",
+					  						ListFieldLable =  "ViewOrderListLable",
+					  						ListLableDefaultText =  "ViewOrder",
+					  						ListLocalDefaultText =  "ViewOrder",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "VatFormatType",
 					  						FieldsDataType =  "Text",
@@ -188,6 +209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -247,6 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -304,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

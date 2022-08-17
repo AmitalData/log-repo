@@ -181,6 +181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
 					  						HelpTextCode =  "Code",
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -237,6 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
 					  						HelpTextCode =  "Name",
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -292,6 +294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

@@ -2649,14 +2649,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void CheckInvoicedFields(ShipmentPM shipmentPM)
         {
-            shipmentPM.IsPartiallyInvoiced = false;
             shipmentPM.IsFullInvoiced = false;
             if(shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
                 return;
             }
-            shipmentPM.IsPartiallyInvoiced  = !shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null && a.ShipmentReceivableLineStatusCode != "ACCT").Any();
-            shipmentPM.IsFullInvoiced = !shipmentPM.IsPartiallyInvoiced;
+            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -12490,6 +12488,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               Transshipment1ATD = f.Transshipment1ATD,
+                               Transshipment1ATA = f.Transshipment1ATA,
+                               Transshipment1ETD = f.Transshipment1ETD,
+                               Transshipment1ETA = f.Transshipment1ETA,
+                               Transshipment2ATD = f.Transshipment2ATD,
+                               Transshipment2ATA = f.Transshipment2ATA,
+                               Transshipment2ETD = f.Transshipment2ETD,
+                               Transshipment2ETA = f.Transshipment2ETA,
+                               Transshipment3ATD = f.Transshipment3ATD,
+                               Transshipment3ATA = f.Transshipment3ATA,
+                               Transshipment3ETD = f.Transshipment3ETD,
+                               Transshipment3ETA = f.Transshipment3ETA,
                                LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,

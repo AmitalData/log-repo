@@ -600,15 +600,15 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    IsCustomTemplate: true
         //});
         this.TransactionsColumns.push({
-            FieldName: 'DocumentDate',
+            FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"),
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate"),
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DocumentDate'
+            SortByName: 'AccountingDate'
         });
         //this.TransactionsColumns.push({
         //    FieldName: 'DocumentDate',

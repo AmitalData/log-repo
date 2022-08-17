@@ -395,6 +395,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
        
         
         this.references = this.getReference(shipment);
+        this.references = this.references.filter((el, i, a) => i === a.indexOf(el));
 
     }
     getReference(shipment: CargoTrackingShipmentList): string[]{

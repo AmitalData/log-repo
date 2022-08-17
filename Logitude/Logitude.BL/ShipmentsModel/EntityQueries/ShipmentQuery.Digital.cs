@@ -21,7 +21,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentPartnerPM> GetDigitalShipmentPartners(string shipmentId, int tenant)
         {
-            InitializeServices(shipmentId, tenant);
+            InitializeServices(tenant);
             var partners = new List<ShipmentPartnerPM>();
             var shipment = shipmentRepository.GetSingleShipment(shipmentId, this.tenant);
             if (shipment == null)
@@ -124,22 +124,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         #region Private methods
-        private void InitializeServices(string shipmentId, int tenant)
+        private void InitializeServices(int tenant)
         {
             this.tenant = tenant;
             addressRepository = new AddressRepository(this.tenant);
             contactRepository = new ContactRepository(this.tenant);
             countryRepository = new CountryRepository(this.tenant);
             shipmentRepository = new ShipmentRepository(this.tenant);
-
         }
-       
+
         private void GetSharedLogisticsSetting()
         {
             SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
             sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
         }
-        
+
         private ShipmentPartnerPM GetShipperPartner(Shipment shipment)
         {
             bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
@@ -200,7 +199,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-       
+
         private ShipmentPartnerPM GetAgentPartner(Shipment shipment)
         {
             bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
@@ -236,7 +235,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
 
         }
-        
+
         private ShipmentPartnerPM GetColoaderPartner(Shipment shipment)
         {
             bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
@@ -270,7 +269,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-       
+
         private ShipmentPartnerPM GetConsigneeNotImporterPartner(Shipment shipment)
         {
             bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
@@ -304,7 +303,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetFreightForwarderPartner(Shipment shipment)
         {
             bool isFreightForwarderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsFreightForwarderShared;
@@ -337,7 +336,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetNotify1Partner(Shipment shipment)
         {
             bool isNotify1Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify1Shared;
@@ -372,7 +371,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetNotify2Partner(Shipment shipment)
         {
             bool isNotify2Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify2Shared;
@@ -405,7 +404,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetShipperNotExporterPartner(Shipment shipment)
         {
             bool isShipperNotExporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperNotExporterShared;
@@ -440,7 +439,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-       
+
         private ShipmentPartnerPM GetCustomsAgentExportPartner(Shipment shipment)
         {
             bool isCustomsAgentExportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentExportShared;
@@ -474,7 +473,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetCustomsAgentImportPartner(Shipment shipment)
         {
             bool isCustomsAgentImportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentImportShared;
@@ -508,7 +507,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetCustomClearancePartner(Shipment shipment)
         {
             bool isCustomClearancePoinShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomClearancePoinShared;
@@ -542,7 +541,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-       
+
         private ShipmentPartnerPM GetConsolidatorPartner(Shipment shipment)
         {
             bool isConsolidatorShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsolidatorShared;
@@ -576,7 +575,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetReleasingAgentPartner(Shipment shipment)
         {
             bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
@@ -611,7 +610,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return item;
         }
-        
+
         private ShipmentPartnerPM GetIssuingCarrierAgentPartner(Shipment shipment)
         {
             bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
@@ -637,7 +636,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             AssignAddressToPartner(shipment.IssuingCarrierAddressId, item);
             return item;
         }
-        
+
         private void AssignAddressToPartner(string addressId, ShipmentPartnerPM item)
         {
             var address = addressRepository.GetSingleAddress(addressId, tenant);
@@ -652,5 +651,515 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             item.CountryCode = country?.Code;
         }
         #endregion Private methods
+
+        public List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegs(string shipmentId, int tenant)
+        {
+            InitializeServices(tenant);
+
+            var routingLegs = new List<ShipmentRoutingLeg>();
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
+
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+
+            if (isInlandDomesticShipment)
+            {
+                routingLegs = GetDigitalShipmentRoutingLegsForInlandDomesticShipment(shipment);
+            }
+            else
+            {
+                routingLegs = GetDigitalShipmentRoutingLegsForShipment(shipment);
+            }
+
+            return routingLegs;
+        }
+
+        private List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegsForInlandDomesticShipment(ShipmentPM shipment)
+        {
+            var routingLegs = new List<ShipmentRoutingLeg>();
+            ShipmentRoutingLeg mainRouteInformation = AddMainRouteInformationForInlandDomesticShipment(shipment);
+            if (mainRouteInformation != null)
+            {
+                routingLegs.Add(mainRouteInformation);
+            }
+            return routingLegs;
+        }
+
+        private ShipmentRoutingLeg AddMainRouteInformationForInlandDomesticShipment(ShipmentPM shipment)
+        {
+            // Main Info InlandDomestic
+            ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
+            {
+                Title = "Main Route Details",
+                LegHeader = "MainRouteInlandDomestic",
+                FromPort = GetFromAddressForInlandDomestic(shipment),
+                ToPort = GetToAddressForInlandDomestic(shipment),
+                TransportMode = "Inland",
+                TransitTime = GetTransitTimeForInlandDomesticShipment(shipment),
+            };
+
+            return mainRouteInformation;
+        }
+
+        private string GetTransitTimeForInlandDomesticShipment(ShipmentPM shipment)
+        {
+            string transitTime = null;
+            var portOfLoadingDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD;
+            var portOfDischargeDate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA;
+            if (portOfDischargeDate != null && portOfLoadingDate != null)
+            {
+                transitTime = (portOfDischargeDate - portOfLoadingDate).Value.Days + " days | " + portOfLoadingDate.Value.Date.ToString("dd.MM.yyyy") + "-" + portOfDischargeDate.Value.Date.ToString("dd.MM.yyyy");
+            }
+
+            return transitTime;
+        }
+
+        private string GetFromAddressForInlandDomestic(ShipmentPM shipment)
+        {
+            if (shipment.InlandDomesticFromTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(shipment.MainCarriageFromAddressId);
+            }
+            else if (shipment.InlandDomesticFromTypeCode == "PORT")
+            {
+                return shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode;
+            }
+            else if (shipment.InlandDomesticFromTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(shipment.InlandDomesticFromCountryId, shipment.InlandDomesticFromCity);
+            }
+
+            return null;
+        }
+
+        private string GetToAddressForInlandDomestic(ShipmentPM shipment)
+        {
+            if (shipment.InlandDomesticToTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(shipment.MainCarriageToAddressId);
+            }
+            else if (shipment.InlandDomesticToTypeCode == "PORT")
+            {
+                return shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode;
+            }
+            else if (shipment.InlandDomesticToTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(shipment.InlandDomesticToCountryId, shipment.InlandDomesticToCity);
+            }
+
+            return null;
+        }
+
+        private string GetFullAddressByPartnerId(string addressId)
+        {
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+
+            Address partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (partnerAddress == null)
+            {
+                return null;
+            }
+
+            var address = partnerAddress.City;
+            if (string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
+            {
+                address = address + "," + partnerAddress.Country?.EnglishName;
+            }
+
+            return address;
+        }
+
+        private string GetFullAddressByCASLAddress(string countryId, string city)
+        {
+            string myResult = "";
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                myResult = city;
+            }
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                Country country = CountryRepository.GetSingleCountry(countryId, tenant, false);
+                if (country != null)
+                {
+                    myResult = myResult + "," + country.EnglishName;
+                }
+            }
+
+            return myResult;
+        }
+
+        private List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegsForShipment(ShipmentPM shipment)
+        {
+            var routingLegs = new List<ShipmentRoutingLeg>();
+
+            // Main Info
+            ShipmentRoutingLeg mainRouteInformation = AddMainRouteInformation(shipment);
+            if (mainRouteInformation != null)
+            {
+                routingLegs.Add(mainRouteInformation);
+            }
+
+            // PreCarriage 
+            if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
+            {
+                ShipmentRoutingLeg preCarriageLeg = AddPreCarriageLegLeg(shipment);
+                if (preCarriageLeg != null)
+                {
+                    routingLegs.Add(preCarriageLeg);
+                }
+            }
+
+            //MainCarriage
+            ShipmentRoutingLeg mainCarriage = AddMainCarriageLeg(shipment);
+            if (mainCarriage != null)
+            {
+                routingLegs.Add(mainCarriage);
+            }
+
+            //Transshipment shipments 
+            if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
+            {
+                ShipmentRoutingLeg transshipment1Leg = AddTransshipment1Leg(shipment);
+                if (transshipment1Leg != null)
+                {
+                    routingLegs.Add(transshipment1Leg);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
+            {
+                ShipmentRoutingLeg transshipment2Leg = AddTransshipment2Leg(shipment);
+                if (transshipment2Leg != null)
+                {
+                    routingLegs.Add(transshipment2Leg);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
+            {
+                ShipmentRoutingLeg transshipment3Leg = AddTransshipment3Leg(shipment);
+                if (transshipment3Leg != null)
+                {
+                    routingLegs.Add(transshipment3Leg);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            {
+                //OnCarriage
+                ShipmentRoutingLeg onCarriageLeg = AddOnCarriageLegLeg(shipment);
+                if (onCarriageLeg != null)
+                {
+                    routingLegs.Add(onCarriageLeg);
+                }
+            }
+
+            return routingLegs;
+        }
+
+        private ShipmentRoutingLeg AddMainRouteInformation(ShipmentPM shipment)
+        {
+            // Main Info
+            ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
+            {
+                Title = "Main Route Info",
+                LegHeader = "MainRoute",
+                Master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master,
+                MasterLabel = GetMasterTextCode(shipment),
+                LoadingPortLabel = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
+                DischargePortLabel = shipment.TransportModeId == "A" ? "Destination" : "Port of discharge",
+                LoadingPort = GetLoadingPort(shipment),
+                DischargePort = GetDischargePort(shipment),
+                TransitTime = GetTransitTime(shipment),
+            };
+
+            return mainRouteInformation;
+        }
+
+        private string GetLoadingPort(ShipmentPM shipment)
+        {
+            string loadingPort = null;
+            if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
+            {
+                loadingPort = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode;
+            }
+            else
+            {
+                loadingPort = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode;
+            }
+
+            return loadingPort;
+        }
+        private string GetDischargePort(ShipmentPM shipment)
+        {
+            string dischargePort = null;
+            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            {
+                dischargePort = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode;
+            }
+            else
+            {
+                dischargePort = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode;
+            }
+
+            return dischargePort;
+        }
+
+        private string GetTransitTime(ShipmentPM shipment)
+        {
+            string transitTime = null;
+            var portOfLoadingDate = GetPortOfLoadingDate(shipment);
+            var portOfDischargeDate = GetPortOfDischargeDate(shipment);
+            if (portOfDischargeDate != null && portOfLoadingDate != null)
+            {
+                transitTime = (portOfDischargeDate - portOfLoadingDate).Value.Days + " days | " + portOfLoadingDate.Value.Date.ToString("dd.MM.yyyy") + "-" + portOfDischargeDate.Value.Date.ToString("dd.MM.yyyy");
+            }
+
+            return transitTime;
+        }
+
+        private DateTime? GetPortOfLoadingDate(ShipmentPM shipment)
+        {
+            if (shipment.PreCarriageATD != null)
+            {
+                return shipment.PreCarriageATD;
+            }
+
+            if (shipment.PreCarriageETD != null)
+            {
+                return shipment.PreCarriageETD;
+            }
+
+            if (shipment.MainCarriageATD != null)
+            {
+                return shipment.MainCarriageATD;
+            }
+
+            if (shipment.MainCarriageETD != null)
+            {
+                return shipment.MainCarriageETD;
+            }
+
+            return null;
+        }
+
+        private DateTime? GetPortOfDischargeDate(ShipmentPM shipment)
+        {
+            if (shipment.OnCarriageATA != null)
+            {
+                return shipment.OnCarriageATA;
+            }
+
+            if (shipment.OnCarriageETA != null)
+            {
+                return shipment.OnCarriageETA;
+            }
+
+            if (shipment.MainCarriageATA != null)
+            {
+                return shipment.MainCarriageATA;
+            }
+
+            if (shipment.MainCarriageETA != null)
+            {
+                return shipment.MainCarriageETA;
+            }
+
+            return null;
+        }
+
+        private ShipmentRoutingLeg AddPreCarriageLegLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg preCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "Pre Carriage Info.",
+                LegHeader = "PreCarriage",
+                FromPort = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode,
+                ToPort = shipment.PreCarriageToPortCode + "," + shipment.PreCarriageToPortCountryCode,
+                TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
+                DepartureDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
+                Carrier = shipment.PreCarriageCarrierName,
+                CarrierNumber = shipment.PreCarriageCarrierNumber,
+                VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
+            };
+
+            return preCarriageLeg;
+        }
+
+        private ShipmentRoutingLeg AddMainCarriageLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg mainCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "Main Carriage Info.",
+                LegHeader = "MainCarriage",
+                FromPort = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode,
+                ToPort = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode,
+                Carrier = shipment.MainCarriageCarrierName,
+                CarrierNumber = shipment.MainCarriageCarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
+                DepartureDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+            };
+            return mainCarriageLeg;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment1Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment1 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 1 Info.",
+                LegHeader = "Transshipment1",
+                FromPort = shipment.Transshipment1FromPortCode + "," + shipment.Transshipment1FromPortCountryCode,
+                ToPort = shipment.Transshipment1ToPortCode + "," + shipment.Transshipment1ToPortCountryCode,
+                Carrier = shipment.Transshipment1CarrierName,
+                CarrierNumber = shipment.Transshipment1CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment1VesselName : null,
+                DepartureDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
+            };
+
+            return transshipment1;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment2Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment2 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 2 Info.",
+                LegHeader = "Transshipment2",
+                FromPort = shipment.Transshipment2FromPortCode + "," + shipment.Transshipment2FromPortCountryCode,
+                ToPort = shipment.Transshipment2ToPortCode + "," + shipment.Transshipment2ToPortCountryCode,
+                Carrier = shipment.Transshipment2CarrierName,
+                CarrierNumber = shipment.Transshipment2CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment2VesselName : null,
+                DepartureDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
+            };
+
+            return transshipment2;
+        }
+
+        private ShipmentRoutingLeg AddTransshipment3Leg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg transshipment3 = new ShipmentRoutingLeg()
+            {
+                Title = "Transshipment 3 Info.",
+                LegHeader = "Transshipment3",
+                FromPort = shipment.Transshipment3FromPortCode + "," + shipment.Transshipment3FromPortCountryCode,
+                ToPort = shipment.Transshipment3ToPortCode + "," + shipment.Transshipment3ToPortCountryCode,
+                Carrier = shipment.Transshipment3CarrierName,
+                CarrierNumber = shipment.Transshipment3CarrierNumber,
+                CarrierLabel = GetCarrierTextCode(shipment),
+                CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
+                VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment3VesselName : null,
+                DepartureDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
+            };
+
+            return transshipment3;
+        }
+
+        private ShipmentRoutingLeg AddOnCarriageLegLeg(ShipmentPM shipment)
+        {
+            ShipmentRoutingLeg onCarriageLeg = new ShipmentRoutingLeg()
+            {
+                Title = "On Carriage Info.",
+                LegHeader = "OnCarriage",
+                FromPort = shipment.OnCarriageFromPortCode + "," + shipment.OnCarriageFromPortCountryCode,
+                ToPort = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode,
+                TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
+                DepartureDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
+                Carrier = shipment.OnCarriageCarrierName,
+                CarrierNumber = shipment.OnCarriageCarrierNumber,
+                VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
+            };
+
+            return onCarriageLeg;
+        }
+        private string GetMasterTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "MAWB";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "OBL";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "CMR/RWB#";
+            }
+
+            return null;
+        }
+
+        private string GetCarrierTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "Airline";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "Shipping Line";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "Trucker";
+            }
+
+            return null;
+        }
+        private string GetCarrierNumberTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "Flight Number";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "Voyage Number";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "Trucker Number";
+            }
+
+            return null;
+        }
+
+        private string GetTransportModeName(string transportModeId)
+        {
+            if (transportModeId == "A")
+            {
+                return "Air";
+            }
+
+            if (transportModeId == "O")
+            {
+                return "Ocean";
+            }
+
+            if (transportModeId == "I")
+            {
+                return "Inland";
+            }
+
+            return null;
+        }
     }
 }

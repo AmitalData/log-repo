@@ -135,6 +135,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "BusinessHoursHoliday",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						ValidForQuerySection1 =  "BusinessHoursHoliday",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "BusinessHoursHoliday",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						ValidForQuerySection1 =  "BusinessHoursHoliday",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BusinessHourId",
+					  						ObjectTableName =  "BusinessHoursHoliday",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "BusinessHourId",
+					  						ListPropertyPath =  "BusinessHourId",
+					  						FullFieldLable =  "BusinessHourId",
+					  						DefaultText =  "BusinessHourId",
+					  						FullLocalDefaultText =  "BusinessHourId",
+					  						ListFieldLable =  "BusinessHourIdListLable",
+					  						ListLableDefaultText =  "BusinessHourId",
+					  						ListLocalDefaultText =  "BusinessHourId",
+					  						ValidForQuerySection1 =  "BusinessHoursHoliday",
+					  						IsRequired =  true,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "BusinessHour",
+					  						NavigationPropertyName =  "BusinessHour",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Day",
 					  						ObjectTableName =  "BusinessHoursHoliday",
 					  						FieldsDataType =  "Integer",
@@ -186,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -244,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -302,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -362,6 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -423,6 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -484,6 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -544,6 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -603,6 +681,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "CreatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -662,6 +744,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "UpdatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -722,6 +808,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "BusinessHour",
+					  						PMPropertyPath =  "BusinessHour",
+					  						ListPropertyPath =  "BusinessHour",
+					  						FullFieldLable =  "BusinessHour",
+					  						DefaultText =  "BusinessHour",
+					  						FullLocalDefaultText =  "BusinessHour",
+					  						ListFieldLable =  "BusinessHourListLable",
+					  						ListLableDefaultText =  "BusinessHour",
+					  						ListLocalDefaultText =  "BusinessHour",
+					  						ObjectTableName =  "BusinessHoursHoliday",
+					  						ValidForQuerySection1 =  "BusinessHoursHoliday",
+					  						NoMetaDataField =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

@@ -87,5 +87,6 @@ export class ObjectFieldList {
 		IsForeignKey: boolean;
 		ForeignEntity: string;
 		NavigationPropertyName: string;
+		ForMetaDataOnly: boolean;
 	
 }

@@ -7908,31 +7908,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 CountryCode = shipment.FromCountryCode,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
-                //IsViaPortsDatesFilled = CheckIfViaPortsDatesFilled(shipment),
+                IsViaPortsDatesFilled = CheckIfViaPortsDatesFilled(shipment),
             };
         }
 
-        //private bool CheckIfViaPortsDatesFilled(ShipmentList shipment)
-        //{
-        //    if (shipment.Transshipment1ETA != null)
-        //    {
-        //        return true;
-        //    }
-        //    if (shipment.Transshipment2ETA != null)
-        //    {
-        //        return true;
-        //    }
-        //    if (shipment.Transshipment3ETA != null)
-        //    {
-        //        return true;
-        //    }
-        //    if (shipment.Transshipment4ETA != null)
-        //    {
-        //        return true;
-        //    }
+        private bool CheckIfViaPortsDatesFilled(ShipmentList shipment)
+        {
+            if (shipment.Transshipment1ETA != null || shipment.Transshipment1ATA != null || shipment.Transshipment1ETD != null || shipment.Transshipment1ATD != null)
+            {
+                return true;
+            }
+            if (shipment.Transshipment2ETA != null || shipment.Transshipment2ATA != null || shipment.Transshipment2ETD != null || shipment.Transshipment2ATD != null)
+            {
+                return true;
+            }
+            if (shipment.Transshipment3ETA != null || shipment.Transshipment3ATA != null || shipment.Transshipment3ETD != null || shipment.Transshipment3ATD != null)
+            {
+                return true;
+            }
 
-        //    return false;
-        //}
+            return false;
+        }
 
         private void FillMainCarraigeToTimeLine(TimeLineData timeLineData, ShipmentList shipment)
         {

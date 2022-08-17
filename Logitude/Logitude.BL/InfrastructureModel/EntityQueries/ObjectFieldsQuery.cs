@@ -146,8 +146,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
                                              DefaultAdditionalFilters = a.DefaultAdditionalFilters,
+                                             ForMetaDataOnly = a.ForMetaDataOnly,
                                    
-
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -251,6 +251,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsForeignKey = a.IsForeignKey,
                                                      ForeignEntity = a.ForeignEntity,
                                                      NavigationPropertyName = a.NavigationPropertyName,
+                                                     ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                  };
             return result;
@@ -363,6 +364,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
 
@@ -490,6 +492,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
                                                 }).ToList();
 
             return objectFields;
@@ -609,6 +612,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              IsForeignKey = a.IsForeignKey,
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
+                                             ForMetaDataOnly = a.ForMetaDataOnly,
 
                                          }).FirstOrDefault();
 
@@ -730,6 +734,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).OrderBy(o => o.FieldName).ToList();
 
@@ -853,6 +858,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              IsForeignKey = a.IsForeignKey,
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
+                                             ForMetaDataOnly = a.ForMetaDataOnly,
 
                                          }).FirstOrDefault();
             if (mod != null)
@@ -980,6 +986,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
 
@@ -1099,6 +1106,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
             return objectfields;
@@ -1216,6 +1224,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsForeignKey = a.IsForeignKey,
                         ForeignEntity = a.ForeignEntity,
                         NavigationPropertyName = a.NavigationPropertyName,
+                        ForMetaDataOnly = a.ForMetaDataOnly,
 
                     }).ToList();
         }
@@ -1333,6 +1342,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
             return objectfields;
@@ -1447,6 +1457,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.ObjectField.IsForeignKey,
                                                     ForeignEntity = a.ObjectField.ForeignEntity,
                                                     NavigationPropertyName = a.ObjectField.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ObjectField.ForMetaDataOnly,
+
                                                 }).ToList();
 
 
@@ -1565,7 +1577,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               IsForeignKey = a.IsForeignKey,
                               ForeignEntity = a.ForeignEntity,
                               NavigationPropertyName = a.NavigationPropertyName,
-
+                              ForMetaDataOnly = a.ForMetaDataOnly,
                           });
             return result;
         }
@@ -1682,6 +1694,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 });
 
@@ -1800,6 +1813,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
 
@@ -2032,6 +2046,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
 
@@ -2623,6 +2638,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              IsForeignKey = a.IsForeignKey,
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
+                                             ForMetaDataOnly = a.ForMetaDataOnly,
+
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2669,6 +2686,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
 
@@ -2789,6 +2807,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    ForMetaDataOnly = a.ForMetaDataOnly,
 
                                                 }).ToList();
             return objectfields;
@@ -2909,6 +2928,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              IsForeignKey = a.IsForeignKey,
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
+                                             ForMetaDataOnly = a.ForMetaDataOnly,
 
                                          }).FirstOrDefault();
 

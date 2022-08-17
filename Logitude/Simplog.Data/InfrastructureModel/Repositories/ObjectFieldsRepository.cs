@@ -508,19 +508,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Add(ObjectField entity)
         {
-            context.ObjectFields.Add(entity);
+            context.ObjectFieldsDbSet.Add(entity);
 
         }
 
         public void Remove(ObjectField entity)
         {
-            context.ObjectFields.Attach(entity);
-            context.ObjectFields.Remove(entity);
+            context.ObjectFieldsDbSet.Attach(entity);
+            context.ObjectFieldsDbSet.Remove(entity);
         }
 
         public void Update(ObjectField entity)
         {
-            context.ObjectFields.Attach(entity);
+            context.ObjectFieldsDbSet.Attach(entity);
             context.SetAsModified(entity);
         }
 

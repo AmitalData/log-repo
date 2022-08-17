@@ -18,7 +18,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
     public class ShipmentRepository : IRepository<Shipment>
     {
         IShipmentsContext shipmentsContext;
-
+        bool useSecondaryDB = false;
         public ShipmentRepository(IShipmentsContext context)
         {
             shipmentsContext = context;
@@ -31,6 +31,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public void SetSecondDBforContext(int tenant)
         {
             shipmentsContext = ShipmentsContext.GetSecContext(tenant);
+            useSecondaryDB = true;
         }
         public ShipmentRepository()
         {
@@ -343,7 +344,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentDataView> GetShipmentViewsByTenant(int tenant)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
-
+            if (useSecondaryDB)
+            {
+                dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
+            }
             // For Testing the ElasticSearch Indexer
             // Temporary Code, need to be removed
             if (tenant == 0)
@@ -351,9 +355,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                 return (from f in dataViewEntities.ShipmentDataViews select f);
             }
             // end of Temporary Code
-
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
-
             return result;
         }
 

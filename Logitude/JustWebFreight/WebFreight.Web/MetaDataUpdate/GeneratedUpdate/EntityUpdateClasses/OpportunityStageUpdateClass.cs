@@ -123,6 +123,94 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "OpportunityStage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  true,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "OpportunityStage",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "OpportunityStage",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  true,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						ValidForQuerySection1 =  "OpportunityStage",
+					  						DisplayInEntityVariables =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "OpportunityId",
 					  						ObjectTableName =  "OpportunityStage",
 					  						FieldsDataType =  "LookUp",
@@ -157,7 +245,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Opportunity",
 					  						ListFieldLable =  "OpportunityIdListLable",
 					  						ListLableDefaultText =  "Opportunity",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Opportunity",
+					  						NavigationPropertyName =  "Opportunity",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -200,7 +292,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "From Stage",
 					  						ListFieldLable =  "FromStageIdListLable",
 					  						ListLableDefaultText =  "From Stage",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Stage",
+					  						NavigationPropertyName =  "FromStage",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -243,7 +339,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "To Stage",
 					  						ListFieldLable =  "ToStageIdListLable",
 					  						ListLableDefaultText =  "To Stage",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Stage",
+					  						NavigationPropertyName =  "ToStage",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -285,7 +385,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Start Date",
 					  						ListFieldLable =  "StartDateListLable",
 					  						ListLableDefaultText =  "Start Date",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -327,7 +429,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "End Date",
 					  						ListFieldLable =  "EndDateListLable",
 					  						ListLableDefaultText =  "End Date",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -366,7 +470,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStageDate",
 					  						DefaultText =  "Last Stage Date",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -406,7 +512,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
 					  						DefaultText =  "Owner",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -445,7 +553,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityTypeId",
 					  						DefaultText =  "Opportunity Type",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);

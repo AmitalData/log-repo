@@ -1,7 +1,14 @@
 ﻿using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.BL.ExtendedServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,74 +16,36 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
-    public class VizionPilotCustomerDataGenerator
+    public class VizionPilotCustomerDataGenerator : BatchTaskExecutionsService
     {
         private int myTenant;
         private ShipmentRepository shipmentRepository;
-        public VizionPilotCustomerDataGenerator(int tenant)
+        private BatchTaskExecutionPM batchTaskExecution;
+
+        public VizionPilotCustomerDataGenerator(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-            myTenant = tenant;
-            shipmentRepository = new ShipmentRepository(tenant);
+            this.batchTaskExecution = batchTaskExecution;
         }
 
-        public List<ShipmentsForAutomaticRequest> GetShipmentsForAutomaticRequest()
+        public override void RunCode()
+        {
+            myTenant = batchTaskExecution.Tenant;
+            shipmentRepository = new ShipmentRepository(myTenant);
+            List<ShipmentsForAutomaticRequest> myResult = SendVizionAutomaticRequests(batchTaskExecution.PrametersXml);
+            batchTaskExecution.PrametersXml = JsonConvert.SerializeObject(myResult);
+        }
+
+        private List<ShipmentsForAutomaticRequest> SendVizionAutomaticRequests(string requestText)
         {
             List<ShipmentsForAutomaticRequest> myResult = new List<ShipmentsForAutomaticRequest>();
-
-            List<string> supportedCarriers = this.GetVizionCarriers();
-
-            DateTime myDateFilter = DateTime.Now.AddDays(14);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-
-            IQueryable<ContainerTrackingRequest> previousReqesuts = shipmentRepository.context.ContainerTrackingRequests
-            .Where(e => e.Tenant == myTenant && e.Status == "Active");
-
-            IQueryable<Shipment> myShipments = shipmentRepository.GetShipmentsWithoutIncludes(myTenant);
-            myShipments = myShipments.Where(d => !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.Master) && string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ShipmentId).Contains(d.Id));
-
-            return (from shipment in myShipments
-                        join sm in shipmentRepository.context.ShipmentMasterDatas
-                        on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
-                        from master in shipmentJoin.DefaultIfEmpty()
-                        join sc in shipmentRepository.context.Containers
-                        on shipment.Id equals sc.ShipmentId into containerJoin
-                        from container in containerJoin.DefaultIfEmpty()
-                        where shipment.NumberOfContainers > 0
-                        && (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "MyGO")
-                        && !shipment.IsCancelled
-                        && !shipment.IsOperationalClosed
-                        && master.MainCarriageATA == null
-                        && master.MainCarriageETA != null
-                        && master.MainCarriageETA >= DateTime.Now
-                        && master.MainCarriageETA <= myDateFilter
-                        && !string.IsNullOrEmpty(container.ContainerNumber)
-                        && supportedCarriers.Contains(master.MainCarriageCarrierCard.ShippingLine.SCACCode)
-                        && !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ContainerId).Contains(container.Id)
-                        select new ShipmentsForAutomaticRequest()
-                        {
-                            ShipmentId = shipment.Id,
-                            ShipmentNumber = shipment.ShipmentNumber,
-                            NumberOfContainers = shipment.NumberOfContainers,
-                        }).Distinct().ToList();
-        }
-        private List<string> GetVizionCarriers()
-        {
-            VizionService vizionService = new VizionService();
-            List<VizionCarrier> supportedCarriers = vizionService.GetAllCarriers();
-            return supportedCarriers.Select(s => s.scac).ToList();
-        }
-
-        public List<ShipmentsForAutomaticRequest> SendVizionAutomaticRequests(string requestText)
-        {
-            List<ShipmentsForAutomaticRequest> muResult = new List<ShipmentsForAutomaticRequest>();
             List<string> shipmentsNumbers = this.GetShipmentsNumbersList(requestText);
-            
+
             foreach (string number in shipmentsNumbers)
             {
-                muResult.Add(this.HandleShipmentSending(number));                
+                myResult.Add(this.HandleShipmentSending(number));
             }
 
-            return muResult;
+            return myResult;
         }
         private List<string> GetShipmentsNumbersList(string requestText)
         {
@@ -136,6 +105,7 @@ namespace WebFreight.Web.Helpers
             try
             {
                 GeneralContainerTrackingArgs myArgs = this.CreateGeneralContainerTrackingArgs(shipmentId);
+                automaticRequest.ContainerNumber = myArgs.ContainerNumber;
                 GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(myArgs);
                 containerTrackingService.GeneralContainerStatus();
                 this.CheckForErrorsAfterSending(myArgs.Errors, automaticRequest);
@@ -160,17 +130,28 @@ namespace WebFreight.Web.Helpers
 
         private GeneralContainerTrackingArgs CreateGeneralContainerTrackingArgs(string shipmentId)
         {
+            Container container = this.GetContainerForSinding(shipmentId);
+
             return new GeneralContainerTrackingArgs()
             {
-                ContainerId = null,
-                ContainerNumber = null,
-                IsFromContainer = false,
+                ContainerId = container?.Id,
+                ContainerNumber = container?.ContainerNumber,
+                IsFromContainer = (container != null),
                 ShipmentId = shipmentId,
                 Tenant = myTenant,
                 IsSimulator = false,
                 Data = null,
-                ContainerStatusSourceCode = "VZN"
+                ContainerStatusSourceCode = "VZN",                
             };
+        }
+        private Container GetContainerForSinding(string shipmentId)
+        {
+            IQueryable<Container> containers = shipmentRepository.context.Containers.Where(d => d.Tenant == myTenant && d.ShipmentId == shipmentId);
+            IQueryable<ContainerTrackingRequest> previousReqesuts = shipmentRepository.context.ContainerTrackingRequests.Where(e => e.Tenant == myTenant && e.Status == "Active" && !string.IsNullOrEmpty(e.ContainerId));
+
+            return (from a in containers
+                    where !previousReqesuts.Select(s => s.ContainerId).Contains(a.Id)
+                    select a).FirstOrDefault();
         }
     }
 
@@ -178,6 +159,7 @@ namespace WebFreight.Web.Helpers
     {
         public string ShipmentId { get; set; }
         public string ShipmentNumber { get; set; }
+        public string ContainerNumber { get; set; }
         public int? NumberOfContainers { get; set; }
         public bool SentSuccesfully { get; set; }
         public string ErrorMessage { get; set; }

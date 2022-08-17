@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.ForeignEntity = objectFieldPM.ForeignEntity;
             objectField.NavigationPropertyName = objectFieldPM.NavigationPropertyName;
             objectField.DefaultAdditionalFilters = GetDefaultAdditionalFilters(objectFieldPM);
-
+            objectField.ForMetaDataOnly = objectFieldPM.ForMetaDataOnly;
 
             if (objectFieldModification != null)
             {

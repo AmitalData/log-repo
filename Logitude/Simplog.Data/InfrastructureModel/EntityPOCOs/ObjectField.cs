@@ -179,6 +179,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ForeignEntity { get; set; }
         public string NavigationPropertyName { get; set; }
         public string DefaultAdditionalFilters { get; set; }
+        public bool ForMetaDataOnly { get; set; }
 
     }
 }

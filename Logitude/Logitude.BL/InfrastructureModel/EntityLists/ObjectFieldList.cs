@@ -85,6 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsForeignKey { get; set; }
         public string ForeignEntity { get; set; }
         public string NavigationPropertyName { get; set; }
+        public bool ForMetaDataOnly { get; set; }
 
     }
 }

@@ -1216,6 +1216,7 @@
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="Extensions\PagedResult.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentValidator.cs" />

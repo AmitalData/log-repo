@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
 {

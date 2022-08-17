@@ -692,6 +692,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "VIP,Vizion - Pilot Customer", 
                 Description = "Vizion - Pilot Customer", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SCD", 
+                Name = "Second context DB", 
+                SearchFields = "SCD,Second context DB", 
+                Description = "to get the secondary database for the context ", 
+			});
 			
             return all;
        }

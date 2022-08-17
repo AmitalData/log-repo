@@ -133,6 +133,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "IATACode",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  						ValidForQuerySection1 =  "IATACode",
+					  						ValidForQuerySection2 =  "IATACodeFollowUp",
+					  						MaxLength =  15,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "IATACode",
 					  						FieldsDataType =  "Text",
@@ -184,6 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -242,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -298,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -354,6 +381,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "DueType",
+					  						NavigationPropertyName =  "DueType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -414,6 +445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -474,6 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -532,6 +565,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Card",
+					  						NavigationPropertyName =  "Airline",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -590,6 +627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

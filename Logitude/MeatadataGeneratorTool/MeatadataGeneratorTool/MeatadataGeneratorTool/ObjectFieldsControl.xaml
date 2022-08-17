@@ -1278,10 +1278,24 @@
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Order:" />
-                        <TextBlock Grid.Row="19"
+
+                        <StackPanel Grid.Row="19"
+                                   Grid.Column="0"
+                                  Height="22"
+                                  Margin="2"
+                                    Orientation="Horizontal">
+                            <Image ToolTip="Don't Create ObjectField has been changed logic to this field."
+                                   Source="Resources/question_mark_icon.png"
+                                   Height="16"
+                                   Margin="0 0 0 0"></Image>
+                            <TextBlock Grid.Row="19"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Don't Create ObjectField:" />
+                                   Text="For MetaData Only:"
+                                   Margin="10 0 0 0"/>
+                        </StackPanel>
+
+        
                         <TextBlock Grid.Row="20"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
@@ -1379,6 +1393,7 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding Order,
                                                 Mode=TwoWay}" />
+                        
                         <CheckBox Grid.Row="19"
                                   Grid.Column="1"
                                   Height="22"

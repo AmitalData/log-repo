@@ -35,13 +35,13 @@ namespace WebFreight.Web.Helpers
                         }
                     }
                 }
-                apiException = new APIException()
-               {
-                   ErrorType = ex.GetType().Name,
-                   ErrorMessage = ErrorMessage,
-                   ShortErrorMessage = ShortErrorMessage,
-               };
 
+                apiException = new APIException()
+                {
+                    ErrorType = ex.GetType().Name,
+                    ErrorMessage = ErrorMessage,
+                    ShortErrorMessage = ShortErrorMessage,
+                };
             }
             else
             {

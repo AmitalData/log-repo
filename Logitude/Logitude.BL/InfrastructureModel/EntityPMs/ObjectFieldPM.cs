@@ -159,6 +159,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string NavigationPropertyName { get; set; }
         public string DefaultAdditionalFilters { get; set; }
         public TreeFilter DefaultAdditionalTreeFilters { get; set; }
+        public bool ForMetaDataOnly { get; set; }
 
     }
 }

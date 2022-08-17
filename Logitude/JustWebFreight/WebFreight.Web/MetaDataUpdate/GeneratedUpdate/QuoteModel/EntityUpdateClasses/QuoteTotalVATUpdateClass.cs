@@ -135,6 +135,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "QuoteTotalVAT",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						ValidForQuerySection1 =  "QuoteTotalVAT",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "QuoteTotalVAT",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						ValidForQuerySection1 =  "QuoteTotalVAT",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteId",
+					  						ObjectTableName =  "QuoteTotalVAT",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "QuoteId",
+					  						ListPropertyPath =  "QuoteId",
+					  						FullFieldLable =  "QuoteId",
+					  						DefaultText =  "QuoteId",
+					  						FullLocalDefaultText =  "QuoteId",
+					  						ListFieldLable =  "QuoteIdListLable",
+					  						ListLableDefaultText =  "QuoteId",
+					  						ListLocalDefaultText =  "QuoteId",
+					  						ValidForQuerySection1 =  "QuoteTotalVAT",
+					  						IsRequired =  true,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Quote",
+					  						NavigationPropertyName =  "Quote",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "QuoteCurrencyVATAmount",
 					  						ObjectTableName =  "QuoteTotalVAT",
 					  						FieldsDataType =  "Double",
@@ -186,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -244,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -302,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -360,6 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -418,6 +493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -476,6 +552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -534,6 +611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -592,6 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -650,6 +729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -709,9 +789,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "VatType",
 					  						NavigationPropertyName =  "VatType",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "VatTypeName",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "VatTypeName",
+					  						ListPropertyPath =  "VatTypeName",
+					  						FullFieldLable =  "VatTypeName",
+					  						DefaultText =  "VatTypeName",
+					  						FullLocalDefaultText =  "VatTypeName",
+					  						ListFieldLable =  "VatTypeNameListLable",
+					  						ListLableDefaultText =  "VatTypeName",
+					  						ListLocalDefaultText =  "VatTypeName",
+					  						ObjectTableName =  "QuoteTotalVAT",
+					  						ValidForQuerySection1 =  "QuoteTotalVAT",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "VatTypeCell",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "VatTypeCell",
+					  						ListPropertyPath =  "VatTypeCell",
+					  						FullFieldLable =  "VatTypeCell",
+					  						DefaultText =  "VatTypeCell",
+					  						FullLocalDefaultText =  "VatTypeCell",
+					  						ListFieldLable =  "VatTypeCellListLable",
+					  						ListLableDefaultText =  "VatTypeCell",
+					  						ListLocalDefaultText =  "VatTypeCell",
+					  						ObjectTableName =  "QuoteTotalVAT",
+					  						ValidForQuerySection1 =  "QuoteTotalVAT",
+					  						NoMetaDataField =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

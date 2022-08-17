@@ -107,5 +107,20 @@ namespace Simplog.Data.ShipmentsModel
         {
             return this;
         }
+        public static IShipmentDataViewContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            //}
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            //DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            ShipmentDataViewContext context = new ShipmentDataViewContext(connection);
+            return context;
+        }
     }
 }

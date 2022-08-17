@@ -5,6 +5,14 @@ namespace Simplog.Server.Infrastructure.DataContracts
 {
     public class QueryOperations
     {
+        public QueryOperations()
+        {
+            PageIndex = 1;
+            PageSize = 10;
+            DataCount = 0;
+            QueryFilterItems = new List<QueryFilterItem>();
+        }
+
         public List<QueryFilterItem> QueryFilterItems { get; set; }
         public int PageSize { get; set; }
         public int PageIndex { get; set; }
@@ -16,18 +24,13 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
         public string UserId { get; set; }
         public string ObjectTableName { get; set; }
+
         public string QuerySection
         {
             get { return querySection; }
             set { querySection = value; }
         }
-        public QueryOperations()
-        {
-            PageIndex = 1;
-            PageSize = 10;
-            DataCount = 0;
-            QueryFilterItems = new List<QueryFilterItem>();
-        }
+
         public void SetFilter(string name, object value, bool isCustom, string Operator, object value2, bool displayInList)
         {
             if (QueryFilterItems == null)
@@ -47,7 +50,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
                     }
                 }
-
             }
             else
             {
@@ -79,8 +81,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                             {
                                 QueryFilterItems.Remove(item);
                             }
-
-
                         }
                         else
                         {
@@ -98,7 +98,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                             {
                                 item.FieldValue = null;
                             }
-
                         }
                     } 
                 }
@@ -113,9 +112,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                     {
                         if (value != null)
                         {
-                            //QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator,DisplayInList=DisplayInList};
-                            //QueryFilterItems.Add(newItem);
-
                             QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = (value.ToString() == "null" ? null : value), IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList };
                             QueryFilterItems.Add(newItem);
                         }
@@ -137,17 +133,14 @@ namespace Simplog.Server.Infrastructure.DataContracts
                     QueryFilterItems.Add(item);
 
                 }
-
                 else
                 {
                     QueryFilterItem item = new QueryFilterItem() { FieldName = name, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, FieldValue3 = value3 };
                     QueryFilterItems.Add(item);
                 }
-
             }
             else
             {
-
                 QueryFilterItem item = QueryFilterItems.Where(d => d.FieldName == name).FirstOrDefault();
                 if (item != null)
                 {
@@ -167,8 +160,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                         {
                             QueryFilterItems.Remove(item);
                         }
-
-
                     }
                     else
                     {
@@ -186,21 +177,16 @@ namespace Simplog.Server.Infrastructure.DataContracts
                         {
                             item.FieldValue3 = value3;
                         }
-
                     }
                 }
                 else
                 {
                     if (value != null)
                     {
-                        //QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator,DisplayInList=DisplayInList};
-                        //QueryFilterItems.Add(newItem);
-
                         QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, FieldValue3 = value3 };
                         QueryFilterItems.Add(newItem);
                     }
                 }
-
             }
         }
 
@@ -223,7 +209,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
                     }
                 }
-
             }
             else
             {
@@ -255,8 +240,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                             {
                                 QueryFilterItems.Remove(item);
                             }
-
-
                         }
                         else
                         {
@@ -269,7 +252,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                             {
                                 item.FieldValue2 = value2;
                             }
-
                         }
                     }
                 }
@@ -284,9 +266,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
                     {
                         if (value != null)
                         {
-                            //QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator,DisplayInList=DisplayInList};
-                            //QueryFilterItems.Add(newItem);
-
                             QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, IsCustomField = isCustomField, FieldDataType = fieldDataType };
                             QueryFilterItems.Add(newItem);
                         }
