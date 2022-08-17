@@ -574,6 +574,16 @@ export class ActivityPM {
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
+    private leadSourceId: string;
+    public get LeadSourceId() { return this.leadSourceId; }
+    public set LeadSourceId(newValue: string) { if (this.leadSourceId != newValue) { this.leadSourceId = newValue; this.MarkAsDirty("LeadSourceId"); } }
+       
+	 
+    private leadSourceName: string;
+    public get LeadSourceName() { return this.leadSourceName; }
+    public set LeadSourceName(newValue: string) { if (this.leadSourceName != newValue) { this.leadSourceName = newValue; this.MarkAsDirty("LeadSourceName"); } }
+       
+	 
 
     public OldEntityPM: ActivityPM;
 		

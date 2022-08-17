@@ -80,6 +80,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ShortNameTextCodeCode { get; set; }
         public string HelpTextCodeCode { get; set; }
         public string AdditionalQuerySections { get; set; }
+        public bool IsListFilter { get; set; }
 
         
     }

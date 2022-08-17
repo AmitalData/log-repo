@@ -23,6 +23,8 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public bool IsCustomField { get; set; }
         [DataMember]
         public string FieldDataType { get; set; }
+        [DataMember]
+        public bool IsListFilter { get; set; }
 
     }
 }

@@ -96,6 +96,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
             objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
 
+            objectField.IsListFilter = objectFieldPM.IsListFilter;
+
 
             if (objectFieldModification != null)
             {

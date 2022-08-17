@@ -173,5 +173,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool EnableFullscreenTextBox { get; set; }
         public string AdditionalQuerySections { get; set; }
 
+        public bool IsListFilter { get; set; }
+
     }
 }
