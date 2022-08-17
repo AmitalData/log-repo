@@ -267,10 +267,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetCustomerReference(DataRow tableRow)
         {
             var customerReferences = new List<string>();
-            AddCustomerReferences(customerReferences, tableRow, "CustomerReference1");
-            AddCustomerReferences(customerReferences, tableRow, "CustomerReference2");
-            AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference1");
-            AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference2");
+            AddCustomerReferences(customerReferences, tableRow, "CustomerReference3");
+            AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference3");
             AddCustomerReferences(customerReferences, tableRow, "OrderCustomerReference");
             AddCustomerReferences(customerReferences, tableRow, "OrderPoNumber");
             AddCustomerReferences(customerReferences, tableRow, "OrderBookingNumber");
