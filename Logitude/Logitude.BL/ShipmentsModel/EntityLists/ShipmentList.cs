@@ -663,6 +663,20 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
         public TimeLineData TimeLineData { get; set; }
+
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
+        public DateTime? Transshipment2ATA { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment3ATD { get; set; }
+        public DateTime? Transshipment3ATA { get; set; }
+        public DateTime? Transshipment3ETD { get; set; }
+        public DateTime? Transshipment3ETA { get; set; }
+
     }
 
     public class TimeLineData

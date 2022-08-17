@@ -21,7 +21,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentPartnerPM> GetDigitalShipmentPartners(string shipmentId, int tenant)
         {
-            InitializeServices(shipmentId, tenant);
+            InitializeServices(tenant);
             var partners = new List<ShipmentPartnerPM>();
             var shipment = shipmentRepository.GetSingleShipment(shipmentId, this.tenant);
             if (shipment == null)
@@ -124,14 +124,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         #region Private methods
-        private void InitializeServices(string shipmentId, int tenant)
+        private void InitializeServices(int tenant)
         {
             this.tenant = tenant;
             addressRepository = new AddressRepository(this.tenant);
             contactRepository = new ContactRepository(this.tenant);
             countryRepository = new CountryRepository(this.tenant);
             shipmentRepository = new ShipmentRepository(this.tenant);
-
         }
 
         private void GetSharedLogisticsSetting()
@@ -655,6 +654,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegs(string shipmentId, int tenant)
         {
+            InitializeServices(tenant);
+
             var routingLegs = new List<ShipmentRoutingLeg>();
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
