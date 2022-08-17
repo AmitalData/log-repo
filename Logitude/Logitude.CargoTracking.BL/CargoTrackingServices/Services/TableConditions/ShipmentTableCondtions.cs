@@ -500,7 +500,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as WarehouseLegRemarks," +
                 " '' as GrossWeightUnitCode," +
                 " '' as ShipmentTypeId," +
-                " '' as ChargeableWeightInKG," +
+                " NULL as ChargeableWeightInKG," +
                 " '' as ExceptionDescription," +
 
                 "'O' as EntityType," +
