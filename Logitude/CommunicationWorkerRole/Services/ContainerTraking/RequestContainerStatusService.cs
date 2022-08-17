@@ -159,7 +159,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
         private void UpdateVizionContainerStatus()
         {
             string requestId = CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant);
-            var isExist = true;
+            var isExist = CheckIfExistOldRequest();
             if (requestId == null)
             {
                 requestId = CreateNewRequest();
@@ -208,7 +208,25 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
             return null;
         }
+        private bool CheckIfExistOldRequest()
+        {
 
+            var previousReqesutQuery = ShipmentContext.ContainerTrackingRequests
+                .Where(e => e.Status == ContainerTrackingRequestStatus.Active && e.CarrierCode == ContainerStatusSimulatorArgs.CarrierCode).AsQueryable();
+            if (ContainerStatusSimulatorArgs.IsFromContainer)
+                previousReqesutQuery = previousReqesutQuery.Where(e => e.ContainerId == ContainerStatusSimulatorArgs.ContainerId || (e.ShipmentId == ContainerStatusSimulatorArgs.ShipmentId && e.ContainerNumber == null));
+            else
+                previousReqesutQuery = previousReqesutQuery.Where(e => e.ShipmentId == ContainerStatusSimulatorArgs.ShipmentId);
+
+            previousReqesutQuery = previousReqesutQuery.Where(e => e.Tenant == ShipmentMasterData.Tenant);
+
+            var previousReqesut = previousReqesutQuery.FirstOrDefault();
+
+            if (previousReqesut != null)
+                return true;
+
+            return false;
+        }
         private void SimulateVizionUpdateContainerStatus()
         {
             var source = GetSource();
