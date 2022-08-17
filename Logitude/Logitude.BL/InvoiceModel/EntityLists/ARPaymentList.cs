@@ -48,6 +48,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ARAccountName { get; set; }
         public string CreditAccountName { get; set; }
         public double? OpenAmount { get; set; }
+        public double? PaidAmount { get; set; }
         public double? OpenAmountInLocalCurrency { get; set; }
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }

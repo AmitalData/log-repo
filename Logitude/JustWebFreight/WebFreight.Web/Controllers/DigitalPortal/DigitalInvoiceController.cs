@@ -116,31 +116,31 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
             return resultClass;
         }
-        
-        public List<ARPaymentList> GetFilteredDigitalARPayments(string arInvoiceId, int tenant)
+
+        [HttpGet]
+        [Route("DigitalInvoice/GetFilteredDigitalARPayments")]
+        public IHttpActionResult GetFilteredDigitalARPayments(string arInvoiceId)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            var tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            List<ARPaymentList> result = new List<ARPaymentList>();
+            var result = new List<ARPaymentList>();
+            var statusRepository = new ARPaymentStatusRepository(tenant);
+            var currencyRepository = new CurrencyRepository(tenant);
+            var aRPaymentRepository = new ARPaymentRepository(tenant);
+            var aRInvoicePaymentQuery = new ARInvoicePaymentQuery(tenant);
+            var methodRepository = new AccountingPaymentMethodRepository(tenant);
+            var invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, tenant);
 
-            ARPaymentStatusRepository statusRepository = new ARPaymentStatusRepository(tenant);
-            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
-            ARInvoicePaymentQuery aRInvoicePaymentQuery = new ARInvoicePaymentQuery(tenant);
-            AccountingPaymentMethodRepository methodRepository = new AccountingPaymentMethodRepository(tenant);
-
-            List<ARInvoicePaymentPM> invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, tenant);
-
-            foreach (ARInvoicePaymentPM item in invoicePayments)
+            foreach (var item in invoicePayments)
             {
-                ARPayment payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, tenant);
+                var payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, tenant);
 
                 if (payment != null)
                 {
-                    ARPaymentList list = new ARPaymentList()
+                    var list = new ARPaymentList()
                     {
                         Id = payment.Id,
                         Tenant = payment.Tenant,
@@ -149,31 +149,32 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         OpenAmount = payment.OpenAmount,
                         ChequeOrPaymentRef = payment.ChequeOrPaymentRef,
                         CreateDate = payment.CreateDate,
+                        PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount 
                     };
 
-                    Currency currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, tenant);
+                    var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, tenant);
                     if (currency != null)
                     {
                         list.PaymentCurrencyCode = currency.Code;
                     }
 
-                    ARPaymentStatus status = statusRepository.GetSingleARPaymentStatus(payment.StatusCode);
+                    var status = statusRepository.GetSingleARPaymentStatus(payment.StatusCode);
                     if (status != null)
                     {
                         list.StatusName = status.Name;
                     }
 
-                    AccountingPaymentMethod method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+                    var method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                     if (method != null)
                     {
-                        list.AccountingPaymentMethodName = method.Name;
+                        list.PaymentMethodName = method.Name;
                     }
 
                     result.Add(list);
                 }
             }
 
-            return result;
+            return Ok(result);
         }
 
         [HttpGet]
