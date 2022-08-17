@@ -120,6 +120,96 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
+        public static List<ObjectField> GetObjectFieldsByObjectTableNameWithNoIncludes(string objectTableName, int tenant)
+        {
+
+            string zerolistName = "tabletenantzeroobjectfields" + objectTableName.ToLower();
+            string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
+
+            List<ObjectField> result = new List<ObjectField>();
+
+            List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
+            List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
+
+
+
+            #region Current Tenant Fields
+
+            if (tenant != 0)
+            {
+
+                if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        var TableId = (from a in context.ObjectTables
+                                       where a.Name == objectTableName
+                                       select a.Id).FirstOrDefault();
+                        currentTenantObjectFields = (from a in context.ObjectFields//.Include("ObjectTable")//.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
+                                                     where (a.Tenant == tenant) && a.ObjectTableId == TableId && a.InActive == false
+                                                     select a).ToList();
+
+                        scope.Complete();
+                    }
+
+
+
+                    CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                }
+                else
+                {
+                    currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
+                }
+
+
+            }
+
+
+            #endregion
+
+            #region Tenant Zero Fields
+
+
+            if (CacheManager.CacheWrapper.Get(zerolistName) == null)
+            {
+
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    var TableId = (from a in context.ObjectTables
+                                   where a.Name == objectTableName
+                                   select a.Id).FirstOrDefault();
+                    zeroTenantObjectFields = (from a in context.ObjectFields//.Include("ObjectTable")//.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
+                                              where (a.Tenant == 0) && a.ObjectTableId == TableId && a.InActive == false
+                                              select a).ToList();
+
+                    scope.Complete();
+                }
+
+
+
+                CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+            }
+            else
+            {
+                zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
+            }
+
+
+            #endregion
+
+
+            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();
+
+
+
+            return result;
+
+
+        }
+
         public List<ObjectField> GetCustomObjectFields(string objectTableId, int tenant)
         {
             return context.ObjectFields.Where(t => t.Tenant == tenant && t.ObjectTableId == objectTableId && t.IsCustom == true).ToList();

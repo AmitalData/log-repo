@@ -285,8 +285,8 @@ namespace WebFreight.Web.WebPages
             if (documentOutCopy == null) return null;
 
             Document document = (from d in commonDataContext.Documents
-                                   where d.Id == documentOutCopy.DocumentId
-                                   select d).FirstOrDefault();
+                                 where d.Id == documentOutCopy.DocumentId
+                                 select d).FirstOrDefault();
             if (document == null) return null;
 
             return new DocumentsFilingPM
@@ -306,8 +306,9 @@ namespace WebFreight.Web.WebPages
                 return new List<DocumentOutCopy>();
             }
             List<string> missedDocumentsKeys = missedDocuments.Select(s => s.Id).ToList();
-            return  (from d in commonDataContext.DocumentOutCopies.Include("DocumentTypeCopy")
-                     where missedDocumentsKeys.Contains(d.DocumentOutId) select d).ToList();
+            return (from d in commonDataContext.DocumentOutCopies.Include("DocumentTypeCopy")
+                    where missedDocumentsKeys.Contains(d.DocumentOutId)
+                    select d).ToList();
         }
 
         private bool ValidateDownloadLimitation()
@@ -390,8 +391,7 @@ namespace WebFreight.Web.WebPages
                 string entityId = "";
                 string[] filestrings = null;
                 int tenant = 0;
-                //if (Request["id"] != null)
-                //{
+
                 string headerRequest = Request["id"];
                 filestrings = headerRequest.Split(':');
 
@@ -406,17 +406,11 @@ namespace WebFreight.Web.WebPages
 
                     if (string.IsNullOrEmpty(email))
                     {
-                        string token = Request["Token"];
+                        string token = GetIncomingToken(headerRequest, filestrings);
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         email = authToken?.Email;
                     }
                 }
-
-
-
-                //string documentName = 
-                //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId +documenttype+ entityId;
-
 
                 string fileName = Request["filename"];
                 const int arrayIncludingRequestAreaMaxLength = 9;
@@ -453,16 +447,7 @@ namespace WebFreight.Web.WebPages
 
                     Uploader up = new Uploader();
 
-                    //if (filestrings.Count() > 2)
-                    //{
-                    //    documentExtension = "pdf";
-                    //    filename += ".pdf";
-                    //    string containername = filestrings[2].ToString();
-                    //    _DatainByte = up.DownloadStaticFile(filename, containername);
 
-                    //}
-                    //else
-                    //{
                     Document document = up.GetDocumentById(documentId, tenant);
                     if (document != null)
                     {
@@ -619,6 +604,17 @@ namespace WebFreight.Web.WebPages
                 //}
                 //AzureLog.SaveLogsInStorage(ErrorMessage, "E",0,User.Identity.Name,User.Identity.Name);
             }
+
+        }
+
+        private string GetIncomingToken(string headerRequest, string[] filestrings)
+        {
+            var token = Request["Token"];
+            if (string.IsNullOrEmpty(token) && headerRequest.Contains("TK="))
+            {
+                token = filestrings[5].Replace("TK=", "");
+            }
+            return token;
 
         }
     }
