@@ -31,7 +31,7 @@ namespace CommunicationWorkerRole
 
         private void StartWork()
         {
-            if (General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+            if (General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() == "staging")
             {
                 Thread.Sleep(60000);
                 return;
