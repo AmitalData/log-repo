@@ -5,21 +5,22 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
+import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
 import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    templateUrl: './AddEditDashboardComponent.html',
+    templateUrl: './AddEditWidgetComponent.html',
 })
 
-export class AddEditDashboardComponent extends BaseComponent {
-    public EntityPM: DashboardPM;
+export class AddEditWidgetComponent extends BaseComponent {
+    public EntityPM: WidgetPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    public DataContext: AddEditDashboardComponent;
+    public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
-    public ObjectTableName: string = "Dashboard";
+    public ObjectTableName: string = "Widget";
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -31,21 +32,42 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
     }
 
-    get Name() { return this.EntityPM.Name }
-    set Name(value: string) {
-        if (this.EntityPM.Name != value) {
-            this.EntityPM.Name = value;
+    get Title() { return this.EntityPM.Title }
+    set Title(value: string) {
+        if (this.EntityPM.Title != value) {
+            this.EntityPM.Title = value;
         }
     }
 
-    get Description() { return this.EntityPM.Description; }
-    set Description(value: string) {
-        if (this.EntityPM.Description != value) {
-            this.EntityPM.Description = value;
+    get TypeCode() { return this.EntityPM.TypeCode; }
+    set TypeCode(value: string) {
+        if (this.EntityPM.TypeCode != value) {
+            this.EntityPM.TypeCode = value;
         }
     }
 
-    CancelButtonClicked() {        
+    get GroupBy() { return this.EntityPM.GroupBy; }
+    set GroupBy(value: string) {
+        if (this.EntityPM.GroupBy != value) {
+            this.EntityPM.GroupBy = value;
+        }
+    }
+
+    get StartPotistion() { return this.EntityPM.StartPotistion; }
+    set StartPotistion(value: string) {
+        if (this.EntityPM.StartPotistion != value) {
+            this.EntityPM.StartPotistion = value;
+        }
+    }
+
+    get EndPosition() { return this.EntityPM.EndPosition; }
+    set EndPosition(value: string) {
+        if (this.EntityPM.EndPosition != value) {
+            this.EntityPM.EndPosition = value;
+        }
+    }
+
+    CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -57,7 +79,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
             if (this.isNew) {
-                this.CreateDashboard();                
+                this.CreateDashboard();
             }
 
             else {
@@ -67,14 +89,14 @@ export class AddEditDashboardComponent extends BaseComponent {
     }
     private CreateDashboard() {
         this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
-        this.dashboardService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.OnSaveCompleted(myResponse);
-        });
-    }   
+        //this.dashboardService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+        //    this.OnSaveCompleted(myResponse);
+        //});
+    }
     private UpdateDashboard() {
-        this.dashboardService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.OnSaveCompleted(myResponse);
-        });
+        //this.dashboardService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+        //    this.OnSaveCompleted(myResponse);
+        //});
     }
     private OnSaveCompleted(myResponse: ServiceResponse) {
         if (!myResponse.HasError) {
