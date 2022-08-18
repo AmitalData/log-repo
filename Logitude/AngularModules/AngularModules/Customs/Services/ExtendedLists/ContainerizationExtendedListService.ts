@@ -31,7 +31,8 @@ export class ContainerizationExtendedListService {
     public AllDeclarations: string;
     public IsDirectCharging: string;
     public containerizationRequestParams:ContainerizationRequestParams;
-
+    public IsError: boolean;
+    
     getPromiseByFilters(filters: ApiQueryFilters) {
 
         return new Promise((resolve, reject) => {

@@ -83,7 +83,14 @@ export class CustomsContainerizationListTemplate {
         
     }
 
-    OnConnectedCheckBoxChecked($event) {
+    OnConnectedCheckBoxChecked($event) {      
+        if(!this.rowData.IsSubmitDeclaration && $event)
+        {
+            this._containerizationExtendedListService.IsError=true;
+        }
+        else{
+            this._containerizationExtendedListService.IsError=false;
+        }
         this._containerizationExtendedListService.disconnectedSelectAll = false;
         if ($event) {
             if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
