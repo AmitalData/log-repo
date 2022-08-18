@@ -617,6 +617,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
                 newObjectField.RightKey = objectFieldDetails.OtherKey;
@@ -719,6 +720,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
                 updatedObjectField.RightKey = objectFieldDetails.OtherKey;
@@ -1270,6 +1272,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
                 newObjectField.RightKey = objectFieldDetails.OtherKey;
@@ -1371,6 +1374,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
                 updatedObjectField.RightKey = objectFieldDetails.OtherKey;
@@ -1872,6 +1876,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
             newObjectField.RecordType = objectFieldDetails.RecordType;
             newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+            newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
             newObjectField.LeftKey = objectFieldDetails.ThisKey;
             newObjectField.RightKey = objectFieldDetails.OtherKey;

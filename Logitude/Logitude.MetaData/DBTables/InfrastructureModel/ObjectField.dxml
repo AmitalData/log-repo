@@ -650,6 +650,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsListFilter"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"

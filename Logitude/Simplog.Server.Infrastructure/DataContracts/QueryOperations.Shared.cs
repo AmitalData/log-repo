@@ -190,21 +190,21 @@ namespace Simplog.Server.Infrastructure.DataContracts
             }
         }
 
-        public void SetFilter(string name, object value, bool isCustom, string Operator, object value2, bool displayInList, bool isCustomField, string fieldDataType)
+        public void SetFilter(string name, object value, bool isCustom, string Operator, object value2, bool displayInList, bool isCustomField, string fieldDataType, bool isListFilter = false)
         {
             if (QueryFilterItems == null)
             {
                 QueryFilterItems = new List<QueryFilterItem>();
                 if (Operator == "NoDate")
                 {
-                    QueryFilterItem item = new QueryFilterItem() { FieldName = name, FieldValue = null, IsCustom = isCustom, Operator = "Equal", DisplayInList = displayInList };
+                    QueryFilterItem item = new QueryFilterItem() { FieldName = name, FieldValue = null, IsCustom = isCustom, Operator = "Equal", DisplayInList = displayInList, IsListFilter  = isListFilter };
                     QueryFilterItems.Add(item);
                 }
                 else
                 {
                     if (value != null)
                     {
-                        QueryFilterItem item = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, IsCustomField = isCustomField, FieldDataType = fieldDataType };
+                        QueryFilterItem item = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, IsCustomField = isCustomField, FieldDataType = fieldDataType, IsListFilter = isListFilter };
                         QueryFilterItems.Add(item);
 
                     }
@@ -216,6 +216,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
                 QueryFilterItem item = QueryFilterItems.Where(d => d.FieldName == name).FirstOrDefault();
                 if (item != null)
                 {
+                    item.IsListFilter = isListFilter;
                     if (Operator == "NoDate")
                     {
                         item.Operator = "Equal";
@@ -259,14 +260,15 @@ namespace Simplog.Server.Infrastructure.DataContracts
                 {
                     if (Operator == "NoDate")
                     {
-                        QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = null, IsCustom = isCustom, Operator = "Equal", DisplayInList = displayInList };
+                        QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = null, IsCustom = isCustom, Operator = "Equal", DisplayInList = displayInList, IsListFilter = isListFilter };
                         QueryFilterItems.Add(newItem);
                     }
                     else
                     {
                         if (value != null)
                         {
-                            QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, IsCustomField = isCustomField, FieldDataType = fieldDataType };
+
+                            QueryFilterItem newItem = new QueryFilterItem() { FieldName = name, FieldValue = value, IsCustom = isCustom, Operator = Operator, FieldValue2 = value2, DisplayInList = displayInList, IsCustomField = isCustomField, FieldDataType = fieldDataType, IsListFilter = isListFilter };
                             QueryFilterItems.Add(newItem);
                         }
                     }

@@ -468,6 +468,13 @@ namespace MeatadataGeneratorTool
             set { isCustomFilter = value; FirePropertyChanged("IsCustomFilter"); }
         }
 
+        bool isListFilter;
+        public bool IsListFilter
+        {
+            get { return isListFilter; }
+            set { isListFilter = value; FirePropertyChanged("IsListFilter"); }
+        }
+
         bool isChecked;
         public bool IsChecked
         {
