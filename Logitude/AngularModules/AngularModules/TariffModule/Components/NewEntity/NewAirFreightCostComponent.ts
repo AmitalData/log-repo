@@ -40,6 +40,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public MeasurementsQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
     private packageTypeListService: PackageTypeListService;
+    private commonDomainService: CommonDomainService;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private ContainerTypesProperties: string[] = [];
@@ -60,6 +61,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.myService = new TariffPMService();
         this.chargesTypePMService = new ChargesTypeListService();
         this.packageTypeListService = new PackageTypeListService();
+        this.commonDomainService = new CommonDomainService();
         this.EntityPM = this.myService.GetNewEntityPM();
        
         this.FillChargesIDsAndUOMS();
@@ -88,8 +90,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     private BCNTmeasurementId: string;
     private GetBCNTMeasurementId() {
         if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
-            var commonDomainService: CommonDomainService = new CommonDomainService();
-            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res: any) => {
+            this.commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.BCNTmeasurementId = res.Result;
@@ -286,10 +287,13 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
             this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
         }
+        else if (this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS"){
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "FIXD", null, null, "Equals", false, false, false, "string", false, true, true);
+        }
         else {
             this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
         }
-
+        
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(chargesTypeFilterField, true, null, null, "Equals", false, false, false, "Boolean");
@@ -731,7 +735,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 }
 
                 else {
-                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
+                   if(this.EntityPM.TypeCode != "ECS" && this.EntityPM.TypeCode != "ICS") 
+                       this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
 
                     if (index == 1) {
                         this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, false);
@@ -780,6 +785,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     }
 
     SetDefaultUOM(index: number) {
+        if(this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS") {
+            this.SetFixedUOM(index);
+            return;
+        }
         this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
             if (!res.HasError) {
                 if (res.Result) {
@@ -797,6 +806,13 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                     }
                 }
             }
+        });
+    }
+
+    private SetFixedUOM(index: number) {
+        this.commonDomainService.GetMeasurementIdByCode("FIXD").subscribe((res: any) => {
+            if (!res.HasError && res.Result)
+                this[this.UOMProps[index]] = res.Result;
         });
     }
 
