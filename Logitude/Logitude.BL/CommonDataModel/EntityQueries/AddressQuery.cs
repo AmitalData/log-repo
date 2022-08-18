@@ -145,6 +145,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AddressPM GetSingleAddressPM(string id, int tenant)
         {
+            string key = $"GetSingleAddressPM({id}, {tenant})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<AddressPM>(key, () =>
+            {
+                return GetSingleAddressPMReal(id, tenant);
+            });
+        }
+        AddressPM GetSingleAddressPMReal(string id, int tenant)
+        {
             AddressPM instance = null;
 
             if (!string.IsNullOrEmpty(id))

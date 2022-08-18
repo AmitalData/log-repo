@@ -73,6 +73,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public EventType GetSingleEventTypeByCode(string code, int tenant)
         {
+            string key = $"GetSingleEventTypeByCode({code}, {tenant})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<EventType>(key, () =>
+            {
+                return GetSingleEventTypeByCodeReal(code, tenant);
+            });
+        }
+        EventType GetSingleEventTypeByCodeReal(string code, int tenant)
+        {
             EventType entity = (from a in context.EventType where a.Tenant == tenant && a.Code == code select a).FirstOrDefault();
             return entity;
         }
