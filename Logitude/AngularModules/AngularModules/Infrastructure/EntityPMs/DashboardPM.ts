@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {WidgetsPM} from './WidgetsPM';
+import {WidgetPM} from './WidgetPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -71,7 +71,7 @@ export class DashboardPM {
        
 	 
      
-	private widgets: WidgetsPM[];
+	private widgets: WidgetPM[];
     get  Widgets() {
         if (this.widgets == null) {
             this.widgets = [];
@@ -79,12 +79,12 @@ export class DashboardPM {
 
         return this.widgets;
     }
-    set  Widgets(newValue: WidgetsPM[]) {
+    set  Widgets(newValue: WidgetPM[]) {
         if (this.widgets != newValue) {
             this.widgets = newValue;
         }
     }
-    public AddWidgets(item: WidgetsPM) {
+    public AddWidget(item: WidgetPM) {
         if (item != null) {
             var index = this. Widgets.indexOf(item);
             if (index == -1) {
@@ -94,7 +94,7 @@ export class DashboardPM {
             }
         }
     }
-    public RemoveWidgets(item: WidgetsPM) {
+    public RemoveWidget(item: WidgetPM) {
         if (item != null) {
             var index = this. Widgets.indexOf(item);
             if (index > -1) {
@@ -103,7 +103,7 @@ export class DashboardPM {
             }
         }
     }
-    //public Widgets: Array<WidgetsPM>= [];
+    //public Widgets: Array<WidgetPM>= [];
  
     public OldEntityPM: DashboardPM;
 		
