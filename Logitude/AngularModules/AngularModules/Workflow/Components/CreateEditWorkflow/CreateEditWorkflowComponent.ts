@@ -23,7 +23,7 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
-    public WidthBusyIndicator: number = 200;
+    public BusyIndicatorWidth: number = 200;
 
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
 
@@ -118,6 +118,16 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
                 this.stopBusyIndicator();
                 if (!serviceResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
+
+                    let newEntity = serviceResponse.Result;
+                    SessionLocator.DynamicLoader.Load("./Workflow/Components/WorkflowBuilder/WorkflowBuilderComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({
+                                ObjectTableName: 'WorkFlow',
+                                EntityId: newEntity.Id
+                            });
+                        });
                 }
                 else {
                     this.ValidationErrorsList = serviceResponse.ErrorsArray;

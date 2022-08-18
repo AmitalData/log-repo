@@ -324,6 +324,18 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
             }
 
             System.Linq.IQueryable querableEntities = null;

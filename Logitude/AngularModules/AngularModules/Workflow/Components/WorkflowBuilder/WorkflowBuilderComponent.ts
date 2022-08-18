@@ -26,7 +26,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
-    public WidthBusyIndicator: number = 200;
+    public BusyIndicatorWidth: number = 200;
 
     public BackButtonLable: string = "Workflows";
 

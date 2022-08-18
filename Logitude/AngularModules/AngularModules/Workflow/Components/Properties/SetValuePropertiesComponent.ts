@@ -17,9 +17,9 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
     }
 
-    ChangeName(name: string) {
-        this.Data["name"] = name;
-    }
+    // ChangeName(name: string) {
+    //     this.Data["name"] = name;
+    // }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
