@@ -434,6 +434,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CargoTypeCode  { get; set; }
        [DataMember]
        public string LoadingPortName  { get; set; }
+       [DataMember]
+       public string ExportLoadingPortCode  { get; set; }
    }
 
 }
