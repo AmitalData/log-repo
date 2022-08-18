@@ -34,59 +34,15 @@ end
 	  v_messageid   IN   NUMBER,
 	  v_statud      IN   NUMBER
 	  ) AS
-	  v_temp NUMBER(1, 0) := 0;
 	  BEGIN
-	  BEGIN
-	  SELECT
-	  1
-	  INTO v_temp
-	  FROM
-	  dual
-	  WHERE
-	  EXISTS (
-	  SELECT
-	  id
-	  FROM
-	  queuemessages
-	  WHERE
-	  id = v_messageid
-	  );
-
-	  EXCEPTION
-	  WHEN OTHERS THEN
-	  NULL;
-	  END;
-
-	  IF v_temp = 1 THEN
-	  IF ( v_statud = 1 ) THEN
-	  BEGIN
-	  DELETE FROM queuemessages
-	  WHERE
-	  id = v_messageid;
-
-	  END;
-	  ELSE
-	  BEGIN
-	  UPDATE queuemessages
-	  SET
-	  status = v_statud,
-	  completedatetime = SYSDATE
-	  WHERE
-	  id = v_messageid;
-
-	  END;
-	  END IF;
-
-	  END IF;
+	  ----INSERT INTO ZQUEUE_SETSTATUS (ID, STATUS, COMPLETEDATETIME) VALUES (v_messageid, v_statud,sysdate  );
+	  delete from queuemessages where id = v_messageid and v_statud =1;
+	  Update queuemessages set completedatetime = sysdate, status=v_statud where id = v_messageid and v_statud!=1;
 
 	  UPDATE queuemessagemoredetails
-	  SET
-	  status = v_statud,
-	  completedatetime = SYSDATE
-	  WHERE
-	  id = v_messageid;
+	  SET          status = v_statud,         completedatetime = SYSDATE
+	  WHERE      id = v_messageid;
 
 	  END;
-
   </OracleScript>
 </Procedure>
