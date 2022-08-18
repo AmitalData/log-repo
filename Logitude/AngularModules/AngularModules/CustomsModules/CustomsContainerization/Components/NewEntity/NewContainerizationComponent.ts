@@ -62,7 +62,7 @@ export class NewContainerizationComponent extends BaseComponent {
     declarationListQuery: DeclarationListService = new DeclarationListService();
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     declarationWebService: DeclarationWebService = new DeclarationWebService()
-        
+    ErrorsList:string[];
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -97,7 +97,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
-        
+
        
         this.IsSelected = false;
         if (!this.entityPM.ConnectedDeclarations) {
@@ -121,7 +121,7 @@ export class NewContainerizationComponent extends BaseComponent {
             }
         }
     }
-
+    
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
         this.entityPM = new ContainerizationPM();
@@ -143,6 +143,9 @@ export class NewContainerizationComponent extends BaseComponent {
                     }
                     this.BuildColumns();
                     this.isLoad = true;
+                                   
+                     this.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
+                   
                 });
             });
         });
@@ -640,9 +643,10 @@ export class NewContainerizationComponent extends BaseComponent {
                 this.ExportFile = this.declarationPM.ExportFile;
 
                 this.selectedValue=this.declarationPM.TransportModeId;
-
+             if(this.declarationPM.IsSubmitDeclaration) {
                 this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
                 this.containerizationExtendedListService.SelectedDeclarations = true;
+             }
             } else {
 
                 this.entityPM = windowArgs.EntityPM;
