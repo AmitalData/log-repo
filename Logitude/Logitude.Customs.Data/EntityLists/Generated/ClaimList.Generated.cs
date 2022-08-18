@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsSendClaimsRelatedEntity  { get; set; }
        [DataMember]
        public string CustomsBranchName  { get; set; }
+       [DataMember]
+       public decimal ClaimAmount  { get; set; }
    }
 
 }

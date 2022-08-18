@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "b756c7eba306203e9c3e3072582185b7";
+		public const string HashString = "bed77706f9f62f0a4e895056b23153ce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2400,7 +2400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2427,6 +2427,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClaimsRelatedEntities",
 					  						DefaultText =  "Claim Related Entities",
+					  						ListFieldLable =  "ClaimsRelatedEntitiesListLable",
+					  						ListLableDefaultText =  "Claim Related Entities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3667,6 +3669,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ClaimAmount",
+					  						ObjectTableName =  "Customs.Claim",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClaimAmount",
+					  						ListPropertyPath =  "ClaimAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Claim",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClaimAmount",
+					  						DefaultText =  "Claim Amount",
+					  						FullLocalDefaultText =  "סכום תביעה",
+					  						ListFieldLable =  "ClaimAmountListLable",
+					  						ListLableDefaultText =  "Claim Amount",
+					  						ListLocalDefaultText =  "סכום תביעה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -3711,15 +3776,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn OpenClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.ClaimAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenClaimFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -3730,15 +3797,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.ClaimAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllClaimFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
   
 	      
 
@@ -3746,15 +3815,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CloseClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.ClaimAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CloseClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CloseClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter CloseClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
