@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "6146bd6e1318f83ee6b00ec524a39763";
+		public const string HashString = "9a9d3ffb8b8ec5201a6396c1e15c13fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19616,6 +19616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsExportDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOFreightActualAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightActualAmount", DefaultText = "Freight Actual Amount",LocalDefaultText = @"הובלה בפועל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndDocumentWithDifferentCustomsReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference", DefaultText = "A document and a document with a different customs reference",LocalDefaultText = @"לא ניתן לקשר מסמך עם סימוכין מכס שונה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
