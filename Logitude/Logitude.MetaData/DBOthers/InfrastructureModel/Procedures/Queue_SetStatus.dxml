@@ -30,5 +30,63 @@ END
 end
 ]]></SqlScript>
   <OracleScript>
-</OracleScript>
+	  create or replace PROCEDURE queue_setstatus (
+	  v_messageid   IN   NUMBER,
+	  v_statud      IN   NUMBER
+	  ) AS
+	  v_temp NUMBER(1, 0) := 0;
+	  BEGIN
+	  BEGIN
+	  SELECT
+	  1
+	  INTO v_temp
+	  FROM
+	  dual
+	  WHERE
+	  EXISTS (
+	  SELECT
+	  id
+	  FROM
+	  queuemessages
+	  WHERE
+	  id = v_messageid
+	  );
+
+	  EXCEPTION
+	  WHEN OTHERS THEN
+	  NULL;
+	  END;
+
+	  IF v_temp = 1 THEN
+	  IF ( v_statud = 1 ) THEN
+	  BEGIN
+	  DELETE FROM queuemessages
+	  WHERE
+	  id = v_messageid;
+
+	  END;
+	  ELSE
+	  BEGIN
+	  UPDATE queuemessages
+	  SET
+	  status = v_statud,
+	  completedatetime = SYSDATE
+	  WHERE
+	  id = v_messageid;
+
+	  END;
+	  END IF;
+
+	  END IF;
+
+	  UPDATE queuemessagemoredetails
+	  SET
+	  status = v_statud,
+	  completedatetime = SYSDATE
+	  WHERE
+	  id = v_messageid;
+
+	  END;
+
+  </OracleScript>
 </Procedure>
