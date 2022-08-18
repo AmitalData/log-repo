@@ -9,6 +9,36 @@
     <tr style="height:1px;">
         <td>
             <table>
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:250px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:80px;">
+                    <td style="vertical-align:top">
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="height:80px;">
+                        <div class="FillParent">
+                            <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
             </table>
         </td>
     </tr>

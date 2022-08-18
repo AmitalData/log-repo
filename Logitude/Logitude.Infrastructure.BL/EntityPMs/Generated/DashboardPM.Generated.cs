@@ -227,7 +227,42 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<WidgetPM> widgets;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DashboardWidgets", "Id","DashboardId")]
+	   [DataMember]
+	   public virtual List<WidgetPM> Widgets  
+	   {
+	        get
+             {
+                 if (widgets == null)
+                 {
+                     widgets = new List<WidgetPM>();
+                 }
+                 return widgets;
+              }
+             set { widgets = value; }
+	    }
+		   
+	   private List<WidgetPM>  deletedWidgets;
+	   public virtual List<WidgetPM> DeletedWidgets  
+	   {
+	        get
+             {
+                 if ( deletedWidgets == null)
+                 {
+                      deletedWidgets = new List<WidgetPM>();
+                 }
+                 return  deletedWidgets;
+              }
+             set {  deletedWidgets = value; }
+	    }
+	     }
    
 }
 	 

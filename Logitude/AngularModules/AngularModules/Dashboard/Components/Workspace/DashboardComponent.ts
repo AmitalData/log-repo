@@ -21,12 +21,12 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
-
-
-
-
 import * as ReactDOM from 'react-dom';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
+import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
@@ -67,6 +67,8 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     showNewDashboardToggle: boolean;
     isNewDashboardRendered: boolean = false;
     @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
+    public selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
+    private dashboardDataBinding: DashboardDataBinding = new DashboardDataBinding();
 
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
@@ -94,8 +96,79 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.showNewDashboardToggle = true;
     }
     renderNewDashboard(callBack: () => void = undefined){
-        ReactDOM.render(React.createElement(Dashboard,{token:SessionInfo.Token,tenant:SessionInfo.LoggedUserTenant,userId:SessionInfo.LoggedUserId}),this.reactDashboradContainer.nativeElement,callBack);
+        ReactDOM.render(React.createElement(Dashboard, {
+            token: SessionInfo.Token,
+            tenant: SessionInfo.LoggedUserTenant,
+            userId: SessionInfo.LoggedUserId,
+            dataBinding: this.dashboardDataBinding,
+            openAddEditWidget: this.OpenDashboardWidgetWindow,
+            openAddEditDashboard: this.OpenDashboardWindow.bind(this),
+            onChangeDashboard: this.OnChangeDashboard,
+            onSaveDashboard: this.OnSaveDashboard,
+        }),
+            this.reactDashboradContainer.nativeElement, callBack);
     }
+    private OpenDashboardWindow(dashboard: any) {
+        this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
+            var myDashboard: DashboardPM = this.GetDashboardEntity(dashboard);
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
+            logitudeWindow.WindowArgs = { EntityPM: myDashboard, };
+            logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+            logitudeWindow.ComponentLoaded.subscribe(comp => {
+                logitudeWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(myDashboard));
+                    }
+                });
+            });
+        });
+    }
+    GetReactDashboard(dashboard: DashboardPM): ReactDashboardPM {
+        var myDashboard: ReactDashboardPM = {} as ReactDashboardPM;
+
+        if (dashboard) {
+            myDashboard.Id = dashboard.Id;
+            myDashboard.Tenant = dashboard.Tenant;
+            myDashboard.Name = dashboard.Name;
+            myDashboard.Description = dashboard.Description;
+            myDashboard.CreateDate = dashboard.CreateDate;
+            myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
+            myDashboard.UpdateDate = dashboard.UpdateDate;
+            myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
+        }
+
+        return myDashboard;
+    }
+    GetDashboardEntity(dashboard: any): DashboardPM {
+        var myDashboard: DashboardPM = new DashboardPM();
+        
+        if (dashboard) {
+            myDashboard.Id = dashboard.Id;
+            myDashboard.Tenant = dashboard.Tenant;
+            myDashboard.Name = dashboard.Name;
+            myDashboard.Description = dashboard.Description;
+            myDashboard.CreateDate = dashboard.CreateDate;
+            myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
+            myDashboard.UpdateDate = dashboard.UpdateDate;
+            myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
+        }
+
+        return myDashboard;
+    }
+    private OpenDashboardWidgetWindow(dashboard: any) {
+        console.log("OpenDashboardWidgetWindow", dashboard);
+
+    }
+    private OnChangeDashboard(dashboard: any) {
+        console.log("OnChangeDashboard", dashboard);
+
+    }
+    private OnSaveDashboard(dashboard: any) {
+        console.log("OnSaveDashboard", dashboard);
+
+    }
+
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
             this.ActivityStatusPage.destroy();

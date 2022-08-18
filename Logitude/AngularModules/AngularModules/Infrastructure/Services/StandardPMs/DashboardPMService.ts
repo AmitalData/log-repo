@@ -21,6 +21,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {DashboardPM} from '../../EntityPMs/DashboardPM';
 
+import {WidgetPM} from '../../EntityPMs/WidgetPM';
 
 @Injectable()
 
@@ -182,12 +183,22 @@ export class DashboardPMService {
                  
             }
 			
+               this.MapWidgets(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.Widgets = [];
+            for (var item in entityPM.Widgets) {
+            var myWidgetPM = entityPM.Widgets[item];
+            var newWidgetPM: WidgetPM = this.clone(myWidgetPM);
+						
+							 
+            entityPM.OldEntityPM.Widgets.push(newWidgetPM);
+            }
+			   
 		}
         else {
 
@@ -199,6 +210,98 @@ export class DashboardPMService {
         return entityPM;
     }
 
+    MapWidgets(entityPM: DashboardPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldWidgets: WidgetPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldWidgets = entityPM.OldEntityPM.Widgets;
+        }
+
+        entityPM.Widgets = new Array<WidgetPM>();
+        for (var item in jsonPM.Widgets) {
+            var jItem = jsonPM.Widgets[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newWidgetPM: WidgetPM;
+	  
+            if (mapParent) {
+                newWidgetPM = new WidgetPM(entityPM);
+            }
+            else
+            {
+                newWidgetPM = new WidgetPM(null);
+            }
+ 			newWidgetPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newWidgetPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newWidgetPM.UniqueKey = Guid.newGuid();
+                newWidgetPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newWidgetPM.OldEntityPM = this.clone(newWidgetPM);
+
+				
+            }
+            else {
+                if (newWidgetPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newWidgetPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newWidgetPM.ChangeSetOp = "Insert";
+                }
+ 
+                newWidgetPM.OldEntityPM = null;
+                newWidgetPM.EntityParentPM = null;
+            }
+			 newWidgetPM.DisableMarkAsDirty = false;
+			 newWidgetPM.IsDirty = false;
+            entityPM.Widgets.push(newWidgetPM);
+        }
+        if (oldWidgets) {
+            
+            for (var itemKey in oldWidgets) {
+                if (entityPM.Widgets.filter(p=> p.UniqueKey === oldWidgets[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldWidgets[itemKey]) {
+                        //oldWidgets[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.Widgets.push(oldWidgets[itemKey]);
+						var oldItemJson = oldWidgets[itemKey];
+                        var deletedPM: WidgetPM = new WidgetPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.Widgets.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
