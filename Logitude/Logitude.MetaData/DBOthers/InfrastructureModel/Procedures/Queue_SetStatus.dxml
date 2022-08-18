@@ -30,5 +30,19 @@ END
 end
 ]]></SqlScript>
   <OracleScript>
-</OracleScript>
+	  create or replace PROCEDURE queue_setstatus (
+	  v_messageid   IN   NUMBER,
+	  v_statud      IN   NUMBER
+	  ) AS
+	  BEGIN
+	  ----INSERT INTO ZQUEUE_SETSTATUS (ID, STATUS, COMPLETEDATETIME) VALUES (v_messageid, v_statud,sysdate  );
+	  delete from queuemessages where id = v_messageid and v_statud =1;
+	  Update queuemessages set completedatetime = sysdate, status=v_statud where id = v_messageid and v_statud!=1;
+
+	  UPDATE queuemessagemoredetails
+	  SET          status = v_statud,         completedatetime = SYSDATE
+	  WHERE      id = v_messageid;
+
+	  END;
+  </OracleScript>
 </Procedure>
