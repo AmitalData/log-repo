@@ -387,8 +387,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+
         public ObjectField GetSingleObjectFieldByObjectFieldCode(string objectFieldCode)
         {
+            string key = $"GetSingleObjectFieldByObjectFieldCode({objectFieldCode})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<ObjectField>(key, () =>
+            {
+                return GetSingleObjectFieldByObjectFieldCodeReal(objectFieldCode);
+            });
+        }
+
+        ObjectField GetSingleObjectFieldByObjectFieldCodeReal(string objectFieldCode)
+        {   
+
             return (from a in context.ObjectFields
                     where a.FieldCode == objectFieldCode
                     select a).FirstOrDefault();

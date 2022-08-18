@@ -39,7 +39,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return this.context.Tenants.Where(r => r.AccountingActivated).Select(r=>r.Id).ToList();
         }
 
-        public static Tenant GetSingleTenant(int id,bool getFromCache)
+        public static Tenant GetSingleTenant(int id, bool getFromCache)
+        {
+            if (!getFromCache)
+            {
+                return GetSingleTenantReal(id, getFromCache);
+            }
+            string key = $"GetSingleTenant({id}, {getFromCache})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<Tenant>(key, () =>
+            {
+                return GetSingleTenantReal(id, getFromCache);// 
+            });
+
+        }
+        static Tenant GetSingleTenantReal(int id,bool getFromCache)
         {
             string entityName = "Tenant" + id ;
             Tenant entity;
