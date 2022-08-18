@@ -217,6 +217,7 @@ export class DeclarationList {
 	DeclarationTypeName: string;
 	IsExportDeclarationAmendments: boolean;
 	LoadingPortName: string;
+	ExportLoadingPortCode: string;
 	
 }
  
