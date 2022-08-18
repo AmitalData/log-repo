@@ -147,8 +147,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
-
         public HybridPartnerPM GetSinglePMByPartnerTenant(int PartnerTenant)
+        {
+            string key = $"GetSinglePMByPartnerTenant({PartnerTenant})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<HybridPartnerPM>(key, () =>
+            {
+                return GetSinglePMByPartnerTenantReal(PartnerTenant);
+            });
+
+        }
+        HybridPartnerPM GetSinglePMByPartnerTenantReal(int PartnerTenant)
         {
             HybridPartnerPM entity = (from a in repository.context.HybridPartners
                                       where a.PartnerTenant == PartnerTenant
