@@ -23,11 +23,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ClaimList> GetIqueryableList(IQueryable<Claim> iQueryable)
         {
-            IQueryable<ClaimList> query = (from a in iQueryable.Include("ImporterTypeForClaim").Include("PassportType").Include("PassportCountryType").Include("ClaimSubmiterType").Include("BeneficiaryActivityType").Include("AccountCountry").Include("AccountCurrencyType").Include("AccountBranch")
-                                           join d in context.Tapags.Include("CustomerCard").Include("ReferantUser")      
-                                           on a.Id equals d.Id 
 
-                                            select new ClaimList()
+            var q = from a in iQueryable
+                    join c in context.ClaimsRelatedEntities
+                    on a.Id equals c.ClaimId
+                    group c by c.ClaimId into g
+                    select new
+                    {
+                        Id = g.Key,
+                        Amount = g.Sum(x => x.ClaimAmount)
+
+                    };
+
+
+            IQueryable<ClaimList> query = (from a in iQueryable.Include("ImporterTypeForClaim").Include("PassportType").Include("PassportCountryType").Include("ClaimSubmiterType").Include("BeneficiaryActivityType").Include("AccountCountry").Include("AccountCurrencyType").Include("AccountBranch")
+                                           join d in context.Tapags.Include("CustomerCard").Include("ReferantUser")  
+                                           on a.Id equals d.Id
+                                           join c in q
+                                           on a.Id equals c.Id
+                                           
+
+
+                                           select new ClaimList()
 											{
                                                 Id = a.Id,
                                                 Tenant = a.Tenant,
@@ -79,7 +96,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 ReferantName = d.ReferantUser.Contact.LocalName != null ? d.ReferantUser.Contact.LocalName : d.ReferantUser.Contact.EnglishName,
                                                 CustomsBranchCode = d.CustomsBranchCode,
                                                 CustomsBranchName = d.CustomsBranch != null ? d.CustomsBranch.LocalName : null,
-                                            });
+                                                ClaimAmount = Convert.ToDecimal(c.Amount)
+                                           });
 
             //Freelancer filtering
             query = GetFreelancerQuery(query);
