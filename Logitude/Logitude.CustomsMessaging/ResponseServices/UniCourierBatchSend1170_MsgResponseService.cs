@@ -26,6 +26,13 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using System.Data.OracleClient;
+using System.Data.SqlClient;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -165,9 +172,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
                         Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
-                        
-                        string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
-                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
+                        RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
+
+                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
                         scopeNewCRS.Complete();
                     }
@@ -191,6 +200,65 @@ namespace Logitude.CustomsMessaging.ResponseServices
 //    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 //});
         }
+
+
+        public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            if (dbms == "oracle")
+            {
+
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + "  where DECLARATIONID=:p1 ";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+
+
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
         {
