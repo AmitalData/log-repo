@@ -121,8 +121,10 @@ export class ObjectFieldPMService {
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+
+                var mappedEntityDeepCloned = this.deepClone(mappedEntity);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntityDeepCloned), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
                  

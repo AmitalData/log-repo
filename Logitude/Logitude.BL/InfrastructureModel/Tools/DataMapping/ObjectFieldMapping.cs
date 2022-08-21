@@ -130,7 +130,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             if (defaultAdditionalTreeFilters == null)
             {
-                return objectFieldPM.DefaultAdditionalFilters;
+                return "";
             }
 
             return JsonSerializer.Serialize(defaultAdditionalTreeFilters);

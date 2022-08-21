@@ -611,9 +611,20 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 
                 defaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
+                HandleObjectFieldValue(defaultAdditionalTreeFilters);
             }
 
             return defaultAdditionalTreeFilters;
+        }
+
+        private void HandleObjectFieldValue(QueryFilterItem queryFilterItem)
+        {
+            queryFilterItem.FieldValue = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : queryFilterItem.FieldValue;
+            if (queryFilterItem.AdditionalFilters == null) return;
+ 
+                queryFilterItem.AdditionalFilters.ForEach(queryFilter => {
+                h(queryFilter);
+            });
         }
     }
 }

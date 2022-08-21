@@ -11,7 +11,6 @@ import { QueryFilterViewItem } from '../../../../Infrastructure/DataContracts/Qu
 
 export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     DataSource: any;
-    IsRoot: boolean;
     AllObjectTables: string[] = [];
 
     constructor() {
@@ -26,7 +25,7 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         if (this.IsRoot && this.DataSource && this.DataSource.length == 0) {
             this.AddEmptyFilter();
         }
-        else if (this.IsRoot) {
+        else if (this.IsRoot && this.DataSource && this.DataSource.length != 1) {
             this.SetAllFilters();
         }
     }
@@ -37,9 +36,8 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         groupTreeFilter.setAndOrOperation(this.DataSource.FilterType);
         groupTreeFilter.IndexOrder = this.DataSource.length;
         let MyFilter = this.RestoreFilters(this.DataSource, groupTreeFilter);
-        let temp = [];
-        temp.push(MyFilter);
-        this.DataSource = temp;
+        this.DataSource = [];
+        this.DataSource.push(MyFilter);
     }
 
     RestoreFilters(BaseFilter: QueryFilterViewItem, MyFilter: QueryFilterViewItem) {
@@ -81,10 +79,20 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         this.FillAllObjectTables();
     }
 
+    public isRoot: boolean;
+    public get IsRoot() { return this.isRoot; }
+    public set IsRoot(newValue: boolean) {
+        if (newValue != this.isRoot) {
+            this.isRoot = newValue;
+        }
+    }
+
     FillAllObjectTables() {
         this.AllObjectTables = [];
         this.AllObjectTables.push(this.ParentObjectTableName);
-        this.AllObjectTables.push(this.ObjectTableName);
+        if (this.ParentObjectTableName != this.ObjectTableName) {
+            this.AllObjectTables.push(this.ObjectTableName);
+        }
     }
 
     AddFilterToGroup(item: QueryFilterViewItem) {
@@ -130,12 +138,12 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     onDeleteFilterClick(item: QueryFilterViewItem) {
         item.MyParentClass.DataSource = this.DeleteFilter(item, item.MyParentClass.DataSource);
         this.DataSource = item.MyParentClass.DataSource;
-        if (item.MyParentClass.DataSource.length == 0) this.AddEmptyFilter();
+        if (item.MyParentClass.DataSource.length == 0 && item.MyParentClass.IsRoot) this.AddEmptyFilter(item);
     }
 
-    AddEmptyFilter() {
-        let emptyTreeFilter = new QueryFilterViewItem(null, this);
-        let newTreeFilter = new QueryFilterViewItem(null, this);
+    AddEmptyFilter(item: QueryFilterViewItem = null) {
+        let emptyTreeFilter = new QueryFilterViewItem(null, item == null ? this : item.MyParentClass);
+        let newTreeFilter = new QueryFilterViewItem(null, item == null ? this : item.MyParentClass);
         newTreeFilter.IsGroup = true;
         newTreeFilter.IndexOrder = this.DataSource.length;
         newTreeFilter.AdditionalFilters.push(emptyTreeFilter);

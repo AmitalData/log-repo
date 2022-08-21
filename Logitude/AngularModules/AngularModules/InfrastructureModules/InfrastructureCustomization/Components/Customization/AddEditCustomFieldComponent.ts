@@ -535,6 +535,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                 });
             }
             else {
+                this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData;
                 this._ObjectFieldPMService.update(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
