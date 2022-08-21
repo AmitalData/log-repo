@@ -21,7 +21,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class ClaimListQueryService
     {
-        private decimal num;
 
         private IQueryable<ClaimList> GetIqueryableList(IQueryable<Claim> iQueryable)
         {
