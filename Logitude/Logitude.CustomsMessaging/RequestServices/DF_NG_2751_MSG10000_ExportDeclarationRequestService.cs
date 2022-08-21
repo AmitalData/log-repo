@@ -469,6 +469,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
             _context = null;
 
+
             for (int i = 0; i < _DeclarationPM?.SupplierInvoices?.Count; i++)
             {
                 if (_DeclarationPM.SupplierInvoices[i].AccountTypeCode == "I04" || _DeclarationPM.SupplierInvoices[i].IncotermCode == null)
