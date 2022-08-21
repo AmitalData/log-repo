@@ -226,6 +226,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.HelpTextDefaultText = GetAttributeStringValue(fieldNode.Attributes["HelpTextDefaultText"]);
             field.InActive = GetAttributeBoolValue(fieldNode.Attributes["InActive"]);
             field.IsCustomFilter = GetAttributeBoolValue(fieldNode.Attributes["IsCustomFilter"]);
+            field.IsListFilter = GetAttributeBoolValue(fieldNode.Attributes["IsListFilter"]);
             field.IsDBField = GetAttributeBoolValue(fieldNode.Attributes["HasDataBaseField"]);
             field.IsForeignKey = GetAttributeBoolValue(fieldNode.Attributes["IsForeignKey"]);
 

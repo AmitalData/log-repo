@@ -64,6 +64,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AdditionalQuerySections).HasMaxLength(200).IsUnicode(false);
 
+            this.Property(t => t.IsListFilter);
+
 
 
             // Table & Column Mappings
@@ -149,7 +151,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
             this.Property(t => t.AdditionalQuerySections).HasColumnName("AdditionalQuerySections");
 
-            
+            this.Property(t => t.IsListFilter).HasColumnName("IsListFilter");
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

@@ -1213,6 +1213,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ConverterName", GetStringValue(f.ConverterName), fieldElement, null);
                 SetAttribute("DataTemplateName", GetStringValue(f.DataTemplateName), fieldElement, null);
                 SetAttribute("IsCustomFilter", f.IsCustomFilter.ToString().ToLower(), fieldElement, null);
+                SetAttribute("IsListFilter", f.IsListFilter.ToString().ToLower(), fieldElement, null);
                 SetAttribute("Operator", GetStringValue(f.Operator), fieldElement, null);
                 SetAttribute("MultiLine", f.MultiLine.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsTimeFrameFilter", f.IsTimeFrameFilter.ToString().ToLower(), fieldElement, null);
