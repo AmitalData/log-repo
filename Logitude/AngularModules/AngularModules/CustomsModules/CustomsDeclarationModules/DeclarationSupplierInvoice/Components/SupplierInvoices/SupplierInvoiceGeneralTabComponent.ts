@@ -187,19 +187,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     ngOnInit() {
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה";
-            this.TooltipCertificate = "אישורים"
+            this.TooltipCertificate = "םישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
-
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-
             this.setAdjustmentsWarning(this.IncotermCode)
         }
     }
@@ -336,7 +326,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         windowArgs.Parent = this;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת חשבון יצוםן";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
@@ -403,7 +393,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AccumulatedFilterSelectedValue = itemValue;
             if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                 this.AccumulatedFilter = "parent";
-                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
 
                 this.IsActionButtonsEnabled = false;
             }
@@ -516,7 +506,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
-                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
                         if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                             this.IsActionButtonsEnabled = false;
 
@@ -700,9 +690,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצאות נוספות");
+            this.AddModification("160", paymentCounter, "הוצםות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצאות נוספות"
+            ExtraPayments160.TypeName = "הוצםות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
@@ -888,16 +878,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
     public set AccountTypeCode(newValue: string) {
         this.EntityPM.AccountTypeCode = newValue;
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
     }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
@@ -917,23 +897,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
-    public set BuyerName(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-
-        this.EntityPM.BuyerName = newValue;
-    }
+    public set BuyerName(newValue: string) { this.EntityPM.BuyerName = newValue; }
 
     public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
         this.EntityPM.BuyerAddress = newValue;
     }
 
@@ -978,7 +945,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.vendor = myResponse.Result;
             if (this.vendor != null) {
                 this.EntityPM.IssueCountryCode = this.vendor.CountryCode;
-                this.EntityPM.IssueCountryName = "טאיוואן";
+                this.EntityPM.IssueCountryName = "טםיווםן";
                 this.vendorNumber = this.vendor.VendorNumber;
                 this.SetDepositionStatus();
             }
@@ -1177,7 +1144,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             filters.PageIndex = 0;
             filters.PageSize = 50;
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
-            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצוא', null, null, "Contains", false, false, false, "Text", false, false);
+            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצום', null, null, "Contains", false, false, false, "Text", false, false);
             const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
             
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
@@ -1406,7 +1373,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     var confirm = new ConfirmWindow();
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- האם להמשיך ?");
+                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- הםם להמשיך ?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         confirm.Close();
                         this.InvoiceNumber = newValue;
@@ -3516,10 +3483,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Width = 1000;
             logWindow.Height = 600;
             if (item.ClassificationCode != null) {
-                logWindow.Title = "אישורים לפרט מכס" + " " + item.ClassificationCode;
+                logWindow.Title = "םישורים לפרט מכס" + " " + item.ClassificationCode;
             }
             else {
-                logWindow.Title = "אישורים לפרט מכס";
+                logWindow.Title = "םישורים לפרט מכס";
             }
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
@@ -4207,8 +4174,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 this.ShowValidatioIcon = true;
                 this.Parent.Parent.tariffErrorItems += 1;
             }
-            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לא מוזן";
-            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לא מתאים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
+            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לם מוזן";
+            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לם מתםים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
 
         }
         else {
