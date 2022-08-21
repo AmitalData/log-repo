@@ -44,14 +44,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARInvoicePM entityPM = null;
 
-            ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("Status").Include("ARInvoiceType").Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
-                 where a.Id == id && a.Tenant == tenant
-                 select a).FirstOrDefault();
+            ARInvoice entityPOCO = repository.context
+                                             .ARInvoices
+                                             .Include("Status")
+                                             .Include("ARInvoiceType")
+                                             .Include("ProfitCurrency")
+                                             .Include("InvoiceCurrency")
+                                             .Include("Status")
+                                             .Include("LocalCurrency")
+                                             .Include("BillTo")
+                                             .Include("TransferStatus")
+                                             .Include("ApprovedByUser")
+                                             .Include("ApprovedByUser.Contact")
+                                             .Include("SalesmanUser")
+                                             .Include("SalesmanUser.Contact")
+                                             .Include("SATInvoiceStatus")
+                                             .Include("SATTransferStatus")
+                                             .Include("Branch")
+                                             .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
 
             if (entityPOCO != null)
             {
-                entityPM = this.GetSingleMappedEntityPM(entityPOCO, true);
+                entityPM = GetSingleMappedEntityPM(entityPOCO, true);
             }
 
             return entityPM;
@@ -1719,8 +1733,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 entityPM = new ARInvoicePM()
                 {
-                    StatusName = entityPOCO.Status == null ? null : entityPOCO.Status.Name,
-                    ARInvoiceTypeName = entityPOCO.ARInvoiceType == null ? null : entityPOCO.ARInvoiceType.Name,
+                    StatusName = entityPOCO.Status?.Name,
+                    ARInvoiceTypeName = entityPOCO.ARInvoiceType?.Name,
                     ProfitCurrencyExchangeRate = entityPOCO.ProfitCurrencyExchangeRate,
                     ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
                     SubTotalInInvoiceCurrency = entityPOCO.SubTotalInInvoiceCurrency,
@@ -1784,11 +1798,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TransferStatusCode = entityPOCO.TransferStatusCode,
                     TransferStatusName = entityPOCO.TransferStatus == null ? "" : entityPOCO.TransferStatus.Name,
                     AccountingExternalCode = entityPOCO.AccountingExternalCode,
-                    ReadyForTransfer = entityPOCO.TransferStatusCode == "RD" ? true : false,
+                    ReadyForTransfer = entityPOCO.TransferStatusCode == "RD",
                     PaymentTermExternalId = entityPOCO.PaymentTermExternalId,
                     ApprovedDate = entityPOCO.ApprovedDate,
                     ApprovedByUserId = entityPOCO.ApprovedByUserId,
-                    ApprovedByUserName = entityPOCO.ApprovedByUser == null ? null : (entityPOCO.ApprovedByUser.Contact == null ? null : entityPOCO.ApprovedByUser.Contact.EnglishName),
+                    ApprovedByUserName = entityPOCO.ApprovedByUser?.Contact?.EnglishName,
                     OperationalDate = entityPOCO.OperationalDate,
                     DateForInterest = entityPOCO.DateForInterest,
                     SplitJournalByCurrency = entityPOCO.SplitJournalByCurrency,
@@ -1797,7 +1811,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     ExternalAccountingEntityId = entityPOCO.ExternalAccountingEntityId,
                     SATPaymentMethodCode = entityPOCO.SATPaymentMethodCode,
                     SalesmanUserId = entityPOCO.SalesmanUserId,
-                    SalesmanUserName = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.EnglishName),
+                    SalesmanUserName = entityPOCO.SalesmanUser?.Contact?.EnglishName,
                     TransmissionError = entityPOCO.TransmissionError,
                     IsCustomsChargesOnly = entityPOCO.IsCustomsChargesOnly,
                     RelatedInvoice = entityPOCO.RelatedInvoice,
@@ -1807,8 +1821,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     PeriodCode = entityPOCO.PeriodCode,
                     SATTransferStatusCode = entityPOCO.SATTransferStatusCode,
                     SATInvoiceStatusCode = entityPOCO.SATInvoiceStatusCode,
-                    SATTransferStatusName = entityPOCO.SATTransferStatus != null ? entityPOCO.SATTransferStatus.Name : null,
-                    SATInvoiceStatusName = entityPOCO.SATInvoiceStatus != null ? entityPOCO.SATInvoiceStatus.Name : null,
+                    SATTransferStatusName = entityPOCO.SATTransferStatus?.Name,
+                    SATInvoiceStatusName = entityPOCO.SATInvoiceStatus?.Name,
                     Intercompany = entityPOCO.Intercompany,
                     BankAccountLiteId = entityPOCO.BankAccountLiteId,
                     IsMultiCurrency = entityPOCO.IsMultiCurrency,
@@ -1820,7 +1834,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
                     DocumentFilingId = entityPOCO.DocumentFilingId,
-                    BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
+                    BranchName = entityPOCO.Branch?.EnglishName,
                     CreatedByPartner = entityPOCO.CreatedByPartner,
                     RegionalTaxId = entityPOCO.RegionalTaxId,
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
@@ -1841,10 +1855,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
-                // Include Bill To is not enough to get customer data
-                CardRepository myCardRepository = new CardRepository(myCommonContext);
-                Card myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
+                var myCardRepository = new CardRepository(myCommonContext);
+
+                var myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
                 SetInterestReportFields(entityPM);
+
                 if (myBillTo != null)
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
@@ -1858,8 +1873,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     {
                         if (myBillTo.Customer.AccountManagerUserId != null)
                         {
-                            ContactRepository myContactRepository = new ContactRepository(myCommonContext);
-                            Contact myContact = myContactRepository.GetSingleContact(myBillTo.Customer.AccountManagerUserId, tenant);
+                            var myContactRepository = new ContactRepository(myCommonContext);
+
+                            var myContact = myContactRepository.GetSingleContact(myBillTo.Customer.AccountManagerUserId, tenant);
+
                             if (myContact != null)
                             {
                                 entityPM.BillToAccountManagerName = myContact.EnglishName;
@@ -1875,6 +1892,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         entityPM.BillToCreditLimitActualAmount = this.GetCustomerCreditLimitActualAmount(entityPOCO.BillToId, tenant);
 
                         double? ActualBalance = 0;
+
                         if (entityPM.BillToCreditLimitOpenBalance != null)
                         {
                             ActualBalance += entityPM.BillToCreditLimitOpenBalance;
@@ -1892,6 +1910,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     {
                         AgentRepository myRepository = new AgentRepository(myCommonContext);
                         Agent myAgent = myRepository.GetSingleAgent(tenant, entityPOCO.BillToId);
+
                         if (myAgent != null)
                         {
                             entityPM.BillToIsCreditLimitEnabled = myAgent.IsCreditLimitEnabled;
@@ -1902,14 +1921,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 if (withComposition)
                 {
-                    ARInvoiceLineRepository invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
-                    ARInvoiceEntityRepository invoiceEntityRepository = new ARInvoiceEntityRepository(repository.context);
-                    ARInvoicePaymentRepository arInvoicePaymentRepository = new ARInvoicePaymentRepository(repository.context);
-                    ARInvoiceTotalVATRepository myTotalVATRepository = new ARInvoiceTotalVATRepository(repository.context);
-                    ARInvoiceLineQuery arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
-                    ARInvoiceEntityQuery arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
-                    ARInvoicePaymentQuery arInvoicePaymentQuery = new ARInvoicePaymentQuery(arInvoicePaymentRepository);
-                    ARInvoiceTotalVATQuery myTotalVATQuery = new ARInvoiceTotalVATQuery(myTotalVATRepository);
+                    var invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
+                    var invoiceEntityRepository = new ARInvoiceEntityRepository(repository.context);
+                    var arInvoicePaymentRepository = new ARInvoicePaymentRepository(repository.context);
+                    var myTotalVATRepository = new ARInvoiceTotalVATRepository(repository.context);
+                    var arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
+                    var arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
+                    var arInvoicePaymentQuery = new ARInvoicePaymentQuery(arInvoicePaymentRepository);
+                    var myTotalVATQuery = new ARInvoiceTotalVATQuery(myTotalVATRepository);
 
                     entityPM.InvoiceLines = arInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(entityId, tenant);
                     entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityId, tenant);
@@ -1918,42 +1937,44 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                     if (entityPM.IsConsolidationInvoice)
                     {
-                        entityPM.ConstituentInvoices = (from d in repository.context.ARInvoices
-                                                        where d.Tenant == tenant
-                                                        && d.IsConstituentInvoice == true
-                                                        && d.ConsolidationInvoiceId == entityPM.Id
-                                                        select new ConstituentPM()
-                                                        {
-                                                            Id = d.Id,
-                                                            Tenant = d.Tenant,
-                                                            ConsolidationInvoiceId = d.ConsolidationInvoiceId,
-                                                        }).ToList();
+                        entityPM.ConstituentInvoices = repository.context
+                                                                 .ARInvoices
+                                                                 .Where(d => d.Tenant == tenant
+                                                                             && d.IsConstituentInvoice == true
+                                                                             && d.ConsolidationInvoiceId == entityPM.Id)
+                                                                 .Select(d => new ConstituentPM()
+                                                                 {
+                                                                     Id = d.Id,
+                                                                     Tenant = d.Tenant,
+                                                                     ConsolidationInvoiceId = d.ConsolidationInvoiceId,
+                                                                 }).ToList();
                     }
                 }
 
-                PaymentTermRepository myPaymentTermRepository = new PaymentTermRepository(myCommonContext);
-                PaymentTerm paymentTerm = myPaymentTermRepository.GetSinglePaymentTerm(entityPOCO.PaymentTermId, tenant);
+                var myPaymentTermRepository = new PaymentTermRepository(myCommonContext);
+                var paymentTerm = myPaymentTermRepository.GetSinglePaymentTerm(entityPOCO.PaymentTermId, tenant);
+
                 if (paymentTerm != null)
                 {
                     entityPM.PaymentTermName = paymentTerm.EnglishName;
                 }
 
                 Currency currency = CurrencyRepository.GetSingleCurrency(entityPOCO.InvoiceCurrencyId, tenant, true);
-                entityPM.InvoiceCurrencyCode = currency != null ? currency.Code : null;
+                entityPM.InvoiceCurrencyCode = currency?.Code;
 
                 Currency localCurrency = CurrencyRepository.GetSingleCurrency(entityPOCO.LocalCurrencyId, tenant, true);
-                entityPM.LocalCurrencyCode = localCurrency != null ? localCurrency.Code : null;
+                entityPM.LocalCurrencyCode = localCurrency?.Code;
 
                 Currency profitCurrency = CurrencyRepository.GetSingleCurrency(entityPOCO.ProfitCurrencyId, tenant, true);
-                entityPM.ProfitCurrencyCode = profitCurrency != null ? profitCurrency.Code : null;
+                entityPM.ProfitCurrencyCode = profitCurrency?.Code;
 
                 ARInvoiceStatusRepository myARInvoiceStatusRepository = new ARInvoiceStatusRepository(repository.context);
                 ARInvoiceStatus invoicestatus = myARInvoiceStatusRepository.GetSingleARInvoiceStatus(entityPOCO.StatusCode);
-                entityPM.StatusName = invoicestatus != null ? invoicestatus.Name : null;
+                entityPM.StatusName = invoicestatus?.Name;
 
                 ARInvoiceTransferStatusRepository myARInvoiceTransferStatusRepository = new ARInvoiceTransferStatusRepository(repository.context);
                 ARInvoiceTransferStatus transferStatus = myARInvoiceTransferStatusRepository.GetSingleARInvoiceTransferStatus(entityPOCO.TransferStatusCode);
-                entityPM.TransferStatusName = transferStatus != null ? transferStatus.Name : null;
+                entityPM.TransferStatusName = transferStatus?.Name;
 
                 var shipment = new ShipmentRepository(tenant).GetSingleForARInvoiceByIdAndTenant(entityPOCO.MainEntityId, tenant);
                 entityPM.MainEntityStatus = shipment?.EntityStatus?.Name;
@@ -1984,13 +2005,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }
                 }
 
-                //Full Accounting 
                 TenantRepository tenantRepository = new TenantRepository(myCommonContext);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
-                    JournalRepository rep = new JournalRepository(tenant);
-                    JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", tenant); // 2- ARInvoice
+                    var rep = new JournalRepository(tenant);
+
+                    var journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id, "2", tenant);
+                    
                     if (journal != null)
                     {
                         entityPM.JournalId = journal.JournalId;
@@ -2025,6 +2047,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return securedEntityPM;
         }
+
         private void SetInterestReportFields(ARInvoicePM invoice)
         {
             InterestReport interestReport = new InterestReport();

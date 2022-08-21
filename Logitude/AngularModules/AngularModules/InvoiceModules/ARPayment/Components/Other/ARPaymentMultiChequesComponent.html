@@ -173,7 +173,7 @@
                                 <log-column [width]="'70'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                            <div *ngIf="paymentPM.StatusCode == 'AD'" style="width: 30px; float: right; height:20px;padding-top:3px">
+                                            <div *ngIf="paymentPM.StatusCode != 'DR'" style="width: 30px; float: right; height:20px;padding-top:3px">
                                                 <IconButton [IsEnabled]="item.entityPM.StatusCode ==inCashbookChequeStatus || item.entityPM.StatusCode ==returnedFromBankChequeStatus"  [Name]="'return'" [IsSmall]="true"
                                                     (click)="ReturnChequeButtonClicked(item)"></IconButton>
                                             </div>

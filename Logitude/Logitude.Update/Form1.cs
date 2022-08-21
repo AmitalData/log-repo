@@ -5804,6 +5804,14 @@ User/Pass",
         {
             Process.Start("ShipmentContainerLog.csv");
         }
+
+        private void updateWorkflowButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "Workflow", updateWorkflowLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
     }
     public class TimeZoneExcelItem
     {

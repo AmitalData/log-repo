@@ -638,7 +638,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         }
                     }
 
-                    List<string> myARInvoicesIds = allShipmentsARInvoices.Where(d => d.ShipmentId == myShipment.Id).Select(s => s.InvoiceId).ToList();
+                    List<string> myARInvoicesIds = new List<string>();
+                    if (housesAndDirectOnly)
+                    {
+                        myARInvoicesIds = allShipmentsARInvoices.Where(d => d.ShipmentId == myShipment.Id || d.ShipmentId == myShipment.MasterShipmentDataId).Select(s => s.InvoiceId).ToList();
+                    }
+
+                    else
+                    {
+                        myARInvoicesIds = allShipmentsARInvoices.Where(d => d.ShipmentId == myShipment.Id).Select(s => s.InvoiceId).ToList();
+                    }
                     foreach (string id in myARInvoicesIds)
                     {
                         ARInvoice invoice = allARInvoices.Where(d => d.Id == id).FirstOrDefault();

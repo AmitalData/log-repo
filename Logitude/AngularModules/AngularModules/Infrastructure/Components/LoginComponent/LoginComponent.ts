@@ -353,7 +353,7 @@ export class LoginComponent implements OnInit {
             var getTokens = "getTokens";
             if (logitudeTokensService.hasOwnProperty(getTokens)) {
                 logitudeTokensService[getTokens]().then((logitudeTokens: any) => {
-                    if(logitudeTokens){
+                    if (logitudeTokens) {
                         let logitudeTokensJson = JSON.stringify(logitudeTokens);
                         CToolSessionInfo.LogitudeTokensJson = logitudeTokensJson;
                     }
@@ -842,27 +842,6 @@ export class LoginComponent implements OnInit {
                     this.loginService.GetTenantTextCode().subscribe((myResult: any) => {
                         if (myResult) {
                             window.TextCodes = window.TextCodes.concat(myResult);
-
-                            // let additionalTextCodes = [
-                            //     {
-                            //         Code: "General.MH.TasksApp",
-                            //         DefaultText: "Tasks App",
-                            //         DefaultTextPlural: null,
-                            //         InActive: false,
-                            //         IsSpellChecked: false,
-                            //         LocalDefaultText: null,
-                            //         ObjectTableId: "1-1",
-                            //         ObjectTableName: "General",
-                            //         SpellCheckDate: null,
-                            //         SpellCheckedByUserId: null,
-                            //         SpellCheckedByUserName: null,
-                            //         Tenant: 0,
-                            //         TextCodeTypeCode: "MH"
-                            //     }
-                            // ];
-
-                            //window.TextCodes = window.TextCodes.concat(additionalTextCodes);
-
                             this.IncreaseProgressBar();
                             //25
                         }

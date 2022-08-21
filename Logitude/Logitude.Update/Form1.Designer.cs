@@ -270,6 +270,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
+            this.updateWorkflowLabel = new System.Windows.Forms.Label();
+            this.updateWorkflowButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -668,7 +670,7 @@
             this.toolStripStatusLabel1,
             this.conStrLabel,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 829);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 672);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1024, 22);
             this.statusStrip1.TabIndex = 14;
@@ -1546,6 +1548,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.updateWorkflowLabel);
+            this.tabPage1.Controls.Add(this.updateWorkflowButton);
             this.tabPage1.Controls.Add(this.UpdateSHOLabel);
             this.tabPage1.Controls.Add(this.UpdateShipmentOrderButton);
             this.tabPage1.Controls.Add(this.UpdateCargoTrackingLabel);
@@ -2704,7 +2708,6 @@
             this.groupBox4.Location = new System.Drawing.Point(6, 5);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(1008, 544);
             this.groupBox4.TabIndex = 0;
@@ -2761,36 +2764,8 @@
             // 
             // CraeteContainerProgressBar
             // 
-            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(12, 106);
-            this.CraeteContainerProgressBar.Margin = new System.Windows.Forms.Padding(2);
-            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
-            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(693, 23);
-            this.CraeteContainerProgressBar.TabIndex = 8;
-            // 
-            // NumberOfShipmentsFail
-            // 
-            this.NumberOfShipmentsFail.AutoSize = true;
-            this.NumberOfShipmentsFail.Location = new System.Drawing.Point(113, 54);
-            this.NumberOfShipmentsFail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
-            this.NumberOfShipmentsFail.Size = new System.Drawing.Size(13, 13);
-            this.NumberOfShipmentsFail.TabIndex = 7;
-            this.NumberOfShipmentsFail.Text = "0";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(9, 54);
-            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(82, 13);
-            this.label20.TabIndex = 6;
-            this.label20.Text = "Fail Shipments :";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
-            // 
-            // CraeteContainerProgressBar
-            // 
             this.CraeteContainerProgressBar.Location = new System.Drawing.Point(15, 129);
+            this.CraeteContainerProgressBar.Margin = new System.Windows.Forms.Padding(2);
             this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
             this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
             this.CraeteContainerProgressBar.TabIndex = 8;
@@ -2798,33 +2773,6 @@
             // NumberOfShipmentsFail
             // 
             this.NumberOfShipmentsFail.AutoSize = true;
-            this.NumberOfShipmentsFail.Location = new System.Drawing.Point(151, 67);
-            this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
-            this.NumberOfShipmentsFail.Size = new System.Drawing.Size(13, 13);
-            this.NumberOfShipmentsFail.TabIndex = 7;
-            this.NumberOfShipmentsFail.Text = "0";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 67);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(82, 13);
-            this.label20.TabIndex = 6;
-            this.label20.Text = "Fail Shipments :";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
-            // 
-            // CraeteContainerProgressBar
-            // 
-            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(11, 105);
-            this.CraeteContainerProgressBar.Margin = new System.Windows.Forms.Padding(2);
-            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
-            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(447, 19);
-            this.CraeteContainerProgressBar.TabIndex = 8;
-            // 
-            // NumberOfShipmentsFail
-            // 
-            this.NumberOfShipmentsFail.AutoSize = true;
             this.NumberOfShipmentsFail.Location = new System.Drawing.Point(113, 54);
             this.NumberOfShipmentsFail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
@@ -2838,7 +2786,7 @@
             this.label20.Location = new System.Drawing.Point(9, 54);
             this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(81, 13);
+            this.label20.Size = new System.Drawing.Size(82, 13);
             this.label20.TabIndex = 6;
             this.label20.Text = "Fail Shipments :";
             this.label20.Click += new System.EventHandler(this.label20_Click);
@@ -2987,93 +2935,32 @@
             // 
             // OITimer
             // 
-            this.textBox4.Location = new System.Drawing.Point(794, 266);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(137, 20);
-            this.textBox4.TabIndex = 114;
-            // 
-            // contextMenuStrip1
-            //
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            //
-            // OITimer
-            // 
             this.OITimer.Enabled = true;
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // textBox4           
-            //             
-            this.textBox4.Location = new System.Drawing.Point(794, 266);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(137, 20);
-            this.textBox4.TabIndex = 114;
-            //
-             // label22
-            //
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(746, 269);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(42, 13);
-            this.label22.TabIndex = 115;
-            this.label22.Text = "Output:";
-            //
-            // OpenContainerLogFile
-            //            
-            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
-            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
-            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
-            this.OpenContainerLogFile.TabIndex = 1;
-            this.OpenContainerLogFile.Text = "Open log";
-            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
-            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
-            //
-            // UpdateEntity            
+            // updateWorkflowLabel
             // 
-            this.UpdateEntity.Location = new System.Drawing.Point(996, 157);
-            this.UpdateEntity.Name = "UpdateEntity";
-            this.UpdateEntity.Size = new System.Drawing.Size(245, 52);
-            this.UpdateEntity.TabIndex = 111;
-            this.UpdateEntity.Text = "Update Entity";
-            this.UpdateEntity.UseVisualStyleBackColor = true;
-            this.UpdateEntity.Click += new System.EventHandler(this.UpdateEntity_Click);
+            this.updateWorkflowLabel.AutoSize = true;
+            this.updateWorkflowLabel.Location = new System.Drawing.Point(206, 589);
+            this.updateWorkflowLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.updateWorkflowLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.updateWorkflowLabel.Name = "updateWorkflowLabel";
+            this.updateWorkflowLabel.Size = new System.Drawing.Size(100, 13);
+            this.updateWorkflowLabel.TabIndex = 105;
+            this.updateWorkflowLabel.Text = "...";
             // 
-            // CraeteContainerProgressBar            
-            //
-            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(15, 129);
-            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
-            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
-            this.CraeteContainerProgressBar.TabIndex = 8;
-            //
-            // label24
-            //
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(747, 321);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 13);
-            this.label24.TabIndex = 116;
-            this.label24.Text = "label24";
+            // updateWorkflowButton
             // 
-            // OpenContainerLogFile            
-            // 
-            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
-            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
-            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
-            this.OpenContainerLogFile.TabIndex = 1;
-            this.OpenContainerLogFile.Text = "Open log";
-            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
-            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(747, 321);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 13);
-            this.label24.TabIndex = 116;
-            this.label24.Text = "label24";
-
+            this.updateWorkflowButton.Location = new System.Drawing.Point(16, 585);
+            this.updateWorkflowButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.updateWorkflowButton.Name = "updateWorkflowButton";
+            this.updateWorkflowButton.Size = new System.Drawing.Size(184, 22);
+            this.updateWorkflowButton.TabIndex = 104;
+            this.updateWorkflowButton.Text = "Update Workflow";
+            this.updateWorkflowButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.updateWorkflowButton.UseVisualStyleBackColor = true;
+            this.updateWorkflowButton.Click += new System.EventHandler(this.updateWorkflowButton_Click);
             // 
             // Form1
             // 
@@ -3379,6 +3266,8 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label updateWorkflowLabel;
+        private System.Windows.Forms.Button updateWorkflowButton;
     }
 }
 

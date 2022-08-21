@@ -132,6 +132,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             WriteLogMessage("Updating CRM Module ...");
                             UpdateCRMModule(context, false);
 
+                            WriteLogMessage("Updating Workflow Module ...");
+                            UpdateWorkflow(context, false);
+
                             WriteLogMessage("Updating Menus tables ...");
                             updateClass.LoadMenustables();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMenustables");
@@ -281,6 +284,12 @@ namespace WebFreight.Web.MetaDataUpdate
                     case "tariffmodule":
                         {
                             UpdateTariffModule(context, true);
+                            break;
+                        }
+
+                    case "workflow":
+                        {
+                            UpdateWorkflow(context, true);
                             break;
                         }
 
@@ -539,6 +548,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
                             tariffModuleUpdate.loadScreens();
+
+
+                            WorkflowUpdateClass workflowUpdateClass = new WorkflowUpdateClass();
+                            workflowUpdateClass.LoadObjectTablesMetadata(context, false);
 
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
@@ -1124,6 +1137,17 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //TariffModuleUpdate updateClass = new TariffModuleUpdate();
             //updateClass.loadScreens();
+        }
+
+        private static void UpdateWorkflow(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            WorkflowUpdateClass workflowUpdateClass = new WorkflowUpdateClass();
+            if (runOldUpdateCode)
+                workflowUpdateClass.LoadObjectsTenantZero(context);
+            else
+                workflowUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",WorkflowUpdateClass");
         }
 
         private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)

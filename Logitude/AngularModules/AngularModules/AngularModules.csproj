@@ -399,6 +399,10 @@
     <Content Include="TariffModule\Components\Workspaces\SaleWorkspaceComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
+    <Content Include="Workflow\Components\WorkflowBuilder\WorkflowBuilderComponent.html" />
+    <Content Include="Workflow\Components\Properties\ConditionPropertiesComponent.html" />
+    <Content Include="Workflow\Components\Properties\LoopPropertiesComponent.html" />
+    <Content Include="Workflow\Components\Properties\SetValuePropertiesComponent.html" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\Images\Icons\Tooltips\TootipBottom.png" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
@@ -7997,6 +8001,20 @@
     <TypeScriptCompile Include="Warehouse\Tools.ts" />
     <TypeScriptCompile Include="Warehouse\Validators\WarehouseEntryValidator.ts" />
     <TypeScriptCompile Include="Warehouse\Validators\WarehouseReleaseValidator.ts" />
+    <TypeScriptCompile Include="Workflow\Components\WorkflowBuilder\WorkflowBuilderComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Properties\ConditionPropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Properties\LoopPropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Properties\SetValuePropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowStatusList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowStatusPM.ts" />
+    <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
+    <TypeScriptCompile Include="Workflow\ModuleWorkflow.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowStatusListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowPMService.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
@@ -8663,6 +8681,7 @@
     <Folder Include="Test\e2e\Reports\" />
     <Folder Include="Warehouse\EntityPMInitServices\" />
     <Folder Include="Warehouse\Utilities\" />
+    <Folder Include="Workflow\Services\ExtendedPMs\" />
     <Folder Include="_Resources\Stimulsoft\css\" />
     <Folder Include="_Resources\Stimulsoft\js\" />
   </ItemGroup>

@@ -832,5 +832,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string InlandDomesticFromStateId { get; set; }
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
+        public string TruckerId { get; set; }
     }
 }

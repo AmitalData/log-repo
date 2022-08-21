@@ -90,6 +90,8 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   //shipment order
   { loadChildren: () => import('../../ShipmentOrder/Module_SHIPOR').then(m => m.ShipmentOrderModule), path: 'ShipmentOrder' },
 
+  { loadChildren: () => import('../../Workflow/ModuleWorkflow').then(m => m.ModuleWorkflow), path: 'Workflow' },
+
 ];
 
 export function LazyArrayToObjects() {

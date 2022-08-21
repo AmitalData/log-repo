@@ -47,15 +47,7 @@ export class MainMenuComponent {
         if(hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)){
             this.MainMenuItems = this.MainMenuItems.filter(m => m.TextCode !== "General.MH.TasksApp");
         }
-        // if (hasCToolToggleFeature) {
-        //     var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
-        //     tasksAppItem.IndexOfOrder = 100;
-        //     tasksAppItem.ObjectTableId = null;
-        //     tasksAppItem.HtmlView = null;
-        //     tasksAppItem.ObjectTableName = null;
-        //     tasksAppItem.QuerySection = null;
-        //     this.MainMenuItems.push(tasksAppItem);
-        // }
+
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
