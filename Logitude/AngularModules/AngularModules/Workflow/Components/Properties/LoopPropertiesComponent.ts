@@ -8,7 +8,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 export class LoopPropertiesComponent extends BaseComponent {
 
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
 
     DataContext: any = this;
     Data: any;
@@ -17,15 +17,11 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
     }
 
-    // ChangeName(name: string) {
-    //     this.Data["name"] = name;
-    // }
-
-    CancelButtonClicked() {
+    cancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    SaveButtonClicked() {
+    saveButtonClicked() {
         this.CurrentSession.CurrentWindow.Close(this.Data);
     }
 }
