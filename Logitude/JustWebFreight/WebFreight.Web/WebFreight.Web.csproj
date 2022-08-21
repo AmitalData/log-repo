@@ -1187,6 +1187,9 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowController.Generated.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
@@ -3411,6 +3414,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseReleaseStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseReleaseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WithholdingTaxDeductionTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AnalyzeQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\ApiCredintialsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AWBMessagesCCSTypeUpdateClass.cs" />
@@ -3622,6 +3627,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\WorkflowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx" />
     <Content Include="Monitoring\AgentSharedDocumentAnalyzeMonitoring.aspx" />
@@ -7457,6 +7463,7 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\WorkFlowDomainService.cs" />
     <Compile Include="XapFileDownloadHandler.ashx.cs">
       <DependentUpon>XapFileDownloadHandler.ashx</DependentUpon>
     </Compile>
@@ -7467,6 +7474,7 @@
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\DomainServices\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
+    <Folder Include="Controllers\WorkflowModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
@@ -7642,6 +7650,14 @@
     <ProjectReference Include="..\..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
       <Project>{54a12a5c-659c-4410-a5e7-949acd43f3a5}</Project>
       <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.Workflow.BL\Logitude.Workflow.BL.csproj">
+      <Project>{3460f102-6bbb-4610-b6b7-22b222afb88c}</Project>
+      <Name>Logitude.Workflow.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.Workflow.Data\Logitude.Workflow.Data.csproj">
+      <Project>{726a5395-1875-44b9-aaa2-0951b8af8084}</Project>
+      <Name>Logitude.Workflow.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.XSD\Logitude.XSD.csproj">
       <Project>{3e75c83f-67c7-4b62-9759-7ea92e16f272}</Project>
