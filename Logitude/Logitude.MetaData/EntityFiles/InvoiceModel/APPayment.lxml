@@ -261,9 +261,9 @@
     ListLocalDefaultText="&quot;PrintedByUserId&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="PrintedByUser"
+    NavigationPropertyName="&quot;PrintedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -411,9 +411,9 @@
     ListLocalDefaultText="&quot;UpdatedByUserId&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="UpdatedByUser"
+    NavigationPropertyName="&quot;UpdatedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -796,9 +796,9 @@
     FullLocalDefaultText="&quot;נוצר ע''י&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="CreatedByUser"
+    NavigationPropertyName="&quot;CreatedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1111,9 +1111,9 @@
     FullLocalDefaultText="&quot;מטבע מקומי&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Currency"
+    ForeignEntity="&quot;Currency&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="LocalCurrency"
+    NavigationPropertyName="&quot;LocalCurrency&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1270,9 +1270,9 @@
     FullLocalDefaultText="&quot;ספק&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Card"
+    ForeignEntity="&quot;Card&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="VendorCard"
+    NavigationPropertyName="&quot;VendorCard&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1428,9 +1428,9 @@
     FullLocalDefaultText="&quot;סטטוס&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="APPaymentStatus"
+    ForeignEntity="&quot;APPaymentStatus&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Status"
+    NavigationPropertyName="&quot;Status&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1666,9 +1666,9 @@
     FullLocalDefaultText="&quot;מטבע התשלום&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Currency"
+    ForeignEntity="&quot;Currency&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="PaymentCurrency"
+    NavigationPropertyName="&quot;PaymentCurrency&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2377,9 +2377,9 @@
     FullLocalDefaultText="&quot;כתובת ספק&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Address"
+    ForeignEntity="&quot;Address&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="VendorAddress"
+    NavigationPropertyName="&quot;VendorAddress&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2995,9 +2995,9 @@
     FullLocalDefaultText="&quot;סניף&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Branch"
+    ForeignEntity="&quot;Branch&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Branch"
+    NavigationPropertyName="&quot;Branch&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3233,9 +3233,9 @@
     FullLocalDefaultText="&quot;סוג כרטיס אשראי&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="CreditCardType"
+    ForeignEntity="&quot;CreditCardType&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="CreditCardType"
+    NavigationPropertyName="&quot;CreditCardType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4291,9 +4291,9 @@
     FullLocalDefaultText="&quot;סטאטוס העברה&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="APPaymentTransferStatus"
+    ForeignEntity="&quot;APPaymentTransferStatus&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="TransferStatus"
+    NavigationPropertyName="&quot;TransferStatus&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4678,9 +4678,9 @@
     FullLocalDefaultText="&quot;משתמש מאשר&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="ApprovedByUser"
+    NavigationPropertyName="&quot;ApprovedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -4983,9 +4983,9 @@
     FullLocalDefaultText="&quot;אמצעי תשלום&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="AccountingPaymentMethod"
+    ForeignEntity="&quot;AccountingPaymentMethod&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="AccountingPaymentMethod"
+    NavigationPropertyName="&quot;AccountingPaymentMethod&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -7614,6 +7614,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConnectedInvoicesNumbers&quot;"
     ListPropertyPath="&quot;ConnectedInvoicesNumbers&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -7818,7 +7819,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -7903,7 +7905,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;DraftPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -7969,7 +7972,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;NotReadyPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -8035,7 +8039,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MarkedAsBlockedForTransfer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -8121,7 +8126,8 @@
         ObjectFieldName="&quot;TransferStatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -8428,6 +8434,19 @@
       LocalName="&quot;External payment received&quot;"
       IsManualEntry="false"
       ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;DIDR&quot;"
+      ObjectTableName="&quot;APPayment&quot;"
+      EnglishName="&quot;Don't Include in Deduction report&quot;"
+      LocalName="&quot;Don't Include in Deduction report&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
