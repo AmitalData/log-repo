@@ -135,6 +135,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     getPropertiesComponentPath = (nodeType: string) => {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
         switch (nodeType) {
+            case "startNode":
+                return null;
+            //return (propertiesComponentPath + "StartPropertiesComponent");
             case "conditionNode":
                 return (propertiesComponentPath + "ConditionPropertiesComponent");
             case "loopNode":
@@ -151,10 +154,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let propertiesWindowArgs: any = {
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData))
         };
-        propertiesWindow.Width = 600;
-        propertiesWindow.Height = 500;
+        propertiesWindow.Width = 800;
+        propertiesWindow.Height = 420;
         propertiesWindow.RTL = false;
-        propertiesWindow.Title = (openPropertiesEventObject.isNewNode ? "New " : "Edit ") + openPropertiesEventObject.nodeLabel + " Element";
+        propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
         return propertiesWindow;
     }
