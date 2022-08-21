@@ -27,33 +27,40 @@ using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using Simplog.Data.InvoiceModel;
 using Logitude.Extensions;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalInvoiceController : ApiController
     {
-        public ShipmentARInvoiceMoneyPM GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId, int tenant)
+        [HttpGet]
+        [Route("DigitalInvoice/GetDigitalShipmentARInvoicesCharges")]
+        public IHttpActionResult GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            CheckAuthentication(token, tenant);
-            ShipmentRepository rep = new ShipmentRepository(tenant);
-            Shipment shipment = rep.GetSingleShipment(shipmentId, tenant);
-            CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-            ShipmentARInvoiceMoneyPM resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
-            List<ShipmentARInvoicePM> arInvoices = new List<ShipmentARInvoicePM>();
-            List<ARInvoiceChargePM> aRCharges = new List<ARInvoiceChargePM>();
-            ARInvoiceRepository arInvoiceReps = new ARInvoiceRepository(tenant);
-            ARInvoiceLineQuery aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
-            List<ARInvoice> invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
-            List<ARInvoiceLinePM> lines = new List<ARInvoiceLinePM>();
-            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-            ARInvoiceStatusRepository aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
+            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+            var tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            var rep = new ShipmentRepository(tenant);
+            var shipment = rep.GetSingleShipment(shipmentId, tenant);
+           // CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+            var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
+            var arInvoices = new List<ShipmentARInvoicePM>();
+            var aRCharges = new List<ARInvoiceChargePM>();
+            var arInvoiceReps = new ARInvoiceRepository(tenant);
+            var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
+            var invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
+            var lines = new List<ARInvoiceLinePM>();
+            var currencyRepository = new CurrencyRepository(tenant);
+            var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
+            var documentOutQuery = new DocumentOutQuery(tenant);
+            var documentTypeQuery = new DocumentTypeQuery(tenant);
 
-            foreach (ARInvoice item in invoices.Where(d => d.IsPrinted))
+            foreach (var item in invoices.Where(d => d.IsPrinted))
             {
                 var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
                 lines.AddRange(itemLines);
-                Currency invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
+                var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
                 var entity = new ShipmentARInvoicePM()
                 {
                     Id = item.Id,
@@ -72,6 +79,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     InvoiceDate = item.InvoiceDate,
                     StatusName = item.Status?.Name,
                 };
+
+                entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
 
                 var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                 if (currency != null)
@@ -114,7 +123,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             resultClass.ARInvoices = arInvoices;
             resultClass.ARCharges = aRCharges;
             resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
-            return resultClass;
+            return Ok(resultClass);
         }
 
         [HttpGet]
@@ -484,6 +493,31 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return isShowAmountLocalCurrencyColumnInSharedLogistics;
         }
         
+        private string GetDocumntURL(ARInvoice item, DocumentOutQuery documentOutQuery, DocumentTypeQuery documentTypeQuery)
+        {
+            string reportUrl = null;
+            var tenant = item.Tenant;
+            var documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(item.ARInvoiceTypeCode);
+            var docType = documentTypeQuery.GetSinglePMByCodeAndTenant(documentTypeCode, tenant);
+            var docId = "";
+            var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(item.MainEntityId, item.Id, docType.Id, tenant);
+            if (docsOutData == null)
+            {
+                return null;
+            }
+
+            docId = docsOutData.Id;
+            if (docsOutData.DocumentOutCopies.Count() > 0)
+            {
+                docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+            }
+
+            string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + item.Id;
+            reportUrl = url;
+
+            return reportUrl;
+        }
+
         #endregion private
     }
 }
