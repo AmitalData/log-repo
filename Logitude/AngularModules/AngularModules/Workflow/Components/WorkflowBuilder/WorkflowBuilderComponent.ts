@@ -99,6 +99,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let flowObject = this.EntityPM.FlowJson && this.EntityPM.FlowJson !== "" ? JSON.parse(this.EntityPM.FlowJson) : null;
             let props = {
                 flow: flowObject,
+                flowChangedEvent: this.flowChangedEvent,
                 openPropertiesEvent: this.openPropertiesEvent,
                 returnPropertiesDataEventKey: this.ReturnPropertiesDataEventKey,
                 setReactFlowInstance: this.setReactFlowInstance,
@@ -106,6 +107,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
         }
+    }
+
+    flowChangedEvent = () => {
+        this.hasChanges = true;
     }
 
     openPropertiesEvent = (openPropertiesEventObject: any) => {
@@ -171,7 +176,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     handlePropertiesWindowClosed = (data: any) => {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
-            this.hasChanges = true;
         }
     }
 
