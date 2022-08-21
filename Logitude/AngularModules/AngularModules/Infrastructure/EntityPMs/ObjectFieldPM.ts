@@ -643,9 +643,9 @@ export class ObjectFieldPM {
     public set DefaultAdditionalFilters(newValue: string) { if (this.defaultAdditionalFilters != newValue) { this.defaultAdditionalFilters = newValue; this.MarkAsDirty("DefaultAdditionalFilters"); } }
        
 	 
-    private defaultAdditionalTreeFilters: any;
+    private defaultAdditionalTreeFilters: string;
     public get DefaultAdditionalTreeFilters() { return this.defaultAdditionalTreeFilters; }
-    public set DefaultAdditionalTreeFilters(newValue: any) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
+    public set DefaultAdditionalTreeFilters(newValue: string) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
        
 	 
 

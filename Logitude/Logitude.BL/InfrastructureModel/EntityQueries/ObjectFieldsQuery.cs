@@ -11,6 +11,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using System.Transactions;
 using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Server.Infrastructure.DataContracts;
+using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -1800,6 +1802,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
+                                                    DefaultAdditionalFilters = a.DefaultAdditionalFilters,
 
                                                 }).ToList();
 
@@ -1910,6 +1913,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             objectField.ListTextCodeDefaultText = listcode.DefaultText;
                         }
                        
+                    }
+
+                    if (!string.IsNullOrEmpty(objectField.DefaultAdditionalFilters))
+                    {
+                        QueryFilterItem defaultAdditionalTreeFilters = new QueryFilterItem();
+                        objectField.DefaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(objectField.DefaultAdditionalFilters);
                     }
                 }
 

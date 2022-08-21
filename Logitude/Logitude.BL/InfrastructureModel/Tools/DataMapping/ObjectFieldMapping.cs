@@ -2,6 +2,7 @@
 using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Text.Json;
 
@@ -125,7 +126,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
         private static string GetDefaultAdditionalFilters(ObjectFieldPM objectFieldPM)
         {
-            TreeFilter defaultAdditionalTreeFilters = objectFieldPM.DefaultAdditionalTreeFilters;
+            QueryFilterItem defaultAdditionalTreeFilters = objectFieldPM.DefaultAdditionalTreeFilters;
 
             if (defaultAdditionalTreeFilters == null)
             {

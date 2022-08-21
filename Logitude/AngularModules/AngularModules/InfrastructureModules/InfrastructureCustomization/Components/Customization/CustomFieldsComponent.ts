@@ -121,6 +121,7 @@ export class CustomFieldsComponent {
                 objectField.CanFilter = true;
                 windowArgs.objectField = objectField;
                 windowArgs.DataTypeCollection = myResponse.Result;
+                windowArgs.ObjectTableName = this.ObjectTableName;
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                 logWindow.WindowClosed.subscribe((event: any) => {
@@ -160,6 +161,7 @@ export class CustomFieldsComponent {
                     //objectField.CanFilter = true;
                     windowArgs.objectField = objectField;
                     windowArgs.DataTypeCollection = myResponse.Result;
+                    windowArgs.ObjectTableName = this.ObjectTableName;
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                     logWindow.WindowClosed.subscribe((event: any) => {

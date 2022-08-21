@@ -21,6 +21,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using System.Text.Json;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -601,15 +602,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             queueservice.Send(queueMessage, tenant);
         }
 
-        public TreeFilter GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
+        public QueryFilterItem GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
         {
             ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
             string defaultAdditionalFilters = objectFieldQuery.GetDefaultAdditionalFiltersByIdAndTenant(Id, tenant);
-            TreeFilter defaultAdditionalTreeFilters = new TreeFilter();
+            QueryFilterItem defaultAdditionalTreeFilters = new QueryFilterItem();
             if (!string.IsNullOrEmpty(defaultAdditionalFilters))
             {
                 
-                defaultAdditionalTreeFilters = JsonSerializer.Deserialize<TreeFilter>(defaultAdditionalFilters);
+                defaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
             }
 
             return defaultAdditionalTreeFilters;

@@ -330,7 +330,7 @@
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
-    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\TreeFiltersSettingsComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\QueryFilterTreeComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentType\Tab\DocumentTypeCopyDetailsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
@@ -1901,7 +1901,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\TreeFiltersSettingsComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\QueryFilterTreeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
@@ -1993,7 +1993,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\ParameterComponentArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\TenantManagementJS.ts" />
-    <TypeScriptCompile Include="Infrastructure\DataContracts\TreeFilter.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\QueryFilterViewItem.ts" />
     <TypeScriptCompile Include="Infrastructure\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIFoldersPermissionList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportFolderList.ts" />

@@ -16,7 +16,6 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { TreeFilter } from '../../../../Infrastructure/DataContracts/TreeFilter';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 
 
@@ -43,11 +42,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ContolFieldsList2: any[];
     CustomPickListsList: string[];
     loginService: LoginService;
-    DefaultAdditionalTreeFilters: TreeFilter;
+    DefaultAdditionalTreeFilters: any;
     ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    AdditionalFiltersData: any;
-    AdditionalFiltersEntities: string[] = [];
+    AdditionalFiltersData: any = [];
+    ShownAdditionalFiltersSettings: boolean;
+    ObjectTableName: string;
     private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
     constructor() {
         super();
@@ -84,11 +84,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
 
+
+    ShowAdditionalFiltersSettingsClicked() {
+        this.ShownAdditionalFiltersSettings = !this.ShownAdditionalFiltersSettings;
+    }
+
     SetWindowArgs(args: any) {
         //this.ShipmentList = args.SelectedShipment;
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
         this.DataTypeCollection = args.DataTypeCollection;
+        this.ObjectTableName = args.ObjectTableName;
         if (this.IsNew) {
 
         }
@@ -342,10 +348,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsMultiline = event;
     }
 
+    lookUpTableName: string;
+    public get LookUpTableName() { return this.lookUpTableName; }
+    public set LookUpTableName(newValue: string) {
+        this.lookUpTableName = newValue;
+    }
+
     LookUpTablesSelectionMethod(item) {
         if (!item) return;
         this.ContolFieldsList1 = [];
         this.ContolFieldsList2 = [];
+        this.LookUpTableName = "";
         
         if (!AppTool.IsNullOrEmpty(this.LookUpTableId)) {
             this.LookUpTableId = item.Id;
@@ -354,7 +367,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
         else {
@@ -364,7 +377,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
     }
@@ -439,30 +452,23 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
-    
     ShowAdditionalFilters() {
-        this.AdditionalFiltersEntities.push("Shipment");
-        if (this.LookUpTable) {
-            this.AdditionalFiltersEntities.push(this.LookUpTable.Name);
-        }
         this.LoadDefaultAdditionalFilters();
     }
 
     LoadDefaultAdditionalFilters() {
-        if (this.objectField && this.objectField.Id) {
-            this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
-                var result: ServiceResponse = serviceResponse;
-                if (result.HasError) {
-                }
-                else {
-                    this.AdditionalFiltersData = result.Result == null ? null : result.Result.AdditionalFilters;
-                    this.ShownAdditionalFilters = true;
-                }
-            });
-        }
-        else {
+        if (!this.objectField || !this.objectField.Id) {
             this.ShownAdditionalFilters = true;
+            return;
         }
+
+        this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+            var result: ServiceResponse = serviceResponse;
+            if (!result.HasError) {
+                this.AdditionalFiltersData = result.Result == null ? [] : result.Result;
+                this.ShownAdditionalFilters = true;
+            }
+        });
     }
 
     public authHeader;
@@ -499,7 +505,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             if (this.IsNew == true) {
-                this.objectField.DefaultAdditionalTreeFilters = this.DefaultAdditionalTreeFilters;
+                this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

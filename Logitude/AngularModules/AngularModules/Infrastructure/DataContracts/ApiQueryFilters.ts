@@ -1,4 +1,5 @@
 import { ApiQueryFiltersAddParams } from './ApiQueryFiltersAddParams';
+import { QueryFilterViewItem } from './QueryFilterViewItem';
 export class ApiQueryFilters {
 
     constructor(getAll: boolean = false) {
@@ -11,6 +12,9 @@ export class ApiQueryFilters {
     public GetCount: boolean;
     public Tenant: number;
     public AdditionalFilters: FilterItem[] = [];
+    public TreeFilters: string = '';
+    public ParentEntityId: string = '';
+    public ParentObjectTableId: string = '';
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;
 
@@ -199,18 +203,20 @@ export class ApiQueryFilters {
 
 export class FilterItem {
     constructor(
-        public FieldName: string,
-        public FieldValue: any,
-        public FieldValue2: any,
-        public FieldValue3: any,
-        public Operator: string,
-        public IsCustom: boolean,
-        public DisplayInList: boolean,
-        public IsCustomField: boolean,
-        public FieldDataType: string,
-        public IgnoreFilter: boolean,
+        public FieldName: string = '',
+        public FieldValue: any = null,
+        public FieldValue2: any = null,
+        public FieldValue3: any = null,
+        public Operator: string = '',
+        public IsCustom: boolean = false,
+        public DisplayInList: boolean = false,
+        public IsCustomField: boolean = false,
+        public FieldDataType: string = '',
+        public IgnoreFilter: boolean = false,
         public IsCacheOnClient: boolean = false,
-        public IsLookUpfilter:boolean=false) { }
+        public IsLookUpfilter: boolean = false,
+        public FilterType: string = '',
+        public AdditionalFilters: QueryFilterViewItem[] = null) { }
         
 
 }

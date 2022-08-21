@@ -255,11 +255,41 @@
             </table>
         </td>
     </tr>
-    <tr  style="height:45%" *ngIf="ShownAdditionalFilters">
+    <tr  style="height:45%" *ngIf="ShownAdditionalFilters && LookUpTableId">
         <td>
             <div class="ScrollViewer">
                 <div class="ScrollContent">
-                    <TreeFiltersSettings [Entities]="AdditionalFiltersEntities" [DataSource]="AdditionalFiltersData"></TreeFiltersSettings>
+                    <table>
+                        <tr style="height: 10px;">
+                            <td style="height: 20px;">
+                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                    Optionally, create a filter to limit the records available to users in the lookup field.
+                                </label>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px;">
+                            <td style="height: 20px;">
+                                <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                                <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                                <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
+                                    Show Filter Settings
+                                </label>
+                            </td>
+                        </tr>
+                        <tr  *ngIf="ShownAdditionalFiltersSettings">
+                            <td>
+                                <div style="width:102%;overflow-x:auto;overflow-y:auto;">
+                                    <QueryFilterTree [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!ShownAdditionalFiltersSettings">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                    
                 </div>
             </div>
         </td>

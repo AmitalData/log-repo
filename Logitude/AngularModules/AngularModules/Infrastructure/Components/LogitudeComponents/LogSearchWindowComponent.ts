@@ -52,6 +52,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     public SearchText: string = "Search";
     public DataContext: LogSearchWindowComponent = this;
     public ObjectTableName: string;
+    public ObjectField: any;
     public ObjectTableId: string;
     public columns: any[] = [];
     public columns1: any[] = [];
@@ -140,6 +141,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     SetWindowArgs(args: CustomEntityArgs) {
         this.ObjectTableName = args.ObjectTableName; // lookup table
+        this.ObjectField = args.ObjectField;
         this.ObjectTableId = args.ObjectTableId;
         this.ObjectTableNamePluralName = TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
         this.ShowInActive = args.ShowInActive;
@@ -440,6 +442,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //    return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
         //}
         //else {
+        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
         return this._entityListService.getByFilters(rowsObjectTable, filters);
         //}
     }
@@ -503,6 +506,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
           //  return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
        // }
         //else {
+            filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }
@@ -897,6 +901,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
 export class CustomEntityArgs {
     public ObjectTableName: string = null;
+    public ObjectField: any = null;
     public ObjectTableId: string = null;
     public SelectedItem: any = null;
     public ShowInActive: boolean = false;
