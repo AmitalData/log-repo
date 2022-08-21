@@ -25,6 +25,14 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+//using System.Data.OracleClient;
+using System.Data.SqlClient;
+using System.Transactions;
+using Oracle.DataAccess.Client;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
