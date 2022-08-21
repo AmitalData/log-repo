@@ -62,6 +62,16 @@ export class DeclarationPendingPM {
     public set Approval(newValue: boolean) { if (this.approval != newValue) { this.approval = newValue; this.MarkAsDirty("Approval"); } }
        
 	 
+    private courierPendingRequireApr: boolean;
+    public get CourierPendingRequireApr() { return this.courierPendingRequireApr; }
+    public set CourierPendingRequireApr(newValue: boolean) { if (this.courierPendingRequireApr != newValue) { this.courierPendingRequireApr = newValue; this.MarkAsDirty("CourierPendingRequireApr"); } }
+       
+	 
+    private wasApproved: boolean;
+    public get WasApproved() { return this.wasApproved; }
+    public set WasApproved(newValue: boolean) { if (this.wasApproved != newValue) { this.wasApproved = newValue; this.MarkAsDirty("WasApproved"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPendingPM;
 	

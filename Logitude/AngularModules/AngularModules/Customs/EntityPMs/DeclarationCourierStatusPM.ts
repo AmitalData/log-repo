@@ -414,6 +414,11 @@ export class DeclarationCourierStatusPM {
     public set MissedDocumentStatusCode(newValue: string) { if (this.missedDocumentStatusCode != newValue) { this.missedDocumentStatusCode = newValue; this.MarkAsDirty("MissedDocumentStatusCode"); } }
        
 	 
+    private approvedCourierPendingList: string;
+    public get ApprovedCourierPendingList() { return this.approvedCourierPendingList; }
+    public set ApprovedCourierPendingList(newValue: string) { if (this.approvedCourierPendingList != newValue) { this.approvedCourierPendingList = newValue; this.MarkAsDirty("ApprovedCourierPendingList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
