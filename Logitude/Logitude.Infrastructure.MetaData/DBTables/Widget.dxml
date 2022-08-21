@@ -56,7 +56,7 @@
   <Column
     Name="TypeCode"
     Type="varchar"
-    Size="3">
+    Size="20">
     <Constraints
       Nullable="false" />
   </Column>

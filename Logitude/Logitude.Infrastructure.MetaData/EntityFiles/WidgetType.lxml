@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Widget Type&quot;"
-  Code="&quot;98f8&quot;"
+  Code="&quot;af8b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -75,7 +75,7 @@
     ObjectTableName="&quot;WidgetType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="20"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -84,7 +84,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="20"
     DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
@@ -320,23 +320,19 @@
   </EventTypes>
   <Records>
     <Record
-      Code="&quot;Co&quot;"
-      Name="&quot;Column&quot;"
-      SearchFields="&quot;Column&quot;" />
+      Code="&quot;line&quot;"
+      Name="&quot;Line&quot;"
+      SearchFields="&quot;Line&quot;" />
     <Record
-      Code="&quot;Are&quot;"
-      Name="&quot;Area&quot;"
-      SearchFields="&quot;Area&quot;" />
-    <Record
-      Code="&quot;Bar&quot;"
+      Code="&quot;bar&quot;"
       Name="&quot;Bar&quot;"
       SearchFields="&quot;Bar&quot;" />
     <Record
-      Code="&quot;Pie&quot;"
+      Code="&quot;pie&quot;"
       Name="&quot;Pie&quot;"
       SearchFields="&quot;Pie&quot;" />
     <Record
-      Code="&quot;Don&quot;"
+      Code="&quot;donut&quot;"
       Name="&quot;Donut&quot;"
       SearchFields="&quot;Donut&quot;" />
   </Records>

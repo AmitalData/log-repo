@@ -23,35 +23,28 @@ namespace Logitude.Infrastructure.BL
 		    var all = new List<WidgetTypeDetails>();  
             all.Add(new WidgetTypeDetails()
             {    
-                Code = "Co", 
-                Name = "Column", 
-                SearchFields = "Column", 
+                Code = "line", 
+                Name = "Line", 
+                SearchFields = "Line", 
 			});
 			 
             all.Add(new WidgetTypeDetails()
             {    
-                Code = "Are", 
-                Name = "Area", 
-                SearchFields = "Area", 
-			});
-			 
-            all.Add(new WidgetTypeDetails()
-            {    
-                Code = "Bar", 
+                Code = "bar", 
                 Name = "Bar", 
                 SearchFields = "Bar", 
 			});
 			 
             all.Add(new WidgetTypeDetails()
             {    
-                Code = "Pie", 
+                Code = "pie", 
                 Name = "Pie", 
                 SearchFields = "Pie", 
 			});
 			 
             all.Add(new WidgetTypeDetails()
             {    
-                Code = "Don", 
+                Code = "donut", 
                 Name = "Donut", 
                 SearchFields = "Donut", 
 			});
