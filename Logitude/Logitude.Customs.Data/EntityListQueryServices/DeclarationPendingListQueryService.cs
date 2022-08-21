@@ -31,6 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 PendingRemarks = a.PendingRemarks,
                                                 Status = a.Status,
                                                 Approval=a.Approval,
+                                                WasApproved=a.Approval,
                                             });
             return query;
 		}
