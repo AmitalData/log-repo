@@ -27,6 +27,8 @@ import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
+import { BehaviorSubject } from 'rxjs';
+
 
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
@@ -68,7 +70,11 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     isNewDashboardRendered: boolean = false;
     @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
     public selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
-    private dashboardDataBinding: DashboardDataBinding = new DashboardDataBinding();
+    private dashboardDataBinding: DashboardDataBinding = 
+    {
+        onGetAllDashboard : new BehaviorSubject<ReactDashboardPM[]>([]),
+        onGetDashboard : new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM)
+    };
 
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
