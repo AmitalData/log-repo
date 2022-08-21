@@ -200,6 +200,65 @@ namespace Logitude.CustomsMessaging.ResponseServices
 //});
         }
 
+
+        public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
+        {
+
+            //
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            if (dbms == "oracle")
+            {
+
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + "  where DECLARATIONID=:p1 ";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
         {
             var requestParams1170 = new MANIFESTRequestRequestParams()
