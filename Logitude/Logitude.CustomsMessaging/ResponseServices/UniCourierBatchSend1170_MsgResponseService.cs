@@ -31,8 +31,9 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
-using System.Data.OracleClient;
+//using System.Data.OracleClient;
 using System.Data.SqlClient;
+using Oracle.DataAccess.Client;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {

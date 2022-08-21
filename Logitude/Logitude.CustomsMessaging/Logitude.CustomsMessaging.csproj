@@ -1,696 +1,701 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{7994D6F2-00A7-4C0D-A7D3-FD7D5304B665}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>Logitude.CustomsMessaging</RootNamespace>
-		<AssemblyName>Logitude.CustomsMessaging</AssemblyName>
-		<TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-		<SccProjectName>SAK</SccProjectName>
-		<SccLocalPath>SAK</SccLocalPath>
-		<SccAuxPath>SAK</SccAuxPath>
-		<SccProvider>SAK</SccProvider>
-		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-		<RestorePackages>true</RestorePackages>
-		<TargetFrameworkProfile />
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>bin\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
-		<OutputPath>bin\Release\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
-		<DebugSymbols>true</DebugSymbols>
-		<OutputPath>bin\All Projects\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<DebugType>full</DebugType>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<ErrorReport>prompt</ErrorReport>
-		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-		<OutputPath>bin\None\</OutputPath>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
-		</Reference>
-		<Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-			<HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-		</Reference>
-		<Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-			<HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.Extensions.ObjectPool, Version=6.0.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.Extensions.ObjectPool.6.0.6\lib\net461\Microsoft.Extensions.ObjectPool.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-			<HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-		</Reference>
-		<Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-			<HintPath>..\packages\RabbitMQ.Client.6.2.2\lib\net461\RabbitMQ.Client.dll</HintPath>
-		</Reference>
-		<Reference Include="System" />
-		<Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-		</Reference>
-		<Reference Include="System.ComponentModel.DataAnnotations" />
-		<Reference Include="System.Configuration" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Numerics" />
-		<Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Runtime.Serialization" />
-		<Reference Include="System.ServiceModel" />
-		<Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-		<Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Transactions" />
-		<Reference Include="System.Web" />
-		<Reference Include="System.Xml.Linq" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="System.Xml" />
-		<Reference Include="Unifreight.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
-		</Reference>
-		<Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.Common.dll</HintPath>
-		</Reference>
-		<Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
-		</Reference>
-		<Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="CustomsBook\CustomsBookImport.cs" />
-		<Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
-		<Compile Include="CustomsBook\CustomsItemImport.cs" />
-		<Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
-		<Compile Include="Dca\DcaDirect9200TenantService.cs" />
-		<Compile Include="Dca\DedicatedCourierDCAService.cs" />
-		<Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
-		<Compile Include="Dca\WaitingTester.cs" />
-		<Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
-		<Compile Include="FakeMessagingServices\DCASincroService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
-		<Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
-		<Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
-		<Compile Include="FakeMessagingServices\Fake_8250_DeclarationStatus_RequestMessagingService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_5117_MSG14003_Amendment_Service.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.cs" />
-		<Compile Include="FakeMessagingServices\Fake_8215_MSG23002_ConstraintApprovalDecision.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_SendDOC_MSG5101_GNMessageToAgent.cs" />
-		<Compile Include="FakeMessagingServices\Fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
-		<Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
-		<Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
-		<Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
-		<Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
-		<Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1259CargoIdentifireType.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1366ContainerType.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1604ConfirmationType.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1422ItemGovernmentProcedureType.cs" />
-		<Compile Include="Helpers\ClosedTable\Update2009TradeAgreementTypeView.cs" />
-		<Compile Include="Helpers\ClosedTable\Update23928IncotemrsFileValidation.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1423CertificateExemptionType.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
-		<Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
-		<Compile Include="MessagingServices\DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBUCADPE_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBClosePending_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
-		<Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
-		<Compile Include="Dca\DCARenameIncomeFileService.cs" />
-		<Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
-			<AutoGen>True</AutoGen>
-			<DesignTime>True</DesignTime>
-			<DependentUpon>ElasticDemoGen.tt</DependentUpon>
-		</Compile>
-		<Compile Include="Helpers\CloneUtil.cs" />
-		<Compile Include="Helpers\ClosedTable\ClosedTableGenericService.cs" />
-		<Compile Include="Helpers\ClosedTable\ClosedTableServiceFactory.cs" />
-		<Compile Include="Helpers\ClosedTable\ClosedTableUniqeList1118Service.cs" />
-		<Compile Include="Helpers\ClosedTable\ClosedTableUniqeListGenericService.cs" />
-		<Compile Include="Helpers\ClosedTable\ManipulateCustomResponse.cs" />
-		<Compile Include="Helpers\ClosedTable\SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1118CustumBranch.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1136CustomsCountry.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1344InternationalSite.cs" />
-		<Compile Include="Helpers\ClosedTable\Update1354GovernmentProcedureType.cs" />
-		<Compile Include="Helpers\CustomException.cs" />
-		<Compile Include="Helpers\DataTypeConvertorUtil.cs" />
-		<Compile Include="Helpers\IIIGClosedTableDBService.cs" />
-		<Compile Include="Helpers\LoadCustomClosedTables.cs" />
-		<Compile Include="Helpers\RequestContentHeaderUtil.cs" />
-		<Compile Include="Helpers\CRSShrinkBlobStepsUtil.cs" />
-		<Compile Include="Helpers\SIAccumulationUtil.cs" />
-		<Compile Include="Helpers\UnifreightDocumentsFilingService.cs" />
-		<Compile Include="MessageAnalyzer\AnalyzeQueueMessage.cs" />
-		<Compile Include="MessagingServices\CBC_NG_8361_MSG01_CustomsBookInMessagingService.cs" />
-		<Compile Include="MessagingServices\CB_NG_8316_CustomItemLegalDemandsMessagingService.cs" />
-		<Compile Include="MessagingServices\CLAIM_2340_ClaimRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\CLAIM_5005_ContinuousRequestOnClaimFileMessagingService.cs" />
-		<Compile Include="MessagingServices\CL_3630_AddUpdateDeleteAddressContactMassagingService.cs" />
-		<Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
-		<Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInCLAIM_2300_MissingDocumentRequestMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInCLAIM_5115_ContinuousMessageMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInST_NG_10_SpecialActivityResponseMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInUCB1170_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBSendDelayForm_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB9999ReAnAnalysis_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB8212_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBStorageSite_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCBUD2LT_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCUDO_UpdateOpenDeclarationsMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
-		<Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_MSG8235_ExportDeclarationAmendmentMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
-		<Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
-		<Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\NG_9100_MSG_OutgoingMessageRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\SaveCC_MSG2450_ContainerizationMessageMessagingService.cs" />
-		<Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
-		<Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
-		<Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
-		<Compile Include="MessagingServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgService.cs" />
-		<Compile Include="MessagingServices\SaveCH_MSG_195_SearchResultsMessagingService.cs" />
-		<Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
-		<Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
-		<Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
-		<Compile Include="MessagingServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamMessagingService.cs" />
-		<Compile Include="MessagingServices\TPG_NG_8306_Web07_GuaranteeCertificateMessagingService.cs" />
-		<Compile Include="MessagingServices\TPG_NG_8307_Web09_DeclarationFilterMessagingService.cs" />
-		<Compile Include="MessagingServices\TSH_NG_8285_Web01_PaymentFilterParamMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInCH_NG_190_MSG1_NoticeToClientMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInCH_NG_196_MSG7_CargoExitFromCheckSiteMassageService.cs" />
-		<Compile Include="MessagingServices\DCAInDEPO_2000_DepositForfeitOrderInfoMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDEPO_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDEPO_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDE_NG_280_MSG11_DebtNotificationMessageMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDE_NG_5107_MSG10_AcceptanceOrRejectionMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDF_5018_ImportExportDeclarationCancellationMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDF_8213_CollateralAnswerApprovalMsgMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDF_NG_5117_ImportDeclerationAmendmentReplyMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInEV_NG_8215_MSG23002_ConstraintApprovalDecisionMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService.cs" />
-		<Compile Include="MessagingServices\DCAInGRNT_1812_CreateGurateeRequestInfoMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInLO_NG_3720_MSG313_PoaUpdateForCustomsAgentMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInNG_5009_FirstAndSeconderyRequirementsMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInST_NG_70_MSG3_StorageResponseFromWarehouseMessagingServices.cs" />
-		<Compile Include="MessagingServices\DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInVAL_NG_8227_MSG_520_RequiredDocumentMassagingService.cs" />
-		<Compile Include="MessagingServices\DCAInVE_3681_VendorErrorOrCriticalChangeMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInVE_3700_ImporterPeriodicDeclarationReplyMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInDOC_NG_5101_GNMessageToAgentMessageService.cs" />
-		<Compile Include="MessagingServices\DCAInDEPO_2020_DepositRefundOrderInfoMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_8302_Web03_DeclarationPrintMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_Web8332_FaultProceduralParamMessagingService.cs" />
-		<Compile Include="MessagingServices\DOC_NG_5101_GNMessageToAgentMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInLP_NG_8400_MSG01_LogisticPermitMessageMessagingService.cs" />
-		<Compile Include="MessagingServices\DCAInEV_NG_8218_ProceduralFaultMessagingService.cs" />
-		<Compile Include="MessagingServices\MessagingServiceBase.PasiveSign.cs" />
-		<Compile Include="MessagingServices\MN_MSG1_MANIFESTMessagingService.cs" />
-		<Compile Include="MessagingServices\MN_NG_9020_MasterBOLQueryMessagingService.cs" />
-		<Compile Include="MessagingServices\ST_NG_40_MSG7_SpecialActivityRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\SYSTBL_NG_9010_MSG_MessageRestoreRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\EV_NG_8216_MSG23003_ConstraintAgentAnswerMessagingService.cs" />
-		<Compile Include="MessagingServices\GRNT_5004_GuaranteeReturnRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\MN_NG_8240_CargoQueryMessagingService.cs" />
-		<Compile Include="MessagingServices\TPG_NG_2018_BankAccountToRefundUpdateReplayMessagingService.cs" />
-		<Compile Include="MessagingServices\TSH_8368_MasavPaymentsToAgentMessagingService.cs" />
-		<Compile Include="MessagingServices\TSH_NG_8289_Web05_CreditQueryMessagingService.cs" />
-		<Compile Include="MessagingServices\TSH_WEB8289_9060_RTGSInfoQueryMessagingService.cs" />
-		<Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
-		<Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
-		<Compile Include="RabbitMQ\Handlers\UCBUD2LT_RabbitMQHandler.cs" />
-		<Compile Include="RabbitMQ\Handlers\UCUW2L_RabbitMQHandler.cs" />
-		<Compile Include="RabbitMQ\PooledRabbitMQPolicy.cs" />
-		<Compile Include="RabbitMQ\RabbitMQDefinitionService.cs" />
-		<Compile Include="RabbitMQ\RabbitmqConnection.cs" />
-		<Compile Include="RabbitMQ\RabbitmqHelper.cs" />
-		<Compile Include="RabbitMQ\RabbitPublishWorker.cs" />
-		<Compile Include="RabbitMQ\RabbitPublishService.cs" />
-		<Compile Include="RabbitMQ\SingletonRabbitMQPublisher.cs" />
-		<Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
-		<Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
-		<Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
-		<Compile Include="RequestServices\CLAIM_5005_ContinuousRequestOnClaimFileRequestService.cs" />
-		<Compile Include="RequestServices\CL_3630_AddUpdateDeleteAddressContactRequestService.cs" />
-		<Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
-		<Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
-		<Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
-		<Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
-		<Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitExportDeclarationRequestService .cs" />
-		<Compile Include="RequestServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\NG_9100_MSG_OutgoingMessageRequest_RequestService.cs" />
-		<Compile Include="RequestServices\SaveCC_MSG2450_ContainerizationMessageRequestService.cs" />
-		<Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
-		<Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
-		<Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
-		<Compile Include="RequestServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgRequestService.cs" />
-		<Compile Include="RequestServices\SaveCH_MSG_195_SearchResultsRequestService .cs" />
-		<Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
-		<Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
-		<Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
-		<Compile Include="RequestServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamRequestService.cs" />
-		<Compile Include="RequestServices\TPG_NG_8306_Web07_GuaranteeCertificateRequestService.cs" />
-		<Compile Include="RequestServices\TPG_NG_8307_Web09_DeclarationFilterRequestService.cs" />
-		<Compile Include="RequestServices\TSH_NG_8285_Web01_PaymentFilterParamRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_8302_Web03_DeclarationPrintRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_8373_Web05_RetrieveImportDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_Web8332_FaultProceduralRequestService.cs" />
-		<Compile Include="RequestServices\DOC_NG_5101_GNMessageToAgent_RequestService.cs" />
-		<Compile Include="RequestServices\EV_NG_8216_MSG23003_ConstraintAgentAnswerRequestService.cs" />
-		<Compile Include="RequestServices\GRNT_5004_GuaranteeReturnRequestService.cs" />
-		<Compile Include="RequestServices\MN_MSG1_MANIFESTRequestService.cs" />
-		<Compile Include="RequestServices\MN_NG_8240_CargoQueryRequestService.cs" />
-		<Compile Include="RequestServices\MN_NG_9020_MasterBOLQueryRequestService.cs" />
-		<Compile Include="RequestServices\ST_NG_40_MSG7_SpecialActivityRequestService.cs" />
-		<Compile Include="RequestServices\TPG_8304_DeficitFileFilterParamRequestService.cs" />
-		<Compile Include="RequestServices\TPG_NG_2018_BankAccountToRefundUpdateReplayRequestService.cs" />
-		<Compile Include="RequestServices\TSH_8368_MasavPaymentsToAgentRequestService.cs" />
-		<Compile Include="RequestServices\TSH_NG_8289_Web05_CreditQueryRequestService.cs" />
-		<Compile Include="RequestServices\TSH_WEB8289_9060_RTGSInfoQueryRequestService.cs" />
-		<Compile Include="RequestServices\Unifreight_L2US01RequestParamRequestService.cs" />
-		<Compile Include="RequestServices\VE_8326_ImporterDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\VP_NG_2690_VehicleInRequestService.cs" />
-		<Compile Include="ResponseServices\CBC_NG_8362_MSG01_CustomsBookOutResponseService.cs" />
-		<Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
-		<Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
-		<Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
-		<Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
-		<Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
-		<Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
-		<Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
-		<Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
-		<Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
-		<Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
-		<Compile Include="RequestServices\LG_NG_8410_LogisticActionRequestMessageRequestService.cs" />
-		<Compile Include="ResponseServices\LP_NG_8400_MSG01_LogisticPermitMessageResponseService.cs" />
-		<Compile Include="ResponseServices\MN_MSG2791_ExportDeliveryAnswerMessageResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_5117_ImportDeclerationAmendmentReplyResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_8235_MSG14000_ExportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
-		<Compile Include="ResponseServices\CreateSupplierInvoiceFromFileBatchUCB_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchUpdateDeclarationCourierStatusMasterChanged_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\CreateCertificateForInvoiceItemsBatchUCB_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\NG_9101_MSG_OutgoingMessageResponse_ResponseService.cs" />
-		<Compile Include="ResponseServices\SaveCC_MSG2450_ContainerizationMessageResponseService.cs" />
-		<Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
-		<Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend2715SendNow_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendClosePending_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\SaveCH_MSG_195_SearchResultsResponseService.cs" />
-		<Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
-		<Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
-		<Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
-		<Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
-		<Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
-		<Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />
-		<Compile Include="ResponseServices\SE_6001_SealUpdateResponseService.cs" />
-		<Compile Include="ResponseServices\ST_MSG05_StorageEntranceUnloadingResponseService.cs" />
-		<Compile Include="ResponseServices\ST_NG_60_SpecialActivityExecutionReportResponseService.cs" />
-		<Compile Include="ResponseServices\ST_NG_10_SpecialActivityResponseMessageResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_NG_8245_ClaimFilesDetailResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_NG_8247_Web06_GuaranteeFilesDetailResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_NG_8248_Web08_GuaranteeCertificateResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_NG_8249_Web10_TPGDeclarationDetailResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_NG_8286_Web02_PaymentListResponseService.cs" />
-		<Compile Include="ResponseServices\DEPO_2000_MSG13_DepositForfeitOrderInfoResponseService.cs" />
-		<Compile Include="ResponseServices\DEPO_2020_DepositRefundOrderInfoResponseService.cs" />
-		<Compile Include="ResponseServices\DEPO_NG_5110_DepositRequestFulfillednfoMsgResponseService.cs" />
-		<Compile Include="ResponseServices\DF_5018_ImportExportDeclarationCancellationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2754_MSG10004_RetrieveImportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_8237_ExportDeclerationAmendmentReplyResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_8303_Web04_DeclarationPrintResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_Web8333_FaultProceduralDetailsResponseService.cs" />
-		<Compile Include="ResponseServices\GRNT_5004_GuaranteeReturnResponseService.cs" />
-		<Compile Include="ResponseServices\INF_MSG_Generic_EV_NG_8216_MSG23003_ConstraintAgentAnswerResponseService.cs" />
-		<Compile Include="RequestServices\SYSTBL_NG_9010_MSG_MessageRestore_RequestService.cs" />
-		<Compile Include="ResponseServices\DOC_NG_5101_GNMessageToAgentResponseService.cs" />
-		<Compile Include="MessagingServices\MessagingServiceBase.ReqSheet.cs" />
-		<Compile Include="MessagingServices\MessagingServiceBase.WR.cs" />
-		<Compile Include="MessagingServices\MessagingServiceFactoryHelper.cs" />
-		<Compile Include="MessagingServices\MM_Web01_MorningMessagesListMessagingService.cs" />
-		<Compile Include="MessagingServices\ST_8330_BlockListInWarehouseFilterMessagingService.cs" />
-		<Compile Include="MessagingServices\SYSTBL_NG_9000_MSG_SystemTableRequestMessageService.cs" />
-		<Compile Include="MessagingServices\CD_NG_8347_Web01_CurrencyRateSearchParamMessagingService.cs" />
-		<Compile Include="MessagingServices\ST_8328_Web01_WarehouseBlockBalanceMessagingService.cs" />
-		<Compile Include="RequestServices\DCAInCustomRequestService.cs" />
-		<Compile Include="RequestServices\DCAInRequestHeader.cs" />
-		<Compile Include="RequestServices\MM_Web01_MorningMessagesListRequestService.cs" />
-		<Compile Include="RequestServices\ST_8328_Web01_WarehouseBlockBalanceFilterParamRequestService.cs" />
-		<Compile Include="RequestServices\ST_8330_BlockListInWarehouseFilterRequestService.cs" />
-		<Compile Include="RequestServices\SYSTBL_NG_9000_MSG_SystemTableRequestService.cs" />
-		<Compile Include="RequestServices\CD_NG_8347_Web01_CurrencyRateSearchParamRequestService.cs" />
-		<Compile Include="ResponseServices\CD_NG_8348_Web02_CurrencyRateDetailResponseService.cs" />
-		<Compile Include="ResponseServices\DEPO_MSG2030_DepositRequestCreatedInfoResponseService.cs" />
-		<Compile Include="ResponseServices\DE_NG_5107_MSG10_AcceptanceOrRejectionMessageResponseService.cs" />
-		<Compile Include="ResponseServices\EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService.cs" />
-		<Compile Include="ResponseServices\EV_NG_8219_MSG14100_ProceduralFaultCancelMsgResponseService.cs" />
-		<Compile Include="ResponseServices\GRNT_1812_CreateGurateeRequestInfoResponseService.cs" />
-		<Compile Include="ResponseServices\Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService.cs" />
-		<Compile Include="MessagingServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService.cs" />
-		<Compile Include="MessagingServices\EV_NG_8214_MSG23001_ConstraintApprovalRequestMessagingService.cs" />
-		<Compile Include="MessagingServices\CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService.cs" />
-		<Compile Include="MessagingServices\DF_MSG10000_ImportDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitDeclarationMessagingService.cs" />
-		<Compile Include="MessagingServices\D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService.cs" />
-		<Compile Include="MessagingServices\IMessagingServiceBase.cs" />
-		<Compile Include="MessagingServices\MessagingServiceBase.cs" />
-		<Compile Include="MessagingServices\TSH_MSG6_AgentPaymentMessageService.cs" />
-		<Compile Include="MessagingServices\TSH_NG_3053_MSG8_AgentPaymentRequestMessageService.cs" />
-		<Compile Include="MessagingServices\VE_MSG010_VendorInsertUpdateDeleteMessagingService.cs" />
-		<Compile Include="MessagingServices\VE_MSG013_VendorAddCommunicationDeviceMessageService.cs" />
-		<Compile Include="MessagingServices\VE_MSG051_VendorSearchByCustomsAgentMessagingService.cs" />
-		<Compile Include="RequestServices\CL_3610_GetCustomerByEntityCustomerIdentificationRequestService.cs" />
-		<Compile Include="RequestServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgRequestService.cs" />
-		<Compile Include="RequestServices\DF_MSG10000_ImportDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitDeclarationRequestService.cs" />
-		<Compile Include="RequestServices\DF_NG_8250_Web01_DeclarationStatus_RequestService.cs" />
-		<Compile Include="RequestServices\D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestService.cs" />
-		<Compile Include="RequestServices\EV_NG_8214_MSG23001_ConstraintApprovalRequestRequestService.cs" />
-		<Compile Include="RequestServices\TSH_MSG6_AgentPaymentRequestService.cs" />
-		<Compile Include="RequestServices\TSH_NG_3053_MSG8_AgentPaymentRequestService.cs" />
-		<Compile Include="RequestServices\VE_MSG010_VendorInsertUpdateDeleteMessageRequestService.cs" />
-		<Compile Include="RequestServices\RequestServiceBase.cs" />
-		<Compile Include="RequestServices\VE_MSG013_VendorAddCommunicationDeviceRequestService.cs" />
-		<Compile Include="RequestServices\VE_MSG051_VendorSearchByCustomsAgentRequestService.cs" />
-		<Compile Include="Helpers\SystemTables.cs" />
-		<Compile Include="MessagingServices\CH_NG_191_MSG2_ChangingTimeRequestMessagingService.cs" />
-		<Compile Include="Properties\AssemblyInfo.cs" />
-		<Compile Include="RequestServices\CH_NG_191_MSG2_ChangingTimeRequestService.cs" />
-		<Compile Include="ResponseServices\CH_NG_190_MSG1_NoticeToClientResponseService.cs" />
-		<Compile Include="ResponseServices\CH_NG_196_MSG7_CargoExitFromCheckSiteResponseService.cs" />
-		<Compile Include="ResponseServices\CL_MSG103_WholeClientForCutomsAgentResponseService.cs" />
-		<Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationErrorPointerService.cs" />
-		<Compile Include="ResponseServices\DE_NG_280_MSG11_DebtNotificationMessageResponseService.cs" />
-		<Compile Include="ResponseServices\DF_8211_CollateralRequestMsgResponseService.cs" />
-		<Compile Include="ResponseServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgResponseService.cs" />
-		<Compile Include="ResponseServices\DF_8213_CollateralAnswerApprovalMsgResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\DF_NG_8251_Web02_DeclarationStatus_ResponseService.cs" />
-		<Compile Include="ResponseServices\D_NG_2716_MSG22001_AddAttachmentResponseService.cs" />
-		<Compile Include="ResponseServices\EV_NG_8214_MSG23001_ConstraintApprovalResponseService.cs" />
-		<Compile Include="ResponseServices\EV_NG_8215_MSG23002_ConstraintApprovalDecisionResponseService.cs" />
-		<Compile Include="ResponseServices\INF_MSG_Generic_DOC_NG_5101_GNMessageToAgent_ResponseService.cs" />
-		<Compile Include="ResponseServices\LO_NG_3720_MSG313_PoaUpdateForCustomsAgentResponseService.cs" />
-		<Compile Include="ResponseServices\LG_NG_8411_SendLogisticActionRequestDecisionResponseService.cs" />
-		<Compile Include="ResponseServices\MM_Web02_MorningMessagesListResponseService.cs" />
-		<Compile Include="ResponseServices\MN_MSG4_SendManifestFeedBack_MessageResponseService.cs" />
-		<Compile Include="ResponseServices\MN_NG_8241_CargoResponseService.cs" />
-		<Compile Include="ResponseServices\MN_NG_8241_Cargo_MessageResponseService.cs" />
-		<Compile Include="ResponseServices\MN_NG_9021_MasterBOLFeedBackResponseService.cs" />
-		<Compile Include="ResponseServices\ST_8329_Web02_WarehouseBlockBalanceDetailResponseService.cs" />
-		<Compile Include="ResponseServices\ST_8331_BlockListInWarehouseDetailResponseService.cs" />
-		<Compile Include="ResponseServices\ST_NG_40_MSG7_SpecialActivityResponseService.cs" />
-		<Compile Include="ResponseServices\ST_NG_70_MSG3_StorageResponseFromWarehouseResponseService.cs" />
-		<Compile Include="ResponseServices\SYSTBL_NG_9001_MSG_SystemTablesResponseService.cs" />
-		<Compile Include="ResponseServices\SYSTBL_NG_9011_MSG_MessageRestore_ResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_8246_DeficitFilesDetailResponseService.cs" />
-		<Compile Include="ResponseServices\TPG_NG_2018_BankAccountToRefundUpdateReplayResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_8356_MasavPaymentsToAgentResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_MSG2_3050_PaymentOrderReplyResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_MSG7_AgentPaymentReplyResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_NG_8290_Web06_CreditInfoResponseService.cs" />
-		<Compile Include="ResponseServices\TSH_WEB8289_9060_RTGSInfoQueryResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniDecReAnalysisBatchSend9999_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\UniDecCollateralBatchSend8212_MsgResponseService.cs" />
-		<Compile Include="ResponseServices\Unifreight_LOGISIVUGResponseService.cs" />
-		<Compile Include="ResponseServices\VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.cs" />
-		<Compile Include="ResponseServices\VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
-		<Compile Include="ResponseServices\VE_3681_VendorErrorOrCriticalChangeResponseService.cs" />
-		<Compile Include="ResponseServices\VE_3700_ImporterPeriodicDeclarationReplyResponseService.cs" />
-		<Compile Include="ResponseServices\VE_8327_ImporterDeclarationResponseService.cs" />
-		<Compile Include="ResponseServices\VE_MSG010_VendorInsertUpdateDeleteMessageResponseService.cs" />
-		<Compile Include="ResponseServices\CH_NG_192_MSG3_ApproveChangeTimeResponseService.cs" />
-		<Compile Include="ResponseServices\ResponseServiceBase.cs" />
-		<Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
-		<Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
-		<Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
-		<Compile Include="Tasks\SendDeclarationStatus.cs" />
-		<Compile Include="Tasks\SendManifestService.cs" />
-		<Compile Include="Testers\EcomTesterService.cs" />
-		<Compile Include="Testers\CourierTester.cs" />
-		<Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
-		<Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
-		<Compile Include="Testers\Mirit\MiritStartUp.cs" />
-		<Compile Include="Testers\Mirit\VendorRepository\AddVendor.cs" />
-		<Compile Include="Testers\Mirit\VendorRepository\DeleteVendor.cs" />
-		<Compile Include="Testers\Mirit\VendorRepository\UpdateVendor.cs" />
-		<Compile Include="Testers\PaymentTestService.cs" />
-		<Compile Include="Testers\SendUnifreightCustomInterfaceTester.cs" />
-		<Compile Include="Testers\SubmitDeclarationTestService.cs" />
-		<Compile Include="MessagingServices\TPG_8304_DeficitFileFilterParamMessagingService.cs" />
-		<Compile Include="U2L\CommDec\ECommDecInsertService.cs" />
-		<Compile Include="U2L\CommDec\CommDecService.cs" />
-		<Compile Include="U2L\Sivug\CalculateCheckDigit.cs" />
-		<Compile Include="U2L\Sivug\SivugUpsertService.cs" />
-		<Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
-		<Compile Include="UnifreightGateway\CacheManagerService.cs" />
-		<Compile Include="UnifreightGateway\CommMasterCourierService.cs" />
-		<Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
-		<Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />
-		<Compile Include="UnifreightGateway\MevakerSendSignedDeclarationService.cs" />
-		<Compile Include="UnifreightGateway\SendDirectMessageService.cs" />
-		<Compile Include="UnifreightGateway\SivugUpsertBatchService.cs" />
-		<Compile Include="UnifreightGateway\SivugUpsertDcaReceivedService.cs" />
-		<Compile Include="UnifreightGateway\Testres\MritTestService.cs" />
-		<Compile Include="UnifreightGateway\UGEnvironmentService.cs" />
-		<Compile Include="UnifreightGateway\UServerGetRequestService.cs" />
-		<Compile Include="UnifreightGateway\UServerSetResponseService.cs" />
-		<Compile Include="Dca\DcaDownloadTenantService.cs" />
-		<Compile Include="Dca\DcaReceivedService.cs" />
-		<Compile Include="Utils\CRSUtil.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="App.config" />
-		<None Include="packages.config">
-			<SubType>Designer</SubType>
-		</None>
-		<None Include="Dca\Deploy\ftp.cmd" />
-		<None Include="Dca\Deploy\Xap\XapFftp.cmd" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
-			<Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
-			<Name>Logitude.AmitalMessaging</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-			<Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
-			<Name>Logitude.BL</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
-			<Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
-			<Name>Logitude.Customs.BL</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
-			<Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
-			<Name>Logitude.Customs.Data</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
-			<Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
-			<Name>Logitude.Customs.Def</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
-			<Project>{f0039dbe-4a1a-4755-8f37-e4005ea74746}</Project>
-			<Name>Logitude.CustomsMessaging.Common</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
-			<Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
-			<Name>Logitude.Server.Tools</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
-			<Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
-			<Name>Logitude.SystemLogs</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
-			<Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
-			<Name>Simplog.Data</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
-			<Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
-			<Name>Simplog.Server.Infrastructure</Name>
-		</ProjectReference>
-		<ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
-			<Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
-			<Name>Unifreight.BL</Name>
-		</ProjectReference>
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="ElasticDemoModel\ElasticDemoGen.tt">
-			<Generator>TextTemplatingFileGenerator</Generator>
-			<LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
-		</Content>
-		<Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
-		<Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
-		<Content Include="MyObj\ICSharpCode.SharpZipLib.dll" />
-		<Content Include="Dca\Deploy\ftpscript.txt" />
-		<Content Include="Dca\Deploy\Xap\Xapftpscript.txt" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="CommonDataModel\" />
-		<Folder Include="RequestParams\" />
-		<Folder Include="ResponseData\" />
-	</ItemGroup>
-	<ItemGroup>
-		<WCFMetadata Include="Connected Services\" />
-	</ItemGroup>
-	<ItemGroup>
-		<Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-	<Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7994D6F2-00A7-4C0D-A7D3-FD7D5304B665}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.CustomsMessaging</RootNamespace>
+    <AssemblyName>Logitude.CustomsMessaging</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=6.0.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.6.0.6\lib\net461\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
+    <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.6.2.2\lib\net461\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unifreight.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomsBook\CustomsBookImport.cs" />
+    <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
+    <Compile Include="CustomsBook\CustomsItemImport.cs" />
+    <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
+    <Compile Include="Dca\DcaDirect9200TenantService.cs" />
+    <Compile Include="Dca\DedicatedCourierDCAService.cs" />
+    <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
+    <Compile Include="Dca\WaitingTester.cs" />
+    <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
+    <Compile Include="FakeMessagingServices\DCASincroService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
+    <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
+    <Compile Include="FakeMessagingServices\Fake_8250_DeclarationStatus_RequestMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_5117_MSG14003_Amendment_Service.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.cs" />
+    <Compile Include="FakeMessagingServices\Fake_8215_MSG23002_ConstraintApprovalDecision.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_SendDOC_MSG5101_GNMessageToAgent.cs" />
+    <Compile Include="FakeMessagingServices\Fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
+    <Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
+    <Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1259CargoIdentifireType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1366ContainerType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1604ConfirmationType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1422ItemGovernmentProcedureType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update2009TradeAgreementTypeView.cs" />
+    <Compile Include="Helpers\ClosedTable\Update23928IncotemrsFileValidation.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1423CertificateExemptionType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUCADPE_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBClosePending_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
+    <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
+    <Compile Include="Dca\DCARenameIncomeFileService.cs" />
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CloneUtil.cs" />
+    <Compile Include="Helpers\ClosedTable\ClosedTableGenericService.cs" />
+    <Compile Include="Helpers\ClosedTable\ClosedTableServiceFactory.cs" />
+    <Compile Include="Helpers\ClosedTable\ClosedTableUniqeList1118Service.cs" />
+    <Compile Include="Helpers\ClosedTable\ClosedTableUniqeListGenericService.cs" />
+    <Compile Include="Helpers\ClosedTable\ManipulateCustomResponse.cs" />
+    <Compile Include="Helpers\ClosedTable\SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1118CustumBranch.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1136CustomsCountry.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1344InternationalSite.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1354GovernmentProcedureType.cs" />
+    <Compile Include="Helpers\CustomException.cs" />
+    <Compile Include="Helpers\DataTypeConvertorUtil.cs" />
+    <Compile Include="Helpers\IIIGClosedTableDBService.cs" />
+    <Compile Include="Helpers\LoadCustomClosedTables.cs" />
+    <Compile Include="Helpers\RequestContentHeaderUtil.cs" />
+    <Compile Include="Helpers\CRSShrinkBlobStepsUtil.cs" />
+    <Compile Include="Helpers\SIAccumulationUtil.cs" />
+    <Compile Include="Helpers\UnifreightDocumentsFilingService.cs" />
+    <Compile Include="MessageAnalyzer\AnalyzeQueueMessage.cs" />
+    <Compile Include="MessagingServices\CBC_NG_8361_MSG01_CustomsBookInMessagingService.cs" />
+    <Compile Include="MessagingServices\CB_NG_8316_CustomItemLegalDemandsMessagingService.cs" />
+    <Compile Include="MessagingServices\CLAIM_2340_ClaimRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\CLAIM_5005_ContinuousRequestOnClaimFileMessagingService.cs" />
+    <Compile Include="MessagingServices\CL_3630_AddUpdateDeleteAddressContactMassagingService.cs" />
+    <Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
+    <Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInCLAIM_2300_MissingDocumentRequestMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInCLAIM_5115_ContinuousMessageMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInST_NG_10_SpecialActivityResponseMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInUCB1170_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBSendDelayForm_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB9999ReAnAnalysis_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8212_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBStorageSite_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUD2LT_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCUDO_UpdateOpenDeclarationsMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
+    <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG8235_ExportDeclarationAmendmentMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
+    <Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\NG_9100_MSG_OutgoingMessageRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\SaveCC_MSG2450_ContainerizationMessageMessagingService.cs" />
+    <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
+    <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
+    <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgService.cs" />
+    <Compile Include="MessagingServices\SaveCH_MSG_195_SearchResultsMessagingService.cs" />
+    <Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
+    <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
+    <Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
+    <Compile Include="MessagingServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamMessagingService.cs" />
+    <Compile Include="MessagingServices\TPG_NG_8306_Web07_GuaranteeCertificateMessagingService.cs" />
+    <Compile Include="MessagingServices\TPG_NG_8307_Web09_DeclarationFilterMessagingService.cs" />
+    <Compile Include="MessagingServices\TSH_NG_8285_Web01_PaymentFilterParamMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInCH_NG_190_MSG1_NoticeToClientMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInCH_NG_196_MSG7_CargoExitFromCheckSiteMassageService.cs" />
+    <Compile Include="MessagingServices\DCAInDEPO_2000_DepositForfeitOrderInfoMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDEPO_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDEPO_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDE_NG_280_MSG11_DebtNotificationMessageMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDE_NG_5107_MSG10_AcceptanceOrRejectionMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDF_5018_ImportExportDeclarationCancellationMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDF_8213_CollateralAnswerApprovalMsgMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDF_NG_5117_ImportDeclerationAmendmentReplyMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInEV_NG_8215_MSG23002_ConstraintApprovalDecisionMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGRNT_1812_CreateGurateeRequestInfoMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInLO_NG_3720_MSG313_PoaUpdateForCustomsAgentMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInNG_5009_FirstAndSeconderyRequirementsMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInST_NG_70_MSG3_StorageResponseFromWarehouseMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInVAL_NG_8227_MSG_520_RequiredDocumentMassagingService.cs" />
+    <Compile Include="MessagingServices\DCAInVE_3681_VendorErrorOrCriticalChangeMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInVE_3700_ImporterPeriodicDeclarationReplyMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInDOC_NG_5101_GNMessageToAgentMessageService.cs" />
+    <Compile Include="MessagingServices\DCAInDEPO_2020_DepositRefundOrderInfoMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_8302_Web03_DeclarationPrintMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_Web8332_FaultProceduralParamMessagingService.cs" />
+    <Compile Include="MessagingServices\DOC_NG_5101_GNMessageToAgentMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInLP_NG_8400_MSG01_LogisticPermitMessageMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInEV_NG_8218_ProceduralFaultMessagingService.cs" />
+    <Compile Include="MessagingServices\MessagingServiceBase.PasiveSign.cs" />
+    <Compile Include="MessagingServices\MN_MSG1_MANIFESTMessagingService.cs" />
+    <Compile Include="MessagingServices\MN_NG_9020_MasterBOLQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\ST_NG_40_MSG7_SpecialActivityRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\SYSTBL_NG_9010_MSG_MessageRestoreRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\EV_NG_8216_MSG23003_ConstraintAgentAnswerMessagingService.cs" />
+    <Compile Include="MessagingServices\GRNT_5004_GuaranteeReturnRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\MN_NG_8240_CargoQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\TPG_NG_2018_BankAccountToRefundUpdateReplayMessagingService.cs" />
+    <Compile Include="MessagingServices\TSH_8368_MasavPaymentsToAgentMessagingService.cs" />
+    <Compile Include="MessagingServices\TSH_NG_8289_Web05_CreditQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\TSH_WEB8289_9060_RTGSInfoQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
+    <Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
+    <Compile Include="RabbitMQ\Handlers\UCBUD2LT_RabbitMQHandler.cs" />
+    <Compile Include="RabbitMQ\Handlers\UCUW2L_RabbitMQHandler.cs" />
+    <Compile Include="RabbitMQ\PooledRabbitMQPolicy.cs" />
+    <Compile Include="RabbitMQ\RabbitMQDefinitionService.cs" />
+    <Compile Include="RabbitMQ\RabbitmqConnection.cs" />
+    <Compile Include="RabbitMQ\RabbitmqHelper.cs" />
+    <Compile Include="RabbitMQ\RabbitPublishWorker.cs" />
+    <Compile Include="RabbitMQ\RabbitPublishService.cs" />
+    <Compile Include="RabbitMQ\SingletonRabbitMQPublisher.cs" />
+    <Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
+    <Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
+    <Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
+    <Compile Include="RequestServices\CLAIM_5005_ContinuousRequestOnClaimFileRequestService.cs" />
+    <Compile Include="RequestServices\CL_3630_AddUpdateDeleteAddressContactRequestService.cs" />
+    <Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
+    <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
+    <Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitExportDeclarationRequestService .cs" />
+    <Compile Include="RequestServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\NG_9100_MSG_OutgoingMessageRequest_RequestService.cs" />
+    <Compile Include="RequestServices\SaveCC_MSG2450_ContainerizationMessageRequestService.cs" />
+    <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
+    <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
+    <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
+    <Compile Include="RequestServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgRequestService.cs" />
+    <Compile Include="RequestServices\SaveCH_MSG_195_SearchResultsRequestService .cs" />
+    <Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
+    <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
+    <Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
+    <Compile Include="RequestServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamRequestService.cs" />
+    <Compile Include="RequestServices\TPG_NG_8306_Web07_GuaranteeCertificateRequestService.cs" />
+    <Compile Include="RequestServices\TPG_NG_8307_Web09_DeclarationFilterRequestService.cs" />
+    <Compile Include="RequestServices\TSH_NG_8285_Web01_PaymentFilterParamRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_8302_Web03_DeclarationPrintRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_8373_Web05_RetrieveImportDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_Web8332_FaultProceduralRequestService.cs" />
+    <Compile Include="RequestServices\DOC_NG_5101_GNMessageToAgent_RequestService.cs" />
+    <Compile Include="RequestServices\EV_NG_8216_MSG23003_ConstraintAgentAnswerRequestService.cs" />
+    <Compile Include="RequestServices\GRNT_5004_GuaranteeReturnRequestService.cs" />
+    <Compile Include="RequestServices\MN_MSG1_MANIFESTRequestService.cs" />
+    <Compile Include="RequestServices\MN_NG_8240_CargoQueryRequestService.cs" />
+    <Compile Include="RequestServices\MN_NG_9020_MasterBOLQueryRequestService.cs" />
+    <Compile Include="RequestServices\ST_NG_40_MSG7_SpecialActivityRequestService.cs" />
+    <Compile Include="RequestServices\TPG_8304_DeficitFileFilterParamRequestService.cs" />
+    <Compile Include="RequestServices\TPG_NG_2018_BankAccountToRefundUpdateReplayRequestService.cs" />
+    <Compile Include="RequestServices\TSH_8368_MasavPaymentsToAgentRequestService.cs" />
+    <Compile Include="RequestServices\TSH_NG_8289_Web05_CreditQueryRequestService.cs" />
+    <Compile Include="RequestServices\TSH_WEB8289_9060_RTGSInfoQueryRequestService.cs" />
+    <Compile Include="RequestServices\Unifreight_L2US01RequestParamRequestService.cs" />
+    <Compile Include="RequestServices\VE_8326_ImporterDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\VP_NG_2690_VehicleInRequestService.cs" />
+    <Compile Include="ResponseServices\CBC_NG_8362_MSG01_CustomsBookOutResponseService.cs" />
+    <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
+    <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
+    <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
+    <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
+    <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
+    <Compile Include="RequestServices\LG_NG_8410_LogisticActionRequestMessageRequestService.cs" />
+    <Compile Include="ResponseServices\LP_NG_8400_MSG01_LogisticPermitMessageResponseService.cs" />
+    <Compile Include="ResponseServices\MN_MSG2791_ExportDeliveryAnswerMessageResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_5117_ImportDeclerationAmendmentReplyResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8235_MSG14000_ExportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
+    <Compile Include="ResponseServices\CreateSupplierInvoiceFromFileBatchUCB_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchUpdateDeclarationCourierStatusMasterChanged_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\CreateCertificateForInvoiceItemsBatchUCB_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\NG_9101_MSG_OutgoingMessageResponse_ResponseService.cs" />
+    <Compile Include="ResponseServices\SaveCC_MSG2450_ContainerizationMessageResponseService.cs" />
+    <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
+    <Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2715SendNow_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendClosePending_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\SaveCH_MSG_195_SearchResultsResponseService.cs" />
+    <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
+    <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
+    <Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
+    <Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
+    <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
+    <Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />
+    <Compile Include="ResponseServices\SE_6001_SealUpdateResponseService.cs" />
+    <Compile Include="ResponseServices\ST_MSG05_StorageEntranceUnloadingResponseService.cs" />
+    <Compile Include="ResponseServices\ST_NG_60_SpecialActivityExecutionReportResponseService.cs" />
+    <Compile Include="ResponseServices\ST_NG_10_SpecialActivityResponseMessageResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_NG_8245_ClaimFilesDetailResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_NG_8247_Web06_GuaranteeFilesDetailResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_NG_8248_Web08_GuaranteeCertificateResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_NG_8249_Web10_TPGDeclarationDetailResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_NG_8286_Web02_PaymentListResponseService.cs" />
+    <Compile Include="ResponseServices\DEPO_2000_MSG13_DepositForfeitOrderInfoResponseService.cs" />
+    <Compile Include="ResponseServices\DEPO_2020_DepositRefundOrderInfoResponseService.cs" />
+    <Compile Include="ResponseServices\DEPO_NG_5110_DepositRequestFulfillednfoMsgResponseService.cs" />
+    <Compile Include="ResponseServices\DF_5018_ImportExportDeclarationCancellationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_RetrieveImportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8237_ExportDeclerationAmendmentReplyResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8303_Web04_DeclarationPrintResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_Web8333_FaultProceduralDetailsResponseService.cs" />
+    <Compile Include="ResponseServices\GRNT_5004_GuaranteeReturnResponseService.cs" />
+    <Compile Include="ResponseServices\INF_MSG_Generic_EV_NG_8216_MSG23003_ConstraintAgentAnswerResponseService.cs" />
+    <Compile Include="RequestServices\SYSTBL_NG_9010_MSG_MessageRestore_RequestService.cs" />
+    <Compile Include="ResponseServices\DOC_NG_5101_GNMessageToAgentResponseService.cs" />
+    <Compile Include="MessagingServices\MessagingServiceBase.ReqSheet.cs" />
+    <Compile Include="MessagingServices\MessagingServiceBase.WR.cs" />
+    <Compile Include="MessagingServices\MessagingServiceFactoryHelper.cs" />
+    <Compile Include="MessagingServices\MM_Web01_MorningMessagesListMessagingService.cs" />
+    <Compile Include="MessagingServices\ST_8330_BlockListInWarehouseFilterMessagingService.cs" />
+    <Compile Include="MessagingServices\SYSTBL_NG_9000_MSG_SystemTableRequestMessageService.cs" />
+    <Compile Include="MessagingServices\CD_NG_8347_Web01_CurrencyRateSearchParamMessagingService.cs" />
+    <Compile Include="MessagingServices\ST_8328_Web01_WarehouseBlockBalanceMessagingService.cs" />
+    <Compile Include="RequestServices\DCAInCustomRequestService.cs" />
+    <Compile Include="RequestServices\DCAInRequestHeader.cs" />
+    <Compile Include="RequestServices\MM_Web01_MorningMessagesListRequestService.cs" />
+    <Compile Include="RequestServices\ST_8328_Web01_WarehouseBlockBalanceFilterParamRequestService.cs" />
+    <Compile Include="RequestServices\ST_8330_BlockListInWarehouseFilterRequestService.cs" />
+    <Compile Include="RequestServices\SYSTBL_NG_9000_MSG_SystemTableRequestService.cs" />
+    <Compile Include="RequestServices\CD_NG_8347_Web01_CurrencyRateSearchParamRequestService.cs" />
+    <Compile Include="ResponseServices\CD_NG_8348_Web02_CurrencyRateDetailResponseService.cs" />
+    <Compile Include="ResponseServices\DEPO_MSG2030_DepositRequestCreatedInfoResponseService.cs" />
+    <Compile Include="ResponseServices\DE_NG_5107_MSG10_AcceptanceOrRejectionMessageResponseService.cs" />
+    <Compile Include="ResponseServices\EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService.cs" />
+    <Compile Include="ResponseServices\EV_NG_8219_MSG14100_ProceduralFaultCancelMsgResponseService.cs" />
+    <Compile Include="ResponseServices\GRNT_1812_CreateGurateeRequestInfoResponseService.cs" />
+    <Compile Include="ResponseServices\Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService.cs" />
+    <Compile Include="MessagingServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService.cs" />
+    <Compile Include="MessagingServices\EV_NG_8214_MSG23001_ConstraintApprovalRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG10000_ImportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService.cs" />
+    <Compile Include="MessagingServices\IMessagingServiceBase.cs" />
+    <Compile Include="MessagingServices\MessagingServiceBase.cs" />
+    <Compile Include="MessagingServices\TSH_MSG6_AgentPaymentMessageService.cs" />
+    <Compile Include="MessagingServices\TSH_NG_3053_MSG8_AgentPaymentRequestMessageService.cs" />
+    <Compile Include="MessagingServices\VE_MSG010_VendorInsertUpdateDeleteMessagingService.cs" />
+    <Compile Include="MessagingServices\VE_MSG013_VendorAddCommunicationDeviceMessageService.cs" />
+    <Compile Include="MessagingServices\VE_MSG051_VendorSearchByCustomsAgentMessagingService.cs" />
+    <Compile Include="RequestServices\CL_3610_GetCustomerByEntityCustomerIdentificationRequestService.cs" />
+    <Compile Include="RequestServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG10000_ImportDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitDeclarationRequestService.cs" />
+    <Compile Include="RequestServices\DF_NG_8250_Web01_DeclarationStatus_RequestService.cs" />
+    <Compile Include="RequestServices\D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestService.cs" />
+    <Compile Include="RequestServices\EV_NG_8214_MSG23001_ConstraintApprovalRequestRequestService.cs" />
+    <Compile Include="RequestServices\TSH_MSG6_AgentPaymentRequestService.cs" />
+    <Compile Include="RequestServices\TSH_NG_3053_MSG8_AgentPaymentRequestService.cs" />
+    <Compile Include="RequestServices\VE_MSG010_VendorInsertUpdateDeleteMessageRequestService.cs" />
+    <Compile Include="RequestServices\RequestServiceBase.cs" />
+    <Compile Include="RequestServices\VE_MSG013_VendorAddCommunicationDeviceRequestService.cs" />
+    <Compile Include="RequestServices\VE_MSG051_VendorSearchByCustomsAgentRequestService.cs" />
+    <Compile Include="Helpers\SystemTables.cs" />
+    <Compile Include="MessagingServices\CH_NG_191_MSG2_ChangingTimeRequestMessagingService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestServices\CH_NG_191_MSG2_ChangingTimeRequestService.cs" />
+    <Compile Include="ResponseServices\CH_NG_190_MSG1_NoticeToClientResponseService.cs" />
+    <Compile Include="ResponseServices\CH_NG_196_MSG7_CargoExitFromCheckSiteResponseService.cs" />
+    <Compile Include="ResponseServices\CL_MSG103_WholeClientForCutomsAgentResponseService.cs" />
+    <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationErrorPointerService.cs" />
+    <Compile Include="ResponseServices\DE_NG_280_MSG11_DebtNotificationMessageResponseService.cs" />
+    <Compile Include="ResponseServices\DF_8211_CollateralRequestMsgResponseService.cs" />
+    <Compile Include="ResponseServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgResponseService.cs" />
+    <Compile Include="ResponseServices\DF_8213_CollateralAnswerApprovalMsgResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8251_Web02_DeclarationStatus_ResponseService.cs" />
+    <Compile Include="ResponseServices\D_NG_2716_MSG22001_AddAttachmentResponseService.cs" />
+    <Compile Include="ResponseServices\EV_NG_8214_MSG23001_ConstraintApprovalResponseService.cs" />
+    <Compile Include="ResponseServices\EV_NG_8215_MSG23002_ConstraintApprovalDecisionResponseService.cs" />
+    <Compile Include="ResponseServices\INF_MSG_Generic_DOC_NG_5101_GNMessageToAgent_ResponseService.cs" />
+    <Compile Include="ResponseServices\LO_NG_3720_MSG313_PoaUpdateForCustomsAgentResponseService.cs" />
+    <Compile Include="ResponseServices\LG_NG_8411_SendLogisticActionRequestDecisionResponseService.cs" />
+    <Compile Include="ResponseServices\MM_Web02_MorningMessagesListResponseService.cs" />
+    <Compile Include="ResponseServices\MN_MSG4_SendManifestFeedBack_MessageResponseService.cs" />
+    <Compile Include="ResponseServices\MN_NG_8241_CargoResponseService.cs" />
+    <Compile Include="ResponseServices\MN_NG_8241_Cargo_MessageResponseService.cs" />
+    <Compile Include="ResponseServices\MN_NG_9021_MasterBOLFeedBackResponseService.cs" />
+    <Compile Include="ResponseServices\ST_8329_Web02_WarehouseBlockBalanceDetailResponseService.cs" />
+    <Compile Include="ResponseServices\ST_8331_BlockListInWarehouseDetailResponseService.cs" />
+    <Compile Include="ResponseServices\ST_NG_40_MSG7_SpecialActivityResponseService.cs" />
+    <Compile Include="ResponseServices\ST_NG_70_MSG3_StorageResponseFromWarehouseResponseService.cs" />
+    <Compile Include="ResponseServices\SYSTBL_NG_9001_MSG_SystemTablesResponseService.cs" />
+    <Compile Include="ResponseServices\SYSTBL_NG_9011_MSG_MessageRestore_ResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_8246_DeficitFilesDetailResponseService.cs" />
+    <Compile Include="ResponseServices\TPG_NG_2018_BankAccountToRefundUpdateReplayResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_8356_MasavPaymentsToAgentResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_MSG2_3050_PaymentOrderReplyResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_MSG7_AgentPaymentReplyResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_NG_8290_Web06_CreditInfoResponseService.cs" />
+    <Compile Include="ResponseServices\TSH_WEB8289_9060_RTGSInfoQueryResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniDecReAnalysisBatchSend9999_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniDecCollateralBatchSend8212_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\Unifreight_LOGISIVUGResponseService.cs" />
+    <Compile Include="ResponseServices\VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.cs" />
+    <Compile Include="ResponseServices\VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
+    <Compile Include="ResponseServices\VE_3681_VendorErrorOrCriticalChangeResponseService.cs" />
+    <Compile Include="ResponseServices\VE_3700_ImporterPeriodicDeclarationReplyResponseService.cs" />
+    <Compile Include="ResponseServices\VE_8327_ImporterDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\VE_MSG010_VendorInsertUpdateDeleteMessageResponseService.cs" />
+    <Compile Include="ResponseServices\CH_NG_192_MSG3_ApproveChangeTimeResponseService.cs" />
+    <Compile Include="ResponseServices\ResponseServiceBase.cs" />
+    <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
+    <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
+    <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
+    <Compile Include="Tasks\SendDeclarationStatus.cs" />
+    <Compile Include="Tasks\SendManifestService.cs" />
+    <Compile Include="Testers\EcomTesterService.cs" />
+    <Compile Include="Testers\CourierTester.cs" />
+    <Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
+    <Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
+    <Compile Include="Testers\Mirit\MiritStartUp.cs" />
+    <Compile Include="Testers\Mirit\VendorRepository\AddVendor.cs" />
+    <Compile Include="Testers\Mirit\VendorRepository\DeleteVendor.cs" />
+    <Compile Include="Testers\Mirit\VendorRepository\UpdateVendor.cs" />
+    <Compile Include="Testers\PaymentTestService.cs" />
+    <Compile Include="Testers\SendUnifreightCustomInterfaceTester.cs" />
+    <Compile Include="Testers\SubmitDeclarationTestService.cs" />
+    <Compile Include="MessagingServices\TPG_8304_DeficitFileFilterParamMessagingService.cs" />
+    <Compile Include="U2L\CommDec\ECommDecInsertService.cs" />
+    <Compile Include="U2L\CommDec\CommDecService.cs" />
+    <Compile Include="U2L\Sivug\CalculateCheckDigit.cs" />
+    <Compile Include="U2L\Sivug\SivugUpsertService.cs" />
+    <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
+    <Compile Include="UnifreightGateway\CacheManagerService.cs" />
+    <Compile Include="UnifreightGateway\CommMasterCourierService.cs" />
+    <Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
+    <Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />
+    <Compile Include="UnifreightGateway\MevakerSendSignedDeclarationService.cs" />
+    <Compile Include="UnifreightGateway\SendDirectMessageService.cs" />
+    <Compile Include="UnifreightGateway\SivugUpsertBatchService.cs" />
+    <Compile Include="UnifreightGateway\SivugUpsertDcaReceivedService.cs" />
+    <Compile Include="UnifreightGateway\Testres\MritTestService.cs" />
+    <Compile Include="UnifreightGateway\UGEnvironmentService.cs" />
+    <Compile Include="UnifreightGateway\UServerGetRequestService.cs" />
+    <Compile Include="UnifreightGateway\UServerSetResponseService.cs" />
+    <Compile Include="Dca\DcaDownloadTenantService.cs" />
+    <Compile Include="Dca\DcaReceivedService.cs" />
+    <Compile Include="Utils\CRSUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Dca\Deploy\ftp.cmd" />
+    <None Include="Dca\Deploy\Xap\XapFftp.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
+      <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
+      <Name>Logitude.AmitalMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
+      <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
+      <Name>Logitude.Customs.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{f0039dbe-4a1a-4755-8f37-e4005ea74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
+      <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
+      <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
+      <Name>Unifreight.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+    <Content Include="MyObj\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Dca\Deploy\ftpscript.txt" />
+    <Content Include="Dca\Deploy\Xap\Xapftpscript.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommonDataModel\" />
+    <Folder Include="RequestParams\" />
+    <Folder Include="ResponseData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
