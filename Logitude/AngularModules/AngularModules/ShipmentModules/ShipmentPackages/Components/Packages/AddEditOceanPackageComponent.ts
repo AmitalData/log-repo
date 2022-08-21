@@ -247,7 +247,7 @@ export class AddEditOceanPackageComponent {
     GetContainerEntityReferenceVisiblity() {
         this.IsContainerEntityReferenceVisible = false;
         if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
-            if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld")) {
+            if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo")) {
                 this.IsContainerEntityReferenceVisible = true;
             }
         }

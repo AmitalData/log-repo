@@ -576,5 +576,6 @@ export class ShipmentList {
 		City: string;
 		Date: Date;
 		DateType: string;
+		IsViaPortsDatesFilled: boolean;
 	
 }

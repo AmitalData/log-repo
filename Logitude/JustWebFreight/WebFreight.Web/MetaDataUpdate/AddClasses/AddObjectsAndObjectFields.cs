@@ -617,12 +617,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
                 newObjectField.RightKey = objectFieldDetails.OtherKey;
                 newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
                 newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
                 newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
+                newObjectField.ForMetaDataOnly = objectFieldDetails.NoMetaDataField;
 
 
                 if (newObjectField.IsCustomFilter)
@@ -718,13 +720,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
                 updatedObjectField.RightKey = objectFieldDetails.OtherKey;
                 updatedObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
                 updatedObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
                 updatedObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
-
+                updatedObjectField.ForMetaDataOnly = objectFieldDetails.NoMetaDataField;
 
 
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
@@ -1269,12 +1272,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
                 newObjectField.RightKey = objectFieldDetails.OtherKey;
                 newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
                 newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
                 newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
+                newObjectField.ForMetaDataOnly = objectFieldDetails.NoMetaDataField;
 
                 if (newObjectField.IsCustomFilter)
                 {
@@ -1369,12 +1374,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+                updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
                 updatedObjectField.RightKey = objectFieldDetails.OtherKey;
                 updatedObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
                 updatedObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
                 updatedObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
+                updatedObjectField.ForMetaDataOnly = objectFieldDetails.NoMetaDataField;
 
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
@@ -1869,12 +1876,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
             newObjectField.RecordType = objectFieldDetails.RecordType;
             newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
+            newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
             newObjectField.LeftKey = objectFieldDetails.ThisKey;
             newObjectField.RightKey = objectFieldDetails.OtherKey;
             newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
             newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
             newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
+            newObjectField.ForMetaDataOnly = objectFieldDetails.NoMetaDataField;
 
             if (newObjectField.IsCustomFilter)
             {

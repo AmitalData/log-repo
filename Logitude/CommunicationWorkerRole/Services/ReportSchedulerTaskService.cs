@@ -35,6 +35,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole.Services
@@ -167,7 +168,7 @@ namespace CommunicationWorkerRole.Services
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
             }
         }
 
@@ -182,7 +183,7 @@ namespace CommunicationWorkerRole.Services
             return recepients;
         }
 
-        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId)
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId, StiReport stiReport)
         {
             AdditionalValidate additionalValidate = new AdditionalValidate();
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
@@ -194,8 +195,8 @@ namespace CommunicationWorkerRole.Services
             }
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
             ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
-
-            if (result.IsValid)
+            ValidateResult gLAccountBalanceInLocalValidateResult = ValidateGLAccountBalanceInLocalCurrency(schedulerDetails.ReportDetails.ReportFilterItems, stiReport);
+            if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
                 SendHtmlDocument(documentId, reportRecepients, reportTask);
@@ -203,7 +204,20 @@ namespace CommunicationWorkerRole.Services
             }
             else
             {
+                LogErrorMessage(result, gLAccountBalanceInLocalValidateResult);
+            }
+
+        }
+
+        private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
+            if (!result.IsValid)
+            {
                 currentTask.LogWarning(result.ErrorMessage);
+            }
+
+            if (!gLAccountBalanceInLocalValidateResult.IsValid)
+            {
+                currentTask.LogWarning(gLAccountBalanceInLocalValidateResult.ErrorMessage);
             }
         }
 
@@ -497,6 +511,22 @@ namespace CommunicationWorkerRole.Services
             return result;
         }
 
+        private ValidateResult ValidateGLAccountBalanceInLocalCurrency(List<QueryFilterItem> reportFilterItems, StiReport stiReport)
+        {
+            ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = ""};
+            string balanceInLocalCurrency = GetFilterFieldValueByName(reportFilterItems, "BalanceInLocalCurrency");
+            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(balanceInLocalCurrency))
+            {
+                var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
+                var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
+
+                result.IsValid = ledgerTransactionsDataProvider.LocalOpenBalance != Convert.ToDecimal(balanceInLocalCurrency);
+                if (!result.IsValid)
+                    result.ErrorMessage = "The E-mail was not sent, the Balance in local currency equals the GLaccount balance in local currency";
+            }
+            return result;
+        }
+        
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
         {
             ReportSchedulerRecepients myRecepients = recepients;

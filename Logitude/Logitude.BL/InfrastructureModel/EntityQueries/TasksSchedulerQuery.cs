@@ -89,6 +89,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ResultType = a.ResultType,
                         Format = a.Format,
                         AdvancedFormat = a.AdvancedFormat,
+                        ExecutedByServerName = a.ExecutedByServerName,
 
                     }).FirstOrDefault();
         }
@@ -504,6 +505,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ResultType = a.ResultType,
                         Format = a.Format,
                         AdvancedFormat = a.AdvancedFormat,
+                        ExecutedByServerName = a.ExecutedByServerName,
 
                     }).ToList();
         }

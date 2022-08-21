@@ -37,7 +37,7 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class ShipmentQuery : ShipmentCloudCustomDataDeserializer
+    public partial class ShipmentQuery : ShipmentCloudCustomDataDeserializer
     {
 
         ShipmentRepository repository;
@@ -1524,6 +1524,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (myContact != null)
                 {
                     shipmentPM.SalesmanUserName = myContact.EnglishName;
+                    shipmentPM.SalesmanEmail = myContact.Email;
                 }
             }
 
@@ -1537,8 +1538,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-
-
+           
             string str = string.Empty;
             if (shipment.ShipmentType != null)
             {
@@ -2358,6 +2358,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
+            CheckInvoicedFields(shipmentPM);
+
             #region Pickups & Deliveries
 
             shipmentPM.ShipmentPickUps = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipment.Id, shipment.Tenant,byLocalName).ToList();
@@ -2643,6 +2645,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return shipmentPM;
+        }
+
+        private void CheckInvoicedFields(ShipmentPM shipmentPM)
+        {
+            shipmentPM.IsFullInvoiced = false;
+            if(shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
+            {
+                return;
+            }
+            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -12476,6 +12488,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               Transshipment1ATD = f.Transshipment1ATD,
+                               Transshipment1ATA = f.Transshipment1ATA,
+                               Transshipment1ETD = f.Transshipment1ETD,
+                               Transshipment1ETA = f.Transshipment1ETA,
+                               Transshipment2ATD = f.Transshipment2ATD,
+                               Transshipment2ATA = f.Transshipment2ATA,
+                               Transshipment2ETD = f.Transshipment2ETD,
+                               Transshipment2ETA = f.Transshipment2ETA,
+                               Transshipment3ATD = f.Transshipment3ATD,
+                               Transshipment3ATA = f.Transshipment3ATA,
+                               Transshipment3ETD = f.Transshipment3ETD,
+                               Transshipment3ETA = f.Transshipment3ETA,
                                LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,

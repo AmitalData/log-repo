@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;f67c&quot;"
+  Code="&quot;9b54&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -807,6 +807,16 @@
       Name="&quot;HTML Editor Style Fixed&quot;"
       SearchFields="&quot;HDF , HTML Editor Style Fixed&quot;"
       Description="&quot;HTML Editor Style Fixed&quot;" />
+    <Record
+      Code="&quot;VIP&quot;"
+      Name="&quot;Vizion - Pilot Customer&quot;"
+      SearchFields="&quot;VIP,Vizion - Pilot Customer&quot;"
+      Description="&quot;Vizion - Pilot Customer&quot;" />
+    <Record
+      Code="&quot;SCD&quot;"
+      Name="&quot;Second context DB&quot;"
+      SearchFields="&quot;SCD,Second context DB&quot;"
+      Description="&quot;to get the secondary database for the context &quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

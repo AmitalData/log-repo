@@ -42,6 +42,7 @@ namespace Logitude.Accounting.BL.DataContract
         private List<LedgerTransaction> oppositeAccountTransactions;
         public List<TaxDeductionReportLine> deductionLines;
         private TenantPM tenantPM;
+        private const string completedStatusCode = "3";
         int? ReportYear;
         List<CardList> transactionsVendors;
         List<Address> addresses;
@@ -546,7 +547,7 @@ namespace Logitude.Accounting.BL.DataContract
                 }
 
             }
-            if (taxDeductionPerVendorReportParameters == null && taxDeductionReport.ErrorMessage != null)
+            if (taxDeductionPerVendorReportParameters == null && taxDeductionReport.ErrorMessage != null && taxDeductionReport.StatusTypeCode != completedStatusCode)
             {
                 throw new ApplicationException(taxDeductionReport.ErrorMessage);
             }

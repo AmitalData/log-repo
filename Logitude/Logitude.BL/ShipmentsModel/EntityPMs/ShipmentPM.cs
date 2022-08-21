@@ -2977,16 +2977,16 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticToAddress2 { get; set; }
         public string InlandDomesticToPhone { get; set; }
         public string InlandDomesticToFax { get; set; }
-
-
         public string InlandDomesticFromAddress1 { get; set; }
         public string InlandDomesticFromAddress2 { get; set; }
         public string InlandDomesticFromPhone { get; set; }
         public string InlandDomesticFromFax { get; set; }
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
-
         public bool FromCTool { get; set; }
+        public string SalesmanEmail { get; set; }
+        public bool IsPartiallyInvoiced { get; set; }
+        public bool IsFullInvoiced { get; set; }
     }
 
     public class TransshipmentLeg

@@ -726,7 +726,7 @@ namespace WebFreight.Web.DataProviders
         public string usoCFDI { get; set; }
         public string TipoRelacion { get; set; }
         public string CFDIRelacionado { get; set; }
-        
+
         public Image QRImage { get; set; }
         public string RegimenFiscalReceptor { get; set; }
         public string RegimenFiscalReceptorCode { get; set; }
@@ -856,6 +856,10 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField69 { get; set; }
         public string ShipmentField70 { get; set; }
         public string ProjectNumber { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? FinalMainCarriageATA { get; set; }
     }
 
     public class ReportInvoiceLine

@@ -1121,6 +1121,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalInvoiceController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalPartnersController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
@@ -1218,6 +1219,7 @@
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="Extensions\PagedResult.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentValidator.cs" />
@@ -2918,6 +2920,7 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
     <Compile Include="Helpers\UploadTariffHelper.cs" />
+    <Compile Include="Helpers\VizionPilotCustomerDataGenerator.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\DocsOut\ARInvoicePrintDetailsService.cs" />

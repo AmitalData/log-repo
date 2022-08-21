@@ -65,8 +65,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string ForwardingSecurityKey { get; set; }
         public string ForwardingConsigneeName { get; set; }
         public string ForwardingShipperName { get; set; }
-        public string ForwardingCustomerReference1 { get; set; }
-        public string ForwardingCustomerReference2 { get; set; }
+        public string ForwardingCustomerReference3 { get; set; }
         public DateTime? ForwardingPickupEstimationDate { get; set; }
         public DateTime? ForwardingFromWarehouseEstimationDate { get; set; }
         public string ForwardingFromWarehouseNotes { get; set; }
@@ -149,8 +148,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string CustomShipperName { get; set; }
         public string CustomCustomerReference { get; set; }
         public string CustomIsMainRecord { get; set; }
-        public string CustomCustomerReference1 { get; set; }
-        public string CustomCustomerReference2 { get; set; }
+        public string CustomCustomerReference3 { get; set; }
         public DateTime? CustomPickupEstimationDate { get; set; }
         public DateTime? CustomFromWarehouseEstimationDate { get; set; }
         public string CustomFromWarehouseNotes { get; set; }

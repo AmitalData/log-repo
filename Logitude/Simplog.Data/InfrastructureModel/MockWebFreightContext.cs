@@ -2088,7 +2088,7 @@ namespace Simplog.Data.InfrastructureModel
 
         public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
 
-        DbSet<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
+        IQueryable<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
 
         DbSet<TextCode> IWebFreightContext.TextCodes => throw new NotImplementedException();
 
@@ -2108,9 +2108,6 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-
-
-
-
+        public DbSet<ObjectField> ObjectFieldsDbSet => throw new NotImplementedException();
     }
 }

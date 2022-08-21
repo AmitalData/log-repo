@@ -382,33 +382,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
         private void SetForwardingCustomerReference(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
             item.CustomerReference = "";
-            if (!string.IsNullOrEmpty(row.ForwardingCustomerReference1))
+            if (!string.IsNullOrEmpty(row.ForwardingCustomerReference3))
             {
-                item.CustomerReference += row.ForwardingCustomerReference1;
-                if (!string.IsNullOrEmpty(row.ForwardingCustomerReference2))
-                {
-                    item.CustomerReference += ",";
-                }
-            }
-            if (!string.IsNullOrEmpty(row.ForwardingCustomerReference2))
-            {
-                item.CustomerReference += row.ForwardingCustomerReference2;
+                item.CustomerReference += row.ForwardingCustomerReference3;
             }
         }
         private void SetCustomCustomerReference(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
             item.CustomerReference = "";
-            if (!string.IsNullOrEmpty(row.CustomCustomerReference1))
+            if (!string.IsNullOrEmpty(row.CustomCustomerReference3))
             {
-                item.CustomerReference += row.CustomCustomerReference1;
-                if (!string.IsNullOrEmpty(row.CustomCustomerReference2))
-                {
-                    item.CustomerReference += ",";
-                }
-            }
-            if (!string.IsNullOrEmpty(row.CustomCustomerReference2))
-            {
-                item.CustomerReference += row.CustomCustomerReference2;
+                item.CustomerReference += row.CustomCustomerReference3;
             }
         }
 

@@ -1,8 +1,10 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,7 @@ namespace WebFreight.Web.ContainerTracking
             containerUpdatedFields = new ContainerUpdatedFields();
             containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(0);
             containerUpdatedFields.ContainerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
+
         }
 
         public ContainerUpdatedFields Run()
@@ -41,25 +44,166 @@ namespace WebFreight.Web.ContainerTracking
         {
             MapArrivedField();
             MapDepartureField();
+            MapEmptyPickup();
+            MapOriginLocation();
+            MapPOL(); 
+            MapPOD();
+
+            MapGate();
+            //MapLIFLocation();
+            MapEmptyReturn();
+            MapCarrierRelease();
+            MapCustomsRelease();
 
         }
 
-        private void MapDepartureField()
+        private void MapCarrierRelease()
         {
-            if (!IsExist(VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort))
-                return;
-            string pOLLocation = null;
-            var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => e.planned);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.CarrierRelease, ref containerUpdatedFields.CarrierReleaseDate);
+            containerUpdatedFields.CarrierReleaseState = GetReleaseState(VizionMilestoneDescriptionCodes.CarrierRelease);
+        }
+
+        
+
+        private void MapCustomsRelease()
+        {
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.CustomsRelease, ref containerUpdatedFields.CustomsReleaseDate);
+            containerUpdatedFields.CustomsReleaseState = GetReleaseState(VizionMilestoneDescriptionCodes.CustomsRelease);
+
+        }
+
+        private void MapEmptyReturn()
+        {
+            MapMilestoneLocationField(VizionMilestoneDescriptionCodes.GateInEmptyReturn, ref containerUpdatedFields.EmptyReturnLocation);
+
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.GateInEmptyReturn, ref containerUpdatedFields.EstimatedEmptyReturn, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort, ref containerUpdatedFields.ActualEmptyReturn);
+            
+        }
+
+        private void MapLIFLocation()
+        {
+            //containerUpdatedFields.LIFLocation = visionContainerStatus?.payload?.inland_destination?. ?? containerUpdatedFields.LIFLocation
+        }
+
+        private void MapGate()
+        {
+            var containersExternal = new ContainersExternal();
+            containersExternal.IsFromOceanInsights = true;
+            var containersExternalData = new ContainersExternalData();
+            containersExternalData.GateIn = GetMilestoneDateField(VizionMilestoneDescriptionCodes.GateInOriginPort);
+            containersExternalData.GateOut = GetMilestoneDateField(VizionMilestoneDescriptionCodes.GateOutFromDestinationPort);
+
+            containersExternal.ContainersExternalData_New = containersExternalData;
+            containerUpdatedFields.ContainersExternal = containersExternal;
+        }
+
+        private void MapPOD()
+        {
+            containerUpdatedFields.PODLocation = visionContainerStatus?.payload?.destination_port?.unlocode ?? containerUpdatedFields.PODLocation;
+
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort, ref containerUpdatedFields.MainCarriageETA, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort, ref containerUpdatedFields.MainCarriageATA);
+
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.EstimatedPODDischarge, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.ActualPODDischarge);
+
+            
+
+
+        }
+
+        private void MapOriginLocation()
+        {
+            containerUpdatedFields.OriginLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.OriginLocation;
+        }
+
+        private void MapEmptyPickup()
+        {
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.EmptyPickup, ref containerUpdatedFields.EstimatedEmptyPickupDate, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.EmptyPickup, ref containerUpdatedFields.ActualEmptyPickupDate);
+            MapMilestoneLocationField(VizionMilestoneDescriptionCodes.EmptyPickup, ref containerUpdatedFields.EmptyPickupLocation);
+        }
+
+        
+
+        private void MapPOL()
+        {
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLArrival, ref containerUpdatedFields.EstimatedPOLArrival, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLArrival, ref containerUpdatedFields.ActualPOLArrival);
+
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLLoaded, ref containerUpdatedFields.EstimatedPOLLoaded, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLLoaded, ref containerUpdatedFields.ActualPOLLoaded);
+            
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageETD, true);
+            MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageATD);
+
+
+        }
+        private string GetReleaseState(string descriptionCode)
+        {
+            if (!IsExist(descriptionCode))
+                return null;
+            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => !e.planned);
             if (plannedMilistone != null)
             {
-                containerUpdatedFields.EstimatedPOLVesselDeparture = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.EstimatedPOLVesselDeparture;
+                return "true";
+            }
+            plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => e.planned);
+            if (plannedMilistone != null)
+            {
+                return "false";
+            }
+            return null;
+        }
+        private void MapMilestoneDateField(string descriptionCode, ref DateTime? date,bool isPland = false)
+        {
+            if (!IsExist(descriptionCode))
+                return;
+            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => e.planned == isPland);
+            if (plannedMilistone != null)
+            {
+                date =  plannedMilistone.timestamp;
+            }
+        }
+        private DateTime? GetMilestoneDateField(string descriptionCode, bool isPland = false)
+        {
+            if (!IsExist(descriptionCode))
+                return null;
+            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => e.planned == isPland);
+            if (plannedMilistone != null)
+            {
+                return plannedMilistone.timestamp;
+            }
+            return null;
+        }
+        private void MapMilestoneLocationField(string descriptionCode, ref string location)
+        {
+            if (!IsExist(descriptionCode))
+                return;
+            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => !string.IsNullOrEmpty(e.location?.unlocode));
+            if (plannedMilistone != null)
+            {
+                location = plannedMilistone.location?.unlocode;
+            }
+        }
+        
+        private void MapDepartureField()
+        {
+            if (!IsExist(VizionMilestoneDescriptionCodes.VesselDepartureFromOriginPort))
+                return;
+            string pOLLocation = null;
+            var plannedMilistone = MilestonesDictinoary[VizionMilestoneDescriptionCodes.VesselDepartureFromOriginPort].FirstOrDefault(e => e.planned);
+            if (plannedMilistone != null)
+            {
+                containerUpdatedFields.EstimatedPOLVesselDeparture =  plannedMilistone.timestamp;
                 pOLLocation = plannedMilistone.location?.unlocode;
             }
 
-            var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => !e.planned);
+            var milistone = MilestonesDictinoary[VizionMilestoneDescriptionCodes.VesselDepartureFromOriginPort].FirstOrDefault(e => !e.planned);
             if (milistone != null)
             {
-                containerUpdatedFields.ActualPOLVesselDeparture = milistone.planned ? containerUpdatedFields.ActualPOLVesselDeparture : milistone.timestamp;
+                containerUpdatedFields.ActualPOLVesselDeparture = milistone.timestamp;
                 pOLLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pOLLocation : milistone.location?.unlocode;
 
             }
@@ -71,20 +215,20 @@ namespace WebFreight.Web.ContainerTracking
 
         private void MapArrivedField()
         {
-            if (!IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort))
+            if (!IsExist(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort))
                 return;
             string pODLocation = null;
-            var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => e.planned);
+            var plannedMilistone = MilestonesDictinoary[VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort].FirstOrDefault(e => e.planned);
             if(plannedMilistone != null)
             {
-                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.EstimatedPODVesselArrival;
+                containerUpdatedFields.EstimatedPODVesselArrival =  plannedMilistone.timestamp ;
                 pODLocation = plannedMilistone.location?.unlocode;
             }
             
-            var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => !e.planned);
+            var milistone = MilestonesDictinoary[VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort].FirstOrDefault(e => !e.planned);
             if(milistone != null)
             {
-                containerUpdatedFields.ActualPODVesselArrival = milistone.planned ? containerUpdatedFields.ActualPODVesselArrival : milistone.timestamp;
+                containerUpdatedFields.ActualPODVesselArrival =  milistone.timestamp;
                 pODLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pODLocation : milistone.location?.unlocode;
 
             }
@@ -129,10 +273,20 @@ namespace WebFreight.Web.ContainerTracking
     }
 
 
-    public static class VizionMmilestoneDescriptionEnums
+    public static class VizionMilestoneDescriptionCodes
     {
         public static string VesselDepartureFromOriginPort = "Vessel departure from origin port";
         public static string VesselArrivedAtDestinationPort = "Vessel arrived at destination port";
+        public static string EmptyPickup = "Gate out from origin port";
+        public static string POLArrival = "Gate in at origin port";
+        public static string POLLoaded = "Loaded on vessel at origin port";
+        public static string POLVslDeparture = "Vessel departure from origin port";
+        public static string GateInOriginPort = "Gate in at origin port";
+        public static string GateOutFromDestinationPort = "Gate out from destination port";
+        public static string DischargedFromVesselAtDestinationPort = "Discharged from vessel at destination port";
+        public static string GateInEmptyReturn = "Discharged from vessel at destination port";
+        public static string CarrierRelease = "Carrier release";
+        public static string CustomsRelease = "Customs release";
 
     }
 }

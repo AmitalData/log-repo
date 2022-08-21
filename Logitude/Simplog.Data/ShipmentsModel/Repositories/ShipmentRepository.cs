@@ -18,7 +18,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
     public class ShipmentRepository : IRepository<Shipment>
     {
         IShipmentsContext shipmentsContext;
-
+        bool useSecondaryDB = false;
         public ShipmentRepository(IShipmentsContext context)
         {
             shipmentsContext = context;
@@ -28,7 +28,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             shipmentsContext = ShipmentsContext.GetContext(tenant);
         }
-
+        public void SetSecondDBforContext(int tenant)
+        {
+            shipmentsContext = ShipmentsContext.GetSecContext(tenant);
+            useSecondaryDB = true;
+        }
         public ShipmentRepository()
         {
             shipmentsContext = new ShipmentsContext();
@@ -340,7 +344,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentDataView> GetShipmentViewsByTenant(int tenant)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
-
+            if (useSecondaryDB)
+            {
+                dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
+            }
             // For Testing the ElasticSearch Indexer
             // Temporary Code, need to be removed
             if (tenant == 0)
@@ -348,9 +355,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                 return (from f in dataViewEntities.ShipmentDataViews select f);
             }
             // end of Temporary Code
-
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
-
             return result;
         }
 
@@ -1028,6 +1033,19 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from a in context.ShipmentMasterDatas
                     where a.Tenant == tenant && a.CarrierServiceLineId == serviceLineId
                     select a);
+        }
+
+        public IQueryable<Shipment> GetShipmentsWithoutIncludes(int tenant)
+        {
+            return (from record in context.Shipments where record.Tenant == tenant select record);
+        }
+
+        public List<string> GetShipmentsIdsFromShipmentsNumbersList(List<string> shipmentsNumbers)
+        {
+            IQueryable<Shipment> shipments = from a in context.Shipments
+                                             where shipmentsNumbers.Contains(a.ShipmentNumber)
+                                             select a;
+            return shipments.Select(s => s.Id).ToList();
         }
     }
 }

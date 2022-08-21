@@ -4,6 +4,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -30,7 +31,7 @@ namespace CommunicationWorkerRole
 
         private void StartWork()
         {
-            if (General.IsUpdating())
+            if (General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() == "staging")
             {
                 Thread.Sleep(60000);
                 return;

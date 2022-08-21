@@ -51,7 +51,7 @@ namespace Logitude.BL.Helpers
             return fieldValue;
         }
 
-        public void SetCustomFieldsValues(string objectTableName, int tenant, List<Object> listQuery)
+        public void SetCustomFieldsValues(string objectTableName, int tenant, List<object> listQuery)
         {
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();

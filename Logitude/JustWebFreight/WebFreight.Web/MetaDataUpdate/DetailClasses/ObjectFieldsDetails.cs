@@ -132,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string HelpTextCodeCode { get; set; }
         public string ListTextCodeCode { get; set; }
         public string AdditionalQuerySections { get; set; }
+        public bool IsListFilter { get; set; }
 
 
         public string ThisKey { get; set; }
@@ -139,9 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsForeignKey { get; set; }
         public string ForeignEntity { get; set; }
         public string NavigationPropertyName { get; set; }
-
-
-        
+        public bool NoMetaDataField { get; set; }     
 
     }
 }

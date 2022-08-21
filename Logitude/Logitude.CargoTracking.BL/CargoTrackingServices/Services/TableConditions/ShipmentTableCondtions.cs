@@ -86,8 +86,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var forwardingShipmentFields =
                 "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
-                " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
-                " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
+                " min(P.CustomerReference3) as ForwardingCustomerReference3, " +
                 " min(ForwardingComputed.ContainersNumbers) as ForwardingContainersNumbers, " +
                 " min(P.House) as ForwardingHouse, " +
                 " min(ForwardingMaster.Master) as ForwardingMaster, " +
@@ -301,8 +300,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var forwardingShipmentFields =
               "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
-              " null as ForwardingCustomerReference1, " +
-              " null as ForwardingCustomerReference2, " +
+              " null as ForwardingCustomerReference3, " +
               " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
               " min(P.House) as ForwardingHouse, " +
               " min(Mas.Master) as ForwardingMaster, " +
@@ -498,12 +496,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     when DirectionId = 'E' and ConsigneeCard.EnglishName is null then CasualImporterName  
                     end
                     ) as ConsigneeName," +
-                " '' as CustomerReference1," +
-                " '' as CustomerReference2," +
+                " '' as CustomerReference3," +
                 " '' as WarehouseLegRemarks," +
                 " '' as GrossWeightUnitCode," +
                 " '' as ShipmentTypeId," +
-                " '' as ChargeableWeightInKG," +
+                " NULL as ChargeableWeightInKG," +
                 " '' as ExceptionDescription," +
 
                 "'O' as EntityType," +

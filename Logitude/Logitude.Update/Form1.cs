@@ -5659,11 +5659,12 @@ User/Pass",
             ToDate = ToDate.AddDays(1);
 
             var ContainerCount = shipmentsContext.ShipmentPackages
-                .Where(a => a.Shipment.ShipmentTypeId == "FCLD" && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
+                .Where(a => (a.Shipment.ShipmentTypeId == "FCLD" || a.Shipment.ShipmentTypeId == "MyGO") && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
                 && a.Shipment.CreateDateTime >= fromDate.Date && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+
             var shipmentsIds = shipmentsContext.ShipmentPackages
-                .Where(a => a.Shipment.ShipmentTypeId == "FCLD" && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
+                .Where(a => (a.Shipment.ShipmentTypeId == "FCLD" || a.Shipment.ShipmentTypeId == "MyGO") && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
                 && a.Shipment.CreateDateTime >= fromDate.Date && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).GroupBy(a => a.Shipment.Id).Select(e => e.Key).ToList();
 

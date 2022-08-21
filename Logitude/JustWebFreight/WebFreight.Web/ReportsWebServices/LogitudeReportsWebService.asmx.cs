@@ -3531,6 +3531,9 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                double? expenseCharges = 0;
+                double? expenseChargesInLocalCurrency = 0;
+               
                 invoicesRecored.InvoiceType = apInvoice.APInvoiceTypeName;
                 invoicesRecored.InvoiceDate = apInvoice.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = apInvoice.InvoiceNumber;
@@ -3543,7 +3546,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.BillToCode = apInvoice.VendorCode;
                 invoicesRecored.AmountDueInInvoiceCurrency = apInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
-                invoicesRecored.ExpenseChargesInLocalCurrency = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                expenseChargesInLocalCurrency = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
 
                 Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
                 if(vendorCard != null)
@@ -3563,7 +3566,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.Currency = apInvoice.LocalCurrencyCode;
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
-                    invoicesRecored.ExpenseCharges = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                    expenseCharges = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
                 }
                 else
                 {
@@ -3574,8 +3577,11 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.subInLocal = apInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.LocalCurrency = apInvoice.LocalCurrencyCode;
-                    invoicesRecored.ExpenseCharges = expenseInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
+                    expenseCharges = expenseInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
                 }
+
+                invoicesRecored.ExpenseCharges = expenseCharges == null ? 0 : expenseCharges;
+                invoicesRecored.ExpenseChargesInLocalCurrency = expenseChargesInLocalCurrency == null ? 0 : expenseChargesInLocalCurrency;
 
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
             }

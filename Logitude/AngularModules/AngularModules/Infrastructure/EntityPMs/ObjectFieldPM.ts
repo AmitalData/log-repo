@@ -643,9 +643,14 @@ export class ObjectFieldPM {
     public set DefaultAdditionalFilters(newValue: string) { if (this.defaultAdditionalFilters != newValue) { this.defaultAdditionalFilters = newValue; this.MarkAsDirty("DefaultAdditionalFilters"); } }
        
 	 
-    private defaultAdditionalTreeFilters: any;
+    private defaultAdditionalTreeFilters: string;
     public get DefaultAdditionalTreeFilters() { return this.defaultAdditionalTreeFilters; }
-    public set DefaultAdditionalTreeFilters(newValue: any) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
+    public set DefaultAdditionalTreeFilters(newValue: string) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
+       
+	 
+    private forMetaDataOnly: boolean;
+    public get ForMetaDataOnly() { return this.forMetaDataOnly; }
+    public set ForMetaDataOnly(newValue: boolean) { if (this.forMetaDataOnly != newValue) { this.forMetaDataOnly = newValue; this.MarkAsDirty("ForMetaDataOnly"); } }
        
 	 
 

@@ -417,6 +417,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerContactName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.CustomerContactEmail).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -941,6 +942,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.FirstPickupFullAddress).HasColumnName("FirstPickupFullAddress");
             this.Property(t => t.CustomerContactName).HasColumnName("CustomerContactName");
             this.Property(t => t.CustomerContactEmail).HasColumnName("CustomerContactEmail");
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId");
         }
     }
 }

@@ -165,7 +165,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.UIProperties.SetRequired("Salesman", "GLAccount", true);
             this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
         }
+        if (this.glaccountPM)
+        {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
+        } else {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
+        }
 
+        
     }
 
     //#region Filters
@@ -350,7 +357,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-
+    private _BalanceInLocalCurrency : string;
+    public get BalanceInLocalCurrency() : string {
+        return this._BalanceInLocalCurrency;
+    }
+    public set BalanceInLocalCurrency(v : string) {
+        this._BalanceInLocalCurrency = v;
+    }
     //#endregion
 
     //#region Filter Methods
@@ -507,6 +520,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
   
         queryFilterItems.push(new QueryFilterItem("UseSecurityLevel", this.fullAccountingSetting.IsSecurityLevelActivated));
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "BalanceInLocalCurrency";
+        queryFilterItem.FieldValue = this.BalanceInLocalCurrency;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
         return queryFilterItems;
     }
 
@@ -578,6 +597,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                 case "ChartOfAccountsTypeCode":
                     this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
                     break;
+                case "BalanceInLocalCurrency":
+                    this.BalanceInLocalCurrency = queryFilterItem.FieldValue;
+                    break;    
             }
         }
     }
@@ -805,6 +827,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                  this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
             }
 
+        }
+        
+        if(this.glaccountPM) {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
+        } else {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
+            this.BalanceInLocalCurrency = '';
         }
     }
 
