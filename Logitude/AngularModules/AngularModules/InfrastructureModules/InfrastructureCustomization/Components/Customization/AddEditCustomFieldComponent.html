@@ -10,7 +10,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr>
+    <tr style="height:50%">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -51,14 +51,14 @@
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
                                 <td style="height: 22px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                        Read Only 
+                                        Read Only
                                     </label>
                                 </td>
                             </tr>
 
 
 
-                            
+
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -69,7 +69,7 @@
 
 
 
-                   
+
 
 
 
@@ -154,7 +154,7 @@
                                     </div>
                                 </td>
                             </tr>
-                          
+
 
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
                                 <td style="height: 22px;">
@@ -227,7 +227,7 @@
                                 <td style="height: 22px;">
                                     <table>
                                         <tr>
-                                            <td style="width:200px;"> 
+                                            <td style="width:200px;">
                                                 <div style="position:absolute;width: 204px;top: 0;bottom: 0;left: 0;right: 0;">
                                                     <ComboBox (SelectedItemChanged)="PickListSelectionMethod($event)" [ItemsSource]="CustomPickListsList" [SelectedItem]="PickListItem"></ComboBox>
                                                 </div>
@@ -251,27 +251,56 @@
                             </tr>
                         </table>
                     </td>
-
                 </tr>
-                <tr style="height:1px;">
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
+            </table>
+        </td>
+    </tr>
+    <tr  style="height:45%" *ngIf="ShownAdditionalFilters && LookUpTableId">
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table>
+                        <tr style="height: 10px;">
+                            <td style="height: 20px;">
+                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                    Optionally, create a filter to limit the records available to users in the lookup field.
+                                </label>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px;">
+                            <td style="height: 20px;">
+                                <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                                <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                                <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
+                                    Show Filter Settings
+                                </label>
+                            </td>
+                        </tr>
+                        <tr  *ngIf="ShownAdditionalFiltersSettings">
+                            <td>
+                                <div style="width:102%;overflow-x:auto;overflow-y:auto;">
+                                    <QueryFilterTree [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!ShownAdditionalFiltersSettings">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr><td colspan="5"></td></tr>
+
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
                     <td>
                         <div>
                             <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>

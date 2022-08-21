@@ -57,6 +57,13 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public string Filter10Operator { get; set; }
 
         public string AdditionalFilters { get; set; }
+
+        public string TreeFilters { get; set; }
+
+        public string ParentEntityId { get; set; }
+
+        public string ParentObjectTableId { get; set; }
+
         public bool DontApplyVirtualization { get; set; }
 
         public string TreeFilter { get; set; }
