@@ -205,6 +205,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
+
+            //
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(tenant);
             if (dbms == "oracle")
