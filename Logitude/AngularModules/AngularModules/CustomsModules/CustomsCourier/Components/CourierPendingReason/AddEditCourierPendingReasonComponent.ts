@@ -18,6 +18,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
  
 @Component({
@@ -36,13 +37,16 @@ export class AddEditCourierPendingReasonComponent
     isFromUnifreight: boolean = false;
     ValidationErrorsList: any[] = [];
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
+    HasRequiresApprovalFeature:boolean=false;
 
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
     _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
     private currentSession=SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-
+        if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
+            this.HasRequiresApprovalFeature = true;
+        }
         this.currentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
@@ -71,6 +75,7 @@ export class AddEditCourierPendingReasonComponent
     }
 
     SetWindowArgs(args: any) {
+        
         if (!AppTool.IsNullOrEmpty(args)) {
             this.isWindowMode = true;
             this.isFromUnifreight = true;

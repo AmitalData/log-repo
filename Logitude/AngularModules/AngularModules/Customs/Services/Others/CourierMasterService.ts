@@ -14,7 +14,7 @@ import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestP
 import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
 import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
+import { PendingRequestParams } from 'Customs/DataContract/RequestParams/PendingRequestParams';
 import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 
@@ -714,7 +714,7 @@ export class CourierMasterService {
 
     }
 
-    PostSendClosePending(requestParams: SendClosePendingRequestParams) {
+    PostSendClosePending(requestParams: PendingRequestParams) {
 
         return defer(() => {
             var authHeader = new Headers();
@@ -746,5 +746,28 @@ export class CourierMasterService {
         );
 
         return LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
+    }
+    PostApproveAllPending(requestParams: PendingRequestParams) {
+
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostApproveAllPending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+            ;
+
+        });
     }
 }
