@@ -1,12 +1,9 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.ShipmentsModel.CustomFilters;
+﻿using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -19,7 +16,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -29,10 +25,6 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel.CustomFilters;
-using Logitude.BL.CommonDataModel.EntityLists;
-using System.Reflection;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -248,10 +240,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 
                 response.Result = listQuery;
-
-                //var customFieldResolver = new CustomFieldResolver();
-
-                //customFieldResolver.SetCustomFieldsValues("Shipment", authToken.Tenant, listQuery.Cast<object>().ToList());
 
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
