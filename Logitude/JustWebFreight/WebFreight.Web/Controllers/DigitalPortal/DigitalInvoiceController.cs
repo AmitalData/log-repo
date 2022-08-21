@@ -40,10 +40,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             var tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
             var rep = new ShipmentRepository(tenant);
             var shipment = rep.GetSingleShipment(shipmentId, tenant);
-           // CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+            CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
             var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
             var arInvoices = new List<ShipmentARInvoicePM>();
             var aRCharges = new List<ARInvoiceChargePM>();
