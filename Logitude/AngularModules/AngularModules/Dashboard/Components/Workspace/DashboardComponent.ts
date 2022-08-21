@@ -74,7 +74,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
     private dashboardDataBinding: DashboardDataBinding =
     {
-        onGetAllDashboard : new BehaviorSubject<ReactDashboardPM[]>([]),
+        onGetAllDashboards : new BehaviorSubject<ReactDashboardPM[]>([]),
         onGetDashboard : new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM)
     };
 
@@ -107,7 +107,12 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
                 this.AllDashboards = myResponse.Result;
             }
 
-            this.dashboardDataBinding.onGetAllDashboard.next(this.AllDashboards);
+            var reactDashboards: ReactDashboardPM[] = [];
+            this.AllDashboards.forEach(element => {
+                reactDashboards.push(this.GetReactDashboard(element));
+            });
+
+            this.dashboardDataBinding.onGetAllDashboards.next(reactDashboards);
             if (this.AllDashboards) {
                 this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(this.AllDashboards[0]));
                 this.selectedDashboard = this.GetReactDashboard(this.AllDashboards[0]);
