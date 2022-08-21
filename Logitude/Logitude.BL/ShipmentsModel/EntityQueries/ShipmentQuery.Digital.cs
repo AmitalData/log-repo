@@ -701,17 +701,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return mainRouteInformation;
         }
 
-        private string GetTransitTimeForInlandDomesticShipment(ShipmentPM shipment)
+        private TransitTime GetTransitTimeForInlandDomesticShipment(ShipmentPM shipment)
         {
-            string transitTime = null;
-            var portOfLoadingDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD;
-            var portOfDischargeDate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA;
-            if (portOfDischargeDate != null && portOfLoadingDate != null)
-            {
-                transitTime = (portOfDischargeDate - portOfLoadingDate).Value.Days + " days | " + portOfLoadingDate.Value.Date.ToString("dd.MM.yyyy") + "-" + portOfDischargeDate.Value.Date.ToString("dd.MM.yyyy");
-            }
-
-            return transitTime;
+            return new TransitTime { 
+                DichargeDate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
+                LoadingDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD
+            };
         }
 
         private string GetFromAddressForInlandDomestic(ShipmentPM shipment)
@@ -910,17 +905,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return dischargePort;
         }
 
-        private string GetTransitTime(ShipmentPM shipment)
+        private TransitTime GetTransitTime(ShipmentPM shipment)
         {
-            string transitTime = null;
-            var portOfLoadingDate = GetPortOfLoadingDate(shipment);
-            var portOfDischargeDate = GetPortOfDischargeDate(shipment);
-            if (portOfDischargeDate != null && portOfLoadingDate != null)
+            return new TransitTime
             {
-                transitTime = (portOfDischargeDate - portOfLoadingDate).Value.Days + " days | " + portOfLoadingDate.Value.Date.ToString("dd.MM.yyyy") + "-" + portOfDischargeDate.Value.Date.ToString("dd.MM.yyyy");
-            }
-
-            return transitTime;
+                DichargeDate = GetPortOfDischargeDate(shipment),
+                LoadingDate = GetPortOfLoadingDate(shipment)
+            };
         }
 
         private DateTime? GetPortOfLoadingDate(ShipmentPM shipment)

@@ -25,6 +25,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DischargePortLabel { get; set; }
         public string Master { get; set; }
         public string MasterLabel { get; set; }
-        public string TransitTime { get; set; }
+        public TransitTime TransitTime { get; set; }
+    }
+
+    public class TransitTime
+    {
+        public DateTime? LoadingDate { get; set; }
+        public DateTime? DichargeDate { get; set; }
     }
 }
