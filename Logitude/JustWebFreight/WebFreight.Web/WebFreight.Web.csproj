@@ -1131,6 +1131,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DashboardPMExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ImageLibraryExtendedListController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TableTabsExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ScreenExtendedController.cs" />
