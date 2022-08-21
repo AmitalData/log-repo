@@ -253,21 +253,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetShipmentActiveStatuses")]
-        public HttpResponseMessage GetShipmentActiveStatuses()
+        public IHttpActionResult GetShipmentActiveStatuses()
         {
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
 
-                var entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
+                int tenant = authToken.Tenant;
 
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(authToken.Tenant);
+                var entityStatusQuery = new EntityStatusQuery(tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalActiveStatuses);
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
+
+                foreach (var item in digitalPortalActiveStatuses.Where(c => c.Code == "SDLY"))
+                {
+                    item.DisplayName = "Out for Delivery";
+                }
+
+                return Ok(digitalPortalActiveStatuses);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
 
