@@ -623,7 +623,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             if (queryFilterItem.AdditionalFilters == null) return;
  
                 queryFilterItem.AdditionalFilters.ForEach(queryFilter => {
-                h(queryFilter);
+                    HandleObjectFieldValue(queryFilter);
             });
         }
     }
