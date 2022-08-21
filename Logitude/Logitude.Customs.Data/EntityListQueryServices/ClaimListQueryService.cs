@@ -21,7 +21,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class ClaimListQueryService
     {
-	    private IQueryable<ClaimList> GetIqueryableList(IQueryable<Claim> iQueryable)
+        private decimal num;
+
+        private IQueryable<ClaimList> GetIqueryableList(IQueryable<Claim> iQueryable)
         {
 
             var q = from a in iQueryable
@@ -39,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimList> query = (from a in iQueryable.Include("ImporterTypeForClaim").Include("PassportType").Include("PassportCountryType").Include("ClaimSubmiterType").Include("BeneficiaryActivityType").Include("AccountCountry").Include("AccountCurrencyType").Include("AccountBranch")
                                            join d in context.Tapags.Include("CustomerCard").Include("ReferantUser")  
                                            on a.Id equals d.Id
-                                           join c in q
+                                           join c in q.DefaultIfEmpty()
                                            on a.Id equals c.Id
                                            
 
@@ -95,8 +97,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 TapagId = d.Id,
                                                 ReferantName = d.ReferantUser.Contact.LocalName != null ? d.ReferantUser.Contact.LocalName : d.ReferantUser.Contact.EnglishName,
                                                 CustomsBranchCode = d.CustomsBranchCode,
-                                                CustomsBranchName = d.CustomsBranch != null ? d.CustomsBranch.LocalName : null,
-                                                ClaimAmount = Convert.ToDecimal(c.Amount)
+                                                CustomsBranchName = d.CustomsBranch != null ? d.CustomsBranch.LocalName : null,                                              
+                                                ClaimAmount = (decimal)c.Amount                                               
                                            });
 
             //Freelancer filtering
