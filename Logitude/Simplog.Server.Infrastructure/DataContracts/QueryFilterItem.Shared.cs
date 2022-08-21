@@ -1,4 +1,6 @@
 using System.Runtime.Serialization;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Simplog.Server.Infrastructure.DataContracts
 {
@@ -25,6 +27,13 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public string FieldDataType { get; set; }
         [DataMember]
         public bool IsListFilter { get; set; }
+
+
+        [DataMember]
+        public string FilterType { get; set; }
+
+        [DataMember]
+        public List<QueryFilterItem> QueryFilterItems { get; set; }
 
     }
 }

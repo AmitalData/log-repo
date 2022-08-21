@@ -48,6 +48,8 @@ using Logitude.Social.BL.EntityQueryServices;
 using Logitude.CRM.Data.Repsitories;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Server.Tools.TreeFilterQuery;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 {
@@ -248,6 +250,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilter, ObjectTableName = "User", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName });
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UserRepository userRepository = new UserRepository(MyContext);
@@ -264,6 +267,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 
                 entityPocos = genericFilter.GetFilteredQuery<User>(nonListQueryOperation, entityPocos);
+                entityPocos = treeFilterQueryService.Apply<User>(entityPocos);
+
+
+
+
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<UserList> entityLists = null;
 
@@ -292,8 +300,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 
                     entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
+                    entityLists = treeFilterQueryService.Apply<UserList>(entityLists);
+
                     scope.Complete();
                 }
+
+
+         
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
