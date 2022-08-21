@@ -71,8 +71,8 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     showNewDashboardToggle: boolean;
     isNewDashboardRendered: boolean = false;
     @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
-    public selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
-    private dashboardDataBinding: DashboardDataBinding = 
+    private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
+    private dashboardDataBinding: DashboardDataBinding =
     {
         onGetAllDashboard : new BehaviorSubject<ReactDashboardPM[]>([]),
         onGetDashboard : new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM)
@@ -110,6 +110,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             this.dashboardDataBinding.onGetAllDashboard.next(this.AllDashboards);
             if (this.AllDashboards) {
                 this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(this.AllDashboards[0]));
+                this.selectedDashboard = this.GetReactDashboard(this.AllDashboards[0]);
             }
         });
     }
@@ -186,7 +187,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             var myWidget: WidgetPM = this.GetWidgetEntity(widget);
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
-            logitudeWindow.WindowArgs = { EntityPM: myWidget, };
+            logitudeWindow.WindowArgs = { EntityPM: myWidget, DashboardPM: this.GetDashboardEntity(this.selectedDashboard) };
             logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
             logitudeWindow.ComponentLoaded.subscribe(comp => {
                 logitudeWindow.WindowClosed.subscribe(s => {
@@ -198,7 +199,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         });
     }
     GetWidgetEntity(widget: ReactWidgetPM): WidgetPM {
-        var myWidget: WidgetPM = new WidgetPM(null);
+        var myWidget: WidgetPM = new WidgetPM(this.GetDashboardEntity(this.selectedDashboard));
 
         if (widget) {
             myWidget.Id = widget.Id;
@@ -230,13 +231,11 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         return myWidget;
     }
 
-    private OnChangeDashboard(dashboard: any) {
-        console.log("OnChangeDashboard", dashboard);
-
+    private OnChangeDashboard(dashboard: ReactDashboardPM) {
+        this.selectedDashboard = dashboard;
     }
-    private OnSaveDashboard(dashboard: any) {
+    private OnSaveDashboard(dashboard: ReactDashboardPM) {
         console.log("OnSaveDashboard", dashboard);
-
     }
 
     ngOnDestroy() {
@@ -251,8 +250,6 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.LoadPieQueries();
     }
 
-
-    
     public Shipments_Today_Status: boolean = true;
     public Shipments_Yesterday_Status: boolean = true;
     public Shipments_LastWeek_Status: boolean = true;

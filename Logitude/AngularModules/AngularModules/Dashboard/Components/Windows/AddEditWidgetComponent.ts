@@ -8,6 +8,7 @@ import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
 import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -15,6 +16,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 
 export class AddEditWidgetComponent extends BaseComponent {
     public EntityPM: WidgetPM;
+    public DashboardPM: DashboardPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
@@ -29,9 +31,11 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs['EntityPM'];
+        this.DashboardPM = windowArgs['DashboardPM'];
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
         this.ComputeChartImageSrc();
+        this.Clone();
     }
 
     private ComputeChartImageSrc() {
@@ -99,6 +103,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -108,37 +113,28 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
-            this.CurrentSession.StartBusyIndicatorSaving();
             if (this.isNew) {
-                this.CreateDashboard();
+                this.isNew = false;
+                this.DashboardPM.AddWidget(this.EntityPM);
             }
 
-            else {
-                this.UpdateDashboard();
-            }
-        }
-    }
-    private CreateDashboard() {
-        this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
-        //this.dashboardService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-        //    this.OnSaveCompleted(myResponse);
-        //});
-    }
-    private UpdateDashboard() {
-        //this.dashboardService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-        //    this.OnSaveCompleted(myResponse);
-        //});
-    }
-    private OnSaveCompleted(myResponse: ServiceResponse) {
-        if (!myResponse.HasError) {
-            this.EntityPM = myResponse.Result;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
+    }   
 
-        else {
-            this.ValidationErrorsList = myResponse.ErrorsArray;
-        }
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('Title');
+        this.myCloner.AddField('TypeCode');
+        this.myCloner.AddField('GroupBy');
+        this.myCloner.AddField('StartPotistion');
+        this.myCloner.AddField('EndPosition');
 
-        this.CurrentSession.StopBusyIndicator();
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DashboardPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 }
