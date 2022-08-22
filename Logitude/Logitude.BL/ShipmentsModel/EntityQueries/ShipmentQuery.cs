@@ -15223,9 +15223,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == customerId &&
                                                                                                                            shipment.IsCancelled == false &&
                                                                                                                            shipment.IsStandalonePickupDelivery == false &&
-                                                                                                                           shipment.IsOperationalClosed == false &&
-                                                                                                                           shipment.SpecialServicesTypeId != warehousingFirstId &&
-                                                                                                                           shipment.SpecialServicesTypeId != warehousingSecondId)
+                                                                                                                           shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
 
 
