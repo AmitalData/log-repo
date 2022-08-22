@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { QueryFilterViewItem } from '../../../../Infrastructure/DataContracts/QueryFilterViewItem';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { QueryFilterViewItem } from '../../../../Infrastructure/DataContracts/Qu
 
 export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     DataSource: any;
-    IsRoot: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
     AllObjectTables: string[] = [];
 
     constructor() {
@@ -22,24 +24,28 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         this.LoadDefaultAdditionalFilters();
     }
 
-    LoadDefaultAdditionalFilters() {       
+    LoadDefaultAdditionalFilters() {
         if (this.IsRoot && this.DataSource && this.DataSource.length == 0) {
             this.AddEmptyFilter();
         }
         else if (this.IsRoot) {
-            this.SetAllFilters();
+            let dataSourceItem = this.DataSource[0];
+            if (dataSourceItem && dataSourceItem.length != 1) {
+                this.DataSource = this.GetAllFilters(dataSourceItem);
+                this.CurrentSession.SessionEvent.emit({ Name: "RefreshAdditionalFiltersData", Value: this.DataSource });
+            }
         }
     }
 
-    private SetAllFilters() {
+    private GetAllFilters(oldValue) {
         let groupTreeFilter = new QueryFilterViewItem(null, this);
         groupTreeFilter.IsGroup = true;
-        groupTreeFilter.setAndOrOperation(this.DataSource.FilterType);
-        groupTreeFilter.IndexOrder = this.DataSource.length;
-        let MyFilter = this.RestoreFilters(this.DataSource, groupTreeFilter);
-        let temp = [];
-        temp.push(MyFilter);
-        this.DataSource = temp;
+        groupTreeFilter.setAndOrOperation(oldValue.FilterType);
+        groupTreeFilter.IndexOrder = 1;
+        let myFilter = this.RestoreFilters(oldValue, groupTreeFilter);
+        let myFilterList = [];
+        myFilterList.push(myFilter);
+        return myFilterList;
     }
 
     RestoreFilters(BaseFilter: QueryFilterViewItem, MyFilter: QueryFilterViewItem) {
@@ -64,6 +70,10 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     public objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
     public set ObjectTableName(newValue: string) {
+        if (this.IsRoot && !AppTool.IsNullOrEmpty(newValue) && !AppTool.IsNullOrEmpty(this.objectTableName) && this.objectTableName != newValue) {
+            this.DataSource = [];
+            this.AddEmptyFilter();
+        }
         if (newValue != this.objectTableName) {
             this.objectTableName = newValue;
         }
@@ -81,10 +91,20 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         this.FillAllObjectTables();
     }
 
+    public isRoot: boolean;
+    public get IsRoot() { return this.isRoot; }
+    public set IsRoot(newValue: boolean) {
+        if (newValue != this.isRoot) {
+            this.isRoot = newValue;
+        }
+    }
+
     FillAllObjectTables() {
         this.AllObjectTables = [];
         this.AllObjectTables.push(this.ParentObjectTableName);
-        this.AllObjectTables.push(this.ObjectTableName);
+        if (this.ParentObjectTableName != this.ObjectTableName) {
+            this.AllObjectTables.push(this.ObjectTableName);
+        }
     }
 
     AddFilterToGroup(item: QueryFilterViewItem) {
@@ -130,12 +150,12 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     onDeleteFilterClick(item: QueryFilterViewItem) {
         item.MyParentClass.DataSource = this.DeleteFilter(item, item.MyParentClass.DataSource);
         this.DataSource = item.MyParentClass.DataSource;
-        if (item.MyParentClass.DataSource.length == 0) this.AddEmptyFilter();
+        if (item.MyParentClass.DataSource.length == 0 && item.MyParentClass.IsRoot) this.AddEmptyFilter(item);
     }
 
-    AddEmptyFilter() {
-        let emptyTreeFilter = new QueryFilterViewItem(null, this);
-        let newTreeFilter = new QueryFilterViewItem(null, this);
+    AddEmptyFilter(item: QueryFilterViewItem = null) {
+        let emptyTreeFilter = new QueryFilterViewItem(null, item == null ? this : item.MyParentClass);
+        let newTreeFilter = new QueryFilterViewItem(null, item == null ? this : item.MyParentClass);
         newTreeFilter.IsGroup = true;
         newTreeFilter.IndexOrder = this.DataSource.length;
         newTreeFilter.QueryFilterItems.push(emptyTreeFilter);

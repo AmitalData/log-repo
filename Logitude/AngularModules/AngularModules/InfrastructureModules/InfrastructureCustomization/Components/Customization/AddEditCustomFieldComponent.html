@@ -272,7 +272,7 @@
                                 <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
                                 <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
                                 <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
-                                    Show Filter Settings
+                                    {{ShownAdditionalFiltersSettings ? 'Hide' : 'Show'}} Filter Settings
                                 </label>
                             </td>
                         </tr>

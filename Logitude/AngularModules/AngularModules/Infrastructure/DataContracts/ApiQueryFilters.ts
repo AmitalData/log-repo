@@ -214,8 +214,8 @@ export class FilterItem {
         public IgnoreFilter: boolean = false,
         public IsCacheOnClient: boolean = false,
         public IsLookUpfilter: boolean = false,
-        public FilterType: string = '',
         public QueryFilterItems: QueryFilterViewItem[] = null) { }
+        public FilterType: string = 'And'
         
 
 }

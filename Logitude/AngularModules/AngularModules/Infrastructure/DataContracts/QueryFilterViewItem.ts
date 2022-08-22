@@ -21,6 +21,7 @@ export class QueryFilterViewItem extends FilterItem  {
     public BooleanList: boolean[] = [true, false];
     public SelectedOperator: Operator;
     public IsChecked: boolean;
+    public ObjectFieldCode: string;
     private SelectedObjectFieldPM: ObjectFieldPM;
 
     constructor(TreeFilter: any = null, ParentClass: QueryFilterTreeComponent = null) {
@@ -43,8 +44,9 @@ export class QueryFilterViewItem extends FilterItem  {
         if (!this.Operator) {
             this.FillOperators("Text");
         }
-
-        this.RefreshEntityFieldsFilterItems();
+        if (!this.BaseTreeFilter) {
+            this.RefreshEntityFieldsFilterItems();
+        }
     }
 
     RefreshEntityFieldsFilterItems() {
@@ -87,7 +89,7 @@ export class QueryFilterViewItem extends FilterItem  {
     FillData() {
         this.FillMainEntityName();
         this.FillSecondaryEntityName();
-        this.FieldValue = this.BaseTreeFilter.FieldValue;
+        this.FillFieldValue();
         this.Operator = this.BaseTreeFilter.Operator;
         this.IsCustom = this.BaseTreeFilter.IsCustom;
         this.FieldDataType = this.BaseTreeFilter.FieldDataType;
@@ -97,13 +99,25 @@ export class QueryFilterViewItem extends FilterItem  {
         this.SelectedOperator = this.Operators.filter(x => x.Code == this.BaseTreeFilter.Operator)[0];
     }
 
+    FillFieldValue() {
+        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date')
+            return;
+        if (this.FieldDataType == 'Boolean') {
+            this.BooleanListValueChanged(this.BaseTreeFilter.FieldValue?.toString() == 'true');
+            return;
+        }
+
+        this.FieldValue = this.BaseTreeFilter.FieldValue;
+    }
+
     FillMainEntityName() {
         let fieldName: string = this.BaseTreeFilter?.FieldName;
         let fieldNameAndObjectTableName = fieldName?.split('.');
         if (!fieldNameAndObjectTableName) return;
 
-        this.FieldName = fieldNameAndObjectTableName.length == 1 ? fieldNameAndObjectTableName[0] : this.MyParentClass.objectTableName;
-        this.MainEntityName = fieldNameAndObjectTableName.length == 1 ? fieldNameAndObjectTableName[1] : this.MyParentClass.ParentObjectTableName;
+        this.FieldName = fieldNameAndObjectTableName.length == 1 ? fieldNameAndObjectTableName[0] : fieldNameAndObjectTableName[1];
+        this.MainEntityName = fieldNameAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        this.FieldChanged(window.ObjectFields.filter(f => this.FieldName == f.FieldName && this.MainEntityName == f.ObjectTableName)[0]);
     }
 
     FillSecondaryEntityName() {
@@ -111,8 +125,14 @@ export class QueryFilterViewItem extends FilterItem  {
         let fieldValueAndObjectTableName = fieldValue?.split('.');
         if (!fieldValueAndObjectTableName) return;
 
-        this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : this.MyParentClass.objectTableName;
-        this.secondaryEntityName = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[1] : this.MyParentClass.ParentObjectTableName;
+        this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : fieldValueAndObjectTableName[1];
+        this.SecondaryEntityName = fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') {
+            this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue);
+        }
+        else {
+            this.ValueChanged(window.ObjectFields.filter(f => this.FieldValue == f.FieldName && this.SecondaryEntityName == f.ObjectTableName)[0]);
+        }
     }
 
     IsObjectTableChanged(selectedEntity) {
@@ -134,13 +154,17 @@ export class QueryFilterViewItem extends FilterItem  {
         return this.FieldName;
     }
 
+    SelectedObjectFieldWithLookUpTable: any;
     public get ObjectFieldLookUpTableName() {
         if (!this.SelectedObjectFieldPM)
             return "";
 
-        let targetObjectField = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id);
-        if (targetObjectField && targetObjectField[0]) {
-            return targetObjectField[0].ObjectTable_LookUpTableName
+        if (this.SelectedObjectFieldWithLookUpTable && this.SelectedObjectFieldWithLookUpTable.Id == this.SelectedObjectFieldPM.Id) {
+            return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName;
+        }
+        this.SelectedObjectFieldWithLookUpTable = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id)[0];
+        if (this.SelectedObjectFieldWithLookUpTable) {
+            return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName
         }
     }
 
@@ -248,6 +272,8 @@ export class QueryFilterViewItem extends FilterItem  {
         else {
             this.Operator = null;
         }
+
+        this.ValueChanged(null);
     }
 
     public AndOrOpsChanged(value) {
@@ -298,26 +324,36 @@ export class QueryFilterViewItem extends FilterItem  {
     public FillMainEntityFields() {
         this.MainEntityFieldsFilterItems = new ApiQueryFilters();
         let mainObjectTable = window.ObjectTables.filter(t => t.Name == this.MainEntityName);
-        if (!mainObjectTable || !mainObjectTable[0].Id) return;
+        if (!mainObjectTable || !mainObjectTable[0]) return;
         this.MainEntityFieldsFilterItems.addAdditionalFilter("ObjectTableId", mainObjectTable[0].Id, null, null, "Equals", false, false, false, "string");
         this.MainEntityFieldsFilterItems.addAdditionalFilter("CanFilter", true, null, null, "Equals", false, false, false, "boolean");
+        this.MainEntityFieldsFilterItems.addAdditionalFilter("DataTypeCode", "Constant", null, null, "NotEqual", false, false, false, "string"); 
+        this.MainEntityFieldsFilterItems.addAdditionalFilter("IsCustomFilter", false, null, null, "Equals", false, false, false, "boolean");
     }
 
     public FillSecondaryEntityFields() {
         this.SecondaryEntityFieldsFilterItems = new ApiQueryFilters();
         let SecondaryEntityName = window.ObjectTables.filter(t => t.Name == this.SecondaryEntityName);
-        if (!SecondaryEntityName || !SecondaryEntityName[0].Id) return;
+        if (!SecondaryEntityName || !SecondaryEntityName[0]) return;
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("ObjectTableId", SecondaryEntityName[0].Id, null, null, "Equals", false, false, false, "string");
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("CanFilter", true, null, null, "Equals", false, false, false, "boolean");
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("DataTypeCode", this.FieldDataType, null, null, "Equals", false, false, false, "string");
+        this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("IsCustomFilter", false, null, null, "Equals", false, false, false, "boolean");
+        if (this.FieldDataType == 'LookUp') {
+            this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedObjectFieldPM?.LookUpTableId, null, null, "Equals", false, false, false, "string");
+        }
     }
 
     FieldChanged(objectFieldPM: ObjectFieldPM) {
-        this.SelectedObjectFieldPM = objectFieldPM;
         if (!objectFieldPM) {
             this.FieldName = "";
             return;
         }
+        if (this.SelectedObjectFieldPM && this.SelectedObjectFieldPM.Id == objectFieldPM.Id) {
+            return;
+        }
+        this.SelectedObjectFieldPM = objectFieldPM;
+        this.ObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.MainEntityName) {
             this.FieldName = this.MainEntityName + '.' + objectFieldPM.FieldName;
         }
@@ -327,6 +363,9 @@ export class QueryFilterViewItem extends FilterItem  {
         this.IsCustom = objectFieldPM.IsCustom;
         this.FieldDataType = objectFieldPM.DataTypeCode;
         this.FillOperators(objectFieldPM.DataTypeCode);
+        this.Operator = null;
+        this.SelectedOperator = null;
+        this.SecondaryEntityChanged("");
     }
 
     ValueChanged(objectFieldPM: ObjectFieldPM) {
