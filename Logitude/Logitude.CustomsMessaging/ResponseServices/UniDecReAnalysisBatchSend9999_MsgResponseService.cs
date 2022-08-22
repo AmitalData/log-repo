@@ -11,7 +11,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
-using Oracle.DataAccess.Client;
+//using Oracle.DataAccess.Client;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -31,9 +31,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
-using OracleCommand = Oracle.DataAccess.Client.OracleCommand;
-using OracleConnection = Oracle.DataAccess.Client.OracleConnection;
-using OracleParameter = Oracle.DataAccess.Client.OracleParameter;
+//using OracleCommand = Oracle.DataAccess.Client.OracleCommand;
+//using OracleConnection = Oracle.DataAccess.Client.OracleConnection;
+//using OracleParameter = Oracle.DataAccess.Client.OracleParameter;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
