@@ -25,14 +25,14 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+
 using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Data.Common;
-//using System.Data.OracleClient;
 using System.Data.SqlClient;
 using System.Transactions;
-using Oracle.DataAccess.Client;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Data.OracleClient;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -163,8 +163,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
                         mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
 
-                        string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
-                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
+                        RealSetDeclarationCourierDeclarationStatusCode(requestParams.Tenant, itemPM.DeclarationId);
+
+
+                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
                         scopeNewCRS.Complete();
                     }
@@ -181,6 +185,63 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listDeclarationIdCreateCRS);
             }
         }
+
+        public static void RealSetDeclarationCourierDeclarationStatusCode(int tenant, string declarationId)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            if (dbms == "oracle")
+            {
+
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I'";
+                    cmd = cmd + "  where DECLARATIONID=:p1 ";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I'";
+                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+
 
         private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams, List<string> listDeclarationIdCreateCRS)
         {

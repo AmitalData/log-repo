@@ -26,14 +26,14 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using System.Data.Common;
+
 using Simplog.Data.InfrastructureModel;
-//using System.Data.OracleClient;
+using System.Data.Common;
 using System.Data.SqlClient;
-using Oracle.DataAccess.Client;
+using System.Transactions;
+using System.Data.OracleClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -173,9 +173,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
                         Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
-                        
-                        string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
-                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
+                        RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
+
+
+                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
                         scopeNewCRS.Complete();
                     }
@@ -201,10 +204,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
+
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
-
-            //
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(tenant);
             if (dbms == "oracle")
