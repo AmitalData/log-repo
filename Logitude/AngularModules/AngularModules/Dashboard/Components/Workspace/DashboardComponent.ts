@@ -32,6 +32,7 @@ import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
 import { DashboardPMExtendedService } from '../../Services/DashboardPMExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
@@ -135,7 +136,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
             openAddEditDashboard: this.OpenDashboardWindow.bind(this),
             onChangeDashboard: this.OnChangeDashboard,
-            onSaveDashboard: this.OnSaveDashboard,
+            onSaveDashboard: this.OnSaveDashboard.bind(this),
         }),
             this.reactDashboradContainer.nativeElement, callBack);
     }
@@ -167,6 +168,11 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
             myDashboard.UpdateDate = dashboard.UpdateDate;
             myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
+            myDashboard.Widgets = [];
+
+            dashboard.Widgets.forEach(item => {
+                myDashboard.Widgets.push(this.GetReactWidget(item));
+            });
         }
 
         return myDashboard;
@@ -183,6 +189,11 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
             myDashboard.UpdateDate = dashboard.UpdateDate;
             myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
+            myDashboard.Widgets = [];
+
+            dashboard.Widgets.forEach(item => {
+                myDashboard.Widgets.push(this.GetWidgetEntity(item));
+            });
         }
 
         return myDashboard;
@@ -197,14 +208,15 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             logitudeWindow.ComponentLoaded.subscribe(comp => {
                 logitudeWindow.WindowClosed.subscribe(s => {
                     if (s) {
-                        //this.dashboardDataBinding.onGetDashboard.next(this.GetReactWidget(myWidget));
+                        this.selectedDashboard = this.GetReactDashboard(comp.DashboardPM);
+                        this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
                     }
                 });
             });
         });
     }
     GetWidgetEntity(widget: ReactWidgetPM): WidgetPM {
-        var myWidget: WidgetPM = new WidgetPM(this.GetDashboardEntity(this.selectedDashboard));
+        var myWidget: WidgetPM = new WidgetPM(null);
 
         if (widget) {
             myWidget.Id = widget.Id;
@@ -230,7 +242,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             myWidget.DashboardId = widget.DashboardId;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
-            myWidget.TypeCode = widget.TypeCode;
+            myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
         }
 
         return myWidget;
@@ -240,7 +252,16 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.selectedDashboard = dashboard;
     }
     private OnSaveDashboard(dashboard: ReactDashboardPM) {
-        console.log("OnSaveDashboard", dashboard);
+        var dashboardPMService: DashboardPMService = new DashboardPMService();
+        var savedEntity: DashboardPM = this.GetDashboardEntity(dashboard);
+
+        dashboardPMService.update(savedEntity).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                //this.EntityPM = myResponse.Result;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     ngOnDestroy() {

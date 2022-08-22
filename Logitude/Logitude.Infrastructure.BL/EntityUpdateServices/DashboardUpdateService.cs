@@ -3,6 +3,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,12 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     entityPM.UpdatedByUserId = loggedContact.Id;
                 }
             }
+        }
+
+        protected override void UpdateComposition(DashboardPM entityPM)
+        {
+            WidgetUpdateService widgetUpdateService = new WidgetUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            widgetUpdateService.UpdateMulti(entityPM.Widgets, entityPM.DeletedWidgets, entityPM, false);
         }
     }
 }

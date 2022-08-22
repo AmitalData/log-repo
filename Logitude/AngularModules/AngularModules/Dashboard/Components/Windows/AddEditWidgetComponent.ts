@@ -115,6 +115,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (errors.length == 0) {
             if (this.isNew) {
                 this.isNew = false;
+                this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.DashboardPM.AddWidget(this.EntityPM);
             }
 
