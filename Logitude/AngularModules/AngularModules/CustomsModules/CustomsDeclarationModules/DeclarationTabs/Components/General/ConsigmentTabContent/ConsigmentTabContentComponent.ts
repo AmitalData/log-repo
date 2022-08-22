@@ -389,7 +389,9 @@ export class ConsigmentTabContentComponent
         // initialize query filters for LoadingPort according to CountryCode
         if (!AppTool.IsNullOrEmpty(this.OriginCountryCode)) {
             this.LoadingPortFilterItems.removeAdditionalFilter("CountryTypeCode");
-            this.LoadingPortFilterItems.addAdditionalFilter("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true);
+            var CountryFilter = new FilterItem("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true, true);
+            this.LoadingPortFilterItems.AdditionalFilters.push(CountryFilter);
+            //this.LoadingPortFilterItems.addAdditionalFilter("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true);
             //this.LoadingPortFilterItems.ForceCacheRefresh = true;
         }
         else {
