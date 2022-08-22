@@ -37,6 +37,31 @@ export class DeclarationValidator {
         var errors = [];
 
         Validator.TryValidateObject(supplierInvoiceItemPM, "Customs.SupplierInvoiceItem", errors);
+        
+        for (let item of supplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
+            Validator.TryValidateObject(item, "Customs.SupplierInvoiceItemsPrice", errors);
+
+            if (AppTool.IsNullOrEmpty(item.AdditionalPriceTypeCode)) {
+                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPriceTypeCode"));
+            }
+
+            if (AppTool.IsNullOrEmpty(item.AdditionalPrice)) {
+                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPrice")); 
+
+            }
+        }
+        for (let item of supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements) {
+            Validator.TryValidateObject(item, "Customs.SuppInvoiceItemsAbachStatement", errors);
+
+            if (AppTool.IsNullOrEmpty(item.StatementTypeCode)) {
+                errors.push(this.GetRequierdFieldErrorText("Customs.SuppInvoiceItemsAbachStatement.F.StatementTypeCode"));
+            }
+
+            // if (AppTool.IsNullOrEmpty(item.IsStatementInd)) {
+            //     errors.push(this.GetRequierdFieldErrorText("Customs.SuppInvoiceItemsAbachStatement.F.IsStatementInd")); 
+
+            // }
+        }
 
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemsMods) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItemsMod", errors);
