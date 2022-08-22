@@ -174,6 +174,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                                   StorageSiteErrorText = a.StorageSiteErrorText,
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,
+                                                                  NotApprovedPendingList = a.NotApprovedPendingList,
 
 
                                                                   AirlineId = cm.CustomsAirline.AirlinePrefix,
@@ -248,6 +249,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 string myFilter = CourierPendingFilter.FieldValue.ToString();
                 iQueryable = iQueryable.Where(x => x.CourierPendingReasonList.StartsWith(myFilter + ",") || x.CourierPendingReasonList.Contains("," + myFilter + ",") || x.CourierPendingReasonList.EndsWith("," + myFilter) || x.CourierPendingReasonList.Equals(myFilter));
 
+            }
+            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotApprovedPendingList");
+            if (filter != null)
+            {
+                iQueryable = iQueryable.Where(d => d.NotApprovedPendingList != null);
             }
             return iQueryable;
         }

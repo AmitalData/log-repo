@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TerminalReleaseDate, 
 	         ShopId, 
 	         LastMileServiceType, 
-	         MissedDocumentStatusCode,
+	         MissedDocumentStatusCode, 
+	         NotApprovedPendingList,
 	      }
 
 
@@ -130,7 +131,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalRelease, 
 	         HatraDate, 
 	         MissedDocumentStatusCode, 
-	         ApprovedCourierPendingList,
+	         ApprovedCourierPendingList, 
+	         NotApprovedPendingList,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -287,6 +289,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MissedDocumentStatusCode))
             {
 				entityPOCO.MissedDocumentStatusCode = entityPM.MissedDocumentStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotApprovedPendingList))
+            {
+				entityPOCO.NotApprovedPendingList = entityPM.NotApprovedPendingList;
 			}
 			}
 
@@ -448,6 +455,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MissedDocumentStatusCode = entityPOCO.MissedDocumentStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NotApprovedPendingList))
+            {
+					entityPM.NotApprovedPendingList = entityPOCO.NotApprovedPendingList;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -604,6 +616,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.MissedDocumentStatusCode = entityPM.MissedDocumentStatusCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotApprovedPendingList))
+            {
+                oldEntityPM.NotApprovedPendingList = entityPM.NotApprovedPendingList;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -636,6 +653,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.LastMileServiceType)) //T4 find type == nText 
             {
                 entityPM.LastMileServiceType = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastMileServiceType));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotApprovedPendingList)) //T4 find type == nText 
+            {
+                entityPM.NotApprovedPendingList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NotApprovedPendingList));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
