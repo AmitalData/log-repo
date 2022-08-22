@@ -253,21 +253,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetShipmentActiveStatuses")]
-        public HttpResponseMessage GetShipmentActiveStatuses()
+        public IHttpActionResult GetShipmentActiveStatuses(string cardId)
         {
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
 
-                var entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
+                var entityStatusQuery = new EntityStatusQuery(tenant);
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
+                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY",StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                if (deliveryStatus != null)
+                    deliveryStatus.DisplayName = "Out for Delivery";
 
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(authToken.Tenant);
+                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SHOR", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                if (orderStatus != null)
+                    orderStatus.DisplayName = "Created";
 
-                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalActiveStatuses);
+                return Ok(digitalPortalActiveStatuses);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
 
