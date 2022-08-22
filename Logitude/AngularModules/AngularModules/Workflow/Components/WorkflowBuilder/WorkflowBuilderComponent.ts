@@ -73,14 +73,16 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     loadWorkflow() {
         if (this.EntityId) {
             this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => {
-                if (!serviceResponse.HasError) {
-                    this.EntityPM = serviceResponse.Result;
-                    this.WorkflowName = this.EntityPM.Name;
-                    this.renderReactFlowModeler();
-                    this.stopBusyIndicator();
-                }
-            });
+            this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse); });
+        }
+    }
+
+    handleGetWorkflowResponse(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.HasError) {
+            this.EntityPM = serviceResponse.Result;
+            this.WorkflowName = this.EntityPM.Name;
+            this.renderReactFlowModeler();
+            this.stopBusyIndicator();
         }
     }
 
@@ -238,15 +240,17 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (flowObject) {
             this.EntityPM.FlowJson = JSON.stringify(flowObject);
             this.startBusyIndicator("Saving ...");
-            this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
-                if (!serviceResponse.HasError) {
-                    this.handleSaveWorkflowResponse(serviceResponse.Result);
-                    this.stopBusyIndicator();
-                    if (backAfterSave) {
-                        this.goBack();
-                    }
-                }
-            });
+            this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => { this.handleUpdateWorkflowResponse(serviceResponse, backAfterSave); });
+        }
+    }
+
+    handleUpdateWorkflowResponse(serviceResponse: ServiceResponse, backAfterSave: boolean) {
+        if (!serviceResponse.HasError) {
+            this.handleSaveWorkflowResponse(serviceResponse.Result);
+            this.stopBusyIndicator();
+            if (backAfterSave) {
+                this.goBack();
+            }
         }
     }
 
