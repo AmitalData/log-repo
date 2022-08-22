@@ -808,7 +808,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.OriginalItemPM.ItemAdditionalStatus = false;
 
         }
-
+ 
         //console.log("Ok, New -> ", this.ClonedItemPM)
         //console.log("    Old -> ", this.OldItemPM)
 
@@ -919,7 +919,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         clonedEntity = new SupplierInvoiceItemPM(entityToClone.EntityParentPM); // check it !!
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
-
+       
         // --------------------------[ Arrays ]------------------------------
         // Modification
         clonedEntity.SupplierInvoiceItemsMods = [];
@@ -976,7 +976,20 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.MapEntitytoEntity(item, clonedItem);
             clonedEntity.SupplierInvoiceItemLevies.push(clonedItem);
         });
-
+        // Prices List
+        clonedEntity.SupplierInvoiceItemsPrices = []; 
+        entityToClone.SupplierInvoiceItemsPrices.forEach((itemMod) => {
+            var clonedItemMod = new SupplierInvoiceItemsPricePM(itemMod.EntityParentPM);
+            this.MapEntitytoEntity(itemMod, clonedItemMod);
+            clonedEntity.SupplierInvoiceItemsPrices.push(clonedItemMod);
+        });
+        // AbachStatements List
+        clonedEntity.SuppInvoiceItemsAbachStatements = []; 
+        entityToClone.SuppInvoiceItemsAbachStatements.forEach((itemMod) => {
+            var clonedItemMod = new SuppInvoiceItemsAbachStatementPM(itemMod.EntityParentPM); 
+            this.MapEntitytoEntity(itemMod, clonedItemMod);
+            clonedEntity.SuppInvoiceItemsAbachStatements.push(clonedItemMod);
+        });
 
         return clonedEntity;
     }
