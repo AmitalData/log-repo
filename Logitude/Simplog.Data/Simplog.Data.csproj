@@ -210,6 +210,7 @@
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
+    <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
     <Compile Include="Helpers\TreeFilter.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
@@ -746,6 +747,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryTransportMode.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAssembly.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
@@ -775,6 +777,7 @@
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsResponseMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentAnalyticMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OBLTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsRequestsCountMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\PayableProratedAmountMap.cs" />
@@ -1201,6 +1204,7 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRADocumentTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentAnalyticRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />

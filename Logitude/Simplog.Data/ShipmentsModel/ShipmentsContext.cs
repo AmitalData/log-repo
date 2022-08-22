@@ -362,6 +362,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ContainerStatusSourceMap());
             modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
             modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
+            modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -437,6 +438,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainerStatus> ContainerStatuses { get; set; }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
         public IDbSet<PayableProratedAmount> PayableProratedAmounts { get; set; }
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
 
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]

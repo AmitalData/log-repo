@@ -939,5 +939,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests => throw new NotImplementedException();
 
         public IDbSet<ShipmentDocsField> ShipmentDocsFields => throw new NotImplementedException();
+
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
