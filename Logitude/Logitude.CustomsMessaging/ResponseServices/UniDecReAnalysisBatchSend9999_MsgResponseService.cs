@@ -31,6 +31,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
+using OracleCommand = Oracle.DataAccess.Client.OracleCommand;
+using OracleConnection = Oracle.DataAccess.Client.OracleConnection;
+using OracleParameter = Oracle.DataAccess.Client.OracleParameter;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
