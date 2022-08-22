@@ -784,7 +784,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     // else
                     // {
 
-                    return GetQuickSearch(ObjectTableName, SearchFields, tenant);                   
+                    return GetQuickSearch(ObjectTableName, SearchFields, tenant);
 
                     // }
 
@@ -2985,19 +2985,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 var customer = (from a in commonDataContext.Cards.Include("Customer")
                                 where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
-                                select new 
+                                select new
                                 {
                                     Id = a.Id,
-                                    Field2 = a.Customer != null ? a.Customer.Field2: null
+                                    Field2 = a.Customer != null ? a.Customer.Field2 : null
                                 }).FirstOrDefault();
 
                 var customerPartner = (from a in commonDataContext.Cards
-                                         where a.Tenant == crmTenant && a.Id == customer.Field2
-                                         select new 
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code
-                                         }).FirstOrDefault();
+                                       where a.Tenant == crmTenant && a.Id == customer.Field2
+                                       select new
+                                       {
+                                           Id = a.Id,
+                                           Code = a.Code
+                                       }).FirstOrDefault();
 
                 var result = (customerPartner?.Code == "74158") ? customerPartner : null;
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -3024,14 +3024,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Tenant = tenant,
                     UserId = userId
                 };
+
+                chargifyAWBStock.Customer = this.GetCRMCustomer(chargifyAWBStock);
                 this.CreateMessagingStock(chargifyAWBStock);
                 this.CreateOpportunity(chargifyAWBStock);
+                this.SendEmail(chargifyAWBStock);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+        private CustomerPM GetCRMCustomer(ChargifyAWBStock chargifyAWBStock)
+        {
+            int crmTenant = 341;
+            var commonDataContext = CommonDataContext.GetContext(0);
+            var crmContext = CRMContext.GetContext(0);
+            int tenant = chargifyAWBStock.Tenant;
+            var userId = chargifyAWBStock.UserId;
+            var tenantString = tenant.ToString();
+            var customer = (from a in commonDataContext.Cards
+                            where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                            select new CustomerPM
+                            {
+                                Id = a.Id,
+                                EnglishName = a.EnglishName,
+                                Code = a.Code,
+                                ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                SalesmanUserId = a.SalesmanUserId,
+                                PrimaryContactId = a.PrimaryContactId,
+                            }).FirstOrDefault();
+
+            return customer;
         }
         private string GetSystemUserId(int tenant)
         {
@@ -3068,26 +3093,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private void CreateOpportunity(ChargifyAWBStock chargifyAWBStock)
         {
+            var newChargifyAWBStock = chargifyAWBStock;
             int crmTenant = 341;
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
             ICRMContext crmContext = CRMContext.GetContext(0);
             int tenant = chargifyAWBStock.Tenant;
             string userId = chargifyAWBStock.UserId;
             string tenantString = tenant.ToString();
-
-            // Create Opportunity 
-            var customer = (from a in commonDataContext.Cards
-                            where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
-                            select new CustomerPM
-                            {
-                                Id = a.Id,
-                                EnglishName = a.EnglishName,
-                                Code = a.Code,
-                                ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                SalesmanUserId = a.SalesmanUserId,
-                                PrimaryContactId = a.PrimaryContactId,
-                            }).FirstOrDefault();
-
+            var customer = chargifyAWBStock.Customer;
             var ownerId = customer?.SalesmanUserId;
             if (string.IsNullOrEmpty(ownerId))
             {
@@ -3098,14 +3111,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
-
             var type = (from a in crmContext.OpportunityTypes
                         where a.Tenant == crmTenant && a.Name == stockType
                         select a).FirstOrDefault();
 
             var stage = (from a in crmContext.Stages
-                        where a.Tenant == crmTenant && a.Code == "QUA"
-                        select a).FirstOrDefault();
+                         where a.Tenant == crmTenant && a.Code == "QUA"
+                         select a).FirstOrDefault();
 
             OpportunityPM opportunityPM = new OpportunityPM()
             {
@@ -3118,13 +3130,58 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 CreatedByUserId = userId,
                 UpdatedByUserId = userId,
                 OpportunityTypeId = type?.Id,
-                StageId = stage?.Id,
-               
+                StageId = stage?.Id
             };
 
             OpportunityUpdateService service = new OpportunityUpdateService(crmContext, new Dictionary<string, IContext>(), crmTenant);
             opportunityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
             service.Update(opportunityPM, true);
+        }
+        private void SendEmail(ChargifyAWBStock chargifyAWBStock)
+        {
+            var crmTenant = 341;
+            var subject = "AWB/INTTRA Stock E-mail Notification";
+            var fromEmail = "admin@fnarsoft.com";
+            var toEmails = "info@logitudeworld.com";
+            var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
+            StringBuilder HtmlTemplate = new StringBuilder();
+            HtmlTemplate.Append(
+                 "<p style='border-style:solid;border-radius:7px;border-color:#385D8A;background-color:#4F81BD;font-family:Century;text-align:center;color:white;vertical-align: middle;padding:5px'>"
+               + "Automatic e<span style='font-family:Arial'>-</span>mail Notification" + "<br />"
+               + "</p>"
+            );
+            HtmlTemplate.Append("<div style='text-align:left;font-size:16px;'>");
+            HtmlTemplate.Append("<p style='text-align:left;color:#000066;font-size:16px;'>");
+            HtmlTemplate.Append("Dear Sales Team,");
+            HtmlTemplate.Append("</p>");
+            HtmlTemplate.Append("<br/>");
+            HtmlTemplate.Append("<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>" + chargifyAWBStock.Customer?.EnglishName + " has purchased a new AWB/INTTRA stock with the following details:</div>");
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Customer: ").Append(chargifyAWBStock.Customer?.EnglishName);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Tenant Number: ").Append(chargifyAWBStock.Tenant.ToString());
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Subject: ").Append(stockType);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Stock Amount: ").Append(chargifyAWBStock.TotalStocks);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Stock Price: ").Append(chargifyAWBStock.TotalPrice);
+            HtmlTemplate.Append("</br>");
+
+            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            {
+                Subject = subject,
+                From = fromEmail,
+                To = toEmails,
+                CC = null,
+                BCC = null,
+                EmailBody = HtmlTemplate.ToString(),
+                Tenant = crmTenant,
+                LoggingUserId = chargifyAWBStock.UserId,
+                IsBodySecured = false,
+            };
+
+            Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
         }
     }
 }
@@ -3195,4 +3252,6 @@ public class ChargifyAWBStock
     public int TotalStocks { get; set; }
     public int TotalPrice { get; set; }
     public string UserId { get; set; }
+    public CustomerPM Customer { get; set; }
+    public string UserName { get; set; }
 }
