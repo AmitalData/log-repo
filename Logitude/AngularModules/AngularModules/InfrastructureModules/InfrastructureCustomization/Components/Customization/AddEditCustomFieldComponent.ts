@@ -17,6 +17,7 @@ import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedData
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 
 declare var window: any;
@@ -45,6 +46,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     DefaultAdditionalTreeFilters: any;
     ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    entityResourceService: EntityResourceService = new EntityResourceService();
     AdditionalFiltersData: any = [];
     ShownAdditionalFiltersSettings: boolean;
     ObjectTableName: string;
@@ -81,6 +83,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         //}
 
         //CustomPickListsList = new ObservableCollection<string>(picklistslist);
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res.Name == "RefreshAdditionalFiltersData") {
+                this.AdditionalFiltersData = res.Value;
+            }
+        });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
 
@@ -457,15 +464,21 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
 
     LoadDefaultAdditionalFilters() {
-        if (!this.objectField || !this.objectField.Id) {
+        if (!this.objectField || !this.objectField.Id || (this.AdditionalFiltersData && this.AdditionalFiltersData.length == 1)) {
             this.ShownAdditionalFilters = true;
             return;
         }
 
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
             var result: ServiceResponse = serviceResponse;
             if (!result.HasError) {
-                this.AdditionalFiltersData = result.Result == null ? [] : result.Result;
+                this.CurrentSession.StopBusyIndicator();
+                let additionalFiltersData = [];
+                if (result.Result) {
+                    additionalFiltersData.push(result.Result);
+                }
+                this.AdditionalFiltersData = additionalFiltersData;
                 this.ShownAdditionalFilters = true;
             }
         });
@@ -504,8 +517,8 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.authHeader.append('Accept', 'application/json');
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
+            this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
             if (this.IsNew == true) {
-                this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -535,7 +548,6 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                 });
             }
             else {
-                this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData;
                 this._ObjectFieldPMService.update(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

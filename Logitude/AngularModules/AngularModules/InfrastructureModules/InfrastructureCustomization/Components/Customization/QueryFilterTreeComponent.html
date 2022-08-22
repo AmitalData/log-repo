@@ -79,7 +79,7 @@
                                                         [LookUpTableName]="'ObjectField'"
                                                         [NoValidation]="true"
                                                         [IsFreeText]="true"
-                                                        [SelectedValue]="item.FieldName"
+                                                        [SelectedValue]="item.ObjectFieldCode"
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder] ="'Field'"
@@ -129,6 +129,7 @@
                                                         [DataContext]="item"
                                                         [IsFreeText]="true"
                                                         [NoValidation]="true"
+                                                        [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [SelectedValue]="item.FieldValue"
                                                         [LookUpTableName]="item.ObjectFieldLookUpTableName"
@@ -160,7 +161,7 @@
                                                         [LookUpTableName]="'ObjectField'"
                                                         [NoValidation]="true"
                                                         [IsFreeText]="true"
-                                                        [SelectedValue]="item.FieldName"
+                                                        [SelectedValue]="item.ObjectFieldCode"
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder] ="'Value'"
@@ -226,3 +227,6 @@
         </td>
     </tr>
 </table>
+
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

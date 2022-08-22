@@ -21,6 +21,7 @@ export class QueryFilterViewItem extends FilterItem  {
     public BooleanList: boolean[] = [true, false];
     public SelectedOperator: Operator;
     public IsChecked: boolean;
+    public ObjectFieldCode: string;
     private SelectedObjectFieldPM: ObjectFieldPM;
 
     constructor(TreeFilter: any = null, ParentClass: QueryFilterTreeComponent = null) {
@@ -88,7 +89,7 @@ export class QueryFilterViewItem extends FilterItem  {
     FillData() {
         this.FillMainEntityName();
         this.FillSecondaryEntityName();
-        this.FieldValue = this.BaseTreeFilter.FieldValue;
+        this.FillFieldValue();
         this.Operator = this.BaseTreeFilter.Operator;
         this.IsCustom = this.BaseTreeFilter.IsCustom;
         this.FieldDataType = this.BaseTreeFilter.FieldDataType;
@@ -96,6 +97,17 @@ export class QueryFilterViewItem extends FilterItem  {
         this.AdditionalFilters = this.BaseTreeFilter.AdditionalFilters;
         this.FillOperators(this.FieldDataType);
         this.SelectedOperator = this.Operators.filter(x => x.Code == this.BaseTreeFilter.Operator)[0];
+    }
+
+    FillFieldValue() {
+        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date')
+            return;
+        if (this.FieldDataType == 'Boolean') {
+            this.BooleanListValueChanged(this.BaseTreeFilter.FieldValue?.toString() == 'true');
+            return;
+        }
+
+        this.FieldValue = this.BaseTreeFilter.FieldValue;
     }
 
     FillMainEntityName() {
@@ -142,13 +154,17 @@ export class QueryFilterViewItem extends FilterItem  {
         return this.FieldName;
     }
 
+    SelectedObjectFieldWithLookUpTable: any;
     public get ObjectFieldLookUpTableName() {
         if (!this.SelectedObjectFieldPM)
             return "";
 
-        let targetObjectField = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id);
-        if (targetObjectField && targetObjectField[0]) {
-            return targetObjectField[0].ObjectTable_LookUpTableName
+        if (this.SelectedObjectFieldWithLookUpTable && this.SelectedObjectFieldWithLookUpTable.Id == this.SelectedObjectFieldPM.Id) {
+            return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName;
+        }
+        this.SelectedObjectFieldWithLookUpTable = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id)[0];
+        if (this.SelectedObjectFieldWithLookUpTable) {
+            return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName
         }
     }
 
@@ -256,6 +272,8 @@ export class QueryFilterViewItem extends FilterItem  {
         else {
             this.Operator = null;
         }
+
+        this.ValueChanged(null);
     }
 
     public AndOrOpsChanged(value) {
@@ -306,29 +324,36 @@ export class QueryFilterViewItem extends FilterItem  {
     public FillMainEntityFields() {
         this.MainEntityFieldsFilterItems = new ApiQueryFilters();
         let mainObjectTable = window.ObjectTables.filter(t => t.Name == this.MainEntityName);
-        if (!mainObjectTable || !mainObjectTable[0].Id) return;
+        if (!mainObjectTable || !mainObjectTable[0]) return;
         this.MainEntityFieldsFilterItems.addAdditionalFilter("ObjectTableId", mainObjectTable[0].Id, null, null, "Equals", false, false, false, "string");
         this.MainEntityFieldsFilterItems.addAdditionalFilter("CanFilter", true, null, null, "Equals", false, false, false, "boolean");
+        this.MainEntityFieldsFilterItems.addAdditionalFilter("DataTypeCode", "Constant", null, null, "NotEqual", false, false, false, "string"); 
+        this.MainEntityFieldsFilterItems.addAdditionalFilter("IsCustomFilter", false, null, null, "Equals", false, false, false, "boolean");
     }
 
     public FillSecondaryEntityFields() {
         this.SecondaryEntityFieldsFilterItems = new ApiQueryFilters();
         let SecondaryEntityName = window.ObjectTables.filter(t => t.Name == this.SecondaryEntityName);
-        if (!SecondaryEntityName || !SecondaryEntityName[0].Id) return;
+        if (!SecondaryEntityName || !SecondaryEntityName[0]) return;
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("ObjectTableId", SecondaryEntityName[0].Id, null, null, "Equals", false, false, false, "string");
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("CanFilter", true, null, null, "Equals", false, false, false, "boolean");
         this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("DataTypeCode", this.FieldDataType, null, null, "Equals", false, false, false, "string");
+        this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("IsCustomFilter", false, null, null, "Equals", false, false, false, "boolean");
         if (this.FieldDataType == 'LookUp') {
             this.SecondaryEntityFieldsFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedObjectFieldPM?.LookUpTableId, null, null, "Equals", false, false, false, "string");
         }
     }
 
     FieldChanged(objectFieldPM: ObjectFieldPM) {
-        this.SelectedObjectFieldPM = objectFieldPM;
         if (!objectFieldPM) {
             this.FieldName = "";
             return;
         }
+        if (this.SelectedObjectFieldPM && this.SelectedObjectFieldPM.Id == objectFieldPM.Id) {
+            return;
+        }
+        this.SelectedObjectFieldPM = objectFieldPM;
+        this.ObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.MainEntityName) {
             this.FieldName = this.MainEntityName + '.' + objectFieldPM.FieldName;
         }
@@ -340,7 +365,7 @@ export class QueryFilterViewItem extends FilterItem  {
         this.FillOperators(objectFieldPM.DataTypeCode);
         this.Operator = null;
         this.SelectedOperator = null;
-        this.secondaryEntityName = "";
+        this.SecondaryEntityChanged("");
     }
 
     ValueChanged(objectFieldPM: ObjectFieldPM) {
