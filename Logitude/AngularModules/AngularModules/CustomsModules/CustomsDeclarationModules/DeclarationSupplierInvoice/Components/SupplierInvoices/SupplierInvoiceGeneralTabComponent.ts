@@ -193,16 +193,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.TooltipCertificate = "םישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
-
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-
             this.setAdjustmentsWarning(this.IncotermCode)
         }
     }
@@ -891,16 +881,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
     public set AccountTypeCode(newValue: string) {
         this.EntityPM.AccountTypeCode = newValue;
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
     }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
@@ -920,23 +900,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
-    public set BuyerName(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-
-        this.EntityPM.BuyerName = newValue;
-    }
+    public set BuyerName(newValue: string) { this.EntityPM.BuyerName = newValue; }
 
     public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
         this.EntityPM.BuyerAddress = newValue;
     }
 
