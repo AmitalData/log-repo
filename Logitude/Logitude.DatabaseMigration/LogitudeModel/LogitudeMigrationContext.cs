@@ -1524,6 +1524,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics
+        {
+            get;
+            set;
+        }
+
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas
         {
             get;
@@ -5259,6 +5266,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
             modelBuilder.Configurations.Add(new MentionMap());
+            modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
             #endregion
 
             #region Missing Map Files For Customs Pocos
