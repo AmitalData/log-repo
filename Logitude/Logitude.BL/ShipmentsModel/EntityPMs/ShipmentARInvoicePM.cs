@@ -27,5 +27,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsConsolidationInvoice { get; set; }
         public string ConsolidationInvoiceId { get; set; }
         public string ConsolidationInvoiceNumber { get; set; }
+        public string ReportUrl { get; set; }
     }
 }
