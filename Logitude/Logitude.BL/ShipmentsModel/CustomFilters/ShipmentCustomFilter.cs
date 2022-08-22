@@ -42,7 +42,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
                     }
 
-                    if (item.FieldName ==  "ConsigneeShipperIds")
+                    if (item.FieldName == "ConsigneeShipperIds")
                     {
                         queryableData = DigitalPortalCustomFilter.ApplyShipperConsigneeFilter(item, queryableData);
                     }
@@ -54,7 +54,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "RemoveWarehouseShipments")
                     {
-                        queryableData = queryableData.Where(d => !(d.DirectionId == "I" && d.TransportModeId == "I"));
+                        SpecialServicesRepository specialServicesRepository = new SpecialServicesRepository(tenant);
+                        SpecialService warehousingFirst = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS", "", tenant);
+                        SpecialService WarehousingSecond = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS-2", "", tenant);
+                        queryableData = queryableData.Where(d => (d.SpecialServicesTypeId != warehousingFirst.Id && d.SpecialServicesTypeId != WarehousingSecond.Id));
                     }
 
                     if (item.FieldName == "ActualDataDateYearMonth")
@@ -63,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         int month = Convert.ToInt32(item.FieldValue2);
                         if (year != 0)
                         {
-                            queryableData = queryableData.Where(d =>  d.CreateDateTime.Year == year);
+                            queryableData = queryableData.Where(d => d.CreateDateTime.Year == year);
                         }
                         if (month != 0)
                         {
@@ -102,7 +105,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             showIsStandalonePickupDelivery = true;
                         }
                     }
-                    
+
 
                     if (item.FieldName == "Partner")
                     {
@@ -296,8 +299,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     if (item.FieldName == "EBookingInProgress")
                     {
                         queryableData = from d in queryableData
-                                        where 
-                                        ( d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "D")
+                                        where
+                                        (d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "D")
                                         && d.DirectionId == "E"
                                         && d.TransportModeId == "O"
                                         && d.INTTRABookingTransStatusCode != "NST" && d.INTTRABookingStatusCode != "SI"
@@ -348,15 +351,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                                     if (directionId == "I")
                                     {
-                                        queryableData = queryableData.Where(d => (d.DirectionId == "I" || d.DirectionId == "C")  && (d.ShipmentLevelCode != "H" || (d.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(d.ShipmentMasterDataId))));
-                                       
+                                        queryableData = queryableData.Where(d => (d.DirectionId == "I" || d.DirectionId == "C") && (d.ShipmentLevelCode != "H" || (d.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(d.ShipmentMasterDataId))));
+
                                     }
 
                                     else
                                     {
                                         queryableData = queryableData.Where(d => d.DirectionId == directionId && (d.ShipmentLevelCode != "H" || (d.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(d.ShipmentMasterDataId))));
                                     }
-                              
+
                                 }
                                 else
                                 {
@@ -693,7 +696,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => 
+                            queryableData = queryableData.Where(d =>
                             (!string.IsNullOrEmpty(d.Transshipment1FromPortId) && d.Transshipment1FromPortId == value)
                             || (!string.IsNullOrEmpty(d.Transshipment2FromPortId) && d.Transshipment2FromPortId == value)
                             || (!string.IsNullOrEmpty(d.Transshipment3FromPortId) && d.Transshipment3FromPortId == value)
@@ -723,7 +726,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             bool showIsCancelled = false;
             bool showIsStandalonePickupDelivery = false;
             bool isMasterConnectedHouses = false;
-            bool isAllShipments = false; 
+            bool isAllShipments = false;
 
             foreach (QueryFilterItem item in queryFilters)
             {
@@ -748,7 +751,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         bool value = Convert.ToBoolean(item.FieldValue);
                         if (value)
                         {
-                            showIsStandalonePickupDelivery= true;
+                            showIsStandalonePickupDelivery = true;
                         }
                     }
 
