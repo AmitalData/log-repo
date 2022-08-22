@@ -55,9 +55,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime CreateDate { get; set; }
         public string ControlAccountId { get; set; }
         public string AccountId { get; set; }
-        public DateTime AccountingDate { get; set; }
-        public DateTime DocumentDate { get; set; }
-        public DateTime DueDate { get; set; }
+        public string AccountingDate { get; set; }
+        public string DocumentDate { get; set; }
+        public string DueDate { get; set; }
         public decimal LocalAmountDebit { get; set; }
         public decimal LocalAmountCredit { get; set; }
         public string CurrencyId { get; set; }
