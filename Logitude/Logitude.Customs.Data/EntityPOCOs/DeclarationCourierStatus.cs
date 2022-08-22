@@ -96,6 +96,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string LastMileServiceType { get; set; }
         [Column("MissedDocumentStatusCode")]
 	    public string MissedDocumentStatusCode { get; set; }
+        [Column("NotApprovedPendingList")]
+	    public string NotApprovedPendingList { get; set; }
     }
 }
 	 

@@ -1711,6 +1711,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string notApprovedPendingList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NotApprovedPendingList  
+	   {
+	    
+	     get
+		{
+		   return notApprovedPendingList;
+		 }
+		 set
+		 {
+		   if(notApprovedPendingList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotApprovedPendingList",OldValue=notApprovedPendingList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notApprovedPendingList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
