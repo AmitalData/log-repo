@@ -235,9 +235,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 List<ShipmentList> listQuery = listQuery = entityLists.ToList();
 
-                var service = new ShipmentService(authToken.Tenant);
-
-                service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
+                myShipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 
                 response.Result = listQuery;
 

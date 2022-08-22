@@ -12488,6 +12488,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
+                               InlandDomesticToCountryId = f.InlandDomesticToCountryId,
+                               InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,
+                               InlandDomesticToTypeCode = f.InlandDomesticToTypeCode,
+                               InlandDomesticFromCity = f.InlandDomesticFromCity,
+                               InlandDomesticToCity = f.InlandDomesticToCity,
                                Transshipment1ATD = f.Transshipment1ATD,
                                Transshipment1ATA = f.Transshipment1ATA,
                                Transshipment1ETD = f.Transshipment1ETD,

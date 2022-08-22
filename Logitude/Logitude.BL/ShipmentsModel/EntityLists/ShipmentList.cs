@@ -676,6 +676,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? Transshipment3ATA { get; set; }
         public DateTime? Transshipment3ETD { get; set; }
         public DateTime? Transshipment3ETA { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticToTypeCode { get; set; }
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
 
     }
 
