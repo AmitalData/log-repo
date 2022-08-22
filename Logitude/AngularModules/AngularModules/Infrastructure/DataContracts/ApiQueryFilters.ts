@@ -14,12 +14,11 @@ export class ApiQueryFilters {
     public AdditionalFilters: FilterItem[] = [];
     public TreeFilters: string = '';
     public ParentEntityId: string = '';
-    public ParentObjectTableId: string = '';
+    public ParentObjectTableName: string = '';
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;
 
     
-
     addAdditionalFilter(
         FieldName: string,
         FieldValue: any,
@@ -216,7 +215,7 @@ export class FilterItem {
         public IsCacheOnClient: boolean = false,
         public IsLookUpfilter: boolean = false,
         public FilterType: string = '',
-        public AdditionalFilters: QueryFilterViewItem[] = null) { }
+        public QueryFilterItems: QueryFilterViewItem[] = null) { }
         
 
 }

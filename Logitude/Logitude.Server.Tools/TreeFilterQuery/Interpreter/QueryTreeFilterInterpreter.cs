@@ -15,7 +15,6 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         {
          
             if (string.IsNullOrEmpty(context.AdditionalTreeFilter)) return  null;
-           
             List<IQueryTreeFilterExpression> expressions = new List<IQueryTreeFilterExpression>();
             expressions.Add(new JavaScriptSerializerExpression());
             expressions.Add(new QueryTreeFilterIgnoreExpresion());
@@ -27,6 +26,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
                 expressions.Add(new PartnerEntityResloveFieldValueExpression());
                 expressions.Add(new PartnerEntityQueryFilterExpression());
             }
+            expressions.Add(new QueryTreeFilterIgnoreExpresion());
 
             foreach (IQueryTreeFilterExpression expression in expressions)
             {

@@ -250,7 +250,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilter, ObjectTableName = "User", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName });
+                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "User", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UserRepository userRepository = new UserRepository(MyContext);
@@ -267,7 +267,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 
                 entityPocos = genericFilter.GetFilteredQuery<User>(nonListQueryOperation, entityPocos);
-                entityPocos = treeFilterQueryService.Apply<User>(entityPocos);
 
 
 

@@ -19,6 +19,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         private QueryTreeFilterContext queryTreeFilterContext;
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
+            queryTreeFilterContext.IsFinish = true;
             this.queryTreeFilterContext = queryTreeFilterContext;
             QueryTreeFilterIterator queryTreeFilterIterator = CreateIterator();
             if (!queryTreeFilterIterator.Any()) return;
@@ -35,6 +36,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private object GetParentEntity()
         {
+            if (queryTreeFilterContext.ParentEntity != null) return queryTreeFilterContext.ParentEntity;
             if (string.IsNullOrEmpty(queryTreeFilterContext.ParentObjectTableName) || string.IsNullOrEmpty(queryTreeFilterContext.ParentEntityId)) return null;
             return InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(queryTreeFilterContext.ParentObjectTableName, queryTreeFilterContext.ParentEntityId, queryTreeFilterContext.Tenant);
         }

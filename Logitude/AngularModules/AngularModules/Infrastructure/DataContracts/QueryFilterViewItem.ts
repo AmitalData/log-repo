@@ -36,8 +36,8 @@ export class QueryFilterViewItem extends FilterItem  {
             this.FillData();
         }
 
-        if (!this.AdditionalFilters) {
-            this.AdditionalFilters = [];
+        if (!this.QueryFilterItems) {
+            this.QueryFilterItems = [];
         }
 
         if (!this.Operator) {
@@ -92,7 +92,7 @@ export class QueryFilterViewItem extends FilterItem  {
         this.IsCustom = this.BaseTreeFilter.IsCustom;
         this.FieldDataType = this.BaseTreeFilter.FieldDataType;
         this.FilterType = this.BaseTreeFilter.FilterType;
-        this.AdditionalFilters = this.BaseTreeFilter.AdditionalFilters;
+        this.QueryFilterItems = this.BaseTreeFilter.QueryFilterItems;
         this.FillOperators(this.FieldDataType);
         this.SelectedOperator = this.Operators.filter(x => x.Code == this.BaseTreeFilter.Operator)[0];
     }

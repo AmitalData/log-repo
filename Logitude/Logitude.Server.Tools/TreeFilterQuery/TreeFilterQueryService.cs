@@ -9,22 +9,25 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.TreeFilterQuery
 {
-   public class TreeFilterQueryService
+    public class TreeFilterQueryService
     {
-
-        private QueryFilterItem queryFilterItem;
-        public TreeFilterQueryService(QueryTreeFilterContext context)
+        private QueryTreeFilterContext queryTreeFilterContext;
+        public TreeFilterQueryService(QueryTreeFilterContext queryTreeFilterContext)
         {
-            queryFilterItem = new QueryTreeFilterInterpreter().Run(context);
+            this.queryTreeFilterContext = queryTreeFilterContext;
         }
-
 
         public IQueryable<T> Apply<T>(IQueryable<T> queryable)
         {
-            if (queryFilterItem == null) return queryable;
-            queryable = queryable.Where(queryFilterItem.GetTreeExpression<T>());
-            return queryable;
+            QueryFilterItem queryFilterItem = new QueryTreeFilterInterpreter().Run(queryTreeFilterContext);
+            if (IsQueryFilterEmtpy(queryFilterItem)) return queryable;
+            return queryable.Where(queryFilterItem.GetTreeExpression<T>());
         }
 
+        public bool IsQueryFilterEmtpy(QueryFilterItem queryFilterItem)
+        {
+            return (queryFilterItem == null || queryFilterItem.QueryFilterItems == null || queryFilterItem.QueryFilterItems.Count() == 0);
+
+        }
     }
 }

@@ -62,14 +62,9 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
         public string ParentEntityId { get; set; }
 
-        public string ParentObjectTableId { get; set; }
+        public string ParentObjectTableName { get; set; }
 
         public bool DontApplyVirtualization { get; set; }
-
-        public string TreeFilter { get; set; }
-        public string ParentEntityId { get; set; }
-
-        public string ParentObjectTableName { get; set; }
 
         public bool GetAll { get; set; }
     }

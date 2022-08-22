@@ -22,11 +22,14 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
             QueryFilterItem = queryFilterItem;
             if (!queryFilterItem.IsCustomField) SetLeftRightExpressions();
             else SetCustomFieldLeftRightExpressions();
+
+
             return CreateExpression();
         }
 
         private void SetLeftRightExpressions()
         {
+           
             LeftExpression = System.Linq.Expressions.Expression.Property(Expression, WhereExpression.GetDeclaringProperty(Expression, QueryFilterItem.FieldName));
             RightExpression = GetRightExpression();
 
@@ -176,13 +179,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
             return System.Linq.Expressions.Expression.And(isNullExpression, isEmptyExpression);
         }
     }
-    public class PartnerEntityExpression : OperatorExpression
-    {
-        public override System.Linq.Expressions.Expression  CreateExpression()
-        {
-            return QueryFilterItem.FieldValue.ToString() == "true" ? System.Linq.Expressions.Expression.Equal(Expression, Expression) : System.Linq.Expressions.Expression.NotEqual(Expression, Expression);
-        }
-    }
+
 
     public class StartsWith : OperatorExpression
     {

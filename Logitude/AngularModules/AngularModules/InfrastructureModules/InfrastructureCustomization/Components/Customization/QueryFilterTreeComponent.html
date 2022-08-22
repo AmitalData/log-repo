@@ -172,7 +172,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <QueryFilterTree [DataSource]="item.AdditionalFilters" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
+                                    <QueryFilterTree [DataSource]="item.QueryFilterItems" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
                                     <div *ngIf="DataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
                                         <table>
                                             <tr>
@@ -196,7 +196,7 @@
                                     </div>
                                     <div class="Filters">
                                         <div class="FilterItem">
-                                            <QueryFilterTree [DataSource]="item.AdditionalFilters" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
+                                            <QueryFilterTree [DataSource]="item.QueryFilterItems" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
                                             <div *ngIf="DataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
                                                 <table>
                                                     <tr>

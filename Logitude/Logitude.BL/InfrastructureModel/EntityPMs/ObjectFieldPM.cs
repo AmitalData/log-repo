@@ -161,5 +161,11 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string DefaultAdditionalFilters { get; set; }
         public QueryFilterItem DefaultAdditionalTreeFilters { get; set; }
 
+        public bool ForMetaDataOnly { get; set; }
+
+        public bool IsListFilter { get; set; }
+
+
+
     }
 }

@@ -20,7 +20,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Iterator
 
         private void BuildCollection(QueryFilterItem queryFilterItem)
         {
-            if (queryFilterItem.QueryFilterItems == null)
+            if (queryFilterItem.QueryFilterItems == null || queryFilterItem.QueryFilterItems.Count() == 0)
             {
                 QueryFilterItems.Add(queryFilterItem);
                 return;

@@ -119,7 +119,9 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
                 case "LessThan": return new LessThan().CreateExpression(expression, item);
                 case "LessThanOrEqual": return new LessThanOrEqual().CreateExpression(expression, item);
                 case "GreaterThanOrEqual": return new GreaterThanOrEqual().CreateExpression(expression, item);
-                case "LargerThan": return new GreaterThan().CreateExpression(expression, item);
+                case "LargerThan":
+                case "GreaterThan":
+                return new GreaterThan().CreateExpression(expression, item);
                 case "Contains": return new Contains().CreateExpression(expression, item);
                 case "NotContains": return new NotContains().CreateExpression(expression, item);
                 case "Equal": return new Equal().CreateExpression(expression, item);

@@ -43,18 +43,18 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     }
 
     RestoreFilters(BaseFilter: QueryFilterViewItem, MyFilter: QueryFilterViewItem) {
-        BaseFilter.AdditionalFilters?.forEach((field) => {
-            if (field.AdditionalFilters.length == 0) {
+        BaseFilter.QueryFilterItems?.forEach((field) => {
+            if (field.QueryFilterItems.length == 0) {
                 let groupTreeFilter = new QueryFilterViewItem(field, this);
-                MyFilter.AdditionalFilters.push(groupTreeFilter);
+                MyFilter.QueryFilterItems.push(groupTreeFilter);
             }
             else {
                 var DWObjectField = new QueryFilterViewItem(null, this);
                 DWObjectField.IsGroup = true;
-                DWObjectField.IndexOrder = MyFilter.AdditionalFilters.length;
+                DWObjectField.IndexOrder = MyFilter.QueryFilterItems.length;
                 DWObjectField.setAndOrOperation(field.AndOr);
                 this.RestoreFilters(field, DWObjectField);
-                MyFilter.AdditionalFilters.push(DWObjectField);
+                MyFilter.QueryFilterItems.push(DWObjectField);
             }
         });
 
@@ -90,9 +90,9 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     AddFilterToGroup(item: QueryFilterViewItem) {
         var newTreeFilter = new QueryFilterViewItem(null, item.MyParentClass);
         newTreeFilter.IndexOrder = this.DataSource.length;
-        var tempData = item.AdditionalFilters;
+        var tempData = item.QueryFilterItems;
         tempData.push(newTreeFilter);
-        item.AdditionalFilters = tempData;
+        item.QueryFilterItems = tempData;
     }
 
     AddGroup(item: QueryFilterViewItem) {
@@ -100,11 +100,11 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         newGroupTreeFilter.IsGroup = true;
         newGroupTreeFilter.IndexOrder = this.DataSource.length;
         var DWInnerObjectField = new QueryFilterViewItem(null, this.DataSource[0].MyParentClass);
-        DWInnerObjectField.IndexOrder = newGroupTreeFilter.AdditionalFilters.length;
-        newGroupTreeFilter.AdditionalFilters.push(DWInnerObjectField);
-        var tempData = item.AdditionalFilters;
+        DWInnerObjectField.IndexOrder = newGroupTreeFilter.QueryFilterItems.length;
+        newGroupTreeFilter.QueryFilterItems.push(DWInnerObjectField);
+        var tempData = item.QueryFilterItems;
         tempData.push(newGroupTreeFilter);
-        item.AdditionalFilters = tempData;
+        item.QueryFilterItems = tempData;
     }
 
     DeleteFilter(Item: QueryFilterViewItem, ListItems: QueryFilterViewItem[]) {
@@ -115,9 +115,9 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     }
 
     private DeleteSpecificFilter(Myfilter: QueryFilterViewItem, Item: QueryFilterViewItem, ListItems: QueryFilterViewItem[]) {
-        if (Myfilter.AdditionalFilters.length > 0) {
-            Myfilter.AdditionalFilters = this.DeleteFilter(Item, Myfilter.AdditionalFilters);
-            if (Myfilter.AdditionalFilters.length == 0) {
+        if (Myfilter.QueryFilterItems.length > 0) {
+            Myfilter.QueryFilterItems = this.DeleteFilter(Item, Myfilter.QueryFilterItems);
+            if (Myfilter.QueryFilterItems.length == 0) {
                 ListItems = ListItems.filter(a => a != Myfilter);
             }
         }
@@ -138,7 +138,7 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         let newTreeFilter = new QueryFilterViewItem(null, this);
         newTreeFilter.IsGroup = true;
         newTreeFilter.IndexOrder = this.DataSource.length;
-        newTreeFilter.AdditionalFilters.push(emptyTreeFilter);
+        newTreeFilter.QueryFilterItems.push(emptyTreeFilter);
         this.DataSource.push(newTreeFilter);
     }
 }

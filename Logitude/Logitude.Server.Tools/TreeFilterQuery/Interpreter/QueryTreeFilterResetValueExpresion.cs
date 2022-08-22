@@ -22,6 +22,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             this.queryTreeFilterContext = queryTreeFilterContext;
+
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
             mainObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(queryTreeFilterContext.ObjectTableName, queryTreeFilterContext.Tenant);
             if (iterator.collection.Where(d => d.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName).Any())

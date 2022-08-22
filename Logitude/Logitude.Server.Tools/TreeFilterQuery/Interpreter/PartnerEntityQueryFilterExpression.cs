@@ -2,6 +2,7 @@
 using Logitude.Server.Tools.TreeFilterQuery.Iterator;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,25 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             this.queryTreeFilterContext = queryTreeFilterContext;
-            if (queryTreeFilterContext.ParentEntity == null) return;
             QueryTreeFilterIterator queryTreeFilterIterator = CreateIterator();
             if (!queryTreeFilterIterator.Any()) return;
+            queryTreeFilterContext.ParentEntity = GetParentEntity();
+            if (queryTreeFilterContext.ParentEntity == null) return;
             while (queryTreeFilterIterator.HasNext())
             {
                 Handel(queryTreeFilterIterator.Next());
             }
         }
+
+
+
+        private object GetParentEntity()
+        {
+            if (queryTreeFilterContext.ParentEntity != null) return queryTreeFilterContext.ParentEntity;
+            if (string.IsNullOrEmpty(queryTreeFilterContext.ParentObjectTableName) || string.IsNullOrEmpty(queryTreeFilterContext.ParentEntityId)) return null;
+            return InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(queryTreeFilterContext.ParentObjectTableName, queryTreeFilterContext.ParentEntityId, queryTreeFilterContext.Tenant);
+        }
+
 
         private void Handel(QueryFilterItem queryFilterItem)
         {
@@ -41,12 +53,13 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool Validation(QueryFilterItem queryFilterItem)
         {
-            switch (queryFilterItem.FilterType.Replace("Field", ""))
+            switch (queryFilterItem.Operator.Replace("Field", ""))
             {
                 case "LessThan": return AssertLessThan(queryFilterItem);
                 case "LessThanOrEqual": return AssertLessThanOrEqual(queryFilterItem);
                 case "GreaterThanOrEqual": return AssertGreaterOrEqual(queryFilterItem);
-                case "LargerThan": return AssertLargerThan(queryFilterItem);
+                case "LargerThan": 
+                case "GreaterThan": return AssertLargerThan(queryFilterItem);
                 case "Contains": return AssertContains(queryFilterItem);
                 case "NotContains": return AssertNotContains(queryFilterItem);
                 case "Equal": return AssertEqual(queryFilterItem);
@@ -82,14 +95,14 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertNotContains(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             return !((string)fieldValue).Contains(value) ? true : false;
         }
 
         private bool AssertEndsWith(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             return ((string)fieldValue).EndsWith(value) ? true : false;
         }
@@ -97,7 +110,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertStartsWith(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
 
             return ((string)fieldValue).StartsWith(value) ? true : false;
@@ -105,7 +118,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertLargerThan(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             IComparable comparable = (IComparable)fieldValue;
             return comparable.CompareTo(value) == 1 ? true : false;
@@ -113,7 +126,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertGreaterOrEqual(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             IComparable comparable = (IComparable)fieldValue;
             return (comparable.CompareTo(value) == 1 || comparable.CompareTo(value) == 0) ? true : false;
@@ -121,7 +134,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertLessThanOrEqual(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             IComparable comparable = (IComparable)fieldValue;
             return (comparable.CompareTo(value) == -1 || comparable.CompareTo(value) == 0) ? true : false;
@@ -129,7 +142,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertLessThan(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             IComparable comparable = (IComparable)fieldValue;
             return comparable.CompareTo(value) == -1 ? true : false;
@@ -137,21 +150,31 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private bool AssertNotEquals(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var value = GetEntityFieldValue(queryFilterItem) ;
             return value != fieldValue ? true : false;
         }
 
         private bool AssertEqual(QueryFilterItem queryFilterItem)
         {
-            var fieldValue = queryFilterItem.FieldValue as string ;
-            var value = GetEntityFieldValue(queryFilterItem) ;
+            var fieldValue = GetQueryFilterItemFieldValue(queryFilterItem);
+            var value = GetEntityFieldValue(queryFilterItem);
             var result = value == fieldValue ? true : false;
             return result;
         }
 
+        private static string GetQueryFilterItemFieldValue(QueryFilterItem queryFilterItem)
+        {
 
+            var fieldValue = queryFilterItem.FieldValue != null && string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : "";
 
+            if (queryFilterItem.FieldDataType == "DateTime" || queryFilterItem.FieldDataType == "Date" && fieldValue != null && !string.IsNullOrEmpty(fieldValue.ToString()) && fieldValue.ToString().Length >= 9)
+            {
+                return queryFilterItem.FieldValue.ToString().Remove(8);
+            }
+
+            return fieldValue;
+        }
 
         private QueryTreeFilterIterator CreateIterator()
         {
@@ -168,9 +191,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             if (string.IsNullOrEmpty(field)) return null;
             var fieldNames = field.ToString().Split('.');
             if (fieldNames.Length == 0) return null;
-            if (fieldNames.Length > 2) return fieldNames[2];
-            if (fieldNames.Length > 1) return fieldNames[1];
-            return fieldNames[0];
+            return fieldNames[fieldNames.Length-1];
 
 
         }
@@ -180,15 +201,21 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
        
         private string GetEntityFieldValue(QueryFilterItem queryFilterItem)
         {
+            if (queryTreeFilterContext.ParentEntity == null) return "";
             Object value = null;
-            ObjectField objectField = new ObjectField() { DataTypeCode = queryFilterItem.FieldDataType , FieldName = queryFilterItem .FieldName};
+            ObjectField objectField = new ObjectField() { DataTypeCode = queryFilterItem.FieldDataType , FieldName =GetFieldName( queryFilterItem.FieldName)};
             PropertyInfo propertyInfo = GetProperty(queryTreeFilterContext.ParentEntity, objectField.FieldName);
-            if (propertyInfo == null) return null;
+            if (propertyInfo == null) return "";
             value = propertyInfo.GetValue(queryTreeFilterContext.ParentEntity, null);
-            if(value == null ) return null;
+            if(value == null ) return "";
             if (value.GetType() == typeof(CustomFieldClass)) value = (value as CustomFieldClass).Value;
             else value = FieldValueResolver.GetFieldStringValue(objectField, value);
-            return value != null ? value.ToString() : null;
+            if (queryFilterItem.FieldDataType == "DateTime" || queryFilterItem.FieldDataType == "Date" && value !=null && !string.IsNullOrEmpty(value.ToString()) && value.ToString().Length >=9 )
+            {
+                return value.ToString().Remove(8);
+            }
+
+            return value != null ? value.ToString() : "";
 
         }
 
