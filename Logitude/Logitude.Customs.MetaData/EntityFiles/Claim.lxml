@@ -4603,43 +4603,37 @@
     FeatureTextCodeCode="&quot;Claim.Features.OpenClaimFiles&quot;"
     FeatureDefaultText="&quot;Open Claim Files&quot;"
     IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;TapagNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;ClaimAmount&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;FollowDate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;SubmitDate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;CustomsFiles&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;Open Claim Files&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
-    </QueryColumns>
+      <QueryColumns>
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="0"
+                       ObjectFieldName="&quot;TapagNumber&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="1"
+                       ObjectFieldName="&quot;CustomerName&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="2"
+                       ObjectFieldName="&quot;FollowDate&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="3"
+                       ObjectFieldName="&quot;SubmitDate&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="4"
+                       ObjectFieldName="&quot;CustomsFiles&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="5"
+                       ObjectFieldName="&quot;IsClosed&quot;"
+                       ColumnWidth="100" />
+          <QueryColumn QueryCode="&quot;Open Claim Files&quot;"
+                       IndexOrder="6"
+                       ObjectFieldName="&quot;ClaimAmount&quot;"
+                       ColumnWidth="100" />
+
+      </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Open Claim Files&quot;"
