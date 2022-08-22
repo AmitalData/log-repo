@@ -54,10 +54,21 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "RemoveWarehouseShipments")
                     {
-                        SpecialServicesRepository specialServicesRepository = new SpecialServicesRepository(tenant);
-                        SpecialService warehousingFirst = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS", "", tenant);
-                        SpecialService WarehousingSecond = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS-2", "", tenant);
-                        queryableData = queryableData.Where(d => (d.SpecialServicesTypeId != warehousingFirst.Id && d.SpecialServicesTypeId != WarehousingSecond.Id));
+                        SpecialServicesTypeRepository specialServicesRepository = new SpecialServicesTypeRepository(tenant);
+                        SpecialServicesType warehousingFirst = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS", tenant);
+                        SpecialServicesType WarehousingSecond = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS-2", tenant);
+
+                        if (warehousingFirst != null)
+                        {
+                            queryableData = queryableData.Where(d => (d.SpecialServicesTypeId != warehousingFirst.Id));
+
+                        }
+
+                        if (WarehousingSecond != null)
+                        {
+                            queryableData = queryableData.Where(d => (d.SpecialServicesTypeId != WarehousingSecond.Id));
+
+                        }
                     }
 
                     if (item.FieldName == "ActualDataDateYearMonth")

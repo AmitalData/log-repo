@@ -15172,10 +15172,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private Tuple<string, string> GetWarehouseIdsToBeExcluded(int tenant)
         {
-            SpecialServicesRepository specialServicesRepository = new SpecialServicesRepository(tenant);
-            SpecialService warehousingFirst = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS", "", tenant);
-            SpecialService WarehousingSecond = (SpecialService)specialServicesRepository.GetSpecialServicesByCodeOrName("WHS-2", "", tenant);
-            return Tuple.Create(warehousingFirst.Id, WarehousingSecond.Id);
+            SpecialServicesTypeRepository specialServicesRepository = new SpecialServicesTypeRepository(tenant);
+            SpecialServicesType warehousingFirst = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS", tenant);
+            SpecialServicesType WarehousingSecond = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS-2", tenant);
+            return Tuple.Create(warehousingFirst != null ? warehousingFirst.Id : "", WarehousingSecond != null ? WarehousingSecond.Id : "");
         }
 
         private Tuple<int, int> GetActiveShipmentsCount(int tenant, string CustomerId, string warehousingFirstId, string warehousingSecondId)
@@ -15183,9 +15183,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var shipmentsFilteredByCustomerId = repository.context.Shipments.Where(shipment => shipment.CustomerId == CustomerId &&
                                                                                                shipment.IsCancelled == false &&
                                                                                                shipment.IsStandalonePickupDelivery == false &&
-                                                                                               (shipment.SpecialServicesTypeId != warehousingFirstId && shipment.SpecialServicesTypeId != warehousingSecondId) &&
                                                                                                shipment.Tenant == tenant)
                                                                             .AsQueryable();
+
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                shipmentsFilteredByCustomerId = shipmentsFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                shipmentsFilteredByCustomerId = shipmentsFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
+
             var activeShipments = shipmentsFilteredByCustomerId.Where(shipment => shipment.IsOperationalClosed == false).AsQueryable();
 
             int allShipmentsCount = shipmentsFilteredByCustomerId.Count();
@@ -15217,6 +15227,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                                            shipment.SpecialServicesTypeId != warehousingFirstId &&
                                                                                                                            shipment.SpecialServicesTypeId != warehousingSecondId)
                                                                                                         .AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
+
             return activeShipmentsDataViewFilteredByCustomerId;
         }
     }
