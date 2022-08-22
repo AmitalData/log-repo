@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
@@ -169,7 +171,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -198,7 +200,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -210,6 +212,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "DWObjectField", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
 
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
@@ -219,15 +222,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(dWObjectFieldRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<DWObjectField>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<DWObjectFieldList> entityLists = dWObjectFieldQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<DWObjectFieldList>(listQueryOperation, entityLists);
+                entityLists = treeFilterQueryService.Apply<DWObjectFieldList>(entityLists);
 
 		      
 			  								

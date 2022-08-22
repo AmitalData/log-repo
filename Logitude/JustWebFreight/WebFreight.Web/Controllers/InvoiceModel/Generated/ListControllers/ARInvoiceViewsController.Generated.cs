@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel;
@@ -187,7 +189,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -216,7 +218,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -229,6 +231,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 ARInvoiceAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "ARInvoice", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
@@ -244,9 +247,9 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				                
 				ARInvoiceCustomFilter customfilters = new ARInvoiceCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -257,6 +260,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<ARInvoiceList> entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, entityLists);
+                entityLists = treeFilterQueryService.Apply<ARInvoiceList>(entityLists);
 
 		      
 			  								
