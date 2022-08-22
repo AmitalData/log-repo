@@ -264,10 +264,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var entityStatusQuery = new EntityStatusQuery(tenant);
 
                 var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-
+          
                 foreach (var item in digitalPortalActiveStatuses.Where(c => c.Code == "SDLY"))
                 {
                     item.DisplayName = "Out for Delivery";
+                }
+
+                foreach (var item in digitalPortalActiveStatuses.Where(c => c.Code == "SHOR"))
+                {
+                    item.DisplayName = "Created";
                 }
 
                 return Ok(digitalPortalActiveStatuses);
