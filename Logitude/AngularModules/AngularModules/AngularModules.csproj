@@ -308,6 +308,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditDashboardComponent.html" />
+    <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
     <Content Include="Images\Icons\multi-print.png" />
     <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
@@ -1767,6 +1768,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />

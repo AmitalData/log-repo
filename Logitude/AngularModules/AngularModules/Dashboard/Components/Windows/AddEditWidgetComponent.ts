@@ -21,6 +21,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Widget";
+    public ChartImageSrc: string;
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -30,6 +31,36 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.EntityPM = windowArgs['EntityPM'];
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
+        this.ComputeChartImageSrc();
+    }
+
+    private ComputeChartImageSrc() {
+        switch (this.EntityPM.TypeCode) {
+            case "Pie": {
+                this.ChartImageSrc = "./Images/PieChart.png";
+                break;
+            }
+
+            case "Bar": {
+                this.ChartImageSrc = "./Images/BarChart.png";
+                break;
+            }
+
+            case "Are": {
+                this.ChartImageSrc = "./Images/AreaChart.png";
+                break;
+            }
+
+            case "Don": {
+                this.ChartImageSrc = "./Images/DonutChart.png";
+                break;
+            }
+
+            case "Co": {
+                this.ChartImageSrc = "";
+                break;
+            }
+        }
     }
 
     get Title() { return this.EntityPM.Title }

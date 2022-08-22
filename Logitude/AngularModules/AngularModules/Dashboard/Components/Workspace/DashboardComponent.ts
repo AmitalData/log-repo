@@ -28,8 +28,10 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject } from 'rxjs';
-
-
+import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
+import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
+import { DashboardPMExtendedService } from '../../Services/DashboardPMExtendedService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
@@ -93,8 +95,25 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     ngOnInit() {
         this.showNewDashboardToggle = true;
         this.FillScreen();
+        this.GetDashboards();
         
     }
+
+    public AllDashboards: DashboardPM[] = [];
+    private GetDashboards() {
+        var dashboardPMService: DashboardPMExtendedService = new DashboardPMExtendedService();
+        dashboardPMService.GetDashboardPMs().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllDashboards = myResponse.Result;
+            }
+
+            this.dashboardDataBinding.onGetAllDashboard.next(this.AllDashboards);
+            if (this.AllDashboards) {
+                this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(this.AllDashboards[0]));
+            }
+        });
+    }
+
     showClassicDashboard(){
         this.showNewDashboardToggle = false;
     }
@@ -107,14 +126,14 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             tenant: SessionInfo.LoggedUserTenant,
             userId: SessionInfo.LoggedUserId,
             dataBinding: this.dashboardDataBinding,
-            openAddEditWidget: this.OpenDashboardWidgetWindow,
+            openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
             openAddEditDashboard: this.OpenDashboardWindow.bind(this),
             onChangeDashboard: this.OnChangeDashboard,
             onSaveDashboard: this.OnSaveDashboard,
         }),
             this.reactDashboradContainer.nativeElement, callBack);
     }
-    private OpenDashboardWindow(dashboard: any) {
+    private OpenDashboardWindow(dashboard: ReactDashboardPM) {
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
             var myDashboard: DashboardPM = this.GetDashboardEntity(dashboard);
             var logitudeWindow = new LogitudeWindow();
@@ -146,7 +165,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
 
         return myDashboard;
     }
-    GetDashboardEntity(dashboard: any): DashboardPM {
+    GetDashboardEntity(dashboard: ReactDashboardPM): DashboardPM {
         var myDashboard: DashboardPM = new DashboardPM();
         
         if (dashboard) {
@@ -162,10 +181,55 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
 
         return myDashboard;
     }
-    private OpenDashboardWidgetWindow(dashboard: any) {
-        console.log("OpenDashboardWidgetWindow", dashboard);
-
+    private OpenDashboardWidgetWindow(widget: ReactWidgetPM) {
+        this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res1: any) => {
+            var myWidget: WidgetPM = this.GetWidgetEntity(widget);
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
+            logitudeWindow.WindowArgs = { EntityPM: myWidget, };
+            logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+            logitudeWindow.ComponentLoaded.subscribe(comp => {
+                logitudeWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        //this.dashboardDataBinding.onGetDashboard.next(this.GetReactWidget(myWidget));
+                    }
+                });
+            });
+        });
     }
+    GetWidgetEntity(widget: ReactWidgetPM): WidgetPM {
+        var myWidget: WidgetPM = new WidgetPM(null);
+
+        if (widget) {
+            myWidget.Id = widget.Id;
+            myWidget.Tenant = widget.Tenant;
+            myWidget.Title = widget.Title;
+            myWidget.GroupBy = widget.GroupBy;
+            myWidget.DashboardId = widget.DashboardId;
+            myWidget.StartPotistion = widget.StartPotistion;
+            myWidget.EndPosition = widget.EndPosition;
+            myWidget.TypeCode = widget.TypeCode;
+        }
+
+        return myWidget;
+    }
+    GetReactWidget(widget: WidgetPM): ReactWidgetPM {
+        var myWidget: ReactWidgetPM = {} as ReactWidgetPM;
+
+        if (widget) {
+            myWidget.Id = widget.Id;
+            myWidget.Tenant = widget.Tenant;
+            myWidget.Title = widget.Title;
+            myWidget.GroupBy = widget.GroupBy;
+            myWidget.DashboardId = widget.DashboardId;
+            myWidget.StartPotistion = widget.StartPotistion;
+            myWidget.EndPosition = widget.EndPosition;
+            myWidget.TypeCode = widget.TypeCode;
+        }
+
+        return myWidget;
+    }
+
     private OnChangeDashboard(dashboard: any) {
         console.log("OnChangeDashboard", dashboard);
 
