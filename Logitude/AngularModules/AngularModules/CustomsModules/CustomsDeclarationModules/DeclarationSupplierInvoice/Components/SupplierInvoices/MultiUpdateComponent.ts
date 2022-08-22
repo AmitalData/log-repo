@@ -10,6 +10,8 @@ import { ConfirmWindow } from "../../../../../Controls/Windows/ConfirmWindow";
 import { SendMultiUpdateRequestParams } from "../../../../../Customs/DataContract/RequestParams/SendMultiUpdateRequestParams";
 import { SupplierInvoiceService } from "../../../../../Customs/Services/Others/SupplierInvoiceService";
 import { MessageWindow } from "../../../../../Controls/Windows/MessageWindow";
+import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 
 @Component({
 
@@ -24,6 +26,8 @@ export class MultiUpdateComponent extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     _SupplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
+    taxExemptCodeTypesFilter: ApiQueryFilters = null;
+
     constructor(private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType").subscribe((response: any) => {
@@ -42,6 +46,7 @@ export class MultiUpdateComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
+        this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(this.CurrentSession.CurrentEditComponent.EntityPM.Direction === 'E');
     }
 
     customsItem: string;

@@ -30,6 +30,7 @@ import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/Object
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 
 
 @Component({
@@ -54,6 +55,8 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     allowExport: boolean = false;
+    taxExemptCodeTypesFilter: ApiQueryFilters;
+
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -87,12 +90,12 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
-
+            
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
             this.FillGridsData(); // copy  grids data from entity PM to ItemSource arrays
-
+            this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
 
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();

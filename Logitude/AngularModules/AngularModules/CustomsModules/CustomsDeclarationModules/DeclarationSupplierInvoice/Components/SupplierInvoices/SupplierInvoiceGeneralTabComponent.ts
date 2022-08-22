@@ -3376,7 +3376,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             else {
                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
-                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
+                this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
 
 
@@ -3670,14 +3670,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         this.ClassificationCode = newValue;
         classificationTextBox.TextValue = newValue;
-
-        if(this.valid && this.Parent.declarationPM.Direction == "E") {
-            this.valid = await new customsItemsService().checkClassificationCodeIsImport(this.ClassificationCode)
-            if(!this.valid) 
-                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, 
-                TextCodeTranslator.Translate("Customs.Declaration.O.ClassificationCodeIsNotExistInImport") ? TextCodeTranslator.Translate("Customs.Declaration.O.ClassificationCodeIsNotExistInImport") : 'קוד פרט מכס לא קיים ביבוא'
-                );            
-        }
 
         if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;

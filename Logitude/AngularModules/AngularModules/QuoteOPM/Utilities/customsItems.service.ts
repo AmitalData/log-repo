@@ -6,19 +6,27 @@ import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/componen
 
 @Injectable()
 export class customsItemsService {
-    public async checkClassificationCodeIsImport(classificationCode: string ): Promise<boolean> {
+    public async checkClassificationCode(classificationCode: string, isExport: boolean): Promise<boolean> {
         const classificationCodeWithoutLastNumber: string = classificationCode.substring(0, classificationCode.length - 1);
         
-        const apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.PageIndex = 0;
-        apiQueryFilters.PageSize = 50;
+        const apiQueryFilters: ApiQueryFilters = customsItemsService.initTaxExemptCodeTypesFilter(isExport);
         apiQueryFilters.addAdditionalFilter("FullClassification", classificationCodeWithoutLastNumber , null, null, "Contains", false, false, false, "string");
 
         const customsItemList: CustomsItemList[] = await LogtuideTableDataService.createInstance().getDataFromService(
             new CustomsItemListService().getByFilters(apiQueryFilters)
         ) as CustomsItemList[];
 
-        return customsItemList.some(x=> x.CustomsBookTypeID == 2 || x.CustomsBookTypeID == 3);
+        return !!customsItemList.length;
     }
 
+    static initTaxExemptCodeTypesFilter(isExport: boolean): ApiQueryFilters {
+        const taxExemptCodeTypesFilter = new ApiQueryFilters();
+        taxExemptCodeTypesFilter.GetAll = true; 
+        taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")
+        
+        if(!isExport)
+            taxExemptCodeTypesFilter.addAdditionalFilter("CustomsItemCategoryID", '2', '3', null, 'Equals', false, false, false, "string")
+
+        return taxExemptCodeTypesFilter;
+    }
 }
