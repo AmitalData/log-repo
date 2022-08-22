@@ -620,9 +620,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void HandleObjectFieldValue(QueryFilterItem queryFilterItem)
         {
             queryFilterItem.FieldValue = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : queryFilterItem.FieldValue;
-            if (queryFilterItem.AdditionalFilters == null) return;
+            if (queryFilterItem.QueryFilterItems == null) return;
  
-                queryFilterItem.AdditionalFilters.ForEach(queryFilter => {
+                queryFilterItem.QueryFilterItems.ForEach(queryFilter => {
                     HandleObjectFieldValue(queryFilter);
             });
         }
