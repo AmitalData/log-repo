@@ -763,7 +763,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             var address = partnerAddress.City;
-            if (!string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
+            if (!string.IsNullOrEmpty(partnerAddress.Country?.Code))
             {
                 address = address + "," + partnerAddress.Country?.Code;
             }
@@ -1316,9 +1316,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             var country = partnerAddress.City;
-            if (string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
+            if (string.IsNullOrEmpty(partnerAddress.Country?.Code))
             {
-                country = partnerAddress.Country?.EnglishName;
+                country = partnerAddress.Country?.Code;
             }
 
             return country;
