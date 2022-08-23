@@ -55,6 +55,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         public virtual WorkFlowStatus Status { get; set; }
         [Column("FlowJson")]
 	    public string FlowJson { get; set; }
+        [Column("Entity")]
+	    public string Entity { get; set; }
     }
 }
 	 

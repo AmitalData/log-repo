@@ -138,8 +138,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let propertiesComponentPath = "./Workflow/Components/Properties/";
         switch (nodeType) {
             case "startNode":
-                return null;
-            //return (propertiesComponentPath + "StartPropertiesComponent");
+                return (propertiesComponentPath + "StartPropertiesComponent");
             case "conditionNode":
                 return (propertiesComponentPath + "ConditionPropertiesComponent");
             case "loopNode":
@@ -156,8 +155,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let propertiesWindowArgs: any = {
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData))
         };
-        propertiesWindow.Width = 800;
-        propertiesWindow.Height = 420;
+        propertiesWindow.Width = 850;
+        propertiesWindow.Height = 750;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
@@ -238,6 +237,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     saveWorkflow(backAfterSave: boolean = false) {
         let flowObject = this.ReactFlowInstance ? this.ReactFlowInstance.toObject() : null;
         if (flowObject) {
+            let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
+            this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
             this.EntityPM.FlowJson = JSON.stringify(flowObject);
             this.startBusyIndicator("Saving ...");
             this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => { this.handleUpdateWorkflowResponse(serviceResponse, backAfterSave); });

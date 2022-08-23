@@ -46,6 +46,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string FlowJson  { get; set; }
+       [DataMember]
+       public string Entity  { get; set; }
    }
 
 }
