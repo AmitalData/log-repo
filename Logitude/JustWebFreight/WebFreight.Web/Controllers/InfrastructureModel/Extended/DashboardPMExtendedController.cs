@@ -28,7 +28,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 SecurityUtility.CheckContactFeature("Dashboard", "READ", tenant);
 
                 DashboardQueryService dashboardQueryService = new DashboardQueryService(tenant);
-                IQueryable<DashboardPM> myResult = dashboardQueryService.GetDashboardPMs(tenant);
+                List<DashboardPM> myResult = dashboardQueryService.GetDashboardPMs(tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

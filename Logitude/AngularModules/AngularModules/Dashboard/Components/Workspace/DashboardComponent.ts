@@ -150,7 +150,8 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             logitudeWindow.ComponentLoaded.subscribe(comp => {
                 logitudeWindow.WindowClosed.subscribe(s => {
                     if (s) {
-                        this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(myDashboard));
+                        this.GetDashboards();
+                        //this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(myDashboard));
                     }
                 });
             });
@@ -264,6 +265,10 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         });
     }
 
+    GetDashboard() {
+
+    }
+    
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
             this.ActivityStatusPage.destroy();

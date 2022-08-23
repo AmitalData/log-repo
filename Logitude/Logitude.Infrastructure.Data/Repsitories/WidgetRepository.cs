@@ -21,7 +21,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<Widget> GetWidgetsByDashboardId(string dashboardId, int tenant)
+        {
+            return (from a in context.Widgets where a.Tenant == tenant && a.DashboardId == dashboardId select a).ToList();
+        }
+    }
 
 }
    

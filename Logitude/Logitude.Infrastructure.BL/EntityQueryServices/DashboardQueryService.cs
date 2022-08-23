@@ -21,9 +21,10 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             entityPM.Widgets = widgetQueryService.GetMulti(dashboardKeys, true);
         }
 
-        public IQueryable<DashboardPM> GetDashboardPMs(int tenant)
+        public List<DashboardPM> GetDashboardPMs(int tenant)
         {
-            IQueryable<DashboardPM> query = (from a in context.Dashboards
+            WidgetQueryService widgetQueryService = new WidgetQueryService(tenant);
+            List<DashboardPM> query = (from a in context.Dashboards
                                              where a.Tenant == tenant
                                              select new DashboardPM()
                                              {
@@ -35,7 +36,14 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                  UpdatedByUserId = a.UpdatedByUserId,
                                                  SearchFields = a.SearchFields,
                                                  Name = a.Name,
-                                             });
+                                             }).ToList();
+
+
+            foreach(DashboardPM item in query)
+            {
+                item.Widgets = widgetQueryService.GetWidgetsByDashboardId(item.Id, tenant);
+            }
+
             return query;
         }
     }

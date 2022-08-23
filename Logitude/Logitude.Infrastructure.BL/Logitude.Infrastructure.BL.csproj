@@ -163,6 +163,7 @@
     <Compile Include="EntityQueryServices\BIReportFolderQueryService.cs" />
     <Compile Include="EntityQueryServices\SharedLogisticsSettingQueryService.cs" />
     <Compile Include="EntityQueryServices\TeamQueryService.cs" />
+    <Compile Include="EntityQueryServices\WidgetQueryService.cs" />
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DashboardUpdateService.cs" />
