@@ -4032,7 +4032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CreatedReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CreatedReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.CreatedReleases", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CreatedReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.CreatedReleases", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4063,7 +4063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ReleasedQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ReleasedQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.ReleasedReleases", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ReleasedQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.ReleasedReleases", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4094,7 +4094,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CancelledReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.StatusCode", PredefinedValue = "CARE",PredefinedValue2 = null, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.StatusCode", PredefinedValue = "CARE",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
