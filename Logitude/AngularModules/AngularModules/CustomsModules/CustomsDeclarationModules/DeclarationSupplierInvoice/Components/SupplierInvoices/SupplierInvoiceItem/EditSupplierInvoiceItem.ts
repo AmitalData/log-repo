@@ -54,6 +54,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     allowExport: boolean = false;
+    public InvoiceNumberText: string = "Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber";
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -81,10 +82,11 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         this.IdentificationsList = new ObservableCollection([]);
         this.LevyList = new ObservableCollection([]);
     }
-    SetWindowArgs(args: any) {
+    SetWindowArgs(args: any) {       
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsDisplayOnly = args.IsDisplayOnly;
             this.allowExport = args.allowExport;
+            this.allowExport ? this.InvoiceNumberText="Customs.SupplierInvoiceItemsConnectedDeclaration.O.InvoiceSequence": this.InvoiceNumberText;    
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
 
