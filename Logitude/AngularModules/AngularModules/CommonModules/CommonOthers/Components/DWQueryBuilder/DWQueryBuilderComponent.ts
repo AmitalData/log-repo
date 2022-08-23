@@ -22,6 +22,8 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { CustomEntityArgs } from '../../../../Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent';
 import { DWQueryBuilderBaseComponent, ObjectFieldOperator, DWFieldsGroup, MultiSelectedValue, ValueDetails, DWObjectFieldsDetails, DWFactsGroup } from '../../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
 import { forEach } from 'cypress/types/lodash';
+import { SchedulerExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 @Component({
     selector: 'DWQueryBuilder',
     templateUrl: './DWQueryBuilderComponent.html',
@@ -34,6 +36,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWObjectTableListService: DWObjectTableListService;
     public _DWQueryPMService: DWQueryPMService;
+    public schedulerExtendedPMService: SchedulerExtendedPMService;
     public ObsList: any[] = [];
     public ObsListAll: any[] = [];
     public AllFieldsObsList: any[] = [];
@@ -133,6 +136,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
 
     LoadEntityResources() {
@@ -1190,8 +1194,35 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
+        this.CheckIfHasScheduler();
+    }
+
+    CheckIfHasScheduler() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-        this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
+        this.schedulerExtendedPMService.GetIsEntityHasScheduler(this.BIReportId, SessionLocator.Tenant).subscribe((serviceResult: any) => {
+            if (!serviceResult.HasError) {
+                serviceResult.Result ? this.ShowHasSchedulerConfirmationMessage() : this.Saving();
+            }
+        });
+    }
+
+    ShowHasSchedulerConfirmationMessage() {
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Saving Changes";
+        confirmWindow.Show("Updating the Report's columns will update the columns in the defined schedulers accordingly while the filters will not");
+        confirmWindow.YesButtonText = "Save";
+        confirmWindow.NoButtonText = "Cancel";
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.Saving();
+            }
+        });
+    }
+
+    Saving() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
+        this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 var MySubQuery = new DWSubQueryPM();
                 MySubQuery.Tenant = SessionLocator.Tenant;
@@ -1202,9 +1233,9 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 this.QueryData.Columns = this.SelectedFieldsDataSource;
                 this.QueryData.Filters = this.SelectedFiltersDataSource[0];
                 if (AppTool.IsNullOrEmpty(this.ID) || this.IsCopy) {
-                    this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe((myResult:any) => {
+                    this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe((myResult: any) => {
                         this.ID = myResult.Result.Id;
-                        this.QID = myResult.Result.DWQueryId
+                        this.QID = myResult.Result.DWQueryId;
                         this.EditButtonClicked(true);
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -1223,7 +1254,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                         this.messageWindow.Show(this.messageWindow.Message);
                         this.NotExist = true;
                     }
-                    this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe((myResult:any) => {
+                    this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe((myResult: any) => {
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {

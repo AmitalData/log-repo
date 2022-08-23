@@ -101,12 +101,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         else {
             this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy") && !this.IsScheduler;
             this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete") && !this.IsScheduler;
-            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload") && !this.IsScheduler; 
+            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload") && !this.IsScheduler;
             this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.DWQueryData = myResult.Result;
                     if (this.DWQueryData.Filters) {
-                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters, this.SavedFilterItemsData);
+                        this.DWQueryData.Filters = this.IsScheduler && !this.IsNewScheduler ? this.SavedFilterItemsData : this.DWQueryData.Filters;
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                         var temp = [];
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
@@ -158,7 +159,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     SetSavedFilterItemsData(args) {
         this.SavedFilterItemsData = args['SavedFilterItemsData'];
-        this.SavedFilterItemsData?.forEach((filter) => {
+        this.SavedFilterItemsData?.FilterItems?.forEach((filter) => {
             filter.TextValue = AppTool.IsNil(filter.TextValue) ? null : filter.TextValue;
         });
     }
@@ -740,7 +741,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 if ((d != null && d != "cancel")) {
                     this.DWQueryData = s.QueryData;
                     if (this.DWQueryData.Filters) {
-                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters, this.SavedFilterItemsData);
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                         var temp = [];
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
