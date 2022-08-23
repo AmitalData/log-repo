@@ -309,4 +309,8 @@ export class RequestAliases {
     //VAT
     public static readonly PutVATSettings = "PutVATSettings"
 
+    //Workflow
+    public static readonly GetWorkflowViews = 'GetWorkflowViews';
+    public static readonly GetWorkflowFlowBuilder = 'GetWorkflowFlowBuilder';
+
 }
