@@ -404,7 +404,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
     }
 
-    HoverTemplateIndex: number = 6;
+    HoverTemplateIndex: number = 7;
 
     DataSource = {
         pageSize: 20,
@@ -495,7 +495,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     BuildColumns() {
         this.QueryColumns = [];
-        this.HoverTemplateIndex = 6;
+        this.HoverTemplateIndex = 7;
         this.columns = [];
         this.columns.push({
             FieldName: this.SelectedFilter,//"ShipmentNumber",
@@ -550,7 +550,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = this.IsExportActivated ? 6 : 5;
+            this.HoverTemplateIndex = this.IsExportActivated ? 7 : 6;
 
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
@@ -583,7 +583,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 this.QueryColumns.push(this.GetQueryColumn("ComputedStatusDate", 'DateTime', 'Status Date' ));
             }
             else {
-                this.HoverTemplateIndex = this.IsExportActivated ? 6 : 5;
+                this.HoverTemplateIndex = this.IsExportActivated ? 7 : 6;
             }
         }
 
@@ -598,12 +598,22 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //    ServerSideSortable: true
         //});
         this.columns.push({
-            FieldName: 'CustomerReference2',
+            FieldName: 'CustomerReference3',
             DataTypeCode: 'String',
             Display: 'Reference #',
             Styles: { width: '108px' },
             HtmlListComponentName: 'CustomReferenceListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/CustomReferenceListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "CustomerReference3"
+        });
+
+        this.columns.push({
+            FieldName: 'CustomerReference2',
+            DataTypeCode: 'String',
+            Display: 'My Reference',
+            Styles: { width: '108px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "CustomerReference2"

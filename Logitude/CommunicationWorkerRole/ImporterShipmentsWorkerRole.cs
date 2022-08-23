@@ -691,6 +691,9 @@ namespace CommunicationWorkerRole
 
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
+
+                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                        shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
                                                         //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -932,6 +935,9 @@ namespace CommunicationWorkerRole
 
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
+
+                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                        shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
                                                         //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -1199,6 +1205,15 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
+        }
+
+        private string GetFirstReferenceFromUNFSideOnly(string customerReference)
+        {
+            if (!string.IsNullOrEmpty(customerReference))
+            {
+                return customerReference.Split(',')[0];
+            }
+            return customerReference;
         }
 
         private static string GetCardCode(Card card)
