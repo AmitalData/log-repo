@@ -211,6 +211,7 @@
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
+    <Compile Include="Helpers\TreeFilter.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
