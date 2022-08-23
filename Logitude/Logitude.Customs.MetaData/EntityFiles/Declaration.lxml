@@ -1154,7 +1154,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2255,7 +2254,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2337,7 +2335,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2891,7 +2888,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="false"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -4507,7 +4503,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="false"
-
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15302,7 +15297,6 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15837,7 +15831,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15918,7 +15911,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15999,7 +15991,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17543,7 +17534,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -18704,7 +18695,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -18781,7 +18771,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19454,7 +19443,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19527,7 +19515,6 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="true"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19752,7 +19739,6 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19828,7 +19814,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-
     DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
