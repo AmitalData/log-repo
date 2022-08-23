@@ -78,7 +78,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams mySendClosePendingRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, SendClosePendingRequestParams mySendClosePendingRequestParams)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");

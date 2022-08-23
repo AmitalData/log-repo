@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierPendingReasonUpdateClass
    {  		
-		public const string HashString = "c33d42816f58ee9a3e0315604ddc9817";
+		public const string HashString = "f102a53ac96e5fe04359fdc163482bdf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -875,13 +875,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierPendingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
 		   Feature CourierPendingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
 		   Feature CourierPendingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
-		   Feature CourierPendingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.PackageFeature", NameTextCodeDefaultText = "CourierPendingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CourierPendingReasonFeature_PendingRequiresApproval = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingRequiresApproval", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierPendingReason.Features.PendingRequiresApproval", NameTextCodeDefaultText = @"Requires Approval For Pending" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
-
-   
+		   Feature CourierPendingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.PackageFeature", NameTextCodeDefaultText = "CourierPendingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);    
 	    
 		}
 

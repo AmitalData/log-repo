@@ -40,9 +40,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonName, 
 	         PendingRemarks, 
 	         Status, 
-	         Approval, 
-	         CourierPendingRequireApr, 
-	         WasApproved,
+	         Approval,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

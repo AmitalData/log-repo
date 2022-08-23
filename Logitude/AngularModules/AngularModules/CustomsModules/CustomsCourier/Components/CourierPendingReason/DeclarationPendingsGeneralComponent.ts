@@ -16,7 +16,6 @@ import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/D
 import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
-import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     templateUrl: './DeclarationPendingsGeneralComponent.html',
@@ -43,22 +42,17 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     _IsNewPending: boolean = true;
     IsHeaderVisible: boolean = false;
     IsChanged: boolean = false;
-    HasRequiresApprovalFeature:boolean=false;
+
     constructor() {
         super();
         this.DeclarationPendingItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        console.log("....|| DeclarationPendingsGeneralComponent ||...."); 
-        
+        console.log("....|| DeclarationPendingsGeneralComponent ||....");
     }
 
     parent;
 
     SetWindowArgs(args: any) {
-        if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
-            this.HasRequiresApprovalFeature = true;
-        }
-
         if (!AppTool.IsNullOrEmpty(args)) {
             this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPending").subscribe(response => {
                 //this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPending").subscribe(response => {
@@ -245,12 +239,8 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
         var errors: string[] = [];
         this.isValid = true;
         this.inValid = false;
-        this.DeclarationCourierStatus.ApprovedCourierPendingList="";
 
         for (let item of this.DeclarationPendingsList) {
-            if(item.WasApproved == false && item.Approval){
-                this.DeclarationCourierStatus.ApprovedCourierPendingList+=","+item.CourierPendingReasonCode
-            }
 
             if (AppTool.IsNullOrEmpty(item.CourierPendingReasonCode)) {
                 errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonCode")));
@@ -288,7 +278,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
             this.isValid = false;
 
             var confirm = new ConfirmWindow();
-            
+
 
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             //confirm.ShowNoButton = true;
@@ -387,7 +377,7 @@ export class DeclarationPendingLine extends BaseComponent {
     constructor(EntityPM: DeclarationPendingPM, Parent: DeclarationPendingsGeneralComponent) {
         super();
         this.entityPM = EntityPM;
-        this.entityPM.WasApproved=this.entityPM.Approval;
+        
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
         this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
         this.parent = Parent;
@@ -424,28 +414,17 @@ export class DeclarationPendingLine extends BaseComponent {
 
     get CourierPendingReasonName() { return this.entityPM.CourierPendingReasonName; }
     set CourierPendingReasonName(value: string) {
+        DeclarationExtendedListService
         if (this.entityPM.CourierPendingReasonName != value) {
             this.entityPM.CourierPendingReasonName = value;
 
         }
     }
 
-    get CourierPendingRequireApr() { return this.entityPM.CourierPendingRequireApr; }
-    set CourierPendingRequireApr(value: boolean) {
-        if (this.entityPM.CourierPendingRequireApr != value) {
-            this.entityPM.CourierPendingRequireApr = value;
-        }
-    }
-    
-    get WasApproved(){ return this.entityPM.WasApproved}
-    set WasApproved(value: boolean) {
-        if (this.entityPM.WasApproved != value) {
-            this.entityPM.WasApproved = value;
-        }    }
-
     courierPendingReason: CourierPendingReasonPM;
     get CourierPendingReason() { return this.CourierPendingReason; }
     set CourierPendingReason(value: CourierPendingReasonPM) {
+
         if (this.CourierPendingReason != value) {
             this.CourierPendingReason = value;
         }
@@ -482,24 +461,19 @@ export class DeclarationPendingLine extends BaseComponent {
 
         }
     }
-
-     
+    
     //#endregion
 
-    SetLocalName(entity, fieldName,fieldName2) {
+    SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
-            this[fieldName2] = entity.RequiresApproval;
         } else {
             this[fieldName] = null;
         }
 
     }
 
-    itemApproved(item:any,$event){
-        debugger;
-        this.entityPM.Approval=true;
-    }
+
     
 
     valid: boolean = true;
