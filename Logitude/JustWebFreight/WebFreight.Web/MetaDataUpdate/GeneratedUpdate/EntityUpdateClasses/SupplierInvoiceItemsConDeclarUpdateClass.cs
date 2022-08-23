@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsConDeclarUpdateClass
    {  		
-		public const string HashString = "1f4c19b31a82505bcae899bfac6d7459";
+		public const string HashString = "982b084abfc51389a7e1fa0604e239e4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הצהרות קשורות לפרט מכס",
 			      				    DefaultText =  "Supplier Invoice Items Connected Declaration",
-			      				    Code =  "caa9",
+			      				    Code =  "e818",
 			      				    Name =  "Customs.SupplierInvoiceItemsConDeclar Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -963,7 +963,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable SupplierInvoiceItemsConDeclarObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsConDeclar" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode SupplierInvoiceItemsConDeclarTextCode_CustomsSupplierInvoiceItemsConnectedDeclarationOInvoiceSequence = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsConnectedDeclaration.O.InvoiceSequence", DefaultText = "Invoice Sequence",LocalDefaultText = @"רצף חשבונית", ObjectTableId = SupplierInvoiceItemsConDeclarObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
