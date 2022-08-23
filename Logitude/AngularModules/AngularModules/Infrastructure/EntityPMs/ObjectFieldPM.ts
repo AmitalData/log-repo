@@ -648,11 +648,6 @@ export class ObjectFieldPM {
     public set DefaultAdditionalTreeFilters(newValue: string) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
        
 	 
-    private forMetaDataOnly: boolean;
-    public get ForMetaDataOnly() { return this.forMetaDataOnly; }
-    public set ForMetaDataOnly(newValue: boolean) { if (this.forMetaDataOnly != newValue) { this.forMetaDataOnly = newValue; this.MarkAsDirty("ForMetaDataOnly"); } }
-       
-	 
 
     public OldEntityPM: ObjectFieldPM;
 		

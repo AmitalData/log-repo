@@ -16,6 +16,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 
 declare var window: any;
@@ -41,7 +43,14 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ContolFieldsList2: any[];
     CustomPickListsList: string[];
     loginService: LoginService;
+    DefaultAdditionalTreeFilters: any;
+    ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    entityResourceService: EntityResourceService = new EntityResourceService();
+    AdditionalFiltersData: any = [];
+    ShownAdditionalFiltersSettings: boolean;
+    ObjectTableName: string;
+    private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -74,7 +83,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         //}
 
         //CustomPickListsList = new ObservableCollection<string>(picklistslist);
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res.Name == "RefreshAdditionalFiltersData") {
+                this.AdditionalFiltersData = res.Value;
+            }
+        });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
+    }
+
+
+    ShowAdditionalFiltersSettingsClicked() {
+        this.ShownAdditionalFiltersSettings = !this.ShownAdditionalFiltersSettings;
     }
 
     SetWindowArgs(args: any) {
@@ -82,6 +101,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
         this.DataTypeCollection = args.DataTypeCollection;
+        this.ObjectTableName = args.ObjectTableName;
         if (this.IsNew) {
 
         }
@@ -335,10 +355,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsMultiline = event;
     }
 
+    lookUpTableName: string;
+    public get LookUpTableName() { return this.lookUpTableName; }
+    public set LookUpTableName(newValue: string) {
+        this.lookUpTableName = newValue;
+    }
+
     LookUpTablesSelectionMethod(item) {
         if (!item) return;
         this.ContolFieldsList1 = [];
         this.ContolFieldsList2 = [];
+        this.LookUpTableName = "";
         
         if (!AppTool.IsNullOrEmpty(this.LookUpTableId)) {
             this.LookUpTableId = item.Id;
@@ -347,7 +374,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
         else {
@@ -357,7 +384,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
     }
@@ -369,12 +396,14 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         else {
             this.objectField.DataTypeCode = fieldDataType.Code;
+            this.ShownAdditionalFilters = false;
             switch (fieldDataType.Code) {
                 case "LookUp":
                     {
                         this.ControlField1Visibile = true;
                         this.ControlField2Visibile = true;
                         this.PickListVisibile = false;
+                        this.ShowAdditionalFilters();
                         break;
                     }
                 case "nText":
@@ -430,6 +459,31 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    ShowAdditionalFilters() {
+        this.LoadDefaultAdditionalFilters();
+    }
+
+    LoadDefaultAdditionalFilters() {
+        if (!this.objectField || !this.objectField.Id || (this.AdditionalFiltersData && this.AdditionalFiltersData.length == 1)) {
+            this.ShownAdditionalFilters = true;
+            return;
+        }
+
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+            var result: ServiceResponse = serviceResponse;
+            if (!result.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+                let additionalFiltersData = [];
+                if (result.Result) {
+                    additionalFiltersData.push(result.Result);
+                }
+                this.AdditionalFiltersData = additionalFiltersData;
+                this.ShownAdditionalFilters = true;
+            }
+        });
+    }
+
     public authHeader;
     SaveChanges() {
 
@@ -463,6 +517,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.authHeader.append('Accept', 'application/json');
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
+            this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
             if (this.IsNew == true) {
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {

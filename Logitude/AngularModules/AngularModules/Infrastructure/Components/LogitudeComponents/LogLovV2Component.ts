@@ -472,7 +472,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
 
             if (this.LookUpTable.CacheOnClient) {
@@ -855,6 +855,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
 
         }
+
+        apiQueryFilter = this.FillTreeFilterDetails(apiQueryFilter);
+
         return apiQueryFilter;
     }
 
@@ -1758,6 +1761,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.SetDependencyProperties(filters);
+        filters = this.FillTreeFilterDetails(filters);
         filters.PageIndex = 0;
 
         if (this.LookUpTable.SortingByObjectField) {
@@ -1778,7 +1782,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 searchText = searchText.replace(/"/g, "");
             }
         }
-        if (!this.LookUpTable.CacheOnClient || this.IsTenantZeroSearch) {//calling data from server;
+        if (!this.LookUpTable.CacheOnClient || this.IsTenantZeroSearch || !AppTool.IsNullOrEmpty(filters.TreeFilters)) {//calling data from server;
             this.CallDataFromServer(searchText, filters);
         }
         else {//calling data from cache;
@@ -1822,6 +1826,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
             this.SetDependencyProperties(tenantZeroFilters);
+            filters = this.FillTreeFilterDetails(filters);
 
             tenantZeroFilters.PageIndex = 0;
             if (this.IsAllDataVisible) {
@@ -2189,6 +2194,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //var ObjectTableId = window.ObjectTables.filter(x => x.Name === this.LookUpTableName)[0].Id;
         var args = new CustomEntityArgs();
         args.ObjectTableId = this.LookUpTable.Id;
+        args.ObjectField = this.ObjectField;
         args.ObjectTableName = this.LookUpTableName;
         args.IsTenantZeroSearch = this.IsTenantZeroSearch;
         args.IsAllDataVisible = this.IsAllDataVisible;
@@ -3089,6 +3095,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         //turn loading flag on
         this.isLoading = true;
+        filters = this.FillTreeFilterDetails(filters);
         this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
             res.subscribe((resp:any) => {
                 if (resp.Result) {
@@ -3220,7 +3227,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         this.isLoading = true;
 
-
+        filters = this.FillTreeFilterDetails(filters);
         var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         if (this.UseCompactSearch) {
             let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
@@ -3350,6 +3357,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
             })
         });
+    }
+
+    FillTreeFilterDetails(filters) {
+        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
+
+
+        return filters;
     }
 
     OnSearchInputKeyUP($event) {

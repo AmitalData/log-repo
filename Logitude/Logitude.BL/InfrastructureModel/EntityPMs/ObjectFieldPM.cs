@@ -1,4 +1,5 @@
 ﻿using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
@@ -148,9 +149,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Code { get; set; }
         public bool CopyToDW { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
-        public string AdditionalQuerySections { get; set; }
 
-        public bool IsListFilter { get; set; }
+        public string AdditionalQuerySections { get; set; }
 
 
         public string LeftKey { get; set; }
@@ -159,8 +159,13 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ForeignEntity { get; set; }
         public string NavigationPropertyName { get; set; }
         public string DefaultAdditionalFilters { get; set; }
-        public TreeFilter DefaultAdditionalTreeFilters { get; set; }
+        public QueryFilterItem DefaultAdditionalTreeFilters { get; set; }
+
         public bool ForMetaDataOnly { get; set; }
+
+        public bool IsListFilter { get; set; }
+
+
 
     }
 }

@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(authToken.Tenant);
                 ObjectFieldService objectFieldService = new ObjectFieldService(webFreightContext, authToken.Tenant);
-                TreeFilter defaultAdditionalTreeFilters = objectFieldService.GetDefaultAdditionalFiltersByIdAndTenant(objectFieldId, authToken.Tenant);
+                var defaultAdditionalTreeFilters = objectFieldService.GetDefaultAdditionalFiltersByIdAndTenant(objectFieldId, authToken.Tenant);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, defaultAdditionalTreeFilters);
             }
