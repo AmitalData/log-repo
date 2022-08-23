@@ -21,7 +21,6 @@ using WebFreight.Web.DataContracts;
 using System.Data.Entity;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.CustomFilters;
-using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
 using System.Reflection;
 
@@ -38,6 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, filters.CardId);
 
                 var queryOperations = new QueryOperations()
                 {
@@ -100,10 +100,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
                 };
 
-                //var customfilters = new CustomerCustomFilter(authToken.Tenant);
-                //entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-                //var myFilter = new CustomerBusinessUnitFilter(authToken.Tenant);
-                //entityPocos = myFilter.RunFilter(entityPocos);
                 entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
                 IQueryable<CustomerList> entityLists = customerQuery.GetDigitalIQueryableEntityList(entityPocos);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
@@ -209,15 +205,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalPartners/GetDigitalShipmentPartners")]
-        public HttpResponseMessage GetDigitalShipmentPartners(string shipmentId)
+        public HttpResponseMessage GetDigitalShipmentPartners(string shipmentId, string cardId)
         {
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                var shipmentQuery = new ShipmentQuery(tenant);
-                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
             catch (Exception ex)

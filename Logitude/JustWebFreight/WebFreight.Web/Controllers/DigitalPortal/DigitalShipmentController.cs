@@ -32,13 +32,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string cardId)
         {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -256,6 +258,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
@@ -279,20 +283,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetEntityEvents")]
-        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, int tenant)
+        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, string cardId)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
             var result = new List<TraceEventPM>();
 
-            var objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, 0, true);
+            var objectTable = new ObjectTableRepository(authToken.Tenant).GetObjectTableByName(objectTableName, 0, true);
 
             if (objectTable != null)
             {
-                var traceEventsRepository = new TraceEventRepository(tenant);
+                var traceEventsRepository = new TraceEventRepository(authToken.Tenant);
                 var traceEventQuery = new TraceEventQuery(traceEventsRepository);
 
-                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
+                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(authToken.Tenant, entityId, objectTable.Id);
 
                 var resultQuery = cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
                                   ? dataQuery.Where(d => d.IsAgentView)
@@ -311,12 +318,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-                var shipmentQuery = new ShipmentQuery(tenant);
-                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant);
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, authToken.Tenant);
                 return Ok(routingLegs);
             }
             catch (Exception ex)

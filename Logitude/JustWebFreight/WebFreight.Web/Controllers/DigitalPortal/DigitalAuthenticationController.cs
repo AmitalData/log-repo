@@ -85,7 +85,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-       
+
         [ActionName("PostDigitalPortalCheckPasswordUser")]
         public HttpResponseMessage PostDigitalPortalCheckPasswordUser(ChangePasswordParameter changePasswordParameter)
         {

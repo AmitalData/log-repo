@@ -4331,13 +4331,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             mixPanelEvent.AddProperty("results_count", shipments.Count().ToString());
             return mixPanelEvent;
         }
+
         public ShipmentPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
-                                     where a.Id == id && a.Tenant == tenant
-                                     select a).FirstOrDefault();
+                Shipment shipment = repository.context
+                                              .Shipments
+                                              .Include("EntityStatus")
+                                              .Include("ComputedEntityStatus")
+                                              .Include("ShipmentType")
+                                              .Include("Incoterm")
+                                              .Include("ShipmentReceivableStatus")
+                                              .Include("ShipmentPayableStatus")
+                                              .Include("ShipmentLevel")
+                                              .Include("NextLeg")
+                                              .Include("ShipmentType")
+                                              .Include("ShipmentMasterData")
+                                              .Include("SpecialServicesType")
+                                              .Include("MoveType")
+                                              .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
 
                 if (shipment != null)
                 {
@@ -4350,17 +4363,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
                     ShipmentPM securedPM = new ShipmentPM();
+
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
-
-
-
-                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
-                                     where a.Id == shipment.Id
-                                     select a).FirstOrDefault();
+                    var CLoudData = repository.context
+                                              .ShipmentAdditionalCloudDatas
+                                              .FirstOrDefault(a => a.Id == shipment.Id);
 
                     if (CLoudData != null)
                     {
@@ -4383,19 +4394,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
-
-
-                    MapShipmentComputedFields(returnShipment, masterData);
-
-
+                    MapShipmentComputedFields(returnShipment , masterData);
                     return returnShipment;
                 }
-
                 else
                 {
                     return null;
                 }
             }
+
             return null;
         }
 
