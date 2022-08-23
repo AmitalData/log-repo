@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {WidgetPM} from './WidgetPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -69,7 +70,41 @@ export class DashboardPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
+     
+	private widgets: WidgetPM[];
+    get  Widgets() {
+        if (this.widgets == null) {
+            this.widgets = [];
+        }
 
+        return this.widgets;
+    }
+    set  Widgets(newValue: WidgetPM[]) {
+        if (this.widgets != newValue) {
+            this.widgets = newValue;
+        }
+    }
+    public AddWidget(item: WidgetPM) {
+        if (item != null) {
+            var index = this. Widgets.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. Widgets.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveWidget(item: WidgetPM) {
+        if (item != null) {
+            var index = this. Widgets.indexOf(item);
+            if (index > -1) {
+                this. Widgets.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public Widgets: Array<WidgetPM>= [];
+ 
     public OldEntityPM: DashboardPM;
 		
     public IsDirty: boolean;
