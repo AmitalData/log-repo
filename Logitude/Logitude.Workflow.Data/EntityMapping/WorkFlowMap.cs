@@ -45,7 +45,9 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.FlowJson).HasColumnName("FlowJson").IsRequired().IsMaxLength().IsUnicode(true);
+            this.Property(t => t.FlowJson).HasColumnName("FlowJson").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.Entity).HasColumnName("Entity").HasMaxLength(50).IsUnicode(false);
         }
     }
 }

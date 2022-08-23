@@ -37,9 +37,9 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<WorkFlow>(nonListQueryOperation, iQueryable);
 
@@ -156,9 +156,9 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<WorkFlow>(nonListQueryOperation, iQueryable);
 

@@ -33,7 +33,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Description, 
 	         OwnerId, 
 	         StatusCode, 
-	         FlowJson,
+	         FlowJson, 
+	         Entity,
 	      }
 
 
@@ -55,7 +56,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         OwnerName, 
 	         CreatedByUserName, 
 	         UpdatedByUserName, 
-	         FlowJson,
+	         FlowJson, 
+	         Entity,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -117,6 +119,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
             {
 				entityPOCO.FlowJson = entityPM.FlowJson;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+				entityPOCO.Entity = entityPM.Entity;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -185,6 +192,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.FlowJson = entityPOCO.FlowJson;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Entity))
+            {
+					entityPM.Entity = entityPOCO.Entity;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -244,6 +256,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
             {
                 oldEntityPM.FlowJson = entityPM.FlowJson;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+                oldEntityPM.Entity = entityPM.Entity;
             }
 			
 		}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, DateTool } from 'Infrastructure/Tools';
+import { DateTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { Validator } from 'Infrastructure/Validators/Validator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
@@ -40,7 +40,6 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
-            //this.setUIProperties();
         }
     }
 
@@ -75,8 +74,6 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.StatusCode = "DRFT";
-        this.EntityPM.FlowJson = "";
-        //this.setUIProperties();
     }
 
     loadWorkflow() {
@@ -85,14 +82,9 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
             if (!serviceResponse.HasError) {
                 this.EntityPM = serviceResponse.Result;
                 this.stopBusyIndicator();
-                //this.setUIProperties();
             }
         });
     }
-
-    // setUIProperties() {
-    //     this.UIProperties.SetRequired("Name", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Name));
-    // }
 
     cancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

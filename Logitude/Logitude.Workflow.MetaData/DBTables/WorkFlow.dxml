@@ -84,7 +84,14 @@
     Type="nvarchar"
     Size="-1">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Entity"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
