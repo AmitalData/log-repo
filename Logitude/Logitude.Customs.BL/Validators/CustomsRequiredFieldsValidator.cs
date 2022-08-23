@@ -556,6 +556,23 @@ namespace Logitude.Customs.BL.Validators
                             {
                                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ThirdCargoID", TableName = "Customs.Consignment" });
                             }
+                            if (Consignment.ConsignmentType =="I" && Consignment.LoadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "אתר טעינה אחרון", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "I" && Consignment.UnloadPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "נמל פריקה", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "E" && Consignment.ExportUnloadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ExportUnloadingPortCode", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "E" && Consignment.ExportLoadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ExportLoadingPortCode", TableName = "Customs.Consignment" });
+                            }
+
                         }
                     }
                     foreach (PropertyInfo info in ConsignmentProperties)
