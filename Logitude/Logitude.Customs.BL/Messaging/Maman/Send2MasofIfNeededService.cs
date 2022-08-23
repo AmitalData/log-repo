@@ -211,7 +211,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 listStorageDefault.Add("ILOVL");
             }
-            if (def.DEFDATA.Contains("ILOVL")) // OVS
+            if (def.DEFDATA.Contains("ILSWS")) // OVS
             {
                 listStorageDefault.Add("ILSWS");
             }
