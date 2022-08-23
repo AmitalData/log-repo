@@ -30,7 +30,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
                                                 PendingRemarks = a.PendingRemarks,
                                                 Status = a.Status,
-                                                Approval=a.Approval,
                                             });
             return query;
 		}

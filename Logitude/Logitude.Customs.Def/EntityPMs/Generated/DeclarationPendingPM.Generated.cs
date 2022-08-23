@@ -160,29 +160,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? approval ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? Approval  
-	   {
-	    
-	     get
-		{
-		   return approval;
-		 }
-		 set
-		 {
-		   if(approval != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Approval",OldValue=approval,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   approval=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
