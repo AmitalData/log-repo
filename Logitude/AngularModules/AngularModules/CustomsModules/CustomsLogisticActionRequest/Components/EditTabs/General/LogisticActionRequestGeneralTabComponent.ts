@@ -70,7 +70,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'DeliverySiteID',
         'RequestReason',
     ]
-
+    public isTransportA: boolean = false;
+    public isTransportO: boolean = false;
+    public isTransportL: boolean = false;
     public SecondCargoIDPlaceholder: string = " ";
     public ThirdCargoIdPlaceholder: string = " ";
     public ManifestNumberPlaceholder: string = " ";
@@ -338,8 +340,26 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     TransportModeClicked(value: string) {
+        
         if (this.entityPM.TransportmodeId != value)
+        {
             this.entityPM.TransportmodeId = value;
+            if(this.entityPM.TransportmodeId=="A"){
+                this.isTransportO = false;
+                this.isTransportL = false;
+                this.isTransportA = true;
+            }
+            else if(this.entityPM.TransportmodeId=="O"){
+                this.isTransportO = true;
+                this.isTransportL = false;
+                this.isTransportA = false;
+            }
+            else{
+                this.isTransportO = false;
+                this.isTransportL = true;
+                this.isTransportA = false;
+            }
+        }
     }
 
     private isImporterClicked: boolean = false;

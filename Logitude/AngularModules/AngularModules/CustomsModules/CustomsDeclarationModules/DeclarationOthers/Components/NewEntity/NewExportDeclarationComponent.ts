@@ -40,6 +40,11 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
 
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public isTransportA: boolean = false;
+    public isTransportO: boolean = false;
+    public isTransportL: boolean = false;
+
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationPM();
@@ -82,12 +87,28 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         if (this.EntityPM.CustomerId != value) {
             this.EntityPM.CustomerId = value;
         }
-    }
+    } 
     get TransportMode() { return this.EntityPM.TransportModeId }
 
     TransportModeClicked(value: string) {
+    
         if (this.EntityPM.TransportModeId != value) {
             this.EntityPM.TransportModeId = value;
+            if(this.EntityPM.TransportModeId=="A"){
+                this.isTransportO = false;
+                this.isTransportL = false;
+                this.isTransportA = true;
+            }
+            else if(this.EntityPM.TransportModeId=="O"){
+                this.isTransportO = true;
+                this.isTransportL = false;
+                this.isTransportA = false;
+            }
+            else{
+                this.isTransportO = false;
+                this.isTransportL = true;
+                this.isTransportA = false;
+            }
         }
     }
 

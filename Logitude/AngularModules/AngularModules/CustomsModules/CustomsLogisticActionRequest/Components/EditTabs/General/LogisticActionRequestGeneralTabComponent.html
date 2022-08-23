@@ -16,12 +16,9 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div class="RadioButton">
-                                    <input [id]="'TariffRadio'" type="radio" name="TariffRadio" [disabled]="true"
-                                        checked />
-                                    <label style="font-size:12px;"> 
-                                        {{'Customs.General.O.Export' | TextCodeTranslationPipe}}
-                                     </label>
+                                <div>
+                                    <RadioButton [Name]="'TariffRadio'" [IsChecked]="true" [IsEnabled]="false" [Text]="'Customs.General.O.Export' | TextCodeTranslationPipe"></RadioButton>
+
                                     <img style="left:-15px" class="CenterCenter" src="./Images/Directions/E.png" />
                                 </div>
                             </div>
@@ -38,12 +35,9 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div class="RadioButton">
-                                    <input type="radio" id="air" value="air" name="TransportMode"
-                                        (click)="TransportModeClicked('A')" />
-                                    <label for="air" style="font-size:12px;">
-                                        {{'Customs.General.O.Air' | TextCodeTranslationPipe}}
-                                    </label>
+                                <div>
+                                    <RadioButton [Name]="'air'" [IsChecked]="isTransportA"  (Checked)="TransportModeClicked('A')" [Text]="'Customs.General.O.Air' | TextCodeTranslationPipe"></RadioButton>
+                                    
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/A.png" />
                                 </div>
                             </div>
@@ -54,12 +48,9 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div class="RadioButton">
-                                    <input id="ocean" type="radio" value="ocean" (click)="TransportModeClicked('O')"
-                                        name="TransportMode" />
-                                    <label for="ocean" style="font-size:12px;">
-                                        {{'Customs.General.O.Ocean' | TextCodeTranslationPipe}}
-                                    </label>
+                                <div>
+                                    <RadioButton [Name]="'ocean'" [IsChecked]="isTransportO" (Checked)="TransportModeClicked('O')" [Text]="'Customs.General.O.Ocean' | TextCodeTranslationPipe"></RadioButton>
+                                    
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/O.png" />
                                 </div>
                             </div>
@@ -70,12 +61,9 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div class="RadioButton">
-                                    <input type="radio" id="land" value="land" (click)="TransportModeClicked('L')"
-                                        name="TransportMode" />
-                                    <label for="land" style="font-size:12px;">
-                                        {{'Customs.General.O.Land' | TextCodeTranslationPipe}}
-                                     </label>
+                                <div>
+                                    <RadioButton [Name]="'land'" [IsChecked]="isTransportL" (Checked)="TransportModeClicked('L')" [Text]="'Customs.General.O.Land' | TextCodeTranslationPipe"></RadioButton>
+                                    
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/I.png" />
                                 </div>
                             </div>
