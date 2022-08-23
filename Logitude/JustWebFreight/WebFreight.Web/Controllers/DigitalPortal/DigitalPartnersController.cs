@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalPartners/NewGetPartnersByFilters")]
-        public IHttpActionResult NewGetPartnersByFilters(string cardId,  string name)
+        public IHttpActionResult NewGetPartnersByFilters(string cardId, string searchText = "")
         {
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -48,8 +48,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var customfilters = new ShipmentCustomFilter(authToken.Tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
 
-            var partners = shipments.Where(a =>  a.ConsigneeName.Contains(name) 
-                                                 || a.ShipperName.Contains(name))
+            var partners = shipments.Where(a =>  a.ConsigneeName.Contains(searchText) 
+                                                 || a.ShipperName.Contains(searchText))
                                     .AsEnumerable()
                                     .SelectMany(a => new List<Partner> 
                                     {
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         } 
                                     })
                                     .DistinctBy(a => a.Id)
-                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) && a.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase))
+                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
                                     .Take(50)
                                     .ToList();
 
