@@ -15092,9 +15092,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public DigitalFiltersCounts GetDigitalFiltersCounts(int tenant, string CustomerId, int leastStatusWeight, int greatestStatusWeight)
         {
-            (int allShipmentsCount, int activeShipmentsCount) = GetActiveShipmentsCount(tenant, CustomerId);
+            (string warehousingFirstId, string warehousingSecondId) = GetWarehouseIdsToBeExcluded(tenant);
 
-            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = GetActiveShipmentsDataViewFilteredByCustomerIdQuery(tenant, CustomerId);
+            (int allShipmentsCount, int activeShipmentsCount) = GetActiveShipmentsCount(tenant, CustomerId, warehousingFirstId, warehousingSecondId);
+
+            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = GetActiveShipmentsDataViewFilteredByCustomerIdQuery(tenant, CustomerId, warehousingFirstId, warehousingSecondId);
+
             (int atOriginShipmentCount, int inTransitShipmentCount, int atDestinationShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, null);
             (int atOriginAirShipmentCount, int inTransitAirShipmentCount, int atDestinationAirShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, "A");
             (int atOriginOceanShipmentCount, int inTransitOceanShipmentCount, int atDestinationOceanShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, "O");
@@ -15120,14 +15123,33 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             };
         }
 
-        private Tuple<int, int> GetActiveShipmentsCount(int tenant, string CustomerId)
+        private Tuple<string, string> GetWarehouseIdsToBeExcluded(int tenant)
+        {
+            SpecialServicesTypeRepository specialServicesRepository = new SpecialServicesTypeRepository(tenant);
+            SpecialServicesType warehousingFirst = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS", tenant);
+            SpecialServicesType WarehousingSecond = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS-2", tenant);
+            return Tuple.Create(warehousingFirst != null ? warehousingFirst.Id : "", WarehousingSecond != null ? WarehousingSecond.Id : "");
+        }
+
+
+        private Tuple<int, int> GetActiveShipmentsCount(int tenant, string CustomerId, string warehousingFirstId, string warehousingSecondId)
         {
             var shipmentsFilteredByCustomerId = repository.context.Shipments.Where(shipment => shipment.CustomerId == CustomerId &&
                                                                                                shipment.IsCancelled == false &&
                                                                                                shipment.IsStandalonePickupDelivery == false &&
-                                                                                               !(shipment.DirectionId == "I" && shipment.TransportModeId == "I") &&
                                                                                                shipment.Tenant == tenant)
                                                                             .AsQueryable();
+
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                shipmentsFilteredByCustomerId = shipmentsFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                shipmentsFilteredByCustomerId = shipmentsFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
+
             var activeShipments = shipmentsFilteredByCustomerId.Where(shipment => shipment.IsOperationalClosed == false).AsQueryable();
 
             int allShipmentsCount = shipmentsFilteredByCustomerId.Count();
@@ -15145,26 +15167,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var atDestinationShipment = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight &&
                                                                                                            (tansportModeId == null || shipment.TransportModeId == tansportModeId));
 
-            if (string.IsNullOrEmpty(tansportModeId))
-            {
-                atOriginShipment = atOriginShipment.Where(shipment => !(shipment.DirectionId == "I" && shipment.TransportModeId == "I"));
-                inTransitShipment = inTransitShipment.Where(shipment => !(shipment.DirectionId == "I" && shipment.TransportModeId == "I"));
-                atDestinationShipment = atDestinationShipment.Where(shipment => !(shipment.DirectionId == "I" && shipment.TransportModeId == "I"));
-                return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
-            }
-
-            if (tansportModeId.Equals("I"))
-            {
-                atOriginShipment = atOriginShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
-                inTransitShipment = inTransitShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
-                atDestinationShipment = atDestinationShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
-                return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
-            }
-
             return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
         }
 
-        private IQueryable<ShipmentDataView> GetActiveShipmentsDataViewFilteredByCustomerIdQuery(int tenant, string customerId)
+        private IQueryable<ShipmentDataView> GetActiveShipmentsDataViewFilteredByCustomerIdQuery(int tenant, string customerId, string warehousingFirstId, string warehousingSecondId)
         {
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipmentsDataView = shipmentRepository.GetShipmentViewsByTenant(tenant);
@@ -15173,6 +15179,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                                            shipment.IsStandalonePickupDelivery == false &&
                                                                                                                            shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
+
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
+
             return activeShipmentsDataViewFilteredByCustomerId;
         }
     }
