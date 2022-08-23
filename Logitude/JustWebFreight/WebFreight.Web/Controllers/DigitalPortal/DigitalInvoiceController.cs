@@ -46,7 +46,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
             var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
             var arInvoices = new List<ShipmentARInvoicePM>();
-            var aRCharges = new List<ARInvoiceChargePM>();
             var arInvoiceReps = new ARInvoiceRepository(tenant);
             var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
             var invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
@@ -58,7 +57,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             foreach (var item in invoices.Where(d => d.IsPrinted))
             {
-                var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
+                var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, authToken.Tenant).ToList();
                 lines.AddRange(itemLines);
                 var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
                 var entity = new ShipmentARInvoicePM()
@@ -82,13 +81,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
 
-                var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
+                var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, authToken.Tenant);
                 if (currency != null)
                 {
                     entity.InvoiceCurrencyCode = currency.Code;
                 }
 
-                var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
+                var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, authToken.Tenant);
                 entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
 
                 entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
@@ -102,50 +101,45 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             var myId = 0;
-            aRCharges = (from d in lines
-                         group d by new
-                         {
-                             d.Description,
-                             d.InvoiceCurrencyCode,
-                             d.InvoiceLocalCurrencyCode
-                         } into g
-
-                         select new ARInvoiceChargePM()
-                         {
-                             Id = ++myId,
-                             Description = g.Key.Description,
-                             InvoiceCurrencyCode = g.Key.InvoiceCurrencyCode,
-                             LocalCurrencyCode = g.Key.InvoiceLocalCurrencyCode,
-                             AmountInInvoiceCurrency = g.Sum(s => s.InvoiceCurrencyAmount),
-                             AmountInLocalCurrency = g.Sum(s => s.LocalCurrencyAmount)
-                         }).ToList();
-
             resultClass.ARInvoices = arInvoices;
-            resultClass.ARCharges = aRCharges;
+            resultClass.ARCharges = lines.GroupBy(d => new {
+                                                            d.Description,
+                                                            d.InvoiceCurrencyCode,
+                                                            d.InvoiceLocalCurrencyCode
+                                                        })
+                                         .Select(g => new ARInvoiceChargePM()
+                                         {
+                                             Id = ++myId,
+                                             Description = g.Key.Description,
+                                             InvoiceCurrencyCode = g.Key.InvoiceCurrencyCode,
+                                             LocalCurrencyCode = g.Key.InvoiceLocalCurrencyCode,
+                                             AmountInInvoiceCurrency = g.Sum(s => s.InvoiceCurrencyAmount),
+                                             AmountInLocalCurrency = g.Sum(s => s.LocalCurrencyAmount)
+                                         }).ToList();
+
             resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
             return Ok(resultClass);
         }
 
         [HttpGet]
         [Route("DigitalInvoice/GetFilteredDigitalARPayments")]
-        public IHttpActionResult GetFilteredDigitalARPayments(string arInvoiceId)
+        public IHttpActionResult GetFilteredDigitalARPayments(string arInvoiceId, string cardId)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            var tenant = authToken.Tenant;
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
             var result = new List<ARPaymentList>();
-            var statusRepository = new ARPaymentStatusRepository(tenant);
-            var currencyRepository = new CurrencyRepository(tenant);
-            var aRPaymentRepository = new ARPaymentRepository(tenant);
-            var aRInvoicePaymentQuery = new ARInvoicePaymentQuery(tenant);
-            var methodRepository = new AccountingPaymentMethodRepository(tenant);
-            var invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, tenant);
+            var statusRepository = new ARPaymentStatusRepository(authToken.Tenant);
+            var currencyRepository = new CurrencyRepository(authToken.Tenant);
+            var aRPaymentRepository = new ARPaymentRepository(authToken.Tenant);
+            var aRInvoicePaymentQuery = new ARInvoicePaymentQuery(authToken.Tenant);
+            var methodRepository = new AccountingPaymentMethodRepository(authToken.Tenant);
+            var invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, authToken.Tenant);
 
             foreach (var item in invoicePayments)
             {
-                var payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, tenant);
+                var payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, authToken.Tenant);
 
                 if (payment != null)
                 {
@@ -161,7 +155,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount 
                     };
 
-                    var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, tenant);
+                    var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, authToken.Tenant);
                     if (currency != null)
                     {
                         list.PaymentCurrencyCode = currency.Code;
@@ -173,7 +167,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         list.StatusName = status.Name;
                     }
 
-                    var method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+                    var method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, authToken.Tenant);
+
                     if (method != null)
                     {
                         list.PaymentMethodName = method.Name;
@@ -381,18 +376,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region private 
 
-        private void CheckAuthentication(string token, int tenant)
-        {
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
-        }
-
         private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
         {
             string code = "999S";
 
-            if (aRInvoiceTypeCode == "CI")
+            if (aRInvoiceTypeCode.Equals("CI", StringComparison.InvariantCultureIgnoreCase))
             {
                 code = "999CI";
             }
@@ -482,6 +470,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
         {
             bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
+
             var sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
             var sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
             

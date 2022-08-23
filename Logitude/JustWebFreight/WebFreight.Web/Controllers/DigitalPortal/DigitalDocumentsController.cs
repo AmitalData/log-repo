@@ -23,24 +23,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalDocuments/GetDigitalEntityDocuments")]
-        public List<SharedLogisticDocumentPM> GetDigitalEntityDocuments(string entityId, string partnerType, int tenant)
+        public List<SharedLogisticDocumentPM> GetDigitalEntityDocuments(string entityId, string partnerType, string cardId)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
+            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, authToken.Tenant);
 
             if (shipment != null)
             {
-                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-
-                output = this.GetShipmentSharedDocuments(shipment, partnerType, tenant, false);
+                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, authToken.Tenant);
+                output = GetShipmentSharedDocuments(shipment, partnerType, authToken.Tenant, false).OrderBy(o => o.Name).ToList();
             }
 
-            return output.OrderBy(o => o.Name).ToList();
+            return output;
         }
 
         #region private 
