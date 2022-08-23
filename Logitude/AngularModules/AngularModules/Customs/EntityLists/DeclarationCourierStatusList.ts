@@ -99,7 +99,6 @@ export class DeclarationCourierStatusList {
 	CasualSupplierName: string;
 	ImporterAddress: string;
 	CasualImporterTel: string;
-	NotApprovedPendingList: string;
 	
 }
  

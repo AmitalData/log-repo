@@ -607,7 +607,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.RefreshList();
         this.DisplayOnlyCheck();
         this.DisplayOnlyCheckDeletePending();
-        this.DisplayOnlyCheckApprovePending();
 
 
         if (this._ValidationErrors2.length > 0) {
@@ -666,14 +665,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
     _HOLD_Total = 0;
-    _NotApproved = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
     _InCorrectDECToBatchSend = 0;
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _TotalNotAccepted =0;
    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
@@ -891,11 +888,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
 
-                            break;
-                        }
-                        case "NotApproved": {
-                            //statements; 
-                            this._NotApproved = item.Value;
                             break;
                         }
                         default: {
@@ -1650,10 +1642,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 case "A": {
                     break;
                 }
-                case "NotApproved": {
-                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null,  "NotEqual", true, false, false, "string");
-                    break;
-                }
                 default: {
                     filters.addAdditionalFilter("CourierPendingReasonList", this.SelectedPendingCodeFilter.Key, null, null, "Contains", false, false, false, "string");
                     break;
@@ -1771,7 +1759,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     GetPending() {
         this._PendingCodes.length = 0;
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
-        this._PendingCodes.push({ 'Key': "NotApproved", 'Value': 'Pending שלא אושרו'});
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
@@ -2322,7 +2309,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
  
     }
     ApproveAllPendingMethod() {
-        debugger;
         if (this.IsDisplayOnly) {
            var myMessageWindow = new MessageWindow();
            myMessageWindow.Width = 250;
@@ -2460,25 +2446,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
-                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
-                }
-            }
-        });
-    }
-
-    DisplayOnlyCheckApprovePending() {
-        this.IsDisplayOnly = false;
-        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
-
-        //Check if deleting pending
-        this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "DCAInUCBApproveAllPending", this.entityPM.Id).subscribe((response: any) => {
-            var displayOnlyCheckResult = response.Result;
-            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
-                if (customsRequestsSheetPM != null) {
-                    this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }

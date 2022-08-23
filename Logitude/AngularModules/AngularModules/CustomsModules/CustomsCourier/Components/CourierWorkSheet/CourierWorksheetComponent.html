@@ -211,7 +211,7 @@
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
                                                             [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img
-                                                                *ngIf="entityPM.IsReadyForInvoice" class="certOkImg"
+                                                                *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" 
                                                                 style="position:relative;width:10px;margin-top:10px;opacity: 0.8;"
                                                                 src="./Images/Buttons/EditWithGreenTick.png" /></button>
                                                         <button style="text-align:right"
@@ -245,8 +245,7 @@
                                                                 class="certOkImg"
                                                                 style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; "
                                                                 src="./Images/Buttons/excelicon.png" /></button>
-                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right"
-                                                            (click)="openBulkFeedPending()">עדכון גורף</button>
+                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right" (click)="openBulkFeedPending()">עדכון גורף</button>
                                                     </div>
 
                                                 </div>
@@ -310,12 +309,8 @@
                                                                     ({{item.Total}})</span>
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
-                                                                    dir="ltr" *ngIf="item.Code == 'HOLD' && !HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}</span>
-                                                                <span
-                                                                    style="font-size:13px;font-weight:bold; text-align:right"
-                                                                    dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו ({{this._NotApproved}})</span>  
+                                                                    dir="ltr" *ngIf="item.Code == 'HOLD'">
+                                                                    ({{item.Total}}) {{item.Header}} </span>
                                                             </div>
                                                         </td>
 
@@ -484,21 +479,18 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:170px">
                                                                             <!--|| (_DecWithoutHaTra == 0)-->
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
-                                                                                [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
+                                                                                          [ButtonText]=_ReadyMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectManifest('RV')">
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">
                                                                                                     {{
                                                                                                     'Customs.CourierMaster.O.ReadyMNFToSendRV'
                                                                                                     |
@@ -513,7 +505,7 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <!--|| (_DecWithoutHaTra == 0)-->
+                                                                         <!--|| (_DecWithoutHaTra == 0)-->
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                             style="width:170px">
                                                                             <split-button
@@ -625,18 +617,18 @@
                                                                                 </div>
                                                                             </split-button>
                                                                         </td>
-                                                                        <td style="width:1px"></td>
+                                                                         <td style="width:1px"></td>
                                                                         <td style="width:200px">
                                                                             <split-button *ngIf="DelayFormVisibility"
-                                                                                (DefaultSplitButtonClicked)="SendDelayForm()"
-                                                                                [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                                          (DefaultSplitButtonClicked)="SendDelayForm()"
+                                                                                          [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
-                                                                                [ButtonText]=SelectedDECToDelayFormButtonText
-                                                                                [AsRegularButton]="'true'"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                                          [ButtonText]=SelectedDECToDelayFormButtonText
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
                                                                                 <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                     class="class-MENUSplitButton-content">
                                                                                     <div></div>
                                                                                 </div>
                                                                             </split-button>
@@ -1002,9 +994,8 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
-                                                                        <td style="width:150px;">
-                                                                            <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                                style="width: 130px;">
+                                                                        <td>
+                                                                            <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
@@ -1018,8 +1009,7 @@
                                                                                     </div>
                                                                                 </split-button>
                                                                             </div>
-                                                                            <div *ngIf="!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0)"
-                                                                                style="width: 130px;">
+                                                                            <div *ngIf="!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0)" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
@@ -1035,8 +1025,7 @@
                                                                             </div>
                                                                         </td>
                                                                         <td>
-                                                                            <div *ngIf="HasRequiresApprovalFeature"
-                                                                                style="width: 130px;">
+                                                                            <div  *ngIf="HasRequiresApprovalFeature" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
@@ -1051,9 +1040,6 @@
                                                                                 </split-button>
                                                                             </div>
                                                                         </td>
-                                                                        <td>
-                                                                            <div></div>
-                                                                        <td>
                                                                     </tr>
                                                                 </table>
                                                             </td>
@@ -1384,47 +1370,24 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow"
-                                                                                    style="height:22px">
+                                                                                <tr class="FormFieldRow" style="height:22px">
                                                                                     <td style="width: 240px">
-                                                                                        <LogLabel
-                                                                                            [ObjectFieldName]="'FinalRelease'"
-                                                                                            [DataContext]="DataContext"
-                                                                                            [TextCode]="'Customs.CourierMaster.CourierCustomStatus.FinalRelease'">
-                                                                                        </LogLabel>
+                                                                                        <LogLabel [ObjectFieldName]="'FinalRelease'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.CourierCustomStatus.FinalRelease'"> </LogLabel>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr class="FormFieldRow"
-                                                                                    style="height:22px">
-                                                                                    <td
-                                                                                        style="width: 240px; height:20px">
-                                                                                        <ul class="FiltersMenu"
-                                                                                            style="float:right; padding-right: 10px;">
-                                                                                            <li (click)="SelectedFinalReleaseValueClick('Y')"
-                                                                                                style="width:55px;"
-                                                                                                [class.SelectedFilter]="_SelectedFinalReleaseValue === 'Y'">
-                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara'
-                                                                                                |
-                                                                                                TextCodeTranslationPipe
-                                                                                                }}
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('Y')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'Y'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara' | TextCodeTranslationPipe }}
                                                                                             </li>
 
-                                                                                            <li (click)="SelectedFinalReleaseValueClick('N')"
-                                                                                                style="width:55px;"
-                                                                                                [class.SelectedFilter]="_SelectedFinalReleaseValue === 'N'">
-                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.NotReleased'
-                                                                                                |
-                                                                                                TextCodeTranslationPipe
-                                                                                                }}
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('N')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'N'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.NotReleased' | TextCodeTranslationPipe }}
                                                                                             </li>
 
-                                                                                            <li (click)="SelectedFinalReleaseValueClick('A')"
-                                                                                                style="width:55px;"
-                                                                                                [class.SelectedFilter]="_SelectedFinalReleaseValue === 'A'">
-                                                                                                {{'Customs.General.O.All'
-                                                                                                |
-                                                                                                TextCodeTranslationPipe
-                                                                                                }}
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
                                                                                             </li>
                                                                                         </ul>
                                                                                     </td>
@@ -1506,23 +1469,26 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="_SelectedTabFilter.Code=='HOLD'"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="_SelectedTabFilter.Code=='HOLD'" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
-                                                            [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
-                                                            (AfterViewInitCompleted)="ViewInitCompleted($event)"
-                                                            (rowSelectedEvent)="OnRowSelected($event)"
-                                                            [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                                            [columns]="columnsPending" [SelectedRow]="SelectedRow"
-                                                            [IsCustomTemplate]="false" [RowBackGroundColor]="'#DFECF7'"
-                                                            [ChangeColorByPropName]="'IsChecked'"
-                                                            [ChangeColorByPropValue]="true"
-                                                            [IgnoreRowHoverVisibilityQueryName]="true"
-                                                            [EnableRowHoverVisibility]="true" [HoverTemplateIndex]="8"
-                                                            [rowHeight]="40" [rows]="RowsItems"
-                                                            [PassAdditionalDataToTemplates]="true"
-                                                            [MyScrollTop]="MyScrollTop">
+                                                                       [ObjectTable]="ObjectTableName"
+                                                                       [dataSource]="DataSource"
+                                                                       (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                                                       (rowSelectedEvent)="OnRowSelected($event)"
+                                                                       [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                                       [columns]="columnsPending"
+                                                                       [SelectedRow]="SelectedRow"
+                                                                       [IsCustomTemplate]="false"
+                                                                       [RowBackGroundColor]="'#DFECF7'"
+                                                                       [ChangeColorByPropName]="'IsChecked'"
+                                                                       [ChangeColorByPropValue]="true"
+                                                                       [IgnoreRowHoverVisibilityQueryName]="true"
+                                                                       [EnableRowHoverVisibility]="true"
+                                                                       [HoverTemplateIndex]="8"
+                                                                       [rowHeight]="40"
+                                                                       [rows]="RowsItems"
+                                                                       [PassAdditionalDataToTemplates]="true"
+                                                                       [MyScrollTop]="MyScrollTop">
                                                             <!--[RowHoverColor]="'#C8C8FA'"
             (CheckBoxChecked)="onCheckBoxChecked($event)"
              -->
@@ -1543,9 +1509,7 @@
         -->
                                                     </div>
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="!(_SelectedTabFilter.Code=='HOLD')"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="!(_SelectedTabFilter.Code=='HOLD')" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"

@@ -182,7 +182,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAMU", // multi update 
 "UCADPE", // הזנה גורפת PENDING
 "DCACSIFF", // יצירת חשבון ספק מאקסל
-"DCAInUCBApproveAllPending",//אישור PENDING
 
             };
 
@@ -330,7 +329,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCACCFII",//יצירת אישור לפרטי מכס
 "UCADPE" ,// add multi pending
 "DCACSIFF", // יצירת חשבון ספק מאקסל
-"DCAInUCBApproveAllPending",//אישור PENDING
 
             };
 
@@ -459,7 +457,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCACCFII",
 "DCACSIFF", // יצירת חשבון ספק מאקסל
 "UCADPE",
-"DCAInUCBApproveAllPending",//אישור PENDING
 //"8302" //בקשה לטופס הצהרה
 };
 
