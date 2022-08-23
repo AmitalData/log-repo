@@ -73,12 +73,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="RequiresApproval"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ErrorPlace"
     ReferencedTable="PendingErrorPlaces"
