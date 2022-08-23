@@ -337,7 +337,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757T", // תשובה להגשת שטעון
 "2751T", // הצהרת שטעון
 "2751T2", // תשובה להצהרת שטעון
-"UCADPE" // add multi pending
+"UCADPE", // add multi pending
 "DCAInUCBApproveAllPending",//אישור PENDING
 
             };
