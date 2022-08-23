@@ -344,6 +344,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentDataView> GetShipmentViewsByTenant(int tenant)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
+
             if (useSecondaryDB)
             {
                 dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
