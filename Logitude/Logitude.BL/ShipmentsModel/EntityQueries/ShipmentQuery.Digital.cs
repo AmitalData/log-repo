@@ -151,14 +151,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ShipperId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ShipperReference1) ? "" : shipment.ShipperReference1;
-            item.Reference2 = string.IsNullOrEmpty(shipment.ShipperReference2) ? "" : shipment.ShipperReference2;
-            item.PartnerType = "Shipper";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ShipperId,
+                Reference1 = string.IsNullOrEmpty(shipment.ShipperReference1) ? "" : shipment.ShipperReference1,
+                Reference2 = string.IsNullOrEmpty(shipment.ShipperReference2) ? "" : shipment.ShipperReference2,
+                PartnerType = "Shipper",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
             item.PartnerName = string.IsNullOrEmpty(card?.EnglishName) ? "" : card?.EnglishName;
@@ -180,14 +182,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ConsigneeId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ConsigneeReference1) ? "" : shipment.ConsigneeReference1;
-            item.Reference2 = string.IsNullOrEmpty(shipment.ConsigneeReference2) ? "" : shipment.ConsigneeReference2;
-            item.PartnerType = "Consignee";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ConsigneeId,
+                Reference1 = string.IsNullOrEmpty(shipment.ConsigneeReference1) ? "" : shipment.ConsigneeReference1,
+                Reference2 = string.IsNullOrEmpty(shipment.ConsigneeReference2) ? "" : shipment.ConsigneeReference2,
+                PartnerType = "Consignee",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
             item.PartnerName = card?.EnglishName;
@@ -212,14 +216,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.AgentId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.AgentReference1) ? "" : shipment.AgentReference1;
-            item.Reference2 = string.IsNullOrEmpty(shipment.AgentReference2) ? "" : shipment.AgentReference2;
-            item.PartnerType = "Agent";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.AgentId,
+                Reference1 = string.IsNullOrEmpty(shipment.AgentReference1) ? "" : shipment.AgentReference1,
+                Reference2 = string.IsNullOrEmpty(shipment.AgentReference2) ? "" : shipment.AgentReference2,
+                PartnerType = "Agent",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.AgentId, tenant, true);
             if (card != null)
@@ -248,13 +254,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ColoaderId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ColoaderReference1) ? "" : shipment.ColoaderReference1;
-            item.PartnerType = "Coloader";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ColoaderId,
+                Reference1 = string.IsNullOrEmpty(shipment.ColoaderReference1) ? "" : shipment.ColoaderReference1,
+                PartnerType = "Coloader",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ColoaderId, tenant, true);
             if (card != null)
@@ -282,13 +290,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ConsigneeNotImporterId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ConsigneeNotImporterReference) ? "" : shipment.ConsigneeNotImporterReference;
-            item.PartnerType = "Consignee Not Importer";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ConsigneeNotImporterId,
+                Reference1 = string.IsNullOrEmpty(shipment.ConsigneeNotImporterReference) ? "" : shipment.ConsigneeNotImporterReference,
+                PartnerType = "Consignee Not Importer",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ConsigneeNotImporterId, tenant, true);
             if (card != null)
@@ -315,13 +325,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 return null;
             }
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.FreightForwarderId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.FreightForwarderReference) ? "" : shipment.FreightForwarderReference;
-            item.PartnerType = "Freight Forwarder";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.FreightForwarderId,
+                Reference1 = string.IsNullOrEmpty(shipment.FreightForwarderReference) ? "" : shipment.FreightForwarderReference,
+                PartnerType = "Freight Forwarder",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.FreightForwarderId, tenant, true);
             if (card != null)
@@ -349,14 +361,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.Notify1Id;
-            item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
-            item.Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2;
-            item.PartnerType = "Notify 1";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.Notify1Id,
+                Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference,
+                Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2,
+                PartnerType = "Notify 1",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
             if (card != null)
@@ -383,13 +397,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 return null;
             }
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.Notify2Id;
-            item.Reference1 = string.IsNullOrEmpty(shipment.Notify2Reference) ? "" : shipment.Notify2Reference;
-            item.PartnerType = "Notify 2";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.Notify2Id,
+                Reference1 = string.IsNullOrEmpty(shipment.Notify2Reference) ? "" : shipment.Notify2Reference,
+                PartnerType = "Notify 2",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.Notify2Id, tenant, true);
             if (card != null)
@@ -417,14 +433,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ShipperNotExporterId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1;
-            item.Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2;
-            item.PartnerType = "Shipper Not Exporter";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ShipperNotExporterId,
+                Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1,
+                Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2,
+                PartnerType = "Shipper Not Exporter",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ShipperNotExporterId, tenant, true);
             if (card != null)
@@ -452,13 +470,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.CustomAgentExportId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.CustomAgentExportReference) ? "" : shipment.CustomAgentExportReference;
-            item.PartnerType = "Custom Agent Export";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.CustomAgentExportId,
+                Reference1 = string.IsNullOrEmpty(shipment.CustomAgentExportReference) ? "" : shipment.CustomAgentExportReference,
+                PartnerType = "Custom Agent Export",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.CustomAgentExportId, tenant, true);
             if (card != null)
@@ -486,13 +506,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.CustomAgentImportId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.CustomAgentImportReference) ? "" : shipment.CustomAgentImportReference;
-            item.PartnerType = "Custom Agent Import";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.CustomAgentImportId,
+                Reference1 = string.IsNullOrEmpty(shipment.CustomAgentImportReference) ? "" : shipment.CustomAgentImportReference,
+                PartnerType = "Custom Agent Import",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.CustomAgentImportId, tenant, true);
             if (card != null)
@@ -520,13 +542,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.CustomClearancePointId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.CustomClearancePointReference1) ? "" : shipment.CustomClearancePointReference1;
-            item.PartnerType = "Custom Clearance Point";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.CustomClearancePointId,
+                Reference1 = string.IsNullOrEmpty(shipment.CustomClearancePointReference1) ? "" : shipment.CustomClearancePointReference1,
+                PartnerType = "Custom Clearance Point",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.CustomClearancePointId, tenant, true);
             if (card != null)
@@ -554,13 +578,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ConsolidatorId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ConsolidatorReference) ? "" : shipment.ConsolidatorReference;
-            item.PartnerType = "Consolidator";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ConsolidatorId,
+                Reference1 = string.IsNullOrEmpty(shipment.ConsolidatorReference) ? "" : shipment.ConsolidatorReference,
+                PartnerType = "Consolidator",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ConsolidatorId, tenant, true);
             if (card != null)
@@ -588,14 +614,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.ReleasingAgentId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.ReleasingAgentReference1) ? "" : shipment.ReleasingAgentReference1;
-            item.Reference2 = string.IsNullOrEmpty(shipment.ReleasingAgentReference2) ? "" : shipment.ReleasingAgentReference2;
-            item.PartnerType = "Releasing Agent";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.ReleasingAgentId,
+                Reference1 = string.IsNullOrEmpty(shipment.ReleasingAgentReference1) ? "" : shipment.ReleasingAgentReference1,
+                Reference2 = string.IsNullOrEmpty(shipment.ReleasingAgentReference2) ? "" : shipment.ReleasingAgentReference2,
+                PartnerType = "Releasing Agent",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.ReleasingAgentId, tenant, true);
             if (card != null)
@@ -623,13 +651,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return null;
             }
 
-            var item = new ShipmentPartnerPM();
-            item.Id = shipment.IssuingCarrierAgentId;
-            item.Reference1 = string.IsNullOrEmpty(shipment.IssuingCarrierReference1) ? "" : shipment.IssuingCarrierReference1;
-            item.PartnerType = "Issuing Carrier Agent";
-            item.CountryCode = "";
-            item.Email = "";
-            item.ContactName = "";
+            var item = new ShipmentPartnerPM
+            {
+                Id = shipment.IssuingCarrierAgentId,
+                Reference1 = string.IsNullOrEmpty(shipment.IssuingCarrierReference1) ? "" : shipment.IssuingCarrierReference1,
+                PartnerType = "Issuing Carrier Agent",
+                CountryCode = "",
+                Email = "",
+                ContactName = ""
+            };
 
             var card = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, tenant, true);
             if (card != null)
