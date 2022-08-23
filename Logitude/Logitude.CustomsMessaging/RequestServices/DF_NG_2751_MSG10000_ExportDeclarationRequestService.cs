@@ -1565,11 +1565,25 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
+
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
-            {
                 DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value = supplierInvoiceItemPM.TradeAgreementCode };
-            }
+
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TaxExemptCode))
+                DMExtensions.TaxExemptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsTaxExemptCode() { Value = GetTaxExemptCode(supplierInvoiceItemPM) };
+
             return DMExtensions;
+        }
+
+        private string GetTaxExemptCode(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
+
+            else if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
+
+            return supplierInvoiceItemPM.TaxExemptCode;
         }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement[] GetDangerousGoodsStatement(List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements)
@@ -1881,23 +1895,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //}
             DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
-
-            if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode))
-            {
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
-                }
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
-                }
-                //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
-            }
-
             DMExtensions.Vehicle = GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentification(supplierInvoiceItemPM.SupplierInvoiceItemVehicles); // Mirit 16/08/15 Task 15960
-                                                                                                                                                                             // if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.PreferenceDocumentNumber)) // moran 9.3.15 - Task 11774
-                                                                                                                                                                             //SetIDTypeValue<PreferenceDocumentNumberType>("11"); //                                                                                                                                                            // SetIDTypeValue<PreferenceDocumentNumberType>("11"); //
             DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
             DMExtensions.InvoiceLineNumbers = "1";// supplierInvoiceItemPM.ActualInvoiceLines;
             DMExtensions.TransactionNatureCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTransactionNatureCode>(supplierInvoiceItemPM.TransactionNatureCode);

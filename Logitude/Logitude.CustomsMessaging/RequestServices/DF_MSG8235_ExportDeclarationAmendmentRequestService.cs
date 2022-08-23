@@ -1906,12 +1906,27 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
+
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
-            {
                 DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value = supplierInvoiceItemPM.TradeAgreementCode };
-            }
+
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TaxExemptCode))
+                DMExtensions.TaxExemptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsTaxExemptCode() { Value = GetTaxExemptCode(supplierInvoiceItemPM) };
+
             return DMExtensions;
         }
+
+        private string GetTaxExemptCode(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
+
+            else if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
+
+            return supplierInvoiceItemPM.TaxExemptCode;
+        }
+
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductName[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
             if (supplierInvoiceItemPM.SupplierInvoiceItemsDescripts == null || supplierInvoiceItemPM.SupplierInvoiceItemsDescripts.Count < 1)
