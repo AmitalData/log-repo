@@ -47,12 +47,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             DeclarationCourierStatusPM dbOccDeclarationCourierStatusPM = GetDBEntity(dirtyDeclarationCourierStatusPM);
+            CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
 
             //if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode) && dirtyDeclarationCourierStatusPM.CourierPendingReasonCode != dbOccDeclarationCourierStatusPM.CourierPendingReasonCode)
             //   || (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.PendingRemarks) && dirtyDeclarationCourierStatusPM.PendingRemarks != dbOccDeclarationCourierStatusPM.PendingRemarks))
             if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonList) && dirtyDeclarationCourierStatusPM.CourierPendingReasonList != dbOccDeclarationCourierStatusPM.CourierPendingReasonList))
             {
-                CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                 string[] courierPendingReasonList = dirtyDeclarationCourierStatusPM.CourierPendingReasonList.Split(',').Select(sValue => sValue.Trim()).ToArray();
                 string[] prevCourierPendingReasonList = !string.IsNullOrEmpty(dbOccDeclarationCourierStatusPM.CourierPendingReasonList) ? dbOccDeclarationCourierStatusPM.CourierPendingReasonList.Split(',').Select(sValue => sValue.Trim()).ToArray() : new string[] { };
                 //CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode, false, false);
@@ -66,11 +66,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
                             declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
-                            if (declarationPendingPM != null)
+                            if (declarationPendingPM != null && (courierPendingReasonPM.RequiresApproval == false || (courierPendingReasonPM.RequiresApproval == true && declarationPendingPM.Approval == true && declarationPendingPM.WasApproved == false)))
                             {
                                 //RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);
-                                OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true,"", declarationPendingPM.PendingRemarks);   
+                                OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true, "", declarationPendingPM.PendingRemarks);
                             }
+                        }
+                    }
+                }
+            }
+            string[] approvedCourierPendingReasonList = dirtyDeclarationCourierStatusPM.ApprovedCourierPendingList.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            foreach (var courierPendingReason in approvedCourierPendingReasonList)
+            {
+                if (courierPendingReason != null)
+                {
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
+
+                    if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
+                    {
+                        DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                        declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
+                        if (declarationPendingPM != null)
+                        {
+                            //RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);
+                            OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true, "", declarationPendingPM.PendingRemarks);
                         }
                     }
                 }
@@ -137,7 +156,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
                 {
-                    
+
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;
@@ -158,7 +177,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         };
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-                    
+
                     string unifreightUser = null;
                     if (RequestSheetContext.Current != null)
                     {
@@ -196,7 +215,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
                         requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
                     }
-                   
+
                     var myYCULTASKPM = new YCULTASKPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -207,7 +226,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIORITY = YCULTASKPM.calcPriority(taskType),
                         TYPE = taskType,
                         USRCODE = unifreightUser,
-                        ARCHIVE = "F", 
+                        ARCHIVE = "F",
                     };
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 

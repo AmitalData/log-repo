@@ -20,22 +20,22 @@ using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    public class DCAInUCBClosePending_MsgMessagingService : MessagingServiceBase<
+    public class DCAInUCAApproveAllPending_MsgMessagingService : MessagingServiceBase<
        GenericRequestParams,
        INF_MSG_GenericResponseData,
        SYSTBL_NG_9000_MSG_SystemTableRequest,
-       DCAInUCBClosePendingWithResponseContentHeader,
+       DCAInUCBApproveAllPendingWithResponseContentHeader,
        DCAInCustomReturnNullRequestService,
-       UniCourierBatchSendClosePending_MsgResponseService, RequestHeader>
+       UniCourierBatchApproveAllPending_MsgResponseService, RequestHeader>
 
     {
 
         public override string MainInterfaceCode
         {
-            get { return "ClosePending"; }
+            get { return "DCAInUCBApproveAllPending"; }
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBClosePendingWithResponseContentHeader customsResponse)
+        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBApproveAllPendingWithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
@@ -54,14 +54,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 
             };
-            if(customsResponse.FilteredRequest)
-            {
-                genericRequestParams.RequestName = $" {customsResponse.MAWB} שידור סגירת PENDING מסוננים לבלדר  ";
-            }else
-            {
-                genericRequestParams.RequestName = $" {customsResponse.MAWB} שידור סגירת PENDING לבלדר ";
+            genericRequestParams.RequestName = $" {customsResponse.MAWB} שידור אישור PENDING לבלדר ";
 
-            }
+           
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
             {
@@ -78,32 +73,30 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams mySendClosePendingRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams myPendingRequestParams)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, myPendingRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";
             }
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = ClosePending  !!!");
+            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCAInUCBApproveAllPending  !!!");
 
             string uniComm = null;
             string fileName = null;
             var transmitionDateTime = DateTime.Now;
             string xmlESBResponseXmlClass = null;
-            var myDCAInUCBClosePendingWithResponseContentHeader = new DCAInUCBClosePendingWithResponseContentHeader()
+            var myDCAInUCBClosePendingWithResponseContentHeader = new DCAInUCBApproveAllPendingWithResponseContentHeader()
             {
-                CourierMasterId = mySendClosePendingRequestParams.CourierMasterId,
+                CourierMasterId = myPendingRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
-                MAWB = mySendClosePendingRequestParams.MAWB,
-                PendingCode = mySendClosePendingRequestParams.PendingCode,
+                MAWB = myPendingRequestParams.MAWB,
                 tenant = tenant,
                 MyMoreParams = "",
-                declarationList = mySendClosePendingRequestParams.DeclarationsList,
-                FilteredRequest = mySendClosePendingRequestParams.DeclarationsList != null,
+                declarationList = myPendingRequestParams.DeclarationsList,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -111,7 +104,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             };
 
 
-            var body = XmlGenericUtil<DCAInUCBClosePendingWithResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
+            var body = XmlGenericUtil<DCAInUCBApproveAllPendingWithResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
             body = body.Substring(body.IndexOf(Environment.NewLine));
             var myESBResponseXmlClass = new ESBResponseXmlClass();
             var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
@@ -150,38 +143,36 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                     {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" ClosePending SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCAInUCBApproveAllPending SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("ClosePending SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCAInUCBApproveAllPending SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
                     return "קיים מסר זהה בתהליך";
                 }
             }
         }
 
-        protected override DCAInUCBClosePendingWithResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override DCAInUCBApproveAllPendingWithResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();
         }
     }
     [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCBClosePendingWithResponseContentHeader", IsNullable = false)]
     [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCBClosePendingWithResponseContentHeader")]
-    public class DCAInUCBClosePendingWithResponseContentHeader : IINF_MSG_Generic
+    public class DCAInUCBApproveAllPendingWithResponseContentHeader : IINF_MSG_Generic
     {
         public IResponseContentHeader GetResponseContentHeader()
         {
             return ResponseContentHeader;
         }
         public Logitude.CustomsMessaging.Testers.Messages.DefaultResponseContentHeader ResponseContentHeader { get; set; }
-        public bool FilteredRequest  { get; set; }
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MAWB { get; set; }
         public string[] declarationList { get; set; }
-        public string[] PendingCode { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public List<string> ServerSplitDeclarationsList { get; set; }

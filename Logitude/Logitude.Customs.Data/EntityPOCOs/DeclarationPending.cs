@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PendingRemarks { get; set; }
         [Column("Status")]
 	    public string Status { get; set; }
+        [Column("Approval")]
+	    public bool? Approval { get; set; }
     }
 }
 	 

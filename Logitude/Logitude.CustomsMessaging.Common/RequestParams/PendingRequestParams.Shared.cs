@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.Common.RequestParams
 {
-    public class SendClosePendingRequestParams : RequestParamsBase
+    public class PendingRequestParams : RequestParamsBase
     {
         public string CourierMasterId { get; set; }
         public string MAWB { get; set; }
