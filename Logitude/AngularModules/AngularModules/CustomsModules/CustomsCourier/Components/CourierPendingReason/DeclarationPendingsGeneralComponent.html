@@ -113,21 +113,19 @@
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
-                                                <CheckBox *ngIf="item.CourierPendingRequireApr"
+                                                <CheckBox *ngIf="item.CourierPendingRequireApr && !item.WasApproved"
                                                     [IsChecked]="item.Approval"
-                                                    [IsEnabled]="!item.WasApproved"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
-                                                    *ngIf="!item.CourierPendingRequireApr">{{item.Approval}}</span>
+                                                    *ngIf="!item.CourierPendingRequireApr || item.WasApproved ">{{item.Approval}}</span>
                                             </div>
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsEditMode">
-                                                <CheckBox *ngIf="item.CourierPendingRequireApr"
+                                                <CheckBox *ngIf="item.CourierPendingRequireApr && !item.WasApproved"
                                                     [IsChecked]="item.Approval"
-                                                    [IsEnabled]="!item.WasApproved"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
-                                                    *ngIf="!item.CourierPendingRequireApr">{{item.Approval}}</span>
+                                                    *ngIf="!item.CourierPendingRequireApr || item.WasApproved ">{{item.Approval}}</span>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
