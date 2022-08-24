@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .MyBlue {
         color: #fff;
         background-color: #337ab7;
@@ -196,21 +196,21 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="GatepassRequestMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'×’×™×™×˜×¤×¡ ×”×¢×‘×¨×•×ª' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
                                                         <button *ngIf="IsMamanEnabled" style="text-align:right"
                                                             (click)="SendFTPMamanRequestMethod()"
                                                             [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest'
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'×©×™× ×•×™ ×�×ª×¨ ×�×—×¡×•×Ÿ' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'×©×™× ×•×™ ×�×ª×¨ ×¤×¨×™×§×”' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
-                                                            [disabled]="IsDisplayOnly">{{'×ž×•×›×Ÿ ×œ×”×›× ×ª ×—×©×‘×•× ×™×ª' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img
                                                                 *ngIf="entityPM.IsReadyForInvoice" class="certOkImg"
                                                                 style="position:relative;width:10px;margin-top:10px;opacity: 0.8;"
                                                                 src="./Images/Buttons/EditWithGreenTick.png" /></button>
@@ -223,30 +223,30 @@
                                                             (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight'
                                                             | TextCodeTranslationPipe }}</button>
 
-                                                        <button style="text-align:right" (click)="SendALLSVG(true)">×‘×§×¨×ª
-                                                            ×¡×™×•×•×’×™×�</button>
+                                                        <button style="text-align:right" (click)="SendALLSVG(true)">בקרת
+                                                            סיווגים</button>
                                                         <button style="text-align:right" (click)="Export2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'×™×¦×•×� ×œ×�×§×¡×œ' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'יצוא לאקסל' }}<img
                                                                 class="CenterCenter" title="Export To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;"
                                                                 src="./Images/Buttons/excelicon.png" /></button>
                                                         <button style="text-align:right"
                                                             (click)="ExportCourierSuspention2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'×“×•×— ×ž×¢×•×›×‘×™ ×ž×›×¡' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'דוח מעוכבי מכס' }}<img
                                                                 class="CenterCenter" title="Export Suspention To Excel"
                                                                 class="certOkImg"
                                                                 style="position:relative;margin-bottom:8px;width:10px;opacity: 0.8;"
                                                                 src="./Images/Buttons/excelicon.png" /></button>
                                                         <button style="text-align:right"
                                                             (click)="ExportCourierPENDING2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'×“×•×— PENDING' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'דוח PENDING' }}<img
                                                                 class="CenterCenter" title="Export PENDING To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; "
                                                                 src="./Images/Buttons/excelicon.png" /></button>
                                                         <button *ngIf='isAllowBulkPendind' style="text-align:right"
-                                                            (click)="openBulkFeedPending()">×¢×“×›×•×Ÿ ×’×•×¨×£</button>
+                                                            (click)="openBulkFeedPending()">עדכון גורף</button>
                                                     </div>
 
                                                 </div>
@@ -259,10 +259,10 @@
                                                     <tr>
                                                         <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
-                                                            {{'×¡×”×› ×©.×ž.×‘ '}} {{ DataSource.rowCount }}</td>
+                                                            {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null"
-                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'×ž×ª×�×™×ž×™×�
-                                                            ×œ×—×™×ª×•×š'}}</td>
+                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים
+                                                            לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
 
@@ -282,7 +282,7 @@
                                             {{DisplayOnlyMessage}}
                                             <span style="padding: 0px 16px;">-</span>
                                             <span class="hyperlink" (click)="RefreshButtonClicked()"
-                                                style="font-size:12px;">×¨×¢× ×Ÿ</span>
+                                                style="font-size:12px;">רענן</span>
                                         </div>
                                     </div>
                                 </td>
@@ -315,7 +315,7 @@
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
                                                                     dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}/×œ×� ×�×•×©×¨×• ({{this._NotApproved}})</span>  
+                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו ({{this._NotApproved}})</span>  
                                                             </div>
                                                         </td>
 
@@ -570,8 +570,8 @@
                                                                                             </li>
                                                                                             <li>
                                                                                                 <span
-                                                                                                    (click)="SendALLCorrectDec('X')">{{'×©×“×¨
-                                                                                                    ×”×¦×”×¨×” ×©×’×•×™×™×�' }}
+                                                                                                    (click)="SendALLCorrectDec('X')">{{'שדר
+                                                                                                    הצהרה שגויים' }}
                                                                                                     ({{_InCorrectDECToBatchSend}})</span>
                                                                                             </li>
                                                                                         </ul>
@@ -610,11 +610,11 @@
                                                                         </td>
                                                                         <td style="width:1px"></td>
                                                                         <td style="width:145px">
-                                                                            <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">×©×“×¨ ×ž×¡×¨ ×©.×ž.×‘ ×œ×ž×¡×•×£</button>-->
+                                                                            <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLTerminal()"
                                                                                 [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled || IsILSWSEnabled )) || IsDisplayOnly"
-                                                                                [ButtonText]="'×©×“×¨ ×ž×¡×¨ ×©.×ž.×‘ ×œ×ž×¡×•×£'"
+                                                                                [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
                                                                                 [AsRegularButton]="'true'"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
@@ -625,7 +625,22 @@
                                                                                 </div>
                                                                             </split-button>
                                                                         </td>
-
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <split-button *ngIf="DelayFormVisibility"
+                                                                                (DefaultSplitButtonClicked)="SendDelayForm()"
+                                                                                [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
+                                                                                [ButtonText]=SelectedDECToDelayFormButtonText
+                                                                                [AsRegularButton]="'true'"
+                                                                                [MENUDivExtraTop]="24"
+                                                                                [MENUDivExtraLeft]="110">
+                                                                                <div
+                                                                                    class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -634,7 +649,7 @@
                                                                     <tr>
                                                                         <td style="width:100px"><button class="Button"
                                                                                 (click)="SendALLSVG(false)"
-                                                                                [disabled]="IsDisplayOnly">×¢×‘×•×¨ ×œ×¡×™×•×•×’
+                                                                                [disabled]="IsDisplayOnly">עבור לסיווג
                                                                                 {{' (' +this._SVGTotal + ')' }}</button>
                                                                         </td>
                                                                         <td></td>
@@ -808,7 +823,7 @@
                                                                             <!--
         <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
                       [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
-                      [ButtonText]="'×©×“×¨ ×ž×¡×ž×›×™×� ×©×’×•×™×™×�'"
+                      [ButtonText]="'שדר מסמכים שגויים'"
                       [AsRegularButton]="'true'"
                       [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
@@ -821,7 +836,7 @@
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendUncorrectDocuments('X')"
                                                                                 [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
-                                                                                [ButtonText]="'×©×“×¨ ×ž×¡×ž×›×™×� ×©×’×•×™×™×�'"
+                                                                                [ButtonText]="'שדר מסמכים שגויים'"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 
@@ -832,8 +847,8 @@
                                                                                             style="width:145px;">
                                                                                             <li>
                                                                                                 <span
-                                                                                                    (click)="SendUncorrectDocuments('VX')">{{'×¦×•×¨
-                                                                                                    ×’×¨×¡×” ×•×©×“×¨ ×©×’×•×™×™×�' }}
+                                                                                                    (click)="SendUncorrectDocuments('VX')">{{'צור
+                                                                                                    גרסה ושדר שגויים' }}
                                                                                                 </span>
                                                                                             </li>
                                                                                         </ul>
@@ -848,7 +863,7 @@
                                                                                 (DefaultSplitButtonClicked)="SendDocumentsFromQueue()"
                                                                                 *ngIf="IsSendDocumentsFromQueueButton"
                                                                                 [IsDisabled]="false"
-                                                                                [ButtonText]="'×©×“×¨ ×ž×¡×ž×›×™×� ×ž×”×ª×•×¨ ×›×¢×ª'"
+                                                                                [ButtonText]="'שדר מסמכים מהתור כעת'"
                                                                                 [AsRegularButton]="'true'"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
@@ -900,12 +915,12 @@
                                                                                 (click)="SendReadyLOWPAYToBatch()"
                                                                                 [disabled]="IsDisplayOnly"> {{ ' ('
                                                                                 +this._PAYReadyNotFastindividual + ') '
-                                                                                + '×ª×©×œ×•×� ×ª×”×œ×™×š ×ž×”×™×¨'}}</button></td>
+                                                                                + 'תשלום תהליך מהיר'}}</button></td>
                                                                         <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0"
                                                                             style="width:100px; "><button class="Button"
                                                                                 (click)="SendReadyLOWPAYToBatch()"
-                                                                                [disabled]="IsDisplayOnly"> {{ '×ª×©×œ×•×�
-                                                                                ×ª×”×œ×™×š ×ž×”×™×¨ ×ž×¡×•×ž× ×™×�'}}</button></td>
+                                                                                [disabled]="IsDisplayOnly"> {{ 'תשלום
+                                                                                תהליך מהיר מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
                                                                         <td style="width:100px"></td>
                                                                         <td></td>
@@ -949,7 +964,7 @@
                                                                                 <li (click)="ACCFilterClicked('WS')"
                                                                                     style="width:120px; height: 25px;"
                                                                                     [class.SelectedFilter]="_SelectedACCValue === 'WS'">
-                                                                                    <!--{{'×ž×™×•×—×“×•×ª ×©×’×•×™×™×�'}}-->
+                                                                                    <!--{{'מיוחדות שגויים'}}-->
                                                                                     {{'Customs.CourierMaster.ACC.WrongSpecial'
                                                                                     | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._ACC_WS_Total +
@@ -958,7 +973,7 @@
                                                                                 <li (click)="ACCFilterClicked('W')"
                                                                                     style="width:120px; height: 25px;"
                                                                                     [class.SelectedFilter]="_SelectedACCValue === 'W'">
-                                                                                    <!--{{'×©.×ž.×‘ ×©×’×•×™×™×�'}}-->
+                                                                                    <!--{{'ש.מ.ב שגויים'}}-->
                                                                                     {{'Customs.CourierMaster.ACC.Wrong'
                                                                                     | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._ACC_W_Total +
@@ -987,13 +1002,13 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
-
-                                                                        <td [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '150px' : '170px' }">
-                                                                            <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width: 130px;">
+                                                                        <td style="width:150px;">
+                                                                            <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                                style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
-                                                                                    [ButtonText]="' ×¡×’×™×¨×” ×’×•×¨×¤×ª ×œ-Pending ×ž×¡×•× × ×™×�'"
+                                                                                    [ButtonText]="' סגירה גורפת ל-Pending מסוננים'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
@@ -1008,7 +1023,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
-                                                                                    [ButtonText]="'×¡×’×™×¨×” ×’×•×¨×¤×ª ×œ-Pending'"
+                                                                                    [ButtonText]="'סגירה גורפת ל-Pending'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
@@ -1025,7 +1040,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
-                                                                                    [ButtonText]="'×�×™×©×•×¨ PENDING'"
+                                                                                    [ButtonText]="'אישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
@@ -1039,27 +1054,6 @@
                                                                         <td>
                                                                             <div></div>
                                                                         <td>
-                                                                        
-                                                                        <td>
-                                                                            
-                                                                                <split-button *ngIf="DelayFormVisibility"
-                                                                                (DefaultSplitButtonClicked)="SendDelayForm()"
-                                                                                [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                                && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
-                                                                                [ButtonText]=SelectedDECToDelayFormButtonText
-                                                                                [AsRegularButton]="'true'"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
-                                                                                    <div></div>
-                                                                                </div>
-                                                                                </split-button>
-                                                                                
-                                                                        </td>
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                             </td>
@@ -1070,7 +1064,7 @@
                                                                     [ObjectTableName]="'Customs.CourierMaster'"
                                                                     (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
                                                                     [SearchText]="SearchFilter"
-                                                                    [PlaceHolder]="'×ª×™×§/×”×¦×”×¨×”/×©.×ž.×‘/×œ×§×•×—'">
+                                                                    [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
                                                                 </SearchTextBox>
                                                             </td>
                                                             <td style="width:5px;"></td>
