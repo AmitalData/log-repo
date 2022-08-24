@@ -978,7 +978,7 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
-                                                                        <td>
+                                                                        <td [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '150px' : '170px' }">
                                                                             <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
@@ -1009,7 +1009,7 @@
                                                                             </div>
                                                                         </td>
                                                                         
-                                                                        <td [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '73%' : '70%' }">
+                                                                        <td>
                                                                             
                                                                                 <split-button *ngIf="DelayFormVisibility"
                                                                                 (DefaultSplitButtonClicked)="SendDelayForm()"
@@ -1025,6 +1025,9 @@
                                                                                 </div>
                                                                                 </split-button>
                                                                                 
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
