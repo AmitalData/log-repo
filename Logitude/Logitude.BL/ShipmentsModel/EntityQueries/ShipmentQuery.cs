@@ -1962,9 +1962,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
-                IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
                 Shipment masterShipment = (from a in repShipmentContext.Shipments
                                            where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
                                            select a).FirstOrDefault();
@@ -2333,7 +2334,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #region ShipmenConsoleShipments
                 if (shipmentPM.ShipmentLevelCode == "C")
                 {
-                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(this.repository.context);
+                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(repShipmentContext);
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
                 #endregion
