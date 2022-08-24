@@ -584,10 +584,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCAInUCBClosePending_MsgMessagingService>
                 ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInUCAApproveAllPending_MsgMessagingService>
-               ((new DCAInUCAApproveAllPending_MsgMessagingService()).MainInterfaceCode);
-
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                  DCAInUCBUCADPE_MsgMessagingService>

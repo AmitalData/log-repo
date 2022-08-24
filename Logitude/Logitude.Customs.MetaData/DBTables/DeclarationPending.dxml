@@ -40,12 +40,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="Approval"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="DeclarationID"
     ReferencedTable="DeclarationCourierStatuses"

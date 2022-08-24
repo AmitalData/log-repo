@@ -19,7 +19,6 @@ export class CourierPendingReasonList {
 	UnifreightStatusCode: string;
 	ErrorPlaceName: string;
 	MamanSuspendedCode: string;
-	RequiresApproval: boolean;
 	
 }
  

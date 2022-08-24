@@ -39,11 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.CourierPendingReasonCode != null)
             {
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPOCO.Tenant);
-                CourierPendingReasonPM constraintType = courierPendingReasonQueryService.GetSingle(entityPOCO.CourierPendingReasonCode, false, false);
+                CourierPendingReasonPM constraintType = courierPendingReasonQueryService.GetSingle(entityPOCO.CourierPendingReasonCode, false, true);
                 entityPM.CourierPendingReasonName = constraintType.LocalName;
-                entityPM.CourierPendingRequireApr = constraintType.RequiresApproval;
             }
-            entityPM.WasApproved = entityPM.Approval;
 
         }
     }

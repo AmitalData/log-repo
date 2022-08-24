@@ -273,29 +273,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? requiresApproval ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? RequiresApproval  
-	   {
-	    
-	     get
-		{
-		   return requiresApproval;
-		 }
-		 set
-		 {
-		   if(requiresApproval != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequiresApproval",OldValue=requiresApproval,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   requiresApproval=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

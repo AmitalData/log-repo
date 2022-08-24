@@ -1580,7 +1580,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 windowArgs.DeclarationId = this.EntityPM.Id;
                 windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
 
-                logitudeWindow.Width = 500;
+                logitudeWindow.Width = 470;
                 logitudeWindow.Height = 300;
                 logitudeWindow.IsShowCloseButton = true;
                 logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");

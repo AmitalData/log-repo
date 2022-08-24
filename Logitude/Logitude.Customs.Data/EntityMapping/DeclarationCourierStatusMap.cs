@@ -84,8 +84,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.LastMileServiceType).HasColumnName("LastMileServiceType").HasMaxLength(4).IsUnicode(true);
 
             this.Property(t => t.MissedDocumentStatusCode).HasColumnName("MissedDocumentStatusCode").HasMaxLength(1).IsUnicode(false);
-
-            this.Property(t => t.NotApprovedPendingList).HasColumnName("NotApprovedPendingList").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }
