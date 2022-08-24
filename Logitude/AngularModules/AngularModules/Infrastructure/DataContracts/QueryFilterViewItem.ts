@@ -21,7 +21,8 @@ export class QueryFilterViewItem extends FilterItem  {
     public BooleanList: boolean[] = [true, false];
     public SelectedOperator: Operator;
     public IsChecked: boolean;
-    public ObjectFieldCode: string;
+    public SelectedObjectFieldCode: string;
+    public ObjectValueFieldCode: string;
     private SelectedObjectFieldPM: ObjectFieldPM;
 
     constructor(TreeFilter: any = null, ParentClass: QueryFilterTreeComponent = null) {
@@ -116,7 +117,7 @@ export class QueryFilterViewItem extends FilterItem  {
         if (!fieldNameAndObjectTableName) return;
 
         this.FieldName = fieldNameAndObjectTableName.length == 1 ? fieldNameAndObjectTableName[0] : fieldNameAndObjectTableName[1];
-        this.MainEntityName = fieldNameAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        this.MainEntityName = this.FieldName ? fieldNameAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.MainEntityName;
         this.FieldChanged(window.ObjectFields.filter(f => this.FieldName == f.FieldName && this.MainEntityName == f.ObjectTableName)[0]);
     }
 
@@ -126,7 +127,7 @@ export class QueryFilterViewItem extends FilterItem  {
         if (!fieldValueAndObjectTableName) return;
 
         this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : fieldValueAndObjectTableName[1];
-        this.SecondaryEntityName = fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        this.SecondaryEntityName = this.FieldValue ? fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.SecondaryEntityName;
         if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') {
             this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue);
         }
@@ -347,13 +348,14 @@ export class QueryFilterViewItem extends FilterItem  {
     FieldChanged(objectFieldPM: ObjectFieldPM) {
         if (!objectFieldPM) {
             this.FieldName = "";
+            this.SelectedObjectFieldCode = "";
             return;
         }
         if (this.SelectedObjectFieldPM && this.SelectedObjectFieldPM.Id == objectFieldPM.Id) {
             return;
         }
         this.SelectedObjectFieldPM = objectFieldPM;
-        this.ObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
+        this.SelectedObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.MainEntityName) {
             this.FieldName = this.MainEntityName + '.' + objectFieldPM.FieldName;
         }
@@ -371,8 +373,10 @@ export class QueryFilterViewItem extends FilterItem  {
     ValueChanged(objectFieldPM: ObjectFieldPM) {
         if (!objectFieldPM) {
             this.FieldValue = "";
+            this.ObjectValueFieldCode = "";
             return;
         }
+        this.ObjectValueFieldCode = objectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.SecondaryEntityName) {
             this.FieldValue = this.SecondaryEntityName + '.' + objectFieldPM.FieldName;
         }
