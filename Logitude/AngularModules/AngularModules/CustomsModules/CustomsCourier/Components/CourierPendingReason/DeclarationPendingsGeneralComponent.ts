@@ -453,6 +453,14 @@ export class DeclarationPendingLine extends BaseComponent {
 
         }
     }
+
+    get Approval() { return this.entityPM.Approval; }
+    set Approval(value: boolean) {
+        if (this.entityPM.Approval != value) {
+            this.entityPM.Approval = value;
+
+        }
+    }
     
     //#endregion
 
