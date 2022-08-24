@@ -43,7 +43,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant);
+                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant, cardId);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }

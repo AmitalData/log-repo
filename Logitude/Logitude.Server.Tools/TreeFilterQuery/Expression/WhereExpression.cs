@@ -81,7 +81,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
             if (filter == null)
                 throw new ArgumentNullException(nameof(filter));
-            if (filter.FilterType == "None" || string.IsNullOrEmpty(filter.FilterType))
+            if (filter.FilterType == "None" || string.IsNullOrEmpty(filter.FilterType) || !string.IsNullOrEmpty(filter.Operator))
                 return GetExpressionForField(expression, filter, suffix + "0");
 
             if (!(filter.QueryFilterItems?.Any() ?? false))

@@ -130,7 +130,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false)
+        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false, string cardId = null)
         {
             int tenant = shipment.Tenant;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(shipment.Tenant);
@@ -1926,6 +1926,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.EntityStatus != null)
             {
                 shipmentPM.StatusName = shipment.EntityStatus.Name;
+                shipmentPM.StatusCode = shipment.EntityStatus.Code;
                 shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             }
 
@@ -1962,9 +1963,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
-                IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
                 Shipment masterShipment = (from a in repShipmentContext.Shipments
                                            where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
                                            select a).FirstOrDefault();
@@ -2333,7 +2335,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #region ShipmenConsoleShipments
                 if (shipmentPM.ShipmentLevelCode == "C")
                 {
-                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(this.repository.context);
+                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(repShipmentContext);
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
                 #endregion
@@ -2358,7 +2360,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-            CheckInvoicedFields(shipmentPM);
+            CheckDigitalPortalInvoicedFields(shipmentPM, cardId);
 
             #region Pickups & Deliveries
 
@@ -2647,14 +2649,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        private void CheckInvoicedFields(ShipmentPM shipmentPM)
+        private void CheckDigitalPortalInvoicedFields(ShipmentPM shipmentPM, string cardId)
         {
+            if (string.IsNullOrEmpty(cardId))
+            {
+                return;
+            }
+
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
                 return;
             }
-            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
+
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
+            List<ARInvoice> invoices = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant);
+            shipmentPM.IsFullInvoiced = invoices?.Count() > 0 ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -4332,7 +4342,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return mixPanelEvent;
         }
 
-        public ShipmentPM GetSinglePM(string id, int tenant)
+        public ShipmentPM GetSinglePM(string id, int tenant, string cardId = null)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -4361,7 +4371,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM shipmentPM = new ShipmentPM();
 
 
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
@@ -13289,6 +13299,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                QuoteNumber = f.QuoteNumber,
                                StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
+                               StatusCode = f.StatusCode,
                                PreForwardingETD = f.PreForwardingETD,
                                IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                ParentShipmentDirectionId = f.ParentShipmentDirectionId,
@@ -15611,6 +15622,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                                            shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
 
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
 
             if (!string.IsNullOrEmpty(warehousingFirstId))
             {

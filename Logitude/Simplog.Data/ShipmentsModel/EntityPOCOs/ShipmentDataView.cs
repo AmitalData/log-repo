@@ -660,6 +660,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageETAOrATA { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusName { get; set; }
+        public string StatusCode { get; set; }
         public string StatusLocation { get; set; }
         public string MissingDocumentsCountWords { get; set; }
         public string ArchivedText { get; set; }

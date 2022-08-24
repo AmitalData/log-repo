@@ -24,10 +24,10 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
         {
             int tenant = sendInterfaceDataContractFileNameArgs.Tenant;
 
-            string shipmentNumber = GetPropertyValueFromObject("ShipmentNumber", EntityPM);
-            string transportModeId = GetPropertyValueFromObject("TransportModeId", EntityPM);
-            string directionId = GetPropertyValueFromObject("DirectionId", EntityPM);
-            string calculatedFileName = GetShipmentLevelName(EntityPM, tenant).ToLower() + "_" + transportModeId.ToLower() + directionId.ToLower() + "_" + shipmentNumber.ToLower();
+            string shipmentNumber = EntityPM.ShipmentNumber;
+            string transportModeId = EntityPM.TransportModeId;
+            string directionId = EntityPM.DirectionId;
+            string calculatedFileName = GetShipmentLevelName(EntityPM, tenant).ToLower() + "_" + transportModeId?.ToLower() + directionId?.ToLower() + "_" + shipmentNumber?.ToLower();
             
             return calculatedFileName;
         }

@@ -22,9 +22,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
             QueryFilterItem = queryFilterItem;
             if (!queryFilterItem.IsCustomField) SetLeftRightExpressions();
             else SetCustomFieldLeftRightExpressions();
-
-
-            return CreateExpression();
+            return Build();
         }
 
         private void SetLeftRightExpressions()
@@ -61,7 +59,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
             return WhereExpression.ToStaticParameterExpressionOfType(WhereExpression.TryCastFieldValueType(QueryFilterItem.FieldValue, LeftExpression.Type), LeftExpression.Type);
         }
 
-        public abstract System.Linq.Expressions.Expression  CreateExpression();
+        public abstract System.Linq.Expressions.Expression Build();
         private string GetFieldName(object name)
         {
             if (name == null || string.IsNullOrEmpty(name.ToString())) return null;
@@ -79,7 +77,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class GreaterThan : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             return System.Linq.Expressions.Expression.GreaterThan(LeftExpression, RightExpression);
         }
@@ -87,7 +85,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class LessThan : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             return System.Linq.Expressions.Expression.LessThan(LeftExpression, RightExpression);
         }
@@ -95,7 +93,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class GreaterThanOrEqual : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             return System.Linq.Expressions.Expression.GreaterThanOrEqual(LeftExpression, RightExpression);
         }
@@ -103,7 +101,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class LessThanOrEqual : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             return System.Linq.Expressions.Expression.LessThanOrEqual(LeftExpression, RightExpression);
         }
@@ -114,7 +112,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class Equal : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             return System.Linq.Expressions.Expression.Equal(LeftExpression, RightExpression);
         }
@@ -122,7 +120,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class NotEqual : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             return System.Linq.Expressions.Expression.NotEqual(LeftExpression, RightExpression);
         }
@@ -131,7 +129,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class Contains : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             if (IsValueTypeField())
             {
@@ -145,7 +143,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class NotContains : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
 
             if (IsValueTypeField())
@@ -161,7 +159,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class IsEmpty : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             var isEmptyExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
             var isNullExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
@@ -172,7 +170,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class IsNotEmpty : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             var isEmptyExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
             var isNullExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
@@ -183,7 +181,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class StartsWith : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
             return System.Linq.Expressions.Expression.Call(field, WhereExpression.StartsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue));
@@ -192,7 +190,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class InList : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             System.Linq.Expressions.Expression expression = null;
             foreach (string value in QueryFilterItem.FieldValue.ToString().Split(','))
@@ -215,7 +213,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class InListExact : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression  CreateExpression()
+        public override System.Linq.Expressions.Expression  Build()
         {
             System.Linq.Expressions.Expression expression = null;
             foreach (string value in QueryFilterItem.FieldValue.ToString().Split(','))
@@ -241,7 +239,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class Exclude : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             System.Linq.Expressions.Expression expression = null;
             foreach (string value in QueryFilterItem.FieldValue.ToString().Split(new string[] { ",", "%2C" }, StringSplitOptions.None))
@@ -265,7 +263,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     public class InListInt : OperatorExpression
     {
-        public override System.Linq.Expressions.Expression CreateExpression()
+        public override System.Linq.Expressions.Expression Build()
         {
             List<int> listOfInts = new List<int>();
             System.Linq.Expressions.Expression expression = null;
@@ -299,7 +297,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
     //    public class Between : OperatorExpression
     //{
-    //    public override System.Linq.Expressions.Expression  CreateExpression()
+    //    public override System.Linq.Expressions.Expression  Build()
     //    {
 
     //       System.Linq.Expressions.Expression grandExpression = null;
