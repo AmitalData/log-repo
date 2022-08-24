@@ -780,7 +780,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             declarationAgentList.Add(declarationAgent);
 
-            if (declarationPM.Consignments != null && declarationPM.Consignments[0].CargoTypeCode == "17")
+            if (declarationPM.Consignments != null&& declarationPM.Consignments.Count() >0 && declarationPM.Consignments[0].CargoTypeCode == "17")
             {
                 var declarationAgentSecond = new DeclarationAgent()
                 {
