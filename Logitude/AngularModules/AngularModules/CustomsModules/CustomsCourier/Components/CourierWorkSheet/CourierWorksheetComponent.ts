@@ -266,6 +266,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     {
                         this._SelectedTabFilter = this._TabFilterList[0];
                         this._SelectedCustomStatusValue = 'S';
+                        this._SelectedStatusValue ='O';
+                        this.SelectedStatusValueClick('O');
                         this.SelectedCustomStatusValueClick('S');
                         break;
                     }
