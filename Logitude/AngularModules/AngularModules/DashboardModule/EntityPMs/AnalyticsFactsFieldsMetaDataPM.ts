@@ -49,6 +49,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     public set CanMeasure(newValue: boolean) { if (this.canMeasure != newValue) { this.canMeasure = newValue; this.MarkAsDirty("CanMeasure"); } }
        
 	 
+    private canGroup: boolean;
+    public get CanGroup() { return this.canGroup; }
+    public set CanGroup(newValue: boolean) { if (this.canGroup != newValue) { this.canGroup = newValue; this.MarkAsDirty("CanGroup"); } }
+       
+	 
     private fieldCode: string;
     public get FieldCode() { return this.fieldCode; }
     public set FieldCode(newValue: string) { if (this.fieldCode != newValue) { this.fieldCode = newValue; this.MarkAsDirty("FieldCode"); } }
@@ -72,6 +77,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     private joinedTableKey: string;
     public get JoinedTableKey() { return this.joinedTableKey; }
     public set JoinedTableKey(newValue: string) { if (this.joinedTableKey != newValue) { this.joinedTableKey = newValue; this.MarkAsDirty("JoinedTableKey"); } }
+       
+	 
+    private joinedTableDisplayField: string;
+    public get JoinedTableDisplayField() { return this.joinedTableDisplayField; }
+    public set JoinedTableDisplayField(newValue: string) { if (this.joinedTableDisplayField != newValue) { this.joinedTableDisplayField = newValue; this.MarkAsDirty("JoinedTableDisplayField"); } }
        
 	 
 

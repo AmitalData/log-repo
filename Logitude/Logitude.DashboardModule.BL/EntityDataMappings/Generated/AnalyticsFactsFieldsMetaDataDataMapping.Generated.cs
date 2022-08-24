@@ -27,11 +27,13 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         AnalyticsFactsMetaDataId, 
 	         DataTypeCode, 
 	         CanMeasure, 
+	         CanGroup, 
 	         FieldCode, 
 	         DisplayName, 
 	         DisplayNamePlural, 
 	         JoinedTableName, 
-	         JoinedTableKey,
+	         JoinedTableKey, 
+	         JoinedTableDisplayField,
 	      }
 
 
@@ -43,11 +45,13 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         AnalyticsFactsMetaDataId, 
 	         DataTypeCode, 
 	         CanMeasure, 
+	         CanGroup, 
 	         FieldCode, 
 	         DisplayName, 
 	         DisplayNamePlural, 
 	         JoinedTableName, 
-	         JoinedTableKey,
+	         JoinedTableKey, 
+	         JoinedTableDisplayField,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -76,6 +80,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 				entityPOCO.CanMeasure = entityPM.CanMeasure;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanGroup))
+            {
+				entityPOCO.CanGroup = entityPM.CanGroup;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FieldCode))
             {
 				entityPOCO.FieldCode = entityPM.FieldCode;
@@ -99,6 +108,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableKey))
             {
 				entityPOCO.JoinedTableKey = entityPM.JoinedTableKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDisplayField))
+            {
+				entityPOCO.JoinedTableDisplayField = entityPM.JoinedTableDisplayField;
 			}
 			}
 
@@ -130,6 +144,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.CanMeasure = entityPOCO.CanMeasure;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CanGroup))
+            {
+					entityPM.CanGroup = entityPOCO.CanGroup;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FieldCode))
             {
 					entityPM.FieldCode = entityPOCO.FieldCode;
@@ -153,6 +172,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JoinedTableKey))
             {
 					entityPM.JoinedTableKey = entityPOCO.JoinedTableKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JoinedTableDisplayField))
+            {
+					entityPM.JoinedTableDisplayField = entityPOCO.JoinedTableDisplayField;
             }
 
 		}
@@ -181,6 +205,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
                 oldEntityPM.CanMeasure = entityPM.CanMeasure;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanGroup))
+            {
+                oldEntityPM.CanGroup = entityPM.CanGroup;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FieldCode))
             {
                 oldEntityPM.FieldCode = entityPM.FieldCode;
@@ -204,6 +233,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableKey))
             {
                 oldEntityPM.JoinedTableKey = entityPM.JoinedTableKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDisplayField))
+            {
+                oldEntityPM.JoinedTableDisplayField = entityPM.JoinedTableDisplayField;
             }
 			
 		}

@@ -35,6 +35,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         public virtual FieldDataType FieldDataType { get; set; }
         [Column("CanMeasure")]
 	    public bool CanMeasure { get; set; }
+        [Column("CanGroup")]
+	    public bool CanGroup { get; set; }
         [Column("FieldCode")]
 	    public string FieldCode { get; set; }
         [Column("DisplayName")]
@@ -45,6 +47,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string JoinedTableName { get; set; }
         [Column("JoinedTableKey")]
 	    public string JoinedTableKey { get; set; }
+        [Column("JoinedTableDisplayField")]
+	    public string JoinedTableDisplayField { get; set; }
     }
 }
 	 

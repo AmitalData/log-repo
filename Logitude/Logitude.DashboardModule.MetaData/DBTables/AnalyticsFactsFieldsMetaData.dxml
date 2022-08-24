@@ -39,6 +39,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CanGroup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="FieldCode"
     Type="varchar"
     Size="100">
@@ -68,6 +74,13 @@
   </Column>
   <Column
     Name="JoinedTableKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="JoinedTableDisplayField"
     Type="varchar"
     Size="100">
     <Constraints

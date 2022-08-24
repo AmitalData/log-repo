@@ -33,6 +33,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.CanMeasure).HasColumnName("CanMeasure");
 
+            this.Property(t => t.CanGroup).HasColumnName("CanGroup");
+
             this.Property(t => t.FieldCode).HasColumnName("FieldCode").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.DisplayName).HasColumnName("DisplayName").HasMaxLength(150).IsUnicode(true);
@@ -42,6 +44,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.JoinedTableName).HasColumnName("JoinedTableName").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.JoinedTableKey).HasColumnName("JoinedTableKey").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.JoinedTableDisplayField).HasColumnName("JoinedTableDisplayField").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

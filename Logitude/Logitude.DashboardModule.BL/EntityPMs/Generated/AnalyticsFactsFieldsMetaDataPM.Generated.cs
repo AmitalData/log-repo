@@ -135,6 +135,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool canGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CanGroup  
+	   {
+	    
+	     get
+		{
+		   return canGroup;
+		 }
+		 set
+		 {
+		   if(canGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CanGroup",OldValue=canGroup,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   canGroup=value;
+		   }
+			
+		 }
+	   }
 	  private string fieldCode ;
 	  	  
        
@@ -246,6 +269,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JoinedTableKey",OldValue=joinedTableKey,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   joinedTableKey=value;
+		   }
+			
+		 }
+	   }
+	  private string joinedTableDisplayField ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JoinedTableDisplayField  
+	   {
+	    
+	     get
+		{
+		   return joinedTableDisplayField;
+		 }
+		 set
+		 {
+		   if(joinedTableDisplayField != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JoinedTableDisplayField",OldValue=joinedTableDisplayField,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   joinedTableDisplayField=value;
 		   }
 			
 		 }
