@@ -2999,6 +2999,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             ShipmentPM shipmentPM = new ShipmentPM();
 
             shipmentPM.Id = houseShipment.Id;
+            shipmentPM.ShipmentNumber = houseShipment.ShipmentNumber;
             shipmentPM.Tenant = houseShipment.Tenant;
             shipmentPM.CreatedByUserId = houseShipment.CreatedByUserId;
             shipmentPM.UpdatedByUserId = houseShipment.UpdatedByUserId;
