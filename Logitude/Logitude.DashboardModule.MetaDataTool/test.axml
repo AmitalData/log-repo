@@ -1,61 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AnalyticsFactsMetaData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <HashString>1f8830825ae94f75b07cb118e1565ba9</HashString>
+  <HashString>d729426453494064bb9ae27e7c498bc9</HashString>
   <Name>a</Name>
   <TableName>b</TableName>
   <AnalyticsFactsFieldsMetaDatas>
-    <AnalyticsFactsFieldsMetaDataViewModel>
-      <HashString>2413e99bb56a487ea602355f4364c34e</HashString>
+    <AnalyticsFactsFieldsMetaData>
+      <HashString>62c40db6466a4ad1975fb5eab0fa975d</HashString>
       <DataTypeCode>Text</DataTypeCode>
-      <CanMeasure>True</CanMeasure>
-      <CanGroup>True</CanGroup>
-      <FieldCode>code</FieldCode>
-      <DisplayName>name</DisplayName>
-      <DisplayNamePlural>plur</DisplayNamePlural>
-      <JoinedTableName>j name</JoinedTableName>
-      <JoinedTableKey>j key</JoinedTableKey>
-      <JoinedTableDisplayField>j d name</JoinedTableDisplayField>
-      <buttonsVisibility>Collapsed</buttonsVisibility>
-      <errorMessages />
-      <ErrorsVisibility>Collapsed</ErrorsVisibility>
-      <ErrorMessages />
-      <DataTypesList>
-        <string>Text</string>
-        <string>nText</string>
-        <string>Date</string>
-        <string>DateTime</string>
-        <string>Boolean</string>
-        <string>Decimal</string>
-        <string>Integer</string>
-        <string>SqlVariant</string>
-      </DataTypesList>
-      <ButtonsVisibility>Collapsed</ButtonsVisibility>
-    </AnalyticsFactsFieldsMetaDataViewModel>
-    <AnalyticsFactsFieldsMetaDataViewModel>
-      <HashString>23df7196ee1b4f41b1fceb8b22af7703</HashString>
-      <DataTypeCode>Text</DataTypeCode>
-      <CanMeasure>True</CanMeasure>
       <FieldCode>1</FieldCode>
       <DisplayName>2</DisplayName>
       <DisplayNamePlural>3</DisplayNamePlural>
-      <JoinedTableName>4</JoinedTableName>
-      <JoinedTableKey>5</JoinedTableKey>
-      <JoinedTableDisplayField>6</JoinedTableDisplayField>
-      <buttonsVisibility>Collapsed</buttonsVisibility>
-      <errorMessages />
-      <ErrorsVisibility>Collapsed</ErrorsVisibility>
-      <ErrorMessages />
-      <DataTypesList>
-        <string>Text</string>
-        <string>nText</string>
-        <string>Date</string>
-        <string>DateTime</string>
-        <string>Boolean</string>
-        <string>Decimal</string>
-        <string>Integer</string>
-        <string>SqlVariant</string>
-      </DataTypesList>
-      <ButtonsVisibility>Collapsed</ButtonsVisibility>
-    </AnalyticsFactsFieldsMetaDataViewModel>
+    </AnalyticsFactsFieldsMetaData>
   </AnalyticsFactsFieldsMetaDatas>
 </AnalyticsFactsMetaData>

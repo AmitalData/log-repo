@@ -1,4 +1,5 @@
 ﻿using Logitude.DashboardModule.MetaDataTool.Models;
+using Logitude.DashboardModule.MetaDataTool.Models.FieldModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
 {
     public class XmlGenerator
     {
-        public static void GenerateXmlFileFromTool(AnalyticsFactsMetaData table)
+        public static void GenerateXmlFileFromTool(AnalyticsFactsMetaDataViewModel table)
         {
             AnalyticsFactsMetaData analyticsFactsMetaData = CleanUnwantedProp(table);
             if (string.IsNullOrEmpty(App.DirectOpenPath))
@@ -31,8 +32,13 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
             xmlWriter.Dispose();
         }
 
-        private static AnalyticsFactsMetaData CleanUnwantedProp(AnalyticsFactsMetaData table)
+        private static AnalyticsFactsMetaData CleanUnwantedProp(AnalyticsFactsMetaDataViewModel table)
         {
+            table.AnalyticsFactsFieldsMetaDatas = new List<AnalyticsFactsFieldsMetaData>();
+            foreach (var item in table.AnalyticsFactsFieldsMetaDataViewModels)
+            {
+                table.AnalyticsFactsFieldsMetaDatas.Add(JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaData>(JsonConvert.SerializeObject(item)));
+            }
             return JsonConvert.DeserializeObject<AnalyticsFactsMetaData>(JsonConvert.SerializeObject(table));
         }
     }

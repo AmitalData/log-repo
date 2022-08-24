@@ -5,17 +5,13 @@ using System.Windows;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight.Command;
 using Logitude.DashboardModule.MetaDataTool.Helpers;
+using Logitude.DashboardModule.MetaDataTool.Models.FieldModels;
 
 namespace Logitude.DashboardModule.MetaDataTool.Models
 {
     public class AnalyticsFactsMetaData : PropertyChangedImplementation
     {
         public string HashString { get; set; } = Guid.NewGuid().ToString("N");
-
-        public AnalyticsFactsMetaData()
-        {
-            AnalyticsFactsFieldsMetaDatas = new List<AnalyticsFactsFieldsMetaDataViewModel>();
-        }
 
         private string name;
         public string Name
@@ -37,7 +33,6 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             }
         }
 
-        public List<AnalyticsFactsFieldsMetaDataViewModel> AnalyticsFactsFieldsMetaDatas { get; set; }
-
+        public List<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas { get; set; }
     }
 }

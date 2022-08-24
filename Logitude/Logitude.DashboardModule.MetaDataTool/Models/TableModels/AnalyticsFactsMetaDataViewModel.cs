@@ -2,6 +2,7 @@
 using Logitude.DashboardModule.MetaDataTool.Helpers;
 using Logitude.DashboardModule.MetaDataTool.Models;
 using Logitude.DashboardModule.MetaDataTool.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +15,8 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
 {
     public class AnalyticsFactsMetaDataViewModel : AnalyticsFactsMetaData
     {
-        public ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel> TempDWObjectFieldsList { get; set; } = new ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel>();
-
+        public ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel> TempFields { get; set; } = new ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel>();
+        public ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel> AnalyticsFactsFieldsMetaDataViewModels { get; set; } = new ObservableCollection<AnalyticsFactsFieldsMetaDataViewModel>();
 
         AnalyticsFactsFieldsMetaDataViewModel selectedObjectField;
 
@@ -91,17 +92,31 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             if (string.IsNullOrEmpty(this.TableName)) str.AppendLine("Name is required!");
             if (string.IsNullOrEmpty(this.Name)) str.AppendLine("Table Name is required!");
 
-            foreach (var field in this.AnalyticsFactsFieldsMetaDatas) field.Validate(str);
+            foreach (var field in this.AnalyticsFactsFieldsMetaDataViewModels) field.Validate(str);
 
             ErrorMessages = str.ToString();
         }
 
+        internal void BuildObsList()
+        {
+            TempFields.Clear();
+            AnalyticsFactsFieldsMetaDataViewModels.Clear();
+            foreach (var item in AnalyticsFactsFieldsMetaDataViewModels)
+            {
+                var analyticsFactsFieldsMetaDataViewModel = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaDataViewModel>(JsonConvert.SerializeObject(item));
+                TempFields.Add(analyticsFactsFieldsMetaDataViewModel);
+                TempFields.Add(analyticsFactsFieldsMetaDataViewModel);
+            }
+            this.SelectedObjectField = TempFields.FirstOrDefault();
+            FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDataViewModels.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         internal void AddNewField(AnalyticsFactsFieldsMetaDataViewModel analyticsFactsFieldsMetaDataViewModel)
         {
-            AnalyticsFactsFieldsMetaDatas.Add(analyticsFactsFieldsMetaDataViewModel);
-            TempDWObjectFieldsList.Add(analyticsFactsFieldsMetaDataViewModel);
+            AnalyticsFactsFieldsMetaDataViewModels.Add(analyticsFactsFieldsMetaDataViewModel);
+            TempFields.Add(analyticsFactsFieldsMetaDataViewModel);
 
-            FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDatas.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+            FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDataViewModels.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
             this.SelectedObjectField = analyticsFactsFieldsMetaDataViewModel;
         }
@@ -138,10 +153,10 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
         public void RemoveFieldMethod(AnalyticsFactsFieldsMetaDataViewModel selected)
         {
             if (selected == null) return;
-            
-            this.AnalyticsFactsFieldsMetaDatas.Remove(selected);
-            this.TempDWObjectFieldsList.Remove(selected);
-            FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDatas.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.AnalyticsFactsFieldsMetaDataViewModels.Remove(selected);
+            this.TempFields.Remove(selected);
+            FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDataViewModels.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
             FirePropertyChanged("DWObjectFieldsList");
         }
 
@@ -152,8 +167,8 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
 
         private void ObjectFieldsFilterTextChangedMethod(string filter)
         {
-            TempDWObjectFieldsList.Clear();
-            var temp = AnalyticsFactsFieldsMetaDatas.Where(a => a.FieldCode.ToLower().Contains(filter.ToLower())).ToList();
+            TempFields.Clear();
+            var temp = AnalyticsFactsFieldsMetaDataViewModels.Where(a => a.FieldCode.ToLower().Contains(filter.ToLower())).ToList();
             foreach (var item in temp)
             {
                 if (SelectedObjectField != null)
@@ -162,7 +177,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
                 }
 
                 item.ErrorsVisibility = Visibility.Collapsed;
-                TempDWObjectFieldsList.Add(item);
+                TempFields.Add(item);
             }
         }
 

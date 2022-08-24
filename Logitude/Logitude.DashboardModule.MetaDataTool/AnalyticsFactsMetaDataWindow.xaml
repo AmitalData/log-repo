@@ -161,7 +161,7 @@
                                     </TextBox>
                                     <ListBox x:Name="MyListBox"
                                              Grid.Row="1"
-                                             ItemsSource="{Binding TempDWObjectFieldsList}"
+                                             ItemsSource="{Binding TempFields}"
                                              SelectedIndex="0"
                                              SelectedItem="{Binding SelectedObjectField,
                                                                     Mode=TwoWay}">
