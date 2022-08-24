@@ -62,6 +62,8 @@ namespace Logitude.DashboardModule.Data
             Database.SetInitializer<DashboardContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
+            modelBuilder.Configurations.Add(new AnalyticsFactsFieldsMetaDataMap());
+	
             modelBuilder.Configurations.Add(new AnalyticsFactsMetaDataMap());
 				
 						 
@@ -99,6 +101,12 @@ namespace Logitude.DashboardModule.Data
 		}
  
 
+	 public IDbSet<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas 
 	 {
 	      get; set;

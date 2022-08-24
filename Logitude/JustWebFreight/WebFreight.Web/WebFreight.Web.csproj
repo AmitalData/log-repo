@@ -1117,7 +1117,9 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsFieldsMetaDataViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsFieldsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />

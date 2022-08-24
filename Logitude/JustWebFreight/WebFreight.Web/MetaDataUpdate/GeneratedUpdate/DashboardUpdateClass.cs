@@ -74,7 +74,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public  List<EntityStatus>  AllEntityStatuses { get; set; }
 		Dictionary<string, QueryGroup> tenantQueryGroups {get; set; }
 		 
-	   	AnalyticsFactsMetaDataUpdateClass  AnalyticsFactsMetaDataUpdateClass = new AnalyticsFactsMetaDataUpdateClass();
+	   	AnalyticsFactsFieldsMetaDataUpdateClass  AnalyticsFactsFieldsMetaDataUpdateClass = new AnalyticsFactsFieldsMetaDataUpdateClass();
+		AnalyticsFactsMetaDataUpdateClass  AnalyticsFactsMetaDataUpdateClass = new AnalyticsFactsMetaDataUpdateClass();
 	
 		public void LoadObjectsTenantZero(IWebFreightContext context)
         {
@@ -230,12 +231,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				return TablesHashStrings;
 
 			TablesHashStrings = new Dictionary<string, string>();
- 			TablesHashStrings.Add("AnalyticsFactsMetaData",  AnalyticsFactsMetaDataUpdateClass.HashString);
+ 			TablesHashStrings.Add("AnalyticsFactsFieldsMetaData",  AnalyticsFactsFieldsMetaDataUpdateClass.HashString);
+			TablesHashStrings.Add("AnalyticsFactsMetaData",  AnalyticsFactsMetaDataUpdateClass.HashString);
 			return TablesHashStrings;
         }
         public void CreateAllObjectTablesMetadata()
         {
    
+			if(MetadataUpdateUtility.IsChangedMetadataTable("AnalyticsFactsFieldsMetaData", ObjectTables, AnalyticsFactsFieldsMetaDataUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("AnalyticsFactsFieldsMetaData");
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					AnalyticsFactsFieldsMetaDataUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AnalyticsFactsMetaData", ObjectTables, AnalyticsFactsMetaDataUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -275,6 +310,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectTables()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
         }
@@ -283,6 +320,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectFields()
         {
    
+	   	   //AnalyticsFactsFieldsMetaDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //AnalyticsFactsMetaDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
         }
@@ -290,6 +329,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllQueries()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
         }
@@ -297,6 +338,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllScreens()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
         }
@@ -304,6 +347,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllTabs()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
         }
@@ -311,6 +356,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllEventTypes()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
         }
@@ -318,18 +365,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllFeatures()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
         }
 		public void CreateAdditionalTextCodes()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
         }
 		public void CreateAllMenuButtons()
         {
    
+	   	   AnalyticsFactsFieldsMetaDataUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   AnalyticsFactsMetaDataUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
         }
@@ -337,6 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
 	   
         }
  	 

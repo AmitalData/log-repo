@@ -17,7 +17,8 @@ namespace Logitude.DashboardModule.Data
     public interface IDashboardContext : IContext
     {
    
-       	 IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas { get; }
+       	 IDbSet<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas { get; }
+		 IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();
