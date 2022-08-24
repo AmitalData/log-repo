@@ -25,6 +25,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
+using Simplog.Data.ShipmentsModel;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -103,10 +104,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
                 {
-                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
+                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
                 }
 
-                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", authToken.Tenant);
 
                 foreach (var filter in newFilters.AdditionalFilters)
                 {
@@ -130,7 +131,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
                 var customfilters = new ShipmentCustomFilter(authToken.Tenant);
-                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
+
+                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+
                 var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
 
                 if (MySearchFilter != null)
@@ -140,7 +143,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.QueryFilterItems.Remove(MySearchFilter);
                 }
 
-                shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
+                shipments = customfilters.GetFilteredQuery(queryOperations, shipments, shipmentRepository);
 
                 var nonListQueryOperation = new QueryOperations
                 {

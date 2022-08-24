@@ -360,6 +360,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return result;
         }
 
+        public IQueryable<ShipmentDataView> GetDigitalShipmentViewsByTenant(int tenant)
+        { 
+            IQueryable<ShipmentDataView> result = (from f in context.ShipmentDigitalDataViews where f.Tenant == tenant select f);
+            return result;
+        }
+
         public IQueryable<ShipmentCountryDashboardView> GetShipmentDataViewsForCountriesDashboard(int tenant, string customerid, string directionId, string transportmodeId)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);

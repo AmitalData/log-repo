@@ -1,4 +1,5 @@
-﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
+﻿using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.Data.Entity;
 using System.Linq;
@@ -49,6 +50,23 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
           || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
           || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
            );
+
+            return queryableData;
+        }
+
+        public static IQueryable<ShipmentDataView> ApplyInTransitFilter(QueryFilterItem item, IQueryable<ShipmentDataView> queryableData, Simplog.Data.ShipmentsModel.Repositories.ShipmentRepository shipmentRepository)
+        {
+            //var Context = ShipmentsContext.GetContext(0);
+            queryableData = (from shipment in queryableData
+                                                      //join delivery in shipmentRepository.context.ShipmentPickUpDeliveries
+                                                      //on shipment.Id equals delivery.ShipmentId
+                                                      where (shipment.MainCarriageATD != null || shipment.Transshipment1ATD != null || shipment.Transshipment2ATD != null || shipment.Transshipment3ATD != null)
+                                                      && (shipment.Transshipment3ToPortId != null ? shipment.Transshipment3ATA == null : true)
+                                                      && (shipment.Transshipment2ToPortId != null ? shipment.Transshipment2ATA == null : true)
+                                                      && (shipment.Transshipment1ToPortId != null ? shipment.Transshipment1ATA == null : true)
+                                                      && (shipment.MainCarriageToPortId != null ? shipment.MainCarriageATA == null : true)
+                                                      && !(shipmentRepository.context.ShipmentPickUpDeliveries.Any(delivery => delivery.ShipmentId == shipment.Id && delivery.PickUpDeliveryTypeCode == "DELV" && delivery.ATA != null))
+                                                      select shipment);
 
             return queryableData;
         }
