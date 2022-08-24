@@ -55,7 +55,15 @@
         <td>
             <table>
                 <tr>
-                    <td>
+                    <td style="width: 20%;" *ngIf="IsRoot && (!DataSource || DataSource.length == 0)">
+                        <label style="padding-left:20%;color: rgb(110, 113, 114);">
+                            No Filters Selected. 
+                        </label>
+                    </td>
+                    <td *ngIf="IsRoot && (!DataSource || DataSource.length == 0)">
+                        <span class="LinkBtn" (click)="AddEmptyFilter()"> Add Filter</span>
+                    </td>
+                    <td *ngIf="DataSource && DataSource.length > 0">
                         <div *ngFor="let item of DataSource; let i=index;">
                             <div *ngIf="item.IsGroup == false" style="width:650px;">
                                 <div>
@@ -79,7 +87,7 @@
                                                         [LookUpTableName]="'ObjectField'"
                                                         [NoValidation]="true"
                                                         [IsFreeText]="true"
-                                                        [SelectedValue]="item.ObjectFieldCode"
+                                                        [SelectedValue]="item.SelectedObjectFieldCode"
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder] ="'Field'"
@@ -161,7 +169,7 @@
                                                         [LookUpTableName]="'ObjectField'"
                                                         [NoValidation]="true"
                                                         [IsFreeText]="true"
-                                                        [SelectedValue]="item.ObjectFieldCode"
+                                                        [SelectedValue]="item.ObjectValueFieldCode"
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder] ="'Value'"
