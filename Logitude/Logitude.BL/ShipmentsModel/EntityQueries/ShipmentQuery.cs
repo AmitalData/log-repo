@@ -2661,9 +2661,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
-            List<ARInvoice> invoices = aRInvoiceRepository.GetInvoicesByShipmentId(shipmentPM.Id, shipmentPM.Tenant);
-            invoices = invoices.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            shipmentPM.IsFullInvoiced = invoices?.Count() > 1 ? true : false;
+            List<ARInvoice> invoices = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant);
+            shipmentPM.IsFullInvoiced = invoices?.Count() > 0 ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)

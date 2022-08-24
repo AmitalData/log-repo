@@ -229,6 +229,8 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return list;
         }
 
+        #region Digital Portal Methods
+
         public List<ARInvoice> GetDigitalInvoicesByShipmentIdAndBillToId(string shipmentId, string cardId, int tenant)
         {
             IQueryable<ARInvoice> iQuery = (from a in context.ARInvoiceEntities
@@ -239,10 +241,29 @@ namespace Simplog.Data.InvoiceModel.Repositories
            
             iQuery = FilterInvoicesStatuses(iQuery);
 
-            List<ARInvoice> list = iQuery.Where(d => d.BillToId == cardId).ToList();
+            List<ARInvoice> list = iQuery.Where(d => d.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
             return list;
         }
+
+
+        public List<ARInvoice> GetDigitalInvoicesByShipmentId(string shipmentId, string cardId, int tenant)
+        {
+           var iQuery = (from a in context.ARInvoiceEntities
+                                    where a.Tenant == tenant
+                                    && a.EntityId == shipmentId
+                                    && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
+                                    select a.ARInvoice);
+
+            iQuery = FilterInvoicesStatuses(iQuery);
+
+            var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+            return list;
+        }
+
+        #endregion Digital Portal Methods
+
         public IQueryable<ARInvoice> GetUnpaidWithVoidandDraftARInvoices(int tenant)
         {
             return context.ARInvoices.Where(d => d.Tenant == tenant && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
