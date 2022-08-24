@@ -2913,6 +2913,24 @@ namespace Logitude.Customs.Def.ClosedTable
             all.Add(new InterfaceManagementDetails()
             {
                 //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "DCAInUCBApproveAllPending",
+
+                InOut = InOutEnum.I.ToString(),
+                Description = "אישור PENDING",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_DCAInUCBApproveAllPending_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                InterfaceType = "B",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
                 Code = "DCAMU",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService

@@ -419,6 +419,11 @@ export class DeclarationCourierStatusPM {
     public set ApprovedCourierPendingList(newValue: string) { if (this.approvedCourierPendingList != newValue) { this.approvedCourierPendingList = newValue; this.MarkAsDirty("ApprovedCourierPendingList"); } }
        
 	 
+    private notApprovedPendingList: string;
+    public get NotApprovedPendingList() { return this.notApprovedPendingList; }
+    public set NotApprovedPendingList(newValue: string) { if (this.notApprovedPendingList != newValue) { this.notApprovedPendingList = newValue; this.MarkAsDirty("NotApprovedPendingList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
