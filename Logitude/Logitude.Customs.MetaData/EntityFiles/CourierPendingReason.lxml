@@ -1113,5 +1113,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;PendingRequiresApproval&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierPendingReason.Features.PendingRequiresApproval&quot;"
+      FeatureDefaultText="&quot;Requires Approval For Pending&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

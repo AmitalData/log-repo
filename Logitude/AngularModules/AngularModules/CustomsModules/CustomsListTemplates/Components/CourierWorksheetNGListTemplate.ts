@@ -778,7 +778,7 @@ export class CourierWorksheetNGListTemplate {
                     windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
                     //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
-                    logitudeWindow.Width = 470;
+                    logitudeWindow.Width = 500;
                     logitudeWindow.Height = 300;
                     logitudeWindow.IsShowCloseButton = true;
                     logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
