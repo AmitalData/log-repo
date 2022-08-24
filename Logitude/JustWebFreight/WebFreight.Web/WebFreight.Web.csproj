@@ -1126,6 +1126,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
     <Compile Include="Controllers\DigitalPortal\Models\GeneralFilters.cs" />
+    <Compile Include="Controllers\DigitalPortal\Models\Partner.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -1224,6 +1225,7 @@
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\PagedResult.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />

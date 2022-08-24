@@ -108,24 +108,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
 
-                if (newFilters.AdditionalFilters.Any())
+                foreach (var filter in newFilters.AdditionalFilters)
                 {
-                    foreach (var filter in newFilters.AdditionalFilters)
-                    {
-                        var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
 
-                        if (field != null)
-                        {
-                            string valuestring1 = filter.FieldValue?.ToString();
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                            string valuestring2 = filter.FieldValue2?.ToString();
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue?.ToString();
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        string valuestring2 = filter.FieldValue2?.ToString();
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
                     }
                 }
 
@@ -235,7 +232,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                List<ShipmentList> listQuery = listQuery = entityLists.ToList();
+                List<ShipmentList> listQuery = entityLists.ToList();
 
                 myShipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 
