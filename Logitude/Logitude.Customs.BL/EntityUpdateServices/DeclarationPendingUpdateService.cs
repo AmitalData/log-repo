@@ -41,10 +41,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             //base.OnCreating(entityPM, entityParentPM);
         }
-        protected override void OnUpdating(DeclarationPendingPM entityPM)
-        {
-            base.OnUpdating(entityPM);
-        }
+
         protected override void AfterUpdating(DeclarationPendingPM entityPM, DeclarationCourierStatusPM entityParentPM)
         {
             if (!IsUpdateComposition)
