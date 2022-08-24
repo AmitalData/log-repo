@@ -879,7 +879,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                
             }
-
+         
             foreach (var item in declaration.GoodsShipment.OrderBy(x => x.SequenceNumeric))
             {
                 SupplierInvoicePM supplierInvoicePM = new SupplierInvoicePM()
@@ -1223,20 +1223,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
            {
-               foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
+                var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
+                foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
-                    if (GetValueCodeType(GoodsItemAmount.AmountType) != "1")
+                  bool IsExist = SupplierInvoiceItemsPricePM.Any(x => x.AdditionalPriceTypeCode == GetValueCodeType(GoodsItemAmount.AmountType));
+                    if (!IsExist&&GetValueCodeType(GoodsItemAmount.AmountType) != "1" && GoodsItemAmount.CustomsValueAmount.currencyID.ToString()== cur)
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
                         supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
-
+                       
                         supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
                         supplierInvoiceItemsPrice.Tenant = tenant;
                         SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
-                    }
-               }
+                    }                    
+                }
             }
             return SupplierInvoiceItemsPricePM;
         }
