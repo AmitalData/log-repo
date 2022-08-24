@@ -130,7 +130,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false)
+        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false, string cardId = null)
         {
             int tenant = shipment.Tenant;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(shipment.Tenant);
@@ -2358,7 +2358,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-            CheckInvoicedFields(shipmentPM);
+            CheckDigitalPortalInvoicedFields(shipmentPM, cardId);
 
             #region Pickups & Deliveries
 
@@ -2647,14 +2647,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        private void CheckInvoicedFields(ShipmentPM shipmentPM)
+        private void CheckDigitalPortalInvoicedFields(ShipmentPM shipmentPM, string cardId)
         {
+            if (string.IsNullOrEmpty(cardId))
+            {
+                return;
+            }
+
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
                 return;
             }
-            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
+
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
+            List<ARInvoice> invoices = aRInvoiceRepository.GetInvoicesByShipmentId(shipmentPM.Id, shipmentPM.Tenant);
+            invoices = invoices.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            shipmentPM.IsFullInvoiced = invoices?.Count() > 1 ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -4332,7 +4341,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return mixPanelEvent;
         }
 
-        public ShipmentPM GetSinglePM(string id, int tenant)
+        public ShipmentPM GetSinglePM(string id, int tenant, string cardId = null)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -4361,7 +4370,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM shipmentPM = new ShipmentPM();
 
 
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
