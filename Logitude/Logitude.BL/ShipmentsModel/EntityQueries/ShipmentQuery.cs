@@ -13299,6 +13299,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                QuoteNumber = f.QuoteNumber,
                                StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
+                               StatusCode = f.StatusCode,
                                PreForwardingETD = f.PreForwardingETD,
                                IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                ParentShipmentDirectionId = f.ParentShipmentDirectionId,
