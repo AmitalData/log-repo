@@ -54,9 +54,6 @@
     <Reference Include="Simplog.Data.Global">
       <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
     </Reference>
-    <Reference Include="Simplog.Server.Infrastructure">
-      <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -185,6 +182,10 @@
     <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
       <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
       <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
