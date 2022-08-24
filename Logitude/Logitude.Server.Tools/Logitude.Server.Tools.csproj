@@ -417,7 +417,7 @@
     <Compile Include="TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityResloveFieldValueExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterIgnoreExpresion.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterValidateExpresion.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterResetValueExpresion.cs" />
     <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterCollection.cs" />
     <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterIterator.cs" />
