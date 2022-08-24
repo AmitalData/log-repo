@@ -310,12 +310,15 @@
                                                                     ({{item.Total}})</span>
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
-                                                                    dir="ltr" *ngIf="item.Code == 'HOLD' && !HasRequiresApprovalFeature">
+                                                                    dir="ltr"
+                                                                    *ngIf="item.Code == 'HOLD' && !HasRequiresApprovalFeature">
                                                                     ({{item.Total}}) {{item.Header}}</span>
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
-                                                                    dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו ({{this._NotApproved}})</span>  
+                                                                    dir="ltr"
+                                                                    *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
+                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו
+                                                                    ({{this._NotApproved}})</span>
                                                             </div>
                                                         </td>
 
@@ -1002,7 +1005,8 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
-                                                                        <td style="width:150px;">
+                                                                        <td
+                                                                            [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '150px' : '170px' }">
                                                                             <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                                 style="width: 130px;">
                                                                                 <split-button
@@ -1034,6 +1038,22 @@
                                                                                 </split-button>
                                                                             </div>
                                                                         </td>
+
+                                                                        <td style="width: 150px;">
+
+                                                                            <split-button *ngIf="DelayFormVisibility"
+                                                                                (DefaultSplitButtonClicked)="SendDelayForm()"
+                                                                                [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                                && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
+                                                                                [ButtonText]=SelectedDECToDelayFormButtonText
+                                                                                [AsRegularButton]="'true'"
+                                                                                [MENUDivExtraTop]="24"
+                                                                                [MENUDivExtraLeft]="110">
+                                                                                <div
+                                                                                    class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                        </td>
                                                                         <td>
                                                                             <div *ngIf="HasRequiresApprovalFeature"
                                                                                 style="width: 130px;">
@@ -1053,7 +1073,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <div></div>
-                                                                        <td>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                             </td>
