@@ -996,9 +996,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
            
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
             {
+                var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                 foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
-                    if (GetValueCodeType(GoodsItemAmount.AmountType) != "1")
+                    bool IsExist = SupplierInvoiceItemsPricePM.Any(x => x.AdditionalPriceTypeCode == GetValueCodeType(GoodsItemAmount.AmountType));
+                    if (!IsExist && GetValueCodeType(GoodsItemAmount.AmountType) != "1" && GoodsItemAmount.CustomsValueAmount.currencyID.ToString() == cur)
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
