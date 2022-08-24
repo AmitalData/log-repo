@@ -1926,6 +1926,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.EntityStatus != null)
             {
                 shipmentPM.StatusName = shipment.EntityStatus.Name;
+                shipmentPM.StatusCode = shipment.EntityStatus.Code;
                 shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             }
 
