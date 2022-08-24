@@ -436,6 +436,9 @@ export class ConsigmentTabContentComponent
     public get CargoTypeCodeForExport() { return this.EntityPM ? this.EntityPM.CargoTypeCode : null; }
     public set CargoTypeCodeForExport(newValue: string) {
         this.EntityPM.CargoTypeCode = newValue;
+      
+    if(this.declarationPM.Direction=='E')
+        this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
     }
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
@@ -703,7 +706,7 @@ export class ConsigmentTabContentComponent
                 }
             }
         }
-    }
+    }   
     SetTipsInsideCargoIdentifires(value: string) {
 
         if (this.declarationPM.Direction == 'E') {
