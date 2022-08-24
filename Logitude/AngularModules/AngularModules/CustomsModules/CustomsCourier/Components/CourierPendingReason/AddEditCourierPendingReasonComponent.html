@@ -157,14 +157,14 @@
                     </td>
                     <td></td>
                 </tr>
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="HasRequiresApprovalFeature">
                     <td>
                         <LogLabel [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        <LogCheckBox [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
                     </td>
                     <td></td>
                 </tr>
