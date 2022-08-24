@@ -1387,7 +1387,7 @@ export class MaintenanceComponent {
                 }
                 case "MRCF": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "קליטת קובץ םישורים מםיקםה להצהרה";
+                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Width = 700;
@@ -1431,7 +1431,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבוםנים/יצוםנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבואנים/יצואנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
@@ -1689,7 +1689,7 @@ export class MaintenanceComponent {
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
                     //formtitle = הצהרת יבום"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();
