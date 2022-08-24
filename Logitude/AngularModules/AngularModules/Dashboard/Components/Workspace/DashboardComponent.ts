@@ -135,7 +135,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
             dataBinding: this.dashboardDataBinding,
             openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
             openAddEditDashboard: this.OpenDashboardWindow.bind(this),
-            onChangeDashboard: this.OnChangeDashboard,
+            onChangeDashboard: this.OnChangeDashboard.bind(this),
             onSaveDashboard: this.OnSaveDashboard.bind(this),
         }),
             this.reactDashboradContainer.nativeElement, callBack);
