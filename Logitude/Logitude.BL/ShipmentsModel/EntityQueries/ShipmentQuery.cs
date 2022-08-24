@@ -15611,6 +15611,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                                            shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
 
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
 
             if (!string.IsNullOrEmpty(warehousingFirstId))
             {
