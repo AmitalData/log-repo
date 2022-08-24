@@ -422,6 +422,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
             if (string.IsNullOrEmpty(documentsFilingPM.UpdatedByUserId))
             {
                 response.ValidationErrors.Add("UpdatedByUserId field is required.");
+                return;
             }
             User user = userRepository.GetSingleUserByCode(documentsFilingPM.UpdatedByUserId, documentsFilingPM.Tenant, true);
             if (user != null)
