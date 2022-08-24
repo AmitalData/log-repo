@@ -11,29 +11,28 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
   public  class QueryTreeFilterInterpreter
     {
 
-        public QueryFilterItem Run(QueryTreeFilterContext context)
+        public QueryFilterItem Run(QueryTreeFilterContext queryTreeFilterContext)
         {
-         
-            if (string.IsNullOrEmpty(context.AdditionalTreeFilter)) return  null;
-            List<IQueryTreeFilterExpression> expressions = new List<IQueryTreeFilterExpression>();
-            expressions.Add(new JavaScriptSerializerExpression());
-            expressions.Add(new QueryTreeFilterIgnoreExpresion());
-            expressions.Add(new QueryTreeFilterResetValueExpresion());
-            expressions.Add(new CustomFieldExpression());
-
-            if (!string.IsNullOrEmpty(context.ParentObjectTableName) && !string.IsNullOrEmpty(context.ParentEntityId))
-            {
-                expressions.Add(new PartnerEntityResloveFieldValueExpression());
-                expressions.Add(new PartnerEntityQueryFilterExpression());
-            }
-            expressions.Add(new QueryTreeFilterIgnoreExpresion());
-
+            List<IQueryTreeFilterExpression> expressions = BuildExpressions(queryTreeFilterContext);
             foreach (IQueryTreeFilterExpression expression in expressions)
             {
-                expression.Interpret(context);
+                expression.Interpret(queryTreeFilterContext);
             }
 
-            return  context.QueryFilterItem;
+            return queryTreeFilterContext.QueryFilterItem;
+        }
+
+        private List<IQueryTreeFilterExpression> BuildExpressions(QueryTreeFilterContext queryTreeFilterContext)
+        {
+            List<IQueryTreeFilterExpression> expressions =  new List<IQueryTreeFilterExpression>();
+            expressions.Add(new JavaScriptSerializerExpression());
+            expressions.Add(new QueryTreeFilterValidateExpresion());
+            expressions.Add(new QueryTreeFilterResetValueExpresion());
+            expressions.Add(new CustomFieldExpression());
+            expressions.Add(new PartnerEntityResloveFieldValueExpression());
+            expressions.Add(new PartnerEntityQueryFilterExpression());
+            expressions.Add(new QueryTreeFilterValidateExpresion());
+            return expressions;
         }
     }
 }

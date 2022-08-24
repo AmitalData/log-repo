@@ -21,6 +21,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
+            queryTreeFilterContext.IsInterpreterFinished = true;
+
             this.queryTreeFilterContext = queryTreeFilterContext;
             QueryTreeFilterIterator queryTreeFilterIterator = CreateIterator();
             if (!queryTreeFilterIterator.Any()) return;
