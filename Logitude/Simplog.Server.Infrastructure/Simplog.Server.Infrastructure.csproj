@@ -180,6 +180,7 @@
     <Compile Include="CacheMessageSender.cs" />
     <Compile Include="ChangeSetOperation.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
+    <Compile Include="DataContracts\TreeFilterQueryArgs.cs" />
     <Compile Include="DataContracts\AmitalRestrictOwnerModel.cs" />
     <Compile Include="DataContracts\ApiQueryFilters.cs" />
     <Compile Include="DataContracts\CodeProperties.cs" />

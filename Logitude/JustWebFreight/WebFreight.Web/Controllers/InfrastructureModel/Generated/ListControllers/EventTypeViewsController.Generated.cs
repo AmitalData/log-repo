@@ -216,7 +216,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "EventType", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "EventType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
@@ -235,7 +244,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 IQueryable<EventTypeList> entityLists = eventTypeQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<EventTypeList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<EventTypeList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<EventTypeList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

@@ -231,7 +231,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 WarehouseAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "Warehouse", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Warehouse",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -254,7 +263,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<WarehouseList> entityLists = warehouseQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<WarehouseList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<WarehouseList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<WarehouseList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

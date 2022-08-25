@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "UnassignedEntity", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "UnassignedEntity",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<UnassignedEntityList> entityLists = unassignedEntityQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<UnassignedEntityList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<UnassignedEntityList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<UnassignedEntityList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

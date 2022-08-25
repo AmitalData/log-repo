@@ -216,7 +216,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "TenantManagmentPrivateLabels", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "TenantManagmentPrivateLabels",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IGlobalContext MyContext = GlobalContext.GetContext();
@@ -235,7 +244,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 IQueryable<TenantManagmentPrivateLabelsList> entityLists = tenantManagmentPrivateLabelsQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<TenantManagmentPrivateLabelsList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<TenantManagmentPrivateLabelsList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<TenantManagmentPrivateLabelsList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

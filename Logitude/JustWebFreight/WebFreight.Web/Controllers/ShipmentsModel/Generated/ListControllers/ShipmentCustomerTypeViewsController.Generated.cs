@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "ShipmentCustomerType", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "ShipmentCustomerType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 IQueryable<ShipmentCustomerTypeList> entityLists = shipmentCustomerTypeQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ShipmentCustomerTypeList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<ShipmentCustomerTypeList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ShipmentCustomerTypeList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

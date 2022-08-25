@@ -960,6 +960,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             PrimaryContactId = a.Card.PrimaryContactId,
                         },
                         BillToId = a.Card.BillToId,
+                       
                     }).FirstOrDefault();
         }
         private AccountingPartnerPM GetAccountingPartnerById(string id, int tenant)

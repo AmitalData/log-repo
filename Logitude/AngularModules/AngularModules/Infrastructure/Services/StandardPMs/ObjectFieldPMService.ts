@@ -77,10 +77,8 @@ export class ObjectFieldPMService {
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
-
-                var mappedEntityDeepCloned = this.deepClone(mappedEntity);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntityDeepCloned), ServiceHelper.GetHttpFullHeaders())
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 
@@ -121,10 +119,8 @@ export class ObjectFieldPMService {
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
-
-                var mappedEntityDeepCloned = this.deepClone(mappedEntity);
-
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntityDeepCloned), ServiceHelper.GetHttpFullHeaders())
+				
+				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
                  
@@ -213,46 +209,6 @@ export class ObjectFieldPMService {
 	    entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
-    }
-
-    public deepClone(obj, hash = new WeakMap()) {
-        // Do not try to clone primitives or functions
-        if (Object(obj) !== obj || obj instanceof Function) {
-            return obj;
-        }
-
-        if (hash.has(obj)) {
-            //return hash.get(obj); // Cyclic reference
-            return;
-        }
-
-        try { // Try to run constructor (without arguments, as we don't know them)
-            var result = new obj.constructor();
-        }
-        catch (e) { // Constructor failed, create object without running the constructor
-            result = Object.create(Object.getPrototypeOf(obj));
-        }
-
-        // Optional: support for some standard constructors (extend as desired)
-        if (obj instanceof Map) {
-            Array.from(obj, ([key, val]) => result.set(this.deepClone(key, hash),
-                this.deepClone(val, hash)));
-        }
-        else if (obj instanceof Set) {
-            Array.from(obj, (key) => result.add(this.deepClone(key, hash)));
-        }
-
-        // Register in hash    
-        hash.set(obj, result);
-
-        // Clone and assign enumerable own properties recursively
-        return Object.assign(result, ...Object.keys(obj).map(
-            key => ({
-                [key]:
-
-                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
-
-            })));
     }
 
     MapObjectFieldValidations(entityPM: ObjectFieldPM, jsonPM: any, mapParent: boolean = true) {

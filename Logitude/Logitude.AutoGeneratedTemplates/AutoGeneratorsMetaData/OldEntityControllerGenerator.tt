@@ -1186,7 +1186,16 @@ if(hasApiHelper)
 #>
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "<#= tableName #>", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= tableName #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								<#+ 
 if(tableName == "Card" || tableName == "Customer")
@@ -1249,7 +1258,7 @@ if(hasApiHelper)
                 IQueryable<<#= listName #>> entityLists = <#= queryName #>.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<<#= listName #>>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<<#= listName #>>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<<#= listName #>>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								<#+ 
@@ -1506,7 +1515,16 @@ else
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "<#= tableName #>", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= tableName #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
                 QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
@@ -1538,7 +1556,7 @@ if(hasCustomFilter)
                 IQueryable<<#= listName #>> entityLists = <#= queryName #>.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<<#= listName #>>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<<#= listName #>>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<<#= listName #>>(entityLists , treeFilterQueryArgs);
 
                 ServiceResponse response = new ServiceResponse();
                 if(compactSeachvalue != null)

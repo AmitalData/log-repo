@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "PaymentChannel", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "PaymentChannel",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IGlobalContext MyContext = GlobalContext.GetContext();
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 IQueryable<PaymentChannelList> entityLists = paymentChannelQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<PaymentChannelList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<PaymentChannelList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<PaymentChannelList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
