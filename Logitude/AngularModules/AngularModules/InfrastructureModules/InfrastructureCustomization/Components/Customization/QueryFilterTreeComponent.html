@@ -113,7 +113,7 @@
 
                                             <td style="width:120px;max-width:120px;min-width:120px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (!item.FieldDataType || item.FieldDataType == '' ||item.FieldDataType == 'Text' || item.FieldDataType == 'nText' || item.FieldDataType == 'Integer' || item.FieldDataType == 'Double' || item.FieldDataType == 'SigDouble' ||item.FieldDataType == 'Decimal')">
                                                 <div>
-                                                    <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [ObjectFieldName]="item.ObjectFieldName" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" HideLastColumn="true" HideColumns="true" DontAllowAutoSelect="true"></LogTextBox>
+                                                    <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [IsMultiline]="false" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [ObjectFieldName]="item.ObjectFieldName" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" HideLastColumn="true" HideColumns="true" DontAllowAutoSelect="true"></LogTextBox>
                                                 </div>
                                             </td>
 
