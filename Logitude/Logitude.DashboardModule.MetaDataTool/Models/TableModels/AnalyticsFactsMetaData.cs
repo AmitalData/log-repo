@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Xml.Serialization;
-using GalaSoft.MvvmLight.Command;
 using Logitude.DashboardModule.MetaDataTool.Helpers;
 using Logitude.DashboardModule.MetaDataTool.Models.FieldModels;
 

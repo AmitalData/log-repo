@@ -8,13 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Xml;
 
 namespace Logitude.DashboardModule.MetaDataTool.Helpers
 {
-    public class XmlGenerator
+    public class JsonHelper
     {
-        public static void GenerateXmlFileFromTool(AnalyticsFactsMetaDataViewModel table)
+        public static void GenerateJsonFileFromTool(AnalyticsFactsMetaDataViewModel table)
         {
             AnalyticsFactsMetaData analyticsFactsMetaData = CleanUnwantedProp(table);
             if (string.IsNullOrEmpty(App.DirectOpenPath))
@@ -22,14 +21,8 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
                 MessageBox.Show("file path in not valid!");
                 return;
             }
-            XmlDocument doc = XMLParser.SerializeToXml(analyticsFactsMetaData);
-            FileStream fileStream = new FileStream(App.DirectOpenPath, FileMode.Truncate, FileAccess.Write);
-            XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
-            XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
-
-            doc.Save(xmlWriter);
-            xmlWriter.Close();
-            xmlWriter.Dispose();
+            var json = JsonConvert.SerializeObject(analyticsFactsMetaData, Formatting.Indented);
+            File.WriteAllText(App.DirectOpenPath, json);
         }
 
         private static AnalyticsFactsMetaData CleanUnwantedProp(AnalyticsFactsMetaDataViewModel table)
@@ -41,5 +34,26 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
             }
             return JsonConvert.DeserializeObject<AnalyticsFactsMetaData>(JsonConvert.SerializeObject(table));
         }
+
+        public static AnalyticsFactsMetaDataViewModel GetAnalyticsFactsMetaDataViewModel(string fileName)
+        {
+            try
+            {
+                AnalyticsFactsMetaDataViewModel analyticsFactsMetaDataView;
+                using (StreamReader r = new StreamReader(fileName))
+                {
+                    string json = r.ReadToEnd();
+                    analyticsFactsMetaDataView = JsonConvert.DeserializeObject<AnalyticsFactsMetaDataViewModel>(json);
+                }
+                analyticsFactsMetaDataView.BuildObsList();
+                return analyticsFactsMetaDataView;
+            }
+            catch (Exception)
+            {
+                return new AnalyticsFactsMetaDataViewModel();
+            }
+
+        }
+
     }
 }

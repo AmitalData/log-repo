@@ -79,7 +79,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
                 return;
             }
 
-            XmlGenerator.GenerateXmlFileFromTool(this);
+            JsonHelper.GenerateJsonFileFromTool(this);
             window.Close();
             Application.Current.Shutdown();
         }

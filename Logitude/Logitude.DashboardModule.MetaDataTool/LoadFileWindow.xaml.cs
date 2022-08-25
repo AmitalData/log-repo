@@ -1,12 +1,9 @@
 ﻿using Logitude.DashboardModule.MetaDataTool.Helpers;
 using Logitude.DashboardModule.MetaDataTool.Models;
+using Newtonsoft.Json;
 using System;
-using System.Dynamic;
 using System.IO;
 using System.Windows;
-using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Linq;
 using Path = System.IO.Path;
 
 namespace Logitude.DashboardModule.MetaDataTool
@@ -28,27 +25,15 @@ namespace Logitude.DashboardModule.MetaDataTool
 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".axml";
-            dlg.Filter = "AXML files (*.axml)|*.axml|All files (*.*)|*.*";
+            dlg.DefaultExt = ".ljson";
+            dlg.Filter = "LJSON files (*.ljson)|*.ljson|All files (*.*)|*.*";
             dlg.InitialDirectory = solutionDir.FullName + @"\Infrastructure.MetaData\EntityFiles"; ;
 
             bool? result = dlg.ShowDialog();
 
             if (result == false) return;
-            try
-            {
-                FileStream stream = new FileStream(dlg.FileName, FileMode.Open);
-                App.DirectOpenPath = dlg.FileName;
-                XmlDocument document = new XmlDocument();
-                document.Load(stream);
-                AnalyticsFactsMetaDataViewModel model = XMLParser.Deserialize<AnalyticsFactsMetaDataViewModel>(document.OuterXml);
-                OpenTabeWindow(model);
-            }
-            catch (Exception)
-            {
-                OpenTabeWindow(new AnalyticsFactsMetaDataViewModel());
-            }
-
+            App.DirectOpenPath = dlg.FileName;
+            OpenTabeWindow(JsonHelper.GetAnalyticsFactsMetaDataViewModel(dlg.FileName));
         }
 
         private void OpenTabeWindow(AnalyticsFactsMetaDataViewModel model)

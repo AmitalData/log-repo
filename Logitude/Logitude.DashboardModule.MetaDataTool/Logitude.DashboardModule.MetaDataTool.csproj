@@ -85,14 +85,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\XmlGenerator.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Views\AnalyticsFactsFieldsMetaDataPage.xaml.cs">
       <DependentUpon>AnalyticsFactsFieldsMetaDataPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\PropertyChangedImplementation.cs" />
-    <Compile Include="Helpers\XMLParser.cs" />
     <Compile Include="LoadFileWindow.xaml.cs">
       <DependentUpon>LoadFileWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +119,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="test.ljson" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -140,9 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="test.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

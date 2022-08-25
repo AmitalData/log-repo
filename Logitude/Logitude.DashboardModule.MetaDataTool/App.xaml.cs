@@ -1,11 +1,12 @@
 ﻿using Logitude.DashboardModule.MetaDataTool.Helpers;
 using Logitude.DashboardModule.MetaDataTool.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Xml;
 
 namespace Logitude.DashboardModule.MetaDataTool
 {
@@ -14,11 +15,13 @@ namespace Logitude.DashboardModule.MetaDataTool
     /// </summary>
     public partial class App : Application
     {
+        private readonly BackgroundWorker worker = new BackgroundWorker();
         public static string DirectOpenPath { get; set; }
-        public static List<string> LXMLFilesPaths { get; set; }
+        public static List<string> LJSONFilesPaths { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+      
             if (e.Args == null || e.Args.Length <= 0)
             {
                 LoadFileWindow loadFileWindow = new LoadFileWindow();
@@ -32,48 +35,31 @@ namespace Logitude.DashboardModule.MetaDataTool
             {
                 return;
             }
-
-            FileStream stream;
-            try
-            {
-                stream = new FileStream(DirectOpenPath, FileMode.Open);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                base.OnStartup(e);
-                return;
-            }
-
-            XmlDocument document = new XmlDocument();
-            document.Load(stream);
-            AnalyticsFactsMetaDataViewModel analyticsFactsMetaDataView = XMLParser.Deserialize<AnalyticsFactsMetaDataViewModel>(document.OuterXml);
             AnalyticsFactsMetaDataWindow objectTableWindow = new AnalyticsFactsMetaDataWindow();
-            objectTableWindow.DataContext = analyticsFactsMetaDataView;
+            objectTableWindow.DataContext = JsonHelper.GetAnalyticsFactsMetaDataViewModel(DirectOpenPath);
             objectTableWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             objectTableWindow.WindowState = WindowState.Maximized;
             objectTableWindow.Show();
 
-            stream.Close();
-            stream.Dispose();
+            LJSONFilesPaths = new List<string>();
 
-            LXMLFilesPaths = new List<string>();
-            GetLXMLAndDXMLFilesPaths();
-
-
+            worker.DoWork += GetLJSONAndDXMLFilesPaths;
+            worker.RunWorkerAsync();
         }
 
-        public void GetLXMLAndDXMLFilesPaths()
+        private void GetLJSONAndDXMLFilesPaths(object sender, DoWorkEventArgs e)
         {
             try
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\";
-                LXMLFilesPaths = Directory.GetFiles(projectDirectory, "*.axml", SearchOption.AllDirectories).ToList();
+                LJSONFilesPaths = Directory.GetFiles(projectDirectory, "*.ljson", SearchOption.AllDirectories).ToList();
             }
             catch (Exception exception)
             {
                 MessageBox.Show("Error While Loading Files: " + exception.Message);
             }
         }
+
+   
     }
 }
