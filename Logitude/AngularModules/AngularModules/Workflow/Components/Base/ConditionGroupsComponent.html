@@ -1,0 +1,172 @@
+<style>
+    .link-button {
+        text-decoration: underline;
+        float: left;
+        color: blue;
+        font-size: 11px;
+        text-indent: 3px;
+    }
+
+    .link-button:hover {
+        text-decoration: underline;
+        float: left;
+        color: lightskyblue;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    .table-container {
+        display: table;
+    }
+
+    .group-operation-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 70px;
+        padding-right: 10px;
+        border-right: 1px solid #808080;
+    }
+
+    .group-conditions-container {
+        display: table-cell;
+    }
+
+    .delete-condition-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 18px;
+    }
+
+    .condition-field-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 180px;
+        padding-right: 10px;
+    }
+
+    .condition-operator-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100px;
+        padding-right: 10px;
+    }
+
+    .condition-value-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 180px;
+    }
+
+    .condition-container {
+        margin-bottom: 10px;
+    }
+
+    .add-buttons-container {
+        margin-top: 10px;
+        margin-left: 18px;
+    }
+
+    .add-group-button {
+        margin-left: 20px;
+    }
+
+    .padding-left-10 {
+        padding-left: 10px;
+    }
+
+    .conditions-container {
+        margin-top: 10px;
+    }
+
+    .delete-condition-button {
+        display: none;
+        cursor: pointer;
+    }
+
+    .condition-row:hover .delete-condition-button {
+        display: block;
+    }
+</style>
+
+
+<ul class="conditions-container">
+    <li *ngFor="let Condition of Conditions; let conditionIndex = index; let isLastCondition = last"
+        class="condition-container">
+
+
+        <div class="table-container">
+
+            <div *ngIf="Condition.isGroup" class="group-operation-container">
+
+                <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
+                    [SelectedItem]="getConditionGroupItem(Condition.groupOperation)"
+                    (SelectedItemChanged)="updateConditionGroupOperation($event, conditionIndex)"></ComboBox>
+
+            </div>
+
+
+            <div class="group-conditions-container" [ngClass]="{'padding-left-10': Condition.isGroup}">
+
+                <div class="table-container condition-row">
+
+                    <div class="delete-condition-container">
+                        <img class="delete-condition-button" src="./Images/Trash-can.png"
+                            (click)="deleteCondition(conditionIndex, Condition.isGroup)" />
+                    </div>
+
+                    <div class="condition-field-container">
+
+                        <LogLov [NoObjectField]="true" [DataContext]="DataContext"
+                            [QueryFilterItems]="getObjectFieldsQueryFilters()" [LookUpTableName]="'ObjectField'"
+                            [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="Condition.fieldId"
+                            [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                        </LogLov>
+
+                    </div>
+
+                    <div class="condition-operator-container">
+
+                        <ComboBox [ItemsSource]="ConditionOperators" [Binding]="'Name'"
+                            [SelectedItem]="getConditionOperatorItem(Condition.operator)"
+                            (SelectedItemChanged)="updateConditionOperator($event, conditionIndex)">
+                        </ComboBox>
+
+                    </div>
+
+                    <div class="condition-value-container">
+
+                        <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                            [HideColumns]="true" [RowsCount]="1"></LogTextBox>
+
+                    </div>
+
+                </div>
+
+                <ConditionGroups *ngIf="Condition.conditions && Condition.conditions.length > 0" [EntityId]="EntityId"
+                    [Conditions]="Condition.conditions" [IsRootConditions]="false"></ConditionGroups>
+
+                <div *ngIf="Condition.isGroup" class="add-buttons-container">
+                    <span class="link-button add-condition-button" (click)="addCondition(conditionIndex, false)">
+                        Add Condition
+                    </span>
+                    <span class="link-button add-group-button" (click)="addCondition(conditionIndex, true)">
+                        Add Group
+                    </span>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container">
+            <span class="link-button add-condition-button" (click)="addCondition(null, false)">
+                Add Condition
+            </span>
+            <span class="link-button add-group-button" (click)="addCondition(null, true)">
+                Add Group
+            </span>
+        </div>
+
+    </li>
+</ul>

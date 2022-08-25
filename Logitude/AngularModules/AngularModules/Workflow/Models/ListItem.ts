@@ -1,4 +1,4 @@
-export class Entity {
+export class ListItem {
     public Name: string;
 
     constructor(name: string) {

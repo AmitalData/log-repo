@@ -6,26 +6,14 @@
         </td>
     </tr>
 
-    <tr style="height:5px;">
-        <td>
-            <div></div>
+    <tr style="height:1px;">
+        <td style="padding-bottom:10px;">
+            <div style="border-bottom:1px solid #6E6E6E;"></div>
         </td>
     </tr>
 
     <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:20px;">
-        <td>
+        <td style="padding-bottom:10px;">
             <div style="padding-left:10px;padding-right:10px;">
                 <div style="font-weight:bold;padding-bottom:4px;">Select Object</div>
                 <div>Select the object whose records trigger the flow when they're created or updated</div>
@@ -33,58 +21,40 @@
         </td>
     </tr>
 
-    <tr style="height:15px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:50px;">
-        <td>
+    <tr style="height:1px;">
+        <td style="padding-bottom:10px;">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div style="padding-left:10px;padding-right:10px;height:30px;width:320px;">
-                <ComboBox [ItemsSource]="Entities" [Binding]="'Name'" [SelectedItem]="Entity"
-                    (SelectedItemChanged)="updateEntity($event)"></ComboBox>
+                <!-- <ComboBox [ItemsSource]="Entities" [Binding]="'Name'" [SelectedItem]="Entity"
+                    (SelectedItemChanged)="updateEntity($event)"></ComboBox> -->
+                <LogLov [NoObjectField]="true" [DataContext]="DataContext"
+                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
+                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
+                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)">
+                </LogLov>
             </div>
         </td>
     </tr>
 
-
-    <tr style="height:15px;">
-        <td>
-            <div></div>
+    <tr style="height:1px;">
+        <td style="padding-bottom:10px;">
+            <div style="border-bottom:1px solid #6E6E6E;"></div>
         </td>
     </tr>
-
 
     <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:20px;">
-        <td>
+        <td style="padding-bottom:10px;">
             <div style="padding-left:10px;padding-right:10px;">
                 <div style="font-weight:bold;">Configure Trigger</div>
             </div>
         </td>
     </tr>
 
-
-    <tr style="height:100px;">
-        <td>
+    <tr style="height:1px;">
+        <td style="padding-bottom:10px;">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Trigger the flow when'" [ObjectFieldName]="'Trigger'"
                     [DataContext]="DataContext"></LogLabel>
@@ -117,44 +87,38 @@
         </td>
     </tr>
 
-
-    <tr style="height:15px;">
-        <td>
-            <div></div>
+    <tr style="height:1px;">
+        <td style="padding-bottom:10px;">
+            <div style="border-bottom:1px solid #6E6E6E;"></div>
         </td>
     </tr>
-
 
     <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:20px;">
-        <td>
+        <td style="padding-bottom:10px;">
             <div style="padding-left:10px;padding-right:10px;">
-                <div style="font-weight:bold;">Configure Conditions</div>
+                <div style="font-weight:bold;">Set Conditions</div>
             </div>
         </td>
     </tr>
 
-    <tr style="height:300px;">
+    <tr style="height:1px;">
         <td>
-            <div style="height:300px;padding-left:10px;padding-right:10px;padding-top:10px;">
-                
+            <div style="padding-left:10px;padding-right:10px;overflow:auto;width:800px;"
+                [ngStyle]="{'height': (ValidationErrorsList != null && ValidationErrorsList.length > 0) ? '285px' : '370px'}">
+
+
+                <div *ngIf="Conditions && Conditions.length === 0">
+                    <IconButton [Name]="'Add'" (click)="initializeCondition()"></IconButton>
+                </div>
+
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"></Conditions>
+
+
             </div>
         </td>
     </tr>
-
 
     <tr>
         <td>
@@ -162,23 +126,23 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
+    <tr style="height:1px;">
+        <td style="vertical-align:bottom">
+            <table style="height:22px;">
                 <tr>
                     <td>
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
+                    <td style="width:57px;">
                         <button class="Button" (click)="cancelButtonClicked()">Cancel</button>
                     </td>
 
-                    <td style="width: 5px;">
+                    <td style="width:5px;">
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
+                    <td style="width:57px;">
                         <button class="RedButton" (click)="saveButtonClicked()">Ok</button>
                     </td>
                 </tr>
