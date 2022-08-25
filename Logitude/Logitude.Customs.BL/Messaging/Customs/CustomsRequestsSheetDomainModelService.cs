@@ -455,6 +455,31 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 .Insert("Customs.General.RequestInProgressNoteClient," + requestParams.PBId, text);
         }
 
+        public void AddExportDBSignQueue(TRequestParams requestParams, string personId, SignQueueByType SignatureBy, string CustomsAgentId)
+        {
+            string queueName = "";
+            if (SignatureBy == SignQueueByType.SignQueueByPersonId)
+            {
+                queueName = "PersonalSign_" + requestParams.Tenant + "_" + personId;
+            }
+            else
+            {
+                queueName = "CompanySign_" + requestParams.Tenant + "_" + CustomsAgentId;
+            }
+
+            Dictionary<string, string> messageProperties = new Dictionary<string, string>();
+            messageProperties.Add("InterfaceTypeCode", requestParams.InterfaceTypeCode);
+            messageProperties.Add("Tenant", requestParams.Tenant.ToString());
+            messageProperties.Add("CorrelationId", requestParams.CustomsRequestsSheetId);
+            var queueService = new Server.Tools.QueueService.CustomDbQueueService(queueName, 0);
+            var queueSendModel = new Server.Tools.QueueService.QueueSendModel();
+            queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
+            queueSendModel.EntityId = MyCustomsRequestsSheetPM?.Id;
+            queueSendModel.UseRabbitMQ = false;//never use rabbit !!!!
+            queueSendModel.InterfaceTypeCode = requestParams.InterfaceTypeCode;
+            queueSendModel.Tenant = requestParams.Tenant;
+            queueService.Send(messageProperties, requestParams.Tenant, null, queueSendModel);
+        }
         public string GetAvailableSignServer(out string personId, out SignQueueByType SignatureBy, out string noAvailableSignServerErrorText,
             string OverrideSignStepName = null)
         {
@@ -1659,31 +1684,40 @@ After that Remove file  from DCA  .. ");
                     {
                         var signStepName = this.GetSignStepName(true);
                         var personId = SignQueue.Instance.GetUserPersonID(this.MyCustomsRequestsSheetPM.RequestOwnerId, this.MyCustomsRequestsSheetPM.Tenant);
-                        var signQueueWebFormUrl = SignQueue.Instance
-                            .GetSignQueueWebFormUrl(
-                            _MyCustomsRequestsSheetPM.Tenant,
-                            personId,
-                            _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
-                        try
+                        var pmCustomsSetting = CustomsSettingQueryService.GetSettingByTenant(this.MyCustomsRequestsSheetPM.Tenant);
+                        if (!pmCustomsSetting.IsConnectedToUniFreight)
                         {
-
-                            Task.Run(
-                                () =>
-                                {
-                                    Thread.Sleep(5000);
-                                    var uri = new Uri(signQueueWebFormUrl);
-                                    var client = new WebClient();
-                                    client.DownloadStringCompleted += (sender, e1) =>
-                                    {
-                                        /// var res = e1.Result;
-                                    };
-                                    client.DownloadStringAsync(uri);
-                                });
+                            AddExportDBSignQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
                         }
-                        catch (Exception)
+                        else
                         {
 
-                            //throw;
+                            var signQueueWebFormUrl = SignQueue.Instance
+                                .GetSignQueueWebFormUrl(
+                                _MyCustomsRequestsSheetPM.Tenant,
+                                personId,
+                                _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
+                            try
+                            {
+
+                                Task.Run(
+                                    () =>
+                                    {
+                                        Thread.Sleep(5000);
+                                        var uri = new Uri(signQueueWebFormUrl);
+                                        var client = new WebClient();
+                                        client.DownloadStringCompleted += (sender, e1) =>
+                                        {
+                                        /// var res = e1.Result;
+                                        };
+                                        client.DownloadStringAsync(uri);
+                                    });
+                            }
+                            catch (Exception)
+                            {
+
+                                //throw;
+                            }
                         }
 
                         createSBQMessage = false;
