@@ -25,7 +25,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
             File.WriteAllText(App.DirectOpenPath, json);
         }
 
-        private static AnalyticsFactsMetaData CleanUnwantedProp(AnalyticsFactsMetaDataViewModel table)
+        public static AnalyticsFactsMetaData CleanUnwantedProp(AnalyticsFactsMetaDataViewModel table)
         {
             table.AnalyticsFactsFieldsMetaDatas = new List<AnalyticsFactsFieldsMetaData>();
             foreach (var item in table.AnalyticsFactsFieldsMetaDataViewModels)

@@ -18,6 +18,7 @@ namespace Logitude.DashboardModule.MetaDataTool
         private readonly BackgroundWorker worker = new BackgroundWorker();
         public static string DirectOpenPath { get; set; }
         public static List<string> LJSONFilesPaths { get; set; }
+        public static List<string> DXMLFilesPaths { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -51,8 +52,17 @@ namespace Logitude.DashboardModule.MetaDataTool
         {
             try
             {
+                LJSONFilesPaths = new List<string>();
+                DXMLFilesPaths = new List<string>();
+
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\";
-                LJSONFilesPaths = Directory.GetFiles(projectDirectory, "*.ljson", SearchOption.AllDirectories).ToList();
+                if (projectDirectory.Contains(@"\Logitude\"))
+                {
+                    string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
+                    LJSONFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.ljson", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+                    DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
+                }
+
             }
             catch (Exception exception)
             {

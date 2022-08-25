@@ -80,6 +80,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             }
 
             JsonHelper.GenerateJsonFileFromTool(this);
+            //DxmlGeneratorClass.GenerateDXMLFileFromTool(this);
             window.Close();
             Application.Current.Shutdown();
         }
