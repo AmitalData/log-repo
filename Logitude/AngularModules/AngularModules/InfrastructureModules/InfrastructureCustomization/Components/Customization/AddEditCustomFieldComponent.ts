@@ -46,7 +46,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     DefaultAdditionalTreeFilters: any;
     ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    entityResourceService: EntityResourceService = new EntityResourceService();
+    EntityResourceService: EntityResourceService = new EntityResourceService();
     AdditionalFiltersData: any = [];
     ShownAdditionalFiltersSettings: boolean;
     ObjectTableName: string;
@@ -97,7 +97,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        //this.ShipmentList = args.SelectedShipment;
+        this.InitLookUpTables();
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
         this.DataTypeCollection = args.DataTypeCollection;
@@ -111,7 +111,6 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
             this.UIProperties.SetEnabled("Code", "ObjectField", false);
         }
-        this.InitLookUpTables();
     }
 
     LookUpTablesFilterItems: ApiQueryFilters;
@@ -470,18 +469,27 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
 
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
-            var result: ServiceResponse = serviceResponse;
-            if (!result.HasError) {
-                this.CurrentSession.StopBusyIndicator();
-                let additionalFiltersData = [];
-                if (result.Result) {
-                    additionalFiltersData.push(result.Result);
+        if (!this.LookUpTableId) return;
+        this.LookUpTableName = this.LookUpTableName ? this.LookUpTableName : window.ObjectTables.filter(t => t.Id == this.LookUpTableId)[0]?.Name;
+        if (!this.LookUpTableName) return;
+        this.EntityResourceService.getEntityResourceByTableName(this.LookUpTableName).subscribe((response: any) => {
+            this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+                var result: ServiceResponse = serviceResponse;
+                if (!result.HasError) {
+                    this.FillAdditionalFiltersData(result);
                 }
-                this.AdditionalFiltersData = additionalFiltersData;
-                this.ShownAdditionalFilters = true;
-            }
-        });
+            });
+        }); 
+    }
+
+    private FillAdditionalFiltersData(result: ServiceResponse) {
+        this.CurrentSession.StopBusyIndicator();
+        let additionalFiltersData = [];
+        if (result.Result) {
+            additionalFiltersData.push(result.Result);
+        }
+        this.AdditionalFiltersData = additionalFiltersData;
+        this.ShownAdditionalFilters = true;
     }
 
     public authHeader;
@@ -532,6 +540,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 var index = window.ObjectFields.indexOf(oldItem);
                                 window.ObjectFields.splice(index, 1);
                             }
+                            item.ObjectTable_LookUpTableName = this.LookUpTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();
