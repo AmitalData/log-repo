@@ -125,7 +125,7 @@ export class CheckBox{
         }
     }
 
-    OnClick() {
+    OnClick() {       
         this.IsChecked = !this.IsChecked;
         this.Checked.emit(this.IsChecked);
     }
