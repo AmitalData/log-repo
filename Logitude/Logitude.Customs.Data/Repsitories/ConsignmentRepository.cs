@@ -121,7 +121,16 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a).ToList();
         }
+        public IQueryable<Consignment> GetConsigmentByExportContainerizationID(string exportContainerizationID, int tenant)
+        {
+            var query = (from b in context.Consignments
+                         where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
+                         select b); 
 
+            return query;
+
+                
+        }
 
 
   
