@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
             if (customResponse.ResponseContentHeader.Exception == null || !customResponse.ResponseContentHeader.Exception.Any(x=>x.ExceptionLevel == 3))
-            {
+            { 
                 if (_ContainerizationPM.OperationMode == "3")
                 {
                     _ContainerizationPM.ContainerizationStatus = "3";
