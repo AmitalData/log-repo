@@ -61,9 +61,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ConsignmentKeys entityKeys = new ConsignmentKeys() { DeclarationId = entityPOCO.DeclarationId, ConsignmentNumber = entityPOCO.ConsignmentNumber,  };
             return entityKeys;
         }
-     
-	 
-   }
-   
+        public List<ConsignmentPM> GetConsigmentByExportContainerizationID(string containerizationId, int tenant)
+        {
+            var query = repository.GetConsigmentByExportContainerizationID(containerizationId, tenant);
+            List<Consignment> Consignments = query.ToList();
+            ConsignmentDataMapping mappings = new ConsignmentDataMapping();
+            List<ConsignmentPM> ConsignmentPMs = new List<ConsignmentPM>();
+            foreach (Consignment consignment in Consignments)
+            {
+                ConsignmentPM ConsignmentPM = new ConsignmentPM();
+                mappings.CustomPOCOToPM(ConsignmentPM, consignment);
+                mappings.POCOToPM(ConsignmentPM, consignment);
+                GetComposition(new ConsignmentKeys() { DeclarationId = consignment.DeclarationId, }, ConsignmentPM);
+                ConsignmentPMs.Add(ConsignmentPM);
+            }
+            return ConsignmentPMs;
+        }
+
+
+    }
+
 }
 	 
