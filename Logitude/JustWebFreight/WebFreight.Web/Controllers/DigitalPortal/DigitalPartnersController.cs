@@ -48,9 +48,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var customfilters = new ShipmentCustomFilter(authToken.Tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
 
-            var partners = shipments.Where(a =>  a.ConsigneeName.Contains(searchText) 
-                                                 || a.ShipperName.Contains(searchText))
-                                    .AsEnumerable()
+            var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
+                                                &&(a.ConsigneeName.Contains(searchText) 
+                                                   || a.ShipperName.Contains(searchText)))
+                                    .Take(50)
                                     .SelectMany(a => new List<Partner> 
                                     {
                                         new Partner
