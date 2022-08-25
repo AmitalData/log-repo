@@ -50,7 +50,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var partners = shipments.Where(a =>  a.ConsigneeName.Contains(searchText) 
                                                  || a.ShipperName.Contains(searchText))
-                                    .AsEnumerable()
+                                    .Take(50)
                                     .SelectMany(a => new List<Partner> 
                                     {
                                         new Partner

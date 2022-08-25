@@ -13017,7 +13017,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
                                PreForwardingETD = f.PreForwardingETD,
-                               StatusCode = f.StatusCode
+                               StatusCode = f.StatusCode,
+                               Id = f.Id,
+                               Tenant = f.Tenant                               
                            };
 
             return myResult;
