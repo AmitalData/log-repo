@@ -442,9 +442,18 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //    return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
         //}
         //else {
-        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        filters = this.FillTreeFilterDetails(filters);
         return this._entityListService.getByFilters(rowsObjectTable, filters);
         //}
+    }
+
+    FillTreeFilterDetails(filters) {
+        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
+
+
+        return filters;
     }
 
 
@@ -506,7 +515,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
           //  return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
        // }
         //else {
-            filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+            filters = this.FillTreeFilterDetails(filters);
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }
