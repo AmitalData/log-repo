@@ -1469,7 +1469,7 @@ on record.JournalId equals j.Id
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(ledgerTransactionBalanceFilter.Tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(ledgerTransactionBalanceFilter.Tenant);
 
-            return (from a in context.LedgerTransactions
+            var ledgerTransactionsListQuery = (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on a.JournalId equals m.JournalId
 
@@ -1483,7 +1483,11 @@ on record.JournalId equals j.Id
 
                     select a).Distinct();
 
-           
+            if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields))
+            {
+                ledgerTransactionsListQuery = ledgerTransactionsListQuery.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
+            }
+            return ledgerTransactionsListQuery;
         }
 
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
@@ -1526,6 +1530,9 @@ on record.JournalId equals j.Id
                                                       && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                       
                                                         select ledger).Distinct();
+            if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields)) {
+                inputLines = inputLines.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
+            }
             List<LedgerTransaction> list2 = inputLines.ToList();
 
             return inputLines;
