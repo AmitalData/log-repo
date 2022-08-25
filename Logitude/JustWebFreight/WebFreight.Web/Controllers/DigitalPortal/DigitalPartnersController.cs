@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
                                                 &&(a.ConsigneeName.Contains(searchText) 
                                                    || a.ShipperName.Contains(searchText)))
-                                    .Take(50)
+                                    .Take(100)
                                     .SelectMany(a => new List<Partner> 
                                     {
                                         new Partner

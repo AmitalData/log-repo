@@ -12986,9 +12986,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
                                TransportModeName = f.TransportModeName,
+                               ShipmentTypeName = f.ShipmentTypeName,
                                DirectionName = f.DirectionName,
                                Master = f.Master,
-                               StatusName = f.StatusName,
+                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
+                               ExactStatusName = f.StatusName,
                                StatusDate = f.StatusDate,
                                ConsigneeId = f.ConsigneeId,
                                ConsigneeCountryCode = f.ConsigneeCountryCode,
@@ -13019,7 +13021,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                PreForwardingETD = f.PreForwardingETD,
                                StatusCode = f.StatusCode,
                                Id = f.Id,
-                               Tenant = f.Tenant                               
+                               Tenant = f.Tenant,
+                               LongMaster = f.LongMaster,
+                               TransportModeId = f.TransportModeId,
+                               DirectionId = f.DirectionId,
+                               ShipperName = f.ShipperName,
+                               ConsigneeName = f.ConsigneeName,
                            };
 
             return myResult;
