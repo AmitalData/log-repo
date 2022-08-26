@@ -167,6 +167,7 @@ export class WarehouseReleasePMService {
         if (!entityPM) {
             
             entityPM = new WarehouseReleasePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -217,6 +218,8 @@ export class WarehouseReleasePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -242,13 +245,14 @@ export class WarehouseReleasePMService {
             {
                 newWarehouseReleasePackagePM = new WarehouseReleasePackagePM(null);
             }
-                
+ 			newWarehouseReleasePackagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newWarehouseReleasePackagePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -274,7 +278,7 @@ export class WarehouseReleasePMService {
                 newWarehouseReleasePackagePM.OldEntityPM = null;
                 newWarehouseReleasePackagePM.EntityParentPM = null;
             }
-			
+			 newWarehouseReleasePackagePM.DisableMarkAsDirty = false;
 			 newWarehouseReleasePackagePM.IsDirty = false;
             entityPM.WarehouseReleasePackages.push(newWarehouseReleasePackagePM);
         }
@@ -288,6 +292,7 @@ export class WarehouseReleasePMService {
                         //entityPM.WarehouseReleasePackages.push(oldWarehouseReleasePackages[itemKey]);
 						var oldItemJson = oldWarehouseReleasePackages[itemKey];
                         var deletedPM: WarehouseReleasePackagePM = new WarehouseReleasePackagePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -299,7 +304,7 @@ export class WarehouseReleasePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
