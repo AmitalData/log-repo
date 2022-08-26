@@ -151,7 +151,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -181,7 +181,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -194,23 +194,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
 				ActivityOwnerHistoryListQueryService activityOwnerHistoryQuery = new ActivityOwnerHistoryListQueryService(MyContext);
 
-                var treeFilterQueryArgs = new TreeFilterQueryArgs()
-                {
-                    ObjectTableName = "AirlineStatisticsList",
-                    Tenant = tenant,
-                    AdditionalTreeFilter = filters.TreeFilters,
-                    ParentEntityId = filters.ParentEntityId,
-                    ParentObjectTableName = filters.ParentObjectTableName,
-                    ParentEntity = filters.ParentEntity,
-                };
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "ActivityOwnerHistory",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 
-                List<ActivityOwnerHistoryList> entityLists = activityOwnerHistoryQuery.GetList(queryOperations, tenant, treeFilterQueryArgs);
+                List<ActivityOwnerHistoryList> entityLists = activityOwnerHistoryQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
 
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = activityOwnerHistoryQuery.GetListCount(queryOperations, tenant, treeFilterQueryArgs);
+                    int count = activityOwnerHistoryQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
