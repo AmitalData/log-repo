@@ -2971,6 +2971,7 @@
     <Compile Include="LogInUserControls\DsvLoginUC.ascx.designer.cs">
       <DependentUpon>DsvLoginUC.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MetaDataUpdate\DashboardAnalyticTablesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MamanStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingCompanyTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccumalationStateDetails.cs" />
@@ -3178,6 +3179,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightMeasurementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightRoundingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WeightUnitUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\DashboardModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AcceptanceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingCompanyTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingEntityJournalUpdateClass.cs" />
@@ -3192,6 +3194,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmountTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AnalyticsFactsFieldsMetaDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AnalyticsFactsMetaDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ApprovedProfessionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeStatusUpdateClass.cs" />
@@ -7609,6 +7612,10 @@
     <ProjectReference Include="..\..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
       <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
       <Name>Logitude.DashboardModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DashboardModule.MetaDataTool\Logitude.DashboardModule.MetaDataTool.csproj">
+      <Project>{15DB9300-FB4E-415F-AEB4-965365250127}</Project>
+      <Name>Logitude.DashboardModule.MetaDataTool</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>

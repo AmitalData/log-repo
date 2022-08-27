@@ -55,7 +55,7 @@ GenerateAllQueryServices("../EntityFiles","../../Logitude.DashboardModule.BL/Ent
 GenerateAllListQueryServices("../EntityFiles","../../Logitude.DashboardModule.Data/EntityListQueryServices","DashboardContext");
 
 GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","Dashboard");
-GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","DashboardUpdateClass");
+GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","DashboardModuleUpdateClass");
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.DashboardModule.BL/CLoseTables");
 //GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/DashboardModel","DashboardContext","Logitude.DashboardModule","DashboardDomainService");
 

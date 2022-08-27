@@ -27,6 +27,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string TableName { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("HashString")]
+	    public string HashString { get; set; }
     }
 }
 	 

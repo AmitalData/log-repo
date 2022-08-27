@@ -25,7 +25,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Id, 
 	         Name, 
 	         TableName, 
-	         Tenant,
+	         Tenant, 
+	         HashString,
 	      }
 
 

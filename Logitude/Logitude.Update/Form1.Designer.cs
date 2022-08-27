@@ -154,6 +154,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.updateWorkflowLabel = new System.Windows.Forms.Label();
+            this.updateWorkflowButton = new System.Windows.Forms.Button();
             this.UpdateSHOLabel = new System.Windows.Forms.Label();
             this.UpdateShipmentOrderButton = new System.Windows.Forms.Button();
             this.UpdateCargoTrackingLabel = new System.Windows.Forms.Label();
@@ -270,8 +272,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
-            this.updateWorkflowLabel = new System.Windows.Forms.Label();
-            this.updateWorkflowButton = new System.Windows.Forms.Button();
+            this.updateDashboardLabel = new System.Windows.Forms.Label();
+            this.updateDashboardButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -670,7 +672,7 @@
             this.toolStripStatusLabel1,
             this.conStrLabel,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 672);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 698);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1024, 22);
             this.statusStrip1.TabIndex = 14;
@@ -1541,13 +1543,15 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1024, 648);
+            this.tabControl1.Size = new System.Drawing.Size(1024, 674);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.updateDashboardLabel);
+            this.tabPage1.Controls.Add(this.updateDashboardButton);
             this.tabPage1.Controls.Add(this.updateWorkflowLabel);
             this.tabPage1.Controls.Add(this.updateWorkflowButton);
             this.tabPage1.Controls.Add(this.UpdateSHOLabel);
@@ -1614,10 +1618,33 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabPage1.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage1.Size = new System.Drawing.Size(1016, 648);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // updateWorkflowLabel
+            // 
+            this.updateWorkflowLabel.AutoSize = true;
+            this.updateWorkflowLabel.Location = new System.Drawing.Point(206, 589);
+            this.updateWorkflowLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.updateWorkflowLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.updateWorkflowLabel.Name = "updateWorkflowLabel";
+            this.updateWorkflowLabel.Size = new System.Drawing.Size(100, 13);
+            this.updateWorkflowLabel.TabIndex = 105;
+            this.updateWorkflowLabel.Text = "...";
+            // 
+            // updateWorkflowButton
+            // 
+            this.updateWorkflowButton.Location = new System.Drawing.Point(16, 585);
+            this.updateWorkflowButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.updateWorkflowButton.Name = "updateWorkflowButton";
+            this.updateWorkflowButton.Size = new System.Drawing.Size(184, 22);
+            this.updateWorkflowButton.TabIndex = 104;
+            this.updateWorkflowButton.Text = "Update Workflow";
+            this.updateWorkflowButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.updateWorkflowButton.UseVisualStyleBackColor = true;
+            this.updateWorkflowButton.Click += new System.EventHandler(this.updateWorkflowButton_Click);
             // 
             // UpdateSHOLabel
             // 
@@ -2939,34 +2966,34 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // updateWorkflowLabel
+            // updateDashboardLabel
             // 
-            this.updateWorkflowLabel.AutoSize = true;
-            this.updateWorkflowLabel.Location = new System.Drawing.Point(206, 589);
-            this.updateWorkflowLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.updateWorkflowLabel.MinimumSize = new System.Drawing.Size(100, 0);
-            this.updateWorkflowLabel.Name = "updateWorkflowLabel";
-            this.updateWorkflowLabel.Size = new System.Drawing.Size(100, 13);
-            this.updateWorkflowLabel.TabIndex = 105;
-            this.updateWorkflowLabel.Text = "...";
+            this.updateDashboardLabel.AutoSize = true;
+            this.updateDashboardLabel.Location = new System.Drawing.Point(206, 617);
+            this.updateDashboardLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.updateDashboardLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.updateDashboardLabel.Name = "updateDashboardLabel";
+            this.updateDashboardLabel.Size = new System.Drawing.Size(100, 13);
+            this.updateDashboardLabel.TabIndex = 107;
+            this.updateDashboardLabel.Text = "...";
             // 
-            // updateWorkflowButton
+            // updateDashboardButton
             // 
-            this.updateWorkflowButton.Location = new System.Drawing.Point(16, 585);
-            this.updateWorkflowButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.updateWorkflowButton.Name = "updateWorkflowButton";
-            this.updateWorkflowButton.Size = new System.Drawing.Size(184, 22);
-            this.updateWorkflowButton.TabIndex = 104;
-            this.updateWorkflowButton.Text = "Update Workflow";
-            this.updateWorkflowButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.updateWorkflowButton.UseVisualStyleBackColor = true;
-            this.updateWorkflowButton.Click += new System.EventHandler(this.updateWorkflowButton_Click);
+            this.updateDashboardButton.Location = new System.Drawing.Point(16, 613);
+            this.updateDashboardButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.updateDashboardButton.Name = "updateDashboardButton";
+            this.updateDashboardButton.Size = new System.Drawing.Size(184, 22);
+            this.updateDashboardButton.TabIndex = 106;
+            this.updateDashboardButton.Text = "Update Dashboard";
+            this.updateDashboardButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.updateDashboardButton.UseVisualStyleBackColor = true;
+            this.updateDashboardButton.Click += new System.EventHandler(this.updateDashboardButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1024, 694);
+            this.ClientSize = new System.Drawing.Size(1024, 720);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -3268,6 +3295,8 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label updateWorkflowLabel;
         private System.Windows.Forms.Button updateWorkflowButton;
+        private System.Windows.Forms.Label updateDashboardLabel;
+        private System.Windows.Forms.Button updateDashboardButton;
     }
 }
 

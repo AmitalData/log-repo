@@ -5812,6 +5812,12 @@ User/Pass",
             thread.Start();
         }
 
+        private void updateDashboardButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "Dashboard", updateDashboardLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
     public class TimeZoneExcelItem
     {

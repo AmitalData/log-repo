@@ -16,6 +16,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
         public static void GenerateJsonFileFromTool(AnalyticsFactsMetaDataViewModel table)
         {
             AnalyticsFactsMetaData analyticsFactsMetaData = CleanUnwantedProp(table);
+            analyticsFactsMetaData.HashString = Guid.NewGuid().ToString("N");
             if (string.IsNullOrEmpty(App.DirectOpenPath))
             {
                 MessageBox.Show("file path in not valid!");

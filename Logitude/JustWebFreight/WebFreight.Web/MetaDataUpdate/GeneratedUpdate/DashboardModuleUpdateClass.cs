@@ -39,7 +39,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
-   public class DashboardUpdateClass
+   public class DashboardModuleUpdateClass
    {
         public Dictionary<string, ObjectTable> ObjectTables { get; set; }
 	    public Dictionary<string, TextCode> TextCodes { get; set; }
