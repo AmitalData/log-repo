@@ -248,7 +248,7 @@ export class UserDefinedReportPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCalculatedChartsOfAccountPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -354,7 +354,7 @@ export class UserDefinedReportPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCalculatedChartsOfAccountsLinePM[pmProperty] = jItem[pmProperty];
             }
            
