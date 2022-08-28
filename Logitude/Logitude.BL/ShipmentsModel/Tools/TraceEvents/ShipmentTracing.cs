@@ -359,7 +359,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("PIOD");
             }
-            else
+            else if (entityPM.IsPODReceived && entityPM.PODReceivedDate != entityPoco.PODReceivedDate)
             {
                 this.CreateTraceEvent("PIOD");
             }
