@@ -141,7 +141,7 @@
 	inner JOIN dw_QuoteComputedFields ON dw_Quotes.Id = dw_QuoteComputedFields.Id
 	inner JOIN dw_Tenants  ON dw_Quotes.Tenant = dw_Tenants.Id
 	inner JOIN NewDIM_Currencies LocalCurrency ON dw_Tenants.CurrencyId = LocalCurrency.Id
-	inner JOIN NewDIM_Partners shipperNotExporterPartners ON dw_Quotes.ShipperNotExporterPartnersId = ShipperNotExporterPartners.Id
+	inner JOIN NewDIM_Partners shipperNotExporterPartners ON dw_Quotes.ShipperNotExporterId = ShipperNotExporterPartners.Id
 	inner JOIN NewDIM_Partners consigneeNotImporterPartners ON dw_Quotes.ConsigneeNotImporterId = consigneeNotImporterPartners.Id
 
 	OPEN QuotesCursor FETCH NEXT FROM QuotesCursor   into  @Id ,@Tenant , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
