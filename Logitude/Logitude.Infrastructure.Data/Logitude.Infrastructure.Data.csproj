@@ -269,6 +269,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
+      <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
+      <Name>Logitude.DashboardModule.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>

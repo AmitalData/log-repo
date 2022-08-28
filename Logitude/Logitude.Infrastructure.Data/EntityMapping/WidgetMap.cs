@@ -29,7 +29,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.Title).HasColumnName("Title").HasMaxLength(300).IsUnicode(true);
 
-            this.Property(t => t.GroupBy).HasColumnName("GroupBy").IsRequired().HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.GroupById).HasColumnName("GroupById").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.DashboardId).HasColumnName("DashboardId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -38,6 +38,16 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.EndPosition).HasColumnName("EndPosition").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.TypeCode).HasColumnName("TypeCode").IsRequired().HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Measure1FieldId).HasColumnName("Measure1FieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Measure2FieldId).HasColumnName("Measure2FieldId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Measure1Operation).HasColumnName("Measure1Operation").IsRequired().HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.Measure2Operation).HasColumnName("Measure2Operation").HasMaxLength(50).IsUnicode(false);
         }
     }
 }

@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AnalyticsFactsFieldsMetaDataUpdateClass
    {  		
-		public const string HashString = "d4cb1c23574ddb559b6031ed4b20e8bf";
+		public const string HashString = "386e89289230d7efc4f42e4cfb874ce5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
+			      				    DependencyFilter1 =  "CanMeasure",
+			      				    DependencyFilter2 =  "CanGroup",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -122,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Analytics Facts Fields MetaData",
-			      				    Code =  "d90c",
+			      				    Code =  "1bc9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",

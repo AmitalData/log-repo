@@ -42,9 +42,9 @@ export class WidgetPM {
     public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
        
 	 
-    private groupBy: string;
-    public get GroupBy() { return this.groupBy; }
-    public set GroupBy(newValue: string) { if (this.groupBy != newValue) { this.groupBy = newValue; this.MarkAsDirty("GroupBy"); } }
+    private groupById: string;
+    public get GroupById() { return this.groupById; }
+    public set GroupById(newValue: string) { if (this.groupById != newValue) { this.groupById = newValue; this.MarkAsDirty("GroupById"); } }
        
 	 
     private dashboardId: string;
@@ -65,6 +65,31 @@ export class WidgetPM {
     private typeCode: string;
     public get TypeCode() { return this.typeCode; }
     public set TypeCode(newValue: string) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
+       
+	 
+    private entityId: string;
+    public get EntityId() { return this.entityId; }
+    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
+       
+	 
+    private measure1FieldId: string;
+    public get Measure1FieldId() { return this.measure1FieldId; }
+    public set Measure1FieldId(newValue: string) { if (this.measure1FieldId != newValue) { this.measure1FieldId = newValue; this.MarkAsDirty("Measure1FieldId"); } }
+       
+	 
+    private measure2FieldId: string;
+    public get Measure2FieldId() { return this.measure2FieldId; }
+    public set Measure2FieldId(newValue: string) { if (this.measure2FieldId != newValue) { this.measure2FieldId = newValue; this.MarkAsDirty("Measure2FieldId"); } }
+       
+	 
+    private measure1Operation: string;
+    public get Measure1Operation() { return this.measure1Operation; }
+    public set Measure1Operation(newValue: string) { if (this.measure1Operation != newValue) { this.measure1Operation = newValue; this.MarkAsDirty("Measure1Operation"); } }
+       
+	 
+    private measure2Operation: string;
+    public get Measure2Operation() { return this.measure2Operation; }
+    public set Measure2Operation(newValue: string) { if (this.measure2Operation != newValue) { this.measure2Operation = newValue; this.MarkAsDirty("Measure2Operation"); } }
        
 	 
 

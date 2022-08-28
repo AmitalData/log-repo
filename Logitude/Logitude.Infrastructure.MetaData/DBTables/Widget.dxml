@@ -26,9 +26,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="GroupBy"
+    Name="GroupById"
+    OldNames="GroupBy"
     Type="varchar"
-    Size="300">
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -60,6 +61,46 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Measure1FieldId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Measure2FieldId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Measure1Operation"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Measure2Operation"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="GroupById"
+    ReferencedTable="AnalyticsFactsFieldsMetaDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DashboardId"
     ReferencedTable="Dashboards"
@@ -69,5 +110,20 @@
     ForeignKeyColumn="TypeCode"
     ReferencedTable="WidgetTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EntityId"
+    ReferencedTable="AnalyticsFactsMetaDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Measure1FieldId"
+    ReferencedTable="AnalyticsFactsFieldsMetaDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Measure2FieldId"
+    ReferencedTable="AnalyticsFactsFieldsMetaDatas"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

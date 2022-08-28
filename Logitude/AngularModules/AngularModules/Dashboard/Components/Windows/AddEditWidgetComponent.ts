@@ -81,10 +81,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    get GroupBy() { return this.EntityPM.GroupBy; }
+    get GroupBy() { return this.EntityPM.GroupById; }
     set GroupBy(value: string) {
-        if (this.EntityPM.GroupBy != value) {
-            this.EntityPM.GroupBy = value;
+        if (this.EntityPM.GroupById != value) {
+            this.EntityPM.GroupById = value;
         }
     }
 

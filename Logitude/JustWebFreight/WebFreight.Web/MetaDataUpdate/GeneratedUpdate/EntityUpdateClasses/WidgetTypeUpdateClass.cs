@@ -74,12 +74,15 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WidgetTypeUpdateClass
    {  		
-		public const string HashString = "f64bbfc7751b4917293a0e939f1cef19";
+		public const string HashString = "c8acf04d870a24da5d2becf28476a8d5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,12 +124,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Widget Type",
-			      				    Code =  "af8b",
+			      				    Code =  "9ac3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
+			      				    ServerModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -161,6 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  20,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
@@ -189,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Code",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -221,6 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -249,6 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Name",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -281,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -309,6 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Search ...",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

@@ -89,25 +89,25 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private string groupBy ;
+	  private string groupById ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string GroupBy  
+       public string GroupById  
 	   {
 	    
 	     get
 		{
-		   return groupBy;
+		   return groupById;
 		 }
 		 set
 		 {
-		   if(groupBy != value)
+		   if(groupById != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GroupBy",OldValue=groupBy,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GroupById",OldValue=groupById,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   groupBy=value;
+		   groupById=value;
 		   }
 			
 		 }
@@ -200,6 +200,121 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeCode",OldValue=typeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   typeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string entityId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityId  
+	   {
+	    
+	     get
+		{
+		   return entityId;
+		 }
+		 set
+		 {
+		   if(entityId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityId",OldValue=entityId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityId=value;
+		   }
+			
+		 }
+	   }
+	  private string measure1FieldId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Measure1FieldId  
+	   {
+	    
+	     get
+		{
+		   return measure1FieldId;
+		 }
+		 set
+		 {
+		   if(measure1FieldId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure1FieldId",OldValue=measure1FieldId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measure1FieldId=value;
+		   }
+			
+		 }
+	   }
+	  private string measure2FieldId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Measure2FieldId  
+	   {
+	    
+	     get
+		{
+		   return measure2FieldId;
+		 }
+		 set
+		 {
+		   if(measure2FieldId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure2FieldId",OldValue=measure2FieldId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measure2FieldId=value;
+		   }
+			
+		 }
+	   }
+	  private string measure1Operation ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Measure1Operation  
+	   {
+	    
+	     get
+		{
+		   return measure1Operation;
+		 }
+		 set
+		 {
+		   if(measure1Operation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure1Operation",OldValue=measure1Operation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measure1Operation=value;
+		   }
+			
+		 }
+	   }
+	  private string measure2Operation ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Measure2Operation  
+	   {
+	    
+	     get
+		{
+		   return measure2Operation;
+		 }
+		 set
+		 {
+		   if(measure2Operation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure2Operation",OldValue=measure2Operation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measure2Operation=value;
 		   }
 			
 		 }
