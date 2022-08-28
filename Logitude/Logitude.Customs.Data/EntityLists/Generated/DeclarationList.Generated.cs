@@ -387,8 +387,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string FinalLoadingSite  { get; set; }
        [DataMember]
-       public int? RequestedCustomsDocId  { get; set; }
-       [DataMember]
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
        public int? PhysicalCheck  { get; set; }

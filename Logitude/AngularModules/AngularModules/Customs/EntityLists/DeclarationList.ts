@@ -194,7 +194,6 @@ export class DeclarationList {
 	CustomFileForExport: string;
 	TransshipmentApprovalDateTime: Date;
 	FinalLoadingSite: string;
-	RequestedCustomsDocId: number;
 	ExportDeclarationOfficeCode: string;
 	PhysicalCheck: number;
 	CargoTypeName: string;
