@@ -61,10 +61,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ConsignmentKeys entityKeys = new ConsignmentKeys() { DeclarationId = entityPOCO.DeclarationId, ConsignmentNumber = entityPOCO.ConsignmentNumber,  };
             return entityKeys;
         }
-       
-
-
-    }
-
+     
+	 
+   }
+   
 }
 	 
