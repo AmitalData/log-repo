@@ -19,8 +19,8 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
     {
         void testc()
         {
-            var a =  UnifreightIIG.Common.WCOResource.DB;
-            var a1 = UnifreightIIG.Common.WCOResource.DBManifest_18;
+            //var a =  UnifreightIIG.Common.WCOResource.DB;
+            //var a1 = UnifreightIIG.Common.WCOResource.DBManifest_18;
 
 
         }
