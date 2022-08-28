@@ -10,7 +10,7 @@ using static Logitude.BL.InfrastructureModel.EntityQueries.ObjectFieldQuery;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
-    internal class ForiegnKeyCheck
+    public class ForiegnKeyCheck
     {
         public static bool CheckClosedTable(object pm, int tenant, bool update = true)
         {
