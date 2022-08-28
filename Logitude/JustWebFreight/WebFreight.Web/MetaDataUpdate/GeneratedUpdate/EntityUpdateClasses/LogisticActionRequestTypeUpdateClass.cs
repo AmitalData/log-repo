@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestTypeUpdateClass
    {  		
-		public const string HashString = "95b7829a696d065fc42916ae36dcf92d";
+		public const string HashString = "63ad3eeaaef59d5de2972ccfeb7531a6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -380,10 +380,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -443,10 +443,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
