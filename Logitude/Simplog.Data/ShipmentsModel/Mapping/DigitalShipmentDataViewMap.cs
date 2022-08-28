@@ -12,6 +12,25 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             // Primary Key
             this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.IsCancelled, t.IsOperationalClosed, t.DirectionId, t.TransportModeId, t.CreateDateTime});
+            this.Property(t => t.ShipperReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.MainCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.AgentName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.CustomAgentExportName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.CustomAgentImportName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.CustomerName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.Notify1Name).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.Notify2Name).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.FreightForwarderName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ReleasingAgentName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ConsolidatorName).HasMaxLength(60);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15).IsUnicode(false);

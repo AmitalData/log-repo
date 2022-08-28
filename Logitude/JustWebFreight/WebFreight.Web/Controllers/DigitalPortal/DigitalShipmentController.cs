@@ -134,7 +134,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-                shipments = customfilters.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository);
+                shipments = DigitalPortalCustomFilter.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository, authToken.Tenant);
 
                 var nonListQueryOperation = new QueryOperations
                 {

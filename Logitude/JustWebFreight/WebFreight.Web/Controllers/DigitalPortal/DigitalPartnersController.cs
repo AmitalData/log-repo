@@ -47,11 +47,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-            var cc = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                && (a.ConsigneeName.Contains(searchText)
-                                                   || a.ShipperName.Contains(searchText)))
-                               .Take(100).ToList();
-
             var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
                                                 &&(a.ConsigneeName.Contains(searchText) 
                                                    || a.ShipperName.Contains(searchText)))

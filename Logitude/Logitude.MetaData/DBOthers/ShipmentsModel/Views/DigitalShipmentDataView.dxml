@@ -36,6 +36,11 @@
     ship.CustomerReference1,
     ship.CustomerReference2,
     ship.CustomerReference3,
+	ship.ShipperReference1,
+	ship.ShipperReference2,
+	ship.ConsigneeReference1,
+	ship.ConsigneeReference2,
+	ship.House,
     ship.ShipmentSubTypeId,
 	dbo.ShipmentSubTypes.[Name] AS ShipmentSubTypeName,
     dbo.TransportModes.[Name] AS TransportModeName,
@@ -70,6 +75,8 @@
     ShipMasterData.InlandDomesticFromAddress2,
     ShipMasterData.InlandDomesticFromPhone,
     ShipMasterData.InlandDomesticFromFax,
+	ShipMasterData.MainCarriageCarrierNumber,
+	ShipMasterData.MainCarriageCarrierId,
     ShipMasterData.InlandDomesticFromStateId,
     InlandDomesticFromState.EnglishName AS InlandDomesticFromStateName,
     ShipmentComputedFields.Transshipments as Transshipments,
@@ -81,7 +88,7 @@
     ShipMasterData.PreCarriageETD,
     ShipMasterData.PreCarriageATA,
     ShipMasterData.PreCarriageATD,
-
+    AgentComputedCards.EnglishName AS AgentName,
 	ShipMasterData.Transshipment1ToPortId, 
 	ShipMasterData.Transshipment1FromPortId,
 	ship.AccountManagerUserId,
@@ -128,10 +135,20 @@
 	ship.NextETA,
 	ship.NextETD,
 	ship.IsCancelled,
+	FreightForwarderCards.EnglishName AS FreightForwarderName,
 	ship.ShipmentLevelCode,
 	dbo.ShipmentLevels.Name AS ShipmentLevelName,
 	ship.ShipmentTypeId,
 	ship.IsStandalonePickupDelivery,
+	ReleasingAgentCards.EnglishName AS ReleasingAgentName,
+	CustomerCards.EnglishName AS CustomerName,
+	ConsolidatorCards.EnglishName AS ConsolidatorName,
+	ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName,
+	Notify1Cards.EnglishName AS Notify1Name,
+	Notify2Cards.EnglishName AS Notify2Name,
+	CustomAgentExportCards.EnglishName AS CustomAgentExportName,
+	CustomAgentImportCards.EnglishName AS CustomAgentImportName,
+	ShipperNotExporterCards.EnglishName AS ShipperNotExporterName,
     CASE WHEN ( NOT ((dbo.ShipmentTypes.[Name] IS NULL) OR ((LEN(dbo.ShipmentTypes.[Name])) = 0)))
 	THEN CASE WHEN (dbo.ShipmentTypes.[Name] IS NULL) 
 	THEN N'' 
@@ -164,6 +181,36 @@
 
     FROM
         dbo.Shipments as ship
+	LEFT OUTER JOIN
+         dbo.Cards AS ConsolidatorCards 
+		     ON dbo.Shipments.ConsolidatorId = ConsolidatorCards.Id
+	LEFT OUTER JOIN
+		 dbo.Cards AS ReleasingAgentCards 
+		     ON dbo.Shipments.ReleasingAgentId = ReleasingAgentCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS FreightForwarderCards 
+		     ON dbo.Shipments.FreightForwarderId = FreightForwarderCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS ConsigneeNotImporterCards 
+		     ON dbo.Shipments.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS ShipperNotExporterCards 
+		     ON dbo.Shipments.ShipperNotExporterId = ShipperNotExporterCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS CustomAgentExportCards 
+		     ON dbo.Shipments.CustomAgentExportId = CustomAgentExportCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS Notify1Cards 
+		    ON dbo.Shipments.Notify1Id = Notify1Cards.Id 
+	LEFT OUTER JOIN 
+	     dbo.Cards AS Notify2Cards 
+		    ON dbo.Shipments.Notify2Id = Notify2Cards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS CustomerCards 
+		     ON dbo.Shipments.CustomerId = CustomerCards.Id
+	LEFT OUTER JOIN
+         dbo.Cards AS CustomAgentImportCards 
+		     ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id
     LEFT OUTER JOIN
         dbo.ShipmentMasterDatas as ShipMasterData
             ON ShipMasterData.Id = ship.MasterShipmentDataId 
@@ -340,7 +387,10 @@
             ON ship.LastSentByUserId = LastSentByUserContact.Id 
     INNER JOIN
         dbo.ShipmentComputedFields AS ShipmentComputedFields 
-            ON ship.Id = ShipmentComputedFields.Id 
+            ON ship.Id = ShipmentComputedFields.Id
+    LEFT OUTER JOIN
+        dbo.Cards AS AgentComputedCards 
+		   ON ship.AgentComputed = AgentComputedCards.Id
     LEFT OUTER JOIN
         dbo.States AS InlandDomesticToState 
             ON InlandDomesticToState.Id = ShipMasterData.InlandDomesticToStateId 

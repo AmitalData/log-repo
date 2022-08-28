@@ -161,5 +161,25 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LongMaster { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
+
+        public string ShipperReference1 { get; set; }
+        public string ShipperReference2 { get; set; }
+        public string ConsigneeReference1 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public string MainCarriageCarrierNumber { get; set; }
+        public string MainCarriageCarrierId { get; set; }
+        public string House { get; set; }
+        public string AgentName { get; set; }
+
+        public string CustomAgentImportName { get; set; }
+        public string CustomerName { get; set; }
+        public string Notify1Name { get; set; }
+        public string Notify2Name { get; set; }
+        public string CustomAgentExportName { get; set; }
+        public string ShipperNotExporterName { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string FreightForwarderName { get; set; }
+        public string ReleasingAgentName { get; set; }
+        public string ConsolidatorName { get; set; }
     }
 }
