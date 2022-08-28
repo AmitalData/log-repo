@@ -140,6 +140,7 @@
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ElasticIndexerWaterMarks.lxml" />
     <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TeamMemberBusinessRole.lxml" />
     <None Include="EntityFiles\Toggle.lxml" />
