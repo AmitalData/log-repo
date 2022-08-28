@@ -99,8 +99,12 @@ namespace Logitude.Customs.BL.TraceEvents
         public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam)
         {
 
+            if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
+            {
+                throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
+            }
 
-            const string ExportStorageStatus = "ExportStorageStatus";
+            string queueName = unifreightHybridQueueTasParam.QueueName;
             _CommunicationsParams = new CommunicationsParams()
             {
                 Tenant = _CommunicationModel.Tenant,
@@ -120,7 +124,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 FolderName =
                 //"ExternalTasksQueue",
-                ExportStorageStatus//"ExportStorageStatus"
+                queueName//"ExportStorageStatus"
             };
 
 
@@ -157,7 +161,7 @@ namespace Logitude.Customs.BL.TraceEvents
             Communications.
                           SendCommunicationLogMessageToQueue(
                           //queueName: "externaltasksqueue" + _CommunicationModel.Tenant + 1,
-                          queueName: ExportStorageStatus.ToLower() + _CommunicationModel.Tenant + 1,
+                          queueName: queueName.ToLower() + _CommunicationModel.Tenant + 1,
                           communicationLogId: communicationLogId,
                           tenant: _CommunicationsParams.Tenant,
                           queueParameters: null,
@@ -212,6 +216,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public string Action { get; set; }
         public string ParameterName { get; set; }
         public TimeSpan UServerDelayTime { get; set; }
+        public string QueueName { get; internal set; }
     }
 
 }
