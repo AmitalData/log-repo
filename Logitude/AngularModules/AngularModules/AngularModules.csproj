@@ -1776,6 +1776,14 @@
     <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsFieldsMetaDataList.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsMetaDataList.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityPMs\AnalyticsFactsFieldsMetaDataPM.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityPMs\AnalyticsFactsMetaDataPM.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsFieldsMetaDataListService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsMetaDataListService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\AnalyticsFactsFieldsMetaDataPMService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\AnalyticsFactsMetaDataPMService.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
@@ -8674,6 +8682,7 @@
     <Folder Include="Customs\Components\DeclarationCargoSplit\" />
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
+    <Folder Include="DashboardModule\Services\ExtendedPMs\" />
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\dist\out-tsc\CommonModules\CommonFilingInbox\Components\" />

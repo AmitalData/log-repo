@@ -1117,6 +1117,10 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsFieldsMetaDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsFieldsMetaDataController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
@@ -2967,6 +2971,7 @@
     <Compile Include="LogInUserControls\DsvLoginUC.ascx.designer.cs">
       <DependentUpon>DsvLoginUC.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MetaDataUpdate\DashboardAnalyticTablesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MamanStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingCompanyTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccumalationStateDetails.cs" />
@@ -3174,6 +3179,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightMeasurementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightRoundingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WeightUnitUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\DashboardModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AcceptanceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingCompanyTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingEntityJournalUpdateClass.cs" />
@@ -3188,6 +3194,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmountTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AnalyticsFactsFieldsMetaDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AnalyticsFactsMetaDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ApprovedProfessionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeUpdateClass.cs" />
@@ -7482,6 +7490,7 @@
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\DomainServices\" />
+    <Folder Include="Controllers\DashboardModel\Extended\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
     <Folder Include="Controllers\WorkflowModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
@@ -7595,6 +7604,18 @@
     <ProjectReference Include="..\..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DashboardModule.BL\Logitude.DashboardModule.BL.csproj">
+      <Project>{d3f9042c-8b29-4882-bcce-73ab5a06290b}</Project>
+      <Name>Logitude.DashboardModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
+      <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
+      <Name>Logitude.DashboardModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DashboardModule.MetaDataTool\Logitude.DashboardModule.MetaDataTool.csproj">
+      <Project>{15DB9300-FB4E-415F-AEB4-965365250127}</Project>
+      <Name>Logitude.DashboardModule.MetaDataTool</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>

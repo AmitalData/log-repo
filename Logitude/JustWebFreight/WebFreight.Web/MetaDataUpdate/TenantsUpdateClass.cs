@@ -135,6 +135,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             WriteLogMessage("Updating Workflow Module ...");
                             UpdateWorkflow(context, false);
 
+                            WriteLogMessage("Updating Dashboard Module ...");
+                            UpdateDashboardModule(context, false);
+
                             WriteLogMessage("Updating Menus tables ...");
                             updateClass.LoadMenustables();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMenustables");
@@ -290,6 +293,12 @@ namespace WebFreight.Web.MetaDataUpdate
                     case "workflow":
                         {
                             UpdateWorkflow(context, true);
+                            break;
+                        }
+
+                    case "dashboard":
+                        {
+                            UpdateDashboardModule(context, true);
                             break;
                         }
 
@@ -1148,6 +1157,19 @@ namespace WebFreight.Web.MetaDataUpdate
                 workflowUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",WorkflowUpdateClass");
+        }
+
+        private static void UpdateDashboardModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            DashboardModuleUpdateClass workflowUpdateClass = new DashboardModuleUpdateClass();
+            if (runOldUpdateCode)
+                workflowUpdateClass.LoadObjectsTenantZero(context);
+            else
+                workflowUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",DashboardUpdateClass");
+            performanceTimerLogger.LogMessage("Updateing Analytic Tables");
+            new DashboardAnalyticTablesUpdateClass(context).Update();
         }
 
         private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)
