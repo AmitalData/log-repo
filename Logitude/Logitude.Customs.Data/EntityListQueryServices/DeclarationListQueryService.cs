@@ -511,7 +511,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueDollar = a.FOBValueDollar,
 
                                                      AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
-                                                     LoadingPortName = a.LoadingSiteType != null ? a.LoadingSiteType.LocalName : null,                                             
+                                                     ExportLoadingPortCode = a.ExportLoadingPortCode,
+                                                     LoadingPortName = a.ExportLoadingPort.LocalName,
+                                                    
                                                  });
 
            
