@@ -3,6 +3,7 @@ import {ActivityStatusDetailsComponent} from '../Dashboard/Components/Workspace/
 import {AirLineDashboardComponent} from '../Dashboard/Components/Workspace/AirLineDashboardComponent';
 import { AddEditDashboardComponent } from '../Dashboard/Components/Windows/AddEditDashboardComponent';
 import { AddEditWidgetComponent } from '../Dashboard/Components/Windows/AddEditWidgetComponent';
+import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/CustomDashboardComponent';
 
 export const Components =
     [
@@ -11,6 +12,7 @@ export const Components =
         AirLineDashboardComponent,
         AddEditDashboardComponent,
         AddEditWidgetComponent,
+        CustomDashboardComponent,
     ];
 
 export class ModuleDeclarations {
@@ -24,6 +26,7 @@ export class ModuleDeclarations {
             case "AirLineDashboardComponent": { myResult = AirLineDashboardComponent; break; }
             case "AddEditDashboardComponent": { myResult = AddEditDashboardComponent; break; }
             case "AddEditWidgetComponent": { myResult = AddEditWidgetComponent; break; }
+            case "CustomDashboardComponent": { myResult = CustomDashboardComponent; break; }
         }
 
         return myResult;
