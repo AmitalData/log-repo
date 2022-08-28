@@ -145,6 +145,7 @@
 	ConsolidatorCards.EnglishName AS ConsolidatorName,
 	ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName,
 	Notify1Cards.EnglishName AS Notify1Name,
+	CreatedByUserContact.EnglishName as CreatedByUserName,
 	Notify2Cards.EnglishName AS Notify2Name,
 	CustomAgentExportCards.EnglishName AS CustomAgentExportName,
 	CustomAgentImportCards.EnglishName AS CustomAgentImportName,
@@ -181,6 +182,9 @@
 
     FROM
         dbo.Shipments as ship
+	LEFT OUTER JOIN
+        dbo.Contacts AS CreatedByUserContact 
+		    ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id
 	LEFT OUTER JOIN
          dbo.Cards AS ConsolidatorCards 
 		     ON ship.ConsolidatorId = ConsolidatorCards.Id
