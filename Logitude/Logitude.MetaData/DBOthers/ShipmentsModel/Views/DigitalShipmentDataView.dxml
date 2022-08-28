@@ -183,34 +183,34 @@
         dbo.Shipments as ship
 	LEFT OUTER JOIN
          dbo.Cards AS ConsolidatorCards 
-		     ON dbo.Shipments.ConsolidatorId = ConsolidatorCards.Id
+		     ON ship.ConsolidatorId = ConsolidatorCards.Id
 	LEFT OUTER JOIN
 		 dbo.Cards AS ReleasingAgentCards 
-		     ON dbo.Shipments.ReleasingAgentId = ReleasingAgentCards.Id
+		     ON ship.ReleasingAgentId = ReleasingAgentCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS FreightForwarderCards 
-		     ON dbo.Shipments.FreightForwarderId = FreightForwarderCards.Id
+		     ON ship.FreightForwarderId = FreightForwarderCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS ConsigneeNotImporterCards 
-		     ON dbo.Shipments.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id
+		     ON ship.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS ShipperNotExporterCards 
-		     ON dbo.Shipments.ShipperNotExporterId = ShipperNotExporterCards.Id
+		     ON ship.ShipperNotExporterId = ShipperNotExporterCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomAgentExportCards 
-		     ON dbo.Shipments.CustomAgentExportId = CustomAgentExportCards.Id
+		     ON ship.CustomAgentExportId = CustomAgentExportCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS Notify1Cards 
-		    ON dbo.Shipments.Notify1Id = Notify1Cards.Id 
+		    ON ship.Notify1Id = Notify1Cards.Id 
 	LEFT OUTER JOIN 
 	     dbo.Cards AS Notify2Cards 
-		    ON dbo.Shipments.Notify2Id = Notify2Cards.Id
+		    ON ship.Notify2Id = Notify2Cards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomerCards 
-		     ON dbo.Shipments.CustomerId = CustomerCards.Id
+		     ON ship.CustomerId = CustomerCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomAgentImportCards 
-		     ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id
+		     ON ship.CustomAgentImportId = CustomAgentImportCards.Id
     LEFT OUTER JOIN
         dbo.ShipmentMasterDatas as ShipMasterData
             ON ShipMasterData.Id = ship.MasterShipmentDataId 
