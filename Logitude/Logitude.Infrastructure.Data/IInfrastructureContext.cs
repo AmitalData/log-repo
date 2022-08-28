@@ -26,21 +26,16 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
-		 IDbSet<Dashboard> Dashboards { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
-		 IDbSet<MeasureType> MeasureTypes { get; }
 		 IDbSet<PriceStep> PriceSteps { get; }
 		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
 		 IDbSet<Team> Teams { get; }
 		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }
 		 IDbSet<Toggle> Toggles { get; }
-		 IDbSet<Widget> Widgets { get; }
-		 IDbSet<WidgetMeasure> WidgetMeasures { get; }
-		 IDbSet<WidgetType> WidgetTypes { get; }
-
 		IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
+
 		void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();

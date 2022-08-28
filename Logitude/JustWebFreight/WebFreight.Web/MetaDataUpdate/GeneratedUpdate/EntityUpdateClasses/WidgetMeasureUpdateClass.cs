@@ -77,12 +77,15 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WidgetMeasureUpdateClass
    {  		
-		public const string HashString = "e706fcc54be56762d8c5e5dacce2902c";
+		public const string HashString = "a268af987a03c3e908a8d18bbc4de5fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,10 +125,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Widget Measure",
-			      				    Code =  "f65e",
+			      				    Code =  "a665",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
+			      				    ClientModuleName =  "DashboardModule",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -161,6 +164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -222,6 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -284,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -345,6 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,

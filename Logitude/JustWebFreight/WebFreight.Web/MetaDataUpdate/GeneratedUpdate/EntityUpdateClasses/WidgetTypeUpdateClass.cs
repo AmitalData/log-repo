@@ -77,12 +77,15 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WidgetTypeUpdateClass
    {  		
-		public const string HashString = "c8acf04d870a24da5d2becf28476a8d5";
+		public const string HashString = "92759032cfa7e37b53700243663d57a5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,12 +127,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Widget Type",
-			      				    Code =  "9ac3",
+			      				    Code =  "bf1c",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
+			      				    ClientModuleName =  "DashboardModule",
 			      				    ServerModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,

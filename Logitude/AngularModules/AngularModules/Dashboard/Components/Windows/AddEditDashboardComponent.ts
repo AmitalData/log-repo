@@ -4,9 +4,9 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
-import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
+import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',

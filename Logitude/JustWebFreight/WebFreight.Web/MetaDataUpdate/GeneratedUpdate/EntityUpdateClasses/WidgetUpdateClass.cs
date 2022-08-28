@@ -77,12 +77,15 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WidgetUpdateClass
    {  		
-		public const string HashString = "a42f027af9031ff1138f4bfbe6c427a3";
+		public const string HashString = "7250579ef8d156dbb667286e9b7b4f3e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,10 +125,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Widget",
-			      				    Code =  "de1b",
+			      				    Code =  "23de",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
+			      				    ClientModuleName =  "DashboardModule",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -823,9 +826,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Measure1Operation",
 					  						ObjectTableName =  "Widget",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "MeasureType",
 					  						MinLength =  0,
-					  						MaxLength =  50,
+					  						MaxLength =  3,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -833,7 +837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
+					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -842,6 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Measure1Operation",
 					  						ListPropertyPath =  "Measure1Operation",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -859,7 +864,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Measure1Operation",
 					  						DefaultText =  "Operation 1",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "MeasureType",
+					  						NavigationPropertyName =  "Measure1Type",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -881,9 +888,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Measure2Operation",
 					  						ObjectTableName =  "Widget",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "MeasureType",
 					  						MinLength =  0,
-					  						MaxLength =  50,
+					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -891,7 +899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
+					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -900,6 +908,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Measure2Operation",
 					  						ListPropertyPath =  "Measure2Operation",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -917,7 +926,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Measure2Operation",
 					  						DefaultText =  "Operation 2",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "MeasureType",
+					  						NavigationPropertyName =  "Measure2Type",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,

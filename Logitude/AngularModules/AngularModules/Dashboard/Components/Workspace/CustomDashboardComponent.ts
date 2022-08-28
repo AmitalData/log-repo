@@ -4,17 +4,17 @@ import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
-import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
 import { DashboardPMExtendedService } from '../../Services/DashboardPMExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
+import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 
 @Component({
     template:

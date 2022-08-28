@@ -106,20 +106,15 @@
     <None Include="DBTables\BIReportsType.dxml" />
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
-    <None Include="DBTables\Dashboard.dxml" />
     <None Include="DBTables\ElasticIndexerWaterMarks.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
     <None Include="DBTables\LastRunDetail.dxml" />
     <None Include="DBTables\LBPTeamMember.dxml" />
-    <None Include="DBTables\MeasureType.dxml" />
     <None Include="DBTables\PriceStep.dxml" />
     <None Include="DBTables\SharedLogisticsSetting.dxml" />
     <None Include="DBTables\Team.dxml" />
     <None Include="DBTables\TeamMemberBusinessRole.dxml" />
     <None Include="DBTables\Toggle.dxml" />
-    <None Include="DBTables\Widget.dxml" />
-    <None Include="DBTables\WidgetMeasure.dxml" />
-    <None Include="DBTables\WidgetType.dxml" />
     <None Include="EntityFiles\BatchTaskExecution.lxml" />
     <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
     <None Include="EntityFiles\BIFoldersPermission.lxml" />
@@ -131,11 +126,9 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
-    <None Include="EntityFiles\Dashboard.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LastRunDetail.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />
-    <None Include="EntityFiles\MeasureType.lxml" />
     <None Include="EntityFiles\PriceStep.lxml" />
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
@@ -143,9 +136,6 @@
     <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TeamMemberBusinessRole.lxml" />
     <None Include="EntityFiles\Toggle.lxml" />
-    <None Include="EntityFiles\Widget.lxml" />
-    <None Include="EntityFiles\WidgetMeasure.lxml" />
-    <None Include="EntityFiles\WidgetType.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

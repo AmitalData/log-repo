@@ -4,11 +4,11 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
-import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
-import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
+import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',

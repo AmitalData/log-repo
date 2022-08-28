@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { DashboardPM } from '../../Infrastructure/EntityPMs/DashboardPM';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import { DashboardPM } from '../../DashboardModule/EntityPMs/DashboardPM';
 
 @Injectable()
 

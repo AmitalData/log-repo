@@ -65,6 +65,16 @@ namespace Logitude.DashboardModule.Data
             modelBuilder.Configurations.Add(new AnalyticsFactsFieldsMetaDataMap());
 	
             modelBuilder.Configurations.Add(new AnalyticsFactsMetaDataMap());
+	
+            modelBuilder.Configurations.Add(new DashboardMap());
+	
+            modelBuilder.Configurations.Add(new MeasureTypeMap());
+	
+            modelBuilder.Configurations.Add(new WidgetMap());
+	
+            modelBuilder.Configurations.Add(new WidgetMeasureMap());
+	
+            modelBuilder.Configurations.Add(new WidgetTypeMap());
 				
 						 
 
@@ -108,6 +118,36 @@ namespace Logitude.DashboardModule.Data
 	 }
 	
 	 public IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Dashboard> Dashboards 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<MeasureType> MeasureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Widget> Widgets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WidgetMeasure> WidgetMeasures 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WidgetType> WidgetTypes 
 	 {
 	      get; set;
 	 

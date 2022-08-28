@@ -1,4 +1,6 @@
-﻿using Logitude.Infrastructure.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.EntityPMs;
+using Logitude.DashboardModule.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;

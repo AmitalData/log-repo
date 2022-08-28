@@ -71,8 +71,18 @@
     <None Include="AnalyticsEntityFiles\ShipmentAnalytic.ljson" />
     <None Include="DBTables\AnalyticsFactsFieldsMetaData.dxml" />
     <None Include="DBTables\AnalyticsFactsMetaData.dxml" />
+    <None Include="DBTables\Dashboard.dxml" />
+    <None Include="DBTables\MeasureType.dxml" />
+    <None Include="DBTables\Widget.dxml" />
+    <None Include="DBTables\WidgetMeasure.dxml" />
+    <None Include="DBTables\WidgetType.dxml" />
     <None Include="EntityFiles\AnalyticsFactsFieldsMetaData.lxml" />
     <None Include="EntityFiles\AnalyticsFactsMetaData.lxml" />
+    <None Include="EntityFiles\Dashboard.lxml" />
+    <None Include="EntityFiles\MeasureType.lxml" />
+    <None Include="EntityFiles\Widget.lxml" />
+    <None Include="EntityFiles\WidgetMeasure.lxml" />
+    <None Include="EntityFiles\WidgetType.lxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
