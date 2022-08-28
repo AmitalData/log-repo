@@ -99,12 +99,12 @@ namespace Logitude.Customs.BL.TraceEvents
         public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam)
         {
 
-            if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
-            {
-                throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
-            }
+            //if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
+            //{
+            //    throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
+            //}
 
-            string queueName = unifreightHybridQueueTasParam.QueueName;
+            const string queueName = "ExternalTasksQueue";
             _CommunicationsParams = new CommunicationsParams()
             {
                 Tenant = _CommunicationModel.Tenant,
@@ -165,7 +165,10 @@ namespace Logitude.Customs.BL.TraceEvents
                           communicationLogId: communicationLogId,
                           tenant: _CommunicationsParams.Tenant,
                           queueParameters: null,
-                          delayTime: unifreightHybridQueueTasParam.UServerDelayTime);
+                          delayTime: unifreightHybridQueueTasParam.UServerDelayTime,
+                          InterfaceTypeCode: unifreightHybridQueueTasParam.InterfaceTypeCode
+
+                          );
 
             LogMessagingUtil.Instance.Append("UnifreightHybridQueueTaskService()")
                         .Append("CommunicationLogId:").Append(communicationLogId)
@@ -216,7 +219,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public string Action { get; set; }
         public string ParameterName { get; set; }
         public TimeSpan UServerDelayTime { get; set; }
-        public string QueueName { get; internal set; }
+        public string InterfaceTypeCode { get; internal set; }
     }
 
 }

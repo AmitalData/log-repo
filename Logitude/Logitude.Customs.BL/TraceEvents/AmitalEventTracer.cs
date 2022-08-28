@@ -90,8 +90,8 @@ namespace Logitude.Customs.BL.TraceEvents
                             Action = "StatusUpdate",
                             ParameterName = "transmission",
                             UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
-                            QueueName = queueName
-                        }); ;
+                            InterfaceTypeCode = queueName
+                        });
                     }
                     else
                     {

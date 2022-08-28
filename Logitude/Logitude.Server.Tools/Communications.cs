@@ -321,7 +321,8 @@ namespace Logitude.Server.Tools
 
 
         public static void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant, Dictionary<string, string> queueParameters = null,
-            TimeSpan? delayTime=null
+            TimeSpan? delayTime=null,
+            string InterfaceTypeCode= null
 
             )
         {
@@ -377,6 +378,7 @@ namespace Logitude.Server.Tools
                         UseRabbitMQ = UseRabbitMQ,
                         EntityCode = "CommunicationLog".ToLower(),
                         EntityId = communicationLogId,
+                        InterfaceTypeCode =InterfaceTypeCode
                     });
                     
                     LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");

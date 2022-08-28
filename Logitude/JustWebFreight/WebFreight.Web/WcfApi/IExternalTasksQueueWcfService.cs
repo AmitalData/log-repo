@@ -1,4 +1,4 @@
-﻿#define tzuri_req
+﻿//#define tzuri_req
 using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
