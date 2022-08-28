@@ -1786,6 +1786,7 @@
     <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\AnalyticsFactsMetaDataPMService.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
