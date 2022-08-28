@@ -1,4 +1,4 @@
-﻿#define tzuri_req
+﻿///#define tzuri_req
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
