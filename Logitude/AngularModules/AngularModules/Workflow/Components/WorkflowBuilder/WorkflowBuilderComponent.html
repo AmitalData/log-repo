@@ -1,41 +1,77 @@
 <style>
+    .workflow-builder-wrapper {
+        background: white;
+    }
+
     .workflow-builder-component-container {
         width: 100%;
         height: 100%;
     }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        width: 10px;
+    }
+
+    .edit-workflow-button-cell {
+        float: left;
+    }
+
+    .save-workflow-button-cell {
+        float: right;
+        width: 60px;
+    }
+
+    .save-button-icon {
+        margin-left: 2px;
+        width: 13px;
+    }
+
+    .save-button-label {
+        line-height: 19px;
+        vertical-align: middle;
+        margin-left: 3px;
+    }
+
+    .back-button-cell {
+        vertical-align: top;
+    }
 </style>
 
-<div class="MediaFillAbsolute" style="background: white;">
+<div class="MediaFillAbsolute workflow-builder-wrapper">
     <div class="MarginAbsolute10">
         <table>
 
-            <tr style="height: 1px;">
+            <tr class="table-row">
                 <td>
                     <table>
                         <tr>
-                            <td style="width:10px">
+                            <td class="table-row-cell">
                                 <div></div>
                             </td>
 
-                            <td style="width: 1px;">
+                            <td class="table-row-cell back-button-cell">
                                 <BackButton [Text]="BackButtonLable" (click)="backButtonClicked()"></BackButton>
                             </td>
 
-                            <td style="width:10px">
+                            <td class="table-row-cell">
                                 <div></div>
                             </td>
 
-                            <td style="width:1px;">
+                            <td class="table-row-cell">
                                 <div class="TabTitleRow TextTrimming">
                                     {{WorkflowName}}
                                 </div>
                             </td>
 
-                            <td style="width:10px">
+                            <td class="table-row-cell">
                                 <div></div>
                             </td>
 
-                            <td style="width:20px;float:left;padding-top:2px">
+                            <td class="table-row-cell edit-workflow-button-cell">
                                 <IconButton [Name]="'Edit'" [Title]="'Edit Workflow'" (click)="editWorkflowClicked()">
                                 </IconButton>
                             </td>
@@ -44,25 +80,22 @@
                                 <div></div>
                             </td>
 
-                            <td style="float:right;width:60px;">
+                            <td class="save-workflow-button-cell">
                                 <table>
                                     <tr>
-                                        <td style="width: 55px;">
+                                        <td>
 
-                                            <button *ngIf="!HasChanges" class="Button" style="width:60px"
-                                                (click)="saveWorkflow()">
-                                                <img [ngStyle]="{'margin-left': '2px'}" style="width:13px"
-                                                    src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
-                                                <span style="line-height: 19px;vertical-align:middle;"
-                                                    [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                            <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()">
+                                                <img src="./Images/Buttons/Save.png"
+                                                    class="save-button-icon CenterCenter" />
+                                                <span class="save-button-label">Save</span>
                                             </button>
 
-                                            <button *ngIf="HasChanges" class="EntityChangesButton" style="width:60px"
+                                            <button *ngIf="HasChanges" class="EntityChangesButton"
                                                 (click)="saveWorkflow()">
-                                                <img src="./Images/Buttons/Save.Red.png" style="width:13px"
-                                                    [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
-                                                <span style="line-height: 19px;vertical-align:middle;"
-                                                    [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                                <img src="./Images/Buttons/Save.Red.png"
+                                                    class="save-button-icon CenterCenter" />
+                                                <span class="save-button-label">Save</span>
                                             </button>
 
                                         </td>
@@ -74,11 +107,11 @@
                 </td>
             </tr>
 
-            <tr style="height: 5px;">
+            <tr class="table-row">
                 <td></td>
             </tr>
 
-            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
                 <td>
                     <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
                 </td>

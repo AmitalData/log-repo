@@ -8,6 +8,7 @@ import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/Cre
 
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
+import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -20,6 +21,7 @@ export const Components = [
 
     ConditionsComponent,
     ConditionGroupsComponent,
+    FieldValueComponent,
 ];
 
 export class ModuleDeclarations {
@@ -36,6 +38,7 @@ export class ModuleDeclarations {
 
             case "ConditionsComponent": { result = ConditionsComponent; break; }
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
+            case "FieldValueComponent": { result = FieldValueComponent; break; }
         }
         return result;
     }

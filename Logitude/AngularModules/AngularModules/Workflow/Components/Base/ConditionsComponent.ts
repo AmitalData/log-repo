@@ -33,10 +33,10 @@ export class ConditionsComponent extends BaseComponent implements OnInit {
     }
 
     updateConditionsOperation(conditionsOperation: any) {
-        this.ConditionsOperationChange.emit(conditionsOperation ? conditionsOperation.Name : null);
+        this.ConditionsOperationChange.emit(conditionsOperation ? conditionsOperation.Code : null);
     }
 
-    getConditionGroupItem(operationName: string) {
-        return this.ConditionGroupOperations.filter(o => o.Name === operationName)[0] || null;
+    getConditionGroupItem(operationCode: string) {
+        return this.ConditionGroupOperations.filter(o => o.Code === operationCode)[0] || null;
     }
 }

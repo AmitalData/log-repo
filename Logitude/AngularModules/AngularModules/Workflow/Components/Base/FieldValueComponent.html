@@ -1,0 +1,14 @@
+<div *ngIf="ObjectField && LookupTable && ObjectField.DataTypeCode === 'LookUp'">
+
+    <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [DataContext]="DataContext"
+        [LookUpTableName]="LookupTable.Name" [DependencyFilter1Value]="ObjectField.DependencyFilter1Value"
+        [DependencyFilter2Value]="ObjectField.DependencyFilter2Value"
+        [DependencyFilter3Value]="ObjectField.DependencyFilter3Value"
+        [DependencyFilter1IsList]="ObjectField.DependencyFilter1IsList"
+        [DependencyFilter2IsList]="ObjectField.DependencyFilter2IsList"
+        [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true" [IsFreeText]="true"
+        [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
+        [SelectedValue]="CurrentValue" [HideColumns]="true" (SelectedItemChanged)="updateValue($event?.Id)">
+    </LogLov>
+
+</div>

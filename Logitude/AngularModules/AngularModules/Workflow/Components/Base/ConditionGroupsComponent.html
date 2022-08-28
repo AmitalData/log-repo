@@ -1,21 +1,22 @@
 <style>
     .link-button {
-        text-decoration: underline;
+        cursor: pointer;
+        color: #2b78e4;
         float: left;
-        color: blue;
-        font-size: 11px;
-        text-indent: 3px;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
     }
 
     .link-button:hover {
-        text-decoration: underline;
-        float: left;
-        color: lightskyblue;
-        font-size: 11px;
-        cursor: pointer;
+        color: #03a9f4;
     }
 
-    .table-container {
+    .group-row,
+    .condition-row {
         display: table;
     }
 
@@ -62,12 +63,12 @@
     }
 
     .add-buttons-container {
-        margin-top: 10px;
+        margin-top: 12px;
         margin-left: 18px;
     }
 
     .add-group-button {
-        margin-left: 20px;
+        margin-left: 18px;
     }
 
     .padding-left-10 {
@@ -86,6 +87,10 @@
     .condition-row:hover .delete-condition-button {
         display: block;
     }
+
+    .margin-left-0 {
+        margin-left: 0;
+    }
 </style>
 
 
@@ -94,20 +99,20 @@
         class="condition-container">
 
 
-        <div class="table-container">
+        <div class="group-row">
 
             <div *ngIf="Condition.isGroup" class="group-operation-container">
 
                 <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
-                    [SelectedItem]="getConditionGroupItem(Condition.groupOperation)"
-                    (SelectedItemChanged)="updateConditionGroupOperation($event, conditionIndex)"></ComboBox>
+                    [SelectedItem]="getListItem(ConditionGroupOperations, Condition.groupOperation)"
+                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)"></ComboBox>
 
             </div>
 
 
             <div class="group-conditions-container" [ngClass]="{'padding-left-10': Condition.isGroup}">
 
-                <div class="table-container condition-row">
+                <div class="condition-row">
 
                     <div class="delete-condition-container">
                         <img class="delete-condition-button" src="./Images/Trash-can.png"
@@ -116,10 +121,12 @@
 
                     <div class="condition-field-container">
 
-                        <LogLov [NoObjectField]="true" [DataContext]="DataContext"
-                            [QueryFilterItems]="getObjectFieldsQueryFilters()" [LookUpTableName]="'ObjectField'"
-                            [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="Condition.fieldId"
-                            [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                        <LogLov [NoObjectField]="true" [ObjectFieldName]="'Field' + conditionIndex"
+                            [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsQueryFilters()"
+                            [LookUpTableName]="'ObjectField'" [NoValidation]="true" [IsFreeText]="true"
+                            [SelectedValue]="Condition.fieldId" [HideColumns]="true"
+                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                            (SelectedItemChanged)="updateConditionField($event, conditionIndex)">
                         </LogLov>
 
                     </div>
@@ -127,16 +134,29 @@
                     <div class="condition-operator-container">
 
                         <ComboBox [ItemsSource]="ConditionOperators" [Binding]="'Name'"
-                            [SelectedItem]="getConditionOperatorItem(Condition.operator)"
-                            (SelectedItemChanged)="updateConditionOperator($event, conditionIndex)">
+                            [SelectedItem]="getListItem(ConditionOperators, Condition.operator)"
+                            (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)">
                         </ComboBox>
 
                     </div>
 
-                    <div class="condition-value-container">
+                    <div *ngIf="Condition.operator !== IsEmptyOperator" class="condition-value-container">
 
-                        <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                            [HideColumns]="true" [RowsCount]="1"></LogTextBox>
+                        <FieldValue *ngIf="ObjectFields[Condition.fieldId]"
+                            [ObjectField]="ObjectFields[Condition.fieldId]" [Name]="'FieldValue' + conditionIndex"
+                            [CurrentValue]="Condition.value"
+                            (ValueChanged)="updateConditionValue($event, conditionIndex)">
+                        </FieldValue>
+
+                    </div>
+
+
+                    <div *ngIf="Condition.operator === IsEmptyOperator" class="condition-value-container">
+
+                        <ComboBox [ItemsSource]="BooleanFieldValues" [Binding]="'Name'"
+                            [SelectedItem]="getListItem(BooleanFieldValues, Condition.value)"
+                            (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)">
+                        </ComboBox>
 
                     </div>
 
@@ -147,10 +167,10 @@
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
                     <span class="link-button add-condition-button" (click)="addCondition(conditionIndex, false)">
-                        Add Condition
+                        <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                     <span class="link-button add-group-button" (click)="addCondition(conditionIndex, true)">
-                        Add Group
+                        <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
                 </div>
 
@@ -159,12 +179,12 @@
 
         </div>
 
-        <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container">
+        <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
             <span class="link-button add-condition-button" (click)="addCondition(null, false)">
-                Add Condition
+                <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
             <span class="link-button add-group-button" (click)="addCondition(null, true)">
-                Add Group
+                <span class="plus-sign">+</span><span>Add Group</span>
             </span>
         </div>
 

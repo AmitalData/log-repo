@@ -39,13 +39,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public WorkFlowPMService: WorkFlowPMService;
 
-    private hasChanges = false;
-    get HasChanges() {
-        if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanges) {
-            return true;
-        }
-        return false;
-    }
+    // private hasChanges = false;
+    // get HasChanges() {
+    //     if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanges) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    public HasChanges = false;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -112,7 +114,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     flowChangedEvent = () => {
-        this.hasChanges = true;
+        this.HasChanges = true;
     }
 
     openPropertiesEvent = (openPropertiesEventObject: any) => {
@@ -155,8 +157,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let propertiesWindowArgs: any = {
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData))
         };
-        propertiesWindow.Width = 850;
-        propertiesWindow.Height = 750;
+        propertiesWindow.Width = 960;
+        propertiesWindow.Height = 760;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
@@ -180,6 +182,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     handlePropertiesWindowClosed = (data: any) => {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
+            this.HasChanges = true;
         }
     }
 
@@ -258,6 +261,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     handleSaveWorkflowResponse(workflowPM: WorkFlowPM) {
         this.EntityPM = workflowPM;
         this.EntityId = workflowPM.Id;
-        this.hasChanges = false;
+        //this.hasChanges = false;
+        this.HasChanges = false;
     }
 }
