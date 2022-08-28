@@ -246,6 +246,10 @@
     Columns="Tenant,InActive,IsAir,EnglishName" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+ 
+    <Index
+    Columns="Tenant,CombinedCode" />
+ 
   <UniqueConstraint
     Columns="Tenant,Code,CountryId" />
 </Table>
