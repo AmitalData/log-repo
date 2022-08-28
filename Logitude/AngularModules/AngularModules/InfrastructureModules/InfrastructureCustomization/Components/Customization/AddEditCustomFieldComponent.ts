@@ -206,6 +206,10 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         return this.objectField.LookUpTableId;
     }
     public set LookUpTableId(value: string) {
+        if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.LookUpTableId) && this.LookUpTableId != value) {
+            this.AdditionalFiltersData = [];
+        }
+
         if (value) {
             this.objectField.LookUpTableId = value;
         }
