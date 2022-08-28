@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -19,20 +19,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import * as React from 'react';
-import Dashboard from 'logitude-dashboard-library';
-import * as ReactDOM from 'react-dom';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { DashboardPM } from '../../../Infrastructure/EntityPMs/DashboardPM';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
-import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
-import { BehaviorSubject } from 'rxjs';
-import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
-import { WidgetPM } from '../../../Infrastructure/EntityPMs/WidgetPM';
-import { DashboardPMExtendedService } from '../../Services/DashboardPMExtendedService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { DashboardPMService } from '../../../Infrastructure/Services/StandardPMs/DashboardPMService';
+import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
@@ -42,7 +29,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
     encapsulation: ViewEncapsulation.None,
 })
 
-export class DashboardComponent extends BaseComponent implements OnInit ,AfterViewInit{
+export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private dashboarddomainservice: DashboardDomainService;
     public TenantPM: TenantPM;
@@ -69,16 +56,8 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
     private CurrentSession = SessionLocator.SelectedSession;
-    showNewDashboardToggle: boolean;
-    isNewDashboardRendered: boolean = false;
-    @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
-    private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
-    private dashboardDataBinding: DashboardDataBinding =
-    {
-        onGetAllDashboards : new BehaviorSubject<ReactDashboardPM[]>([]),
-        onGetDashboard : new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM)
-    };
-
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    public IsMenuVisible: boolean = false;
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -89,186 +68,57 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
     }
-    ngAfterViewInit(): void {
-        this.renderNewDashboard(this.showClassicDashboard.bind(this));
-    }
     
     ngOnInit() {
-        this.showNewDashboardToggle = true;
-        this.FillScreen();
-        this.GetDashboards();
-        
+        this.FillScreen();              
     }
 
-    public AllDashboards: DashboardPM[] = [];
-    private GetDashboards() {
-        var dashboardPMService: DashboardPMExtendedService = new DashboardPMExtendedService();
-        dashboardPMService.GetDashboardPMs().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllDashboards = myResponse.Result;
-            }
-
-            var reactDashboards: ReactDashboardPM[] = [];
-            this.AllDashboards.forEach(element => {
-                reactDashboards.push(this.GetReactDashboard(element));
-            });
-
-            this.dashboardDataBinding.onGetAllDashboards.next(reactDashboards);
-            if (this.AllDashboards) {
-                this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(this.AllDashboards[0]));
-                this.selectedDashboard = this.GetReactDashboard(this.AllDashboards[0]);
-            }
-        });
+    ngAfterViewInit() {
+        this.IsMenuVisible = true;
     }
 
-    showClassicDashboard(){
-        this.showNewDashboardToggle = false;
+    private selectedPageItem: string = "CLASIC";
+    get SelectedPageItem() { return this.selectedPageItem; }
+    set SelectedPageItem(newValue: string) {
+        if (this.selectedPageItem != newValue) {
+            this.selectedPageItem = newValue;
+            this.SelectionPageChanged();
+        }
     }
-    showNewDashboard(){
-        this.showNewDashboardToggle = true;
-    }
-    renderNewDashboard(callBack: () => void = undefined){
-        ReactDOM.render(React.createElement(Dashboard, {
-            token: SessionInfo.Token,
-            tenant: SessionInfo.LoggedUserTenant,
-            userId: SessionInfo.LoggedUserId,
-            dataBinding: this.dashboardDataBinding,
-            openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
-            openAddEditDashboard: this.OpenDashboardWindow.bind(this),
-            onChangeDashboard: this.OnChangeDashboard.bind(this),
-            onSaveDashboard: this.OnSaveDashboard.bind(this),
-        }),
-            this.reactDashboradContainer.nativeElement, callBack);
-    }
-    private OpenDashboardWindow(dashboard: ReactDashboardPM) {
-        this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
-            var myDashboard: DashboardPM = this.GetDashboardEntity(dashboard);
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
-            logitudeWindow.WindowArgs = { EntityPM: myDashboard, };
-            logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
-            logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.GetDashboards();
-                        //this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(myDashboard));
+
+    private Page_CUSTOM: any = null;
+    SelectionPageChanged() {
+        if (this.SelectedPageItem != null) {
+
+            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedPageItem)[0];
+            if (myLocation != null) {
+
+                switch (this.SelectedPageItem) {
+                    case "CLASIC": {
+
+                        break;
                     }
-                });
-            });
-        });
-    }
-    GetReactDashboard(dashboard: DashboardPM): ReactDashboardPM {
-        var myDashboard: ReactDashboardPM = {} as ReactDashboardPM;
 
-        if (dashboard) {
-            myDashboard.Id = dashboard.Id;
-            myDashboard.Tenant = dashboard.Tenant;
-            myDashboard.Name = dashboard.Name;
-            myDashboard.Description = dashboard.Description;
-            myDashboard.CreateDate = dashboard.CreateDate;
-            myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
-            myDashboard.UpdateDate = dashboard.UpdateDate;
-            myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
-            myDashboard.Widgets = [];
+                    case "CUSTOM": {
+                        if (this.Page_CUSTOM == null) {
+                            this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res1: any) => {
+                                    SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_CUSTOM = cmpRef.instance;
+                                            this.Page_CUSTOM.InitComponent();
+                                        });
+                                });
+                            });
+                        }
 
-            dashboard.Widgets.forEach(item => {
-                myDashboard.Widgets.push(this.GetReactWidget(item));
-            });
-        }
-
-        return myDashboard;
-    }
-    GetDashboardEntity(dashboard: ReactDashboardPM): DashboardPM {
-        var myDashboard: DashboardPM = new DashboardPM();
-        
-        if (dashboard) {
-            myDashboard.Id = dashboard.Id;
-            myDashboard.Tenant = dashboard.Tenant;
-            myDashboard.Name = dashboard.Name;
-            myDashboard.Description = dashboard.Description;
-            myDashboard.CreateDate = dashboard.CreateDate;
-            myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
-            myDashboard.UpdateDate = dashboard.UpdateDate;
-            myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
-            myDashboard.Widgets = [];
-
-            dashboard.Widgets.forEach(item => {
-                myDashboard.Widgets.push(this.GetWidgetEntity(item));
-            });
-        }
-
-        return myDashboard;
-    }
-    private OpenDashboardWidgetWindow(widget: ReactWidgetPM) {
-        this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res1: any) => {
-            var myWidget: WidgetPM = this.GetWidgetEntity(widget);
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
-            logitudeWindow.WindowArgs = { EntityPM: myWidget, DashboardPM: this.GetDashboardEntity(this.selectedDashboard) };
-            logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
-            logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.selectedDashboard = this.GetReactDashboard(comp.DashboardPM);
-                        this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
+                        break;
                     }
-                });
-            });
-        });
-    }
-    GetWidgetEntity(widget: ReactWidgetPM): WidgetPM {
-        var myWidget: WidgetPM = new WidgetPM(null);
-
-        if (widget) {
-            myWidget.Id = widget.Id;
-            myWidget.Tenant = widget.Tenant;
-            myWidget.Title = widget.Title;
-            myWidget.GroupBy = widget.GroupBy;
-            myWidget.DashboardId = widget.DashboardId;
-            myWidget.StartPotistion = widget.StartPotistion;
-            myWidget.EndPosition = widget.EndPosition;
-            myWidget.TypeCode = widget.TypeCode;
-        }
-
-        return myWidget;
-    }
-    GetReactWidget(widget: WidgetPM): ReactWidgetPM {
-        var myWidget: ReactWidgetPM = {} as ReactWidgetPM;
-
-        if (widget) {
-            myWidget.Id = widget.Id;
-            myWidget.Tenant = widget.Tenant;
-            myWidget.Title = widget.Title;
-            myWidget.GroupBy = widget.GroupBy;
-            myWidget.DashboardId = widget.DashboardId;
-            myWidget.StartPotistion = widget.StartPotistion;
-            myWidget.EndPosition = widget.EndPosition;
-            myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
-        }
-
-        return myWidget;
-    }
-
-    private OnChangeDashboard(dashboard: ReactDashboardPM) {
-        this.selectedDashboard = dashboard;
-    }
-    private OnSaveDashboard(dashboard: ReactDashboardPM) {
-        var dashboardPMService: DashboardPMService = new DashboardPMService();
-        var savedEntity: DashboardPM = this.GetDashboardEntity(dashboard);
-
-        dashboardPMService.update(savedEntity).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                //this.EntityPM = myResponse.Result;
+                }
             }
-
-            this.CurrentSession.StopBusyIndicator();
-        });
+        }
     }
 
-    GetDashboard() {
-
-    }
-    
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
             this.ActivityStatusPage.destroy();

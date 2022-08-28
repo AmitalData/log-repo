@@ -1,0 +1,31 @@
+{
+  "HashString": "7b267b04eaa54237acefd9bfc2e12f15",
+  "Name": "ShipmentAnalytics",
+  "TableName": "ShipmentAnalytics",
+  "AnalyticsFactsFieldsMetaDatas": [
+    {
+      "HashString": "6e3374bff3d443688c6974dd83216bab",
+      "DataTypeCode": "Text",
+      "CanMeasure": "True",
+      "CanGroup": "True",
+      "FieldCode": "ShipmentNumber",
+      "DisplayName": "Shipment Number",
+      "DisplayNamePlural": "Shipment Numbers",
+      "JoinedTableName": null,
+      "JoinedTableKey": null,
+      "JoinedTableDisplayField": null
+    },
+    {
+      "HashString": "96422864ab904aae8e5fa5415191cf5d",
+      "DataTypeCode": "Text",
+      "CanMeasure": "True",
+      "CanGroup": "True",
+      "FieldCode": "NumberOfContainers",
+      "DisplayName": "Number Of Containers",
+      "DisplayNamePlural": "Number Of Containers",
+      "JoinedTableName": null,
+      "JoinedTableKey": null,
+      "JoinedTableDisplayField": null
+    }
+  ]
+}
