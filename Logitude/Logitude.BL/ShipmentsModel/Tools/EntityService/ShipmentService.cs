@@ -3,7 +3,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
-using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -14,16 +13,18 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.ShipmentsModel.Tools.ExternalService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
+using Logitude.BL.Workfkow;
+using Logitude.BL.Workfkow.Constants;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.CToolWorkflows;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
@@ -55,8 +56,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
-using Logitude.BL.ShipmentsModel.Tools.ExternalService;
-using Logitude.BL.ShipmentsModel.EntityLists;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -377,9 +376,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.entityPM != null && !this.entityPM.FromCTool)
                 {
                     EntityChangesMessageProducer.ProduceShipmentCreateMessage(entityPoco, entityPM);
-                    //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
+
                 RunAutomationThatDependencyOnLastEntityUpdate();
+
+                new WorkflowEntityQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Create
+                }.Produce();
 
                 scope.Complete();
 
@@ -627,15 +634,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
-                // Produce shipment update msg
-                //if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
-                //{
-                //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
-                //}
                 if (this.entityPM != null && !this.entityPM.FromCTool)
                 {
                     EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
                 }
+
+                new WorkflowEntityQueueMessage()
+                {
+                    Entity = WorkflowEntities.Shipment,
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    Type = QueueMessagesTypes.Update
+                }.Produce();
 
                 scope.Complete();
                 #endregion
@@ -659,25 +669,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             shipmentQuery.MapEventsListForAPI(shipmentPM);
             mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM, shipmentPM.ShipmentNumber);
             shipmentPM.EventList = shipmentTraceEventPMs;
-        }
-
-        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(queueName);
-        }
-
-        private void AddKafkaQueueMessage(string queueName)
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue(queueName, 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "ShipmentId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
 
         private void UpdatePayablesLinesVatAmounts()

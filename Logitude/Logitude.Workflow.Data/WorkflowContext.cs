@@ -70,6 +70,10 @@ namespace Logitude.Workflow.Data
 			
             modelBuilder.Configurations.Add(new WorkFlowMap());
 	
+            modelBuilder.Configurations.Add(new WorkFlowInstanceMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowInstanceStatusMap());
+	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
 				
 						 
@@ -352,6 +356,18 @@ namespace Logitude.Workflow.Data
  
 
 	 public IDbSet<WorkFlow> WorkFlows 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowInstance> WorkFlowInstances 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowInstanceStatus> WorkFlowInstanceStatuses 
 	 {
 	      get; set;
 	 
