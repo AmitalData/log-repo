@@ -1773,8 +1773,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     GetPending() {
         this._PendingCodes.length = 0;
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
-        this._PendingCodes.push({ 'Key': "NotApproved", 'Value': 'Pending שלא אושרו'});
-        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+        if (this.HasRequiresApprovalFeature) {
+            this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
+        }        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
