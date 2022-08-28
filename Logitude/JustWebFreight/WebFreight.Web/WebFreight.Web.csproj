@@ -6664,6 +6664,8 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">

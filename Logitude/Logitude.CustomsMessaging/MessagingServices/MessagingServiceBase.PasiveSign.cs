@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             var toContinueNextCommand = true;
             var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-
+        
             switch (_CustomsRequestsSheetService.CalcSignByFromStep(null))
             {
              
@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
 
                     availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
-                    
+
                     if (!string.IsNullOrWhiteSpace(availableSignServer))
                     {
 
@@ -116,8 +116,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             curComm = _CustomsStateMachineProcess.CurrentCommand;
                         }
                         _CustomsRequestsSheetService.StartStep(CustomsStepEnum.CustomRequestSign, curComm);
-                        
-                        SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
+
+                        var pmCustomsSetting = Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+                        if (!pmCustomsSetting.IsConnectedToUniFreight)
+                        {
+                            _CustomsRequestsSheetService.AddExportDBSignQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
+                        }
+                        else
+                        {
+                            SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
+                        }                        
                         var businessErrorException = new BusinessErrorException("Add SignQueue ");
 
                         businessErrorException.CurrentContextTag = new TResponseData()
@@ -149,6 +157,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     startAt = this._CustomsRequestsSheetService.GetCurrentStepStartAt().GetValueOrDefault();
                 }
+            ;
+                if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
+                {
+                    var queueservice = new Server.Tools.QueueService.DbQueueService("How Care ", requestParams.Tenant);
+                    if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
+                    {
+                        queueservice.CompleteAsFailedParam(_SignRecievedModel.ExportTaskQueueId);
+                    }
+                    else
+                    {
+                        queueservice.Complete(_SignRecievedModel.ExportTaskQueueId);
+                    }
+                    
+                }
 
 
             }
@@ -162,7 +184,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //object ContextObjectTag = null;
             toContinueNextCommand = DoStep(stepRequest, () =>
             {
-
+                if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
+                {
+                    throw new Exception(_SignRecievedModel.ExportTaskMarkAsFailedMessage);
+                }
                 if (throwNoAvailableSignServer)
                 {
                     throw new Exception(noAvailableSignServerErrorText);
@@ -175,9 +200,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             null,null);
             ///customsRequest = ContextObjectTag as TCustomsRequest;
             ;
+            if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
+            {
+                toContinueNextCommand = false;//use batch - not IIS !!!
+            }
+                
             return toContinueNextCommand;
 
         }
+
+        
 
         private void SetRequestSheetContextCurrentX509Certificate(byte[] customRequestSignedByteArry)
         {

@@ -182,7 +182,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        private void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
+        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
         {
             try
             {
@@ -364,7 +364,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     var customsSettingQueryService = new CustomsSettingQueryService(0);
                     var listSetting = customsSettingQueryService.GetAll()
                         .Where(rec => !string.IsNullOrWhiteSpace(rec.CustomsAgentId) && !string.IsNullOrWhiteSpace(rec.IIGServiceAddress))
-                        .Where(rec => rec.Tenant > 0);
+                        .Where(rec => rec.Tenant > 0)
+                        
+                        .Where(rec => rec.IsConnectedToUniFreight)// export pilot multi tenant => use queue db 
+                        ;
+                    ;
+
                     foreach (var item in listSetting)
                     {
                         JustRefreshDb(item.Tenant);
