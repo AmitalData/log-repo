@@ -25,8 +25,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationListQueryService
     {
-
-        static bool isExport = false;
+    
 
 #if false
         private IQueryable<DeclarationList> GetIqueryableList_old(IQueryable<Declaration> iQueryable)
@@ -516,7 +515,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  });
 
            
-            isExport = false;
+          
                 return query;
         }
 
