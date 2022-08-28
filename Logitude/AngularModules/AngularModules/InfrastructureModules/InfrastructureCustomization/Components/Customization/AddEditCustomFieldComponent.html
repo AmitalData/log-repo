@@ -180,7 +180,7 @@
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
                                         <LogLov (SelectedItemChanged)="LookUpTablesSelectionMethod($event)"
                                                 [QueryFilterItems]="LookUpTablesFilterItems"
-                                                [ObjectFieldName]="'ObjectTableId'"
+                                                [ObjectFieldName]="'LookUpTableName'"
                                                 [ObjectTableName]="'ObjectTable'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'ObjectTable'"
@@ -277,7 +277,7 @@
                 <tr *ngIf="ShownAdditionalFiltersSettings">
                     <td>
                         <ScrollViewer [IsTowSides]="true">
-                            <QueryFilterTree [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
+                            <QueryFilterTree style="position:absolute;" [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
                         </ScrollViewer>
                     </td>
                 </tr>
