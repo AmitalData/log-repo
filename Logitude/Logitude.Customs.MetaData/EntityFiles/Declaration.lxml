@@ -19798,7 +19798,7 @@
     ListLableDefaultText="&quot;Export Loading Port&quot;"
     ListLocalDefaultText="&quot;נמל טעינה&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     ForeignEntity="LoadingSiteType"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="ExportLoadingPort"

@@ -1252,6 +1252,11 @@
     ReferencedTable="AmedmentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportLoadingPortCode"
+    ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index

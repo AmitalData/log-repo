@@ -287,35 +287,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
-            }
-          
-            var qConsignmentLoadingPort =
-                  (from cons in context.Consignments 
-                   where cons.ExportLoadingPortCode != null
-                   group cons by new { cons.DeclarationId }
-                       into newgroup
-                   select new
-                   {
-                       newgroup.Key.DeclarationId,
-                       cons = newgroup.GroupBy(x => x.ExportLoadingPortCode).Select(grp => grp.FirstOrDefault()),
-                   });
+            }         
 
-
-            if (!isExport)
-            {
-                qConsignmentLoadingPort =
-                     (from cons in context.Consignments
-                      where  false && cons.ExportLoadingPortCode != null 
-                      group cons by new { cons.DeclarationId }
-                       into newgroup
-                      select new
-                      {
-                          newgroup.Key.DeclarationId,
-                          cons = newgroup.GroupBy(x => x.ExportLoadingPortCode).Select(grp => grp.FirstOrDefault()),
-                      });
-
-                // qConsignmentLoadingPort.Where(x => x.DeclarationId == "-1");
-            }
+        
           
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
@@ -336,11 +310,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
-
-                                                 join consJoin in qConsignmentLoadingPort
-                                                           on a.Id equals consJoin.DeclarationId
-                                                           into ConsignmentLoadingPortJoin
-                                                 from myJoinConsignmentLoadingPort in ConsignmentLoadingPortJoin.DefaultIfEmpty()
+                                              
                                                 
                                                  join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                             on a.AmendmentStatus equals AmendmentRequestStatus.Code
@@ -542,8 +512,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueDollar = a.FOBValueDollar,
 
                                                      AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
-                                                     LoadingPortName = myJoinConsignmentLoadingPort.cons.FirstOrDefault().ExportLoadingPort.LocalName,
-                                                     ExportLoadingPortCode = myJoinConsignmentLoadingPort.cons.FirstOrDefault().ExportLoadingPort.Code,
+                                                     LoadingPortName = a.LoadingSiteType != null ? a.LoadingSiteType.LocalName : null,                                             
                                                  });
 
            
@@ -590,15 +559,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = iQueryable.Where(x => query1.Contains(x.Id));
             }
 
-            var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "Direction");
-            if (filter2 != null)
-            {
-                if (filter2.FieldValue.ToString()=="E"&& filter2.Operator== "Equal")
-                {
-                    isExport = true; 
-                }
-           
-            }
             
             return iQueryable;
         }
