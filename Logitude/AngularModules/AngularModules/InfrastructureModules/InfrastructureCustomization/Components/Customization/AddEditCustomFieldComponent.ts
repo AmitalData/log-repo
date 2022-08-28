@@ -100,6 +100,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.InitLookUpTables();
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
+        this.LookUpTableId = this.objectField.LookUpTableId;
         this.DataTypeCollection = args.DataTypeCollection;
         this.ObjectTableName = args.ObjectTableName;
         if (this.IsNew) {
@@ -107,7 +108,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
         else {
             this.DataTypeSelectionMethod({ Code: this.objectField.DataTypeCode });
-            this.LookUpTablesSelectionMethod("");
+            //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
             this.UIProperties.SetEnabled("Code", "ObjectField", false);
         }
@@ -212,6 +213,9 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         if (value) {
             this.objectField.LookUpTableId = value;
+        }
+        else {
+            this.lookUpTableName = "";
         }
     }
 
@@ -365,7 +369,10 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
 
     LookUpTablesSelectionMethod(item) {
-        if (!item) return;
+        if (!item) {
+            this.LookUpTableId = "";
+            return;
+        }
         this.ContolFieldsList1 = [];
         this.ContolFieldsList2 = [];
         this.LookUpTableName = "";
@@ -467,27 +474,40 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
 
     LoadDefaultAdditionalFilters() {
+        this.LookUpTableName = this.LookUpTableName ? this.LookUpTableName : window.ObjectTables.filter(t => t.Id == this.LookUpTableId)[0]?.Name;
+        if (this.LookUpTableName) {
+            this.LoadLookUpTableResources();
+        }
+        else {
+            this.StartLoadDefaultAdditionalFilters();
+        }
+    }
+
+    LoadLookUpTableResources() {
+        this.EntityResourceService.getEntityResourceByTableName(this.LookUpTableName).subscribe((response: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            this.StartLoadDefaultAdditionalFilters();
+        }); 
+    }
+
+    StartLoadDefaultAdditionalFilters() {
         if (!this.objectField || !this.objectField.Id || (this.AdditionalFiltersData && this.AdditionalFiltersData.length == 1)) {
             this.ShownAdditionalFilters = true;
             return;
         }
 
-        this.CurrentSession.StartBusyIndicator("Loading...");
+
         if (!this.LookUpTableId) return;
-        this.LookUpTableName = this.LookUpTableName ? this.LookUpTableName : window.ObjectTables.filter(t => t.Id == this.LookUpTableId)[0]?.Name;
         if (!this.LookUpTableName) return;
-        this.EntityResourceService.getEntityResourceByTableName(this.LookUpTableName).subscribe((response: any) => {
-            this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
-                var result: ServiceResponse = serviceResponse;
-                if (!result.HasError) {
-                    this.FillAdditionalFiltersData(result);
-                }
-            });
-        }); 
+        this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+            var result: ServiceResponse = serviceResponse;
+            if (!result.HasError) {
+                this.FillAdditionalFiltersData(result);
+            }
+        });
     }
 
     private FillAdditionalFiltersData(result: ServiceResponse) {
-        this.CurrentSession.StopBusyIndicator();
         let additionalFiltersData = [];
         if (result.Result) {
             additionalFiltersData.push(result.Result);
@@ -514,7 +534,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("Field Label is Required");
         }
 
-        if (this.objectField.DataTypeCode == "LookUp" && this.objectField.LookUpTableId == null) {
+        if (this.objectField.DataTypeCode == "LookUp" && (AppTool.IsNullOrEmpty(this.objectField.LookUpTableId) || AppTool.IsNullOrEmpty(this.LookUpTableName))) {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
