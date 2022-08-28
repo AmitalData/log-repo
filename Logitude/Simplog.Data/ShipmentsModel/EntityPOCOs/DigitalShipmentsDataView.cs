@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -56,26 +52,21 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentSubTypeName { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
         public DateTime? CarrierLastStatusDate { get; set; }
+        public string CustomerId { get; set; }
 
         public string TransportModeName { get; set; }
         public string DirectionName { get; set; }
         public string Master { get; set; }
         public bool IsCancelled { get; set; }
-
         public string ConsigneeId { get; set; }
         public string ShipperId { get; set; }
-
         public string ShipperCountryCode { get; set; }
         public string ConsigneeCountryCode { get; set; }
         public string DescriptionOfGoods { get; set; }
-
         public string DirectionId { get; set; }
-
         public DateTime CreateDateTime { get; set; }
         public DateTime? FirstPickupETA { get; set; }
-
         public DateTime? FirstPickupETD { get; set; }
-
         public string MainCarriageToPortName { get; set; }
         public string MainCarriageFromPortName { get; set; }
         public string MainCarriageFromPortCountryCode { get; set; }
@@ -92,7 +83,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string InlandDomesticToFax { get; set; }
         public string InlandDomesticToStateName { get; set; }
         public string InlandDomesticToStateId { get; set; }
-
         public string InlandDomesticFromAddress1 { get; set; }
         public string InlandDomesticFromAddress2 { get; set; }
         public string InlandDomesticFromPhone { get; set; }
@@ -101,22 +91,18 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string InlandDomesticFromStateId { get; set; }
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
-
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public DateTime? PreForwardingETA { get; set; }
         public DateTime? PreForwardingATA { get; set; }
-
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
-
         public DateTime? OnForwardingETD { get; set; }
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }
         public DateTime? OnForwardingATA { get; set; }
-
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
@@ -134,14 +120,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Transshipment1ToPortCountryName { get; set; }
         public string Transshipment2ToPortCountryCode { get; set; }
         public string Transshipment2ToPortCountryName { get; set; }
-
         public string Transshipment3ToPortCountryCode { get; set; }
         public string Transshipment3ToPortCountryName { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string MainCarriageCarrierCode { get; set; }
         public string Transshipment1CarrierName { get; set; }
         public string Transshipment1CarrierCode { get; set; }
-
         public string Transshipment2CarrierName { get; set; }
         public string Transshipment2CarrierCode { get; set; }
         public string Transshipment3CarrierName { get; set; }
@@ -152,14 +136,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CreatedByUserName { get; set; }
         public string NextLegName { get; set; }
         public string NextLegCode { get; set; }
-
         public string MainCarriageFromCity { get; set; }
         public string MainCarriageToCity { get; set; }
-
         public DateTime? NextETD { get; set; }
         public DateTime? NextETA { get; set; }
-
-
         public DateTime? StatusDate { get; set; }
         public string ShipmentType { get; set; }
         public string FromPortId { get; set; }
@@ -174,7 +154,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public string From { get; set; }
         public string To { get; set; }
-
         public int? StatusWeight { get; set; }
         public string StatusName { get; set; }
         public string StatusCode { get; set; }
@@ -182,7 +161,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LongMaster { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
-
-
     }
 }

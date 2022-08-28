@@ -1,7 +1,7 @@
-﻿<View DBType="Main" Name="DigitalShippmentsView" Schema="dbo" Module="Shipment">
+﻿<View DBType="Main" Name="DigitalShipmentsView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
-	CREATE VIEW [dbo].[DigitalShippmentsView]  
+	CREATE VIEW [dbo].[DigitalShipmentsView]  
 	AS 
 	SELECT
 	ship.Id,
@@ -32,6 +32,7 @@
     ShipMasterData.Transshipment1ATD,
     dbo.Incoterms.Code AS IncotermCode,
     ship.ShipmentNumber,
+	ship.CustomerId,
     ship.CustomerReference1,
     ship.CustomerReference2,
     ship.CustomerReference3,

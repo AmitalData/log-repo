@@ -275,26 +275,18 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-                //if (!RoleEnvironment.IsAvailable)//is azure env
-                //{
-                //    return;
-                //}
+
                 SubscriptionDescription myAgentSubscription;
-                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
+                string subscribtionName = Environment.MachineName;
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                 {
                     myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
                 }
-                //  string ssss = RoleEnvironment.CurrentRoleInstance.Id;
-
 
                 CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
                 Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
                 cacheThread.Start();
-
                 this.StartSignalRTopicThread();
-
             }
             catch (Exception ex)
             {

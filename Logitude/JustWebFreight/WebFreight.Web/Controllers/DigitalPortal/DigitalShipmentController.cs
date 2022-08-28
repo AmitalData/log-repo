@@ -149,6 +149,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var genericFilter = new GenericFilter();
 
                 shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
+               
                 var myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, authToken.Tenant);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);

@@ -952,5 +952,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ShipmentDataView> ShipmentDigitalDataViews => throw new NotImplementedException();
 
         public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews => throw new NotImplementedException();
+
+        IDbSet<DigitalShipmentsDataView> IShipmentsContext.ShipmentDigitalDataViews => throw new NotImplementedException();
     }
 }

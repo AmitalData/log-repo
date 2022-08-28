@@ -68,6 +68,7 @@ namespace Simplog.Data.ShipmentsModel
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
 
             modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            modelBuilder.Configurations.Add(new DigitalShipmentDataViewMap());
             modelBuilder.Configurations.Add(new ShipmentCountryDashboardViewMap());
             modelBuilder.Configurations.Add(new ShipmentDirectionTransmodeViewMap());
             modelBuilder.Configurations.Add(new ShipmentsCustomersDashboardViewMap());

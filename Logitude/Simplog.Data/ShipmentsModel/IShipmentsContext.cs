@@ -12,15 +12,11 @@ namespace Simplog.Data.ShipmentsModel
 {
     public interface IShipmentsContext : IContext
     {
-        IDbSet<ShipmentDataView> ShipmentDigitalDataViews
+        IDbSet<DigitalShipmentsDataView> ShipmentDigitalDataViews
         {
             get; 
         }
 
-        IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews
-        {
-            get;
-        }
 
         IDbSet<Shipment> Shipments { get; }
         IDbSet<ShipmentDocsField> ShipmentDocsFields { get; }
