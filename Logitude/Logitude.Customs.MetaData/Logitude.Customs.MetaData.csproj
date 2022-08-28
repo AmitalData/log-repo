@@ -104,6 +104,7 @@
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
@@ -1041,6 +1042,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFiles\ExportDeclarationClosingData.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBScripts\Post\XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
