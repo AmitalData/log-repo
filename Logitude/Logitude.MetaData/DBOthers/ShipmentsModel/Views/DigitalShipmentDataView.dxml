@@ -184,7 +184,7 @@
         dbo.Shipments as ship
 	LEFT OUTER JOIN
         dbo.Contacts AS CreatedByUserContact 
-		    ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id
+		    ON ship.CreatedByUserId = CreatedByUserContact.Id
 	LEFT OUTER JOIN
          dbo.Cards AS ConsolidatorCards 
 		     ON ship.ConsolidatorId = ConsolidatorCards.Id
