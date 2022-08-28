@@ -1419,6 +1419,11 @@ export class DeclarationPM {
     public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
        
 	 
+    private exportLoadingPortCode: string;
+    public get ExportLoadingPortCode() { return this.exportLoadingPortCode; }
+    public set ExportLoadingPortCode(newValue: string) { if (this.exportLoadingPortCode != newValue) { this.exportLoadingPortCode = newValue; this.MarkAsDirty("ExportLoadingPortCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
