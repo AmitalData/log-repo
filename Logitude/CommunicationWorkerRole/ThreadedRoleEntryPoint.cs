@@ -50,6 +50,7 @@ using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Server.Tools.Interfaces;
 using CommunicationWorkerRole.Stimulsoft.fonts;
 using Newtonsoft.Json;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace CommunicationWorkerRole
 {
@@ -285,7 +286,8 @@ namespace CommunicationWorkerRole
                new IISManager(),
                () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
                () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-               () => (new EntityGetReflectorService()) as IEntityGetReflectorService
+               () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
+               () => (new TreeFilterQueryService()) as ITreeFilterQueryService
                );
 
 

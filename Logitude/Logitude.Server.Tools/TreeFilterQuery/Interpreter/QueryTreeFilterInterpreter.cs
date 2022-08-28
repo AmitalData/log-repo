@@ -11,9 +11,17 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
   public  class QueryTreeFilterInterpreter
     {
 
-        public QueryFilterItem Run(QueryTreeFilterContext queryTreeFilterContext)
+        TreeFilterQueryArgs treeFilterQueryArgs;
+        public QueryTreeFilterInterpreter(TreeFilterQueryArgs treeFilterQueryArgs)
         {
-            List<IQueryTreeFilterExpression> expressions = BuildExpressions(queryTreeFilterContext);
+            this.treeFilterQueryArgs = treeFilterQueryArgs;
+        }
+
+
+        public QueryFilterItem Run()
+        {
+            QueryTreeFilterContext queryTreeFilterContext = this.BuildContext(treeFilterQueryArgs); 
+            List<IQueryTreeFilterExpression> expressions = BuildExpressions();
             foreach (IQueryTreeFilterExpression expression in expressions)
             {
                 expression.Interpret(queryTreeFilterContext);
@@ -22,7 +30,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             return queryTreeFilterContext.QueryFilterItem;
         }
 
-        private List<IQueryTreeFilterExpression> BuildExpressions(QueryTreeFilterContext queryTreeFilterContext)
+        private List<IQueryTreeFilterExpression> BuildExpressions()
         {
             List<IQueryTreeFilterExpression> expressions =  new List<IQueryTreeFilterExpression>();
             expressions.Add(new JavaScriptSerializerExpression());
@@ -34,5 +42,23 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             expressions.Add(new QueryTreeFilterValidateExpresion());
             return expressions;
         }
+
+        private QueryTreeFilterContext BuildContext(TreeFilterQueryArgs treeFilterQueryArgs)
+        {
+            return new QueryTreeFilterContext()
+            {
+
+                AdditionalTreeFilter = treeFilterQueryArgs.AdditionalTreeFilter,
+                ObjectTableName = treeFilterQueryArgs.ObjectTableName,
+                ParentEntityId = treeFilterQueryArgs.ParentEntityId,
+                ParentObjectTableName = treeFilterQueryArgs.ParentObjectTableName,
+                Tenant = treeFilterQueryArgs.Tenant,
+
+            };
+
+        }
+
+
+
     }
 }

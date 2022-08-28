@@ -90,4 +90,4 @@ export class ObjectFieldList {
 		ForMetaDataOnly: boolean;
 		IsListFilter: boolean;
 	
-}
+}

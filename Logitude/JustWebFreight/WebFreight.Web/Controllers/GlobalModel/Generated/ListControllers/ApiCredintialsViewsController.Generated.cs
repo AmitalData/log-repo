@@ -216,7 +216,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "ApiCredintials", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "ApiCredintials",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IGlobalContext MyContext = GlobalContext.GetContext();
@@ -235,7 +244,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 IQueryable<ApiCredintialsList> entityLists = apiCredintialsQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ApiCredintialsList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<ApiCredintialsList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ApiCredintialsList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

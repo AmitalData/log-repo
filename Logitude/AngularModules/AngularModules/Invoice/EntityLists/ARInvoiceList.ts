@@ -156,5 +156,6 @@ export class ARInvoiceList {
 		GlobalTaxCalculation: string;
 		PaymentReferences: string;
 		SATCancelReasonCode: string;
+		DigitalPortalSearchFields: string;
 	
 }

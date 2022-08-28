@@ -218,7 +218,16 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "QuoteTemplate", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "QuoteTemplate",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IQuotesContext MyContext = QuotesContext.GetContext(tenant);
@@ -240,7 +249,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 IQueryable<QuoteTemplateList> entityLists = quoteTemplateQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<QuoteTemplateList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<QuoteTemplateList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<QuoteTemplateList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

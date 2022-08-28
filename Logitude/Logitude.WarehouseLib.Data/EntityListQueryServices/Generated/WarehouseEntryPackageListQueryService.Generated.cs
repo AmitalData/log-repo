@@ -25,7 +25,11 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<WarehouseEntryPackageList> GetList(QueryOperations queryOperations, int tenant)
+        public List<WarehouseEntryPackageList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<WarehouseEntryPackageList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -48,6 +52,7 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
             IQueryable<WarehouseEntryPackageList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<WarehouseEntryPackageList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<WarehouseEntryPackageList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -144,7 +149,14 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant)
+
+		
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -162,14 +174,18 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
             
 			iQueryable = filter.GetFilteredQuery<WarehouseEntryPackage>(nonListQueryOperation, iQueryable);
 
+
+
             IQueryable<WarehouseEntryPackageList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<WarehouseEntryPackageList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<WarehouseEntryPackageList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

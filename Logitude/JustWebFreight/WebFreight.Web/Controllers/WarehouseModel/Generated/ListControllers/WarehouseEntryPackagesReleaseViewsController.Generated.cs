@@ -197,12 +197,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IWarehouseContext MyContext = WarehouseContext.GetContext(tenant);
 				WarehouseEntryPackagesReleaseListQueryService warehouseEntryPackagesReleaseQuery = new WarehouseEntryPackagesReleaseListQueryService(MyContext);
 
-                List<WarehouseEntryPackagesReleaseList> entityLists = warehouseEntryPackagesReleaseQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "WarehouseEntryPackagesRelease",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<WarehouseEntryPackagesReleaseList> entityLists = warehouseEntryPackagesReleaseQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = warehouseEntryPackagesReleaseQuery.GetListCount(queryOperations, tenant);
+                    int count = warehouseEntryPackagesReleaseQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
