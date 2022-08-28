@@ -32,6 +32,8 @@ namespace WebFreight.Web.WcfApi
             
             try
             {
+
+                stringBuilder.AppendLine($"Company:{exportReqSignData.isCompanySignOn}|Personal{exportReqSignData.isPersonalSignOn}|{exportReqSignData.CurrentSignCertificate}");
                 if (!ON_PREMISE)
                 {
                     SecurityUtility.AuthenticationOnTenant(exportReqSignData.Tenant);
@@ -145,6 +147,7 @@ namespace WebFreight.Web.WcfApi
             finally
             {
 
+                
 
 
                 Logger.LogMe(stringBuilder.Replace(Environment.NewLine, "|").ToString(), false, "ExportSignTaskFromQueue_" + (exportReqSignData?.Tenant ?? 0).ToString());
