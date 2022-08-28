@@ -1788,6 +1788,7 @@
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetMeasurePM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetTypePM.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\DashboardPMExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsFieldsMetaDataListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsMetaDataListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\DashboardListService.ts" />
@@ -1799,7 +1800,6 @@
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
-    <TypeScriptCompile Include="Dashboard\Services\DashboardPMExtendedService.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
@@ -8683,7 +8683,6 @@
     <Folder Include="Customs\Components\DeclarationCargoSplit\" />
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
-    <Folder Include="DashboardModule\Services\ExtendedPMs\" />
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\dist\out-tsc\CommonModules\CommonFilingInbox\Components\" />

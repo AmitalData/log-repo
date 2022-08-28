@@ -23,84 +23,84 @@ using Logitude.Infrastructure.Data.EntityMapping;
 
 namespace Logitude.Infrastructure.Data
 {
-    public class InfrastructureContext : DbContextBase, IInfrastructureContext
+   public class InfrastructureContext: DbContextBase, IInfrastructureContext
     {
         public InfrastructureContext()
         {
-            Database.SetInitializer<InfrastructureContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+            Database.SetInitializer<InfrastructureContext>(null);     
+			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
         public InfrastructureContext(DbConnection conn)
-            : base(conn, true)
+            : base(conn,true)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<InfrastructureContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
         public static IInfrastructureContext GetContext(int tenant)
-        {
+        {           
             GlobalDB currentDb;
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             InfrastructureContext context = new InfrastructureContext(connection);
             return context;
         }
-        public override LogitudeDBSchema LogitudeDBSchema
+		public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
-
+                
             }
 
             Database.SetInitializer<InfrastructureContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
+			
             modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
-
+	
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
-
+	
             modelBuilder.Configurations.Add(new BIFoldersPermissionMap());
-
+	
             modelBuilder.Configurations.Add(new BIReportMap());
-
+	
             modelBuilder.Configurations.Add(new BIReportFolderMap());
-
+	
             modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
-
+	
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
-
+	
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
-
+	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
-
+	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
-
+	
             modelBuilder.Configurations.Add(new LastRunDetailMap());
-
+	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
-
+	
             modelBuilder.Configurations.Add(new PriceStepMap());
-
+	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
-
+	
             modelBuilder.Configurations.Add(new TeamMap());
-
+	
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
-
+	
             modelBuilder.Configurations.Add(new ToggleMap());
-
-
+				
+						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -196,7 +196,7 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
-
+            
             modelBuilder.Configurations.Add(new MarkUpTypeMap());
             modelBuilder.Configurations.Add(new MAWBStackMap());
             modelBuilder.Configurations.Add(new MeasurementMap());
@@ -314,38 +314,39 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
             modelBuilder.Configurations.Add(new ReportGroupMap());
             modelBuilder.Configurations.Add(new UserPermittedBranchMap());
-            modelBuilder.Configurations.Add(new LeadSourceMap());
+			modelBuilder.Configurations.Add(new LeadSourceMap());
             modelBuilder.Configurations.Add(new IndustryMap());
-            modelBuilder.Configurations.Add(new ProductPeriodMap());
+			modelBuilder.Configurations.Add(new ProductPeriodMap());
             modelBuilder.Configurations.Add(new ProductTypeMap());
             modelBuilder.Configurations.Add(new CustomerProductMap());
-            modelBuilder.Configurations.Add(new CustomerProductActualDataMap());
+			modelBuilder.Configurations.Add(new CustomerProductActualDataMap());
             modelBuilder.Configurations.Add(new CustomerProductLocationMap());
             modelBuilder.Configurations.Add(new CustomerProductLocationActualDataMap());
-            modelBuilder.Configurations.Add(new CompetitorMap());
-            modelBuilder.Configurations.Add(new CustomerCompetitorMap());
-            modelBuilder.Configurations.Add(new CustomerCompetitorProductMap());
-            modelBuilder.Configurations.Add(new ContactDoneMethodMap());
+			modelBuilder.Configurations.Add(new CompetitorMap());
+			modelBuilder.Configurations.Add(new CustomerCompetitorMap());
+			modelBuilder.Configurations.Add(new CustomerCompetitorProductMap());
+			modelBuilder.Configurations.Add(new ContactDoneMethodMap());
             modelBuilder.Configurations.Add(new AdditionalServiceMap());
-            modelBuilder.Configurations.Add(new QuotePackageMap());
-            modelBuilder.Configurations.Add(new QuoteClosingReasonMap());
-            modelBuilder.Configurations.Add(new CustomerStatusMap());
-            modelBuilder.Configurations.Add(new BusinessUnitMap());
-            modelBuilder.Configurations.Add(new UserPermittedProductMap());
-            modelBuilder.Configurations.Add(new ShipmentCommodityMap());
-            modelBuilder.Configurations.Add(new ParticipantMap());
+			modelBuilder.Configurations.Add(new QuotePackageMap());
+			modelBuilder.Configurations.Add(new QuoteClosingReasonMap());
+			modelBuilder.Configurations.Add(new CustomerStatusMap());
+			modelBuilder.Configurations.Add(new BusinessUnitMap());
+			modelBuilder.Configurations.Add(new UserPermittedProductMap());
+			modelBuilder.Configurations.Add(new ShipmentCommodityMap());
+			modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
-            modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
-            modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
-            #endregion
+			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
+			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
+			#endregion
 
             base.OnModelCreating(modelBuilder);
         }
@@ -362,124 +363,124 @@ namespace Logitude.Infrastructure.Data
 
         public int SaveChanges()
         {
-            DetectChanges();
-            return base.SaveChanges();
+		    DetectChanges();
+		    return base.SaveChanges();
+       
+	    }
 
-        }
+      
+		public DbConnection GetConnection()
+		{
+			return this.Database.Connection;
+		}
 
+		public DbContext GetActiveDbContext()
+		{
+			return this;
+		}
+ 
 
-        public DbConnection GetConnection()
-        {
-            return this.Database.Connection;
-        }
-
-        public DbContext GetActiveDbContext()
-        {
-            return this;
-        }
-
-
-        public IDbSet<BatchTaskExecution> BatchTaskExecutions
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BIFoldersPermission> BIFoldersPermissions
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BIReport> BIReports
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BIReportFolder> BIReportFolders
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BIReportsType> BIReportsTypes
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BusinessProcessQueue> BusinessProcessQueues
-        {
-            get; set;
-
-        }
-
-        public IDbSet<BusinessRole> BusinessRoles
-        {
-            get; set;
-
-        }
-
-        public IDbSet<FeatureToggle> FeatureToggles
-        {
-            get; set;
-
-        }
-
-        public IDbSet<LastRunDetail> LastRunDetails
-        {
-            get; set;
-
-        }
-
-        public IDbSet<LBPTeamMember> LBPTeamMembers
-        {
-            get; set;
-
-        }
-
-        public IDbSet<PriceStep> PriceSteps
-        {
-            get; set;
-
-        }
-
-        public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings
-        {
-            get; set;
-
-        }
-
-        public IDbSet<Team> Teams
-        {
-            get; set;
-
-        }
-
-        public IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles
-        {
-            get; set;
-
-        }
-
-        public IDbSet<Toggle> Toggles
-        {
-            get; set;
-
-        }
+	 public IDbSet<BatchTaskExecution> BatchTaskExecutions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIFoldersPermission> BIFoldersPermissions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReport> BIReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReportFolder> BIReportFolders 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReportsType> BIReportsTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BusinessProcessQueue> BusinessProcessQueues 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BusinessRole> BusinessRoles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<FeatureToggle> FeatureToggles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LastRunDetail> LastRunDetails 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LBPTeamMember> LBPTeamMembers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PriceStep> PriceSteps 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Team> Teams 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Toggle> Toggles 
+	 {
+	      get; set;
+	 
+	 }
 
         public IDbSet<IndexerWaterMark> IndexerWaterMarks
         {

@@ -34,9 +34,9 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<Team> Teams { get; }
 		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }
 		 IDbSet<Toggle> Toggles { get; }
-		IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
-
-		void SetAsModified(object entity);
+	 
+         IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
+         void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
 
