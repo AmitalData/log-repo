@@ -82,14 +82,21 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
                     string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
-                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                    unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                    if (!string.IsNullOrWhiteSpace( queueName ))
                     {
-                        Action = "StatusUpdate",
-                        ParameterName = "transmission",
-                        UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
-                        QueueName = queueName
-                    }); ;
+                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                        unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                        {
+                            Action = "StatusUpdate",
+                            ParameterName = "transmission",
+                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
+                            QueueName = queueName
+                        }); ;
+                    }
+                    else
+                    {
+                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status}):expected only MSCSTORAGE/BFIFILE");
+                    }
                 }
                 else
                 {
@@ -139,7 +146,8 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 case "CFIFILEM":
                 default:
-                    throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
+                    //throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
+                    
                     break;
             }
 
