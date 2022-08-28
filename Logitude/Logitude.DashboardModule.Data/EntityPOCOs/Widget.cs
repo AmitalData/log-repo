@@ -49,26 +49,6 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string EntityId { get; set; }
 	      
         public virtual AnalyticsFactsMetaData EntityMetaData { get; set; }
-        [ForeignKey("Measure1FieldsMetaData")]
-        [Column("Measure1FieldId")]
-	    public string Measure1FieldId { get; set; }
-	      
-        public virtual AnalyticsFactsFieldsMetaData Measure1FieldsMetaData { get; set; }
-        [ForeignKey("Measure2FieldsMetaData")]
-        [Column("Measure2FieldId")]
-	    public string Measure2FieldId { get; set; }
-	      
-        public virtual AnalyticsFactsFieldsMetaData Measure2FieldsMetaData { get; set; }
-        [ForeignKey("Measure1Type")]
-        [Column("Measure1Operation")]
-	    public string Measure1Operation { get; set; }
-	      
-        public virtual MeasureType Measure1Type { get; set; }
-        [ForeignKey("Measure2Type")]
-        [Column("Measure2Operation")]
-	    public string Measure2Operation { get; set; }
-	      
-        public virtual MeasureType Measure2Type { get; set; }
     }
 }
 	 

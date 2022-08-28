@@ -112,6 +112,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string measureFieldId ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MeasureFieldId  
+	   {
+	    
+	     get
+		{
+		   return measureFieldId;
+		 }
+		 set
+		 {
+		   if(measureFieldId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasureFieldId",OldValue=measureFieldId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measureFieldId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

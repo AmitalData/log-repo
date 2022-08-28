@@ -40,14 +40,6 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.TypeCode).HasColumnName("TypeCode").IsRequired().HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Measure1FieldId).HasColumnName("Measure1FieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Measure2FieldId).HasColumnName("Measure2FieldId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Measure1Operation).HasColumnName("Measure1Operation").IsRequired().HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.Measure2Operation).HasColumnName("Measure2Operation").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

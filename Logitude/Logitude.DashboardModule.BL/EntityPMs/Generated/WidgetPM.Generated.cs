@@ -227,99 +227,42 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string measure1FieldId ;
-	  	  
-       
-	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Measure1FieldId  
-	   {
+
+	   private List<WidgetMeasurePM> widgetMeasures;
 	    
-	     get
-		{
-		   return measure1FieldId;
-		 }
-		 set
-		 {
-		   if(measure1FieldId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure1FieldId",OldValue=measure1FieldId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   measure1FieldId=value;
-		   }
-			
-		 }
-	   }
-	  private string measure2FieldId ;
-	  	  
-       
-	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("WidgetWidgetMeasure", "Id","WidgetId")]
 	   [DataMember]
-       public string Measure2FieldId  
+	   public virtual List<WidgetMeasurePM> WidgetMeasures  
 	   {
-	    
-	     get
-		{
-		   return measure2FieldId;
-		 }
-		 set
-		 {
-		   if(measure2FieldId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure2FieldId",OldValue=measure2FieldId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   measure2FieldId=value;
-		   }
-			
-		 }
-	   }
-	  private string measure1Operation ;
-	  	  
-       
-	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Measure1Operation  
+	        get
+             {
+                 if (widgetMeasures == null)
+                 {
+                     widgetMeasures = new List<WidgetMeasurePM>();
+                 }
+                 return widgetMeasures;
+              }
+             set { widgetMeasures = value; }
+	    }
+		   
+	   private List<WidgetMeasurePM>  deletedWidgetMeasures;
+	   public virtual List<WidgetMeasurePM> DeletedWidgetMeasures  
 	   {
-	    
-	     get
-		{
-		   return measure1Operation;
-		 }
-		 set
-		 {
-		   if(measure1Operation != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure1Operation",OldValue=measure1Operation,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   measure1Operation=value;
-		   }
-			
-		 }
-	   }
-	  private string measure2Operation ;
-	  	  
-       
-	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Measure2Operation  
-	   {
-	    
-	     get
-		{
-		   return measure2Operation;
-		 }
-		 set
-		 {
-		   if(measure2Operation != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Measure2Operation",OldValue=measure2Operation,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   measure2Operation=value;
-		   }
-			
-		 }
-	   }
-   }
+	        get
+             {
+                 if ( deletedWidgetMeasures == null)
+                 {
+                      deletedWidgetMeasures = new List<WidgetMeasurePM>();
+                 }
+                 return  deletedWidgetMeasures;
+              }
+             set {  deletedWidgetMeasures = value; }
+	    }
+	     }
    
 }
 	 

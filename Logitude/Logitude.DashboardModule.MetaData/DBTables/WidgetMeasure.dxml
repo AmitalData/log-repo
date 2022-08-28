@@ -32,6 +32,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="MeasureFieldId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="WidgetId"
     ReferencedTable="Widgets"
@@ -41,5 +48,10 @@
     ForeignKeyColumn="MeasureCode"
     ReferencedTable="MeasureTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MeasureFieldId"
+    ReferencedTable="AnalyticsFactsFieldsMetaDatas"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
