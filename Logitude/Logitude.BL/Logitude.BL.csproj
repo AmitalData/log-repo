@@ -3147,6 +3147,9 @@
     <Compile Include="Validators\UserCustomValidator.Shared.cs" />
     <Compile Include="Validators\ValidationClass.cs" />
     <Compile Include="Validators\ValidationClass.Shared.cs" />
+    <Compile Include="Workflow\Constants\QueueMessagesTypes.cs" />
+    <Compile Include="Workflow\Constants\WorkflowEntities.cs" />
+    <Compile Include="Workflow\WorkflowEntityQueueMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

@@ -60,15 +60,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowInstanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowStatusDetails.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\WorkFlowDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkFlowInstanceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkFlowInstanceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowStatusDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\WorkFlowInstancePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WorkFlowInstanceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowStatusPM.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowStatusQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\WorkFlowUpdateService.cs" />
