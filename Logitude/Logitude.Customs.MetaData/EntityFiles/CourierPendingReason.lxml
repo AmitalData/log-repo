@@ -1202,7 +1202,14 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CourierPendingReason.O.NotApprovedPending&quot;"
+      DefaultText="&quot;NotApprovedPending&quot;"
+      LocalDefaultText="&quot;Pending שלא אושרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;PendingRequiresApproval&quot;"
