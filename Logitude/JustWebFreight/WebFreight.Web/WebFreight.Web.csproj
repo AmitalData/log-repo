@@ -1175,6 +1175,7 @@
     <Compile Include="Controllers\ShipmentOrderModel\ShipmentOrderExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\ContainerTrackingController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\DashboardAnalyticsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainerTrackingProvidersController.Extended.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
@@ -7499,6 +7500,7 @@
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
     <Folder Include="MobileApplication\Views\CurrencyType\" />
+    <Folder Include="MobileApplication\Views\DashboardAnalytics\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
