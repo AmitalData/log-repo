@@ -34,6 +34,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.DigitalModels;
 using System.Threading.Tasks;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -4379,9 +4380,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
-                    var CLoudData = repository.context
-                                              .ShipmentAdditionalCloudDatas
-                                              .FirstOrDefault(a => a.Id == shipment.Id);
+
+
+
+                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                     where a.Id == shipment.Id
+                                     select a).FirstOrDefault();
 
                     if (CLoudData != null)
                     {
@@ -4404,7 +4408,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
-                    MapShipmentComputedFields(returnShipment , masterData);
+
+
+
+                    MapShipmentComputedFields(returnShipment, masterData);
+
                     return returnShipment;
                 }
                 else
@@ -11018,8 +11026,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            //IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
+            //ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
             IQueryable<Shipment> iQueryable_Shipments = (from f in shipmentsContext.Shipments where f.Tenant == tenant && f.IsCancelled == false select f);
 
@@ -11036,95 +11044,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => d.TransportModeId == transportModeId);
             }
 
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime lastWeekDate = todayDate.AddDays(-7);
+
 
             // Operational Open
             IQueryable<Shipment> iQueryable_OperationalOpen = iQueryable_Shipments.Where(d => d.IsOperationalClosed == false);
-            myResult.OperationalOpenCount_DH = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "A").Take(1001).Count();
-            myResult.OperationalOpenCount_DC = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C").Take(1001).Count();
-            myResult.ImportShipmentsCount = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode != "C" && ((d.DirectionId == "C" && d.NoFreightFile == true) || d.DirectionId == "I")).Take(1001).Count();
+            myResult.OperationalOpenCount_DH = GetOperationalOpenCount_DH(tenant, iQueryable_OperationalOpen);
+            myResult.OperationalOpenCount_DC = GetOperationalOpenCount_DC(tenant, iQueryable_OperationalOpen);
+            myResult.ImportShipmentsCount = GetImportShipmentsCount(tenant, iQueryable_OperationalOpen);
 
             // Accounting Open
             IQueryable<Shipment> iQueryable_AccountingOpen = iQueryable_Shipments.Where(d => d.IsAccountingClosed == false);
-            myResult.AccountingOpenCount_DH = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && d.ShipmentReceivableStatusCode == "OPEN").Take(1001).Count();
-            myResult.AccountingOpenCount_DC = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C") && d.ShipmentPayableStatusCode == "OPEN").Take(1001).Count();
+            myResult.AccountingOpenCount_DH = GetAccountingOpenCount_DH(tenant, iQueryable_AccountingOpen);
+            myResult.AccountingOpenCount_DC = GetAccountingOpenCount_DC(tenant, iQueryable_AccountingOpen);
 
             // FSR
-            myResult.LastSentFSRCount = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate).Take(1001).Count();
+            myResult.LastSentFSRCount = GetLastSentFSRCount(tenant, iQueryable_Shipments);
 
 
             // EAWB
-            myResult.OperationalOpenCount_LWU = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.CarrierLastStatusDate >= lastWeekDate).Take(1001).Count();
+            myResult.OperationalOpenCount_LWU = GetOperationalOpenCount_LWU(tenant, iQueryable_Shipments);
 
             if (hasETDFeature)
             {
-                List<string> unwantedStatuesId = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && (d.Code == "SARR" || d.Code == "SDLD") select d.Id).ToList();
-                string statusId1 = unwantedStatuesId[0];
-                string statusId2 = unwantedStatuesId[1];
-
-                myResult.OperationalOpenCount_ETD = (from myShipment in iQueryable_Shipments
-                                                     join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                     from myMasterData in ShipmentsMasters
-                                                     where myShipment.Tenant == tenant
-                                                     && myShipment.ShipmentLevelCode != "H"
-                                                     && myShipment.DirectionId == "E"
-                                                     && myShipment.TransportModeId == "A"
-                                                     && myShipment.StatusId != statusId1
-                                                     && myShipment.StatusId != statusId2
-                                                     && myMasterData.Tenant == tenant
-                                                     && myMasterData.MainCarriageATD == null
-                                                     && myMasterData.MainCarriageATA == null
-                                                     && myMasterData.MainCarriageETD != null
-                                                     && System.Data.Entity.DbFunctions.TruncateTime(myMasterData.MainCarriageETD) > lastWeekDate
-                                                     select myShipment).Take(1001).Count();
+                myResult.OperationalOpenCount_ETD = GetOperationalOpenCount_ETD(tenant, iQueryable_Shipments,shipmentsContext);
             }
 
             if (hasExpDepNotTransmittedFeature)
             {
-                myResult.ExpectedDeparturesNotTransmittedCount = (from myShipment in iQueryable_Shipments
-                                                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                                  from myMasterData in ShipmentsMasters
-                                                                  where myShipment.Tenant == tenant
-                                                                  && myShipment.ShipmentLevelCode != "H"
-                                                                  && myShipment.DirectionId == "E"
-                                                                  && myShipment.TransportModeId == "O"
-                                                                  && myShipment.INTTRASIStatusCode == "NSEN"
-                                                                  && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
-                                                                  && myMasterData.Tenant == tenant
-                                                                  && myMasterData.MainCarriageATD == null
-                                                                  && myMasterData.MainCarriageETD != null
-                                                                  select myShipment).Take(1001).Count();
+                myResult.ExpectedDeparturesNotTransmittedCount = GetExpectedDeparturesNotTransmittedCount(tenant, iQueryable_Shipments, shipmentsContext);
             }
 
             if (hasShippingInstructionsLast7DaysFeature)
             {
-                myResult.ShippingInstructionsLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+                myResult.ShippingInstructionsLast7DaysCount = GetShippingInstructionsLast7DaysCount(tenant, iQueryable_Shipments);
             }
 
             if (hasContainerStatusLast7DaysFeature)
             {
-                myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+                myResult.ContainerStatusLast7DaysCount = GetContainerStatusLast7DaysCount(tenant, iQueryable_Shipments);
             }
 
             if (hasEBookingInProgress)
             {
-                myResult.EBookingInProgressCount = (from myShipment in iQueryable_Shipments
-                                                    join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                    from myMasterData in ShipmentsMasters
-                                                    where myShipment.Tenant == tenant
-                                                    && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
-                                                    && myShipment.DirectionId == "E"
-                                                    && myShipment.TransportModeId == "O"
-                                                    && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
-                                                    && myMasterData.Tenant == tenant
-                                                    && myMasterData.MainCarriageATD == null
-                                                    select myShipment).Take(1001).Count();
+                myResult.EBookingInProgressCount = GetEBookingInProgressCount(tenant, iQueryable_Shipments, shipmentsContext);
 
             }
             // Others
-            myResult.CreditLimitBlockedCount = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001).Count();
-
+            myResult.CreditLimitBlockedCount = GetCreditLimitBlockedCount(tenant, iQueryable_Shipments);
             if (hasFollowupsFeature)
             {
                 int allFollowUpsCount = 0;
@@ -11144,15 +11110,363 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     allFollowups = allFollowups.Where(d => d.TransportModeId == transportModeId);
                 }
 
-                allFollowUpsCount = allFollowups.Take(1001).Count();
-                myFollowUpsCount = allFollowups.Where(d => d.FollowUpOwnerId == loggedContactId).Take(1001).Count();
-
-                myResult.AllFollowUpsCount = allFollowUpsCount;
-                myResult.MyFollowUpsCount = myFollowUpsCount;
+                myResult.AllFollowUpsCount = GetAllFollowUpsCount(tenant, allFollowups);
+                myResult.MyFollowUpsCount = GetMyFollowUpsCount(tenant,loggedContactId, allFollowups); 
             }
 
             return myResult;
         }
+
+        private int GetOperationalOpenCount_DH(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var OperationalOpenCount_DH = "OperationalOpenCount_DH" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "A").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_DH) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_DH);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_DH, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetOperationalOpenCount_DC(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var OperationalOpenCount_DC = "OperationalOpenCount_DC" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_DC) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_DC);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_DC, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetImportShipmentsCount(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var ImportShipmentsCount = "ImportShipmentsCount" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode != "C" && ((d.DirectionId == "C" && d.NoFreightFile == true) || d.DirectionId == "I")).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ImportShipmentsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ImportShipmentsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ImportShipmentsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+
+        private int GetAccountingOpenCount_DH(int tenant, IQueryable<Shipment> iQueryable_AccountingOpen)
+        {
+            int count = 0;
+            var AccountingOpenCount_DH = "AccountingOpenCount_DH" + tenant;
+
+            var iQueryableData = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && d.ShipmentReceivableStatusCode == "OPEN").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AccountingOpenCount_DH) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AccountingOpenCount_DH);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AccountingOpenCount_DH, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetAccountingOpenCount_DC(int tenant, IQueryable<Shipment> iQueryable_AccountingOpen)
+        {
+            int count = 0;
+            var AccountingOpenCount_DC = "AccountingOpenCount_DC" + tenant;
+
+            var iQueryableData = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C") && d.ShipmentPayableStatusCode == "OPEN").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AccountingOpenCount_DC) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AccountingOpenCount_DC);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AccountingOpenCount_DC, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+
+        private int GetLastSentFSRCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var LastSentFSRCount = "LastSentFSRCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(LastSentFSRCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(LastSentFSRCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(LastSentFSRCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+        private int GetOperationalOpenCount_LWU(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var OperationalOpenCount_LWU = "OperationalOpenCount_LWU" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.CarrierLastStatusDate >= lastWeekDate).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_LWU) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_LWU);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_LWU, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        
+        //-----------------------
+        private int GetOperationalOpenCount_ETD(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var OperationalOpenCount_ETD = "OperationalOpenCount_ETD" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
+
+
+            List<string> unwantedStatuesId = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && (d.Code == "SARR" || d.Code == "SDLD") select d.Id).ToList();
+            string statusId1 = unwantedStatuesId[0];
+            string statusId2 = unwantedStatuesId[1];
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && myShipment.ShipmentLevelCode != "H"
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "A"
+                                  && myShipment.StatusId != statusId1
+                                  && myShipment.StatusId != statusId2
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  && myMasterData.MainCarriageATA == null
+                                  && myMasterData.MainCarriageETD != null
+                                  && System.Data.Entity.DbFunctions.TruncateTime(myMasterData.MainCarriageETD) > lastWeekDate
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_ETD) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_ETD);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_ETD, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+
+            return count;
+        }
+        private int GetExpectedDeparturesNotTransmittedCount(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var ExpectedDeparturesNotTransmittedCount = "ExpectedDeparturesNotTransmittedCount" + tenant;
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && myShipment.ShipmentLevelCode != "H"
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "O"
+                                  && myShipment.INTTRASIStatusCode == "NSEN"
+                                  && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  && myMasterData.MainCarriageETD != null
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ExpectedDeparturesNotTransmittedCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ExpectedDeparturesNotTransmittedCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ExpectedDeparturesNotTransmittedCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetEBookingInProgressCount(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var EBookingInProgressCount = "EBookingInProgressCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "O"
+                                  && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(EBookingInProgressCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(EBookingInProgressCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(EBookingInProgressCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+        //-----------------------
+        private int GetShippingInstructionsLast7DaysCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var ShippingInstructionsLast7DaysCount = "ShippingInstructionsLast7DaysCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ShippingInstructionsLast7DaysCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ShippingInstructionsLast7DaysCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ShippingInstructionsLast7DaysCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetContainerStatusLast7DaysCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var ContainerStatusLast7DaysCount = "ContainerStatusLast7DaysCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ContainerStatusLast7DaysCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ContainerStatusLast7DaysCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ContainerStatusLast7DaysCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+       
+
+        private int GetCreditLimitBlockedCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var CreditLimitBlockedCount = "CreditLimitBlockedCount" + tenant;
+       
+            var iQueryableData = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(CreditLimitBlockedCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(CreditLimitBlockedCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(CreditLimitBlockedCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetAllFollowUpsCount(int tenant, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        {
+            int count = 0;
+            var AllFollowUpsCount = "AllFollowUpsCount" + tenant;
+
+            var iQueryableData = allFollowups.Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AllFollowUpsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AllFollowUpsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AllFollowUpsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetMyFollowUpsCount(int tenant, string loggedContactId, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        {
+            int count = 0;
+            var MyFollowUpsCount = "MyFollowUpsCount" + tenant + loggedContactId;
+
+            var iQueryableData = allFollowups.Where(d => d.FollowUpOwnerId == loggedContactId).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(MyFollowUpsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(MyFollowUpsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(MyFollowUpsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
         public List<FlightSummary> GetShipmentsDashBoardDeparturesArrivals(int tenant, string directionId, string transportModeId)
         {
             List<FlightSummary> myResult = new List<FlightSummary>();
