@@ -366,7 +366,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                     this.CurrentDocument.DocumentId = result.Result.split('.')[0];
                                     this.CurrentDocument.HasFile = true;
                                     this.CurrentDocument.Received = true;
-                                    this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateAsUtc();
+                                    this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateTimeAsUtc();
                                     this.CurrentDocument.ReceivedByUserId = SessionLocator.LoggedUserId;
                                     this.CurrentDocument.FileExtension = this.FileExtension;
                                     this.CurrentDocument.FileSize = result.FileSize;
