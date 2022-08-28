@@ -555,6 +555,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CombinedCode = f.CombinedCode,
                                               StateName = f.State!=null ? f.State.EnglishName:null,
                                               StateCode = f.StateCode,
+                                              Longtitude = f.Longtitude,
+                                              Latitude = f.Latitude,
+
                                           };
             return result;
         }

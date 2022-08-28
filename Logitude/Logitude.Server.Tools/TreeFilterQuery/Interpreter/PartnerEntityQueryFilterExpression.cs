@@ -168,7 +168,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         private static string GetQueryFilterItemFieldValue(QueryFilterItem queryFilterItem)
         {
 
-            var fieldValue = queryFilterItem.FieldValue != null && string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : "";
+            var fieldValue = queryFilterItem.FieldValue != null && !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : "";
 
             if (queryFilterItem.FieldDataType == "DateTime" || queryFilterItem.FieldDataType == "Date" && fieldValue != null && !string.IsNullOrEmpty(fieldValue.ToString()) && fieldValue.ToString().Length >= 9)
             {

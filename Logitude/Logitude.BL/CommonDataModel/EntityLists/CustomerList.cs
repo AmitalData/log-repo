@@ -436,5 +436,13 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         
         [DataMember]
         public string SATCustomerName { get; set; }
+
+        public string AccountManagerUserId { get; set; }
+
+        public string ATTN { get; set; }
+
     }
+
+
+
 }
