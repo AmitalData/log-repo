@@ -1104,8 +1104,8 @@ namespace MeatadataGeneratorTool
             }
         }
 
-        private string displayInRequiredFields;
-        public string DisplayInRequiredFields
+        private bool displayInRequiredFields;
+        public bool DisplayInRequiredFields
         {
             get
             {

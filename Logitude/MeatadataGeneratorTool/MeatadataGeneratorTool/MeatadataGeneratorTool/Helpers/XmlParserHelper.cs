@@ -299,7 +299,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.DisplayInAutomationAsEnitity = GetAttributeBoolValue(fieldNode.Attributes["DisplayInAutomationAsEnitity"]);
             field.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
             field.AdditionalQuerySections = GetAttributeStringValue(fieldNode.Attributes["AdditionalQuerySections"]);
-            field.DisplayInRequiredFields = GetAttributeStringValue(fieldNode.Attributes["DisplayInRequiredFields"]);
+            field.DisplayInRequiredFields = GetAttributeBoolValue(fieldNode.Attributes["DisplayInRequiredFields"]);
 
 
             if (fieldNode.Attributes["HtmlListComponentName"] != null)
