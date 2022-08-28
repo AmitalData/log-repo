@@ -198,7 +198,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-
+            if (contact == null)
+            {
+                contact = contactRep.GetSingleContactByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
+            }
             ICRMContext crmContext = this.MainContext as ICRMContext;
             CRMEmailAlertsHelper helper = new CRMEmailAlertsHelper();
 
