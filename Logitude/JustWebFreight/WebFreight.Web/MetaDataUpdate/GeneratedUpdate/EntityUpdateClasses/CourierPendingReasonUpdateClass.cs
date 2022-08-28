@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierPendingReasonUpdateClass
    {  		
-		public const string HashString = "c33d42816f58ee9a3e0315604ddc9817";
+		public const string HashString = "3207fe8744b27bd615333d85a2ad8649";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -933,7 +933,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CourierPendingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierPendingReason" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CourierPendingReasonTextCode_CustomsCourierPendingReasonONotApprovedPending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierPendingReason.O.NotApprovedPending", DefaultText = "NotApprovedPending",LocalDefaultText = @"Pending שלא אושרו", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
