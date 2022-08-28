@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "3f730ba6bf40919620eedddf41dbc788";
+
+		public const string HashString = "b433c017db162e978cfa1681d7d6d243";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16297,6 +16298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportLoadingPortCode",
 					  						DefaultText =  "Export Loading Port",
+					  						FullLocalDefaultText =  "נמל טעינה",
 					  						ListFieldLable =  "ExportLoadingPortCodeListLable",
 					  						ListLableDefaultText =  "Export Loading Port",
 					  						ListLocalDefaultText =  "נמל טעינה",
