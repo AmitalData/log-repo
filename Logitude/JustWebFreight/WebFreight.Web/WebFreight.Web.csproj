@@ -1005,6 +1005,7 @@
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountInterestTransactions.cs" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.BankDepositLine.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.TaxReportLines.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.LedgerTransactionReconcile.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
