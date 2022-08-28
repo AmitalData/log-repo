@@ -53,7 +53,8 @@ export class CustomDashboardComponent implements  AfterViewInit {
     private dashboardDataBinding: DashboardDataBinding =
         {
             onGetAllDashboards: new BehaviorSubject<ReactDashboardPM[]>([]),
-            onGetDashboard: new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM)
+            onGetDashboard: new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM),
+            onAddUpdateWidget: new BehaviorSubject<boolean>(false),
         };
 
     public AllDashboards: DashboardPM[] = [];

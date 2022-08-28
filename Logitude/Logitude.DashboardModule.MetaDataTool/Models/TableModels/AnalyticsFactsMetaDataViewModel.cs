@@ -102,11 +102,11 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
         {
             TempFields.Clear();
             AnalyticsFactsFieldsMetaDataViewModels.Clear();
-            foreach (var item in AnalyticsFactsFieldsMetaDataViewModels)
+            foreach (var item in AnalyticsFactsFieldsMetaDatas)
             {
                 var analyticsFactsFieldsMetaDataViewModel = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaDataViewModel>(JsonConvert.SerializeObject(item));
                 TempFields.Add(analyticsFactsFieldsMetaDataViewModel);
-                TempFields.Add(analyticsFactsFieldsMetaDataViewModel);
+                AnalyticsFactsFieldsMetaDataViewModels.Add(analyticsFactsFieldsMetaDataViewModel);
             }
             this.SelectedObjectField = TempFields.FirstOrDefault();
             FieldsEditControlVisibility = (AnalyticsFactsFieldsMetaDataViewModels.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
