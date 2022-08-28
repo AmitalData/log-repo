@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {WorkFlowList} from '../../EntityLists/WorkFlowList';
+import {WorkFlowInstanceList} from '../../EntityLists/WorkFlowInstanceList';
 
 @Injectable()
 
-export class WorkFlowListService {
+export class WorkFlowInstanceListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<WorkFlowList> = [];
+	public static CachedData: Array<WorkFlowInstanceList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflowviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflowinstanceviews';  
     }
 
 	getSingle(id: string) {
@@ -42,7 +42,7 @@ export class WorkFlowListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: WorkFlowList;
+						var entity: WorkFlowInstanceList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class WorkFlowListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstance", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class WorkFlowListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<WorkFlowList> = [];
+						var _mappedListsArray: Array<WorkFlowInstanceList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: WorkFlowList = this.MapJsonToEntityList(allLists[key]);
+								var entity: WorkFlowInstanceList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class WorkFlowListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstance", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -135,11 +135,11 @@ export class WorkFlowListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<WorkFlowList> = [];
+						var _mappedListsArray: Array<WorkFlowInstanceList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: WorkFlowList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: WorkFlowInstanceList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -148,7 +148,7 @@ export class WorkFlowListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstance", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -160,8 +160,8 @@ export class WorkFlowListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: WorkFlowList;
-            entityList = new WorkFlowList();
+            var entityList: WorkFlowInstanceList;
+            entityList = new WorkFlowInstanceList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

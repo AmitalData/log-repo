@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {WorkFlowStatusList} from '../../EntityLists/WorkFlowStatusList';
+import {WorkFlowInstanceStatusList} from '../../EntityLists/WorkFlowInstanceStatusList';
 
 @Injectable()
 
-export class WorkFlowStatusListService {
+export class WorkFlowInstanceStatusListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<WorkFlowStatusList> = [];
+	public static CachedData: Array<WorkFlowInstanceStatusList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflowstatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflowinstancestatusviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class WorkFlowStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: WorkFlowStatusList;
+						var entity: WorkFlowInstanceStatusList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class WorkFlowStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstanceStatus", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class WorkFlowStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<WorkFlowStatusList> = [];
+						var _mappedListsArray: Array<WorkFlowInstanceStatusList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: WorkFlowStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: WorkFlowInstanceStatusList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class WorkFlowStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstanceStatus", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -135,11 +135,11 @@ export class WorkFlowStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<WorkFlowStatusList> = [];
+						var _mappedListsArray: Array<WorkFlowInstanceStatusList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: WorkFlowStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: WorkFlowInstanceStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -148,7 +148,7 @@ export class WorkFlowStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlowInstanceStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -167,9 +167,9 @@ export class WorkFlowStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (WorkFlowStatusListService.CachedData.length > 0) {
+		if (WorkFlowInstanceStatusListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = WorkFlowStatusListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = WorkFlowInstanceStatusListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -177,25 +177,25 @@ export class WorkFlowStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("WorkFlowStatus").pipe(
+            return CachedDataManager.GetClosedTableData("WorkFlowInstanceStatus").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<WorkFlowStatusList> = [];
+					var _mappedListsArray: Array<WorkFlowInstanceStatusList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: WorkFlowStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: WorkFlowInstanceStatusList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					WorkFlowStatusListService.CachedData = _mappedListsArray;
+					WorkFlowInstanceStatusListService.CachedData = _mappedListsArray;
 
-					var filteredData = WorkFlowStatusListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = WorkFlowInstanceStatusListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WorkFlowStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WorkFlowInstanceStatus", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -226,14 +226,14 @@ export class WorkFlowStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (WorkFlowStatusListService.CachedData.length > 0) {
+        if (WorkFlowInstanceStatusListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = WorkFlowStatusListService.CachedData; 
+					serviceResponse.Result = WorkFlowInstanceStatusListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(WorkFlowStatusListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(WorkFlowInstanceStatusListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -243,18 +243,18 @@ export class WorkFlowStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("WorkFlowStatus").pipe(
+            return CachedDataManager.GetClosedTableData("WorkFlowInstanceStatus").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<WorkFlowStatusList> = [];
+					var _mappedListsArray: Array<WorkFlowInstanceStatusList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: WorkFlowStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: WorkFlowInstanceStatusList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					WorkFlowStatusListService.CachedData = _mappedListsArray;
+					WorkFlowInstanceStatusListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -264,7 +264,7 @@ export class WorkFlowStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WorkFlowStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WorkFlowInstanceStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -279,8 +279,8 @@ export class WorkFlowStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: WorkFlowStatusList;
-            entityList = new WorkFlowStatusList();
+            var entityList: WorkFlowInstanceStatusList;
+            entityList = new WorkFlowInstanceStatusList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

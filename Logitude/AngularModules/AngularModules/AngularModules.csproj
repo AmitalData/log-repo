@@ -8021,15 +8021,22 @@
     <TypeScriptCompile Include="Workflow\Components\Properties\ConditionPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\LoopPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\SetValuePropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceStatusList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowStatusList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstancePM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstanceStatusPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowStatusPM.ts" />
     <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
     <TypeScriptCompile Include="Workflow\ModuleWorkflow.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceStatusListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowStatusListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowInstancePMService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowPMService.ts" />
   </ItemGroup>
   <ItemGroup>

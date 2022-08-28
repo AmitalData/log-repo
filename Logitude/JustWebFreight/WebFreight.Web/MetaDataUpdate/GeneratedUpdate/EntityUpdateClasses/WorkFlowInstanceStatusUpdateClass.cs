@@ -80,20 +80,20 @@ using Logitude.Workflow.BL.CLoseTable;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class WorkFlowStatusUpdateClass
+   public class WorkFlowInstanceStatusUpdateClass
    {  		
-		public const string HashString = "ba8f6d11e3d3b699654054d4b599cb35";
+		public const string HashString = "225f4373cbeeaa65af61fc922256aaf6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "WorkFlowStatus",
+	             				    ObjectTableName =  "WorkFlowInstanceStatus",
 			      				    IsNew =  true,
-			      				    DBTableName =  "WorkFlowStatuses",
-			      				    ObjectTableSingular =  "WorkFlowStatus",
-			      				    ObjectTablePlural =  "WorkFlowStatuses",
+			      				    DBTableName =  "WorkFlowInstanceStatuses",
+			      				    ObjectTableSingular =  "WorkFlowInstanceStatus",
+			      				    ObjectTablePlural =  "WorkFlowInstanceStatuses",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -106,13 +106,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
@@ -123,14 +123,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Workflow Status",
-			      				    Code =  "ed66",
+			      				    DefaultText =  "Workflow Instance Status",
+			      				    Code =  "ba6d",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Workflow",
-			      				    ServerModuleName =  "Workflow",
+			      				    ClientModuleName =  "WorkFlow",
+			      				    ServerModuleName =  "WorkFlow",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  WorkFlowStatusUpdateClass.HashString,
+			      				    HashString =  WorkFlowInstanceStatusUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -151,13 +151,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "WorkFlowStatus",
+					  						ObjectTableName =  "WorkFlowInstanceStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -165,9 +165,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  4,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
@@ -178,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "WorkFlowStatus",
+					  						ValidForQuerySection1 =  "WorkFlowInstanceStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -186,7 +187,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
-					  						DisplayInLookupColumnSize =  "0",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
@@ -213,13 +213,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "WorkFlowStatus",
+					  						ObjectTableName =  "WorkFlowInstanceStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -227,20 +227,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "WorkFlowStatus",
+					  						ValidForQuerySection1 =  "WorkFlowInstanceStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -248,7 +249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
-					  						DisplayInLookupColumnSize =  "1",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
@@ -275,7 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "WorkFlowStatus",
+					  						ObjectTableName =  "WorkFlowInstanceStatus",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -289,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -302,7 +303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "WorkFlowStatus",
+					  						ValidForQuerySection1 =  "WorkFlowInstanceStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -340,15 +341,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable WorkFlowStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlowStatus" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> WorkFlowStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WorkFlowStatus").ToList();
+		   ObjectTable WorkFlowInstanceStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlowInstanceStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> WorkFlowInstanceStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WorkFlowInstanceStatus").ToList();
 		       
 	      
 
-	         Screen WorkFlowStatusWorkFlowStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WorkFlowStatus.HeaderScreen", Name = "WorkFlowStatusHeaderScreen", ObjectTableId = WorkFlowStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen WorkFlowInstanceStatusWorkFlowInstanceStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WorkFlowInstanceStatus.HeaderScreen", Name = "WorkFlowInstanceStatusHeaderScreen", ObjectTableId = WorkFlowInstanceStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    WorkFlowStatusObjectTable.HeaderScreenId = WorkFlowStatusWorkFlowStatusHeaderScreenScreen0.Id;
-		    WorkFlowStatusObjectTable.HeaderScreenCode = WorkFlowStatusWorkFlowStatusHeaderScreenScreen0.Code;
+		    WorkFlowInstanceStatusObjectTable.HeaderScreenId = WorkFlowInstanceStatusWorkFlowInstanceStatusHeaderScreenScreen0.Id;
+		    WorkFlowInstanceStatusObjectTable.HeaderScreenCode = WorkFlowInstanceStatusWorkFlowInstanceStatusHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -365,7 +366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable WorkFlowStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlowStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable WorkFlowInstanceStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlowInstanceStatus" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -379,7 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = WorkFlowStatusObjectTable.Id,
+                ObjectTableId = WorkFlowInstanceStatusObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -397,7 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = WorkFlowStatusObjectTable.Id,
+                ObjectTableId = WorkFlowInstanceStatusObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -414,14 +415,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 }
 
 
-	    public void FillWorkFlowStatus()
+	    public void FillWorkFlowInstanceStatus()
         { 
-            var repo = new WorkFlowStatusRepository(0);
+            var repo = new WorkFlowInstanceStatusRepository(0);
             var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
             new FillCloseTables().FillCloseTable<
-                                WorkFlowStatus,
-                                WorkFlowStatusDetails,
-                                WorkFlowStatusRepository>(repo, dic);
+                                WorkFlowInstanceStatus,
+                                WorkFlowInstanceStatusDetails,
+                                WorkFlowInstanceStatusRepository>(repo, dic);
         }
 
 	    

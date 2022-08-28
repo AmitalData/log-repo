@@ -17,20 +17,20 @@ using Logitude.Workflow.Data.EntityLists;
 namespace Logitude.Workflow.Data.EntityListQueryServices
 { 
 
-    public partial class WorkFlowListQueryService
+    public partial class WorkFlowInstanceListQueryService
     {
          private IWorkflowContext context;
-        public WorkFlowListQueryService(IWorkflowContext context)
+        public WorkFlowInstanceListQueryService(IWorkflowContext context)
         {
             this.context = context;
         }
 
-        public List<WorkFlowList> GetList(QueryOperations queryOperations, int tenant)
+        public List<WorkFlowInstanceList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<WorkFlow> iQueryable = (from a in context.WorkFlows
+            IQueryable<WorkFlowInstance> iQueryable = (from a in context.WorkFlowInstances
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -41,20 +41,20 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
-            iQueryable = filter.GetFilteredQuery<WorkFlow>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<WorkFlowInstance>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<WorkFlowList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<WorkFlowInstanceList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<WorkFlowList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<WorkFlowInstanceList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(WorkFlowList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> WorkFlowObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("WorkFlow",tenant).ToList();
+                PropertyInfo propInfo = typeof(WorkFlowInstanceList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> WorkFlowInstanceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("WorkFlowInstance",tenant).ToList();
 
-                ObjectField objectField = (from a in WorkFlowObjectFields
+                ObjectField objectField = (from a in WorkFlowInstanceObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -62,7 +62,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<WorkFlowList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -71,36 +71,36 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<WorkFlowList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<WorkFlowInstanceList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -126,21 +126,21 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
     
         }
 
-         public List<WorkFlowList> GetList(int tenant)
+         public List<WorkFlowInstanceList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public WorkFlowList GetSingle(string id)
+        public WorkFlowInstanceList GetSingle(string id)
         {
-            IQueryable<WorkFlow> WorkFlowQuery = (from a in context.WorkFlows
+            IQueryable<WorkFlowInstance> WorkFlowInstanceQuery = (from a in context.WorkFlowInstances
                                                        where a.Id == id
                                                        select a);
 
              
-            IQueryable<WorkFlowList> WorkFlowListQuery = GetIqueryableList( WorkFlowQuery);
-            WorkFlowList WorkFlowList = WorkFlowListQuery.FirstOrDefault();
-            return WorkFlowList;
+            IQueryable<WorkFlowInstanceList> WorkFlowInstanceListQuery = GetIqueryableList( WorkFlowInstanceQuery);
+            WorkFlowInstanceList WorkFlowInstanceList = WorkFlowInstanceListQuery.FirstOrDefault();
+            return WorkFlowInstanceList;
            
         }
 
@@ -149,7 +149,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<WorkFlow> iQueryable = (from a in context.WorkFlows 
+            IQueryable<WorkFlowInstance> iQueryable = (from a in context.WorkFlowInstances 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -160,11 +160,11 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
-			iQueryable = filter.GetFilteredQuery<WorkFlow>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<WorkFlowInstance>(nonListQueryOperation, iQueryable);
 
-            IQueryable<WorkFlowList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<WorkFlowInstanceList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<WorkFlowList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<WorkFlowInstanceList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

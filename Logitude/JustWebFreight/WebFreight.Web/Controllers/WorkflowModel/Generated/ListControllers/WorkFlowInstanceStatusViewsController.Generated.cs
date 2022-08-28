@@ -47,11 +47,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class WorkFlowViewsController : ApiController
+    public partial class WorkFlowInstanceStatusViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -59,13 +59,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("WorkFlow", "READ", authToken.Tenant);
-	                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
-                WorkFlowListQueryService workFlowQuery = new WorkFlowListQueryService(MyContext);
-                WorkFlowList workFlowList = workFlowQuery.GetSingle(id);
+                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
+                WorkFlowInstanceStatusListQueryService workFlowInstanceStatusQuery = new WorkFlowInstanceStatusListQueryService(MyContext);
+                WorkFlowInstanceStatusList workFlowInstanceStatusList = workFlowInstanceStatusQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  workFlowList);
+                return Request.CreateResponse(HttpStatusCode.OK,  workFlowInstanceStatusList);
             }
             catch (Exception ex)
             {
@@ -82,10 +81,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("WorkFlow", "READ", authToken.Tenant);
-	                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
-                WorkFlowListQueryService workFlowQuery = new WorkFlowListQueryService(MyContext);
-                List<WorkFlowList> result = workFlowQuery.GetList(authToken.Tenant);
+                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
+                WorkFlowInstanceStatusListQueryService workFlowInstanceStatusQuery = new WorkFlowInstanceStatusListQueryService(MyContext);
+                List<WorkFlowInstanceStatusList> result = workFlowInstanceStatusQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -105,23 +103,22 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("WorkFlow", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "WorkFlow",
+                    ObjectTableName = "WorkFlowInstanceStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "WorkFlows",
+                    QuerySection = "WorkFlowInstanceStatuss",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> WorkFlowObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("WorkFlow",tenant);
+				List<ObjectField> WorkFlowInstanceStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("WorkFlowInstanceStatus",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -144,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = WorkFlowObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = WorkFlowInstanceStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = WorkFlowObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = WorkFlowInstanceStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -195,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IWorkflowContext MyContext = WorkflowContext.GetContext(tenant);
-				WorkFlowListQueryService workFlowQuery = new WorkFlowListQueryService(MyContext);
+				WorkFlowInstanceStatusListQueryService workFlowInstanceStatusQuery = new WorkFlowInstanceStatusListQueryService(MyContext);
 
-                List<WorkFlowList> entityLists = workFlowQuery.GetList(queryOperations, tenant);
+                List<WorkFlowInstanceStatusList> entityLists = workFlowInstanceStatusQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = workFlowQuery.GetListCount(queryOperations, tenant);
+                    int count = workFlowInstanceStatusQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 
