@@ -318,12 +318,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if(dirtyDeclarationPM.PaymentDate.HasValue)
                 {
                     DateTime paymentDateTime = dirtyDeclarationPM.PaymentDate.Value;
-                    if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
+                    // if(this.DE)
+                    if (!dirtyDeclarationPM.IsCourierDeclaration)
                     {
-                        using (var trans = TransactionFactory.GetNewTransaction())
+                        if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
                         {
-                            SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
-                            trans.Complete();
+                            using (var trans = TransactionFactory.GetNewTransaction())
+                            {
+                                SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
+                                trans.Complete();
+                            }
                         }
                     }
                     statusDateTimeLP2U = dirtyDeclarationPM.PaymentDate.Value; // Task 36100
