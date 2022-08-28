@@ -2556,6 +2556,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    BillToId = customer.BillToId,
                                                    BillToName = customer.BillToName,
                                                    SATCustomerName = customer.SATCustomerName,
+                                                   AccountManagerUserId = customer.AccountManagerUserId,
+                                                  
                                                });
 
 
