@@ -33,6 +33,11 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string MeasureCode { get; set; }
 	      
         public virtual MeasureType Measure { get; set; }
+        [ForeignKey("MeasureField")]
+        [Column("MeasureFieldId")]
+	    public string MeasureFieldId { get; set; }
+	      
+        public virtual AnalyticsFactsFieldsMetaData MeasureField { get; set; }
     }
 }
 	 

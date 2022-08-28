@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {DashboardPM} from './DashboardPM';
+import {WidgetMeasurePM} from './WidgetMeasurePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -72,27 +73,41 @@ export class WidgetPM {
     public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
-    private measure1FieldId: string;
-    public get Measure1FieldId() { return this.measure1FieldId; }
-    public set Measure1FieldId(newValue: string) { if (this.measure1FieldId != newValue) { this.measure1FieldId = newValue; this.MarkAsDirty("Measure1FieldId"); } }
-       
-	 
-    private measure2FieldId: string;
-    public get Measure2FieldId() { return this.measure2FieldId; }
-    public set Measure2FieldId(newValue: string) { if (this.measure2FieldId != newValue) { this.measure2FieldId = newValue; this.MarkAsDirty("Measure2FieldId"); } }
-       
-	 
-    private measure1Operation: string;
-    public get Measure1Operation() { return this.measure1Operation; }
-    public set Measure1Operation(newValue: string) { if (this.measure1Operation != newValue) { this.measure1Operation = newValue; this.MarkAsDirty("Measure1Operation"); } }
-       
-	 
-    private measure2Operation: string;
-    public get Measure2Operation() { return this.measure2Operation; }
-    public set Measure2Operation(newValue: string) { if (this.measure2Operation != newValue) { this.measure2Operation = newValue; this.MarkAsDirty("Measure2Operation"); } }
-       
-	 
+     
+	private widgetMeasures: WidgetMeasurePM[];
+    get  WidgetMeasures() {
+        if (this.widgetMeasures == null) {
+            this.widgetMeasures = [];
+        }
 
+        return this.widgetMeasures;
+    }
+    set  WidgetMeasures(newValue: WidgetMeasurePM[]) {
+        if (this.widgetMeasures != newValue) {
+            this.widgetMeasures = newValue;
+        }
+    }
+    public AddWidgetMeasure(item: WidgetMeasurePM) {
+        if (item != null) {
+            var index = this. WidgetMeasures.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. WidgetMeasures.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveWidgetMeasure(item: WidgetMeasurePM) {
+        if (item != null) {
+            var index = this. WidgetMeasures.indexOf(item);
+            if (index > -1) {
+                this. WidgetMeasures.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public WidgetMeasures: Array<WidgetMeasurePM>= [];
+ 
     public OldEntityPM: WidgetPM;
 	
     private entityParentPM: any;

@@ -30,11 +30,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         StartPotistion, 
 	         EndPosition, 
 	         TypeCode, 
-	         EntityId, 
-	         Measure1FieldId, 
-	         Measure2FieldId, 
-	         Measure1Operation, 
-	         Measure2Operation,
+	         EntityId,
 	      }
 
 
@@ -49,11 +45,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         StartPotistion, 
 	         EndPosition, 
 	         TypeCode, 
-	         EntityId, 
-	         Measure1FieldId, 
-	         Measure2FieldId, 
-	         Measure1Operation, 
-	         Measure2Operation,
+	         EntityId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -100,26 +92,6 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
             {
 				entityPOCO.EntityId = entityPM.EntityId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure1FieldId))
-            {
-				entityPOCO.Measure1FieldId = entityPM.Measure1FieldId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure2FieldId))
-            {
-				entityPOCO.Measure2FieldId = entityPM.Measure2FieldId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure1Operation))
-            {
-				entityPOCO.Measure1Operation = entityPM.Measure1Operation;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure2Operation))
-            {
-				entityPOCO.Measure2Operation = entityPM.Measure2Operation;
 			}
 			}
 
@@ -171,26 +143,6 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.EntityId = entityPOCO.EntityId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Measure1FieldId))
-            {
-					entityPM.Measure1FieldId = entityPOCO.Measure1FieldId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Measure2FieldId))
-            {
-					entityPM.Measure2FieldId = entityPOCO.Measure2FieldId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Measure1Operation))
-            {
-					entityPM.Measure1Operation = entityPOCO.Measure1Operation;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Measure2Operation))
-            {
-					entityPM.Measure2Operation = entityPOCO.Measure2Operation;
-            }
-
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -235,26 +187,6 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
             {
                 oldEntityPM.EntityId = entityPM.EntityId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure1FieldId))
-            {
-                oldEntityPM.Measure1FieldId = entityPM.Measure1FieldId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure2FieldId))
-            {
-                oldEntityPM.Measure2FieldId = entityPM.Measure2FieldId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure1Operation))
-            {
-                oldEntityPM.Measure1Operation = entityPM.Measure1Operation;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Measure2Operation))
-            {
-                oldEntityPM.Measure2Operation = entityPM.Measure2Operation;
             }
 			
 		}
