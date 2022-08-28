@@ -1,7 +1,5 @@
-﻿using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
+﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 
@@ -9,7 +7,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 {
     public static class DigitalPortalCustomFilter
     {
-        public static IQueryable<ShipmentDataView> ApplyShipperConsigneeFilter(QueryFilterItem item, IQueryable<ShipmentDataView> queryableData)
+        public static IQueryable<DigitalShipmentsDataView> ApplyShipperConsigneeFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData)
         {
             string[] values = item.FieldValue == null ? null : item.FieldValue.ToString().Split(',');
             if (values != null && values.Length > 0)
@@ -20,51 +18,31 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             return queryableData;
         }
 
-        public static IQueryable<ShipmentDataView> ApplyDigitalPortalSearchFilter(QueryFilterItem item, IQueryable<ShipmentDataView> queryableData)
+        public static IQueryable<DigitalShipmentsDataView> ApplyDigitalPortalSearchFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData)
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
             queryableData = queryableData.Where(d =>
-             d.ShipperReference1.Contains(digitalPortalSearchFields)
-          || d.ShipperReference2.Contains(digitalPortalSearchFields)
-          || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
-          || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
-          || d.ShipmentNumber.Contains(digitalPortalSearchFields)
-          || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
-          || d.House.Contains(digitalPortalSearchFields)
-          || d.Master.Contains(digitalPortalSearchFields)
-          || d.AgentName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.CustomAgentImportName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ConsigneeName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ShipperName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.CustomerName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.Notify1Name.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.Notify2Name.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.CustomAgentExportName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ShipperNotExporterName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ConsigneeNotImporterName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.FreightForwarderName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ReleasingAgentName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ConsolidatorName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
-          || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
+            d.ShipmentNumber.Contains(digitalPortalSearchFields)
+              || d.Master.Contains(digitalPortalSearchFields)
+              || d.ConsigneeName.ToLower().StartsWith(digitalPortalSearchFields)
+              || d.ShipperName.ToLower().StartsWith(digitalPortalSearchFields)
+              || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
+              || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
+              || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
            );
 
             return queryableData;
         }
 
-        public static IQueryable<ShipmentDataView> ApplyInTransitFilter(QueryFilterItem item, IQueryable<ShipmentDataView> queryableData, Simplog.Data.ShipmentsModel.Repositories.ShipmentRepository shipmentRepository)
+        public static IQueryable<DigitalShipmentsDataView> ApplyInTransitFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData, Simplog.Data.ShipmentsModel.Repositories.ShipmentRepository shipmentRepository)
         {
-            //var Context = ShipmentsContext.GetContext(0);
             queryableData = (from shipment in queryableData
-                                                      //join delivery in shipmentRepository.context.ShipmentPickUpDeliveries
-                                                      //on shipment.Id equals delivery.ShipmentId
                                                       where (shipment.MainCarriageATD != null || shipment.Transshipment1ATD != null || shipment.Transshipment2ATD != null || shipment.Transshipment3ATD != null)
-                                                      && (shipment.Transshipment3ToPortId != null ? shipment.Transshipment3ATA == null : true)
-                                                      && (shipment.Transshipment2ToPortId != null ? shipment.Transshipment2ATA == null : true)
-                                                      && (shipment.Transshipment1ToPortId != null ? shipment.Transshipment1ATA == null : true)
-                                                      && (shipment.MainCarriageToPortId != null ? shipment.MainCarriageATA == null : true)
+                                                      && (shipment.Transshipment3ToPortId == null || shipment.Transshipment3ATA == null)
+                                                      && (shipment.Transshipment2ToPortId == null || shipment.Transshipment2ATA == null)
+                                                      && (shipment.Transshipment1ToPortId == null || shipment.Transshipment1ATA == null)
+                                                      && (shipment.MainCarriageToPortId == null || shipment.MainCarriageATA == null)
                                                       && !(shipmentRepository.context.ShipmentPickUpDeliveries.Any(delivery => delivery.ShipmentId == shipment.Id && delivery.PickUpDeliveryTypeCode == "DELV" && delivery.ATA != null))
                                                       select shipment);
 

@@ -355,15 +355,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             {
                 return (from f in dataViewEntities.ShipmentDataViews select f);
             }
+
             // end of Temporary Code
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
             return result;
         }
 
-        public IQueryable<ShipmentDataView> GetDigitalShipmentViewsByTenant(int tenant)
-        { 
-            IQueryable<ShipmentDataView> result = (from f in context.ShipmentDigitalDataViews where f.Tenant == tenant select f);
-            return result;
+        public IQueryable<DigitalShipmentsDataView> GetDigitalShipmentViewsByTenant(int tenant)
+        {
+            return context.DigitalShipmentsDataViews.Where(f => f.Tenant == tenant);
         }
 
         public IQueryable<ShipmentCountryDashboardView> GetShipmentDataViewsForCountriesDashboard(int tenant, string customerid, string directionId, string transportmodeId)

@@ -132,18 +132,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var customfilters = new ShipmentCustomFilter(authToken.Tenant);
 
-                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+                IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-                var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
-
-                if (MySearchFilter != null)
-                {
-                    var SearchTerm = MySearchFilter.FieldValue.ToString();
-                    shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
-                    queryOperations.QueryFilterItems.Remove(MySearchFilter);
-                }
-
-                shipments = customfilters.GetFilteredQuery(queryOperations, shipments, shipmentRepository);
+                shipments = customfilters.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository);
 
                 var nonListQueryOperation = new QueryOperations
                 {

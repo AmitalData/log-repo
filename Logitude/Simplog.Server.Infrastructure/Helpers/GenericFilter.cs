@@ -12,6 +12,7 @@ namespace Simplog.Server.Infrastructure.Helpers
     public class GenericFilter
     {
         CustomFieldClass customFilterClass = new CustomFieldClass();
+        
         public IQueryable<T> GetFilteredQuery<T>(QueryOperations operations, IQueryable<T> queryableData)
         {
             

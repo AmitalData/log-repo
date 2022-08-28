@@ -42,11 +42,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-            
+
             var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
-            var customfilters = new ShipmentCustomFilter(authToken.Tenant);
-            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
+            IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
             var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
                                                 &&(a.ConsigneeName.Contains(searchText) 

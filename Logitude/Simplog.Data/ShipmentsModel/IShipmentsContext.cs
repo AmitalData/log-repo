@@ -16,6 +16,12 @@ namespace Simplog.Data.ShipmentsModel
         {
             get; 
         }
+
+        IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews
+        {
+            get;
+        }
+
         IDbSet<Shipment> Shipments { get; }
         IDbSet<ShipmentDocsField> ShipmentDocsFields { get; }
         IDbSet<ShipmentType> ShipmentTypes { get; }

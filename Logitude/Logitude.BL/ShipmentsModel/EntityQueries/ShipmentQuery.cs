@@ -13267,9 +13267,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public IQueryable<ShipmentList> GetDigitalIQueryableShipmentList(IQueryable<ShipmentDataView> shipments, int tenant)
+        public IQueryable<ShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
         {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
+            var tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
             var myResult = from f in shipments
                            select new ShipmentList()

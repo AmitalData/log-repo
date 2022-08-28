@@ -1,13 +1,10 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
-using System.Transactions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
@@ -19,8 +16,6 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Linq;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -49,10 +44,7 @@ namespace Simplog.Data.ShipmentsModel
         public static IShipmentsContext GetContext(int tenant)
         {
             GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
+             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
@@ -94,6 +86,7 @@ namespace Simplog.Data.ShipmentsModel
             //string databasename = DatabaseInitializer.GetDatabaseName();
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
             modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            modelBuilder.Configurations.Add(new DigitalShipmentDataViewMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -372,6 +365,12 @@ namespace Simplog.Data.ShipmentsModel
         {
             get; set;
         }
+
+        public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews
+        {
+            get;
+        }
+
         public IDbSet<Shipment> Shipments { get; set; }
         public IDbSet<ShipmentType> ShipmentTypes { get; set; }
         public IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; set; }
