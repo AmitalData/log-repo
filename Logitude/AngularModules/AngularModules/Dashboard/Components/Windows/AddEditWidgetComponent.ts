@@ -30,6 +30,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
+        this.WidgetMeasuresList = [];
     }
 
     SetWindowArgs(windowArgs: any) {

@@ -34,6 +34,8 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 																	  DisplayNamePlural = a.DisplayNamePlural,
 																	  JoinedTableName = a.JoinedTableName,
 																	  JoinedTableKey = a.JoinedTableKey,
+																	  CanGroup = a.CanGroup,
+																	  JoinedTableDisplayField = a.JoinedTableDisplayField,
 																  });
 			return query;
 		}

@@ -383,9 +383,10 @@ namespace WebFreight.Web.Helpers
                         object listQuery = Activator.CreateInstance(tableQueryType, parameters1);
 
                         Type[] parameterstypes = new Type[] { typeof(QueryOperations), typeof(int) };
+                        Type[] parameterstypes1 = new Type[] { typeof(QueryOperations) };
 
                         MethodInfo getListMethodInfo = listQuery.GetType().GetMethod("GetList", parameterstypes);
-                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount");
+                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount", parameterstypes1);
 
 
                         if (getListMethodInfo != null && getCountMethodInfo != null)
