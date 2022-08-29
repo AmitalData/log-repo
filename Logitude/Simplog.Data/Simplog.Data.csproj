@@ -733,6 +733,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\DigitalShipmentsDataView.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
@@ -768,6 +769,7 @@
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\DigitalShipmentDataViewMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />

@@ -25,11 +25,73 @@
                             </tr>
 
                             <tr class="FormFieldRow">
-                                <td style="width:120px;">
-                                    <LogLabel [ObjectFieldName]="'GroupBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'EntityId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="width:250px;">
-                                    <LogTextBox [ObjectFieldName]="'GroupBy'" [Text]="GroupBy" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'EntityId'"
+                                            [SelectedValue]="EntityId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'AnalyticsFactsMetaData'">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'GroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'GroupById'"
+                                            [SelectedValue]="GroupById"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                            [DependencyFilter2Value]="true"
+                                            [DependencyFilter3Value]="EntityId">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <!--<LogLov [ObjectFieldName]="'MeasureCode'"
+                                                        [SelectedValue]="item.MeasureCode"
+                                                        [ObjectTableName]="item.ObjectTableName"
+                                                        [DataContext]="item.DataContext"
+                                                        [LookUpTableName]="'MeasureType'"
+                                                        [HideColumns]="true">
+                                                </LogLov>-->
+                                            </td>
+                                            <td style="width: 2px;">
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                                <!--<LogLov [ObjectFieldName]="'MeasureFieldId'"
+                                                        [SelectedValue]="item.MeasureFieldId"
+                                                        [ObjectTableName]="item.ObjectTableName"
+                                                        [DataContext]="item.DataContext"
+                                                        [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                                        [DependencyFilter1Value]="true"
+                                                        [HideColumns]="true">
+                                                </LogLov>-->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
                                 </td>
                                 <td>
                                     <div></div>

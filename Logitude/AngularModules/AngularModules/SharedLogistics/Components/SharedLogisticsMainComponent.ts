@@ -548,6 +548,7 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.ShowViews = false;
             listArgs.DontCheckQueryFeature = this.IsCtoolSetting ? true : false;
+            listArgs.IsCargoTrackingMenuClicked = this.SharedTitleType == "CargoTracking";
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {

@@ -84,15 +84,11 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
-            modelBuilder.Configurations.Add(new DashboardMap());
-	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
             modelBuilder.Configurations.Add(new LastRunDetailMap());
 	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
-	
-            modelBuilder.Configurations.Add(new MeasureTypeMap());
 	
             modelBuilder.Configurations.Add(new PriceStepMap());
 	
@@ -103,14 +99,8 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
 	
             modelBuilder.Configurations.Add(new ToggleMap());
-	
-            modelBuilder.Configurations.Add(new WidgetMap());
-	
-            modelBuilder.Configurations.Add(new WidgetMeasureMap());
-	
-            modelBuilder.Configurations.Add(new WidgetTypeMap());
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
-
+				
+						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -355,6 +345,7 @@ namespace Logitude.Infrastructure.Data
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
 			modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -443,12 +434,6 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
-	 public IDbSet<Dashboard> Dashboards 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<FeatureToggle> FeatureToggles 
 	 {
 	      get; set;
@@ -462,12 +447,6 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<LBPTeamMember> LBPTeamMembers 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<MeasureType> MeasureTypes 
 	 {
 	      get; set;
 	 
@@ -502,27 +481,11 @@ namespace Logitude.Infrastructure.Data
 	      get; set;
 	 
 	 }
-	
-	 public IDbSet<Widget> Widgets 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<WidgetMeasure> WidgetMeasures 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<WidgetType> WidgetTypes 
-	 {
-	      get; set;
-	 
-	 }
+
         public IDbSet<IndexerWaterMark> IndexerWaterMarks
         {
             get; set;
+
         }
 
     }

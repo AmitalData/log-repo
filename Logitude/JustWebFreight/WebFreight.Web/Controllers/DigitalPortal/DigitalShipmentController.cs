@@ -107,7 +107,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
                 }
 
-                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", authToken.Tenant);
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
 
                 foreach (var filter in newFilters.AdditionalFilters)
                 {
@@ -132,18 +132,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var customfilters = new ShipmentCustomFilter(authToken.Tenant);
 
-                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+                IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-                var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
-
-                if (MySearchFilter != null)
-                {
-                    var SearchTerm = MySearchFilter.FieldValue.ToString();
-                    shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
-                    queryOperations.QueryFilterItems.Remove(MySearchFilter);
-                }
-
-                shipments = customfilters.GetFilteredQuery(queryOperations, shipments, shipmentRepository);
+                shipments = DigitalPortalCustomFilter.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository, authToken.Tenant);
 
                 var nonListQueryOperation = new QueryOperations
                 {
@@ -158,6 +149,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var genericFilter = new GenericFilter();
 
                 shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
+               
                 var myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, authToken.Tenant);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);

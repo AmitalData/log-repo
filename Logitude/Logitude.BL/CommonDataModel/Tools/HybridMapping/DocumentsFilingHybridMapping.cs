@@ -204,7 +204,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
             BranchRepository branchRepository = new BranchRepository(commonContext);
             Response response = new Response();
 
-         
+
             if (!string.IsNullOrEmpty(documentsFilingPM.ObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetObjectTableByName(documentsFilingPM.ObjectTableId, 0, true);
@@ -217,7 +217,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     response.ValidationErrors.Add("ObjectTableId field doesn't exist in the database,Upsert this entity before using it.");
                 }
             }
-            
+
             if (!string.IsNullOrEmpty(documentsFilingPM.ChildObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetObjectTableByName(documentsFilingPM.ChildObjectTableId, 0, true);
@@ -243,6 +243,8 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     response.ValidationErrors.Add("DocumentTypeId field doesn't exist in the database,Upsert this entity before using it.");
                 }
             }
+
+            ValidateUpdatedByUser(documentsFilingPM, userRepository, response);
 
             if (!documentsFilingPM.IsAttachment)
             {
@@ -284,20 +286,6 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                         response.ValidationErrors.Add("ReceivedByUserId field doesn't exist in the database,Upsert this entity before using it.");
                     }
                 }
-
-                if (!string.IsNullOrEmpty(documentsFilingPM.UpdatedByUserId))
-                {
-                    User user = userRepository.GetSingleUserByCode(documentsFilingPM.UpdatedByUserId, documentsFilingPM.Tenant, true);
-                    if (user != null)
-                    {
-                        documentsFilingPM.UpdatedByUserId = user.Id;
-                    }
-                    else
-                    {
-                        response.ValidationErrors.Add("UpdatedByUserId field doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
 
                 if (!string.IsNullOrEmpty(documentsFilingPM.DeletedByUserId))
                 {
@@ -414,7 +402,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     }
                 }
                 else
-                {                    
+                {
                     response.ValidationErrors.Add("DocumentsMetaDataTypeId field is required.");
                 }
             }
@@ -424,9 +412,28 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                 response.ErrorMessage += error + Environment.NewLine;
             }
 
-            response.HasError = response.ValidationErrors.Count() > 0; 
+            response.HasError = response.ValidationErrors.Count() > 0;
 
             return response;
+        }
+
+        private static void ValidateUpdatedByUser(DocumentsFilingPM documentsFilingPM, UserRepository userRepository, Response response)
+        {
+            if (string.IsNullOrEmpty(documentsFilingPM.UpdatedByUserId))
+            {
+                response.ValidationErrors.Add("UpdatedByUserId field is required.");
+                return;
+            }
+            User user = userRepository.GetSingleUserByCode(documentsFilingPM.UpdatedByUserId, documentsFilingPM.Tenant, true);
+            if (user != null)
+            {
+                documentsFilingPM.UpdatedByUserId = user.Id;
+            }
+            else
+            {
+                response.ValidationErrors.Add("UpdatedByUserId field doesn't exist in the database,Upsert this entity before using it.");
+            }
+
         }
     }
 }

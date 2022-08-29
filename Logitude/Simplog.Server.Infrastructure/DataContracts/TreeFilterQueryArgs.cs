@@ -14,5 +14,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public string ParentEntityId { get; set; }
         public string ParentObjectTableName { get; set; }
         public object ParentEntity { get; set; }
+        public Type Type { get; set; }
     }
 }

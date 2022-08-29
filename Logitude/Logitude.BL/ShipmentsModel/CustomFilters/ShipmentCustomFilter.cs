@@ -5,23 +5,21 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.DataContracts;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
-using System.Data.Entity.Core.Objects;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityLists;
-using System.Data.Entity;
 
 namespace Logitude.BL.ShipmentsModel.CustomFilters
 {
     public class ShipmentCustomFilter
     {
-        int tenant;
+        private int _tenant;
+
         public ShipmentCustomFilter(int tenant)
         {
-            this.tenant = tenant;
+            _tenant = tenant;
         }
 
         public IQueryable<ShipmentDataView> GetFilteredQuery(QueryOperations operations, IQueryable<ShipmentDataView> queryableData, ShipmentRepository shipmentRepository = null)
@@ -37,21 +35,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "InTransit")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyInTransitFilter(item, queryableData,shipmentRepository);
-                    }
-
-                    if (item.FieldName == "DigitalPortalSearchFields")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
-                    }
-
-                    if (item.FieldName == "ConsigneeShipperIds")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyShipperConsigneeFilter(item, queryableData);
-                    }
-
                     if (item.FieldName == "DigitalQuickSearch")
                     {
                         queryableData = DigitalCustomFilter.ApplyDigitalQuickSearchFilter(item, queryableData);
@@ -59,9 +42,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "RemoveWarehouseShipments")
                     {
-                        SpecialServicesTypeRepository specialServicesRepository = new SpecialServicesTypeRepository(tenant);
-                        SpecialServicesType warehousingFirst = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS", tenant);
-                        SpecialServicesType WarehousingSecond = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS-2", tenant);
+                        SpecialServicesTypeRepository specialServicesRepository = new SpecialServicesTypeRepository(_tenant);
+                        SpecialServicesType warehousingFirst = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS", _tenant);
+                        SpecialServicesType WarehousingSecond = specialServicesRepository.GetSingleSpecialServicesTypeByCode("WHS-2", _tenant);
 
                         if (warehousingFirst != null)
                         {
@@ -248,9 +231,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.IsCancelled == false && d.MainCarriageATD == null && d.MainCarriageATA == null && d.MainCarriageETD != null && d.DirectionId == "E" && d.TransportModeId == "A");
 
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(tenant);
-                        EntityStatus status_Arrived = statusRepository.GetSingleEntityStatusByCode("SARR", tenant);
-                        EntityStatus status_Delivered = statusRepository.GetSingleEntityStatusByCode("SDLD", tenant);
+                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
+                        EntityStatus status_Arrived = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant);
+                        EntityStatus status_Delivered = statusRepository.GetSingleEntityStatusByCode("SDLD", _tenant);
 
                         if (status_Arrived != null)
                         {
@@ -262,7 +245,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             queryableData = queryableData.Where(d => d.ShipmentStatusId != status_Delivered.Id);
                         }
 
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) > lastWeekDate);
@@ -270,7 +253,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AirlinesUpdates")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.CarrierLastStatusDate >= lastWeekDate && d.IsCancelled == false);
@@ -292,7 +275,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "ShippingInstructionsLast7Days")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = from d in queryableData
@@ -303,7 +286,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "ContainerStatusLast7Days")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = from d in queryableData
@@ -327,7 +310,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "SentFSR")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate && d.IsCancelled == false);
@@ -390,7 +373,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 //queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H");
                             }
 
-                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
 
 
 
@@ -532,7 +515,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         string value = Convert.ToString(item.FieldValue);
                         if (value != null)
                         {
-                            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(_tenant);
                             ShipmentDataView dataview = queryableData.FirstOrDefault();
                             List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackages(dataview.Tenant).Where(d => d.ContainerNumber.StartsWith(value)).ToList();
                             List<string> shipmentIds = (from a in shipmentPackages
@@ -559,7 +542,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         string value = Convert.ToString(item.FieldValue);
                         if (value != null)
                         {
-                            ARInvoiceEntityRepository invoiceRep = new ARInvoiceEntityRepository(tenant);
+                            ARInvoiceEntityRepository invoiceRep = new ARInvoiceEntityRepository(_tenant);
                             ShipmentDataView dataview = queryableData.FirstOrDefault();
                             List<ARInvoiceEntity> invoiceEntities = invoiceRep.GetInvoiceEntities(dataview.Tenant).Where(d => d.ARInvoice.InvoiceNumber.StartsWith(value)).ToList();
                             List<string> shipmentIds = (from a in invoiceEntities select a.EntityId).ToList();
@@ -590,7 +573,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             bool? value = item.FieldValue as bool?;
                             if (value == true)
                             {
-                                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                                 int year = currentDateTime.Value.Year;
                                 int month = currentDateTime.Value.Month;
                                 if (month == 1)
@@ -615,7 +598,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         {
                             string code = item.FieldValue.ToString();
 
-                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                             DateTime date1 = todayDate;
                             DateTime date2 = todayDate;
 
@@ -735,6 +718,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 return queryableData;
             }
         }
+        
         public IQueryable<ShipmentList> GetFilteredQuery(QueryOperations operations, IQueryable<ShipmentList> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
@@ -896,9 +880,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.IsCancelled == false && d.MainCarriageATD == null && d.MainCarriageATA == null && d.MainCarriageETD != null && d.DirectionId == "E" && d.TransportModeId == "A");
 
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(tenant);
-                        EntityStatus status_Arrived = statusRepository.GetSingleEntityStatusByCode("SARR", tenant);
-                        EntityStatus status_Delivered = statusRepository.GetSingleEntityStatusByCode("SDLD", tenant);
+                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
+                        EntityStatus status_Arrived = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant);
+                        EntityStatus status_Delivered = statusRepository.GetSingleEntityStatusByCode("SDLD", _tenant);
 
                         if (status_Arrived != null)
                         {
@@ -910,7 +894,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             queryableData = queryableData.Where(d => d.StatusId != status_Delivered.Id);
                         }
 
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) > lastWeekDate);
@@ -918,7 +902,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AirlinesUpdates")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.CarrierLastStatusDate >= lastWeekDate && d.IsCancelled == false);
@@ -940,7 +924,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "ShippingInstructionsLast7Days")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = from d in queryableData
@@ -951,7 +935,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "SentFSR")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         DateTime lastWeekDate = todayDate.AddDays(-7);
 
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate && d.IsCancelled == false);
@@ -1011,7 +995,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 //queryableData = queryableData.Where(d => d.ShipmentLevelCode != "H");
                             }
 
-                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
 
 
 
@@ -1153,7 +1137,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         string value = Convert.ToString(item.FieldValue);
                         if (value != null)
                         {
-                            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(_tenant);
                             ShipmentList dataview = queryableData.FirstOrDefault();
                             List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackages(dataview.Tenant).Where(d => d.ContainerNumber.StartsWith(value)).ToList();
                             List<string> shipmentIds = (from a in shipmentPackages
@@ -1180,7 +1164,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         string value = Convert.ToString(item.FieldValue);
                         if (value != null)
                         {
-                            ARInvoiceEntityRepository invoiceRep = new ARInvoiceEntityRepository(tenant);
+                            ARInvoiceEntityRepository invoiceRep = new ARInvoiceEntityRepository(_tenant);
                             ShipmentList dataview = queryableData.FirstOrDefault();
                             List<ARInvoiceEntity> invoiceEntities = invoiceRep.GetInvoiceEntities(dataview.Tenant).Where(d => d.ARInvoice.InvoiceNumber.StartsWith(value)).ToList();
                             List<string> shipmentIds = (from a in invoiceEntities select a.EntityId).ToList();
@@ -1211,7 +1195,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             bool? value = item.FieldValue as bool?;
                             if (value == true)
                             {
-                                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                                 int year = currentDateTime.Value.Year;
                                 int month = currentDateTime.Value.Month;
                                 if (month == 1)
@@ -1236,7 +1220,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         {
                             string code = item.FieldValue.ToString();
 
-                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                             DateTime date1 = todayDate;
                             DateTime date2 = todayDate;
 
@@ -1293,6 +1277,5 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 return queryableData;
             }
         }
-
     }
 }
