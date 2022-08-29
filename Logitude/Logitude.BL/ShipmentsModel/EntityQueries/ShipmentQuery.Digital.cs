@@ -724,7 +724,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             // Main Info InlandDomestic
             ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
             {
-                Title = "Main route details",
+                Title = "Main route info.",
                 LegHeader = "MainRouteInlandDomestic",
                 FromPort = GetFromAddressForInlandDomestic(shipment),
                 ToPort = GetToAddressForInlandDomestic(shipment),
@@ -896,7 +896,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             // Main Info
             ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
             {
-                Title = "Main route info",
+                Title = "Main route info.",
                 LegHeader = "MainRoute",
                 Master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master,
                 MasterLabel = GetMasterTextCode(shipment),
@@ -915,11 +915,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string loadingPort = null;
             if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
             {
-                loadingPort = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode;
+                loadingPort = shipment.PreCarriageFromPortName + "," + shipment.PreCarriageFromPortCountryCode;
             }
             else
             {
-                loadingPort = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode;
+                loadingPort = shipment.MainCarriageFromPortName + "," + shipment.MainCarriageFromPortCountryCode;
             }
 
             return loadingPort;
@@ -930,11 +930,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string dischargePort = null;
             if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
             {
-                dischargePort = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode;
+                dischargePort = shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode;
             }
             else
             {
-                dischargePort = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode;
+                dischargePort = shipment.MainCarriageToPortName + "," + shipment.MainCarriageToPortCountryCode;
             }
 
             return dischargePort;
@@ -1004,8 +1004,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Pre carriage info.",
                 LegHeader = "PreCarriage",
-                FromPort = shipment.PreCarriageFromPortCode + "," + shipment.PreCarriageFromPortCountryCode,
-                ToPort = shipment.PreCarriageToPortCode + "," + shipment.PreCarriageToPortCountryCode,
+                FromPort = shipment.PreCarriageFromPortName + "," + shipment.PreCarriageFromPortCountryCode,
+                ToPort = shipment.PreCarriageToPortName + "," + shipment.PreCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
                 DepartureDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
                 Carrier = shipment.PreCarriageCarrierName,
@@ -1022,8 +1022,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Main carriage info.",
                 LegHeader = "MainCarriage",
-                FromPort = shipment.MainCarriageFromPortCode + "," + shipment.MainCarriageFromPortCountryCode,
-                ToPort = shipment.MainCarriageToPortCode + "," + shipment.MainCarriageToPortCountryCode,
+                FromPort = shipment.MainCarriageFromPortName + "," + shipment.MainCarriageFromPortCountryCode,
+                ToPort = shipment.MainCarriageToPortName + "," + shipment.MainCarriageToPortCountryCode,
                 Carrier = shipment.MainCarriageCarrierName,
                 CarrierNumber = shipment.MainCarriageCarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
@@ -1040,8 +1040,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Transshipment 1 info.",
                 LegHeader = "Transshipment1",
-                FromPort = shipment.Transshipment1FromPortCode + "," + shipment.Transshipment1FromPortCountryCode,
-                ToPort = shipment.Transshipment1ToPortCode + "," + shipment.Transshipment1ToPortCountryCode,
+                FromPort = shipment.Transshipment1FromPortName + "," + shipment.Transshipment1FromPortCountryCode,
+                ToPort = shipment.Transshipment1ToPortName + "," + shipment.Transshipment1ToPortCountryCode,
                 Carrier = shipment.Transshipment1CarrierName,
                 CarrierNumber = shipment.Transshipment1CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
@@ -1059,8 +1059,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Transshipment 2 info.",
                 LegHeader = "Transshipment2",
-                FromPort = shipment.Transshipment2FromPortCode + "," + shipment.Transshipment2FromPortCountryCode,
-                ToPort = shipment.Transshipment2ToPortCode + "," + shipment.Transshipment2ToPortCountryCode,
+                FromPort = shipment.Transshipment2FromPortName + "," + shipment.Transshipment2FromPortCountryCode,
+                ToPort = shipment.Transshipment2ToPortName + "," + shipment.Transshipment2ToPortCountryCode,
                 Carrier = shipment.Transshipment2CarrierName,
                 CarrierNumber = shipment.Transshipment2CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
@@ -1078,8 +1078,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Transshipment 3 info.",
                 LegHeader = "Transshipment3",
-                FromPort = shipment.Transshipment3FromPortCode + "," + shipment.Transshipment3FromPortCountryCode,
-                ToPort = shipment.Transshipment3ToPortCode + "," + shipment.Transshipment3ToPortCountryCode,
+                FromPort = shipment.Transshipment3FromPortName + "," + shipment.Transshipment3FromPortCountryCode,
+                ToPort = shipment.Transshipment3ToPortName + "," + shipment.Transshipment3ToPortCountryCode,
                 Carrier = shipment.Transshipment3CarrierName,
                 CarrierNumber = shipment.Transshipment3CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
@@ -1097,8 +1097,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "On carriage info.",
                 LegHeader = "OnCarriage",
-                FromPort = shipment.OnCarriageFromPortCode + "," + shipment.OnCarriageFromPortCountryCode,
-                ToPort = shipment.OnCarriageToPortCode + "," + shipment.OnCarriageToPortCountryCode,
+                FromPort = shipment.OnCarriageFromPortName + "," + shipment.OnCarriageFromPortCountryCode,
+                ToPort = shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
                 DepartureDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
                 Carrier = shipment.OnCarriageCarrierName,
@@ -1571,5 +1571,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion Shipment TimeLine
 
+        public Tuple <string, int> GetShipmentIdBySecurityKey(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                return null;
+
+            Shipment shipment = (from a in repository.context.Shipments
+                                 where a.SecurityKey == key
+                                 select a).FirstOrDefault();
+
+            if (shipment == null)
+                return null;
+
+            return Tuple.Create(shipment.Id, shipment.Tenant);
+        }
     }
 }
