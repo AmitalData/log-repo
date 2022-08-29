@@ -26,6 +26,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
+    public IsAddNewMeasureVisible: boolean = true;
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -73,6 +74,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.EntityPM.WidgetMeasures.forEach(item => {
             this.WidgetMeasuresList.push(new WidgetMeasureItem(item));
         });
+
+        if (this.WidgetMeasuresList.length == 0) {
+            var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
+            newItem.Tenant = this.EntityPM.Tenant;
+            newItem.WidgetId = this.EntityPM.Id;
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem));
+        }
     }
 
     get Title() { return this.EntityPM.Title }
@@ -152,6 +160,10 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();
+    }
+
+    AddNewMeasureClicked() {
+
     }
 }
 

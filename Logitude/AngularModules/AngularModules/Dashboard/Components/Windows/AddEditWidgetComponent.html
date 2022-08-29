@@ -68,33 +68,35 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <!--<LogLov [ObjectFieldName]="'MeasureCode'"
+                                                <LogLov [ObjectFieldName]="'MeasureCode'"
                                                         [SelectedValue]="item.MeasureCode"
                                                         [ObjectTableName]="item.ObjectTableName"
                                                         [DataContext]="item.DataContext"
                                                         [LookUpTableName]="'MeasureType'"
                                                         [HideColumns]="true">
-                                                </LogLov>-->
+                                                </LogLov>
                                             </td>
                                             <td style="width: 2px;">
                                                 <div></div>
                                             </td>
                                             <td>
-                                                <!--<LogLov [ObjectFieldName]="'MeasureFieldId'"
+                                                <LogLov [ObjectFieldName]="'MeasureFieldId'"
                                                         [SelectedValue]="item.MeasureFieldId"
                                                         [ObjectTableName]="item.ObjectTableName"
                                                         [DataContext]="item.DataContext"
                                                         [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                                         [DependencyFilter1Value]="true"
                                                         [HideColumns]="true">
-                                                </LogLov>-->
+                                                </LogLov>
                                             </td>
                                         </tr>
                                     </table>
                                     
                                 </td>
                                 <td>
-                                    <div></div>
+                                    <div>
+                                        <IconButton *ngIf="IsAddNewMeasureVisible" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
+                                    </div>
                                 </td>
                             </tr>
 
