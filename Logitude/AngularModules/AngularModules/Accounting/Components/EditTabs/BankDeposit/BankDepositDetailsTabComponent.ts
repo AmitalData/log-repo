@@ -30,6 +30,8 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositPMService';
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 import { CashBookList } from '../../../EntityLists/CashBookList';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 
 @Component({
 
@@ -64,9 +66,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     txt_DepositDetails: string = TextCodeTranslator.Translate("Accounting.General.O.DepositDetails");
     private CurrentSession = SessionLocator.SelectedSession;
 
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
 
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-
+    public QueryColumns: QueryColumnPM[] = [];
 
     BankDepositPMService: BankDepositPMService = new BankDepositPMService();
     cashBookPMService: CashBookPMService = new CashBookPMService();
@@ -93,6 +96,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.Listen();
         this.GetDefaultValues();
+        this.buildQueryColumns();
     }
 
     private SetViewMode()
@@ -1008,5 +1012,23 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         else {
             this.GetCashbookLines();
         }
+    }
+
+    buildQueryColumns(){
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ChequeNumber",'Text',TextCodeTranslator.Translate("BankDepositLine.F.ChequeNumber")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DueDate",'DateTime',TextCodeTranslator.Translate("BankDepositLine.F.DueDate")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LocalAmount",'Number',this.GetAmountHeader()));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Currency",'Text',TextCodeTranslator.Translate("CashBookLine.F.Currency")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount",'Number',TextCodeTranslator.Translate("CashBookLine.F.ForeignAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountNumber",'Text',TextCodeTranslator.Translate("CashBookLine.F.AccountNumber")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Bank",'Text',TextCodeTranslator.Translate("CashBookLine.F.Bank")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Branch",'Text',TextCodeTranslator.Translate("CashBookLine.F.Branch")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ARPaymentNumber",'Text',TextCodeTranslator.Translate("CashBookLine.F.ARPaymentNumber")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
+            GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'ChequeStatusName' : 'ChequeStatusLocalName','Text',TextCodeTranslator.Translate("ARPaymentCheque.F.StatusCode")));
+    }
+
+    public ExportToExcel(){
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('BankDepositLine',this.GetDeposiutAPIFilters(),this.QueryColumns);
     }
 }
