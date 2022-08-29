@@ -929,21 +929,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         
         private string GetDischargePort(ShipmentPM shipment)
         {
-            string dischargePort = null;
-            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
-            {
-                dischargePort = shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode;
-            }
-            else
-            {
-                dischargePort = shipment.MainCarriageToPortName + "," + shipment.MainCarriageToPortCountryCode;
-            }
-
-            return dischargePort;
-        }
-
-        private string GetDischargePortFromTransshipment(ShipmentPM shipment)
-        {
             if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
             {
                 return shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode;
