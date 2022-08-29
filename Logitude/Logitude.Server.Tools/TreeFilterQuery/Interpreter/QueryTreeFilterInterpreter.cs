@@ -11,29 +11,55 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
   public  class QueryTreeFilterInterpreter
     {
 
-        public QueryFilterItem Run(QueryTreeFilterContext context)
+        TreeFilterQueryArgs treeFilterQueryArgs;
+        public QueryTreeFilterInterpreter(TreeFilterQueryArgs treeFilterQueryArgs)
         {
-         
-            if (string.IsNullOrEmpty(context.AdditionalTreeFilter)) return  null;
-            List<IQueryTreeFilterExpression> expressions = new List<IQueryTreeFilterExpression>();
-            expressions.Add(new JavaScriptSerializerExpression());
-            expressions.Add(new QueryTreeFilterIgnoreExpresion());
-            expressions.Add(new QueryTreeFilterResetValueExpresion());
-            expressions.Add(new CustomFieldExpression());
+            this.treeFilterQueryArgs = treeFilterQueryArgs;
+        }
 
-            if (!string.IsNullOrEmpty(context.ParentObjectTableName) && !string.IsNullOrEmpty(context.ParentEntityId))
-            {
-                expressions.Add(new PartnerEntityResloveFieldValueExpression());
-                expressions.Add(new PartnerEntityQueryFilterExpression());
-            }
-            expressions.Add(new QueryTreeFilterIgnoreExpresion());
 
+        public QueryFilterItem Run()
+        {
+            QueryTreeFilterContext queryTreeFilterContext = this.BuildContext(treeFilterQueryArgs); 
+            List<IQueryTreeFilterExpression> expressions = BuildExpressions();
             foreach (IQueryTreeFilterExpression expression in expressions)
             {
-                expression.Interpret(context);
+                expression.Interpret(queryTreeFilterContext);
             }
 
-            return  context.QueryFilterItem;
+            return queryTreeFilterContext.QueryFilterItem;
         }
+
+        private List<IQueryTreeFilterExpression> BuildExpressions()
+        {
+            List<IQueryTreeFilterExpression> expressions =  new List<IQueryTreeFilterExpression>();
+            expressions.Add(new JavaScriptSerializerExpression());
+            expressions.Add(new QueryTreeFilterValidateExpresion());
+            expressions.Add(new QueryTreeFilterResetValueExpresion());
+            expressions.Add(new CustomFieldExpression());
+            expressions.Add(new PartnerEntityResloveFieldValueExpression());
+            expressions.Add(new PartnerEntityQueryFilterExpression());
+            expressions.Add(new QueryTreeFilterValidateExpresion());
+            return expressions;
+        }
+
+        private QueryTreeFilterContext BuildContext(TreeFilterQueryArgs treeFilterQueryArgs)
+        {
+            return new QueryTreeFilterContext()
+            {
+
+                AdditionalTreeFilter = treeFilterQueryArgs.AdditionalTreeFilter,
+                ObjectTableName = treeFilterQueryArgs.ObjectTableName,
+                ParentEntityId = treeFilterQueryArgs.ParentEntityId,
+                ParentObjectTableName = treeFilterQueryArgs.ParentObjectTableName,
+                Tenant = treeFilterQueryArgs.Tenant,
+                Type = treeFilterQueryArgs.Type,
+
+            };
+
+        }
+
+
+
     }
 }

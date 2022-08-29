@@ -197,12 +197,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
 				FeatureToggleListQueryService featureToggleQuery = new FeatureToggleListQueryService(MyContext);
 
-                List<FeatureToggleList> entityLists = featureToggleQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "FeatureToggle",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<FeatureToggleList> entityLists = featureToggleQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = featureToggleQuery.GetListCount(queryOperations, tenant);
+                    int count = featureToggleQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

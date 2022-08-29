@@ -959,8 +959,19 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(tenant);
 				<#= tableName #>ListQueryService <#= queryName #> = new <#= tableName #>ListQueryService(MyContext);
 
-                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= tableName #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
@@ -971,13 +982,13 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 		 if(hasTenant)
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations, tenant);
+                    int count = <#= queryName #>.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
 <#+
          }
 		 else
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations);
+                    int count = <#= queryName #>.GetListCount(queryOperations , treeFilterQueryArgs);
 <#+
          }
 #>

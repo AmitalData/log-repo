@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -202,11 +203,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                 entityPocos = myFilter.RunFilter(entityPocos);
 
+
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                {
+                    AdditionalTreeFilter = filters.TreeFilters,
+                    ObjectTableName = "Card",
+                    ParentEntityId = filters.ParentEntityId,
+                    ParentObjectTableName = filters.ParentObjectTableName,
+                    Tenant = tenant,
+                    ParentEntity = filters.ParentEntity
+                };
+
+
                 entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
-
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<CustomerList>(entityLists, treeFilterQueryArgs);
 
                 if (!string.IsNullOrEmpty(searchvalue))
                 {

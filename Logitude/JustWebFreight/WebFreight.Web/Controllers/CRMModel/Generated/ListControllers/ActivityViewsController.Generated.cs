@@ -197,12 +197,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
 				ActivityListQueryService activityQuery = new ActivityListQueryService(MyContext);
 
-                List<ActivityList> entityLists = activityQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Activity",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<ActivityList> entityLists = activityQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = activityQuery.GetListCount(queryOperations, tenant);
+                    int count = activityQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

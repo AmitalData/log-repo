@@ -239,7 +239,7 @@ export class InterestBasesTypePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newInterestBasesPeriodPM[pmProperty] = jItem[pmProperty];
             }
            

@@ -194,12 +194,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
 				BatchTaskExecutionStatusListQueryService batchTaskExecutionStatusQuery = new BatchTaskExecutionStatusListQueryService(MyContext);
 
-                List<BatchTaskExecutionStatusList> entityLists = batchTaskExecutionStatusQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "BatchTaskExecutionStatus",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<BatchTaskExecutionStatusList> entityLists = batchTaskExecutionStatusQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = batchTaskExecutionStatusQuery.GetListCount(queryOperations);
+                    int count = batchTaskExecutionStatusQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

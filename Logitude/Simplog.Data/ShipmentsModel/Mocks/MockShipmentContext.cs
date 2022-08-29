@@ -744,6 +744,13 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<DigitalShipmentsDataView> DigitalShipmentSearch(string SearchFields)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public IDbSet<ShipmentCustomsTransmission> ShipmentCustomsTransmissions
         {
             get
@@ -941,5 +948,11 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ShipmentDocsField> ShipmentDocsFields => throw new NotImplementedException();
 
         public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IDbSet<ShipmentDataView> ShipmentDigitalDataViews => throw new NotImplementedException();
+
+        public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews => throw new NotImplementedException();
+
+        IDbSet<DigitalShipmentsDataView> IShipmentsContext.ShipmentDigitalDataViews => throw new NotImplementedException();
     }
 }

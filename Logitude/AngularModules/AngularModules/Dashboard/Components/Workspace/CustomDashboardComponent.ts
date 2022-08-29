@@ -36,9 +36,12 @@ import { DashboardPMExtendedService } from '../../../DashboardModule/Services/Ex
 export class CustomDashboardComponent implements  AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;    
     private isNewDashboardRendered: boolean = false;
-    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;    
+    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
+    private dashboardPMService: DashboardPMService;
+    private dashboardPMExtendedService: DashboardPMExtendedService;
     constructor() {
-        
+        this.dashboardPMService = new DashboardPMService();
+        this.dashboardPMExtendedService = new DashboardPMExtendedService();
     }
 
     ngAfterViewInit(): void {
@@ -58,9 +61,8 @@ export class CustomDashboardComponent implements  AfterViewInit {
         };
 
     public AllDashboards: DashboardPM[] = [];
-    private GetDashboards() {
-        var dashboardPMService: DashboardPMExtendedService = new DashboardPMExtendedService();
-        dashboardPMService.GetDashboardPMs().subscribe((myResponse: ServiceResponse) => {
+    private GetDashboards() {        
+        this.dashboardPMExtendedService.GetDashboardPMs().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllDashboards = myResponse.Result;
             }
@@ -71,11 +73,23 @@ export class CustomDashboardComponent implements  AfterViewInit {
             });
 
             this.dashboardDataBinding.onGetAllDashboards.next(reactDashboards);
+
             if (this.AllDashboards) {
-                this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(this.AllDashboards[0]));
-                this.selectedDashboard = this.GetReactDashboard(this.AllDashboards[0]);
+                this.GetSingleDashboardWithWidgets(this.AllDashboards[0].Id);                
             }
         });
+    }
+    GetSingleDashboardWithWidgets(dashboardId: string) {
+        this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var myDashbord: DashboardPM = myResponse.Result;
+                if (myDashbord) {
+                    var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(myDashbord)
+                    this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
+                    this.selectedDashboard = myReactDashboard;
+                }
+            }           
+        });        
     }
 
     renderNewDashboard() {
@@ -199,11 +213,10 @@ export class CustomDashboardComponent implements  AfterViewInit {
     private OnChangeDashboard(dashboard: ReactDashboardPM) {
         this.selectedDashboard = dashboard;
     }
-    private OnSaveDashboard(dashboard: ReactDashboardPM) {
-        var dashboardPMService: DashboardPMService = new DashboardPMService();
+    private OnSaveDashboard(dashboard: ReactDashboardPM) {        
         var savedEntity: DashboardPM = this.GetDashboardEntity(dashboard);
 
-        dashboardPMService.update(savedEntity).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMService.update(savedEntity).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 //this.EntityPM = myResponse.Result;
             }

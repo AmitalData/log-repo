@@ -17,6 +17,9 @@ namespace Simplog.Data.ShipmentsModel
     public class ShipmentDataViewContext : DbContext, IShipmentDataViewContext
     {
         IDbSet<ShipmentDataView> shipmentDataViews;
+
+        public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataView { get; set; }
+
         public ShipmentDataViewContext()
             
         {
@@ -52,7 +55,6 @@ namespace Simplog.Data.ShipmentsModel
             set;
         }
 
-
         public void SetAsModified(object entity)
         {
            
@@ -66,6 +68,7 @@ namespace Simplog.Data.ShipmentsModel
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
 
             modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            modelBuilder.Configurations.Add(new DigitalShipmentDataViewMap());
             modelBuilder.Configurations.Add(new ShipmentCountryDashboardViewMap());
             modelBuilder.Configurations.Add(new ShipmentDirectionTransmodeViewMap());
             modelBuilder.Configurations.Add(new ShipmentsCustomersDashboardViewMap());

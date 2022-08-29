@@ -9,6 +9,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -24,6 +25,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
+    public WidgetMeasuresList: WidgetMeasureItem[];
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -35,6 +37,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
         this.ComputeChartImageSrc();
+        this.BuildMeasures();
         this.Clone();
     }
 
@@ -66,11 +69,23 @@ export class AddEditWidgetComponent extends BaseComponent {
             }
         }
     }
+    private BuildMeasures() {
+        this.EntityPM.WidgetMeasures.forEach(item => {
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(item));
+        });
+    }
 
     get Title() { return this.EntityPM.Title }
     set Title(value: string) {
         if (this.EntityPM.Title != value) {
             this.EntityPM.Title = value;
+        }
+    }
+
+    get EntityId() { return this.EntityPM.EntityId }
+    set EntityId(value: string) {
+        if (this.EntityPM.EntityId != value) {
+            this.EntityPM.EntityId = value;
         }
     }
 
@@ -81,8 +96,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    get GroupBy() { return this.EntityPM.GroupById; }
-    set GroupBy(value: string) {
+    get GroupById() { return this.EntityPM.GroupById; }
+    set GroupById(value: string) {
         if (this.EntityPM.GroupById != value) {
             this.EntityPM.GroupById = value;
         }
@@ -137,5 +152,28 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();
+    }
+}
+
+export class WidgetMeasureItem {
+    public ObjectTableName: string = "WidgetMeasure";
+    public EntityPM: WidgetMeasurePM;
+    public DataContext: WidgetMeasureItem = this;
+    constructor(entityPM: WidgetMeasurePM) {
+        this.EntityPM = entityPM;
+    }
+
+    get MeasureFieldId() { return this.EntityPM.MeasureFieldId; }
+    set MeasureFieldId(value: string) {
+        if (this.EntityPM.MeasureFieldId != value) {
+            this.EntityPM.MeasureFieldId = value;
+        }
+    }
+
+    get MeasureCode() { return this.EntityPM.MeasureCode; }
+    set MeasureCode(value: string) {
+        if (this.EntityPM.MeasureCode != value) {
+            this.EntityPM.MeasureCode = value;
+        }
     }
 }

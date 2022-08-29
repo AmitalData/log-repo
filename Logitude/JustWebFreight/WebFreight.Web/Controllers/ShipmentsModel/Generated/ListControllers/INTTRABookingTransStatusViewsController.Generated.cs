@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "INTTRABookingTransStatus", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "INTTRABookingTransStatus",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 IQueryable<INTTRABookingTransStatusList> entityLists = iNTTRABookingTransStatusQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<INTTRABookingTransStatusList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<INTTRABookingTransStatusList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<INTTRABookingTransStatusList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

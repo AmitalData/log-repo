@@ -21,14 +21,21 @@ export class QueryFilterViewItem extends FilterItem  {
     public BooleanList: boolean[] = [true, false];
     public SelectedOperator: Operator;
     public IsChecked: boolean;
-    public ObjectFieldCode: string;
+    public SelectedObjectFieldCode: string;
+    public ObjectValueFieldCode: string;
+    public IsRefreshField: boolean;
+    public IsRefreshFieldValue: boolean;
     private SelectedObjectFieldPM: ObjectFieldPM;
 
     constructor(TreeFilter: any = null, ParentClass: QueryFilterTreeComponent = null) {
         super();
         this.BaseTreeFilter = TreeFilter;
         this.UIProperties = new UIProperties;
+        this.Initialize(ParentClass);
+        
+    }
 
+    Initialize(ParentClass: QueryFilterTreeComponent) {
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
         }
@@ -74,12 +81,7 @@ export class QueryFilterViewItem extends FilterItem  {
     }
 
     DatePickerCondationValueChange(newValue) {
-        if (newValue) {
-            this.FieldValue = FieldValueResolver.ConvertUTCDateToString(newValue);
-        }
-        else {
-            this.FieldValue = "";
-        }
+        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue) : "";
     }
 
     LogLovCondationValueChange(newValue) {
@@ -116,7 +118,7 @@ export class QueryFilterViewItem extends FilterItem  {
         if (!fieldNameAndObjectTableName) return;
 
         this.FieldName = fieldNameAndObjectTableName.length == 1 ? fieldNameAndObjectTableName[0] : fieldNameAndObjectTableName[1];
-        this.MainEntityName = fieldNameAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        this.MainEntityName = this.FieldName ? fieldNameAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.MainEntityName;
         this.FieldChanged(window.ObjectFields.filter(f => this.FieldName == f.FieldName && this.MainEntityName == f.ObjectTableName)[0]);
     }
 
@@ -126,7 +128,7 @@ export class QueryFilterViewItem extends FilterItem  {
         if (!fieldValueAndObjectTableName) return;
 
         this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : fieldValueAndObjectTableName[1];
-        this.SecondaryEntityName = fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName;
+        this.SecondaryEntityName = this.FieldValue ? fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.SecondaryEntityName;
         if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') {
             this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue);
         }
@@ -139,29 +141,25 @@ export class QueryFilterViewItem extends FilterItem  {
         return !AppTool.IsNullOrEmpty(selectedEntity) && this.MyParentClass && selectedEntity != this.MyParentClass.parentObjectTableName && selectedEntity != this.MyParentClass.objectTableName;     
     }
 
-
     public get ObjectTableName() {
-        if (AppTool.IsNullOrEmpty(this.FieldName))
-            return "";
+        if (AppTool.IsNullOrEmpty(this.FieldName)) return "";
         return this.FieldName.split('.')[0];
     }
 
     public get ObjectFieldName() {
-        if (AppTool.IsNullOrEmpty(this.FieldName))
-            return "";
-        if (this.FieldName.indexOf('.') > -1)
-            return this.FieldName.split('.')[1];
+        if (AppTool.IsNullOrEmpty(this.FieldName)) return "";
+        if (this.FieldName.indexOf('.') > -1) return this.FieldName.split('.')[1];
         return this.FieldName;
     }
 
     SelectedObjectFieldWithLookUpTable: any;
     public get ObjectFieldLookUpTableName() {
-        if (!this.SelectedObjectFieldPM)
-            return "";
+        if (!this.SelectedObjectFieldPM) return "";
 
         if (this.SelectedObjectFieldWithLookUpTable && this.SelectedObjectFieldWithLookUpTable.Id == this.SelectedObjectFieldPM.Id) {
             return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName;
         }
+
         this.SelectedObjectFieldWithLookUpTable = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id)[0];
         if (this.SelectedObjectFieldWithLookUpTable) {
             return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName
@@ -266,13 +264,7 @@ export class QueryFilterViewItem extends FilterItem  {
 
     public OperationValueChanged(operator) {
         this.SelectedOperator = operator;
-        if (operator) {
-            this.Operator = operator.Code;
-        }
-        else {
-            this.Operator = null;
-        }
-
+        this.Operator = operator ? operator.Code : null;
         this.ValueChanged(null);
     }
 
@@ -307,6 +299,7 @@ export class QueryFilterViewItem extends FilterItem  {
 
     public MainEntityChanged(mainEntityName) {
         this.MainEntityName = mainEntityName;
+        this.IsRefreshField = !this.IsRefreshField;
         this.FieldChanged(null);
         if (AppTool.IsNullOrEmpty(mainEntityName)) {
             this.RefreshMainEntityFieldsFilterItems();
@@ -315,6 +308,7 @@ export class QueryFilterViewItem extends FilterItem  {
 
     public SecondaryEntityChanged(secondaryEntityName) {
         this.SecondaryEntityName = secondaryEntityName;
+        this.IsRefreshFieldValue = !this.IsRefreshFieldValue;
         this.ValueChanged(null);
         if (AppTool.IsNullOrEmpty(secondaryEntityName)) {
             this.RefreshSecondaryEntityFieldsFilterItems();
@@ -347,13 +341,21 @@ export class QueryFilterViewItem extends FilterItem  {
     FieldChanged(objectFieldPM: ObjectFieldPM) {
         if (!objectFieldPM) {
             this.FieldName = "";
+            this.SelectedObjectFieldCode = "";
+            this.Operator = null;
+            this.SelectedObjectFieldPM = null;
             return;
         }
         if (this.SelectedObjectFieldPM && this.SelectedObjectFieldPM.Id == objectFieldPM.Id) {
             return;
         }
+
+        this.FieldSelectedChanged(objectFieldPM);
+    }
+
+    FieldSelectedChanged(objectFieldPM) {
         this.SelectedObjectFieldPM = objectFieldPM;
-        this.ObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
+        this.SelectedObjectFieldCode = this.SelectedObjectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.MainEntityName) {
             this.FieldName = this.MainEntityName + '.' + objectFieldPM.FieldName;
         }
@@ -371,8 +373,10 @@ export class QueryFilterViewItem extends FilterItem  {
     ValueChanged(objectFieldPM: ObjectFieldPM) {
         if (!objectFieldPM) {
             this.FieldValue = "";
+            this.ObjectValueFieldCode = "";
             return;
         }
+        this.ObjectValueFieldCode = objectFieldPM.FieldCode;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.SecondaryEntityName) {
             this.FieldValue = this.SecondaryEntityName + '.' + objectFieldPM.FieldName;
         }

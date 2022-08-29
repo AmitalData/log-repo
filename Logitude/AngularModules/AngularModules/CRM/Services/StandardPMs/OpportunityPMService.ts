@@ -282,7 +282,7 @@ export class OpportunityPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newOpportunityProductPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -388,7 +388,7 @@ export class OpportunityPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newOpportunityProductLocationPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -486,7 +486,7 @@ export class OpportunityPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newOpportunityCompetitorPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -592,7 +592,7 @@ export class OpportunityPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newOpportunityCompetitorProductPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -690,7 +690,7 @@ export class OpportunityPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newOpportunityAdditionalServicePM[pmProperty] = jItem[pmProperty];
             }
            

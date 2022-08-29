@@ -438,7 +438,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         const extraOffset = 20;
         if (this.IsMobileView)
-            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - extraOffset) / this.sliderMobileCardWidth);
+            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth) / this.sliderMobileCardWidth);
 
         else
             var webCount = Math.floor((sliderWrapperWidth - webPagersWidth) / this.sliderCardWidth);
@@ -569,7 +569,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
     sliderCardWidth: number = 164;
-    sliderMobileCardWidth: number = 154;
+    sliderMobileCardWidth: number = 133;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;

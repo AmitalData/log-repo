@@ -80,7 +80,10 @@ namespace Logitude.Social.BL.EntityUpdateServices
 
             string email = HttpContext.Current.User.Identity.Name;
             Contact currentUserContact = contactrep.GetSingleContactByEmail(email, entityPM.Tenant);
-
+            if (currentUserContact == null)
+            {
+                currentUserContact = contactrep.GetSingleContactByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
+            }
             string postId = entityPM.ParentPostId != null ? entityPM.ParentPostId : entityPM.Id;
 
             System.Collections.Generic.List<FeedPM> addedFeeds = new List<FeedPM>();

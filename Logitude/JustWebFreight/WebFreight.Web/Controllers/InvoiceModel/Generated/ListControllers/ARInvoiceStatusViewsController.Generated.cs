@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "ARInvoiceStatus", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "ARInvoiceStatus",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<ARInvoiceStatusList> entityLists = aRInvoiceStatusQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ARInvoiceStatusList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<ARInvoiceStatusList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ARInvoiceStatusList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

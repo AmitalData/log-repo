@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "AccountingTransferType", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "AccountingTransferType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<AccountingTransferTypeList> entityLists = accountingTransferTypeQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<AccountingTransferTypeList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<AccountingTransferTypeList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<AccountingTransferTypeList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

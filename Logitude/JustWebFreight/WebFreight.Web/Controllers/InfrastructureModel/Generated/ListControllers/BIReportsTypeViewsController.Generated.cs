@@ -194,12 +194,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
 				BIReportsTypeListQueryService bIReportsTypeQuery = new BIReportsTypeListQueryService(MyContext);
 
-                List<BIReportsTypeList> entityLists = bIReportsTypeQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "BIReportsType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<BIReportsTypeList> entityLists = bIReportsTypeQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bIReportsTypeQuery.GetListCount(queryOperations);
+                    int count = bIReportsTypeQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

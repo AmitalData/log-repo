@@ -197,12 +197,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
 				PriceStepListQueryService priceStepQuery = new PriceStepListQueryService(MyContext);
 
-                List<PriceStepList> entityLists = priceStepQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "PriceStep",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<PriceStepList> entityLists = priceStepQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = priceStepQuery.GetListCount(queryOperations, tenant);
+                    int count = priceStepQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

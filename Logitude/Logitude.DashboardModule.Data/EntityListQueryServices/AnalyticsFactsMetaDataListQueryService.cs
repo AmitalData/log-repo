@@ -24,13 +24,10 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             IQueryable<AnalyticsFactsMetaDataList> query = (from a in iQueryable
                                                             select new AnalyticsFactsMetaDataList()
                                                             {
-
                                                                 Id = a.Id,
-
                                                                 Name = a.Name,
-
                                                                 TableName = a.TableName,
-
+                                                                Tenant = a.Tenant,
                                                             });
             return query;
         }

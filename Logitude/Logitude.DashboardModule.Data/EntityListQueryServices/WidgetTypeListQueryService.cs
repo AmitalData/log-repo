@@ -46,5 +46,4 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
     }
 
-
 }

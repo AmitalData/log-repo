@@ -161,11 +161,11 @@ namespace Logitude.Update
             string storageServiceMode = "fs";
             string queueServiceMode = "azure";
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null ,null);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
-
+         
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();

@@ -212,7 +212,16 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "SATInterfaceSetting", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "SATInterfaceSetting",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
@@ -231,7 +240,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<SATInterfaceSettingList> entityLists = sATInterfaceSettingQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<SATInterfaceSettingList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<SATInterfaceSettingList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<SATInterfaceSettingList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

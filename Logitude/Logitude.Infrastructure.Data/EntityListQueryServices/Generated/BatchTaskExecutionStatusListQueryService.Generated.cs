@@ -25,7 +25,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<BatchTaskExecutionStatusList> GetList(QueryOperations queryOperations, int tenant)
+        public List<BatchTaskExecutionStatusList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<BatchTaskExecutionStatusList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -47,6 +51,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BatchTaskExecutionStatusList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<BatchTaskExecutionStatusList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BatchTaskExecutionStatusList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -143,7 +148,14 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+
+		
+        public int GetListCount(QueryOperations queryOperations ){
+		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -160,14 +172,18 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             
 			iQueryable = filter.GetFilteredQuery<BatchTaskExecutionStatus>(nonListQueryOperation, iQueryable);
 
+
+
             IQueryable<BatchTaskExecutionStatusList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BatchTaskExecutionStatusList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BatchTaskExecutionStatusList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

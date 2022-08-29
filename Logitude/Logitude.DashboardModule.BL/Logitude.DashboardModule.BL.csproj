@@ -94,6 +94,7 @@
     <Compile Include="EntityUpdateServices\Generated\WidgetMeasureUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\WidgetMeasureUpdateService.cs" />
     <Compile Include="EntityUpdateServices\WidgetUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\DashboardModuleClassLevelValidator.cs" />

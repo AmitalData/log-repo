@@ -24,6 +24,7 @@ export class WorkFlowList {
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
 	FlowJson: string;
+	Entity: string;
 	
 }
  

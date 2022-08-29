@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual void CheckBankAccountExists(BankAccountPM entityPM)
         {
-            BankAccountList account = GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant);
+            BankAccountList account = GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.CurrencyId, entityPM.Tenant);
             ValidationResult result;
             if (account != null)
             {
@@ -240,11 +240,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return TranslateTextsClassUtilResolver.Translate(code, tenant, useLocal);//TranslateTextsClass.Translate(code, tenant, useLocal);
         }
 
-        public virtual BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)
+        public virtual BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             BankAccountListQueryService query = new BankAccountListQueryService(MyContext);
-            BankAccountList account = query.GetUniqueAccount(accountNumber, branchNumber, bankId, tenant);
+            BankAccountList account = query.GetUniqueAccount(accountNumber, branchNumber, bankId, currencyId, tenant);
             return account;
         }
 
@@ -284,7 +284,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         void Validate(BankAccountPM entityPM);
         ContactPM GetLoggedContact(int tenant);
         string GetMessageTranslation(string code, int tenant, bool useLocal);
-        BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant);
+        BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant);
         BankAccountList GetByGLAccount(string glAccountId, int tenant);
         BankAccountList GetByDeferedGLAccount(string deferredGLAccountId, int tenant);
         BankAccount GetSingleBankAccount(string id, int tenant);

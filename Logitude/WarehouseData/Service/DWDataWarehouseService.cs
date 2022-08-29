@@ -194,6 +194,10 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "QuoteClosingReasonId DEFAULT '-1' FOR QuoteClosingReasonId;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FromPortId DEFAULT '-1' FOR FromPortId;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ToPortId DEFAULT '-1' FOR ToPortId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterId DEFAULT '-1' FOR ShipperNotExporterId;"
+
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterId DEFAULT '-1' FOR ConsigneeNotImporterId;"
+
                         ;
 
                     break;

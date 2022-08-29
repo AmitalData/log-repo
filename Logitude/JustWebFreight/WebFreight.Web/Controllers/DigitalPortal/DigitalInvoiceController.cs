@@ -48,14 +48,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var arInvoices = new List<ShipmentARInvoicePM>();
             var arInvoiceReps = new ARInvoiceRepository(tenant);
             var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
-            var invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
+            var invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
             var lines = new List<ARInvoiceLinePM>();
             var currencyRepository = new CurrencyRepository(tenant);
             var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
             var documentOutQuery = new DocumentOutQuery(tenant);
             var documentTypeQuery = new DocumentTypeQuery(tenant);
 
-            foreach (var item in invoices.Where(d => d.IsPrinted))
+
+           
+            foreach (var item in invoices.Where(d=> d.IsPrinted))
             {
                 var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, authToken.Tenant).ToList();
                 lines.AddRange(itemLines);
@@ -297,6 +299,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
 
+                entityPocos = aRInvoiceRepository.FilterInvoicesStatuses(entityPocos);
+
                 var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
                 entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, authToken.Tenant);
@@ -507,6 +511,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return reportUrl;
         }
 
+        
         #endregion private
     }
 }

@@ -1,4 +1,5 @@
 import { WorkflowBuilderComponent } from "./Components/WorkflowBuilder/WorkflowBuilderComponent";
+import { StartPropertiesComponent } from './Components/Properties/StartPropertiesComponent';
 import { ConditionPropertiesComponent } from './Components/Properties/ConditionPropertiesComponent';
 import { LoopPropertiesComponent } from './Components/Properties/LoopPropertiesComponent';
 import { SetValuePropertiesComponent } from './Components/Properties/SetValuePropertiesComponent';
@@ -7,6 +8,7 @@ import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/Cre
 
 export const Components = [
     WorkflowBuilderComponent,
+    StartPropertiesComponent,
     ConditionPropertiesComponent,
     LoopPropertiesComponent,
     SetValuePropertiesComponent,
@@ -19,6 +21,7 @@ export class ModuleDeclarations {
         var result: any = null;
         switch (name) {
             case "WorkflowBuilderComponent": { result = WorkflowBuilderComponent; break; }
+            case "StartPropertiesComponent": { result = StartPropertiesComponent; break; }
             case "ConditionPropertiesComponent": { result = ConditionPropertiesComponent; break; }
             case "LoopPropertiesComponent": { result = LoopPropertiesComponent; break; }
             case "SetValuePropertiesComponent": { result = SetValuePropertiesComponent; break; }

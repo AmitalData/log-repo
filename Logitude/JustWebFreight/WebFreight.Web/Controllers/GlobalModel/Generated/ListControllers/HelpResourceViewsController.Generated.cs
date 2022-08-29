@@ -216,7 +216,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                 TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "HelpResource", ParentEntityId = filters.ParentEntityId, ParentObjectTableName = filters.ParentObjectTableName, Tenant = tenant   });
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "HelpResource",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IGlobalContext MyContext = GlobalContext.GetContext();
@@ -235,7 +244,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 IQueryable<HelpResourceList> entityLists = helpResourceQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<HelpResourceList>(listQueryOperation, entityLists);
-                entityLists = treeFilterQueryService.Apply<HelpResourceList>(entityLists);
+                entityLists = new TreeFilterQueryService().Apply<HelpResourceList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

@@ -8,19 +8,19 @@
 //------------------------------------------------------------------------------
 
 
-import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
+import { ARPaymentInvoicePM } from './ARPaymentInvoicePM';
 
-import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionPM } from './../../Accounting/EntityPMs/LedgerTransactionPM';
 
-import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
+import { ARPaymentChequeReplicaPM } from './ARPaymentChequeReplicaPM';
 
-import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ARPaymentPMCustomCode } from '../EntityPMCustomCode/ARPaymentPMCustomCode';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { Output, EventEmitter } from '@angular/core';
+import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
@@ -28,12 +28,12 @@ import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransfer
 
 export class ARPaymentPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
-	  constructor() {
-          this.UIProperties = new UIProperties(this);
-          this.IsDirty = false;
-      }
+    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+    public UIProperties: UIProperties;
+    constructor() {
+        this.UIProperties = new UIProperties(this);
+        this.IsDirty = false;
+    }
 
 
     private id: string;
@@ -367,15 +367,15 @@ export class ARPaymentPM {
 
 
 
-	private paymentInvoices: ARPaymentInvoicePM[];
-    get  PaymentInvoices() {
+    private paymentInvoices: ARPaymentInvoicePM[];
+    get PaymentInvoices() {
         if (this.paymentInvoices == null) {
             this.paymentInvoices = [];
         }
 
         return this.paymentInvoices;
     }
-    set  PaymentInvoices(newValue: ARPaymentInvoicePM[]) {
+    set PaymentInvoices(newValue: ARPaymentInvoicePM[]) {
         if (this.paymentInvoices != newValue) {
             this.paymentInvoices = newValue;
         }
@@ -387,7 +387,7 @@ export class ARPaymentPM {
 
                 item.EntityParentPM = this;
 
-                this. PaymentInvoices.push(item);
+                this.PaymentInvoices.push(item);
                 this.MarkAsDirty();
             }
         }
@@ -396,13 +396,13 @@ export class ARPaymentPM {
         if (item != null) {
             var index = this.PaymentInvoices.indexOf(item);
             if (index > -1) {
-                this. PaymentInvoices.splice(index, 1);
+                this.PaymentInvoices.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
-	    //public PaymentInvoices: Array<ARPaymentInvoicePMPM>= [];
-     private setVoided: boolean;
+    //public PaymentInvoices: Array<ARPaymentInvoicePMPM>= [];
+    private setVoided: boolean;
     public get SetVoided() { return this.setVoided; }
     public set SetVoided(newValue: boolean) { if (this.setVoided != newValue) { this.setVoided = newValue; this.MarkAsDirty("SetVoided"); } }
 
@@ -558,30 +558,30 @@ export class ARPaymentPM {
 
 
 
-	private invoicesLedgerTransactions: LedgerTransactionPM[];
-    get  InvoicesLedgerTransactions() {
+    private invoicesLedgerTransactions: LedgerTransactionPM[];
+    get InvoicesLedgerTransactions() {
         if (this.invoicesLedgerTransactions == null) {
             this.invoicesLedgerTransactions = [];
         }
 
         return this.invoicesLedgerTransactions;
     }
-    set  InvoicesLedgerTransactions(newValue: LedgerTransactionPM[]) {
+    set InvoicesLedgerTransactions(newValue: LedgerTransactionPM[]) {
         if (this.invoicesLedgerTransactions != newValue) {
             this.invoicesLedgerTransactions = newValue;
         }
     }
     //public InvoicesLedgerTransactions: Array<LedgerTransactionPMPM>= [];
 
-	private aRPaymentChequeReplicas: ARPaymentChequeReplicaPM[];
-    get  ARPaymentChequeReplicas() {
+    private aRPaymentChequeReplicas: ARPaymentChequeReplicaPM[];
+    get ARPaymentChequeReplicas() {
         if (this.aRPaymentChequeReplicas == null) {
             this.aRPaymentChequeReplicas = [];
         }
 
         return this.aRPaymentChequeReplicas;
     }
-    set  ARPaymentChequeReplicas(newValue: ARPaymentChequeReplicaPM[]) {
+    set ARPaymentChequeReplicas(newValue: ARPaymentChequeReplicaPM[]) {
         if (this.aRPaymentChequeReplicas != newValue) {
             this.aRPaymentChequeReplicas = newValue;
         }
@@ -593,7 +593,7 @@ export class ARPaymentPM {
 
                 item.EntityParentPM = this;
 
-                this. ARPaymentChequeReplicas.push(item);
+                this.ARPaymentChequeReplicas.push(item);
                 this.MarkAsDirty();
             }
         }
@@ -602,23 +602,23 @@ export class ARPaymentPM {
         if (item != null) {
             var index = this.ARPaymentChequeReplicas.indexOf(item);
             if (index > -1) {
-                this. ARPaymentChequeReplicas.splice(index, 1);
+                this.ARPaymentChequeReplicas.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
 
-	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
+    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
 
-	private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
-    get  ARPaymentBankTranfers() {
+    private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
+    get ARPaymentBankTranfers() {
         if (this.aRPaymentBankTranfers == null) {
             this.aRPaymentBankTranfers = [];
         }
 
         return this.aRPaymentBankTranfers;
     }
-    set  ARPaymentBankTranfers(newValue: ARPaymentBankTranferPM[]) {
+    set ARPaymentBankTranfers(newValue: ARPaymentBankTranferPM[]) {
         if (this.aRPaymentBankTranfers != newValue) {
             this.aRPaymentBankTranfers = newValue;
         }
@@ -630,7 +630,7 @@ export class ARPaymentPM {
 
                 item.EntityParentPM = this;
 
-                this. ARPaymentBankTranfers.push(item);
+                this.ARPaymentBankTranfers.push(item);
                 this.MarkAsDirty();
             }
         }
@@ -639,65 +639,65 @@ export class ARPaymentPM {
         if (item != null) {
             var index = this.ARPaymentBankTranfers.indexOf(item);
             if (index > -1) {
-                this. ARPaymentBankTranfers.splice(index, 1);
+                this.ARPaymentBankTranfers.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
-	    //public ARPaymentBankTranfers: Array<ARPaymentBankTranferPMPM>= [];
-     private isPaymentNumberManuallySet: boolean;
+    //public ARPaymentBankTranfers: Array<ARPaymentBankTranferPMPM>= [];
+    private isPaymentNumberManuallySet: boolean;
     public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
     public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
 
 
     private field1: CustomFieldClass;
-    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "ARPayment");} return this.field1; }
-    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+    public get Field1() { if (!this.field1) { this.field1 = new CustomFieldClass(null, "Field1", "ARPayment"); } return this.field1; }
+    public set Field1(newValue: CustomFieldClass) { this.field1 = newValue; this.MarkAsDirty("Field1"); }
 
 
     private field2: CustomFieldClass;
-    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "ARPayment");} return this.field2; }
-    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+    public get Field2() { if (!this.field2) { this.field2 = new CustomFieldClass(null, "Field2", "ARPayment"); } return this.field2; }
+    public set Field2(newValue: CustomFieldClass) { this.field2 = newValue; this.MarkAsDirty("Field2"); }
 
 
     private field3: CustomFieldClass;
-    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "ARPayment");} return this.field3; }
-    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+    public get Field3() { if (!this.field3) { this.field3 = new CustomFieldClass(null, "Field3", "ARPayment"); } return this.field3; }
+    public set Field3(newValue: CustomFieldClass) { this.field3 = newValue; this.MarkAsDirty("Field3"); }
 
 
     private field4: CustomFieldClass;
-    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "ARPayment");} return this.field4; }
-    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+    public get Field4() { if (!this.field4) { this.field4 = new CustomFieldClass(null, "Field4", "ARPayment"); } return this.field4; }
+    public set Field4(newValue: CustomFieldClass) { this.field4 = newValue; this.MarkAsDirty("Field4"); }
 
 
     private field5: CustomFieldClass;
-    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "ARPayment");} return this.field5; }
-    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+    public get Field5() { if (!this.field5) { this.field5 = new CustomFieldClass(null, "Field5", "ARPayment"); } return this.field5; }
+    public set Field5(newValue: CustomFieldClass) { this.field5 = newValue; this.MarkAsDirty("Field5"); }
 
 
     private field6: CustomFieldClass;
-    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "ARPayment");} return this.field6; }
-    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+    public get Field6() { if (!this.field6) { this.field6 = new CustomFieldClass(null, "Field6", "ARPayment"); } return this.field6; }
+    public set Field6(newValue: CustomFieldClass) { this.field6 = newValue; this.MarkAsDirty("Field6"); }
 
 
     private field7: CustomFieldClass;
-    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "ARPayment");} return this.field7; }
-    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+    public get Field7() { if (!this.field7) { this.field7 = new CustomFieldClass(null, "Field7", "ARPayment"); } return this.field7; }
+    public set Field7(newValue: CustomFieldClass) { this.field7 = newValue; this.MarkAsDirty("Field7"); }
 
 
     private field8: CustomFieldClass;
-    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "ARPayment");} return this.field8; }
-    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+    public get Field8() { if (!this.field8) { this.field8 = new CustomFieldClass(null, "Field8", "ARPayment"); } return this.field8; }
+    public set Field8(newValue: CustomFieldClass) { this.field8 = newValue; this.MarkAsDirty("Field8"); }
 
 
     private field9: CustomFieldClass;
-    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "ARPayment");} return this.field9; }
-    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+    public get Field9() { if (!this.field9) { this.field9 = new CustomFieldClass(null, "Field9", "ARPayment"); } return this.field9; }
+    public set Field9(newValue: CustomFieldClass) { this.field9 = newValue; this.MarkAsDirty("Field9"); }
 
 
     private field10: CustomFieldClass;
-    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "ARPayment");} return this.field10; }
-    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+    public get Field10() { if (!this.field10) { this.field10 = new CustomFieldClass(null, "Field10", "ARPayment"); } return this.field10; }
+    public set Field10(newValue: CustomFieldClass) { this.field10 = newValue; this.MarkAsDirty("Field10"); }
 
 
     private gLAccountCurrencyCode: string;
@@ -720,21 +720,21 @@ export class ARPaymentPM {
     public set ForceUsingBankTransferMethod(newValue: boolean) { if (this.forceUsingBankTransferMethod != newValue) { this.forceUsingBankTransferMethod = newValue; this.MarkAsDirty("ForceUsingBankTransferMethod"); } }
 
 
-    private reconcileExternalPagesIds : string;
-    public get ReconcileExternalPagesIds() : string {
+    private reconcileExternalPagesIds: string;
+    public get ReconcileExternalPagesIds(): string {
         return this.reconcileExternalPagesIds;
     }
-    public set ReconcileExternalPagesIds(v : string) {
+    public set ReconcileExternalPagesIds(v: string) {
         this.reconcileExternalPagesIds = v;
         this.MarkAsDirty("ReconcileExternalPagesIds");
     }
 
 
-    private presetValueDate : Date;
-    public get PresetValueDate() : Date {
+    private presetValueDate: Date;
+    public get PresetValueDate(): Date {
         return this.presetValueDate;
     }
-    public set PresetValueDate(v : Date) {
+    public set PresetValueDate(v: Date) {
         this.presetValueDate = v;
     }
 
@@ -756,18 +756,17 @@ export class ARPaymentPM {
 
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
-        this.IsDirty = true;
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
 
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ARPaymentPMCustomCode.ApplyEntityChanged(propertyName, this);
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPayment");
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ARPaymentPMCustomCode.ApplyEntityChanged(propertyName, this);
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPayment");
 
+            }
         }
-	 }
     }
     private MyClone: ARPaymentPM;
 

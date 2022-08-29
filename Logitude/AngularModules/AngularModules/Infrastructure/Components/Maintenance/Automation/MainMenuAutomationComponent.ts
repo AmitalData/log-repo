@@ -51,11 +51,15 @@ export class MainMenuAutomationComponent implements OnInit {
 
         if (item.ObjectTableName === "WorkFlow") {
 
+            if(this.IsMainteneceView){
+                this.CloseButtonClicked();
+            }
+
             let listArgs = new ListComponentArgs();
             listArgs.QueryCode = "All Workflows";
             listArgs.ObjectTableName = "WorkFlow";
             listArgs.DisplayTitle = "Workflows";
-            listArgs.BackButtonTitle = "Automations";
+            listArgs.BackButtonTitle = this.IsMainteneceView ? "Maintenance" : "Automations";
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;

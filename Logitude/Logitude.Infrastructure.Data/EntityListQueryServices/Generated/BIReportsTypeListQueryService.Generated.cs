@@ -25,7 +25,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<BIReportsTypeList> GetList(QueryOperations queryOperations, int tenant)
+        public List<BIReportsTypeList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<BIReportsTypeList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -47,6 +51,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BIReportsTypeList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<BIReportsTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BIReportsTypeList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -143,7 +148,14 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+
+		
+        public int GetListCount(QueryOperations queryOperations ){
+		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -160,14 +172,18 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             
 			iQueryable = filter.GetFilteredQuery<BIReportsType>(nonListQueryOperation, iQueryable);
 
+
+
             IQueryable<BIReportsTypeList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BIReportsTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BIReportsTypeList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

@@ -50,6 +50,7 @@ using Logitude.Customs.BL.PatchDistribution.Patches;
 using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web
 {
@@ -274,26 +275,18 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-                //if (!RoleEnvironment.IsAvailable)//is azure env
-                //{
-                //    return;
-                //}
+
                 SubscriptionDescription myAgentSubscription;
-                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
+                string subscribtionName = Environment.MachineName;
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                 {
                     myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
                 }
-                //  string ssss = RoleEnvironment.CurrentRoleInstance.Id;
-
 
                 CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
                 Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
                 cacheThread.Start();
-
                 this.StartSignalRTopicThread();
-
             }
             catch (Exception ex)
             {
@@ -369,7 +362,8 @@ namespace WebFreight.Web
                 new IISManager(),
                 () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
                 () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-                () => (new EntityGetReflectorService()) as IEntityGetReflectorService
+                () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
+                () => (new TreeFilterQueryService()) as ITreeFilterQueryService
                 );
             ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
             InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =

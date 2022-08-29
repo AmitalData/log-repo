@@ -1,13 +1,10 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
-using System.Transactions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
@@ -19,8 +16,6 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Linq;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -28,71 +23,58 @@ namespace Simplog.Data.ShipmentsModel
 {
     public class ShipmentsContext : DbContextBase, IShipmentsContext
     {
-        public ShipmentsContext()
-            : base("LogitudeStr")
+        public ShipmentsContext() : base("LogitudeStr")
         {
             Database.SetInitializer<ShipmentsContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-     
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();     
         }
 
-        public ShipmentsContext(DbConnection conn)
-            : base(conn,true)
+        public ShipmentsContext(DbConnection conn) : base(conn,true)
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
             Database.SetInitializer<ShipmentsContext>(null);
-            
         }
 
         public static IShipmentsContext GetContext(int tenant)
         {
             GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             ShipmentsContext context = new ShipmentsContext(connection);
             return context;
         }
+
         public static IShipmentsContext GetSecContext(int tenant)
         {
             GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
-            string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            //DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
             ShipmentsContext context = new ShipmentsContext(connection);
             return context;
         }
+
         public override LogitudeDBSchema LogitudeDBSchema
         {
-            get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
+            get { return LogitudeDBSchema.LOGITUDE_MAIN; }
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
-                ////config.QueryOptions.CaseInsensitiveComparison = true;
-                ////config.QueryOptions.CaseInsensitiveLike = true;
-                //modelBuilder.SetDefaultSchema("LOGITUDE_MAIN");
             }
 
             Database.SetInitializer<ShipmentsContext>(null);
-            //string databasename = DatabaseInitializer.GetDatabaseName();
-            //Database.DefaultConnectionFactory.CreateConnection(databasename);
+            //modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            modelBuilder.Configurations.Add(new DigitalShipmentDataViewMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -365,6 +347,11 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public IDbSet<DigitalShipmentsDataView> ShipmentDigitalDataViews
+        {
+            get;set;
         }
 
         public IDbSet<Shipment> Shipments { get; set; }

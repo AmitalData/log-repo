@@ -104,6 +104,11 @@ export class WorkFlowPM {
     public set FlowJson(newValue: string) { if (this.flowJson != newValue) { this.flowJson = newValue; this.MarkAsDirty("FlowJson"); } }
        
 	 
+    private entity: string;
+    public get Entity() { return this.entity; }
+    public set Entity(newValue: string) { if (this.entity != newValue) { this.entity = newValue; this.MarkAsDirty("Entity"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		
