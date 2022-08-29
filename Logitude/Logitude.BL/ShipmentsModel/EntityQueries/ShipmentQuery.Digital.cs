@@ -1211,7 +1211,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         #endregion Routing
 
         #region Shipment TimeLine
-        public void BuildShipmentListWithTimeLine(List<ShipmentList> entityLists, int tenant)
+        public void BuildShipmentListWithTimeLine(List<DigitalShipmentList> entityLists, int tenant)
         {
             InitializeServices(tenant);
             foreach (var item in entityLists)
@@ -1220,7 +1220,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
 
-        private void FillShipmnetTimeLine(ShipmentList shipment, int tenant)
+        private void FillShipmnetTimeLine(DigitalShipmentList shipment, int tenant)
         {
             bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
             if (isInlandDomesticShipment)
@@ -1233,7 +1233,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
 
-        private TimeLineData FillShipmnetTimeLineForInlandDomesticShipment(ShipmentList shipment)
+        private TimeLineData FillShipmnetTimeLineForInlandDomesticShipment(DigitalShipmentList shipment)
         {
             TimeLineData timeLineData = new TimeLineData();
             this.FillMainCarraigeFromTimeLineForInlandDomesticShipment(timeLineData, shipment);
@@ -1241,7 +1241,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return timeLineData;
         }
 
-        private void FillMainCarraigeFromTimeLineForInlandDomesticShipment(TimeLineData timeLineData, ShipmentList shipment)
+        private void FillMainCarraigeFromTimeLineForInlandDomesticShipment(TimeLineData timeLineData, DigitalShipmentList shipment)
         {
             timeLineData.MainCarriageFrom = new TimeLineStop()
             {
@@ -1252,7 +1252,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             };
         }
 
-        private void FillMainCarraigeToTimeLineForInlandDomesticShipment(TimeLineData timeLineData, ShipmentList shipment)
+        private void FillMainCarraigeToTimeLineForInlandDomesticShipment(TimeLineData timeLineData, DigitalShipmentList shipment)
         {
             timeLineData.MainCarriageTo = new TimeLineStop()
             {
@@ -1263,7 +1263,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             };
         }
 
-        private string GetCityForFromInlandDomestic(ShipmentList shipment)
+        private string GetCityForFromInlandDomestic(DigitalShipmentList shipment)
         {
             if (shipment.InlandDomesticFromTypeCode == "PART")
             {
@@ -1281,7 +1281,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
         
-        private string GetCityForToInlandDomestic(ShipmentList shipment)
+        private string GetCityForToInlandDomestic(DigitalShipmentList shipment)
         {
             if (shipment.InlandDomesticToTypeCode == "PART")
             {
@@ -1299,7 +1299,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        private string GetCountryForFromInlandDomestic(ShipmentList shipment)
+        private string GetCountryForFromInlandDomestic(DigitalShipmentList shipment)
         {
             if (shipment.InlandDomesticFromTypeCode == "PART")
             {
@@ -1317,7 +1317,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        private string GetCountryForToInlandDomestic(ShipmentList shipment)
+        private string GetCountryForToInlandDomestic(DigitalShipmentList shipment)
         {
             if (shipment.InlandDomesticToTypeCode == "PART")
             {
@@ -1391,7 +1391,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        private TimeLineData FillShipmnetTimeLineForShipment(ShipmentList shipment)
+        private TimeLineData FillShipmnetTimeLineForShipment(DigitalShipmentList shipment)
         {
             var shipmentPickUpDeliveries = (from a in repository.context.ShipmentPickUpDeliveries.Include("FromAddressCountry").Include("ToAddressCountry") where a.ShipmentId == shipment.Id select a);
             TimeLineData timeLineData = new TimeLineData();
@@ -1402,7 +1402,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return timeLineData;
         }
 
-        private void FillMainCarraigeFromTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        private void FillMainCarraigeFromTimeLine(TimeLineData timeLineData, DigitalShipmentList shipment)
         {
             timeLineData.MainCarriageFrom = new TimeLineStop()
             {
@@ -1414,7 +1414,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             };
         }
 
-        private bool CheckIfViaPortsDatesFilled(ShipmentList shipment)
+        private bool CheckIfViaPortsDatesFilled(DigitalShipmentList shipment)
         {
             if (shipment.Transshipment1ETA != null || shipment.Transshipment1ATA != null || shipment.Transshipment1ETD != null || shipment.Transshipment1ATD != null)
             {
@@ -1432,7 +1432,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return false;
         }
 
-        private void FillMainCarraigeToTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        private void FillMainCarraigeToTimeLine(TimeLineData timeLineData, DigitalShipmentList shipment)
         {
             timeLineData.MainCarriageTo = new TimeLineStop()
             {
@@ -1443,7 +1443,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             };
         }
        
-        private void FillPickUpTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        private void FillPickUpTimeLine(TimeLineData timeLineData, DigitalShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
             var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
             if (firstPickup == null)
@@ -1516,7 +1516,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
        
-        private void FillDeliveryTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        private void FillDeliveryTimeLine(TimeLineData timeLineData, DigitalShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
             var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
             if (finalDelivery == null)

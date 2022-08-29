@@ -226,7 +226,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                List<ShipmentList> listQuery = entityLists.ToList();
+                List<DigitalShipmentList> listQuery = entityLists.ToList();
 
                 myShipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 

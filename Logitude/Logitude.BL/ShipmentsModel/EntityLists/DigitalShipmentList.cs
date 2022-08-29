@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Simplog.Data.ShipmentsModel.EntityPOCOs
+namespace Logitude.BL.ShipmentsModel.EntityLists
 {
-    public class DigitalShipmentsDataView
+    public class DigitalShipmentList
     {
-        [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string SalesmanUserId { get; set; }
@@ -44,9 +42,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? Transshipment1ETD { get; set; }
         public DateTime? Transshipment1ETA { get; set; }
         public string IncotermCode { get; set; }
-        public string MainCarriageFinalDestinationCountryCode { get; set; }
-        public string MainCarriageFinalDestinationCountryName { get; set; }
-
         public string ShipmentNumber { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
@@ -151,7 +146,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FromPortName { get; set; }
         public string ToPort { get; set; }
         public string ToPortName { get; set; }
+        public string ToPortCountry { get; set; }
+        public string IncotermId { get; set; }
         public string CarrierNumber { get; set; }
+        public string FromPortCountryName { get; set; }
+        public string ToPortCountryName { get; set; }
+        public string ToPortCountryCode { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
         public DateTime? MainCarriageExpectedOrActual { get; set; }
         public string MainCarriageETAOrATA { get; set; }
         public string StatusId { get; set; }
@@ -177,30 +181,36 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomAgentImportName { get; set; }
         public string CustomerName { get; set; }
 
+        public TimeLineData TimeLineData { get; set; }
+
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageToPortCode { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
+
+
         public string MainCarriageFromPartnerId { get; set; }
-        public string MainCarriageToPartnerId { get; set; }
-        public string ToPortCountryCode { get; set; }
-        public string FromPortCountryCode { get; set; }
-        public string IncotermId { get; set; }
-        public string FromPortCountryName { get; set; }
-        public string ToPortCountryName { get; set; }
-        public string ToPortCode { get; set; }
-        public string FromPortCode { get; set; }
-        public string MainCarriageFromCountryCode { get; set; }
-        public string MainCarriageToCountryCode { get; set; }
         public string MainCarriageFromAddressId { get; set; }
+        public string MainCarriageToPartnerId { get; set; }
         public string MainCarriageToAddressId { get; set; }
+
         public DateTime? MainCarriageFinalDestinationETA { get; set; }
         public DateTime? MainCarriageFinalDestinationATA { get; set; }
         public DateTime? DepartureArrivalFromDate { get; set; }
         public DateTime? DepartureArrivalToDate { get; set; }
+
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
-        public string MasterShipmentDataId { get; set; }
 
+        public string MasterShipmentDataId { get; set; }
+        public string FromPortCountryCode { get; set; }
+        public string ProfitCurrencyCode { get; set; }
+        public string LocalCurrencyCode { get; set; }
+
+        public string FromPortCountry { get; set; }
+        public string ExactStatusName { get; set; }
+
+        public DateTime? MainCarriageETDTime { get; set; }
+        public DateTime? MainCarriageETATime { get; set; }
     }
 }
