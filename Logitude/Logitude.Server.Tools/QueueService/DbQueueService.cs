@@ -439,7 +439,8 @@ namespace Logitude.Server.Tools.QueueService
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            //nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            nextRunDelayInSecPar.Value = serverWaitTime.Value.TotalSeconds;
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);

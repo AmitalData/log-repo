@@ -181,18 +181,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             _swMessagingServiceBase.Restart(); 
             _RequestService.ManipulateRequestParams(requestParams);
             LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams::Took:" + _swMessagingServiceBase.ElapsedMilliseconds);
-            bool exportSignViaDBQueue = true;
-            if (exportSignViaDBQueue)
-            {
-                if (
-                    !Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight
-                    && requestParams.ForcePersonalSign)
-                {
-                    requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                    requestParams.RequestVIAChangeDue =
-                        requestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
-                }
-            }
             string requestSatus = "F";
             string responseStatus = "F";
             TCustomsRequest customsRequest = default(TCustomsRequest);

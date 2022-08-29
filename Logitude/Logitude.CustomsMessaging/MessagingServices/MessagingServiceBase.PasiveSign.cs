@@ -220,7 +220,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 File.WriteAllText(@"C:\Users\itzik\Desktop\zevel\tst_utf8.xml", xml);
                 var xDoc1 = XDocument.Parse(xml);
             }
-            var xDoc = XDocument.Parse(Encoding.UTF8.GetString(customRequestSignedByteArry));
+            
+            //var xDoc = XDocument.Parse(Encoding.UTF8.GetString(customRequestSignedByteArry));
+            string xml1 = Encoding.UTF8.GetString(customRequestSignedByteArry) ?? "";
+            if (xml1[0] != '<')//why START AT 2022/8/29 == bom ?? 
+            {
+                xml1 = xml1.Substring(1);
+            }
+            var xDoc = XDocument.Parse(xml1);
             var eleX509SubjectName = xDoc.Descendants().FirstOrDefault(ele => ele.Name.LocalName.Contains("X509SubjectName"));
             if (eleX509SubjectName != null)
             {

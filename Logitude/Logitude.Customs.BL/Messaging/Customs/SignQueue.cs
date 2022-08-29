@@ -182,17 +182,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn,string tenant=null)
+        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(CurrentSignCertificate)) { return; }
 
-                string  companyTenant = tenant;
-                if (companyTenant == null)
-                {
-                    companyTenant=SignQueue.GetCompanyTenant(CurrentSignCertificate);
-                }
+                var companyTenant = SignQueue.GetCompanyTenant(CurrentSignCertificate);
                 var tenantListOfPersonID = GetTenantListOfPersonID(SignCertificateClass.Get(CurrentSignCertificate).PersonId, 0);
 
                 lock ((this._MyQueue as ICollection).SyncRoot)
