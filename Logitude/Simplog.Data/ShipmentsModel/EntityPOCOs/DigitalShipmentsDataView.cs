@@ -44,6 +44,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? Transshipment1ETD { get; set; }
         public DateTime? Transshipment1ETA { get; set; }
         public string IncotermCode { get; set; }
+        public string MainCarriageFinalDestinationCountryCode { get; set; }
+        public string MainCarriageFinalDestinationCountryName { get; set; }
+
         public string ShipmentNumber { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
@@ -180,7 +183,15 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPortCountryName { get; set; }
         public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageToPartnerId { get; set; }
-
+        public string ToPortCountryCode { get; set; }
+        public string FromPortCountryCode { get; set; }
+        public string IncotermId { get; set; }
+        public string FromPortCountryName { get; set; }
+        public string ToPortCountryName { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
         public string MainCarriageFromAddressId { get; set; }
         public string MainCarriageToAddressId { get; set; }
         public DateTime? MainCarriageFinalDestinationETA { get; set; }
@@ -189,5 +200,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? DepartureArrivalToDate { get; set; }
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
+        public string MasterShipmentDataId { get; set; }
+
     }
 }

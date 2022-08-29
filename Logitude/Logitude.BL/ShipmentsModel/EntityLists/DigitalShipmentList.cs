@@ -146,7 +146,16 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string FromPortName { get; set; }
         public string ToPort { get; set; }
         public string ToPortName { get; set; }
+        public string ToPortCountry { get; set; }
+        public string IncotermId { get; set; }
         public string CarrierNumber { get; set; }
+        public string FromPortCountryName { get; set; }
+        public string ToPortCountryName { get; set; }
+        public string ToPortCountryCode { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
         public DateTime? MainCarriageExpectedOrActual { get; set; }
         public string MainCarriageETAOrATA { get; set; }
         public string StatusId { get; set; }
@@ -193,6 +202,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
 
+        public string MasterShipmentDataId { get; set; }
+        public string FromPortCountryCode { get; set; }
         public string ProfitCurrencyCode { get; set; }
         public string LocalCurrencyCode { get; set; }
 
