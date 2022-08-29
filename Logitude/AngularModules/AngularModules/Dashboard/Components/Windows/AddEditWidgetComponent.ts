@@ -158,6 +158,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 export class WidgetMeasureItem {
     public ObjectTableName: string = "WidgetMeasure";
     public EntityPM: WidgetMeasurePM;
+    public DataContext: WidgetMeasureItem = this;
     constructor(entityPM: WidgetMeasurePM) {
         this.EntityPM = entityPM;
     }
