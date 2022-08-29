@@ -33,9 +33,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 
                 ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
-                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService(new QueryTreeFilterContext() { AdditionalTreeFilter = filters.TreeFilters ,ObjectTableName = "", Tenant = authToken.Tenant });
+
+                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
                 var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
-                treeFilterQueryService.Apply(shipmentAnalyticIQueryable);
+                shipmentAnalyticIQueryable = treeFilterQueryService.Apply(shipmentAnalyticIQueryable, new TreeFilterQueryArgs() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "", Tenant = authToken.Tenant });
                 var result = shipmentAnalyticIQueryable.ToList();
                 return Request.CreateResponse(result);
             }
