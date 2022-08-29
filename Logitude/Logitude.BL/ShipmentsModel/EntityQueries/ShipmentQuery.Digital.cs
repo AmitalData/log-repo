@@ -880,7 +880,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
             {
                 //OnCarriage
                 ShipmentRoutingLeg onCarriageLeg = AddOnCarriageLegLeg(shipment);
@@ -929,7 +929,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         
         private string GetDischargePort(ShipmentPM shipment)
         {
-            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
             {
                 return shipment.OnCarriageToPortName + ", " + shipment.OnCarriageToPortCountryCode;
             }
