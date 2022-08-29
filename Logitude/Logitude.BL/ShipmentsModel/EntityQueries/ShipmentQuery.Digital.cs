@@ -1021,7 +1021,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ToPort = shipment.PreCarriageToPortName + ", " + shipment.PreCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
                 DepartureDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
-                DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
+                DateType = shipment.PreCarriageATD != null ? "ATD" : (shipment.PreCarriageETD != null ? "ETD" : null),
                 Carrier = shipment.PreCarriageCarrierName,
                 CarrierNumber = shipment.PreCarriageCarrierNumber,
                 VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
@@ -1044,7 +1044,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
                 DepartureDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
-                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
+                DateType = shipment.MainCarriageATD != null ? "ATD" : (shipment.MainCarriageETD != null ? "ETD" : null),
             };
             return mainCarriageLeg;
         }
@@ -1063,7 +1063,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment1VesselName : null,
                 DepartureDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
-                DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
+                DateType = shipment.Transshipment1ATD != null ? "ATD" : (shipment.Transshipment1ETD != null ? "ETD" : null),
             };
 
             return transshipment1;
@@ -1083,7 +1083,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment2VesselName : null,
                 DepartureDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
-                DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
+                DateType = shipment.Transshipment2ATD != null ? "ATD" : (shipment.Transshipment2ETD != null ? "ETD" : null),
             };
 
             return transshipment2;
@@ -1103,7 +1103,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment3VesselName : null,
                 DepartureDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
-                DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
+                DateType = shipment.Transshipment3ATD != null ? "ATD" : (shipment.Transshipment3ETD != null ? "ETD" : null),
             };
 
             return transshipment3;
@@ -1119,7 +1119,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ToPort = shipment.OnCarriageToPortName + ", " + shipment.OnCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
                 DepartureDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
-                DateType = shipment.OnCarriageATD != null ? "Actual" : (shipment.OnCarriageETD != null ? "Estimated" : null),
+                DateType = shipment.OnCarriageATD != null ? "ATD" : (shipment.OnCarriageETD != null ? "ETD" : null),
                 Carrier = shipment.OnCarriageCarrierName,
                 CarrierNumber = shipment.OnCarriageCarrierNumber,
                 VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
