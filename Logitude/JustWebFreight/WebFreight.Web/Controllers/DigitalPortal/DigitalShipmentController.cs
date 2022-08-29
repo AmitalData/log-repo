@@ -38,6 +38,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
+
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
@@ -156,7 +157,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
-                    var propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
+                    var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
                     var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant).ToList();
 
                     var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
@@ -171,32 +172,32 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             {
                                 case "text":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "double":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, double>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, double>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "datetime":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, DateTime>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, DateTime>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "integer":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, int>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, int>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "lookup":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "boolean":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, bool>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, bool>(queryOperations, entityLists);
                                         break;
                                     }
                                 default:
@@ -208,7 +209,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                         else
                         {
-                            entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                            entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                         }
                     }
                 }
