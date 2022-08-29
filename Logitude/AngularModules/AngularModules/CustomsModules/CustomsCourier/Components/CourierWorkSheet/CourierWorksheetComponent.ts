@@ -136,6 +136,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
             this.HasRequiresApprovalFeature = true;
         }
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
+        });
+
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
@@ -1773,7 +1776,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         if (this.HasRequiresApprovalFeature) {
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
-        }        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+        }       
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
