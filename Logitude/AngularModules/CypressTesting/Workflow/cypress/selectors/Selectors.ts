@@ -3,9 +3,7 @@ export class WorkflowSelectors {
     public static readonly AutomationsTab = '#GeneralMHAutomations';
     public static readonly WorkflowsBox = "div[data-cy^='Workflows']";
 
-    public static WorkFlowSingleFlow (index: number): string {
-		return "#LogGrid_0_0row" + index.toString();
-	}
+    public static WorkFlowFlowRow = "div[class^='Row']"
     public static readonly FlowBuilderEditButton = '#Edit';
     public static readonly WorkflowStartNode = "div[data-selector^='start-node-1']";
     public static readonly WorkflowEditNodeButton = "button[class^='edit-button']";

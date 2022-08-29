@@ -6,6 +6,7 @@ import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { StartNodeDetails } from "../models/StartNodeDetails";
 import { WorkflowDetails } from "../models/WorkflowDetails";
 import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms';
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
@@ -19,7 +20,7 @@ export function OpenWorkflowsInAutomationTab() {
 
 export function OpenFirstFlowInWorkFlowList() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowFlowBuilder, RequestAliases.GetWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkFlowSingleFlow(1), null);
+    cy.Click(WorkflowSelectors.WorkFlowFlowRow + BaseSelectors.FirstElement, null);
 }
 
 export function AssertOpenFlowBuilder() {
