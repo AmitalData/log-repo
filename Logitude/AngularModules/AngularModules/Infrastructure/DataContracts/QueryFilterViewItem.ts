@@ -6,7 +6,6 @@ import { AppTool } from '../Tools';
 import { ObjectFieldPM } from '../EntityPMs/ObjectFieldPM';
 import { ApiQueryFilters, FilterItem } from './ApiQueryFilters';
 import { FieldValueResolver } from '../Utilities/FieldValueResolver';
-import { EntityResourceService } from '../Services/EntityResourceService';
 declare var window: any;
 
 export class QueryFilterViewItem extends FilterItem  {
@@ -27,8 +26,6 @@ export class QueryFilterViewItem extends FilterItem  {
     public IsRefreshField: boolean;
     public IsRefreshFieldValue: boolean;
     private SelectedObjectFieldPM: ObjectFieldPM;
-    EntityResourceService: EntityResourceService = new EntityResourceService();
-    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(TreeFilter: any = null, ParentClass: QueryFilterTreeComponent = null) {
         super();
@@ -352,21 +349,8 @@ export class QueryFilterViewItem extends FilterItem  {
         if (this.SelectedObjectFieldPM && this.SelectedObjectFieldPM.Id == objectFieldPM.Id) {
             return;
         }
-        //if (objectFieldPM.DataTypeCode == "LookUp") {
-        //    this.LoadLookUpEntityResources(objectFieldPM);
-        //}
-        //else {
-            this.FieldSelectedChanged(objectFieldPM);
-        //}
-    }
 
-    LoadLookUpEntityResources(objectFieldPM) {
-        this.CurrentSession.StartBusyIndicator("Loading...");
-        let loockupEntityTableName = window.ObjectTables.filter(objectTable => objectTable.Id == objectFieldPM.LookUpTableId)[0]?.Name;
-        this.EntityResourceService.getEntityResourceByTableName(loockupEntityTableName).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();
-            this.FieldSelectedChanged(objectFieldPM);
-        }); 
+        this.FieldSelectedChanged(objectFieldPM);
     }
 
     FieldSelectedChanged(objectFieldPM) {
