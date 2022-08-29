@@ -13,8 +13,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 })
 
 export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
-    private CurrentSession = SessionLocator.SelectedSession;
-    EntityResourceService: EntityResourceService = new EntityResourceService();
+    public CurrentSession = SessionLocator.SelectedSession;
+    public EntityResourceService: EntityResourceService = new EntityResourceService();
     AllObjectTables: string[] = [];
 
     constructor() {
