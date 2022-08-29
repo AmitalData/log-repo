@@ -255,7 +255,7 @@ export class ARInvoiceStockPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceStockLinePM[pmProperty] = jItem[pmProperty];
             }
            
