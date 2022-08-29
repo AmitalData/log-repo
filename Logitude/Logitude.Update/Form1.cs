@@ -91,6 +91,7 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using WebFreight.Web.MetaDataUpdate;
 using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace Logitude.Update
 {
@@ -161,7 +162,7 @@ namespace Logitude.Update
             string storageServiceMode = "fs";
             string queueServiceMode = "azure";
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null ,null);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
