@@ -1,115 +1,152 @@
+<style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:hover {
+        color: #03a9f4;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .select-entity-label {
+        padding-bottom: 4px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .select-entity-label,
+    .set-conditions-label,
+    .select-trigger-label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+
+    .start-conditions-container {
+        overflow: auto;
+        width: 800px;
+        height: 370px;
+    }
+
+    .min-start-conditions-container {
+        height: 285px;
+    }
+</style>
+
 <table>
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
-    <tr style="height:5px;">
-        <td>
-            <div></div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
         </td>
     </tr>
 
-    <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:20px;">
-        <td>
-            <div style="padding-left:10px;padding-right:10px;">
-                <div style="font-weight:bold;padding-bottom:4px;">Select Object</div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-entity-label">Select Object</div>
                 <div>Select the object whose records trigger the flow when they're created or updated</div>
             </div>
         </td>
     </tr>
 
-    <tr style="height:15px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr style="height:50px;">
-        <td>
+    <tr class="table-row">
+        <td class="table-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
-            <div style="padding-left:10px;padding-right:10px;height:30px;width:320px;">
-                <ComboBox [ItemsSource]="Entities" [Binding]="'Name'" [SelectedItem]="Entity"
-                    (SelectedItemChanged)="updateEntity($event)"></ComboBox>
+            <div class="table-row-cell-block entity-list-container">
+                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
+                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
+                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
+                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
+                    [DataCy]="'start-entity'">
+                </LogLov>
             </div>
         </td>
     </tr>
 
-
-    <tr style="height:15px;">
-        <td>
-            <div></div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
         </td>
     </tr>
 
-
-    <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:20px;">
-        <td>
-            <div style="padding-left:10px;padding-right:10px;">
-                <div style="font-weight:bold;">Configure Trigger</div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-trigger-label">Configure Trigger</div>
             </div>
         </td>
     </tr>
 
-
-    <tr style="height:100px;">
-        <td>
+    <tr class="table-row">
+        <td class="table-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Trigger the flow when'" [ObjectFieldName]="'Trigger'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
-            <div style="padding-left:10px;padding-right:10px;width:320px;">
+            <div class="table-row-cell-block trigger-radios-container">
                 <table>
                     <tr>
-                        <td style="width:80px">
-                            <RadioButton style="display:inline" [Name]="'TriggerRadio'"
-                                [IsChecked]="Trigger === 'create'" (Checked)="updateTrigger('create')"
-                                [Text]="'A record is created'" [Top]="5"></RadioButton>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'create'"
+                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5">
+                            </RadioButton>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:80px">
-                            <RadioButton style="display:inline" [Name]="'TriggerRadio'"
-                                [IsChecked]="Trigger === 'update'" (Checked)="updateTrigger('update')"
-                                [Text]="'A record is updated'" [Top]="5"></RadioButton>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'update'"
+                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5">
+                            </RadioButton>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:80px">
-                            <RadioButton style="display:inline" [Name]="'TriggerRadio'"
-                                [IsChecked]="Trigger === 'createOrUpdate'" (Checked)="updateTrigger('createOrUpdate')"
-                                [Text]="'A record is created or updated'" [Top]="5"></RadioButton>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'createOrUpdate'"
+                                (Checked)="updateTrigger('createOrUpdate')" [Text]="'A record is created or updated'"
+                                [Top]="5"></RadioButton>
                         </td>
                     </tr>
                 </table>
@@ -117,44 +154,37 @@
         </td>
     </tr>
 
-
-    <tr style="height:15px;">
-        <td>
-            <div></div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
         </td>
     </tr>
 
-
-    <tr style="height:1px;">
-        <td style="border-bottom:1px solid #6E6E6E;">
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:25px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-
-    <tr style="height:20px;">
-        <td>
-            <div style="padding-left:10px;padding-right:10px;">
-                <div style="font-weight:bold;">Configure Conditions</div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="set-conditions-label">Set Conditions</div>
             </div>
         </td>
     </tr>
 
-    <tr style="height:300px;">
+    <tr class="table-row">
         <td>
-            <div style="height:300px;padding-left:10px;padding-right:10px;padding-top:10px;">
-                
+            <div class="table-row-cell-block start-conditions-container"
+                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <div *ngIf="Conditions && Conditions.length === 0">
+                    <span class="link-button" (click)="initializeCondition()">
+                        <span class="plus-sign">+</span><span>Add Condition</span>
+                    </span>
+                </div>
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"></Conditions>
+
             </div>
         </td>
     </tr>
-
 
     <tr>
         <td>
@@ -162,27 +192,13 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+    <tr class="table-row">
+        <td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="cancelButtonClicked()">Cancel</button>
-                    </td>
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'start-properties-save-button'"
+                [CancelButtonDataCy]="'start-properties-cancel-button'"></FooterButtons>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="saveButtonClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
         </td>
     </tr>
 

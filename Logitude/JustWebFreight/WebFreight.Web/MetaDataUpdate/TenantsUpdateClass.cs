@@ -1169,7 +1169,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             performanceTimerLogger.LogMessage("Generated" + ",DashboardUpdateClass");
             performanceTimerLogger.LogMessage("Updateing Analytic Tables");
-            new DashboardAnalyticTablesUpdateClass(context).Update();
+            //new DashboardAnalyticTablesUpdateClass(context).Update();
         }
 
         private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)

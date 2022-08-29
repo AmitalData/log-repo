@@ -1,0 +1,39 @@
+<style>
+    .entity-conditions-container {
+        display: table;
+        width: max-content;
+    }
+
+    .entity-conditions-operation-container {
+        display: table-cell;
+        vertical-align: middle;
+        min-width: 70px;
+        padding-right: 10px;
+        border-right: 1px solid #808080;
+    }
+
+    .entity-condition-groups-container {
+        display: table-cell;
+        padding-left: 10px;
+    }
+</style>
+
+
+<div *ngIf="Conditions && Conditions.length > 0" class="entity-conditions-container">
+
+    <div class="entity-conditions-operation-container">
+
+        <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
+            [SelectedItem]="getConditionGroupItem(ConditionsOperation)"
+            (SelectedItemChanged)="updateConditionsOperation($event)">
+        </ComboBox>
+
+    </div>
+
+    <div class="entity-condition-groups-container">
+
+        <ConditionGroups [EntityId]="EntityId" [(Conditions)]="Conditions"></ConditionGroups>
+
+    </div>
+
+</div>
