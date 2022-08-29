@@ -49,38 +49,54 @@ export class CustomsContainerizationListTemplate {
  
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
-        if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
-            this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
+        if(this.rowData.IsSubmitDeclaration){
+           if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
+               this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
+           }
+           if (!this._containerizationExtendedListService.ConnectedDeclarations) {
+               this._containerizationExtendedListService.ConnectedDeclarations = "";
+           }
+           if (!this._containerizationExtendedListService.IsDirectCharging) {
+               this._containerizationExtendedListService.IsDirectCharging = "";
+           }
+           if (!this._containerizationExtendedListService.AllDeclarations) {
+               this._containerizationExtendedListService.AllDeclarations = "";
+           }
+           if (!this._containerizationExtendedListService.containerizationRequestParams) {
+               this._containerizationExtendedListService.containerizationRequestParams = new ContainerizationRequestParams();
+               this._containerizationExtendedListService.containerizationRequestParams.ContainerizationList = [];
+           
+           }
+           if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
+               this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
+           }
+           let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
+           if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+               let ConnectedDeclarations = sConnectedDeclarations.split(',')
+               let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
+               this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
+           }
+           if (this._containerizationExtendedListService.connectedSelectAll == true) {              
+               this.IsConnectedDeclarationChecked = true;             
+           }
+              
         }
-        if (!this._containerizationExtendedListService.ConnectedDeclarations) {
-            this._containerizationExtendedListService.ConnectedDeclarations = "";
+         this.countDeclarationUi = this._containerizationExtendedListService?.ConnectedDeclarations?.split(',').length-1;
+         if(this._containerizationExtendedListService.connectedSelectAll){
+            this.ShowError();
+         } 
+    }
+    ShowError(){
+        debugger
+        this._containerizationExtendedListService.IsError=false;
+        this._containerizationExtendedListService.SelectedDeclarations = true;
+        if(AppTool.IsNullOrEmpty(this._containerizationExtendedListService.AllDeclarations)){
+          
+            this._containerizationExtendedListService.ErrorsList=["לא אותרו הצהרות שניתן להמכיל"];
+            this._containerizationExtendedListService.IsError=true;
+            this._containerizationExtendedListService.SelectedDeclarations = false;
         }
-        if (!this._containerizationExtendedListService.IsDirectCharging) {
-            this._containerizationExtendedListService.IsDirectCharging = "";
-        }
-        if (!this._containerizationExtendedListService.AllDeclarations) {
-            this._containerizationExtendedListService.AllDeclarations = "";
-        }
-        if (!this._containerizationExtendedListService.containerizationRequestParams) {
-            this._containerizationExtendedListService.containerizationRequestParams = new ContainerizationRequestParams();
-            this._containerizationExtendedListService.containerizationRequestParams.ContainerizationList = [];
 
-        }
-        if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
-            this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
-        }
-        let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
-        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
-            let ConnectedDeclarations = sConnectedDeclarations.split(',')
-            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
-            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
-        }
-        if (this._containerizationExtendedListService.connectedSelectAll == true) {
-            this.IsConnectedDeclarationChecked = true;
-        }
-        
-        this.countDeclarationUi = this._containerizationExtendedListService?.ConnectedDeclarations?.split(',').length-1;
-        
     }
     OnNotChecked($event){
         if(!this.rowData.IsSubmitDeclaration)
@@ -89,7 +105,8 @@ export class CustomsContainerizationListTemplate {
         }
     }
     OnConnectedCheckBoxChecked($event) {  
-          
+
+        this._containerizationExtendedListService.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
         if(!this.rowData.IsSubmitDeclaration)
         {
             this._containerizationExtendedListService.IsError=true;
@@ -111,7 +128,7 @@ export class CustomsContainerizationListTemplate {
            else {
                if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                    this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
-                   this._containerizationExtendedListService.connectedSelectAll = false;
+                   this._containerizationExtendedListService.connectedSelectAll = false;                  
                    this.RemoveUniqueConsignmentToRequestParams(this.rowData.CargoTypeCode, this.rowData.ManifestNumber, this.rowData.SecondCargoID, this.rowData.ThirdCargoID, this.rowData.Id)
    
                }
@@ -119,7 +136,7 @@ export class CustomsContainerizationListTemplate {
                    this._containerizationExtendedListService.IsDirectCharging = this._containerizationExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
                }
            }       
-           if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations) || (this._containerizationExtendedListService.ConnectedDeclarations.split(',').length -1 - this.countDeclarationUi ==0)) {
+            if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations) || (this._containerizationExtendedListService.ConnectedDeclarations.split(',').length - 1 - this.countDeclarationUi == 0)) {
            
                this._containerizationExtendedListService.SelectedDeclarations = false;
            } else {

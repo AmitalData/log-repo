@@ -61,8 +61,7 @@ export class NewContainerizationComponent extends BaseComponent {
     declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     declarationListQuery: DeclarationListService = new DeclarationListService();
     declarationPMService: DeclarationPMService = new DeclarationPMService();
-    declarationWebService: DeclarationWebService = new DeclarationWebService()
-    ErrorsList:string[];
+    declarationWebService: DeclarationWebService = new DeclarationWebService()   
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -144,7 +143,7 @@ export class NewContainerizationComponent extends BaseComponent {
                     this.BuildColumns();
                     this.isLoad = true;
                                    
-                     this.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
+                    this.containerizationExtendedListService.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
                    
                 });
             });
@@ -152,7 +151,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
     }
 
-    itemMouseOver(itemValue: string) {
+    itemMouseOver(itemValue: string) {     
         if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);
             var img_O = document.getElementById(this.TransportFilter_O);
@@ -397,11 +396,18 @@ export class NewContainerizationComponent extends BaseComponent {
  
 
     OnAllBtnClicked() {
-        
+
+        this.containerizationExtendedListService.IsError=false;
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
         this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
+        if(this.containerizationExtendedListService.ConnectedDeclarations=="undefined"||  AppTool.IsNullOrEmpty( this.containerizationExtendedListService.ConnectedDeclarations)){
+          
+            this.containerizationExtendedListService.ErrorsList=["לא אותרו הצהרות שניתן להמכיל"];
+            this.containerizationExtendedListService.IsError=true;
+            this.containerizationExtendedListService.SelectedDeclarations = false;
+        }
         this.LoadConnectedItems();
 
     }
@@ -412,6 +418,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     OnNoneBtnClicked() {
+        this.containerizationExtendedListService.IsError=false;
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
@@ -611,7 +618,7 @@ export class NewContainerizationComponent extends BaseComponent {
         return params
     }
     private timerToken: any;
-    TextChanged(searchtext: any) {
+    TextChanged(searchtext: any) {       
         if (searchtext != null || searchtext != undefined) {
 
             this.timerToken = setTimeout(() => {

@@ -62,7 +62,7 @@
 
 <tr style="height: 28px;">
     <td colspan="5">
-        <ValidationSummary class="StyleMess"  *ngIf="containerizationExtendedListService.IsError" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+        <ValidationSummary class="StyleMess"  *ngIf="containerizationExtendedListService.IsError" [ItemsSource]="containerizationExtendedListService.ErrorsList" [SingleLine]="true"></ValidationSummary>
     </td>
 </tr>
 
