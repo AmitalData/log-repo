@@ -107,7 +107,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
                 }
 
-                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", authToken.Tenant);
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
 
                 foreach (var filter in newFilters.AdditionalFilters)
                 {
