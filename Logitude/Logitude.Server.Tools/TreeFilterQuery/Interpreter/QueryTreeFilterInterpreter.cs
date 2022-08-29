@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 {
-  public  class QueryTreeFilterInterpreter
+    public class QueryTreeFilterInterpreter
     {
 
         public QueryFilterItem Run(QueryTreeFilterContext context)
         {
-         
-            if (string.IsNullOrEmpty(context.AdditionalTreeFilter)) return  null;
+
+            if (string.IsNullOrEmpty(context.AdditionalTreeFilter)) return null;
             List<IQueryTreeFilterExpression> expressions = new List<IQueryTreeFilterExpression>();
             expressions.Add(new JavaScriptSerializerExpression());
             expressions.Add(new QueryTreeFilterIgnoreExpresion());
-            expressions.Add(new QueryTreeFilterResetValueExpresion());
+            if (!string.IsNullOrEmpty(context.ObjectTableName))
+                expressions.Add(new QueryTreeFilterResetValueExpresion());
             expressions.Add(new CustomFieldExpression());
 
             if (!string.IsNullOrEmpty(context.ParentObjectTableName) && !string.IsNullOrEmpty(context.ParentEntityId))
@@ -33,7 +34,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
                 expression.Interpret(context);
             }
 
-            return  context.QueryFilterItem;
+            return context.QueryFilterItem;
         }
     }
 }
