@@ -1120,8 +1120,14 @@
     <Compile Include="Controllers\DashboardModel\Extended\DashboardPMExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsFieldsMetaDataViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\MeasureTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\WidgetMeasureViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\WidgetTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\WidgetViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsFieldsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsMetaDataController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />

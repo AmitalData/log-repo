@@ -106,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static string GetProjectPath()
         {
-            return "../../../Logitude.DashboardModule.MetaData\\AnalyticsEntityFiles"; ;
+            return "AnalyticsEntityFiles";
         }
 
         private Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData BuildFileJson(string fileName)
