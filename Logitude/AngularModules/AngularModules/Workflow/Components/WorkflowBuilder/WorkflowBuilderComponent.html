@@ -85,14 +85,15 @@
                                     <tr>
                                         <td>
 
-                                            <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()">
+                                            <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()"
+                                                data-cy="save-workflow-changes-button">
                                                 <img src="./Images/Buttons/Save.png"
                                                     class="save-button-icon CenterCenter" />
                                                 <span class="save-button-label">Save</span>
                                             </button>
 
                                             <button *ngIf="HasChanges" class="EntityChangesButton"
-                                                (click)="saveWorkflow()">
+                                                (click)="saveWorkflow()" data-cy="save-workflow-changes-button">
                                                 <img src="./Images/Buttons/Save.Red.png"
                                                     class="save-button-icon CenterCenter" />
                                                 <span class="save-button-label">Save</span>

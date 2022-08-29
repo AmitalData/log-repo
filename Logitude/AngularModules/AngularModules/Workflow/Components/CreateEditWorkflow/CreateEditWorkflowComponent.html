@@ -1,62 +1,101 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-row {
+        height: 10px;
+    }
+
+    .split-row {
+        height: 20px;
+    }
+
+    .name-row,
+    .owner-row {
+        height: 50px;
+    }
+
+    .description-row {
+        height: 85px;
+    }
+
+    .name-input-container,
+    .description-input-container,
+    .owner-input-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-input-container,
+    .owner-input-container {
+        height: 30px;
+    }
+
+    .description-input-container {
+        height: 65px;
+    }
+</style>
+
 <table *ngIf="EntityPM">
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
-    <tr style="height:10px;">
+    <tr class="first-split-row">
         <td>
             <div></div>
         </td>
     </tr>
 
-    <tr style="height:50px;">
+    <tr class="name-row">
         <td>
             <div>
                 <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                 </LogLabel>
             </div>
-            <div style="padding-left:10px;padding-right:10px;height:30px;">
+            <div class="name-input-container">
                 <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
             </div>
         </td>
     </tr>
 
-    <tr style="height:20px;">
+    <tr class="split-row">
         <td>
             <div></div>
         </td>
     </tr>
 
-    <tr style="height:85px;">
+    <tr class="description-row">
         <td>
             <div>
                 <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext"></LogLabel>
             </div>
-            <div style="padding-left:10px;padding-right:10px;height:65px;">
+            <div class="description-input-container">
                 <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
             </div>
         </td>
     </tr>
 
-    <tr style="height:20px;">
+    <tr class="split-row">
         <td>
             <div></div>
         </td>
     </tr>
 
-    <tr style="height:50px;">
+    <tr class="owner-row">
         <td>
             <div>
                 <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                 </LogLabel>
             </div>
-            <div style="padding-left:10px;padding-right: 10px;height:30px;">
+            <div class="owner-input-container">
                 <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [SelectedValue]="OwnerId"
                     [DataContext]="DataContext" [LookUpTableName]="'User'" [HideColumns]="true"></LogLov>
             </div>
@@ -70,28 +109,13 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+    <tr class="table-row">
+        <td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="cancelButtonClicked()">Cancel</button>
-                    </td>
+            <FooterButtons [SaveButtonLabel]="IsNewEntity ? 'Create' : 'Save'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'workflow-save-button'"
+                [CancelButtonDataCy]="'workflow-cancel-button'"></FooterButtons>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button *ngIf="IsNewEntity" class="RedButton" (click)="saveButtonClicked()">Create</button>
-                        <button *ngIf="!IsNewEntity" class="RedButton" (click)="saveButtonClicked()">Save</button>
-                    </td>
-                </tr>
-            </table>
         </td>
     </tr>
 

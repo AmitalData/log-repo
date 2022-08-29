@@ -64,22 +64,6 @@
     .min-start-conditions-container {
         height: 285px;
     }
-
-    .footer-buttons-cell {
-        vertical-align: bottom
-    }
-
-    .footer-buttons-table {
-        height: 22px;
-    }
-
-    .footer-button-cell {
-        width: 57px;
-    }
-
-    .footer-buttons-split {
-        width: 5px;
-    }
 </style>
 
 <table>
@@ -115,7 +99,8 @@
                 <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
                     [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
                     [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
-                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)">
+                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
+                    [DataCy]="'start-entity'">
                 </LogLov>
             </div>
         </td>
@@ -208,26 +193,12 @@
     </tr>
 
     <tr class="table-row">
-        <td class="footer-buttons-cell">
-            <table class="footer-buttons-table">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+        <td>
 
-                    <td class="footer-button-cell">
-                        <button class="Button" (click)="cancelButtonClicked()">Cancel</button>
-                    </td>
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'start-properties-save-button'"
+                [CancelButtonDataCy]="'start-properties-cancel-button'"></FooterButtons>
 
-                    <td class="footer-buttons-split">
-                        <div></div>
-                    </td>
-
-                    <td class="footer-button-cell">
-                        <button class="RedButton" (click)="saveButtonClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
         </td>
     </tr>
 

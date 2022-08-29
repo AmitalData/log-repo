@@ -5,10 +5,10 @@ import { LoopPropertiesComponent } from './Components/Properties/LoopPropertiesC
 import { SetValuePropertiesComponent } from './Components/Properties/SetValuePropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/CreateEditWorkflowComponent";
-
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
+import { FooterButtonsComponent } from "./Components/Base/FooterButtonsComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -18,10 +18,10 @@ export const Components = [
     SetValuePropertiesComponent,
     FieldTemplateComponent,
     CreateEditWorkflowComponent,
-
     ConditionsComponent,
     ConditionGroupsComponent,
     FieldValueComponent,
+    FooterButtonsComponent,
 ];
 
 export class ModuleDeclarations {
@@ -35,10 +35,10 @@ export class ModuleDeclarations {
             case "SetValuePropertiesComponent": { result = SetValuePropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
             case "CreateEditWorkflowComponent": { result = CreateEditWorkflowComponent; break; }
-
             case "ConditionsComponent": { result = ConditionsComponent; break; }
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }
+            case "FooterButtonsComponent": { result = FooterButtonsComponent; break; }
         }
         return result;
     }

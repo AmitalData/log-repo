@@ -8,7 +8,8 @@
         [DependencyFilter2IsList]="ObjectField.DependencyFilter2IsList"
         [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true" [IsFreeText]="true"
         [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
-        [SelectedValue]="CurrentValue" [HideColumns]="true" (SelectedItemChanged)="updateValue($event?.Id)">
+        [DataCy]="DataCy" [SelectedValue]="CurrentValue" [HideColumns]="true"
+        (SelectedItemChanged)="updateValue($event?.Id)">
     </LogLov>
 
 </div>

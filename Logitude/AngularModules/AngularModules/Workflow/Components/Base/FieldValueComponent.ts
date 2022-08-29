@@ -15,6 +15,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Input() Name: string;
     @Input() CurrentValue: any;
 
+    @Input() DataCy: string;
+
     @Output() ValueChanged = new EventEmitter<any>();
 
     public LookupTable: ObjectTablePM;

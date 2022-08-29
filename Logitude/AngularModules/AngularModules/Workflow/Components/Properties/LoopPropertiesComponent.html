@@ -1,66 +1,24 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+</style>
+
 <table>
-    <!-- <tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
         <td>
 
-            <table>
-                <tr class="FormFieldRow">
-                    <td>
-                        <table>
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'loop-properties-save-button'"
+                [CancelButtonDataCy]="'loop-properties-cancel-button'"></FooterButtons>
 
-                            <tr class="FormFieldRow">
-                                <td style="width:70px;">
-                                    <LogLabel [NoObjectField]="true" [Text]="'Name'" [DataContext]="DataContext">
-                                    </LogLabel>
-                                </td>
-
-                                <td style="width:250px;">
-                                    <LogTextBox [Text]="Data['name']" [NoObjectField]="true" [IsFreeText]="true"
-                                        [DataContext]="DataContext" [HideColumns]="true"
-                                        (ValueChanged)="ChangeName($event)"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </td>
-                </tr>
-            </table>
-
-        </td>
-
-    </tr> -->
-
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="cancelButtonClicked()">Cancel</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="saveButtonClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
         </td>
     </tr>
 

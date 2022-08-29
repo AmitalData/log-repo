@@ -105,7 +105,8 @@
 
                 <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
                     [SelectedItem]="getListItem(ConditionGroupOperations, Condition.groupOperation)"
-                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)"></ComboBox>
+                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)">
+                </ComboBox>
 
             </div>
 

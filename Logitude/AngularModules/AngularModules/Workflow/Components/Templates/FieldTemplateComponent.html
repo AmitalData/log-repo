@@ -1,16 +1,31 @@
+<style>
+    .status {
+        font-weight: bold;
+        color: #000000;
+    }
+
+    .draft-status {
+        color: #258bee !important;
+    }
+
+    .published-status {
+        color: #54aa41 !important;
+    }
+</style>
+
 <table *ngIf="Entity">
     <tr>
         <td>
             <div class="MediaFill">
 
-                <!-- WorkFlow  -->
                 <table *ngIf="ObjectTableName == 'WorkFlow'">
                     <tr>
                         <td>
                             <div class="MediaFill">
 
                                 <div *ngIf="FieldName == 'StatusName'">
-                                    <div [style.font-weight]="'bold'" [style.color]="StatusColor">
+                                    <div
+                                        [ngClass]="'status' + (Entity[FieldName] ? (' ' + Entity[FieldName].toLowerCase() + '-status') : '')">
                                         {{Entity[FieldName]}}
                                     </div>
                                 </div>
