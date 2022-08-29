@@ -686,6 +686,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion Private methods
 
+        #region Routing 
+
         public List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegs(string shipmentId, int tenant)
         {
             InitializeServices(tenant);
@@ -1008,6 +1010,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ToPort = shipment.PreCarriageToPortName + "," + shipment.PreCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
                 DepartureDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
+                DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
                 Carrier = shipment.PreCarriageCarrierName,
                 CarrierNumber = shipment.PreCarriageCarrierNumber,
                 VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
@@ -1030,6 +1033,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
                 DepartureDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
             };
             return mainCarriageLeg;
         }
@@ -1048,6 +1052,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment1VesselName : null,
                 DepartureDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
+                DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
             };
 
             return transshipment1;
@@ -1067,6 +1072,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment2VesselName : null,
                 DepartureDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
+                DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
             };
 
             return transshipment2;
@@ -1086,6 +1092,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment3VesselName : null,
                 DepartureDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
+                DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
             };
 
             return transshipment3;
@@ -1101,6 +1108,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ToPort = shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode,
                 TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
                 DepartureDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
+                DateType = shipment.OnCarriageATD != null ? "Actual" : (shipment.OnCarriageETD != null ? "Estimated" : null),
                 Carrier = shipment.OnCarriageCarrierName,
                 CarrierNumber = shipment.OnCarriageCarrierNumber,
                 VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
@@ -1188,6 +1196,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
+
+        #endregion Routing
 
         #region Shipment TimeLine
         public void BuildShipmentListWithTimeLine(List<ShipmentList> entityLists, int tenant)
@@ -1573,12 +1583,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public Tuple <string, int> GetShipmentIdBySecurityKey(string key)
         {
-            if (string.IsNullOrEmpty(key))
+            if (string.IsNullOrWhiteSpace(key))
                 return null;
 
-            Shipment shipment = (from a in repository.context.Shipments
-                                 where a.SecurityKey == key
-                                 select a).FirstOrDefault();
+            Shipment shipment = repository.context.Shipments.FirstOrDefault(a=>a.SecurityKey.Equals(key, StringComparison.InvariantCultureIgnoreCase));
 
             if (shipment == null)
                 return null;
