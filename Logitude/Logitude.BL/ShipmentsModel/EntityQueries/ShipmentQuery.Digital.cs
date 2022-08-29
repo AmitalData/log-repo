@@ -947,7 +947,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
             {
-                return shipment.MainCarriageToPortName + "," + shipment.MainCarriageToPortName;
+                return shipment.MainCarriageToPortName + "," + shipment.MainCarriageFromPortCountryCode; 
             }
 
             return null;
