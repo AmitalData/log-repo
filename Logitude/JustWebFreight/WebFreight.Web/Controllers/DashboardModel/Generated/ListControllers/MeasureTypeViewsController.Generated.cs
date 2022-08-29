@@ -194,12 +194,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IDashboardContext MyContext = DashboardContext.GetContext(tenant);
 				MeasureTypeListQueryService measureTypeQuery = new MeasureTypeListQueryService(MyContext);
 
-                List<MeasureTypeList> entityLists = measureTypeQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "MeasureType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<MeasureTypeList> entityLists = measureTypeQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = measureTypeQuery.GetListCount(queryOperations);
+                    int count = measureTypeQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
