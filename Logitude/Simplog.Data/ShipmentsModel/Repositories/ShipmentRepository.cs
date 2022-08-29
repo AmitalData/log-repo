@@ -1,17 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Data.Helpers;
-using System.Data.SqlClient;
 using System.Text;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -28,11 +22,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             shipmentsContext = ShipmentsContext.GetContext(tenant);
         }
+
         public void SetSecondDBforContext(int tenant)
         {
             shipmentsContext = ShipmentsContext.GetSecContext(tenant);
             useSecondaryDB = true;
         }
+
         public ShipmentRepository()
         {
             shipmentsContext = new ShipmentsContext();
@@ -355,15 +351,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             {
                 return (from f in dataViewEntities.ShipmentDataViews select f);
             }
+
             // end of Temporary Code
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
             return result;
         }
 
-        public IQueryable<ShipmentDataView> GetDigitalShipmentViewsByTenant(int tenant)
-        { 
-            IQueryable<ShipmentDataView> result = (from f in context.ShipmentDigitalDataViews where f.Tenant == tenant select f);
-            return result;
+        public IQueryable<DigitalShipmentsDataView> GetDigitalShipmentViewsByTenant(int tenant)
+        {
+            return context.ShipmentDigitalDataViews.Where(f => f.Tenant == tenant);
         }
 
         public IQueryable<ShipmentCountryDashboardView> GetShipmentDataViewsForCountriesDashboard(int tenant, string customerid, string directionId, string transportmodeId)
@@ -803,12 +799,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             context.SaveChanges();
         }
 
-        public List<Shipment> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public List<Shipment> GetMulti(EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
         }
 
-        public Shipment GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public Shipment GetSingle(EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
         }
@@ -827,10 +823,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from f in context.Shipments
                     where (f.CustomerId == customerId || f.AgentId == customerId || f.ConsigneeId == customerId
-|| f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
-|| f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
-|| f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
-|| f.ReleasingAgentId == customerId) && f.Tenant == tenant
+                            || f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
+                            || f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
+                            || f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
+                            || f.ReleasingAgentId == customerId) && f.Tenant == tenant
                     select f).Any();
         }
 
@@ -907,13 +903,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Shipment GetShipmentByAgentSharedManifestRef(string agentSharedManifestRef, int tenant)
         {
-
             return (from a in context.Shipments
                     where a.Tenant == tenant && a.AgentSharedManifestRef == agentSharedManifestRef
                     select a).FirstOrDefault();
-
-
-
         }
 
         public IQueryable<Shipment> GetConnectedHouses(string masterId, int tenant)
@@ -987,7 +979,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where a.Tenant == tenant && a.House == house
                     select a).ToList();
         }
-
 
         public List<Shipment> GetStandaloneShipments(string shipmentParentId, int tenant)
         {
