@@ -164,6 +164,24 @@ export class QueryFilterViewItem extends FilterItem  {
         if (this.SelectedObjectFieldWithLookUpTable) {
             return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName
         }
+        else if (!this.EntityResourcesLoaded) {
+            this.LoadLookUpTableResources();
+        }
+    }
+
+    EntityResourcesLoaded: boolean;
+    LoadLookUpTableResources() {
+        if (!this.MyParentClass) return;
+
+        this.MyParentClass.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        this.MyParentClass.EntityResourceService.getEntityResourceByTableName(this.MainEntityName).subscribe((response: any) => {
+            this.MyParentClass.CurrentSession.StopBusyIndicator();
+            this.EntityResourcesLoaded = true;
+            this.SelectedObjectFieldWithLookUpTable = window.ObjectFields.filter(f => this.SelectedObjectFieldPM.Id == f.Id)[0];
+            if (this.SelectedObjectFieldWithLookUpTable) {
+                return this.SelectedObjectFieldWithLookUpTable.ObjectTable_LookUpTableName
+            }
+        });
     }
 
     public mainEntityName: string;
