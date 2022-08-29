@@ -32,7 +32,7 @@ export class ContainerizationExtendedListService {
     public IsDirectCharging: string;
     public containerizationRequestParams:ContainerizationRequestParams;
     public IsError: boolean;
-    
+    public  ErrorsList:string[];
     getPromiseByFilters(filters: ApiQueryFilters) {
 
         return new Promise((resolve, reject) => {
