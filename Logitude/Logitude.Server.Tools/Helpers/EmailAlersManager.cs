@@ -40,6 +40,10 @@ namespace Logitude.Server.Tools.Helpers
             ContactRepository contactRepository = new ContactRepository(commonContext);
 
             Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetLoggedUserEmail(tenant), tenant);
+            if (loggedContact == null)
+            {
+                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
+            }
             if (toEmails != null)
             {
                 string[] recipientEmails = toEmails.Split(';');
