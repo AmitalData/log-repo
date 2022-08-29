@@ -79,8 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-=		public const string HashString = "af3903c9eb690512a21db035fc211ff8";
-=	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "46d93d0b1ccc74d9a8a0dacf84809708";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -16098,7 +16098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ContainersQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
 
-			 QueryColumn ContainersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
 
              AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -16107,15 +16107,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			  Query PendingPOLDepartureQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_1.Id, NameTextCodeCode = ContainerTextCode_1.Code, ObjectTableName = "Container", Code = "PendingPOLDeparture",  QueryGroupCode = "38cb", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_1.Id,FeatureUniqeCode= ContainerFeature_1.FeatureUniqeCode, DefaultSortName = "EstimatedPOLVesselDeparture", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn PendingPOLDepartureQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn PendingPOLDepartureQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 128 }, addedQueryColumns);
 
 			 QueryColumn PendingPOLDepartureQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn PendingPOLDepartureQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn PendingPOLDepartureQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 128 }, addedQueryColumns);
 
 			 QueryColumn PendingPOLDepartureQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
 
@@ -16152,11 +16152,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn InTransitNewQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.POLLocation" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn InTransitNewQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+			 QueryColumn InTransitNewQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn InTransitNewQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.ActualPOLVesselDeparture" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn InTransitNewQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.ActualPOLVesselDeparture" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InTransitNewQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
+			 QueryColumn InTransitNewQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 155 }, addedQueryColumns);
 
              AdvancedQueryFilter InTransitNewQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.InTransitFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -16165,23 +16165,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			  Query InTransitTransshipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_3.Id, NameTextCodeCode = ContainerTextCode_3.Code, ObjectTableName = "Container", Code = "InTransitTransshipments",  QueryGroupCode = "38cb", IndexOrder = 3, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_3.Id,FeatureUniqeCode= ContainerFeature_3.FeatureUniqeCode, DefaultSortName = "EstimatedPODVesselArrival", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InTransitTransshipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 113 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 153 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 119 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 159 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 132 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 152 }, addedQueryColumns);
 
 			 QueryColumn InTransitTransshipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 111 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 98 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 111 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 151 }, addedQueryColumns);
 
 			 QueryColumn InTransitTransshipmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 93 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn InTransitTransshipmentsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 151 }, addedQueryColumns);
 
@@ -16189,25 +16189,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn InTransitTransshipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.Transshipment1Location" , ColumnWidth = 107 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.EstimatedTrans1VesselDeparture" , ColumnWidth = 108 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.EstimatedTrans1VesselDeparture" , ColumnWidth = 158 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.EstimatedTrans1VesselArrival" , ColumnWidth = 106 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.EstimatedTrans1VesselArrival" , ColumnWidth = 156 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.ActualTrans1VesselDeparture" , ColumnWidth = 97 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.ActualTrans1VesselDeparture" , ColumnWidth = 147 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualTransshipment1VesselArrival" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualTransshipment1VesselArrival" , ColumnWidth = 156 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Container.Transshipment2Location" , ColumnWidth = 107 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Container.Transshipment2Location" , ColumnWidth = 147 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Container.EstimatedTrans2VesselDeparture" , ColumnWidth = 102 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Container.EstimatedTrans2VesselDeparture" , ColumnWidth = 152 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Container.EstimatedTrans2VesselArrival" , ColumnWidth = 105 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Container.EstimatedTrans2VesselArrival" , ColumnWidth = 155 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Container.ActualTrans2VesselDeparture" , ColumnWidth = 112 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Container.ActualTrans2VesselDeparture" , ColumnWidth = 152 }, addedQueryColumns);
 
-			 QueryColumn InTransitTransshipmentsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Container.ActualTransshipment2VesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn InTransitTransshipmentsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Container.ActualTransshipment2VesselArrival" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter InTransitTransshipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.InTransitwithTransshipments", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InTransitTransshipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.InTransitwithTransshipmentsFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16216,7 +16216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn PendingGateOutQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
-			 QueryColumn PendingGateOutQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+			 QueryColumn PendingGateOutQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
 
 			 QueryColumn PendingGateOutQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
@@ -16232,7 +16232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn PendingGateOutQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
 
-			 QueryColumn PendingGateOutQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingGateOutQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 140 }, addedQueryColumns);
 
              AdvancedQueryFilter PendingGateOutQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingGateOutFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -16257,11 +16257,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn PendingEmptyReturnQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingEmptyReturnQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+			 QueryColumn PendingEmptyReturnQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingEmptyReturnQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EmptyReturnLocation" , ColumnWidth = 90 }, addedQueryColumns);
+			 QueryColumn PendingEmptyReturnQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EmptyReturnLocation" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PendingEmptyReturnQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.EstimatedEmptyReturn" , ColumnWidth = 90 }, addedQueryColumns);
+			 QueryColumn PendingEmptyReturnQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.EstimatedEmptyReturn" , ColumnWidth = 120 }, addedQueryColumns);
 
              AdvancedQueryFilter PendingEmptyReturnQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingEmptyReturnFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -16353,7 +16353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ExceptionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.ExceptionDate" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExceptionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.HasContainerException", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ExceptionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.HasException", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -16370,7 +16370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn CancelledContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn CancelledContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
 
