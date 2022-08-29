@@ -131,13 +131,20 @@ namespace Logitude.Customs.BL.TraceEvents
             var mytransmission = GetTransmission();
             string myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
             myMainObject =HttpUtility.HtmlEncode(myMainObject);
-            //List<QueueTask> queue1Tasks = GetArrayOfQueueTask(unifreightHybridQueueTasParam, myMainObject);
-            //_CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
-            var myEnvelope = new Envelope()
+            bool withoutEnvelop = true;
+            if (withoutEnvelop)
             {
-                
-                CommunicationLogId = Guid.NewGuid().ToString(),
-                Tasks = new List<QueueTask>() {
+                List<QueueTask> queue1Tasks = GetArrayOfQueueTask(unifreightHybridQueueTasParam, myMainObject);
+                _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
+
+            }
+            else
+            {
+                var myEnvelope = new Envelope()
+                {
+
+                    CommunicationLogId = Guid.NewGuid().ToString(),
+                    Tasks = new List<QueueTask>() {
 
                     new QueueTask() {
                         Action = "StatusUpdate",
@@ -153,8 +160,11 @@ namespace Logitude.Customs.BL.TraceEvents
                     }
                     }
 
-            };
-            _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(myEnvelope);
+                };
+                _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(myEnvelope);
+            }
+           
+            
 
             string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
 
