@@ -19,6 +19,11 @@ namespace Logitude.DashboardModule.Data
    
        	 IDbSet<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas { get; }
 		 IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas { get; }
+		 IDbSet<Dashboard> Dashboards { get; }
+		 IDbSet<MeasureType> MeasureTypes { get; }
+		 IDbSet<Widget> Widgets { get; }
+		 IDbSet<WidgetMeasure> WidgetMeasures { get; }
+		 IDbSet<WidgetType> WidgetTypes { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

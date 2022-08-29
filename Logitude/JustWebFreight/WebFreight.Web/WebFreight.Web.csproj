@@ -1118,10 +1118,15 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Extended\DashboardPMExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsFieldsMetaDataViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\MeasureTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\WidgetTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsFieldsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsMetaDataController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
@@ -1138,23 +1143,16 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Extended\DashboardPMExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ImageLibraryExtendedListController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TableTabsExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ScreenExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ScreenSectionExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DashboardViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ImageLibraryViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\MeasureTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QuoteChargesGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenSectionViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\WidgetMeasureViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\WidgetTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\WidgetViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DashboardController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ImageLibraryController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\MultiEntityUpdateLogController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QuoteChargesGroupController.Generated.cs" />
@@ -7498,7 +7496,6 @@
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\DomainServices\" />
-    <Folder Include="Controllers\DashboardModel\Extended\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
     <Folder Include="Controllers\WorkflowModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
