@@ -22,10 +22,9 @@ using WebFreight.Web.Security;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
-using Simplog.Data.ShipmentsModel;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -38,12 +37,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
-                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant, cardId);
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
+                id = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
+                var shipmentQuery = new ShipmentQuery(tenant);
+                var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
@@ -275,32 +274,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetEntityEvents")]
-        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, string cardId)
+        public IHttpActionResult GetEntityEvents(string entityId, string objectTableName, string cardType, string cardId)
         {
-            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
+            var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId);
+            entityId = shipmentIdAndTenant.Item1;
+            var tenant = shipmentIdAndTenant.Item2;
             var result = new List<TraceEventPM>();
-
-            var objectTable = new ObjectTableRepository(authToken.Tenant).GetObjectTableByName(objectTableName, 0, true);
-
+            var objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)
             {
-                var traceEventsRepository = new TraceEventRepository(authToken.Tenant);
+                var traceEventsRepository = new TraceEventRepository(tenant);
                 var traceEventQuery = new TraceEventQuery(traceEventsRepository);
 
-                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(authToken.Tenant, entityId, objectTable.Id);
+                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
 
                 var resultQuery = cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
                                   ? dataQuery.Where(d => d.IsAgentView)
                                   : dataQuery.Where(d => d.IsCustomerView);
 
-                return resultQuery.OrderByDescending(s => s.EventDateTime).ToList();
+                return Ok(resultQuery.OrderByDescending(s => s.EventDateTime).ToList());
             }
 
-            return result;
+            return Ok(result);
         }
 
         [HttpGet]
@@ -309,12 +305,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, authToken.Tenant);
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
+                shipmentId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
+                var shipmentQuery = new ShipmentQuery(tenant);
+                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant);
                 return Ok(routingLegs);
             }
             catch (Exception ex)
@@ -322,5 +318,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
+
     }
 }

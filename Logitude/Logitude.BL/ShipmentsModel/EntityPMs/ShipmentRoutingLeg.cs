@@ -15,6 +15,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierNumberLabel { get; set; }
         public string VesselName { get; set; }
         public DateTime? DepartureDate { get; set; }
+        public string DateType { get; set; }
     }
 
     public class MainRouteInformation : ShipmentRoutingLeg
