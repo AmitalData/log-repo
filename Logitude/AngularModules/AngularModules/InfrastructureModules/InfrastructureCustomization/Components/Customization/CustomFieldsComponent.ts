@@ -106,6 +106,8 @@ export class CustomFieldsComponent {
     AddCustomField() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Add New Custom Field";
+        logWindow.Width = 800;
+        logWindow.Height = 600;
         var windowArgs: any = {};
         this.myService = new GeneralDomainService();
         this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
@@ -144,7 +146,9 @@ export class CustomFieldsComponent {
 
     EditLine(item) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Add New Custom Field";
+        logWindow.Title = "Edit Custom Field";
+        logWindow.Width = 800;
+        logWindow.Height = 600;
         var windowArgs: any = {};
         this.myService = new GeneralDomainService();
         this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {

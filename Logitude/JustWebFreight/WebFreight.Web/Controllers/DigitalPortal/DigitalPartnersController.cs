@@ -23,11 +23,55 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
 using System.Reflection;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.Extensions;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using WebFreight.Web.Extensions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalPartnersController : ApiController
     {
+
+        [HttpGet]
+        [Route("DigitalPartners/NewGetPartnersByFilters")]
+        public IHttpActionResult NewGetPartnersByFilters(string cardId, string searchText = "")
+        {
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            
+            var shipmentRepository = new ShipmentRepository(authToken.Tenant);
+
+            var customfilters = new ShipmentCustomFilter(authToken.Tenant);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
+
+            var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
+                                                &&(a.ConsigneeName.Contains(searchText) 
+                                                   || a.ShipperName.Contains(searchText)))
+                                    .Take(100)
+                                    .SelectMany(a => new List<Partner> 
+                                    {
+                                        new Partner
+                                        { 
+                                            Id = a.ConsigneeId,
+                                            Name = a.ConsigneeName
+                                        },
+                                        new Partner
+                                        { 
+                                            Id = a.ShipperId,
+                                            Name = a.ShipperName
+                                        } 
+                                    })
+                                    .DistinctBy(a => a.Id)
+                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
+                                    .Take(10)
+                                    .ToList();
+
+            return Ok(partners);
+        }
 
         [HttpGet]
         [Route("DigitalPartners/GetPartnersByFilters")]
@@ -212,6 +256,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);

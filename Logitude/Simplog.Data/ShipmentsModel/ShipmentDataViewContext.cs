@@ -50,9 +50,7 @@ namespace Simplog.Data.ShipmentsModel
         {
             get;
             set;
-        }
-
-
+        } 
         public void SetAsModified(object entity)
         {
            

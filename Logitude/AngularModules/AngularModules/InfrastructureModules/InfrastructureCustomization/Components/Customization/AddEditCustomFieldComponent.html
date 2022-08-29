@@ -10,7 +10,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr style="height:50%">
+    <tr [ngStyle]="{'height': ShownAdditionalFilters && LookUpTableId ? '42%' : '100%'}">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -180,7 +180,7 @@
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
                                         <LogLov (SelectedItemChanged)="LookUpTablesSelectionMethod($event)"
                                                 [QueryFilterItems]="LookUpTablesFilterItems"
-                                                [ObjectFieldName]="'ObjectTableId'"
+                                                [ObjectFieldName]="'LookUpTableName'"
                                                 [ObjectTableName]="'ObjectTable'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'ObjectTable'"
@@ -255,43 +255,38 @@
             </table>
         </td>
     </tr>
-    <tr  style="height:45%" *ngIf="ShownAdditionalFilters && LookUpTableId">
+    <tr  style="height:50%" *ngIf="ShownAdditionalFilters && LookUpTableId">
         <td>
-            <div class="ScrollViewer">
-                <div class="ScrollContent">
-                    <table>
-                        <tr style="height: 10px;">
-                            <td style="height: 20px;">
-                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                    Optionally, create a filter to limit the records available to users in the lookup field.
-                                </label>
-                            </td>
-                        </tr>
-                        <tr style="height: 10px;">
-                            <td style="height: 20px;">
-                                <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
-                                <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
-                                <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
-                                    {{ShownAdditionalFiltersSettings ? 'Hide' : 'Show'}} Filter Settings
-                                </label>
-                            </td>
-                        </tr>
-                        <tr  *ngIf="ShownAdditionalFiltersSettings">
-                            <td>
-                                <div style="width:102%;overflow-x:auto;overflow-y:auto;">
-                                    <QueryFilterTree [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr *ngIf="!ShownAdditionalFiltersSettings">
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                </div>
-            </div>
+            <table>
+                <tr style="height: 10px;">
+                    <td style="height: 20px;">
+                        <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                            Optionally, create a filter to limit the records available to users in the lookup field.
+                        </label>
+                    </td>
+                </tr>
+                <tr style="height: 10px;">
+                    <td style="height: 20px;">
+                        <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                        <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                        <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
+                            {{ShownAdditionalFiltersSettings ? 'Hide' : 'Show'}} Filter Settings
+                        </label>
+                    </td>
+                </tr>
+                <tr *ngIf="ShownAdditionalFiltersSettings">
+                    <td>
+                        <ScrollViewer [IsTowSides]="true">
+                            <QueryFilterTree style="position:absolute;" [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
+                        </ScrollViewer>
+                    </td>
+                </tr>
+                <tr *ngIf="!ShownAdditionalFiltersSettings">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 

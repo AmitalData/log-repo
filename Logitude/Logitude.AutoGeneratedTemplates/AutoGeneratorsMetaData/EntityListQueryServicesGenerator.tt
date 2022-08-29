@@ -423,7 +423,11 @@ namespace <#= querylistservicenamespacestring #>
             this.context = context;
         }
 
-        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant)
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -452,6 +456,7 @@ namespace <#= querylistservicenamespacestring #>
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -548,7 +553,14 @@ namespace <#= querylistservicenamespacestring #>
            
         }
 
-        public int GetListCount(QueryOperations queryOperations<#= tenantParam #>)
+
+		
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #> ){
+		 		  return GetListCount(queryOperations<#= tenantParamValue #>, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #>  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -572,14 +584,18 @@ namespace <#= querylistservicenamespacestring #>
             
 			iQueryable = filter.GetFilteredQuery<<#= tableName #>>(nonListQueryOperation, iQueryable);
 
+
+
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 <#+

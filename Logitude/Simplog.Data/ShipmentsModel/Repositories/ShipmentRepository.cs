@@ -344,6 +344,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentDataView> GetShipmentViewsByTenant(int tenant)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
+
             if (useSecondaryDB)
             {
                 dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
@@ -356,6 +357,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
             // end of Temporary Code
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
+            return result;
+        }
+
+        public IQueryable<ShipmentDataView> GetDigitalShipmentViewsByTenant(int tenant)
+        { 
+            IQueryable<ShipmentDataView> result = (from f in context.ShipmentDigitalDataViews where f.Tenant == tenant select f);
             return result;
         }
 

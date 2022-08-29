@@ -389,6 +389,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WarehouseFreeDays = shipment.WarehouseStorageFreeDays == null ? 0 : shipment.WarehouseStorageFreeDays.Value;
                     invoicedataprovider.PreCarriageVessel = shipment.PreCarriageVesselName;
                     invoicedataprovider.PreForwardingVessel = shipment.PreForwardingVesselName;
+                    invoicedataprovider.ConnectedQuoteNumber = shipment.QuoteNumber;
 
                     User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
                     if (salesman != null)

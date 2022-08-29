@@ -153,6 +153,7 @@ export class WarehouseEntryPackagesReleasePMService {
         if (!entityPM) {
             
             entityPM = new WarehouseEntryPackagesReleasePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class WarehouseEntryPackagesReleasePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

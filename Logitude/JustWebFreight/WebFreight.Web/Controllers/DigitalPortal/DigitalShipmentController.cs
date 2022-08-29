@@ -25,6 +25,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
+using Simplog.Data.ShipmentsModel;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -42,7 +43,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant);
+                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant, cardId);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
@@ -103,29 +104,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
                 {
-                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
+                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
                 }
 
-                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", authToken.Tenant);
 
-                if (newFilters.AdditionalFilters.Any())
+                foreach (var filter in newFilters.AdditionalFilters)
                 {
-                    foreach (var filter in newFilters.AdditionalFilters)
-                    {
-                        var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
 
-                        if (field != null)
-                        {
-                            string valuestring1 = filter.FieldValue?.ToString();
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                            string valuestring2 = filter.FieldValue2?.ToString();
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue?.ToString();
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        string valuestring2 = filter.FieldValue2?.ToString();
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
                     }
                 }
 
@@ -133,7 +131,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
                 var customfilters = new ShipmentCustomFilter(authToken.Tenant);
-                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
+
+                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+
                 var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
 
                 if (MySearchFilter != null)
@@ -143,7 +143,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.QueryFilterItems.Remove(MySearchFilter);
                 }
 
-                shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
+                shipments = customfilters.GetFilteredQuery(queryOperations, shipments, shipmentRepository);
 
                 var nonListQueryOperation = new QueryOperations
                 {
@@ -235,7 +235,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                List<ShipmentList> listQuery = listQuery = entityLists.ToList();
+                List<ShipmentList> listQuery = entityLists.ToList();
 
                 myShipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 

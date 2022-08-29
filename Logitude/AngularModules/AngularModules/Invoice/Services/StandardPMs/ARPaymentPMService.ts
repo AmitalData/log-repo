@@ -12,187 +12,184 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
+import { ARPaymentPM } from '../../EntityPMs/ARPaymentPM';
 
-import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
-import {LedgerTransactionPM} from 'Accounting/EntityPMs/LedgerTransactionPM';
-import {ARPaymentChequeReplicaPM} from '../../EntityPMs/ARPaymentChequeReplicaPM';
-import {ARPaymentBankTranferPM} from '../../EntityPMs/ARPaymentBankTranferPM';
-import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
-import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
+import { ARPaymentInvoicePM } from '../../EntityPMs/ARPaymentInvoicePM';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
+import { ARPaymentChequeReplicaPM } from '../../EntityPMs/ARPaymentChequeReplicaPM';
+import { ARPaymentBankTranferPM } from '../../EntityPMs/ARPaymentBankTranferPM';
+import { ARPaymentPMInitService } from '../../EntityPMInitServices/ARPaymentPMInitService';
+import { ARPaymentValidator } from '../../Validators/ARPaymentValidator';
 
 @Injectable()
 
 export class ARPaymentPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpayments';
     }
 
-	get(id: string) {
+    get(id: string) {
 
-		var callTime = new Date();
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var entity: ARPaymentPM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-                      ARPaymentPMInitService.InitValues(entity, false);
-                      ARPaymentPMInitService.ApplyUIPoperties(entity, false);
-						}
+                        var entity: ARPaymentPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                            ARPaymentPMInitService.InitValues(entity, false);
+                            ARPaymentPMInitService.ApplyUIPoperties(entity, false);
+                        }
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "GetSinglePM", 'id=' + id);
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "GetSinglePM", 'id=' + id);
 
-						return serviceResponse;
+                        return serviceResponse;
 
-					}),
+                    }),
 
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-	insert(entityPM: ARPaymentPM) {
+    insert(entityPM: ARPaymentPM) {
 
-		var callTime = new Date();
+        var callTime = new Date();
 
-		return defer(() => {
+        return defer(() => {
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
-			var errorsArray = validator.Validate("ARPayment", entityPM);
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ARPayment", entityPM);
 
-			var customValidator :ARPaymentValidator = new ARPaymentValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+            var customValidator: ARPaymentValidator = new ARPaymentValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: ARPaymentPM = this.MapJsonToEntityPM(entityPM, false);
+                var mappedEntity: ARPaymentPM = this.MapJsonToEntityPM(entityPM, false);
 
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ARPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ARPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
 
-							return serviceResponse;
-						}),
+                            return serviceResponse;
+                        }),
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                        catchError(ServiceHelper.HandleServiceError));
+            }
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
 
-	update(entityPM: ARPaymentPM) {
+    update(entityPM: ARPaymentPM) {
 
-		var callTime = new Date();
+        var callTime = new Date();
 
-		return defer(() => {
+        return defer(() => {
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
-			var errorsArray = validator.Validate("ARPayment", entityPM);
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ARPayment", entityPM);
 
-			var customValidator :ARPaymentValidator = new ARPaymentValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+            var customValidator: ARPaymentValidator = new ARPaymentValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: ARPaymentPM = this.MapJsonToEntityPM(entityPM, false);
+                var mappedEntity: ARPaymentPM = this.MapJsonToEntityPM(entityPM, false);
 
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ARPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ARPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
 
-							return serviceResponse;
-						}),
+                            return serviceResponse;
+                        }),
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                        catchError(ServiceHelper.HandleServiceError));
+            }
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
 
 
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
 
 
         if (!entityPM) {
 
             entityPM = new ARPaymentPM();
-			entityPM.DisableMarkAsDirty = true;
+            entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
+            var property = jsonPMKeys[key];
 
-			  if(customFields.indexOf(property) > -1)
-                {
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -202,61 +199,61 @@ export class ARPaymentPMService {
                 entityPM[property] = jsonPM[property];
             }
 
-            }
+        }
 
-               this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapARPaymentChequeReplicas(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapARPaymentBankTranfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapARPaymentChequeReplicas(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapARPaymentBankTranfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
 
 
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
 
             entityPM.OldEntityPM.PaymentInvoices = [];
             for (var item in entityPM.PaymentInvoices) {
-            var myARPaymentInvoicePM = entityPM.PaymentInvoices[item];
-            var newARPaymentInvoicePM: ARPaymentInvoicePM = this.clone(myARPaymentInvoicePM);
+                var myARPaymentInvoicePM = entityPM.PaymentInvoices[item];
+                var newARPaymentInvoicePM: ARPaymentInvoicePM = this.clone(myARPaymentInvoicePM);
 
 
-            entityPM.OldEntityPM.PaymentInvoices.push(newARPaymentInvoicePM);
+                entityPM.OldEntityPM.PaymentInvoices.push(newARPaymentInvoicePM);
             }
 
             entityPM.OldEntityPM.InvoicesLedgerTransactions = [];
             for (var item in entityPM.InvoicesLedgerTransactions) {
-            var myLedgerTransactionPM = entityPM.InvoicesLedgerTransactions[item];
-            var newLedgerTransactionPM: LedgerTransactionPM = this.clone(myLedgerTransactionPM);
+                var myLedgerTransactionPM = entityPM.InvoicesLedgerTransactions[item];
+                var newLedgerTransactionPM: LedgerTransactionPM = this.clone(myLedgerTransactionPM);
 
 
-            entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
+                entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
             }
 
             entityPM.OldEntityPM.ARPaymentChequeReplicas = [];
             for (var item in entityPM.ARPaymentChequeReplicas) {
-            var myARPaymentChequeReplicaPM = entityPM.ARPaymentChequeReplicas[item];
-            var newARPaymentChequeReplicaPM: ARPaymentChequeReplicaPM = this.clone(myARPaymentChequeReplicaPM);
+                var myARPaymentChequeReplicaPM = entityPM.ARPaymentChequeReplicas[item];
+                var newARPaymentChequeReplicaPM: ARPaymentChequeReplicaPM = this.clone(myARPaymentChequeReplicaPM);
 
 
-            entityPM.OldEntityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
+                entityPM.OldEntityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
             }
 
             entityPM.OldEntityPM.ARPaymentBankTranfers = [];
             for (var item in entityPM.ARPaymentBankTranfers) {
-            var myARPaymentBankTranferPM = entityPM.ARPaymentBankTranfers[item];
-            var newARPaymentBankTranferPM: ARPaymentBankTranferPM = this.clone(myARPaymentBankTranferPM);
+                var myARPaymentBankTranferPM = entityPM.ARPaymentBankTranfers[item];
+                var newARPaymentBankTranferPM: ARPaymentBankTranferPM = this.clone(myARPaymentBankTranferPM);
 
 
-            entityPM.OldEntityPM.ARPaymentBankTranfers.push(newARPaymentBankTranferPM);
+                entityPM.OldEntityPM.ARPaymentBankTranfers.push(newARPaymentBankTranferPM);
             }
 
-		}
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
     }
@@ -279,15 +276,14 @@ export class ARPaymentPMService {
             if (mapParent) {
                 newARPaymentInvoicePM = new ARPaymentInvoicePM(entityPM);
             }
-            else
-            {
+            else {
                 newARPaymentInvoicePM = new ARPaymentInvoicePM(null);
             }
- 			newARPaymentInvoicePM.DisableMarkAsDirty = true;
+            newARPaymentInvoicePM.DisableMarkAsDirty = true;
 
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -300,7 +296,7 @@ export class ARPaymentPMService {
                 newARPaymentInvoicePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newARPaymentInvoicePM.OldEntityPM = this.clone(newARPaymentInvoicePM);
-//file not found! child composition ARPaymentInvoice
+                //file not found! child composition ARPaymentInvoice
 
 
             }
@@ -311,28 +307,28 @@ export class ARPaymentPMService {
                         newARPaymentInvoicePM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARPaymentInvoicePM.ChangeSetOp = "Insert";
+                    newARPaymentInvoicePM.ChangeSetOp = "Insert";
                 }
-//file not found! child composition ARPaymentInvoice
+                //file not found! child composition ARPaymentInvoice
 
                 newARPaymentInvoicePM.OldEntityPM = null;
                 newARPaymentInvoicePM.EntityParentPM = null;
             }
-			 newARPaymentInvoicePM.DisableMarkAsDirty = false;
-			 newARPaymentInvoicePM.IsDirty = false;
+            newARPaymentInvoicePM.DisableMarkAsDirty = false;
+            newARPaymentInvoicePM.IsDirty = false;
             entityPM.PaymentInvoices.push(newARPaymentInvoicePM);
         }
         if (oldPaymentInvoices) {
 
             for (var itemKey in oldPaymentInvoices) {
-                if (entityPM.PaymentInvoices.filter(p=> p.UniqueKey === oldPaymentInvoices[itemKey].UniqueKey).length === 0) {
+                if (entityPM.PaymentInvoices.filter(p => p.UniqueKey === oldPaymentInvoices[itemKey].UniqueKey).length === 0) {
 
                     if (oldPaymentInvoices[itemKey]) {
                         //oldPaymentInvoices[itemKey].ChangeSetOp = "Delete";
                         //entityPM.PaymentInvoices.push(oldPaymentInvoices[itemKey]);
-						var oldItemJson = oldPaymentInvoices[itemKey];
+                        var oldItemJson = oldPaymentInvoices[itemKey];
                         var deletedPM: ARPaymentInvoicePM = new ARPaymentInvoicePM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -344,11 +340,11 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 
-//file not found! child composition ARPaymentInvoice
+                        //file not found! child composition ARPaymentInvoice
                         deletedPM.OldEntityPM = null;
                         entityPM.PaymentInvoices.push(deletedPM);
                     }
@@ -356,7 +352,7 @@ export class ARPaymentPMService {
             }
         }
     }
-//file not found! for child composition ARPaymentInvoice
+    //file not found! for child composition ARPaymentInvoice
     MapInvoicesLedgerTransactions(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
 
         entityPM.InvoicesLedgerTransactions = new Array<LedgerTransactionPM>();
@@ -368,17 +364,17 @@ export class ARPaymentPMService {
             }
             var newLedgerTransactionPM: LedgerTransactionPM;
             newLedgerTransactionPM = new LedgerTransactionPM();
-		    newLedgerTransactionPM.DisableMarkAsDirty = true;
+            newLedgerTransactionPM.DisableMarkAsDirty = true;
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newLedgerTransactionPM[pmProperty] = jItem[pmProperty];
             }
-			newLedgerTransactionPM.DisableMarkAsDirty = false;
+            newLedgerTransactionPM.DisableMarkAsDirty = false;
             newLedgerTransactionPM.IsDirty = false;
             entityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
         }
@@ -401,15 +397,14 @@ export class ARPaymentPMService {
             if (mapParent) {
                 newARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(entityPM);
             }
-            else
-            {
+            else {
                 newARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
             }
- 			newARPaymentChequeReplicaPM.DisableMarkAsDirty = true;
+            newARPaymentChequeReplicaPM.DisableMarkAsDirty = true;
 
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -432,27 +427,27 @@ export class ARPaymentPMService {
                         newARPaymentChequeReplicaPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARPaymentChequeReplicaPM.ChangeSetOp = "Insert";
+                    newARPaymentChequeReplicaPM.ChangeSetOp = "Insert";
                 }
 
                 newARPaymentChequeReplicaPM.OldEntityPM = null;
                 newARPaymentChequeReplicaPM.EntityParentPM = null;
             }
-			 newARPaymentChequeReplicaPM.DisableMarkAsDirty = false;
-			 newARPaymentChequeReplicaPM.IsDirty = false;
+            newARPaymentChequeReplicaPM.DisableMarkAsDirty = false;
+            newARPaymentChequeReplicaPM.IsDirty = false;
             entityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
         }
         if (oldARPaymentChequeReplicas) {
 
             for (var itemKey in oldARPaymentChequeReplicas) {
-                if (entityPM.ARPaymentChequeReplicas.filter(p=> p.UniqueKey === oldARPaymentChequeReplicas[itemKey].UniqueKey).length === 0) {
+                if (entityPM.ARPaymentChequeReplicas.filter(p => p.UniqueKey === oldARPaymentChequeReplicas[itemKey].UniqueKey).length === 0) {
 
                     if (oldARPaymentChequeReplicas[itemKey]) {
                         //oldARPaymentChequeReplicas[itemKey].ChangeSetOp = "Delete";
                         //entityPM.ARPaymentChequeReplicas.push(oldARPaymentChequeReplicas[itemKey]);
-						var oldItemJson = oldARPaymentChequeReplicas[itemKey];
+                        var oldItemJson = oldARPaymentChequeReplicas[itemKey];
                         var deletedPM: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -464,7 +459,7 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 
@@ -493,15 +488,14 @@ export class ARPaymentPMService {
             if (mapParent) {
                 newARPaymentBankTranferPM = new ARPaymentBankTranferPM(entityPM);
             }
-            else
-            {
+            else {
                 newARPaymentBankTranferPM = new ARPaymentBankTranferPM(null);
             }
- 			newARPaymentBankTranferPM.DisableMarkAsDirty = true;
+            newARPaymentBankTranferPM.DisableMarkAsDirty = true;
 
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -524,27 +518,27 @@ export class ARPaymentPMService {
                         newARPaymentBankTranferPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARPaymentBankTranferPM.ChangeSetOp = "Insert";
+                    newARPaymentBankTranferPM.ChangeSetOp = "Insert";
                 }
 
                 newARPaymentBankTranferPM.OldEntityPM = null;
                 newARPaymentBankTranferPM.EntityParentPM = null;
             }
-			 newARPaymentBankTranferPM.DisableMarkAsDirty = false;
-			 newARPaymentBankTranferPM.IsDirty = false;
+            newARPaymentBankTranferPM.DisableMarkAsDirty = false;
+            newARPaymentBankTranferPM.IsDirty = false;
             entityPM.ARPaymentBankTranfers.push(newARPaymentBankTranferPM);
         }
         if (oldARPaymentBankTranfers) {
 
             for (var itemKey in oldARPaymentBankTranfers) {
-                if (entityPM.ARPaymentBankTranfers.filter(p=> p.UniqueKey === oldARPaymentBankTranfers[itemKey].UniqueKey).length === 0) {
+                if (entityPM.ARPaymentBankTranfers.filter(p => p.UniqueKey === oldARPaymentBankTranfers[itemKey].UniqueKey).length === 0) {
 
                     if (oldARPaymentBankTranfers[itemKey]) {
                         //oldARPaymentBankTranfers[itemKey].ChangeSetOp = "Delete";
                         //entityPM.ARPaymentBankTranfers.push(oldARPaymentBankTranfers[itemKey]);
-						var oldItemJson = oldARPaymentBankTranfers[itemKey];
+                        var oldItemJson = oldARPaymentBankTranfers[itemKey];
                         var deletedPM: ARPaymentBankTranferPM = new ARPaymentBankTranferPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -556,7 +550,7 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 
@@ -568,7 +562,7 @@ export class ARPaymentPMService {
         }
     }
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
@@ -586,15 +580,15 @@ export class ARPaymentPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {
-		    var entityPM: ARPaymentPM;
-			entityPM = new ARPaymentPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
+    public GetNewEntityPM() {
+        var entityPM: ARPaymentPM;
+        entityPM = new ARPaymentPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
 
-			ARPaymentPMInitService.InitValues(entityPM, true);
-			ARPaymentPMInitService.ApplyUIPoperties(entityPM, true);
+        ARPaymentPMInitService.InitValues(entityPM, true);
+        ARPaymentPMInitService.ApplyUIPoperties(entityPM, true);
 
-			return entityPM;
+        return entityPM;
     }
 
 

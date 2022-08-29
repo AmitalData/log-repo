@@ -34,6 +34,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.DigitalModels;
 using System.Threading.Tasks;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -130,7 +131,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false)
+        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false, string cardId = null)
         {
             int tenant = shipment.Tenant;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(shipment.Tenant);
@@ -1926,6 +1927,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.EntityStatus != null)
             {
                 shipmentPM.StatusName = shipment.EntityStatus.Name;
+                shipmentPM.StatusCode = shipment.EntityStatus.Code;
                 shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             }
 
@@ -1962,9 +1964,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
-                IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
                 Shipment masterShipment = (from a in repShipmentContext.Shipments
                                            where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
                                            select a).FirstOrDefault();
@@ -2333,7 +2336,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #region ShipmenConsoleShipments
                 if (shipmentPM.ShipmentLevelCode == "C")
                 {
-                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(this.repository.context);
+                    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(repShipmentContext);
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
                 #endregion
@@ -2358,7 +2361,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-            CheckInvoicedFields(shipmentPM);
+            CheckDigitalPortalInvoicedFields(shipmentPM, cardId);
 
             #region Pickups & Deliveries
 
@@ -2647,14 +2650,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        private void CheckInvoicedFields(ShipmentPM shipmentPM)
+        private void CheckDigitalPortalInvoicedFields(ShipmentPM shipmentPM, string cardId)
         {
+            if (string.IsNullOrEmpty(cardId))
+            {
+                return;
+            }
+
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
                 return;
             }
-            shipmentPM.IsFullInvoiced = shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null).Any();
+
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
+            List<ARInvoice> invoices = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant);
+            shipmentPM.IsFullInvoiced = invoices?.Count() > 0 ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -4332,7 +4343,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return mixPanelEvent;
         }
 
-        public ShipmentPM GetSinglePM(string id, int tenant)
+        public ShipmentPM GetSinglePM(string id, int tenant, string cardId = null)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -4361,7 +4372,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM shipmentPM = new ShipmentPM();
 
 
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
@@ -4369,9 +4380,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
-                    var CLoudData = repository.context
-                                              .ShipmentAdditionalCloudDatas
-                                              .FirstOrDefault(a => a.Id == shipment.Id);
+
+
+
+                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                     where a.Id == shipment.Id
+                                     select a).FirstOrDefault();
 
                     if (CLoudData != null)
                     {
@@ -4394,7 +4408,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
-                    MapShipmentComputedFields(returnShipment , masterData);
+
+
+
+                    MapShipmentComputedFields(returnShipment, masterData);
+
                     return returnShipment;
                 }
                 else
@@ -11008,8 +11026,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            //IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
+            //ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
             IQueryable<Shipment> iQueryable_Shipments = (from f in shipmentsContext.Shipments where f.Tenant == tenant && f.IsCancelled == false select f);
 
@@ -11026,95 +11044,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => d.TransportModeId == transportModeId);
             }
 
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime lastWeekDate = todayDate.AddDays(-7);
+
 
             // Operational Open
             IQueryable<Shipment> iQueryable_OperationalOpen = iQueryable_Shipments.Where(d => d.IsOperationalClosed == false);
-            myResult.OperationalOpenCount_DH = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "A").Take(1001).Count();
-            myResult.OperationalOpenCount_DC = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C").Take(1001).Count();
-            myResult.ImportShipmentsCount = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode != "C" && ((d.DirectionId == "C" && d.NoFreightFile == true) || d.DirectionId == "I")).Take(1001).Count();
+            myResult.OperationalOpenCount_DH = GetOperationalOpenCount_DH(tenant, iQueryable_OperationalOpen);
+            myResult.OperationalOpenCount_DC = GetOperationalOpenCount_DC(tenant, iQueryable_OperationalOpen);
+            myResult.ImportShipmentsCount = GetImportShipmentsCount(tenant, iQueryable_OperationalOpen);
 
             // Accounting Open
             IQueryable<Shipment> iQueryable_AccountingOpen = iQueryable_Shipments.Where(d => d.IsAccountingClosed == false);
-            myResult.AccountingOpenCount_DH = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && d.ShipmentReceivableStatusCode == "OPEN").Take(1001).Count();
-            myResult.AccountingOpenCount_DC = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C") && d.ShipmentPayableStatusCode == "OPEN").Take(1001).Count();
+            myResult.AccountingOpenCount_DH = GetAccountingOpenCount_DH(tenant, iQueryable_AccountingOpen);
+            myResult.AccountingOpenCount_DC = GetAccountingOpenCount_DC(tenant, iQueryable_AccountingOpen);
 
             // FSR
-            myResult.LastSentFSRCount = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate).Take(1001).Count();
+            myResult.LastSentFSRCount = GetLastSentFSRCount(tenant, iQueryable_Shipments);
 
 
             // EAWB
-            myResult.OperationalOpenCount_LWU = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.CarrierLastStatusDate >= lastWeekDate).Take(1001).Count();
+            myResult.OperationalOpenCount_LWU = GetOperationalOpenCount_LWU(tenant, iQueryable_Shipments);
 
             if (hasETDFeature)
             {
-                List<string> unwantedStatuesId = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && (d.Code == "SARR" || d.Code == "SDLD") select d.Id).ToList();
-                string statusId1 = unwantedStatuesId[0];
-                string statusId2 = unwantedStatuesId[1];
-
-                myResult.OperationalOpenCount_ETD = (from myShipment in iQueryable_Shipments
-                                                     join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                     from myMasterData in ShipmentsMasters
-                                                     where myShipment.Tenant == tenant
-                                                     && myShipment.ShipmentLevelCode != "H"
-                                                     && myShipment.DirectionId == "E"
-                                                     && myShipment.TransportModeId == "A"
-                                                     && myShipment.StatusId != statusId1
-                                                     && myShipment.StatusId != statusId2
-                                                     && myMasterData.Tenant == tenant
-                                                     && myMasterData.MainCarriageATD == null
-                                                     && myMasterData.MainCarriageATA == null
-                                                     && myMasterData.MainCarriageETD != null
-                                                     && System.Data.Entity.DbFunctions.TruncateTime(myMasterData.MainCarriageETD) > lastWeekDate
-                                                     select myShipment).Take(1001).Count();
+                myResult.OperationalOpenCount_ETD = GetOperationalOpenCount_ETD(tenant, iQueryable_Shipments,shipmentsContext);
             }
 
             if (hasExpDepNotTransmittedFeature)
             {
-                myResult.ExpectedDeparturesNotTransmittedCount = (from myShipment in iQueryable_Shipments
-                                                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                                  from myMasterData in ShipmentsMasters
-                                                                  where myShipment.Tenant == tenant
-                                                                  && myShipment.ShipmentLevelCode != "H"
-                                                                  && myShipment.DirectionId == "E"
-                                                                  && myShipment.TransportModeId == "O"
-                                                                  && myShipment.INTTRASIStatusCode == "NSEN"
-                                                                  && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
-                                                                  && myMasterData.Tenant == tenant
-                                                                  && myMasterData.MainCarriageATD == null
-                                                                  && myMasterData.MainCarriageETD != null
-                                                                  select myShipment).Take(1001).Count();
+                myResult.ExpectedDeparturesNotTransmittedCount = GetExpectedDeparturesNotTransmittedCount(tenant, iQueryable_Shipments, shipmentsContext);
             }
 
             if (hasShippingInstructionsLast7DaysFeature)
             {
-                myResult.ShippingInstructionsLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+                myResult.ShippingInstructionsLast7DaysCount = GetShippingInstructionsLast7DaysCount(tenant, iQueryable_Shipments);
             }
 
             if (hasContainerStatusLast7DaysFeature)
             {
-                myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+                myResult.ContainerStatusLast7DaysCount = GetContainerStatusLast7DaysCount(tenant, iQueryable_Shipments);
             }
 
             if (hasEBookingInProgress)
             {
-                myResult.EBookingInProgressCount = (from myShipment in iQueryable_Shipments
-                                                    join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                                    from myMasterData in ShipmentsMasters
-                                                    where myShipment.Tenant == tenant
-                                                    && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
-                                                    && myShipment.DirectionId == "E"
-                                                    && myShipment.TransportModeId == "O"
-                                                    && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
-                                                    && myMasterData.Tenant == tenant
-                                                    && myMasterData.MainCarriageATD == null
-                                                    select myShipment).Take(1001).Count();
+                myResult.EBookingInProgressCount = GetEBookingInProgressCount(tenant, iQueryable_Shipments, shipmentsContext);
 
             }
             // Others
-            myResult.CreditLimitBlockedCount = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001).Count();
-
+            myResult.CreditLimitBlockedCount = GetCreditLimitBlockedCount(tenant, iQueryable_Shipments);
             if (hasFollowupsFeature)
             {
                 int allFollowUpsCount = 0;
@@ -11134,15 +11110,363 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     allFollowups = allFollowups.Where(d => d.TransportModeId == transportModeId);
                 }
 
-                allFollowUpsCount = allFollowups.Take(1001).Count();
-                myFollowUpsCount = allFollowups.Where(d => d.FollowUpOwnerId == loggedContactId).Take(1001).Count();
-
-                myResult.AllFollowUpsCount = allFollowUpsCount;
-                myResult.MyFollowUpsCount = myFollowUpsCount;
+                myResult.AllFollowUpsCount = GetAllFollowUpsCount(tenant, allFollowups);
+                myResult.MyFollowUpsCount = GetMyFollowUpsCount(tenant,loggedContactId, allFollowups); 
             }
 
             return myResult;
         }
+
+        private int GetOperationalOpenCount_DH(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var OperationalOpenCount_DH = "OperationalOpenCount_DH" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "A").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_DH) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_DH);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_DH, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetOperationalOpenCount_DC(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var OperationalOpenCount_DC = "OperationalOpenCount_DC" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_DC) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_DC);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_DC, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetImportShipmentsCount(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
+        {
+            int count = 0;
+            var ImportShipmentsCount = "ImportShipmentsCount" + tenant;
+
+            var iQueryableData = iQueryable_OperationalOpen.Where(d => d.ShipmentLevelCode != "C" && ((d.DirectionId == "C" && d.NoFreightFile == true) || d.DirectionId == "I")).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ImportShipmentsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ImportShipmentsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ImportShipmentsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+
+        private int GetAccountingOpenCount_DH(int tenant, IQueryable<Shipment> iQueryable_AccountingOpen)
+        {
+            int count = 0;
+            var AccountingOpenCount_DH = "AccountingOpenCount_DH" + tenant;
+
+            var iQueryableData = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && d.ShipmentReceivableStatusCode == "OPEN").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AccountingOpenCount_DH) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AccountingOpenCount_DH);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AccountingOpenCount_DH, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+        private int GetAccountingOpenCount_DC(int tenant, IQueryable<Shipment> iQueryable_AccountingOpen)
+        {
+            int count = 0;
+            var AccountingOpenCount_DC = "AccountingOpenCount_DC" + tenant;
+
+            var iQueryableData = iQueryable_AccountingOpen.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C") && d.ShipmentPayableStatusCode == "OPEN").Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AccountingOpenCount_DC) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AccountingOpenCount_DC);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AccountingOpenCount_DC, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+
+
+        }
+
+        private int GetLastSentFSRCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var LastSentFSRCount = "LastSentFSRCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.TransportModeId == "A" && d.LastFSRStatusRequestDate >= lastWeekDate).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(LastSentFSRCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(LastSentFSRCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(LastSentFSRCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+        private int GetOperationalOpenCount_LWU(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var OperationalOpenCount_LWU = "OperationalOpenCount_LWU" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.ShipmentLevelCode != "H" && d.CarrierLastStatusDate >= lastWeekDate).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_LWU) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_LWU);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_LWU, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        
+        //-----------------------
+        private int GetOperationalOpenCount_ETD(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var OperationalOpenCount_ETD = "OperationalOpenCount_ETD" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
+
+
+            List<string> unwantedStatuesId = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && (d.Code == "SARR" || d.Code == "SDLD") select d.Id).ToList();
+            string statusId1 = unwantedStatuesId[0];
+            string statusId2 = unwantedStatuesId[1];
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && myShipment.ShipmentLevelCode != "H"
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "A"
+                                  && myShipment.StatusId != statusId1
+                                  && myShipment.StatusId != statusId2
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  && myMasterData.MainCarriageATA == null
+                                  && myMasterData.MainCarriageETD != null
+                                  && System.Data.Entity.DbFunctions.TruncateTime(myMasterData.MainCarriageETD) > lastWeekDate
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(OperationalOpenCount_ETD) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(OperationalOpenCount_ETD);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(OperationalOpenCount_ETD, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+
+            return count;
+        }
+        private int GetExpectedDeparturesNotTransmittedCount(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var ExpectedDeparturesNotTransmittedCount = "ExpectedDeparturesNotTransmittedCount" + tenant;
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && myShipment.ShipmentLevelCode != "H"
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "O"
+                                  && myShipment.INTTRASIStatusCode == "NSEN"
+                                  && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  && myMasterData.MainCarriageETD != null
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ExpectedDeparturesNotTransmittedCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ExpectedDeparturesNotTransmittedCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ExpectedDeparturesNotTransmittedCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetEBookingInProgressCount(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
+        {
+            int count = 0;
+            var EBookingInProgressCount = "EBookingInProgressCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+
+            var iQueryableData = (from myShipment in iQueryable_Shipments
+                                  join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                  from myMasterData in ShipmentsMasters
+                                  where myShipment.Tenant == tenant
+                                  && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
+                                  && myShipment.DirectionId == "E"
+                                  && myShipment.TransportModeId == "O"
+                                  && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
+                                  && myMasterData.Tenant == tenant
+                                  && myMasterData.MainCarriageATD == null
+                                  select myShipment).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(EBookingInProgressCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(EBookingInProgressCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(EBookingInProgressCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+        //-----------------------
+        private int GetShippingInstructionsLast7DaysCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var ShippingInstructionsLast7DaysCount = "ShippingInstructionsLast7DaysCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ShippingInstructionsLast7DaysCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ShippingInstructionsLast7DaysCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ShippingInstructionsLast7DaysCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetContainerStatusLast7DaysCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var ContainerStatusLast7DaysCount = "ContainerStatusLast7DaysCount" + tenant;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastWeekDate = todayDate.AddDays(-7);
+
+            var iQueryableData = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(ContainerStatusLast7DaysCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(ContainerStatusLast7DaysCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(ContainerStatusLast7DaysCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+       
+
+        private int GetCreditLimitBlockedCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
+        {
+            int count = 0;
+            var CreditLimitBlockedCount = "CreditLimitBlockedCount" + tenant;
+       
+            var iQueryableData = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(CreditLimitBlockedCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(CreditLimitBlockedCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(CreditLimitBlockedCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetAllFollowUpsCount(int tenant, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        {
+            int count = 0;
+            var AllFollowUpsCount = "AllFollowUpsCount" + tenant;
+
+            var iQueryableData = allFollowups.Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AllFollowUpsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AllFollowUpsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AllFollowUpsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+        private int GetMyFollowUpsCount(int tenant, string loggedContactId, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        {
+            int count = 0;
+            var MyFollowUpsCount = "MyFollowUpsCount" + tenant + loggedContactId;
+
+            var iQueryableData = allFollowups.Where(d => d.FollowUpOwnerId == loggedContactId).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(MyFollowUpsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(MyFollowUpsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(MyFollowUpsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
         public List<FlightSummary> GetShipmentsDashBoardDeparturesArrivals(int tenant, string directionId, string transportModeId)
         {
             List<FlightSummary> myResult = new List<FlightSummary>();
@@ -12947,7 +13271,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
-
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
@@ -12969,357 +13292,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
-                               LastUpdateDate = f.LastUpdateDate,
-                               MainCarriageFromAddressId = f.MainCarriageFromAddressId,
-                               MainCarriageToAddressId = f.MainCarriageToAddressId,
-                               ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
-                               FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
-                               MainCarriageFromCity = f.MainCarriageFromCity,
-                               MainCarriageFromCountryCode = f.MainCarriageFromCountryCode,
-                               MainCarriageToCity = f.MainCarriageToCity,
-                               MainCarriageToCountryCode = f.MainCarriageToCountryCode,
-                               Tenant = f.Tenant,
-                               ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
-                               CarrierLastStatusDate = f.CarrierLastStatusDate,
-                               CarrierLastStatusName = f.CarrierLastStatusName,
-                               CarrierLastStatusCode = f.CarrierLastStatusCode,
-                               ShipmentViewId = f.Id,
-                               Id = f.Id,
-                               Shipper = f.Shipper,
-                               Consignee = f.Consignee,
-                               DirectionId = f.DirectionId,
-                               DirectionName = f.DirectionName,
-                               TransportModeName = f.TransportModeName,
-                               MasterShipmentNumber = f.MasterShipmentNumber,
-                               House = f.House,
-                               CreateDateTime = f.CreateDateTime,
+                               IncotermCode = f.IncotermCode,
                                ShipmentNumber = f.ShipmentNumber,
-                               ShipmentType = f.ShipmentType,
-                               ShipmentTypeName = f.ShipmentTypeName,
-                               ShipmentTypeId = f.ShipmentTypeId,
-                               TransportModeId = f.TransportModeId,
-                               CarrierTransportDocumentNumber = f.CarrierTransportDocumentNumber,
-                               ChargeableWeightInKG = f.ChargeableWeightInKG,
-                               ChargeableWeight = f.ChargeableWeight,
-                               GrossWeight = f.GrossWeight,
-                               ShipperReference1 = f.ShipperReference1,
-                               ShipperCountryCode = f.ShipperCountryCode,
-                               ConsigneeCountryCode = f.ConsigneeCountryCode,
-                               Master = f.Master,
-                               OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
-                               OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
-                               AccountedReceivablesInLocalCurrency = f.AccountedReceivablesInLocalCurrency,
-                               OpenPayablesInLocalCurrency = f.OpenPayablesInLocalCurrency,
-                               ShipmentPayableStatusCode = f.ShipmentPayableStatusCode,
-                               ShipmentReceivableStatusCode = f.ShipmentReceivableStatusCode,
-                               ShipmentPayableStatusName = f.ShipmentPayableStatusName,
-                               ShipmentReceivableStatusName = f.ShipmentReceivableStatusName,
-                               ProfitInLocalCurrency = f.ProfitInLocalCurrency,
-                               ProfitInProfitCurrency = f.ProfitInProfitCurrency,
-                               EstimateProfitInLocalCurrency = f.EstimateProfitInLocalCurrency,
-                               EstimateProfitInProfitCurrency = f.EstimateProfitInProfitCurrency,
-                               BranchId = f.BranchId,
-                               DepartmentId = f.DepartmentId,
-                               MainCarriageETA = f.MainCarriageETA,
-                               MainCarriageATD = f.MainCarriageATD,
-                               LocalCurrencyCode = currentTenant.CurrencyCode,
-                               ProfitCurrencyCode = currentTenant.ProfitCurrencyCode,
-                               NextETA = f.NextETA,
-                               NextETD = f.NextETD,
-                               NextLegName = f.NextLegName,
-                               Routing = f.Routing, 
-                               FromPortId = f.FromPortId,
-                               ToPortId = f.ToPortId,
-                               FromPortCode = f.FromPortCode,
-                               FromPort = f.FromPort,
-                               FromPortName = f.FromPortName,
-                               FromPortCountry = f.MainCarriageFromPortCountryName,
-                               ToPortCode = f.ToPortCode,
-                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
-                               ToPortName = f.ToPortName,
-                               ToPortCountry = f.MainCarriageToPortCountryName,
-                               MasterShipmentDataId = f.MasterShipmentDataId,
-                               BranchName = f.BranchName,
-                               MoveTypeName = f.MoveTypeName,
-                               CustomerName = f.CustomerName,
-                               GrossWeightInKG = f.GrossWeightInKG,
-                               GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
-                               GrossWeightPerTon = f.GrossWeightPerTon,
-                               ShipmentLevelCode = f.ShipmentLevelCode,
-                               ShipmentLevelName = f.ShipmentLevelName,
-                               VolumetricWeight = f.VolumetricWeight,
-                               AirlinePrefix = f.AirlinePrefix,
-                               AccountedPayablesInLocalCurrency = f.AccountedPayablesInLocalCurrency,
-                               AccountedPayablesInProfitCurrency = f.AccountedPayablesInProfitCurrency,
-                               AccountedReceivablesInProfitCurrency = f.AccountedReceivablesInProfitCurrency,
-                               MainCarriageFromPortId = f.MainCarriageFromPortId,
-                               MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
-                               MainCarriageATA = f.MainCarriageATA,
-                               MainCarriageETD = f.MainCarriageETD,
-                               IncotermId = f.IncotermId,
-                               OpenPayablesInProfitCurrency = f.OpenPayablesInProfitCurrency,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
-                               CustomerReference3 = f.CustomerReference3,
-                               PrivateLabelInvoiceNumber = f.PrivateLabelInvoiceNumber,
-                               IssuingCarrierAgentId = f.IssuingCarrierAgentId,
-                               IncotermCode = f.IncotermCode,
-                               MainCarriageCarrierId = f.MainCarriageCarrierId,
-                               AsAgreedFreight = f.AsAgreedFreight,
-                               AsAgreedOtherCharges = f.AsAgreedOtherCharges,
-                               AccountNumber = f.AccountNumber,
-                               AWBPrint = f.AWBPrint,
-                               FNAReason = f.FNAReason,
-                               AgentName = f.AgentName,
-                               Agent = f.Agent,
-                               MainCarriageCarrierName = f.MainCarriageCarrierName,
-                               FinalArrivalDate = f.FinalArrivalDate,
-                               EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
-                               ActualFinalArrivalDate = f.ActualFinalArrivalDate,
-                               VolumeInCBM = f.VolumeInCBM,
-                               TEU = f.TEU,
-                               ProfitExchangeRate = f.ProfitExchangeRate,
-                               LastFSRStatusRequestDate = f.LastFSRStatusRequestDate,
-                               CustomFieldId = f.CustomFileId,
-                               SpecialServicesTypeName = f.SpecialServicesTypeName,
-                               AMSBL = f.AMSBL,
-                               FromPortCountryCode = f.FromPortCountryCode,
-                               FromPortCountryName = f.FromPortCountryName,
-                               ToPortCountryCode = f.ToPortCountryCode,
-                               ToPortCountryName = f.ToPortCountryName,
-                               CarrierNumber = f.CarrierNumber,
-                               AgentId = f.AgentId,
-                               AgentComputed = f.AgentComputed,
-                               ARInvoiceIssued = f.ARInvoiceIssued,
-                               CreditNoteIssued = f.CreditNoteIssued,
-                               CustomFileNumber = f.CustomFileNumber,
-                               FreightForwarderId = f.FreightForwarderId,
-                               FreightForwarderName = f.FreightForwarderName,
-                               ProductCode = f.ProductCode,
-                               IsAccountingClosed = f.IsAccountingClosed,
-                               IsOperationalClosed = f.IsOperationalClosed,
-                               OperationalCloseDate = f.OperationalCloseDate,
-                               AccountingCloseDate = f.AccountingCloseDate,
-                               PackagesQuantity = f.PackagesQuantity,
-                               FHLStatusCode = f.FHLStatusCode,
-                               FHLStatusName = f.FHLStatusName,
-                               FHLStatusDate = f.FHLStatusDate,
-                               FWBStatusCode = f.FWBStatusCode,
-                               FWBStatusName = f.FWBStatusName,
-                               FWBStatusDate = f.FWBStatusDate,
-                               CargonautFHLStatusCode = f.CargonautFHLStatusCode,
-                               CargonautFHLStatusName = f.CargonautFHLStatusName,
-                               CargonautFHLStatusDate = f.CargonautFHLStatusDate,
-                               CargonautFWBStatusCode = f.CargonautFWBStatusCode,
-                               CargonautFWBStatusName = f.CargonautFWBStatusName,
-                               CargonautFWBStatusDate = f.CargonautFWBStatusDate,
-                               NumberOfInsidePackages = f.NumberOfInsidePackages,
-                               NumberOfInsidePackagesDetails = f.NumberOfInsidePackagesDetails,
-                               ConsolidatorId = f.ConsolidatorId,
-                               ConsolidatorName = f.ConsolidatorName,
-                               ConsolidatorNote = f.ConsolidatorNote,
-                               ConsolidatorAddressId = f.ConsolidatorAddressId,
-                               ConsolidatorContactId = f.ConsolidatorContactId,
-                               ConsolidatorReference = f.ConsolidatorReference,
-                               PreCarriageETD = f.PreCarriageETD,
-                               AccountManagerUserName = f.AccountManagerUserName,
-                               SalesmanUserName = f.SalesmanUserName,
-                               CreatedByUserName = f.CreatedByUserName,
-                               ManifestReason = f.ManifestReason,
-                               ManifestStatusCode = f.ManifestStatusCode,
-                               IsMissingDocument = f.IsMissingDocument,
-                               DocumentsSearchFields = f.DocumentsSearchFields,
-                               ConsigneeName = f.ConsigneeName,
-                               ShipperName = f.ShipperName,
-                               ForwarderShipmentNumber = f.ForwarderShipmentNumber,
-                               CustomerShipmentNumber = f.CustomerShipmentNumber,
-                               CustomsDeclarationNumber = f.CustomsDeclarationNumber,
-                               HasException = f.HasException,
-                               ExceptionDescription = f.ExceptionDescription,
-                               ExceptionResolvedDescription = f.ExceptionResolvedDescription,
-                               LastExceptionDescription = f.LastExceptionDescription,
-                               ExceptionDate = f.ExceptionDate,
-                               LastDocumentDateTime = f.LastDocumentDateTime,
-                               MainCarriageExpectedOrActual = f.MainCarriageExpectedOrActual,
-                               MainCarriageETAOrATA = f.MainCarriageETAOrATA,
-                               MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
-                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
-                               MainCarriageFromPortCode = f.MainCarriageFromPortCode,
-                               MainCarriageFromPortCountryName = f.MainCarriageFromPortCountryName,
-                               MainCarriageToPortCode = f.MainCarriageToPortCode,
-                               MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
-                               MainCarriageToPortName = f.MainCarriageToPortName,
-                               MainHarmonize = f.MainHarmonize,
-                               StatusId = f.StatusId,
-                               StatusDate = f.StatusDate,
-                               StatusLocation = f.StatusLocation,
-                               LongMaster = f.LongMaster,
-                               PartnerLogoId = f.PartnerLogoId,
-                               MissingDocumentsCount = f.MissingDocumentsCount,
-                               MissingDocumentsCountWords = f.MissingDocumentsCountWords,
-                               CancelledDate = f.CancelledDate,
-                               PartnerName = f.PartnerName,
-                               MissingDocsNames = f.MissingDocsNames,
-                               NumberOfFollowUps = f.NumberOfFollowUps,
-                               ArchivedText = f.ArchivedText,
-                               CustomerId = f.CustomerId,
-                               IsRequestedDocuments = f.IsRequestedDocuments,
-                               IsDigitalSignRequired = f.IsDigitalSignRequired,
-                               RequestedDocumentsCount = f.RequestedDocumentsCount,
-                               MainCarriageVesselId = f.MainCarriageVesselId,
-                               MainCarriageVesselName = f.MainCarriageVesselName,
-                               BookingConfirmationNumber = f.BookingConfirmationNumber,
-                               DescriptionOfGoods = f.DescriptionOfGoods,
-                               Notes = f.Notes,
-                               IsNewARInvoiceBlocked = f.IsNewARInvoiceBlocked,
-                               OperationalDate = f.OperationalDate,
-                               CutoffDate = f.CutoffDate,
-                               IsImporterApprovalRequried = f.IsImporterApprovalRequried,
-                               ApprovedByUserName = f.ApprovedByUserName,
-                               IsManifestSentToAgent = f.IsManifestSentToAgent,
-                               AgentSharedManifestRef = f.AgentSharedManifestRef,
-                               ValueOfGoods = f.ValueOfGoods,
-                               NumberOfHouses = f.NumberOfHouses,
-                               LocalCustomsTransmissionsStatusCode = f.LocalCustomsTransmissionsStatusCode,
-                               LocalCustomsTransmissionsStatusName = f.LocalCustomsTransmissionsStatusName,
-                               LocalCustomsTransmissionsStatusError = f.LocalCustomsTransmissionsStatusError,
-                               LocalCustomsTransmissionsStatusDate = f.LocalCustomsTransmissionsStatusDate,
-                               LocalCustomsSentByUserName = f.LocalCustomsSentByUserName,
-                               ISFDate = f.ISFDate,
-                               ISFNumber = f.ISFNumber,
-                               ITDate = f.ITDate,
-                               ITNumber = f.ITNumber,
-                               FreightRelease = f.FreightRelease,
-                               TerminalAvailable = f.TerminalAvailable,
-                               Terminal2Available = f.Terminal2Available,
-                               OBLTypeCode = f.OBLTypeCode,
-                               DocumentsClosingDate = f.DocumentsClosingDate,
-                               ENSNumber = f.ENSNumber,
-                               ENSDate = f.ENSDate,
-                               WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
-                               WarehouseLegAddressId = f.WarehouseLegAddressId,
-                               WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
-                               WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,
-                               WarehouseLegActualEntryDate = f.WarehouseLegActualEntryDate,
-                               WarehouseLegExpectedReleaseDate = f.WarehouseLegExpectedReleaseDate,
-                               WarehouseLegActualReleaseDate = f.WarehouseLegActualReleaseDate,
-                               WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
-                               WarehouseLegRemarks = f.WarehouseLegRemarks,
-                               WarehouseLegReference = f.WarehouseLegReference,
-                               WarehouseLegTerminalName = f.WarehouseLegTerminalName,
-                               WarehouseLegAddressCountryCode = f.WarehouseLegAddressCountryCode,
-                               WarehouseLegAddressCountryName = f.WarehouseLegAddressCountryName,
-                               WarehouseLegEntryDate = f.WarehouseLegActualEntryDate != null ? f.WarehouseLegActualEntryDate : f.WarehouseLegExpectedEntryDate,
-                               WarehouseLegReleaseDate = f.WarehouseLegActualReleaseDate != null ? f.WarehouseLegActualReleaseDate : f.WarehouseLegExpectedReleaseDate,
-                               WarehouseLeg2WarehouseId = f.WarehouseLeg2WarehouseId,
-                               WarehouseLeg2AddressId = f.WarehouseLeg2AddressId,
-                               WarehouseLeg2TerminalCode = f.WarehouseLeg2TerminalCode,
-                               WarehouseLeg2ExpectedEntryDate = f.WarehouseLeg2ExpectedEntryDate,
-                               WarehouseLeg2ActualEntryDate = f.WarehouseLeg2ActualEntryDate,
-                               WarehouseLeg2ExpectedReleaseDate = f.WarehouseLeg2ExpectedReleaseDate,
-                               WarehouseLeg2ActualReleaseDate = f.WarehouseLeg2ActualReleaseDate,
-                               WarehouseLeg2Remarks = f.WarehouseLeg2Remarks,
-                               WarehouseLeg2Reference = f.WarehouseLeg2Reference,
-                               WarehouseLeg2TerminalName = f.WarehouseLeg2TerminalName,
-                               WarehouseLeg2AddressCountryCode = f.WarehouseLeg2AddressCountryCode,
-                               WarehouseLeg2AddressCountryName = f.WarehouseLeg2AddressCountryName,
-                               WarehouseLeg2EntryDate = f.WarehouseLeg2ActualEntryDate != null ? f.WarehouseLeg2ActualEntryDate : f.WarehouseLeg2ExpectedEntryDate,
-                               WarehouseLeg2ReleaseDate = f.WarehouseLeg2ActualReleaseDate != null ? f.WarehouseLeg2ActualReleaseDate : f.WarehouseLeg2ExpectedReleaseDate,
-                               RegistryDate = f.RegistryDate,
-                               TrailerNumber = f.TrailerNumber,
-                               IsAssembly = f.IsAssembly,
-                               LastSharedEventId = f.LastSharedEventId,
-                               LastSharedEventName = f.LastSharedEventName,
-                               LastSharedEventLocation = f.LastSharedEventLocation,
-                               LastSharedEventNotes = f.LastSharedEventNotes,
-                               LastSharedEventDate = f.LastSharedEventDate,
-                               ManifestLastSharingDate = f.ManifestLastSharingDate,
-                               NumberOfPackages = f.NumberOfPackages,
-                               NumberOfContainers = f.NumberOfContainers,
-                               FirstOperationalCloseDate = f.FirstOperationalCloseDate,
-                               FirstAccountingCloseDate = f.FirstAccountingCloseDate,
-                               DeclarationNumber = f.DeclarationNumber,
-                               CustomsClearanceDate = f.CustomsClearanceDate,
-                               IncludesCustoms = f.IncludesCustoms,
-                               DeclarationDate = f.DeclarationDate,
-                               INTTRASIError = f.INTTRASIError,
-                               INTTRASIStatusCode = f.INTTRASIStatusCode,
-                               INTTRASIStatusName = f.INTTRASIStatusName,
-                               INTTRASIStatusDate = f.INTTRASIStatusDate,
-                               INTTRABookingStatusCode = f.INTTRABookingStatusCode,
-                               INTTRABookingStatusName = f.INTTRABookingStatusName,
-                               INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
-                               INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
-                               INTTRABookingError = f.INTTRABookingError,
-                               INTTRALastBookingResponse = f.INTTRALastBookingResponse,
-                               LastFinalDestination = f.LastFinalDestination,
-                               FirstPickupETA = f.FirstPickupETA,
-                               FirstPickupETD = f.FirstPickupETD,
-                               INTTRALastStatusDate = f.INTTRALastStatusDate,
-                               Notify1Reference = f.Notify1Reference,
-                               Notify1Reference2 = f.Notify1Reference2,
-                               Notify2Reference = f.Notify2Reference,
-                               ShipperNotExporterReference = f.ShipperNotExporterReference,
-                               ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
-                               ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
-                               ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
-                               ProjectNumber = f.ProjectNumber,
-                               ContainerLastStatusDate = f.ContainerLastStatusDate,
-                               IsDepositionRequired = f.IsDepositionRequired,
-                               CreatedFromDigital = f.CreatedFromDigital,
-                               ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
-                               ForwarderPartnerId = f.ForwarderPartnerId,
-                               From = f.From,
-                               To = f.To,
-                               Origin = f.Origin,
-                               ARInvoices = f.ARInvoices,
-                               NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
-                               CreatedByPartner = f.CreatedByPartner,
-                               FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
-                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
-                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                               ShipmentType = f.ShipmentType,
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
-                               ImportManifest = f.ImportManifest,
-                               IsDangerous = f.IsDangerous,
-                               DangerousUnNumber = f.DangerousUnNumber,
-                               ComputedStatusId = f.ComputedStatusId,
-                               ComputedStatusDate = f.ComputedStatusDate,
-                               QuoteId = f.QuoteId,
-                               QuoteNumber = f.QuoteNumber,
-                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
+                               TransportModeName = f.TransportModeName,
+                               ShipmentTypeName = f.ShipmentTypeName,
+                               DirectionName = f.DirectionName,
+                               Master = f.Master,
+                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
-                               PreForwardingETD = f.PreForwardingETD,
-                               IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
-                               ParentShipmentDirectionId = f.ParentShipmentDirectionId,
-                               ParentShipmentNumber = f.ParentShipmentNumber,
-                               ParentShipmentType = f.ParentShipmentType,
-                               IsHTSMissing = f.IsHTSMissing,
-                               PlannedCargoReadyDate = f.PlannedCargoReadyDate,
-                               ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
-                               HandlerUserId = f.HandlerUserId,
-                               HandlerUserName = f.HandlerUserName,
-                               DestinationWarehouseId = f.DestinationWarehouseId,
-                               DestinationWarehouseName = f.DestinationWarehouseName,
-                               GrossWeightUnitCode = f.GrossWeightUnitCode,
-                               AccrualsApprovalDate = f.AccrualsApprovalDate,
-                               IsAccrualsApproved = f.IsAccrualsApproved,
-                               TruckNumber = f.TruckNumber,
-                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
-                               CustomerContactEmail = f.CustomerContactEmail,
-                               CustomerContactName = f.CustomerContactName,
-                               HasUnassignedData = f.HasUnassignedData,
-                               OperationalStatusId = f.OperationalStatusId,
-                               OperationalStatusName = f.OperationalStatusName,
-                               PrivateLabelAgentName = f.PrivateLabelAgentName,
-                               StatusWeight = f.StatusWeight,
-                               IsShipmentOrder = f.IsShipmentOrder,
-                               FirstPickupFullAddress = f.FirstPickupFullAddress,
-                               LastDeliveryFullAddress = f.LastDeliveryFullAddress,
-                               MainCarriageETDTime = f.MainCarriageETD,
-                               MainCarriageETATime = f.MainCarriageETA,
-                               PackagesQuantityAndType = f.PackagesQuantityAndType,
-                               ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
+                               StatusDate = f.StatusDate,
+                               ConsigneeId = f.ConsigneeId,
+                               ConsigneeCountryCode = f.ConsigneeCountryCode,
+                               ShipperId = f.ShipperId,
+                               ShipperCountryCode = f.ShipperCountryCode,
+                               DescriptionOfGoods = f.DescriptionOfGoods,
+                               CreateDateTime = f.CreateDateTime,
+                               FirstPickupETA = f.FirstPickupETA,
+                               FirstPickupETD = f.FirstPickupETD,
+                               MainCarriageATD = f.MainCarriageATD,
+                               MainCarriageETD = f.MainCarriageETD,
+                               MainCarriageFromPortName = f.MainCarriageFromPortName,
+                               MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
                                InlandDomesticToAddress1 = f.InlandDomesticToAddress1,
                                InlandDomesticToAddress2 = f.InlandDomesticToAddress2,
                                InlandDomesticToPhone = f.InlandDomesticToPhone,
@@ -13334,6 +13332,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
+                               PreForwardingETD = f.PreForwardingETD,
+                               StatusCode = f.StatusCode,
+                               Id = f.Id,
+                               Tenant = f.Tenant,
+                               LongMaster = f.LongMaster,
+                               TransportModeId = f.TransportModeId,
+                               DirectionId = f.DirectionId,
+                               ShipperName = f.ShipperName,
+                               ConsigneeName = f.ConsigneeName,
                            };
 
             return myResult;
@@ -15611,6 +15618,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                                            shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
 
+            if (!string.IsNullOrEmpty(warehousingFirstId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingFirstId);
+            }
+
+            if (!string.IsNullOrEmpty(warehousingSecondId))
+            {
+                activeShipmentsDataViewFilteredByCustomerId = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.SpecialServicesTypeId != warehousingSecondId);
+            }
 
             if (!string.IsNullOrEmpty(warehousingFirstId))
             {

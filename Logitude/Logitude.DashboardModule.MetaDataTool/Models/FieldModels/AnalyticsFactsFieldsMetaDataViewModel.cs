@@ -17,6 +17,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
 
         public AnalyticsFactsFieldsMetaDataViewModel()
         {
+            this.ButtonsVisibility = Visibility.Collapsed;
         }
 
         public AnalyticsFactsFieldsMetaDataViewModel(AnalyticsFactsMetaDataViewModel analyticsFactsMetaDataViewModel, bool isNew)

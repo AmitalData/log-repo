@@ -18,6 +18,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         private Func<IHtmlEditorHelper> _HtmlEditorHelper;
         private Func<IEntityUpdateReflectorService> _EntityUpdateReflectorService;
         private Func<IEntityGetReflectorService> entityGetReflectorService;
+        private Func<ITreeFilterQueryService> treeFilterQueryService;
 
         private I_IISManager _IISManager;
 
@@ -93,8 +94,8 @@ namespace Simplog.Server.Infrastructure.Helpers
             I_IISManager myIISManager,
             Func<IHtmlEditorHelper> myIHtmlEditorHelper,
             Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService,
-            Func<IEntityGetReflectorService> myEntityGetReflectorService
-
+            Func<IEntityGetReflectorService> myEntityGetReflectorService,
+            Func<ITreeFilterQueryService> treeFilterQueryService
             )
         {
             if (_Instance != null)
@@ -110,8 +111,9 @@ namespace Simplog.Server.Infrastructure.Helpers
             _Instance._IISManager = myIISManager;
             _Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
             _Instance.entityGetReflectorService = myEntityGetReflectorService;
+            _Instance.treeFilterQueryService = treeFilterQueryService;
 
-
+            
         }
 
         public string CompressText(string text)
@@ -160,7 +162,22 @@ namespace Simplog.Server.Infrastructure.Helpers
             return entityGetReflectorService().GetEntity(entityGetReflector);
         }
 
+
+        public IQueryable<T> ApplyTreeFilter<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs)
+        {
+            return treeFilterQueryService().Apply<T>(queryable , treeFilterQueryArgs);
+
+        }
     }
+
+
+    public interface ITreeFilterQueryService
+    {
+        IQueryable<T> Apply<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs);
+    }
+
+
+
 
     public interface IByteCompressorUtil
     {

@@ -24,7 +24,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             this.tenant = tenant;
         }
 
-        public IQueryable<ShipmentDataView> GetFilteredQuery(QueryOperations operations, IQueryable<ShipmentDataView> queryableData)
+        public IQueryable<ShipmentDataView> GetFilteredQuery(QueryOperations operations, IQueryable<ShipmentDataView> queryableData, ShipmentRepository shipmentRepository = null)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -37,6 +37,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "InTransit")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyInTransitFilter(item, queryableData,shipmentRepository);
+                    }
+
                     if (item.FieldName == "DigitalPortalSearchFields")
                     {
                         queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);

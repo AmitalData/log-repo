@@ -50,6 +50,7 @@ using Logitude.Customs.BL.PatchDistribution.Patches;
 using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web
 {
@@ -369,7 +370,8 @@ namespace WebFreight.Web
                 new IISManager(),
                 () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
                 () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-                () => (new EntityGetReflectorService()) as IEntityGetReflectorService
+                () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
+                () => (new TreeFilterQueryService()) as ITreeFilterQueryService
                 );
             ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
             InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =

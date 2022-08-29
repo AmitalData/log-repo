@@ -99,14 +99,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 		}
 
 
-        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)
+        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
         {
             IQueryable<BankAccount> accountQuery = (from a in context.BankAccounts
                                                     where a.Tenant == tenant 
                                                     && a.AccountNumber == accountNumber 
                                                     && a.BranchNumber == branchNumber
                                                     && a.BankId == bankId
-                                                  select a);
+                                                    && a.CurrencyId == currencyId
+                                                    select a);
 
             IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
             List<BankAccountList> accountList = accountListQuery.ToList();

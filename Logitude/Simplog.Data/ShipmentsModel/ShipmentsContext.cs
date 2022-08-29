@@ -93,6 +93,7 @@ namespace Simplog.Data.ShipmentsModel
             Database.SetInitializer<ShipmentsContext>(null);
             //string databasename = DatabaseInitializer.GetDatabaseName();
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
+            modelBuilder.Configurations.Add(new ShipmentDataViewMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -367,6 +368,10 @@ namespace Simplog.Data.ShipmentsModel
             base.OnModelCreating(modelBuilder);
         }
 
+        public IDbSet<ShipmentDataView> ShipmentDigitalDataViews
+        {
+            get; set;
+        }
         public IDbSet<Shipment> Shipments { get; set; }
         public IDbSet<ShipmentType> ShipmentTypes { get; set; }
         public IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; set; }

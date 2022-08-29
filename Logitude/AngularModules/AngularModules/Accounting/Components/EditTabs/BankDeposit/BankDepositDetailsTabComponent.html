@@ -535,6 +535,9 @@
                                 <div style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
                                     <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </div>
+                                <div style="width: 30px;margin-top: 4px;margin-right: 10px;" [style.float]="isRTL ? 'left' : 'right'">
+                                    <IconButton [Name]="'Excel'" (click)="ExportToExcel()" [disabled]="false"></IconButton>
+                                  </div>
                             </div>
                         </td>
                     </tr>
@@ -675,7 +678,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
+                                                    {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusLocalName : item.ARPChequeStatusName ) : (showLocal?item.ChequeStatusLocalName : item.ChequeStatusName )  }}
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

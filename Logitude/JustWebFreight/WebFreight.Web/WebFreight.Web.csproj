@@ -1005,6 +1005,7 @@
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountInterestTransactions.cs" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.BankDepositLine.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.TaxReportLines.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.LedgerTransactionReconcile.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
@@ -1130,6 +1131,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
     <Compile Include="Controllers\DigitalPortal\Models\GeneralFilters.cs" />
+    <Compile Include="Controllers\DigitalPortal\Models\Partner.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -1197,9 +1199,12 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceController.Generated.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
@@ -1229,6 +1234,7 @@
     <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\PagedResult.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
@@ -3432,6 +3438,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WidgetTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WidgetUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WithholdingTaxDeductionTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowInstanceStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowInstanceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WorkFlowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AnalyzeQueueUpdateClass.cs" />
