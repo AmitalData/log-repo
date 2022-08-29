@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     }
                     else
                     {
-                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status}):expected only MSCSTORAGE/BFIFILE");
+                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
                     }
                 }
                 else
