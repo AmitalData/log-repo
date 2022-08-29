@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalPartners/NewGetPartnersByFilters")]
-        public IHttpActionResult NewGetPartnersByFilters(string cardId, string searchText = "")
+        public IHttpActionResult NewGetPartnersByFilters(string cardId, string cardType, string searchText = "")
         {
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -47,7 +47,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-            var partners = shipments.Where(a => a.Tenant == authToken.Tenant 
+
+            var partners = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                && cardType.Equals("CS") 
+                                                    ? a.CustomerId.Equals(cardId) 
+                                                    : a.AgentId.Equals(cardId)
+                                                && a.CustomerId == cardId
                                                 &&(a.ConsigneeName.Contains(searchText) 
                                                    || a.ShipperName.Contains(searchText)))
                                     .Take(100)

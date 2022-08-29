@@ -53,7 +53,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsStandalonePickupDelivery { get; set; }
         public DateTime? CarrierLastStatusDate { get; set; }
         public string CustomerId { get; set; }
-
+        public string AgentId { get; set; }
         public string TransportModeName { get; set; }
         public string DirectionName { get; set; }
         public string Master { get; set; }
@@ -173,13 +173,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string CustomAgentImportName { get; set; }
         public string CustomerName { get; set; }
-        public string Notify1Name { get; set; }
-        public string Notify2Name { get; set; }
-        public string CustomAgentExportName { get; set; }
-        public string ShipperNotExporterName { get; set; }
-        public string ConsigneeNotImporterName { get; set; }
-        public string FreightForwarderName { get; set; }
-        public string ReleasingAgentName { get; set; }
-        public string ConsolidatorName { get; set; }
     }
 }

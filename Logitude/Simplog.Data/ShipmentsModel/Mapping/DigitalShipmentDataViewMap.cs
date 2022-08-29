@@ -21,17 +21,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.AgentName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.CustomAgentExportName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.CustomAgentImportName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.CustomerName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.Notify1Name).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.Notify2Name).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.ShipperNotExporterName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.ConsigneeNotImporterName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.FreightForwarderName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.ReleasingAgentName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.ConsolidatorName).HasMaxLength(60);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
@@ -199,7 +192,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Transshipment2CarrierCode).HasColumnName("Transshipment2CarrierCode");
             this.Property(t => t.Transshipment3CarrierName).HasColumnName("Transshipment3CarrierName");
             this.Property(t => t.Transshipment3CarrierCode).HasColumnName("Transshipment3CarrierCode");
-
+            this.Property(t => t.AgentId).HasColumnName("AgentId");
             this.Property(t => t.NextLegName).HasColumnName("NextLegName");
             this.Property(t => t.DirectionName).HasColumnName("DirectionName");
             this.Property(t => t.TransportModeName).HasColumnName("TransportModeName");

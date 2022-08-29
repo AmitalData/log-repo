@@ -41,6 +41,7 @@
 	ship.ConsigneeReference1,
 	ship.ConsigneeReference2,
 	ship.House,
+	ship.AgentId,
     ship.ShipmentSubTypeId,
 	dbo.ShipmentSubTypes.[Name] AS ShipmentSubTypeName,
     dbo.TransportModes.[Name] AS TransportModeName,
@@ -135,21 +136,13 @@
 	ship.NextETA,
 	ship.NextETD,
 	ship.IsCancelled,
-	FreightForwarderCards.EnglishName AS FreightForwarderName,
 	ship.ShipmentLevelCode,
 	dbo.ShipmentLevels.Name AS ShipmentLevelName,
 	ship.ShipmentTypeId,
 	ship.IsStandalonePickupDelivery,
-	ReleasingAgentCards.EnglishName AS ReleasingAgentName,
 	CustomerCards.EnglishName AS CustomerName,
-	ConsolidatorCards.EnglishName AS ConsolidatorName,
-	ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName,
-	Notify1Cards.EnglishName AS Notify1Name,
 	CreatedByUserContact.EnglishName as CreatedByUserName,
-	Notify2Cards.EnglishName AS Notify2Name,
-	CustomAgentExportCards.EnglishName AS CustomAgentExportName,
 	CustomAgentImportCards.EnglishName AS CustomAgentImportName,
-	ShipperNotExporterCards.EnglishName AS ShipperNotExporterName,
     CASE WHEN ( NOT ((dbo.ShipmentTypes.[Name] IS NULL) OR ((LEN(dbo.ShipmentTypes.[Name])) = 0)))
 	THEN CASE WHEN (dbo.ShipmentTypes.[Name] IS NULL) 
 	THEN N'' 
@@ -185,30 +178,6 @@
 	LEFT OUTER JOIN
         dbo.Contacts AS CreatedByUserContact 
 		    ON ship.CreatedByUserId = CreatedByUserContact.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS ConsolidatorCards 
-		     ON ship.ConsolidatorId = ConsolidatorCards.Id
-	LEFT OUTER JOIN
-		 dbo.Cards AS ReleasingAgentCards 
-		     ON ship.ReleasingAgentId = ReleasingAgentCards.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS FreightForwarderCards 
-		     ON ship.FreightForwarderId = FreightForwarderCards.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS ConsigneeNotImporterCards 
-		     ON ship.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS ShipperNotExporterCards 
-		     ON ship.ShipperNotExporterId = ShipperNotExporterCards.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS CustomAgentExportCards 
-		     ON ship.CustomAgentExportId = CustomAgentExportCards.Id
-	LEFT OUTER JOIN
-         dbo.Cards AS Notify1Cards 
-		    ON ship.Notify1Id = Notify1Cards.Id 
-	LEFT OUTER JOIN 
-	     dbo.Cards AS Notify2Cards 
-		    ON ship.Notify2Id = Notify2Cards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomerCards 
 		     ON ship.CustomerId = CustomerCards.Id
