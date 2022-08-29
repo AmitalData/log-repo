@@ -657,6 +657,9 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         if (AppTool.IsNullOrEmpty(this.CustomerReference1) && !this.IsExportShipment) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
+
+
+
         if (AppTool.IsNullOrEmpty(this.CustomerReference3) && this.IsExportShipment) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Reference"));
         }
@@ -687,13 +690,15 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (!this.SelectedTransportationTypes) {
+        if (!this.SelectedTransportationTypes && !this.IsExportShipment ) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1) && !this.IsExportShipment) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
+
+
         if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.SourceEntity.PackagesQuantity) || AppTool.IsNullOrEmpty(this.SourceEntity.GrossWeight))) {
             this.ValidationErrorsList.push("Weight and Quantity are required");
         }
