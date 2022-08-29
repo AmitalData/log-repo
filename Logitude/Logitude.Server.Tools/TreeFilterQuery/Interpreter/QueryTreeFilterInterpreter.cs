@@ -53,6 +53,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
                 ParentEntityId = treeFilterQueryArgs.ParentEntityId,
                 ParentObjectTableName = treeFilterQueryArgs.ParentObjectTableName,
                 Tenant = treeFilterQueryArgs.Tenant,
+                Type = treeFilterQueryArgs.Type,
 
             };
 

@@ -28,6 +28,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         public int Tenant { get; set; }
 
         public bool IsInterpreterFinished { get; set; }
+        public Type Type { get; set; }
 
 
 

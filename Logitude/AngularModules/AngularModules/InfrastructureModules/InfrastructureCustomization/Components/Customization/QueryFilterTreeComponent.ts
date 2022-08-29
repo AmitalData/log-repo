@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { QueryFilterViewItem } from '../../../../Infrastructure/DataContracts/QueryFilterViewItem';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 
 export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
+    EntityResourceService: EntityResourceService = new EntityResourceService();
     AllObjectTables: string[] = [];
 
     constructor() {
@@ -28,11 +30,21 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
             this.AddEmptyFilter();
         }
         else if (this.IsRoot) {
-            let dataSourceItem = this.DataSource[0];
-            if (dataSourceItem && dataSourceItem.length != 1) {
-                this.DataSource = this.GetAllFilters(dataSourceItem);
-            }
+            this.LoadLookUpTableResources();
         }
+    }
+
+    LoadLookUpTableResources() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName(this.ParentObjectTableName).subscribe((response: any) => {
+                this.CurrentSession.StopBusyIndicator();
+                let dataSourceItem = this.DataSource[0];
+                if (dataSourceItem && dataSourceItem.length != 1) {
+                    this.DataSource = this.GetAllFilters(dataSourceItem);
+                }
+            });
+        });
     }
 
     MustAddEmptyFilter() {

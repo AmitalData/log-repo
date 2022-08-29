@@ -475,17 +475,18 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
     LoadDefaultAdditionalFilters() {
         this.LookUpTableName = this.LookUpTableName ? this.LookUpTableName : window.ObjectTables.filter(t => t.Id == this.LookUpTableId)[0]?.Name;
-        if (this.LookUpTableName) {
-            this.LoadLookUpTableResources();
-        }
-        else {
+        //if (this.LookUpTableName) {
+        //    this.LoadLookUpTableResources();
+        //}
+        //else {
             this.StartLoadDefaultAdditionalFilters();
-        }
+        //}
     }
 
     LoadLookUpTableResources() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
         this.EntityResourceService.getEntityResourceByTableName(this.LookUpTableName).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             this.StartLoadDefaultAdditionalFilters();
         }); 
     }
