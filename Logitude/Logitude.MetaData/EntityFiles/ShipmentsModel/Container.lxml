@@ -20985,7 +20985,7 @@
         QueryCode="&quot;Containers&quot;"
         IndexOrder="15"
         ObjectFieldName="&quot;ActualPODVesselArrival&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="154" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -21016,12 +21016,12 @@
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
-        ColumnWidth="109" />
+        ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="94" />
+        ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="2"
@@ -21031,12 +21031,12 @@
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;CarrierName&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;PendingPOLDeparture&quot;"
         IndexOrder="5"
@@ -21137,17 +21137,17 @@
         QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;PODLocation&quot;"
-        ColumnWidth="89" />
+        ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;ActualPOLVesselDeparture&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;EstimatedPODVesselArrival&quot;"
-        ColumnWidth="154" />
+        ColumnWidth="155" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -21178,17 +21178,17 @@
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
-        ColumnWidth="113" />
+        ColumnWidth="153" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="119" />
+        ColumnWidth="159" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
-        ColumnWidth="132" />
+        ColumnWidth="152" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="3"
@@ -21198,12 +21198,12 @@
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;CarrierName&quot;"
-        ColumnWidth="98" />
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
-        ColumnWidth="111" />
+        ColumnWidth="151" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="6"
@@ -21213,12 +21213,12 @@
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;VesselName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;PODLocation&quot;"
-        ColumnWidth="93" />
+        ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="9"
@@ -21238,53 +21238,53 @@
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;EstimatedTrans1VesselDeparture&quot;"
-        ColumnWidth="108" />
+        ColumnWidth="158" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;EstimatedTrans1VesselArrival&quot;"
-        ColumnWidth="106" />
+        ColumnWidth="156" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="14"
         ObjectFieldName="&quot;ActualTrans1VesselDeparture&quot;"
-        ColumnWidth="97" />
+        ColumnWidth="147" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="15"
         ObjectFieldName="&quot;ActualTransshipment1VesselArrival&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="156" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="16"
         ObjectFieldName="&quot;Transshipment2Location&quot;"
-        ColumnWidth="107" />
+        ColumnWidth="147" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="17"
         ObjectFieldName="&quot;EstimatedTrans2VesselDeparture&quot;"
-        ColumnWidth="102" />
+        ColumnWidth="152" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="18"
         ObjectFieldName="&quot;EstimatedTrans2VesselArrival&quot;"
-        ColumnWidth="105" />
+        ColumnWidth="155" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="19"
         ObjectFieldName="&quot;ActualTrans2VesselDeparture&quot;"
-        ColumnWidth="112" />
+        ColumnWidth="152" />
       <QueryColumn
         QueryCode="&quot;InTransitTransshipments&quot;"
         IndexOrder="20"
         ObjectFieldName="&quot;ActualTransshipment2VesselArrival&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;InTransitTransshipments&quot;"
         PredefinedValue="&quot;True&quot;"
-        ObjectFieldName="&quot;InTransitwithTransshipments&quot;"
+        ObjectFieldName="&quot;InTransitwithTransshipmentsFilter&quot;"
         IsPredefined="true"
         IndexOrder="0"
         CustomPredefined="false" />
@@ -21314,7 +21314,7 @@
         QueryCode="&quot;PendingGateOut&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="94" />
+        ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;PendingGateOut&quot;"
         IndexOrder="2"
@@ -21354,7 +21354,7 @@
         QueryCode="&quot;PendingGateOut&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;ActualPODVesselArrival&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="140" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -21425,17 +21425,17 @@
         QueryCode="&quot;PendingEmptyReturn&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;PODLocation&quot;"
-        ColumnWidth="89" />
+        ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;PendingEmptyReturn&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;EmptyReturnLocation&quot;"
-        ColumnWidth="90" />
+        ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;PendingEmptyReturn&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;EstimatedEmptyReturn&quot;"
-        ColumnWidth="90" />
+        ColumnWidth="120" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -21689,7 +21689,7 @@
       <QueryFilter
         QueryCode="&quot;Exceptions&quot;"
         PredefinedValue="&quot;True&quot;"
-        ObjectFieldName="&quot;HasContainerException&quot;"
+        ObjectFieldName="&quot;HasException&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
@@ -21739,7 +21739,7 @@
         QueryCode="&quot;Cancelled Containers&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
-        ColumnWidth="120" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
         IndexOrder="6"
