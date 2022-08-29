@@ -25,7 +25,11 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<WidgetList> GetList(QueryOperations queryOperations, int tenant)
+        public List<WidgetList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<WidgetList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -48,6 +52,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             IQueryable<WidgetList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<WidgetList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<WidgetList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -144,7 +149,14 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant)
+
+		
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -162,14 +174,18 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             
 			iQueryable = filter.GetFilteredQuery<Widget>(nonListQueryOperation, iQueryable);
 
+
+
             IQueryable<WidgetList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<WidgetList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<WidgetList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 
