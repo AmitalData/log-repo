@@ -54,21 +54,23 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
     }
 
     updateConditionField(field: any, conditionIndex: number) {
-        if(field){
-            this.ObjectFields[field.Id] = field;
+        if (field) {
+            this.ObjectFields[field.FieldCode] = field;
         }
-        if (field?.Id !== this.Conditions[conditionIndex]?.fieldId) {
-            this.Conditions[conditionIndex].fieldId = field ? field.Id : null;
+
+        if (field?.FieldCode !== this.Conditions[conditionIndex]?.fieldCode) {
+            this.Conditions[conditionIndex].fieldCode = field ? field.FieldCode : null;
             this.Conditions[conditionIndex].field = field ? field.FieldName : null;
             this.Conditions[conditionIndex].type = field ? field.DataTypeCode : null;
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
+            this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
         }
     }
 
     updateConditionOperator(operatorCode: any, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
-            if(operatorCode === ConditionOperators.IsEmpty || this.Conditions[conditionIndex]?.operator === ConditionOperators.IsEmpty){
+            if (operatorCode === ConditionOperators.IsEmpty || this.Conditions[conditionIndex]?.operator === ConditionOperators.IsEmpty) {
                 this.updateConditionValue(null, conditionIndex);
             }
             this.Conditions[conditionIndex].operator = operatorCode;
@@ -82,10 +84,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
     }
 
     addCondition(conditionIndex: number, isGroup: boolean) {
-        if (conditionIndex === null) {
-            this.Conditions.push(new Condition(isGroup));
-        } else {
-            this.Conditions[conditionIndex].conditions.push(new Condition(isGroup));
+        if (this.isValidConditions()) {
+            if (conditionIndex === null) {
+                this.Conditions.push(new Condition(isGroup));
+            } else {
+                this.Conditions[conditionIndex].conditions.push(new Condition(isGroup));
+            }
         }
     }
 
@@ -110,5 +114,22 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
 
     getListItem(itemsList: ListItem[], itemCode: string) {
         return itemsList.filter(o => o.Code === itemCode)[0] || null;
+    }
+
+    isValidConditions(conditions: Condition[] | null = null) {
+        let result = true;
+        for (let condition of (conditions || this.Conditions)) {
+            if (!condition.fieldCode || !condition.value) {
+                result = false;
+                break;
+            }
+            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
+                result = this.isValidConditions(condition.conditions);
+                if (!result) {
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }

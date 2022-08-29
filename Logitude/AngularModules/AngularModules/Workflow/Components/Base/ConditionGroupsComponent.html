@@ -11,8 +11,12 @@
         padding-right: 2px;
     }
 
-    .link-button:hover {
+    .link-button:not(.disabled):hover {
         color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
     }
 
     .group-row,
@@ -124,8 +128,8 @@
 
                         <LogLov [NoObjectField]="true" [ObjectFieldName]="'Field' + conditionIndex"
                             [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsQueryFilters()"
-                            [LookUpTableName]="'ObjectField'" [NoValidation]="true" [IsFreeText]="true"
-                            [SelectedValue]="Condition.fieldId" [HideColumns]="true"
+                            [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                            [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionField($event, conditionIndex)">
                         </LogLov>
@@ -143,8 +147,14 @@
 
                     <div *ngIf="Condition.operator !== IsEmptyOperator" class="condition-value-container">
 
-                        <FieldValue *ngIf="ObjectFields[Condition.fieldId]"
-                            [ObjectField]="ObjectFields[Condition.fieldId]" [Name]="'FieldValue' + conditionIndex"
+                        <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
+                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'FieldValue' + conditionIndex"
+                            [CurrentValue]="Condition.value"
+                            (ValueChanged)="updateConditionValue($event, conditionIndex)">
+                        </FieldValue>
+
+                        <FieldValue *ngIf="!Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
+                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'FieldValue' + conditionIndex"
                             [CurrentValue]="Condition.value"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
@@ -167,10 +177,12 @@
                     [Conditions]="Condition.conditions" [IsRootConditions]="false"></ConditionGroups>
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
-                    <span class="link-button add-condition-button" (click)="addCondition(conditionIndex, false)">
+                    <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+                        (click)="addCondition(conditionIndex, false)">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
-                    <span class="link-button add-group-button" (click)="addCondition(conditionIndex, true)">
+                    <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+                        (click)="addCondition(conditionIndex, true)">
                         <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
                 </div>
@@ -181,10 +193,12 @@
         </div>
 
         <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
-            <span class="link-button add-condition-button" (click)="addCondition(null, false)">
+            <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+                (click)="addCondition(null, false)">
                 <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
-            <span class="link-button add-group-button" (click)="addCondition(null, true)">
+            <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+                (click)="addCondition(null, true)">
                 <span class="plus-sign">+</span><span>Add Group</span>
             </span>
         </div>
