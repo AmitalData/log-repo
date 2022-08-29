@@ -33,7 +33,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
 
-                stringBuilder.AppendLine($"Company:{exportReqSignData.isCompanySignOn}|Personal{exportReqSignData.isPersonalSignOn}|{exportReqSignData.CurrentSignCertificate}");
+                stringBuilder.AppendLine($"Tenant{exportReqSignData.Tenant}|Company:{exportReqSignData.isCompanySignOn}|Personal{exportReqSignData.isPersonalSignOn}|{exportReqSignData.CurrentSignCertificate}");
                 if (!ON_PREMISE)
                 {
                     SecurityUtility.AuthenticationOnTenant(exportReqSignData.Tenant);
@@ -45,82 +45,109 @@ namespace WebFreight.Web.WcfApi
                 var currentSignCertificate = SignCertificateClass.Get(exportReqSignData.CurrentSignCertificate);
                 //{"InterfaceTypeCode":"8347","Tenant":"1","CorrelationId":"ef284e9d-7228-4a99-97e8-49e5b808af91"}
                 MessagingServiceFactoryHelper.InitContainer();
-                if (exportReqSignData.isPersonalSignOn)
+
+                if (exportReqSignData.ToCheckSignCertificate)
                 {
-                    string queueName = "PersonalSign_" + exportReqSignData.Tenant + "_" + currentSignCertificate.PersonId;
-                    DbQueueService queueservice = new DbQueueService(queueName, exportReqSignData.Tenant);
-                    stringBuilder.AppendLine("queueName:" + queueName);
-                    queueResponse = queueservice.ReceiveDetail(TimeSpan.FromMinutes(4), true);
-                    
-                    if (queueResponse.RetryNumber > 10)
+                    string PersonalTenantCommaDelimitedList = SignQueue.GetTenantCommaDelimitedList(exportReqSignData.CurrentSignCertificate);
+                    string CompanyTenant = SignQueue.GetCompanyTenant(exportReqSignData.CurrentSignCertificate);
+
+
+                    return new ResponseExportSignTask()
                     {
-                        //anaO.
-                        //queueservice.CompleteAsFailed();
-
-                        //return;
-                        //CompleteAsFailed
-                    }
-                    if (queueResponse.MessageId != null)
-                    {
-
-                        
-
-                        string correlationId = queueResponse.MessageValues["CorrelationId"].ToString();
-                        string InterfaceTypeCode = queueResponse.MessageValues["InterfaceTypeCode"].ToString();
-                        stringBuilder.AppendLine($"Q:{queueResponse.MessageId}:Rtry:{queueResponse.RetryNumber}|CRSid:{correlationId}");
-                        var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
-
-
-
-                        var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
-                        stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
-                        return  new ResponseExportSignTask() { 
-                           currTenant= exportReqSignData.Tenant,  queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode= InterfaceTypeCode,  ReceiveBytesToSign= BytesToSign };
-
-
-                    }
+                        currTenant = exportReqSignData.Tenant,
+                        ResultSignCertificateCheck = new SignCertificateCheck()
+                        {
+                            isCompanySignOn = string.IsNullOrWhiteSpace(CompanyTenant),
+                            isPersonalSignOn = string.IsNullOrWhiteSpace(PersonalTenantCommaDelimitedList)
+                        }
+                    };
                 }
-
-
-                if (exportReqSignData.isCompanySignOn)
+                else
                 {
-                    if (CustomsSettingQueryService.GetSettingByTenant(exportReqSignData.Tenant).CustomsAgentId != currentSignCertificate.CustomsAgentId)
+                    if (exportReqSignData.isPersonalSignOn)
                     {
-                        throw new Exception($"GetSettingByTenant({exportReqSignData.Tenant}).CustomsAgentId != signServer.customsAgentId {currentSignCertificate.CustomsAgentId} ");
-                    }
-                    string queueName = "CompanySign_" + exportReqSignData.Tenant + "_" + currentSignCertificate.CustomsAgentId;
-                    DbQueueService queueservice = new DbQueueService(queueName, exportReqSignData.Tenant);//QueueServiceManager.GetQueueService(queueName, 0);
-                    stringBuilder.AppendLine("queueName:" + queueName);
-                    queueResponse = queueservice.ReceiveDetail(TimeSpan.FromMinutes(4), true);
-                    
-                    if (queueResponse.RetryNumber > 10)
-                    {
-                        //CompleteAsFailed
-                        //anaO.
-                        //queueservice.CompleteAsFailed();
-                    }
-                    if (queueResponse.MessageId != null)
-                    {
-                        //{"InterfaceTypeCode":"8347","Tenant":"1","CorrelationId":"ef284e9d-7228-4a99-97e8-49e5b808af91"}
-                        //int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
+                        string queueName = "PersonalSign_" + exportReqSignData.Tenant + "_" + currentSignCertificate.PersonId;
+                        DbQueueService queueservice = new DbQueueService(queueName, exportReqSignData.Tenant);
+                        stringBuilder.AppendLine("queueName:" + queueName);
+                        queueResponse = queueservice.ReceiveDetail(TimeSpan.FromMinutes(4), true);
 
-                        string correlationId = queueResponse.MessageValues["CorrelationId"].ToString();
-                        string InterfaceTypeCode = queueResponse.MessageValues["InterfaceTypeCode"].ToString();
-                        stringBuilder.AppendLine($"Q:{queueResponse.MessageId}:Rtry:{queueResponse.RetryNumber}|CRSid:{correlationId}");
-                        var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
-                        if (anaO.CurrentCustomsCommandWR != CustomsCommandEnum.CustomsCommandSignRequestWR)
+                        if (queueResponse.RetryNumber > 10)
                         {
                             //anaO.
+                            //queueservice.CompleteAsFailed();
+
+                            //return;
+                            //CompleteAsFailed
                         }
+                        if (queueResponse.MessageId != null)
+                        {
 
 
 
-                        var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
-                        stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
-                        return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId,  CustomsRequestsSheetId = correlationId,  InterfaceTypeCode= InterfaceTypeCode,  ReceiveBytesToSign= BytesToSign };
+                            string correlationId = queueResponse.MessageValues["CorrelationId"].ToString();
+                            string InterfaceTypeCode = queueResponse.MessageValues["InterfaceTypeCode"].ToString();
+                            stringBuilder.AppendLine($"Q:{queueResponse.MessageId}:Rtry:{queueResponse.RetryNumber}|CRSid:{correlationId}");
+                            var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
 
 
+
+                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
+                            return new ResponseExportSignTask()
+                            {
+                                currTenant = exportReqSignData.Tenant,
+                                queueId = queueResponse.MessageId,
+                                CustomsRequestsSheetId = correlationId,
+                                InterfaceTypeCode = InterfaceTypeCode,
+                                ReceiveBytesToSign = BytesToSign
+                            };
+
+
+                        }
                     }
+
+
+                    if (exportReqSignData.isCompanySignOn)
+                    {
+                        if (CustomsSettingQueryService.GetSettingByTenant(exportReqSignData.Tenant).CustomsAgentId != currentSignCertificate.CustomsAgentId)
+                        {
+                            throw new Exception($"GetSettingByTenant({exportReqSignData.Tenant}).CustomsAgentId != signServer.customsAgentId {currentSignCertificate.CustomsAgentId} ");
+                        }
+                        string queueName = "CompanySign_" + exportReqSignData.Tenant + "_" + currentSignCertificate.CustomsAgentId;
+                        DbQueueService queueservice = new DbQueueService(queueName, exportReqSignData.Tenant);//QueueServiceManager.GetQueueService(queueName, 0);
+                        stringBuilder.AppendLine("queueName:" + queueName);
+                        queueResponse = queueservice.ReceiveDetail(TimeSpan.FromMinutes(4), true);
+
+                        if (queueResponse.RetryNumber > 10)
+                        {
+                            //CompleteAsFailed
+                            //anaO.
+                            //queueservice.CompleteAsFailed();
+                        }
+                        if (queueResponse.MessageId != null)
+                        {
+                            //{"InterfaceTypeCode":"8347","Tenant":"1","CorrelationId":"ef284e9d-7228-4a99-97e8-49e5b808af91"}
+                            //int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
+
+                            string correlationId = queueResponse.MessageValues["CorrelationId"].ToString();
+                            string InterfaceTypeCode = queueResponse.MessageValues["InterfaceTypeCode"].ToString();
+                            stringBuilder.AppendLine($"Q:{queueResponse.MessageId}:Rtry:{queueResponse.RetryNumber}|CRSid:{correlationId}");
+                            var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
+                            if (anaO.CurrentCustomsCommandWR != CustomsCommandEnum.CustomsCommandSignRequestWR)
+                            {
+                                //anaO.
+                            }
+
+
+
+                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
+                            return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode = InterfaceTypeCode, ReceiveBytesToSign = BytesToSign };
+
+
+                        }
+                    }
+
                 }
 
 

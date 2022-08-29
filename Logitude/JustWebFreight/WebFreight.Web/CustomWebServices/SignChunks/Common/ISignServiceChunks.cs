@@ -104,6 +104,11 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
     {
         [DataMember]
         public int Tenant { get; set; }
+
+
+        [DataMember]
+        public bool ToCheckSignCertificate { get; set; }
+
     }
 
     [DataContract]
@@ -122,6 +127,23 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
         public string ErrorMessage { get; set; }
         [DataMember]
         public string InnerErrorMessage { get; set; }
+
+
+        [DataMember]
+        public SignCertificateCheck ResultSignCertificateCheck { get; set; }
+
+
+
+    }
+
+    [DataContract]
+    public class SignCertificateCheck
+    {
+        [DataMember]
+        public bool isCompanySignOn { get; set; }
+        [DataMember]
+        public bool isPersonalSignOn { get; set; }
+
     }
 
 }

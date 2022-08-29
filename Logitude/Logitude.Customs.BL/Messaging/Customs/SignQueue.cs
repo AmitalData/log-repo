@@ -557,7 +557,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                     availableSignServer = copyOfMySubscribeSignServerList
                     .FirstOrDefault(rec =>
-                        rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
+                        //rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
+                        rec.MySignCertificateClass.CustomsAgentId == GetCustomsAgentIdFromTenant(tenant)
+                        && rec.IsCompanySignOn == true);
                     break;
                 case SignQueueByType.SignQueueByPersonId:
                     if (String.IsNullOrWhiteSpace(personId))
@@ -609,10 +611,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             List<SubscribeSignServer> myCopy = null;
 
+
             lock ((this._MyQueue as ICollection).SyncRoot)
             {
                 myCopy = _MySubscribeSignServerList
-                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant))
+                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant)
+                      || rec.MySignCertificateClass.CustomsAgentId  == GetCustomsAgentIdFromTenant(tenant)) //multi tenant 
                     .ToList();
                 myCopy = myCopy.Where(rec => DateTime.Now.Subtract(rec.LastAccessedAt) < TimeSpan.FromMinutes(SubscribeSignServerTimeOutInMinutes))
                     .ToList(); ;
