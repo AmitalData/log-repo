@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "f0d573b6a708b745f0d983025a1420af";
+		public const string HashString = "b55c5d79a3c01095895263e6a9bd7edf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -157,6 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -218,6 +219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -274,6 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -335,6 +338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -391,6 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -450,6 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  20,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -509,6 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -566,6 +573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -624,6 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -683,6 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -743,6 +753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  20,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -804,6 +815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -861,6 +873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -920,6 +933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -980,6 +994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1040,6 +1055,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1100,6 +1116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1160,6 +1177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1221,6 +1239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1277,6 +1296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1337,6 +1357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1397,6 +1418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1457,6 +1479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1513,6 +1536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1569,6 +1593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1629,6 +1654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1689,6 +1715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1745,6 +1772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1801,6 +1829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1861,6 +1890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1922,6 +1952,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1980,6 +2011,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2038,6 +2070,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2096,6 +2129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2154,6 +2188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2212,6 +2247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2270,6 +2306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2328,6 +2365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2386,6 +2424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2444,6 +2483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2502,6 +2542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2560,6 +2601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2617,6 +2659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2677,6 +2720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2737,6 +2781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2797,6 +2842,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2857,6 +2903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2917,6 +2964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2977,6 +3025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3037,6 +3086,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3097,6 +3147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LargerThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3157,6 +3208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3217,6 +3269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3277,6 +3330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3337,6 +3391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3397,6 +3452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3457,6 +3513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3517,6 +3574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3577,6 +3635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3637,6 +3696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3697,6 +3757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3757,6 +3818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3817,6 +3879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3877,6 +3940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3937,6 +4001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3997,6 +4062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4057,6 +4123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4117,6 +4184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4177,6 +4245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4237,6 +4306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4297,6 +4367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4357,6 +4428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4417,6 +4489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4477,6 +4550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4537,6 +4611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4597,6 +4672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4657,6 +4733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4717,6 +4794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4777,6 +4855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4837,6 +4916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4897,6 +4977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4957,6 +5038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5017,6 +5099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5077,6 +5160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5137,6 +5221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5197,6 +5282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5257,6 +5343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5317,6 +5404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5377,6 +5465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5437,6 +5526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5497,6 +5587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5557,6 +5648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5617,6 +5709,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5677,6 +5770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5737,6 +5831,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5797,6 +5892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5857,6 +5953,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5917,6 +6014,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5977,6 +6075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6037,6 +6136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6097,6 +6197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6157,6 +6258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6217,6 +6319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6277,6 +6380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6337,6 +6441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6397,6 +6502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6457,6 +6563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6517,6 +6624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6577,6 +6685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6637,6 +6746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6697,6 +6807,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6757,6 +6868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6817,6 +6929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6877,6 +6990,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6937,6 +7051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6997,6 +7112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7057,6 +7173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7117,6 +7234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7177,6 +7295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7237,6 +7356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7297,6 +7417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7357,6 +7478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7417,6 +7539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7477,6 +7600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7537,6 +7661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7597,6 +7722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7657,6 +7783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7717,6 +7844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7777,6 +7905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7837,6 +7966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7896,6 +8026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7956,6 +8087,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8015,6 +8147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8074,6 +8207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8133,6 +8267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8193,6 +8328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8253,6 +8389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8313,6 +8450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8373,6 +8511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8433,6 +8572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8493,6 +8633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8554,6 +8695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8613,6 +8755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInList =  true,
 					  						DataTemplateName =  "StatusDataTemplate",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8674,6 +8817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8733,6 +8877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8792,6 +8937,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8851,6 +8997,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8910,6 +9057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8969,6 +9117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9028,6 +9177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9087,6 +9237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9148,6 +9299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9207,6 +9359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9266,6 +9419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9325,6 +9479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9384,6 +9539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9444,6 +9600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9504,6 +9661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9564,6 +9722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9624,6 +9783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9684,6 +9844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9744,6 +9905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9804,6 +9966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9864,6 +10027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9924,6 +10088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9984,6 +10149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10044,6 +10210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10104,6 +10271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10164,6 +10332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10224,6 +10393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10284,6 +10454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10344,6 +10515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10404,6 +10576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10464,6 +10637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10524,6 +10698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10584,6 +10759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10644,6 +10820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10704,6 +10881,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10764,6 +10942,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10824,6 +11003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10884,6 +11064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10944,6 +11125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11004,6 +11186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11064,6 +11247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11124,6 +11308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11184,6 +11369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11244,6 +11430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11304,6 +11491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11364,6 +11552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11424,6 +11613,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11484,6 +11674,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11544,6 +11735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11605,6 +11797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11663,6 +11856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11720,6 +11914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -11779,6 +11974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -11838,6 +12034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11898,6 +12095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11959,6 +12157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12016,6 +12215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12076,6 +12276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12136,6 +12337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12195,6 +12397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12256,6 +12459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12316,6 +12520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12375,6 +12580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12435,6 +12641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12495,6 +12702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12555,6 +12763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -12613,6 +12822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12672,6 +12882,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12729,6 +12940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12791,6 +13003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12848,6 +13061,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12905,6 +13119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12962,6 +13177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13019,6 +13235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13076,6 +13293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13133,6 +13351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13193,6 +13412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13252,6 +13472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13308,6 +13529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13368,6 +13590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13429,6 +13652,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13487,6 +13711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -13546,6 +13771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13605,6 +13831,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13663,6 +13890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13721,6 +13949,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13779,6 +14008,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13837,6 +14067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13894,6 +14125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13954,6 +14186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14014,6 +14247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14074,6 +14308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14133,6 +14368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14192,6 +14428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14251,6 +14488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14310,6 +14548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14370,6 +14609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14430,6 +14670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14490,6 +14731,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14550,6 +14792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14610,6 +14853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14670,6 +14914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14730,6 +14975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14790,6 +15036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14847,6 +15094,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14907,6 +15155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14969,6 +15218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15031,6 +15281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15094,6 +15345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15157,6 +15409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15220,6 +15473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15284,6 +15538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15345,6 +15600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15405,6 +15661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15465,6 +15722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -15504,6 +15762,242 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InTransitFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InTransitFilter",
+					  						ListPropertyPath =  "InTransitFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InTransitFilter",
+					  						DefaultText =  "In Transit Filter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InTransitwithTransshipmentsFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InTransitwithTransshipmentsFilter",
+					  						ListPropertyPath =  "InTransitwithTransshipmentsFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InTransitwithTransshipmentsFilter",
+					  						DefaultText =  "In Transit with Transshipments Filter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PendingGateOutFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PendingGateOutFilter",
+					  						ListPropertyPath =  "PendingGateOutFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PendingGateOutFilter",
+					  						DefaultText =  "Pending Gate Out Filter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PendingEmptyReturnFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PendingEmptyReturnFilter",
+					  						ListPropertyPath =  "PendingEmptyReturnFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PendingEmptyReturnFilter",
+					  						DefaultText =  "Pending Empty Return Filter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -15529,94 +16023,362 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ContainerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Containers", DefaultText = @"Containers",LocalDefaultText = "Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Containers", NameTextCodeDefaultText = "Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.ClosedContainers", DefaultText = @"Closed Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.ClosedContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.ClosedContainers", NameTextCodeDefaultText = "Closed Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingPOLDeparture", DefaultText = @"Pending POL Departure",LocalDefaultText = "Pending POL Departure", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingPOLDeparture", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingPOLDeparture", NameTextCodeDefaultText = "PendingPOLDeparture", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.CancelledContainers", DefaultText = @"Cancelled Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.CancelledContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CancelledContainers", NameTextCodeDefaultText = "Cancelled Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.InTransitNew", DefaultText = @"In Transit",LocalDefaultText = "In Transit", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.InTransitNew", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.InTransitNew", NameTextCodeDefaultText = "InTransitNew", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Containers", DefaultText = @"Containers",LocalDefaultText = "Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Containers", NameTextCodeDefaultText = "Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.InTransitTransshipments", DefaultText = @"In Transit with Transshipments",LocalDefaultText = "In Transit with Transshipments", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.InTransitTransshipments", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.InTransitTransshipments", NameTextCodeDefaultText = "InTransitTransshipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingGateOut", DefaultText = @"Pending Gate Out",LocalDefaultText = "Pending Gate Out", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingGateOut", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingGateOut", NameTextCodeDefaultText = "PendingGateOut", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingEmptyReturn", DefaultText = @"Pending Empty Return",LocalDefaultText = "Pending Empty Return", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingEmptyReturn", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingEmptyReturn", NameTextCodeDefaultText = "PendingEmptyReturn", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = "All Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.ClosedContainers", DefaultText = @"Closed Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.ClosedContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.ClosedContainers", NameTextCodeDefaultText = "Closed Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Exceptions", DefaultText = @"Exceptions",LocalDefaultText = "Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Exceptions", NameTextCodeDefaultText = "Exceptions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.CancelledContainers", DefaultText = @"Cancelled Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.CancelledContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CancelledContainers", NameTextCodeDefaultText = "Cancelled Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query ContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageETA" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.MainCarriageETD" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageATA" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
 
-			 QueryColumn AllContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.MainCarriageATD" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.POLLocation" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPOLVesselDeparture" , ColumnWidth = 173 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.ActualPOLVesselDeparture" , ColumnWidth = 155 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
-			  Query ClosedContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_1.Id, NameTextCodeCode = ContainerTextCode_1.Code, ObjectTableName = "Container", Code = "Closed Containers",  QueryGroupCode = "38cb", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_1.Id,FeatureUniqeCode= ContainerFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query PendingPOLDepartureQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_1.Id, NameTextCodeCode = ContainerTextCode_1.Code, ObjectTableName = "Container", Code = "PendingPOLDeparture",  QueryGroupCode = "38cb", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_1.Id,FeatureUniqeCode= ContainerFeature_1.FeatureUniqeCode, DefaultSortName = "EstimatedPOLVesselDeparture", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ClosedContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
-			 QueryColumn ClosedContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn ClosedContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn ClosedContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ClosedContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPOLDepartureQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingPOLDepartureQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingPOLDepartureQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingPOLDepartureQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingPOLDepartureQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.POLLocation" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingPOLDepartureQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EstimatedPOLVesselDeparture" , ColumnWidth = 173 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingPOLDepartureQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingPOLDepartureFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingPOLDepartureQuery.Id,QueryCode = PendingPOLDepartureQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query InTransitNewQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_2.Id, NameTextCodeCode = ContainerTextCode_2.Code, ObjectTableName = "Container", Code = "InTransitNew",  QueryGroupCode = "38cb", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_2.Id,FeatureUniqeCode= ContainerFeature_2.FeatureUniqeCode, DefaultSortName = "EstimatedPODVesselArrival", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InTransitNewQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.POLLocation" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.ActualPOLVesselDeparture" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn InTransitNewQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
+
+             AdvancedQueryFilter InTransitNewQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.InTransitFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitNewQuery.Id,QueryCode = InTransitNewQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query InTransitTransshipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_3.Id, NameTextCodeCode = ContainerTextCode_3.Code, ObjectTableName = "Container", Code = "InTransitTransshipments",  QueryGroupCode = "38cb", IndexOrder = 3, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_3.Id,FeatureUniqeCode= ContainerFeature_3.FeatureUniqeCode, DefaultSortName = "EstimatedPODVesselArrival", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InTransitTransshipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 113 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 119 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 132 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 111 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 98 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 111 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 93 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 151 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.TransshipmentCount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.Transshipment1Location" , ColumnWidth = 107 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.EstimatedTrans1VesselDeparture" , ColumnWidth = 108 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.EstimatedTrans1VesselArrival" , ColumnWidth = 106 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.ActualTrans1VesselDeparture" , ColumnWidth = 97 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualTransshipment1VesselArrival" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Container.Transshipment2Location" , ColumnWidth = 107 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Container.EstimatedTrans2VesselDeparture" , ColumnWidth = 102 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Container.EstimatedTrans2VesselArrival" , ColumnWidth = 105 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Container.ActualTrans2VesselDeparture" , ColumnWidth = 112 }, addedQueryColumns);
+
+			 QueryColumn InTransitTransshipmentsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Container.ActualTransshipment2VesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter InTransitTransshipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.InTransitwithTransshipments", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitTransshipmentsQuery.Id,QueryCode = InTransitTransshipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query PendingGateOutQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_4.Id, NameTextCodeCode = ContainerTextCode_4.Code, ObjectTableName = "Container", Code = "PendingGateOut",  QueryGroupCode = "38cb", IndexOrder = 4, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_4.Id,FeatureUniqeCode= ContainerFeature_4.FeatureUniqeCode, DefaultSortName = "ActualPODVesselArrival", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingGateOutQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+
+			 QueryColumn PendingGateOutQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingGateOutQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingGateOutFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query PendingEmptyReturnQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_5.Id, NameTextCodeCode = ContainerTextCode_5.Code, ObjectTableName = "Container", Code = "PendingEmptyReturn",  QueryGroupCode = "38cb", IndexOrder = 5, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_5.Id,FeatureUniqeCode= ContainerFeature_5.FeatureUniqeCode, DefaultSortName = "EstimatedEmptyReturn", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingEmptyReturnQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.EmptyReturnLocation" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn PendingEmptyReturnQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.EstimatedEmptyReturn" , ColumnWidth = 90 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingEmptyReturnQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingEmptyReturnFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_6.Id, NameTextCodeCode = ContainerTextCode_6.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 6, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_6.Id,FeatureUniqeCode= ContainerFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.POLLocation" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPOLVesselDeparture" , ColumnWidth = 173 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.ActualPOLVesselDeparture" , ColumnWidth = 155 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Container.ClosedDate" , ColumnWidth = 90 }, addedQueryColumns);
+  
+	      
+
+			  Query ClosedContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_7.Id, NameTextCodeCode = ContainerTextCode_7.Code, ObjectTableName = "Container", Code = "Closed Containers",  QueryGroupCode = "38cb", IndexOrder = 7, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_7.Id,FeatureUniqeCode= ContainerFeature_7.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ClosedContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.ClosedDate" , ColumnWidth = 90 }, addedQueryColumns);
 
              AdvancedQueryFilter ClosedContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsClosed", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query CancelledContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_2.Id, NameTextCodeCode = ContainerTextCode_2.Code, ObjectTableName = "Container", Code = "Cancelled Containers",  QueryGroupCode = "38cb", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_2.Id,FeatureUniqeCode= ContainerFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExceptionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_8.Id, NameTextCodeCode = ContainerTextCode_8.Code, ObjectTableName = "Container", Code = "Exceptions",  QueryGroupCode = "38cb", IndexOrder = 8, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_8.Id,FeatureUniqeCode= ContainerFeature_8.FeatureUniqeCode, DefaultSortName = "ExceptionDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CancelledContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ExceptionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ExceptionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ExceptionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ExceptionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ExceptionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+			 QueryColumn ExceptionsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn ExceptionsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ExceptionsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ExceptionsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.ExceptionDescription" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ExceptionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.ExceptionDate" , ColumnWidth = 90 }, addedQueryColumns);
+
+             AdvancedQueryFilter ExceptionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.HasContainerException", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
-			  Query ContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_3.Id, NameTextCodeCode = ContainerTextCode_3.Code, ObjectTableName = "Container", Code = "Containers",  QueryGroupCode = "38cb", IndexOrder = 3, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_3.Id,FeatureUniqeCode= ContainerFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CancelledContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_9.Id, NameTextCodeCode = ContainerTextCode_9.Code, ObjectTableName = "Container", Code = "Cancelled Containers",  QueryGroupCode = "38cb", IndexOrder = 9, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_9.Id,FeatureUniqeCode= ContainerFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn ContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn ContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CancelledContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+			 QueryColumn CancelledContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.CancelledDate" , ColumnWidth = 90 }, addedQueryColumns);
+
+             AdvancedQueryFilter CancelledContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
