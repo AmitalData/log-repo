@@ -182,13 +182,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
+        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn,string tenant=null)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(CurrentSignCertificate)) { return; }
 
-                var companyTenant = SignQueue.GetCompanyTenant(CurrentSignCertificate);
+                string  companyTenant = tenant;
+                if (companyTenant == null)
+                {
+                    companyTenant=SignQueue.GetCompanyTenant(CurrentSignCertificate);
+                }
                 var tenantListOfPersonID = GetTenantListOfPersonID(SignCertificateClass.Get(CurrentSignCertificate).PersonId, 0);
 
                 lock ((this._MyQueue as ICollection).SyncRoot)
@@ -557,7 +561,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                     availableSignServer = copyOfMySubscribeSignServerList
                     .FirstOrDefault(rec =>
-                        rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
+                        //rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
+                        rec.MySignCertificateClass.CustomsAgentId == GetCustomsAgentIdFromTenant(tenant)
+                        && rec.IsCompanySignOn == true);
                     break;
                 case SignQueueByType.SignQueueByPersonId:
                     if (String.IsNullOrWhiteSpace(personId))
@@ -609,10 +615,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             List<SubscribeSignServer> myCopy = null;
 
+
             lock ((this._MyQueue as ICollection).SyncRoot)
             {
                 myCopy = _MySubscribeSignServerList
-                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant))
+                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant)
+                      || rec.MySignCertificateClass.CustomsAgentId  == GetCustomsAgentIdFromTenant(tenant)) //multi tenant 
                     .ToList();
                 myCopy = myCopy.Where(rec => DateTime.Now.Subtract(rec.LastAccessedAt) < TimeSpan.FromMinutes(SubscribeSignServerTimeOutInMinutes))
                     .ToList(); ;

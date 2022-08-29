@@ -33,7 +33,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
 
-                stringBuilder.AppendLine($"Company:{exportReqSignData.isCompanySignOn}|Personal{exportReqSignData.isPersonalSignOn}|{exportReqSignData.CurrentSignCertificate}");
+                stringBuilder.AppendLine($"Tenant{exportReqSignData.Tenant}|Company:{exportReqSignData.isCompanySignOn}|Personal{exportReqSignData.isPersonalSignOn}|{exportReqSignData.CurrentSignCertificate}");
                 if (!ON_PREMISE)
                 {
                     SecurityUtility.AuthenticationOnTenant(exportReqSignData.Tenant);
