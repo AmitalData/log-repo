@@ -13267,12 +13267,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public IQueryable<ShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
+        public IQueryable<DigitalShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
         {
             var tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
             var myResult = from f in shipments
-                           select new ShipmentList()
+                           select new DigitalShipmentList()
                            {
                                Transshipment1ATD = f.Transshipment1ATD,
                                Transshipment1ATA = f.Transshipment1ATA,
@@ -13289,7 +13289,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFromCity = f.MainCarriageFromCity,
                                MainCarriageToCity = f.MainCarriageToCity,
                                Tenant = f.Tenant,
-                               ShipmentViewId = f.Id,
                                Id = f.Id,
                                DirectionId = f.DirectionId,
                                DirectionName = f.DirectionName,
@@ -13323,6 +13322,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ShipmentLevelCode = f.ShipmentLevelCode,
                                ShipmentLevelName = f.ShipmentLevelName,
                                MainCarriageFromPortId = f.MainCarriageFromPortId,
+                               MainCarriageToPortId = f.MainCarriageToPortId,
                                MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
                                MainCarriageATA = f.MainCarriageATA,
                                MainCarriageETD = f.MainCarriageETD,
@@ -13374,6 +13374,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
+                               AgentId = f.AgentId,
+                               FirstPickupETA = f.FirstPickupETA,
+                               FirstPickupETD = f.FirstPickupETD,
+                               InlandDomesticFromCity = f.InlandDomesticFromCity,
+                               InlandDomesticToCity  = f.InlandDomesticToCity,
+                               InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
+                               InlandDomesticToCountryId = f.InlandDomesticToCountryId,
+                               InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,
+                               InlandDomesticToTypeCode = f.InlandDomesticToTypeCode,
+                               MainCarriageFromPortCode =  f.MainCarriageFromPortCode,
+                               MainCarriageToPortCode = f.MainCarriageToPortCode,
+                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
+                               MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
+                               MainCarriageFromPartnerId = f.MainCarriageFromPartnerId,
+                               MainCarriageToPartnerId = f.MainCarriageToPartnerId,
+                               MainCarriageFromAddressId = f.MainCarriageFromAddressId,
+                               MainCarriageToAddressId = f.MainCarriageToAddressId,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               DepartureArrivalFromDate = f.DepartureArrivalFromDate,
+                               DepartureArrivalToDate = f.DepartureArrivalToDate,
+                               FromCountryCode = f.FromCountryCode,
+                               ToCountryCode = f.ToCountryCode
                            };
 
             return myResult;

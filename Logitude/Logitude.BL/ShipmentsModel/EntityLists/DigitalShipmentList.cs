@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Simplog.Data.ShipmentsModel.EntityPOCOs
+namespace Logitude.BL.ShipmentsModel.EntityLists
 {
-    public class DigitalShipmentsDataView
+    public class DigitalShipmentList
     {
-        [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string SalesmanUserId { get; set; }
@@ -174,20 +172,34 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomAgentImportName { get; set; }
         public string CustomerName { get; set; }
 
+        public TimeLineData TimeLineData { get; set; }
+
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageToPortCode { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
-        public string MainCarriageFromPartnerId { get; set; }
-        public string MainCarriageToPartnerId { get; set; }
 
+
+        public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageFromAddressId { get; set; }
+        public string MainCarriageToPartnerId { get; set; }
         public string MainCarriageToAddressId { get; set; }
+
         public DateTime? MainCarriageFinalDestinationETA { get; set; }
         public DateTime? MainCarriageFinalDestinationATA { get; set; }
         public DateTime? DepartureArrivalFromDate { get; set; }
         public DateTime? DepartureArrivalToDate { get; set; }
+
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
+
+        public string ProfitCurrencyCode { get; set; }
+        public string LocalCurrencyCode { get; set; }
+
+        public string FromPortCountry { get; set; }
+        public string ExactStatusName { get; set; }
+
+        public DateTime? MainCarriageETDTime { get; set; }
+        public DateTime? MainCarriageETATime { get; set; }
     }
 }
