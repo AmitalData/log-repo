@@ -68,7 +68,7 @@ namespace Logitude.Customs.BL.TraceEvents
             var mytransmission_detail1 = new transmission_details()
             {
                 //sender = new sender() { Value = $"Mehes Cloud ({_CommunicationModel.Tenant})" },
-                sender = new sender() { Value = $"HYBRIDE" },
+                sender = new sender() { Value = $"HYBRID" },
                 subject = new subject() { Value = CommunicationsParamsSubject },
             };
             if (_CommunicationModel.special_instruction != null)
@@ -130,7 +130,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             var mytransmission = GetTransmission();
             string myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
-            myMainObject =HttpUtility.HtmlEncode(myMainObject);
+            
             bool withoutEnvelop = true;
             if (withoutEnvelop)
             {
@@ -140,6 +140,7 @@ namespace Logitude.Customs.BL.TraceEvents
             }
             else
             {
+                myMainObject = HttpUtility.HtmlEncode(myMainObject);
                 var myEnvelope = new Envelope()
                 {
 
