@@ -4492,6 +4492,11 @@
     Columns="Tenant,ComputedStatusDate" />
   <Index
     Columns="Tenant,House" />
+  
+  <Index
+    Columns="Tenant,ShipmentReceivableStatusCode,ShipmentLevelCode" />
+ 
+  
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint
