@@ -373,7 +373,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-
+            
 
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
@@ -468,6 +468,15 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.Declaration = Getdeclaration(_DeclarationPM);
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
             _context = null;
+
+
+            for (int i = 0; i < _DeclarationPM?.SupplierInvoices?.Count; i++)
+            {
+                if (_DeclarationPM.SupplierInvoices[i].AccountTypeCode == "I04" || _DeclarationPM.SupplierInvoices[i].IncotermCode == null)
+                {
+                    req.Declaration.GoodsShipment[i].TradeTerms = null;
+                }
+            }
 
             return req;
         }
