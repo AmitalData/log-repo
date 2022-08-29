@@ -985,22 +985,28 @@ namespace WebFreight.Web.Security
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
 
                     Contact customerCareContact = contactrep.GetSingleContactByEmail(email, 0);
+                    
                     if (customerCareContact != null)
                     {
                         return true;
                     }
+
                     Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
                     if (contact != null)
                     {
                         CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        
                         if (cardContact != null)
                         {
                             return true;
                         }
                     }
                 }
+
                 throw new AutenticationException("Sorry! you are not authorized to read data!");
             }
+
             return true;
         }
 
