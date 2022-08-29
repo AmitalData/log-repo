@@ -102,12 +102,18 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
                     case "CUSTOM": {
                         if (this.Page_CUSTOM == null) {
                             this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
-                                this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res1: any) => {
-                                    SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
-                                        .then(cmpRef => {
-                                            this.Page_CUSTOM = cmpRef.instance;
-                                            this.Page_CUSTOM.InitComponent();
+                                this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
+                                                SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
+                                                    .then(cmpRef => {
+                                                        this.Page_CUSTOM = cmpRef.instance;
+                                                        this.Page_CUSTOM.InitComponent();
+                                                    });
+                                            });
                                         });
+                                    });
                                 });
                             });
                         }

@@ -15,8 +15,9 @@ namespace Logitude.DashboardModule.Data.Repositories
    public partial class WidgetRepository:IRepository<Widget>
    {        
 		public List<Widget> GetMulti(EntityKeyFields entityKeys)
-        {            
-			throw new NotImplementedException();
+        {
+            DashboardKeys myEntityKeys = entityKeys as DashboardKeys;
+            return (from a in context.Widgets where a.DashboardId == myEntityKeys.Id select a).ToList();
         }
 
         public List<Widget> GetWidgetsByDashboardId(string dashboardId, int tenant)

@@ -39,10 +39,10 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
                                        }).ToList();
 
 
-            foreach (DashboardPM item in query)
-            {
-                item.Widgets = widgetQueryService.GetWidgetsByDashboardId(item.Id, tenant);
-            }
+            //foreach (DashboardPM item in query)
+            //{
+            //    item.Widgets = widgetQueryService.GetWidgetsByDashboardId(item.Id, tenant);
+            //}
 
             return query;
         }

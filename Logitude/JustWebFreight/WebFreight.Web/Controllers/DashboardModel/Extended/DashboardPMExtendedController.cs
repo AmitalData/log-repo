@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Security;
-using Logitude.DashboardModule.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -11,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.DashboardModel.Extended
 {

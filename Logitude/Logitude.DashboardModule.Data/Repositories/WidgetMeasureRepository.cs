@@ -13,15 +13,12 @@ using Simplog.Server.Infrastructure;
 namespace Logitude.DashboardModule.Data.Repositories
 {
    public partial class WidgetMeasureRepository:IRepository<WidgetMeasure>
-   {
-        
+   {        
 		public List<WidgetMeasure> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            WidgetKeys myEntityKeys = entityKeys as WidgetKeys;
+            return (from a in context.WidgetMeasures where a.WidgetId == myEntityKeys.Id select a).ToList();
         }
-
    }
-
 }
    

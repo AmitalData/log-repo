@@ -1788,6 +1788,9 @@
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetMeasurePM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetTypePM.ts" />
+    <TypeScriptCompile Include="DashboardModule\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="DashboardModule\ModuleProviders.ts" />
+    <TypeScriptCompile Include="DashboardModule\Module_DAASH.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\DashboardPMExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsFieldsMetaDataListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsMetaDataListService.ts" />

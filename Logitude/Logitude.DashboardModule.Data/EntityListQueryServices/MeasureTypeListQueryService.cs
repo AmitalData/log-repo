@@ -15,37 +15,30 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.EntityLists;
 
 namespace Logitude.DashboardModule.Data.EntityListQueryServices
-{ 
+{
 
-    public partial class MeasureTypeListQueryService
-    {
-	    private IQueryable<MeasureTypeList> GetIqueryableList(IQueryable<MeasureType> iQueryable)
-        {
-		IQueryable<MeasureTypeList> query = (from a in iQueryable
-                                            select new MeasureTypeList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
-            return query;
+	public partial class MeasureTypeListQueryService
+	{
+		private IQueryable<MeasureTypeList> GetIqueryableList(IQueryable<MeasureType> iQueryable)
+		{
+			IQueryable<MeasureTypeList> query = (from a in iQueryable
+												 select new MeasureTypeList()
+												 {
+													 Code = a.Code,
+													 Name = a.Name,
+													 SearchFields = a.SearchFields,
+												 });
+			return query;
 		}
 
-		private IQueryable<MeasureType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<MeasureType> iQueryable)
-        {
-			throw new NotImplementedException();
-		}
-				private IQueryable<MeasureType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<MeasureType> iQueryable)
-        {
+		private IQueryable<MeasureType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<MeasureType> iQueryable)
+		{
 			return iQueryable;
 		}
-		
-			}
-
-
+		private IQueryable<MeasureType> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<MeasureType> iQueryable)
+		{
+			return iQueryable;
+		}
+	}
 }
 	

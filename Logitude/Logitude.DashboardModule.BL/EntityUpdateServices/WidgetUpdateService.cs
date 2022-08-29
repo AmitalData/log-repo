@@ -1,4 +1,6 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.DashboardModule.BL.EntityPMs;
+using Logitude.Server.Tools.Counters;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,12 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
             }
 
             entityPM.DashboardId = entityParentPM.Id;
+        }
+
+        protected override void UpdateComposition(WidgetPM entityPM)
+        {
+            WidgetMeasureUpdateService widgetMeasureUpdateService = new WidgetMeasureUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            widgetMeasureUpdateService.UpdateMulti(entityPM.WidgetMeasures, entityPM.DeletedWidgetMeasures, entityPM, false);
         }
     }
 }
