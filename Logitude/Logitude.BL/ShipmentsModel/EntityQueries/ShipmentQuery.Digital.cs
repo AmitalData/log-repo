@@ -942,6 +942,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return dischargePort;
         }
 
+        private string GetDischargePortFromTransshipment(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+            {
+                return shipment.OnCarriageToPortName + "," + shipment.OnCarriageToPortCountryCode;
+            }
+            else if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3ToPortName + "," + shipment.Transshipment3ToPortCountryCode;
+            }
+            else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2ToPortName + "," + shipment.Transshipment2ToPortCountryCode;
+            }
+            else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1ToPortName + "," + shipment.Transshipment1ToPortCountryCode;
+            }
+            else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageToPortName + "," + shipment.MainCarriageToPortName;
+            }
+
+            return null;
+        }
+
         private TransitTime GetTransitTime(ShipmentPM shipment)
         {
             return new TransitTime
