@@ -21309,23 +21309,48 @@
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CancelledDate&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;Cancelled Containers&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="94" />
+      <QueryColumn
+        QueryCode="&quot;Cancelled Containers&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ContainerTypeName&quot;"
+        ColumnWidth="128" />
+      <QueryColumn
+        QueryCode="&quot;Cancelled Containers&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;Cancelled Containers&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="2"
+        IndexOrder="6"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="3"
+        IndexOrder="7"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="4"
+        IndexOrder="8"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;Cancelled Containers&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;CancelledDate&quot;"
+        ColumnWidth="90" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
