@@ -20640,6 +20640,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Container&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -20703,6 +20704,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InTransitwithTransshipmentsFilter&quot;"
     ListPropertyPath="&quot;InTransitwithTransshipmentsFilter&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -20710,6 +20712,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Container&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -20773,6 +20776,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PendingGateOutFilter&quot;"
     ListPropertyPath="&quot;PendingGateOutFilter&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -20780,6 +20784,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Container&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -20843,6 +20848,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PendingEmptyReturnFilter&quot;"
     ListPropertyPath="&quot;PendingEmptyReturnFilter&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -20850,6 +20856,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Container&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -21067,7 +21074,7 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;InTransit&quot;"
+    Code="&quot;InTransitNew&quot;"
     TextCode="&quot;In Transit&quot;"
     LocalTextCode="&quot;In Transit&quot;"
     QueryGroupCode="&quot;38cb&quot;"
@@ -21082,69 +21089,69 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
         ColumnWidth="109" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="94" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="158" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;POLLocation&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;PODLocation&quot;"
         ColumnWidth="89" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;ActualPOLVesselDeparture&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;EstimatedPODVesselArrival&quot;"
         ColumnWidth="154" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;InTransit&quot;"
+        QueryCode="&quot;InTransitNew&quot;"
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;InTransitFilter&quot;"
         IsPredefined="true"
@@ -21711,46 +21718,41 @@
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CancelledDate&quot;"
-        ColumnWidth="90" />
-      <QueryColumn
-        QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="94" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
         ColumnWidth="128" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="8"
+        IndexOrder="7"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Cancelled Containers&quot;"
-        IndexOrder="9"
+        IndexOrder="8"
         ObjectFieldName="&quot;CancelledDate&quot;"
         ColumnWidth="90" />
     </QueryColumns>
