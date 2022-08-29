@@ -39,6 +39,28 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                        
                         queryableData = queryableData.Where(d => !d.IsClosed && !d.IsCancelled);
                     }
+                    if (item.FieldName == "PendingPOLDepartureFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
+                    }
+                    if (item.FieldName == "InTransitFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
+                    }
+                    if (item.FieldName == "InTransitwithTransshipmentsFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null);
+                    }
+                    if (item.FieldName == "PendingGateOutFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null);
+                    }
+                    if (item.FieldName == "PendingEmptyReturnFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.GateOut != null &&  d.ActualEmptyReturn == null);
+                    }
+
+
    
                 }
 
@@ -52,11 +74,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 }
             }
 
-            if (showIsCancelled)
-            {
+            //if (showIsCancelled)
+            //{
                 queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled);
-            }
-            else if (showIsClosed)
+            //}
+            //else
+            if (showIsClosed)
             {
                 queryableData= queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
             }
