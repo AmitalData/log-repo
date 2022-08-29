@@ -11,12 +11,20 @@
         padding-right: 2px;
     }
 
-    .link-button:hover {
+    .link-button:not(.disabled):hover {
         color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
     }
 
     .table-row {
         height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
     }
 
     .table-row-cell {
@@ -74,7 +82,7 @@
         </td>
     </tr>
 
-    <tr class="table-row">
+    <tr class="first-split-table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>
@@ -174,7 +182,7 @@
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" (click)="initializeCondition()">
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                 </div>
