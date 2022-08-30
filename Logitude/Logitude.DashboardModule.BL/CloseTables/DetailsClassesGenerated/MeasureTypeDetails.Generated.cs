@@ -44,7 +44,7 @@ namespace Logitude.DashboardModule.BL
 			 
             all.Add(new MeasureTypeDetails()
             {    
-                Code = "Cnt", 
+                Code = "Count", 
                 Name = "Count", 
                 SearchFields = "Count", 
 			});
