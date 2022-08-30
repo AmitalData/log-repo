@@ -242,6 +242,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (flowObject) {
             let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
             this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
+            this.EntityPM.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
             this.EntityPM.FlowJson = JSON.stringify(flowObject);
             this.startBusyIndicator("Saving ...");
             this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => { this.handleUpdateWorkflowResponse(serviceResponse, backAfterSave); });

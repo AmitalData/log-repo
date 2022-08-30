@@ -25,6 +25,7 @@ export class WorkFlowList {
 	UpdatedByUserName: string;
 	FlowJson: string;
 	Entity: string;
+	Trigger: string;
 	
 }
  
