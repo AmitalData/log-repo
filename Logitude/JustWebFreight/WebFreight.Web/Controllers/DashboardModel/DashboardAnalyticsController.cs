@@ -18,12 +18,13 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.DashboardModule.BL.EntityPMs;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
     public class DashboardAnalyticsController : ApiController
     {
-        public HttpResponseMessage GetShipmentAnalytic([FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage PostGetDataAnalytic(WidgetPM widget)
         {
             try
             {

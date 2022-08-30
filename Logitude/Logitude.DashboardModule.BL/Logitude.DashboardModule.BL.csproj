@@ -56,6 +56,9 @@
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\MeasureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WidgetTypeDetails.Generated.cs" />
+    <Compile Include="DataProviders\DataProviderFactory.cs" />
+    <Compile Include="DataProviders\IDataProviderService.cs" />
+    <Compile Include="DataProviders\ShipmentDataProviderService.cs" />
     <Compile Include="EntityDataMappings\AnalyticsFactsFieldsMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\AnalyticsFactsMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\DashboardDataMapping.cs" />
