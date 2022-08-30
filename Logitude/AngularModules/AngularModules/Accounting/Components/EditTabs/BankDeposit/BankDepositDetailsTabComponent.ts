@@ -32,6 +32,7 @@ import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCo
 import { CashBookList } from '../../../EntityLists/CashBookList';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
 
@@ -49,6 +50,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public NoCashBookRows: boolean = false;
     public IsLinesSelection: boolean = false;
     public IsNewDepositMode: boolean = false;
+    public EnableExportChequeDepositsToExcell: boolean = false;
     searchText: string = "";
 
 
@@ -97,6 +99,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.Listen();
         this.GetDefaultValues();
         this.buildQueryColumns();
+        if (FeatureLocator.HasFeaturePermession("BankDeposit", "ExpChDepToExcell")) {
+            this.EnableExportChequeDepositsToExcell = true;
+        }
     }
 
     private SetViewMode()
