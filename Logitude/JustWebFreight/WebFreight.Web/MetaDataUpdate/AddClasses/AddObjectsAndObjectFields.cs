@@ -77,7 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (!string.IsNullOrEmpty(objectTablesDetails.HashString))
                     objectTable.HashString = objectTablesDetails.HashString;
                 objectTableRepository.Add(objectTable);
-
+                
                 TextCode objectSingular = null;
                 if (!tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName))
                 {
@@ -163,6 +163,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 }
 
                 objectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
+                objectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
 
                 return objectTable;
                 #endregion
@@ -318,6 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 updatedObjectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
                 updatedObjectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
+                updatedObjectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
                 objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
