@@ -1401,6 +1401,84 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 
+        //public List<IGrouping<string, LedgerTransaction>> GetLedgerTransactions_InterestTransactionsCheck(ref InterestTransactionsGetNextGroupArgs getNextGroupArgs)
+        //{
+        //    getNextGroupArgs.ActualDifference = 0m;
+        //    string old_journalId_saved = getNextGroupArgs.OldJournalId;
+        //    // IQueryable<LedgerTransaction> query;
+        //    int myMAX = getNextGroupArgs.MaxPageSize; //getNextGroupArgs.LT_LinesMaximum;
+        //    InterestTransactionsGetNextGroupArgs args = getNextGroupArgs;
+        //    bool onlyZeroes = args.OnlyZeroes;
+        //    LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
+        //    IQueryable<IGrouping<string, LedgerTransaction>> group_query;
+
+        //    if (getNextGroupArgs.MoveOn)
+        //    {
+        //        group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+        //              && String.Compare(rec.JournalId, args.OldJournalId) > 0).
+        //              GroupBy(item => item.JournalId).OrderBy(gr => gr.Key).Take(myMAX);
+
+        //    }
+        //    else if (getNextGroupArgs.RunAgain)
+        //    {
+        //        group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+        //            && String.Compare(rec.JournalId, args.OldJournalId) >= 0).
+        //              GroupBy(item => item.JournalId).OrderBy(gr => gr.Key).Take(myMAX);
+
+
+        //    }
+        //    else
+        //    {
+        //        group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+        //              && String.Compare(rec.JournalId, args.OldJournalId) > 0).
+        //              GroupBy(item => item.JournalId).OrderBy(gr => gr.Key).Take(myMAX);
+
+
+        //    }
+
+
+        //    List<IGrouping<string, LedgerTransaction>> group_list = group_query.ToList();
+        //    List<string> q = group_query.Select(g => g.Key).ToList();
+        //    string long_text = "";
+        //    int ctr = 1;
+        //    q.ForEach(item => long_text += "#" + ctr++ + "," + item + "\n");
+        //    List<IGrouping<string, LedgerTransaction>> result = new List<IGrouping<string, LedgerTransaction>>();
+        //    getNextGroupArgs.OldJournalId = q.Last();
+
+
+        //    if (group_list == null || group_list.Count == 0)
+        //    {
+        //        //Nothing retrieved. Stop here!
+        //        getNextGroupArgs.Stop = true;
+        //    }
+        //    else
+        //    {
+        //        getNextGroupArgs.OldJournalId = q.Last();
+        //        foreach (IGrouping<String, LedgerTransaction> group in group_list)
+        //        {
+        //            string jID = group.Key;
+        //            JournalListQueryService journalListQueryService = new JournalListQueryService(context);
+        //            JournalRepository journalRepository = new JournalRepository(this.context);
+        //            var jPM = journalRepository.GetSingle(jID, getNextGroupArgs.Tenant);
+        //            if (jPM != null && !String.IsNullOrEmpty(jPM.Id) && (String.IsNullOrEmpty(jPM.ExternalSystem) || jPM.ExternalSystem != "AMITAL"))
+        //            {
+        //                string accountingEntityCode = jPM.AccountingEntityCode;
+        //                string accountingEntityId = jPM.AccountingEntityId;
+        //                if (!String.IsNullOrEmpty(accountingEntityCode) && !String.IsNullOrEmpty(accountingEntityId))
+        //                {
+        //                    CheckInterestTransactionByAccountingEntity();
+        //                }
+        //            }
+        //        }
+
+        //    }
+        //    string long_text_res = "";
+        //    // result.ForEach(item => long_text_res += item.DueDate.ToString("dd.MM.yyyy") + " : " + item.OpenAmount.ToString() + "   ");
+
+        //    return result;
+        //}
+
+
 
         public List<LedgerTransactionList> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
         {
@@ -1942,6 +2020,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     }
 
+
+  
     public class GetAllAccountArgs
     {
         public int Tenant { get; set; }
