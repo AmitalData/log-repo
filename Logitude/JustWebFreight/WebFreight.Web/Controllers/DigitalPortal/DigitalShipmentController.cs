@@ -43,6 +43,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var tenant = shipmentIdAndTenant.Item2;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
+                shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
