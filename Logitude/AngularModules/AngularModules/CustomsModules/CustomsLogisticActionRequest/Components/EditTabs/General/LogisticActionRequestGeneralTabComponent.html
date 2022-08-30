@@ -388,14 +388,14 @@
                                 </td>
                                 <td style="width: 57px;vertical-align: bottom;">
                                     <button class="RedButton" (click)="OkButtonClicked()"
-                                        [disabled]="!OKButtonEnabled || entityPM.OperationalStatus === 'נכשלה'">{{'General.B.Save' |
+                                        [disabled]="!OKButtonEnabled || entityPM.OperationalStatus === 'נשלחה'">{{'General.B.Save' |
                                         TextCodeTranslationPipe}}</button>
                                 </td>
                                 <td style="width: 10px;vertical-align: bottom;">
                                     <div></div>
                                 </td>
                                 <td style="width:110px;  vertical-align: bottom;">
-                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.OperationalStatus === 'נכשלה'" [AvoidDoubleClick]="true"
+                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.OperationalStatus === 'נשלחה'" [AvoidDoubleClick]="true"
                                         #MyCustomSendOptionsComponent
                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
