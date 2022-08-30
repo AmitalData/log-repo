@@ -1,6 +1,3 @@
-
-
-
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -10,55 +7,87 @@ import { WidgetFilterItem } from './WidgetFilterItem';
 
 @Component({
     selector: 'WidgetFilter',
-    templateUrl: './WidgetFilterComponent.html',
-    inputs: ['DataSource', 'IsRoot', 'ObjectTableName', 'ParentObjectTableName']
+    templateUrl: './WidgetFilterComponent.html'
 })
-
-
 export class WidgetFilterComponent extends BaseComponent implements OnInit {
-    @Input() IsRoot: boolean;
-    @Input() ObjectTableName: string;
-    @Input() DataSource: any;
 
+    @Input() public IsRoot: boolean;
+    @Input() public DataSource: WidgetFilterItem;
+    @Input() public Root: WidgetFilterItem;
+    @Input() public EntityId: string;
 
-    ngOnInit(): void {
-
-
-    }
-    
-    onDeleteFilterClick(item: WidgetFilterItem) {
-        item.MyParentClass.DataSource = this.DeleteFilter(item, item.MyParentClass.DataSource);
-        this.DataSource = item.MyParentClass.DataSource;
-        if (item.MyParentClass.DataSource.length == 0 && item.MyParentClass.IsRoot) this.AddEmptyFilter(item);
+    ngOnInit() {
+        this.LoadDefaultAdditionalFilters();
     }
 
-    AddEmptyFilter(item: WidgetFilterItem = null) {
-        let emptyTreeFilter = new WidgetFilterItem(null, item == null ? this : item.MyParentClass);
-        let newTreeFilter = new WidgetFilterItem(null, item == null ? this : item.MyParentClass);
-        newTreeFilter.IsGroup = true;
-        newTreeFilter.IndexOrder = this.DataSource.length;
-        newTreeFilter.QueryFilterItems.push(emptyTreeFilter);
-        this.DataSource.push(newTreeFilter);
+    LoadDefaultAdditionalFilters() {
+        // if (this.IsRoot) this.DataSource = this.GetAllFilters(this.DataSource[0]);
     }
-    
-    DeleteFilter(Item: WidgetFilterItem, ListItems: WidgetFilterItem[]) {
-        ListItems.forEach((Myfilter) => {
-            ListItems = this.DeleteSpecificFilter(Myfilter, Item, ListItems);
+
+    get FilterItems(): WidgetFilterItem[] {
+        return this.DataSource.QueryFilterItems;
+    }
+
+    private GetAllFilters(oldValue: WidgetFilterItem) {
+        let groupTreeFilter = new WidgetFilterItem(null);
+        groupTreeFilter.IsGroup = true;
+        groupTreeFilter.setAndOrOperation(oldValue.FilterType);
+        groupTreeFilter.IndexOrder = 1;
+        let myFilter = this.RestoreFilters(oldValue, groupTreeFilter);
+        let myFilterList = [];
+        myFilterList.push(myFilter);
+        return myFilterList;
+    }
+
+    RestoreFilters(baseFilter: WidgetFilterItem, myFilter: WidgetFilterItem) {
+        baseFilter.QueryFilterItems?.forEach((field) => {
+            this.BuildFilter(field, myFilter);
         });
-        return ListItems;
+        return myFilter;
     }
 
-    private DeleteSpecificFilter(Myfilter: WidgetFilterItem, Item: WidgetFilterItem, ListItems: WidgetFilterItem[]) {
-        if (Myfilter.QueryFilterItems.length > 0) {
-            Myfilter.QueryFilterItems = this.DeleteFilter(Item, Myfilter.QueryFilterItems);
-            if (Myfilter.QueryFilterItems.length == 0) {
-                ListItems = ListItems.filter(a => a != Myfilter);
-            }
+    private BuildFilter(field: WidgetFilterItem, myFilter: WidgetFilterItem) {
+        if (field.QueryFilterItems.length == 0) {
+            let groupTreeFilter = new WidgetFilterItem(field);
+            myFilter.QueryFilterItems.push(groupTreeFilter);
+            return;
         }
-        else if (Myfilter == Item) {
-            ListItems = ListItems.filter(a => a != Item);
-        }
-        return ListItems;
+        var DWObjectField = new WidgetFilterItem(null);
+        DWObjectField.IsGroup = true;
+        DWObjectField.IndexOrder = myFilter.QueryFilterItems.length;
+        DWObjectField.setAndOrOperation(field.FilterType);
+        this.RestoreFilters(field, DWObjectField);
+        myFilter.QueryFilterItems.push(DWObjectField);
+    }
+
+    AddEmptyFilter() {
+        var groupFilter = new WidgetFilterItem(null);
+        groupFilter.IsGroup = true;
+        groupFilter.IndexOrder = this.FilterItems.length;
+        groupFilter.QueryFilterItems.push(new WidgetFilterItem(null));
+        this.DataSource.QueryFilterItems.push(groupFilter);
+    }
+
+    onDeleteFilterClick(filterItem: WidgetFilterItem) {
+        this.DataSource.QueryFilterItems = this.FilterItems.filter(item => item !== filterItem);
+    }
+
+    AddFilterToGroup(item: WidgetFilterItem) {
+        var newTreeFilter = new WidgetFilterItem(null);
+        newTreeFilter.IndexOrder = this.FilterItems.length;
+        item.QueryFilterItems.push(newTreeFilter);
+    }
+
+    AddGroup(item: WidgetFilterItem) {
+        let newGroupTreeFilter = new WidgetFilterItem(null);
+        newGroupTreeFilter.IsGroup = true;
+        newGroupTreeFilter.IndexOrder = this.FilterItems.length;
+
+        var newGroupField = new WidgetFilterItem(null);
+        newGroupField.IndexOrder = newGroupTreeFilter.QueryFilterItems.length;
+        newGroupTreeFilter.QueryFilterItems.push(newGroupField);
+
+        item.QueryFilterItems.push(newGroupTreeFilter);
     }
 
 }

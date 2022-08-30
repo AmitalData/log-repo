@@ -6,19 +6,22 @@
         font-size: 11px;
         text-indent: 3px;
     }
-        .LinkBtn:hover {
-            text-decoration: underline;
-            float: left;
-            color: lightskyblue;
-            font-size: 11px;
-            cursor: pointer;
-        }
+
+    .LinkBtn:hover {
+        text-decoration: underline;
+        float: left;
+        color: lightskyblue;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
     .GroupItem {
         min-width: 70px;
         min-height: 65px;
         margin: 5px;
         display: inline-block;
     }
+
     .OperatorItem {
         min-width: 45px;
         min-height: 65px;
@@ -32,22 +35,28 @@
         min-height: 20px;
         margin: 5px;
         display: inline-block;
-        /*display: table-cell;
-        vertical-align: middle;*/
     }
 
     .Filters {
         display: table-cell;
         border-left: 1px solid gray;
     }
+
     .FilterItem {
         min-width: 55px;
         min-height: 20px;
         margin: 5px;
     }
 
-</style>
+    .ImgHolder {
+        flex-direction: row;
+        box-sizing: border-box;
+        display: flex;
+        place-content: center;
+        align-items: center;
 
+    }
+</style>
 <table>
     <tr>
         <td style="width:6px;">
@@ -56,22 +65,27 @@
         <td>
             <table>
                 <tr>
-                    <td>
-                        <div *ngFor="let item of DataSource; let i=index;">
-                            <div *ngIf="item.IsGroup == false" style="width:650px;">
+
+                    <td style="width: 130px;height:45px;" *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)">
+                        <label style="padding-left:20%;color: #C9C9C9;">
+                            No Filters Added.
+                        </label>
+                    </td>
+                    <td *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)">
+                        <span class="LinkBtn" (click)="AddEmptyFilter()"> Add Filter</span>
+                    </td>
+
+                    <td *ngIf="FilterItems && FilterItems.length > 0">
+                        <div style="display: flex; width: 0px;" *ngFor="let item of FilterItems; let i=index;">
+                            <div *ngIf="IsRoot || FilterItems.length != 1" class="ImgHolder">
+                                <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;"
+                                    (click)="onDeleteFilterClick(item)" />
+                            </div>
+                            <div *ngIf="!item.IsGroup" style="width:650px;">
                                 <div>
                                     <table style="height:30px;">
                                         <tr style="height:30px;" class="MyFilterItem">
-                                            <td style="width: 16px;">
-                                                <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
-                                            </td>
-                                            <td style="width:170px;max-width:170px;min-width:87px;">
-                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [SelectedItem]="item.MainEntityName" [WaterMark]="'Table'" (SelectedItemChanged)="item.MainEntityChanged($event)"></ComboBox>
-                                            </td>
-                                            <td style="width:7px;">
-                                                <div style="width:7px;"></div>
-                                            </td>
-                                            <td style="width:170px;max-width:170px;min-width:87px;">
+                                            <!-- <td style="width:170px;max-width:170px;min-width:87px;">
                                                 <LogLov (SelectedItemChanged)="item.FieldChanged($event)"
                                                         [ObjectFieldName]="'ObjectFieldCode'"
                                                         [QueryFilterItems]="item.MainEntityFieldsFilterItems"
@@ -110,7 +124,7 @@
                                                 </div>
                                             </td>
 
-                                            <!--Boolean-->
+                                  
                                             <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && item.FieldDataType == 'Boolean' && item.Operator == 'Equal'">
                                                 <ComboBox style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked" [WaterMark]="'Value'"></ComboBox>
                                             </td>
@@ -172,45 +186,39 @@
 
                                             <td *ngIf="!item.ShowOtherEntity" style="width:127px;">
                                                 <div style="width:127px;"></div>
-                                            </td>
+                                            </td> -->
 
                                             <td colspan="5">
                                                 <div></div>
                                             </td>
                                         </tr>
                                     </table>
-                                    <QueryFilterTree [DataSource]="item.QueryFilterItems" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
-                                    <div *ngIf="DataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
-                                        <table>
-                                            <tr>
-                                                <td style="width:1%;"></td>
-                                                <td style="width:1%;"><span class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
-                                                <td style="width:1%;"></td>
-                                                <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
-                                                <td style="width:4%;"></td>
-                                                <td style="width:30%;"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                    <WidgetFilter [DataSource]="item" [EntityId]="EntityId">
+                                    </WidgetFilter>
                                 </div>
                             </div>
                             <div class="GroupItem" *ngIf="item.IsGroup == true" style="width:620px;">
                                 <div class="OperatorItem">
                                     <div style="display: table-cell;vertical-align: middle;">
                                         <div class="Operator">
-                                            <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)" [ItemsSource]="item.AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
+                                            <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)"
+                                                [ItemsSource]="item.AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
                                         </div>
                                     </div>
                                     <div class="Filters">
                                         <div class="FilterItem">
-                                            <QueryFilterTree [DataSource]="item.QueryFilterItems" [ParentObjectTableName]="ParentObjectTableName" [ObjectTableName]="ObjectTableName"></QueryFilterTree>
-                                            <div *ngIf="DataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
+                                            <WidgetFilter [DataSource]="item" [EntityId]="EntityId">
+                                            </WidgetFilter>
+                                            <div *ngIf="FilterItems.length > 0 && item.IsGroup == true"
+                                                style="margin-top: 10px;margin-left: 6px;">
                                                 <table>
                                                     <tr>
                                                         <td style="width:1%;"></td>
-                                                        <td style="width:1%;"><span class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
+                                                        <td style="width:1%;"><span class="LinkBtn"
+                                                                (click)="AddFilterToGroup(item)">Add Filter</span></td>
                                                         <td style="width:1%;"></td>
-                                                        <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                                                        <td style="width:10%;"><span class="LinkBtn"
+                                                                (click)="AddGroup(item)">Add Group</span></td>
                                                         <td style="width:4%;"></td>
                                                         <td style="width:30%;"></td>
                                                     </tr>
@@ -223,7 +231,9 @@
                         </div>
                     </td>
                 </tr>
-                <tr><td colspan="4"></td></tr>
+                <tr>
+                    <td colspan="4"></td>
+                </tr>
             </table>
         </td>
     </tr>

@@ -98,17 +98,6 @@
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <div style="width:102%;overflow-x:auto;overflow-y:auto;">
-                                        <WidgetFilter [DataSource]="AdditionalFiltersData" [IsRoot]="true" [TableName]="'TableName'"></WidgetFilter>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
                             <tr>
                                 <td><div></div></td>
                             </tr>
@@ -117,6 +106,17 @@
 
                     <td>
                         <img width="150" height="150" [attr.src]="ChartImageSrc" class="CenterCenter" />
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width:800px;">
+                        <div style="width:102%;overflow-x:auto;overflow-y:auto;">
+                            <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
+                        </div>
+                    </td>
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 

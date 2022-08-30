@@ -10,6 +10,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -26,6 +27,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
+    public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
