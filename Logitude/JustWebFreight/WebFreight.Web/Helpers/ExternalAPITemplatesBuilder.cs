@@ -17,7 +17,7 @@ namespace WebFreight.Web.Helpers
         private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
         private string[] oceanInsightAPISNames = new[] { "Container" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
-                                                                  "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , 
+                                                                  "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , "ClosedMonthCheck" ,
                                                                   "Customer Open Files Amount", "GL Account More Data" };
         private Dictionary<string,string> XMLRequestTexts;
 
