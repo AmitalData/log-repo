@@ -69,6 +69,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         #region Fields
 
+        public VerticalTimeLineData TimeLineData { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CountryForStatisticsId { get; set; }
 
@@ -3013,5 +3015,31 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
         public string CarrierTypeName { get; set; }
+    }
+
+    public class VerticalTimeLineData
+    {
+        public VerticalTimeLineStop Pickup { get; set; }
+        public VerticalTimeLineStop MainCarriageFrom { get; set; }
+        public VerticalTimeLineStop MainCarriageTo { get; set; }
+        public VerticalTimeLineStop Delivery { get; set; }
+        public VerticalTimeLineStop Transshipment1 { get; set; }
+        public VerticalTimeLineStop Transshipment2 { get; set; }
+        public VerticalTimeLineStop Transshipment3 { get; set; }
+        public VerticalTimeLineStop PreCarriage { get; set; }
+        public VerticalTimeLineStop OnCarriage { get; set; }
+        public VerticalTimeLineStop Warehouse1 { get; set; }
+        public VerticalTimeLineStop Warehouse2 { get; set; }
+
+    }
+
+    public class VerticalTimeLineStop
+    {
+        public string Title { get; set; }
+        public string CountryCode { get; set; }
+        public string City { get; set; }
+        public DateTime? Date { get; set; }
+        public string DateType { get; set; }
+        public bool IsViaPortsDatesFilled { get; set; }
     }
 }
