@@ -206,6 +206,7 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="MessagingServices\DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
@@ -399,6 +400,7 @@
     <Compile Include="RequestServices\VP_NG_2690_VehicleInRequestService.cs" />
     <Compile Include="ResponseServices\CBC_NG_8362_MSG01_CustomsBookOutResponseService.cs" />
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
+    <Compile Include="ResponseServices\CC_MSG1_EntryExitToFromCustomsStorageSitesMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />

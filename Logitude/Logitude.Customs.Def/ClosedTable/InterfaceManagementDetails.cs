@@ -1819,6 +1819,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //   NeedSignature = false
             });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "1050",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר יציאה ממסוף/נמל",
+                DcaPrefixName = "SaveCC_MSG1050_EntryExitToFromCustomsStorageSitesMessage_Out.",
+                DcaPrefixName2 = "SaveCC_MSG1050_EntryExitToFromCustomsStorageSitesMessage_EX_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //   NeedSignature = false
+            });
+
             // moran 25.1.15 - Task 9967 <--
 
             all.Add(new InterfaceManagementDetails()
