@@ -16,6 +16,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class ClosedMonthCheckController : ApiController
     {
+        private const string OpenPeriod = "Open";
+        private const string ClosedPeriod = "Closed";
         public HttpResponseMessage Get(int? year ,int? month,string periodTypeCode)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -28,28 +30,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                 AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(accountingContext);
                 List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType(periodTypeCode, tenant);
-
                 var currentAccountingPeriodPM = accountingPeriodsByTypeRegular.FirstOrDefault(periods => periods.Year == year);
-
-                if (currentAccountingPeriodPM == null)
-                {
-                    throw new Exception("Accounting period with code " + periodTypeCode + " doesn't exist");
-                }
-
-                string result = "";
-                if (currentAccountingPeriodPM != null && month > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault() && month <= currentAccountingPeriodPM.OpenMonth)
-                {
-                    result = "Open";
-                }
-                else {
-                    result = "Closed";
-                }
-
+                ValidateAccountingPeriod(currentAccountingPeriodPM, periodTypeCode);
+                string result = GetAccountingPeriodStatus(currentAccountingPeriodPM, month);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        private string GetAccountingPeriodStatus(AccountingPeriodPM currentAccountingPeriodPM, int? month)
+        {
+            if (currentAccountingPeriodPM != null && month > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault() && month <= currentAccountingPeriodPM.OpenMonth)
+            {
+                return OpenPeriod;
+            }
+            else
+            {
+                return ClosedPeriod;
+            }
+        }
+
+        private void ValidateAccountingPeriod(AccountingPeriodPM currentAccountingPeriodPM,string periodTypeCode)
+        {
+            if (currentAccountingPeriodPM == null)
+            {
+                throw new Exception("Accounting period with code " + periodTypeCode + " doesn't exist");
             }
         }
 
