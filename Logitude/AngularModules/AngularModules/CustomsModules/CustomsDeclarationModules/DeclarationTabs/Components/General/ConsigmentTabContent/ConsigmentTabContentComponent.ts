@@ -366,6 +366,7 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StorageSiteCodeExport", this.ObjectTableName, !this.IsDisplayOnly);
         if (this.declarationPM.TransportModeId != 'O') {
             this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, false);
         }
