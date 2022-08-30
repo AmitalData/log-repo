@@ -107,7 +107,12 @@ export class WidgetPM {
         }
     }
     //public WidgetMeasures: Array<WidgetMeasurePM>= [];
- 
+     private filters: string;
+    public get Filters() { return this.filters; }
+    public set Filters(newValue: string) { if (this.filters != newValue) { this.filters = newValue; this.MarkAsDirty("Filters"); } }
+       
+	 
+
     public OldEntityPM: WidgetPM;
 	
     private entityParentPM: any;
