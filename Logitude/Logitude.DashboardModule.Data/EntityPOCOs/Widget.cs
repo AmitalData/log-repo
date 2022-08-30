@@ -49,6 +49,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string EntityId { get; set; }
 	      
         public virtual AnalyticsFactsMetaData EntityMetaData { get; set; }
+        [Column("Filters")]
+	    public string Filters { get; set; }
     }
 }
 	 
