@@ -85,5 +85,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
         public string ReleaseDateString { get; set; }
+
+        public string AzurePrincipalSecretKey { get; set; }
+        public string DNSIPAddress { get; set; }
+        public string DNSZone { get; set; }
     }
 }

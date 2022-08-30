@@ -12,7 +12,11 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
+using Microsoft.Azure.Management.Dns.Fluent;
+using Microsoft.Azure.Management.Dns.Fluent.Models;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Practices.Unity;
+using Microsoft.Rest.Azure.Authentication;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -27,6 +31,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -438,7 +443,67 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-      
+        public HttpResponseMessage GetGenerateDigitalPortalDomain(string customerURL)
+        {
+            try
+            {
+                var tenantId = "a46b1446-9af4-4079-87ad-3304ee9ed758";
+                var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
+                var secret = "~Tc8Q~6IvteQMJKc.-Ya1TvBKNl.f16mAuS7Pc2w";
+                var subscriptionId = "faa01774-0b55-482b-a317-742a1f1479f8";
+                var resourceGroupName = "globallogitude";
+                var zoneName = "logitudeworld.com";
+                var DNSIPAddress = "13.80.79.173";
+                RunAddingARecordSample(tenantId, clientId, secret, subscriptionId, resourceGroupName, zoneName, DNSIPAddress).Wait();
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public static async Task RunAddingARecordSample(string tenantId, string clientId, string secret, string subscriptionId, string resourceGroupName, string zoneName, string DNSIPAddress)
+        {
+            // Build the service credentials and DNS management client
+            var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
+            var dnsClient = new DnsManagementClient(serviceCreds);
+            dnsClient.SubscriptionId = subscriptionId;
+
+            #region Create A Record
+            // **********************************************************************************************************
+            // Create A Record
+            // **********************************************************************************************************
+
+            var recordSetName = "maheera";
+            Console.Write("Creating DNS 'A' record set with name '{0}'...", recordSetName);
+            try
+            {
+                // Create record set parameters
+                var recordSetParams = new RecordSet();
+                recordSetParams.TTL = 3600;
+
+                // Add records to the record set parameter object.  In this case, we'll add a record of type 'A'
+                recordSetParams.ARecords = new List<ARecord>();
+                recordSetParams.ARecords.Add(new ARecord(DNSIPAddress));
+
+                // Add metadata to the record set.  Similar to Azure Resource Manager tags, this is optional and you can add multiple metadata name/value pairs
+                //recordSetParams.Metadata = new Dictionary<string, string>();
+                //recordSetParams.Metadata.Add("user", "Mary");
+
+                // Create the actual record set in Azure DNS
+                // Note: no ETAG checks specified, will overwrite existing record set if one exists
+                var recordSet = await dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, recordSetName, RecordType.A, recordSetParams);
+
+                Console.WriteLine("success");
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine("failed: {0}", e.Message);
+            }
+            #endregion 
+        }
+
 
         #region SendBlockToServer
         int counter = -1;

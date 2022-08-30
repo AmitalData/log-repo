@@ -332,9 +332,21 @@
                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td>
-                            <div style="width: 150px; padding: 0px 5px;">
-                                <button class="Button" (click)="openLoginPolicyPopup()">Login Policy</button>
-                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 0px 5px;">
+                                            <button class="Button" (click)="onGenerateClicked()">Generate</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding: 0px 5px;">
+                                            <button class="Button" (click)="openLoginPolicyPopup()">Login Policy</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            
                         </td>
                     </tr>
 

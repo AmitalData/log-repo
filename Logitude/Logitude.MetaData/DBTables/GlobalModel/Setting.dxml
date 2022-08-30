@@ -517,4 +517,31 @@
     <Constraints
       Nullable="true" />
   </Column>
+	<Column
+        Name="AzurePrincipalSecretKey"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+	
+	<Column
+        Name="DNSZone"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+	
+	<Column
+        Name="DNSIPAddress"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+	
 </Table>
