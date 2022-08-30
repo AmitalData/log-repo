@@ -191,7 +191,7 @@
 	 [CustomFieldValuesVariable] ,  @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
 	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency,  @MarkupPercentage, @SalesmanUserId , @BusinessUnitId,
 	 @ShipperNotExporter, @ConsigneeNotImporter,@ShipmentSubType)
-	 )
+	 
 
 	   	END TRY 
 BEGIN CATCH  
