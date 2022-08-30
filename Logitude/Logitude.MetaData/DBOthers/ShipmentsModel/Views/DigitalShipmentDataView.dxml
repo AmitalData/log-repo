@@ -30,6 +30,7 @@
     ShipMasterData.Transshipment1ETD,
     ShipMasterData.Transshipment1ATA,
     ShipMasterData.Transshipment1ATD,
+	ship.IsOperationalClosed,
     dbo.Incoterms.Code AS IncotermCode,
 	FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,
 	FinalDestinationCountries.EnglishName AS MainCarriageFinalDestinationCountryName,
