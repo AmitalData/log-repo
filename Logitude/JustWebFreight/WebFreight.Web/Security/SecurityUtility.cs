@@ -117,10 +117,12 @@ namespace WebFreight.Web.Security
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
+
                 if (contactinfo.IsApi && (contactinfo.Tenant != tenant) && contactinfo.Tenant != 0)
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
+
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
