@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { BooleanItems } from "Workflow/Constants/BooleanItems";
 import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { Condition } from "Workflow/Models/Condition";
@@ -33,8 +34,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
     ];
 
     public BooleanFieldValues: ListItem[] = [
-        new ListItem("True"),
-        new ListItem("False"),
+        new ListItem(BooleanItems.True),
+        new ListItem(BooleanItems.False),
     ];
 
     DataContext: any = this;
@@ -70,16 +71,19 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
 
     updateConditionOperator(operatorCode: any, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
+
             if (operatorCode === ConditionOperators.IsEmpty || this.Conditions[conditionIndex]?.operator === ConditionOperators.IsEmpty) {
-                this.updateConditionValue(null, conditionIndex);
+                let value = operatorCode === ConditionOperators.IsEmpty ? BooleanItems.True : null;
+                this.updateConditionValue(value, conditionIndex);
             }
+
             this.Conditions[conditionIndex].operator = operatorCode;
         }
     }
 
     updateConditionValue(value: string, conditionIndex: number) {
         if (value !== this.Conditions[conditionIndex]?.value) {
-            this.Conditions[conditionIndex].value = value?.toString();
+            this.Conditions[conditionIndex].value = value ? value.toString() : null;
         }
     }
 
