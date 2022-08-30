@@ -1229,7 +1229,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else
             {
-                shipment.TimeLineData = FillShipmentTimeLineForShipment(shipment);
+                shipment.TimeLineData = FillShipmnetTimeLineForShipment(shipment);
             }
         }
 

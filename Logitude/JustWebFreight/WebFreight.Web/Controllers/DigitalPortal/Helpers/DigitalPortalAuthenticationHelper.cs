@@ -18,29 +18,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
         public Tuple<string, int> AuthenticateResponse(string cardId, string entityId)
         {
+            string securityKey = HttpContext.Current.Request.Headers["securitykey"];
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             int tenant;
 
-            if (authToken != null)
+            if (securityKey != null)
+            {
+                var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
+                if (shipmentIdAndTenant == null)
+                {
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+                }
+                entityId = shipmentIdAndTenant.Item1;
+                tenant = shipmentIdAndTenant.Item2;
+                return Tuple.Create(entityId, tenant);
+            }
+            else if (authToken != null)
             {
                 tenant = authToken.Tenant;
                 CheckSecurityByToken(tenant, cardId);
-
                 return Tuple.Create(entityId, tenant);
             }
 
-            string securityKey = HttpContext.Current.Request.Headers["securitykey"];
-
-            var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
-            
-            if (shipmentIdAndTenant == null)
-            {
-                throw new AutenticationException("Sorry! this user is not authorized!");
-            }
-
-            entityId = shipmentIdAndTenant.Item1;
-            tenant = shipmentIdAndTenant.Item2;
-            return Tuple.Create(entityId, tenant);
+            return null;
         }
 
         public void CheckSecurityByToken(int tenant, string cardId)
