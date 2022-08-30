@@ -154,13 +154,14 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
         var rresponse: ServiceResponse = new ServiceResponse();
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         return defer(() => {
-            var rresponse: ServiceResponse = new ServiceResponse();
+            var response: ServiceResponse = new ServiceResponse();
             /*if (this.declarationPM.CancelRequestStatusCode == "2" || this.declarationPM.CancelRequestStatusCode == "5")
                 rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: "לתצוגה בלבד" };
             else*/
-                rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: "" };
-
-            return of(rresponse);
+                
+            response.Result = { IsDisplayOnly: this.declarationPM.IsExportClosed, DisplayOnlyMessage: "" };            
+            
+            return of(response);
         });
     }
 
