@@ -17,8 +17,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             this.queryTreeFilterContext = queryTreeFilterContext;
-            RemoveEmptyFilters(queryTreeFilterContext.QueryFilterItem);
             FillFiledsNames(queryTreeFilterContext.Type);
+            RemoveEmptyFilters(queryTreeFilterContext.QueryFilterItem);
         }
 
 
@@ -43,8 +43,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             if (!queryTreeFilterContext.IsInterpreterFinished) return;
             queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.Operator) && d.Operator.Contains("Field") && d.FieldValue != null && !string.IsNullOrEmpty(d.FieldValue.ToString()) && d.FieldValue.ToString().Split('.')[0] == queryTreeFilterContext.ParentObjectTableName);
             queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldName) && d.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName);
-            //queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldName) && !fieldsNames.Contains(d.FieldName));
-            //queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldValue.ToString()) && d.Operator.Contains("Field") && !fieldsNames.Contains(d.FieldValue.ToString()));
+            queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldName) && !fieldsNames.Contains(d.FieldName));
+            queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldValue.ToString()) && d.Operator.Contains("Field") && !fieldsNames.Contains(d.FieldValue.ToString()));
 
         }
 

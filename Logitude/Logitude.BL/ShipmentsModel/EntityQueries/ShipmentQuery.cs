@@ -4431,6 +4431,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
                                      where a.Id == id && a.Tenant == tenant
                                      select a).FirstOrDefault();
+                if (shipment == null) return null;
 
                 ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
                                                  where a.Id == shipment.MasterShipmentDataId
