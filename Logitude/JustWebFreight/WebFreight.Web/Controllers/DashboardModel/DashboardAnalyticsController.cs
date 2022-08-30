@@ -19,6 +19,7 @@ using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.DashboardModule.BL.EntityPMs;
+using Logitude.DashboardModule.BL.DataProviders;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -31,14 +32,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-
-                ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
-
-                TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
-                var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
-                shipmentAnalyticIQueryable = treeFilterQueryService.Apply(shipmentAnalyticIQueryable, new TreeFilterQueryArgs() { AdditionalTreeFilter = filters.TreeFilters, ObjectTableName = "", Tenant = authToken.Tenant });
-                var result = shipmentAnalyticIQueryable.ToList();
+                var dataProvicer = new DataProviderService();
+                var result = dataProvicer.GetData(widget);
                 return Request.CreateResponse(result);
             }
             catch (Exception ex)
