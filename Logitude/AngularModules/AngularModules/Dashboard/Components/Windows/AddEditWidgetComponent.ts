@@ -29,6 +29,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public WidgetMeasuresList: WidgetMeasureItem[];
     public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
+    
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -44,6 +45,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.BuildMeasures();
         this.CheckAddNewMeasureVisible();
         this.Clone();
+        this.GetFilters();
+    }
+
+    GetFilters() {
+        if(!this.EntityPM.Filters) return;
+        var filters = JSON.parse(this.EntityPM.Filters);
+        if(!filters) return;
+        this.GroupRoot = filters;
     }
 
     private ComputeChartImageSrc() {
@@ -142,6 +151,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.EndPosition != value) {
             this.EntityPM.EndPosition = value;
         }
+    }
+
+    public TableChanged(){
+        this.GroupRoot = new WidgetFilterItem();
     }
 
     CancelButtonClicked() {

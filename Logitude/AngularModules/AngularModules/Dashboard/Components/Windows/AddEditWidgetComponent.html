@@ -35,7 +35,9 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'AnalyticsFactsMetaData'"
                                             [HideColumns]="true"
-                                            [DisplayMemberPath]="'Name'">
+                                            [DisplayMemberPath]="'Name'"
+                                            [IgnoreFeatureCheck]="true"                                         
+                                            (SelectedItemChanged)="TableChanged()">
                                     </LogLov>
                                 </td>
                                 <td>
@@ -116,9 +118,9 @@
                     </td>
                 </tr>
 
-                <tr class="FormFieldRow">
-                    <td style="width:800px;">
-                        <div style="width:102%;overflow-x:auto;overflow-y:auto;">
+                <tr class="FormFieldRow" *ngIf="EntityId">
+                    <td style="width: 800px; height: 280px;">
+                        <div style="overflow-x: SCROLL; overflow-y: SCROLL;HEIGHT: 100%; width: 100%;">
                             <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
                         </div>
                     </td>
