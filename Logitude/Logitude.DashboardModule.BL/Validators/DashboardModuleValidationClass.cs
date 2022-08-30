@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Logitude.DashboardModule.BL.Validators
 {
-    class DashboardModuleValidationClass : IDashboardModuleValidationClass
+    public class DashboardModuleValidationClass : IDashboardModuleValidationClass
     {
 
         bool ready;

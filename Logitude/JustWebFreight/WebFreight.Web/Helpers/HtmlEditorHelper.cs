@@ -5912,9 +5912,19 @@ namespace WebFreight.Web.Helpers
             string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
             string pageLink;
+            var isDigitalPortalVisibile = false;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
 
-            if(sharedTenant.IsCargoTrackWebAccessActivated == true)
+            SecurityUtility.CheckContactFeature("General", "SHLOGDIGITALPORTAL", sharedLinkHTMLArgs.Tenant);
+            {
+                isDigitalPortalVisibile = true;
+            }
+
+            if (isDigitalPortalVisibile)
+            {
+                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key;
+            }
+            else if (sharedTenant.IsCargoTrackWebAccessActivated == true)
             {
                 var cargoURL = GetCargoTrackingSystemURL(sharedLinkHTMLArgs, myUrl);
                 pageLink = cargoURL + "cargo-tracking/declaration-link?" +

@@ -9,11 +9,9 @@ export class ModuleProviders {
         var service: any = null;
 
         switch (name) {
-            // List
             case "WorkFlowListService": { service = new WorkFlowListService(); break; }
             case "WorkFlowStatusListService": { service = new WorkFlowStatusListService(); break; }
 
-            // PM
             case "WorkFlowPMService": { service = new WorkFlowPMService(); break; }
         }
 

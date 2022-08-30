@@ -14377,6 +14377,59 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public ShipmentPM GetSingleDigitalShipmentPMBySecurityKey(string key)
+        {
+            if (!string.IsNullOrEmpty(key))
+            {
+
+                Shipment shipment = null;
+
+                shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData")
+                            where a.SecurityKey == key && !a.IsCancelled
+                            select a).FirstOrDefault();
+
+
+
+                if (shipment != null)
+                {
+                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                                     where a.Id == shipment.MasterShipmentDataId
+                                                     select a).FirstOrDefault();
+
+                    ShipmentPM shipmentPM = new ShipmentPM();
+
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                     where a.Id == shipment.Id
+                                     select a).FirstOrDefault();
+                    if (CLoudData != null)
+                    {
+                        shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
+                        shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
+                        shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
+                        shipmentPM.VersionApproved = CLoudData.VersionApproved;
+                        shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
+                        shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
+
+                    }
+                    return shipmentPM;
+                }
+            }
+
+            return null;
+        }
+
         public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomData(string key, int tenant)
         {
             if (!string.IsNullOrEmpty(key))

@@ -1212,10 +1212,11 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             if (!myShipmentResult.HasError) {
                 this.ShipmentPM = myShipmentResult.Result;
                 this.ShipmentPM.StatusId = Status.Result.Id;
-                this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
-                this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
-                this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
+                this.ShipmentPM.ShipperReference1 = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerReference1 : this.ShipmentPM.ShipperReference1;
+                this.ShipmentPM.ShipperReference2 = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerReference2 : this.ShipmentPM.ShipperReference2;
+                this.ShipmentPM.ShipperId = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerId : this.ShipmentPM.ShipperId;
                 this.ShipmentPM.DontAddToForwarderQueue = true;
+                this.ShipmentPM.IsImporterShipment = true;
                 this._ShipmentPMService.update(this.ShipmentPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
                         this.DisableAddDocumentButton = true;

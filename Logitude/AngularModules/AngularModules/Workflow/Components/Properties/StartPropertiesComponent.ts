@@ -1,8 +1,10 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { Entity } from "Workflow/Models/Entity";
+import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
+import { Condition } from "Workflow/Models/Condition";
 
 @Component({
     templateUrl: "./StartPropertiesComponent.html"
@@ -10,12 +12,11 @@ import { Entity } from "Workflow/Models/Entity";
 
 export class StartPropertiesComponent extends BaseComponent {
 
-    public Entities: Entity[] = [
-        new Entity("Shipment"),
-    ];
-
-    public Entity: Entity = null;
+    public EntityId: string = null;
     public Trigger: string = null;
+
+    public Conditions: Condition[];
+    public ConditionsOperation: string;
 
     public ValidationErrorsList: string[];
 
@@ -27,11 +28,22 @@ export class StartPropertiesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
 
-        let entityCode = this.Data["entity"];
-        let entity = entityCode ? (this.Entities.filter(e => e.Name === entityCode)[0] || null) : null;
+        this.initialize();
+    }
 
-        this.updateEntity(entity, false);
-        this.updateTrigger(this.Data["trigger"], false);
+    initialize() {
+        this.EntityId = this.Data["entityId"] || null;
+        this.Trigger = this.Data["trigger"] || null;
+
+        this.Conditions = this.Data["conditions"] || [];
+        this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionGroupOperations.And;
+
+        this.setUIProperties();
+    }
+
+    initializeCondition() {
+        let condition = new Condition();
+        this.Conditions.push(condition);
     }
 
     cancelButtonClicked() {
@@ -42,30 +54,44 @@ export class StartPropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
+
+            this.setConditionsData();
+
+            //console.log(this.Data);
+
             this.CurrentSession.CurrentWindow.Close(this.Data);
-        }else{
+        } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
         }
     }
 
-    updateEntity(entity: Entity, updateData: boolean = true) {
-        if (updateData) {
-            this.Data["entity"] = entity.Name;
-        }
-        this.Entity = entity;
-        this.setRequiredUIProperty("Object", entity);
+    setConditionsData() {
+        this.Data["conditions"] = this.Conditions;
+        this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
     }
 
-    updateTrigger(trigger: string, updateData: boolean = true) {
-        if (updateData) {
-            this.Data["trigger"] = trigger;
-        }
+    updateEntity(entity: any) {
+        this.Data["entityId"] = entity ? entity.Id : null;
+        this.Data["entity"] = entity ? entity.Name : null;
+        this.EntityId = entity ? entity.Id : null;
+        this.setUIProperties();
+    }
+
+    updateTrigger(trigger: string) {
+        this.Data["trigger"] = trigger;
         this.Trigger = trigger;
-        this.setRequiredUIProperty("Trigger", trigger);
+        this.setUIProperties();
     }
 
-    setRequiredUIProperty(fieldName: string, fieldValue: any) {
-        this.UIProperties.SetRequired(fieldName, null, AppTool.IsNullOrEmpty(fieldValue));
+    setUIProperties() {
+        this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.EntityId));
+        this.UIProperties.SetRequired("Trigger", null, AppTool.IsNullOrEmpty(this.Trigger));
+    }
+
+    getObjectTablesQueryFilters() {
+        let apiQueryFilters = new ApiQueryFilters();
+        apiQueryFilters.addAdditionalFilter("Name", "Shipment", null, null, "Equals", false, false, false, "Text");
+        return apiQueryFilters;
     }
 }

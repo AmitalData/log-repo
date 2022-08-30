@@ -19,7 +19,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
 	public partial class MeasureTypeListQueryService
 	{
-		private IQueryable<MeasureTypeList> GetIqueryableList(IQueryable<MeasureType> iQueryable)
+		public IQueryable<MeasureTypeList> GetIqueryableList(IQueryable<MeasureType> iQueryable)
 		{
 			IQueryable<MeasureTypeList> query = (from a in iQueryable
 												 select new MeasureTypeList()
