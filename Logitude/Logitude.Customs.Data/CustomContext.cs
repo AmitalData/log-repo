@@ -624,6 +624,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
+            modelBuilder.Configurations.Add(new PhysicalCheckCodeMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckSearchResultTypeMap());
@@ -3004,6 +3006,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheck> PhysicalChecks 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PhysicalCheckCode> PhysicalCheckCodes 
 	 {
 	      get; set;
 	 

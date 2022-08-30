@@ -441,6 +441,7 @@
     <None Include="DBTables\PendingByKeyword.dxml" />
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
+    <None Include="DBTables\PhysicalCheckCode.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
@@ -540,6 +541,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />

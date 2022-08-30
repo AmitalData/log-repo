@@ -998,7 +998,7 @@
   </Column>
   <Column
     Name="PhysicalCheck"
-    Type="int">
+    Type="varchar">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1238,6 +1238,11 @@
   <Relation
     ForeignKeyColumn="ExportDeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PhysicalCheck"
+    ReferencedTable="PhysicalCheckCodes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

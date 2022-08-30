@@ -5354,12 +5354,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? physicalCheck ;
+	  private string physicalCheck ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? PhysicalCheck  
+       public string PhysicalCheck  
 	   {
 	    
 	     get
@@ -5370,7 +5370,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(physicalCheck != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   physicalCheck=value;
 		   }

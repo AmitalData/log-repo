@@ -121,6 +121,7 @@
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PhysicalCheckCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PoaAuthorizationTypeLookupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckSearchResultTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PoaStatusTypeLookUpPM.Generated.cs" />
@@ -130,11 +131,8 @@
     <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StorageStatusTablePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />

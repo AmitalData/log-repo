@@ -391,7 +391,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
-       public int? PhysicalCheck  { get; set; }
+       public string PhysicalCheck  { get; set; }
        [DataMember]
        public string CargoTypeName  { get; set; }
        [DataMember]
