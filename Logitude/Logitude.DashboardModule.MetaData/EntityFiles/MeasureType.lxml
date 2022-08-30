@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Measure Type&quot;"
-  Code="&quot;1b8e&quot;"
+  Code="&quot;c758&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -336,7 +336,7 @@
       Name="&quot;Max&quot;"
       SearchFields="&quot;Max&quot;" />
     <Record
-      Code="&quot;Cnt&quot;"
+      Code="&quot;Count&quot;"
       Name="&quot;Count&quot;"
       SearchFields="&quot;Count&quot;" />
     <Record
