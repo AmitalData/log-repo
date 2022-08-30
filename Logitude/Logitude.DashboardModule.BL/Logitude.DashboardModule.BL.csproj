@@ -80,6 +80,7 @@
     <Compile Include="EntityPMs\Generated\WidgetMeasurePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetTypePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\AnalyticsFactsFieldsMetaDataQueryService.cs" />
     <Compile Include="EntityQueryServices\DashboardQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsFieldsMetaDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsMetaDataQueryService.Generated.cs" />
