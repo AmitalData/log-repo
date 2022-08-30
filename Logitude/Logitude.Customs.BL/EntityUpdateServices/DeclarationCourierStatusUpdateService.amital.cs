@@ -75,21 +75,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            string[] approvedCourierPendingReasonList = dirtyDeclarationCourierStatusPM.ApprovedCourierPendingList.Split(',').Select(sValue => sValue.Trim()).ToArray();
-            foreach (var courierPendingReason in approvedCourierPendingReasonList)
-            {
-                if (courierPendingReason != null)
+            if (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.ApprovedCourierPendingList)){
+                string[] approvedCourierPendingReasonList = dirtyDeclarationCourierStatusPM.ApprovedCourierPendingList.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                foreach (var courierPendingReason in approvedCourierPendingReasonList)
                 {
-                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
-
-                    if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
+                    if (courierPendingReason != null)
                     {
-                        DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
-                        declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
-                        if (declarationPendingPM != null)
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
+
+                        if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
                         {
-                            //RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);
-                            OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true, "", declarationPendingPM.PendingRemarks);
+                            DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                            declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
+                            if (declarationPendingPM != null)
+                            {
+                                //RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);
+                                OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true, "", declarationPendingPM.PendingRemarks);
+                            }
                         }
                     }
                 }
