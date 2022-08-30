@@ -340,6 +340,11 @@ export class ObjectTablePM {
     public set ParentObjectTableName(newValue: string) { if (this.parentObjectTableName != newValue) { this.parentObjectTableName = newValue; this.MarkAsDirty("ParentObjectTableName"); } }
        
 	 
+    private availableInCustomization: boolean;
+    public get AvailableInCustomization() { return this.availableInCustomization; }
+    public set AvailableInCustomization(newValue: boolean) { if (this.availableInCustomization != newValue) { this.availableInCustomization = newValue; this.MarkAsDirty("AvailableInCustomization"); } }
+       
+	 
 
     public OldEntityPM: ObjectTablePM;
 		
