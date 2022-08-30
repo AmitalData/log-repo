@@ -35,7 +35,8 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'AnalyticsFactsMetaData'"
                                             [HideColumns]="true"
-                                            [DisplayMemberPath]="'Name'"                                           
+                                            [DisplayMemberPath]="'Name'"
+                                            [IgnoreFeatureCheck]="true"                                         
                                             (SelectedItemChanged)="TableChanged()">
                                     </LogLov>
                                 </td>
@@ -57,7 +58,9 @@
                                             [DependencyFilter2Value]="true"
                                             [DependencyFilter3Value]="EntityId"
                                             [HideColumns]="true"
-                                            [DisplayMemberPath]="'DisplayName'">
+                                            [DisplayMemberPath]="'DisplayName'"
+                                            [IgnoreFeatureCheck]="true"
+                                            >
                                     </LogLov>
                                 </td>
                                 <td>
@@ -92,7 +95,8 @@
                                                         [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                                         [DependencyFilter1Value]="true"
                                                         [HideColumns]="true"
-                                                        [DisplayMemberPath]="'DisplayName'">
+                                                        [DisplayMemberPath]="'DisplayName'"
+                                                        [IgnoreFeatureCheck]="true">
                                                 </LogLov>
                                             </td>
                                         </tr>
