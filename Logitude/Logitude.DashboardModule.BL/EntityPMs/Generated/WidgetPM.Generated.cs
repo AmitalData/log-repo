@@ -262,7 +262,30 @@ namespace Logitude.DashboardModule.BL.EntityPMs
               }
              set {  deletedWidgetMeasures = value; }
 	    }
-	     }
+	  	  private string filters ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Filters  
+	   {
+	    
+	     get
+		{
+		   return filters;
+		 }
+		 set
+		 {
+		   if(filters != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Filters",OldValue=filters,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   filters=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
