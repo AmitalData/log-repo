@@ -251,17 +251,17 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            //if (stop == false)
-            //{
-            //    MethodsInfo = getMethodsInfo("WebFreight.Web.DashboardModel.DomainServices.DashboardDomainService", tableName);
-            //    if (MethodsInfo != null)
-            //    {
-            //        getListMethodInfo = MethodsInfo.ListMethodInfo;
-            //        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-            //        context = MethodsInfo.context;
-            //        stop = true;
-            //    }
-            //}
+            if (stop == false)
+            {
+                MethodsInfo = getMethodsInfo("WebFreight.Web.DashboardModel.DomainServices.DashboardDomainService", tableName);
+                if (MethodsInfo != null)
+                {
+                    getListMethodInfo = MethodsInfo.ListMethodInfo;
+                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                    context = MethodsInfo.context;
+                    stop = true;
+                }
+            }
 
             if (stop == false)
             {

@@ -36,7 +36,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
             IQueryable<AnalyticsFactsFieldsMetaData> iQueryable = (from a in context.AnalyticsFactsFieldsMetaDatas
                                               
-                   where a.Tenant == tenant select a);
+                   where a.Tenant == tenant || a.Tenant == 0 select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
@@ -162,7 +162,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             GenericSort sortClass = new GenericSort();
 
             IQueryable<AnalyticsFactsFieldsMetaData> iQueryable = (from a in context.AnalyticsFactsFieldsMetaDatas 
-                   where a.Tenant == tenant select a);
+                   where a.Tenant == tenant || a.Tenant == 0 select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
