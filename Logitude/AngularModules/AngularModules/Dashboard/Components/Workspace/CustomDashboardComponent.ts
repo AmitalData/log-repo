@@ -15,6 +15,8 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 
 @Component({
     template:
@@ -173,6 +175,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
                 if (s) {
                     this.selectedDashboard = this.GetReactDashboard(comp.DashboardPM);
                     this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
+                    this.dashboardDataBinding.onAddUpdateWidget.next(true);
                 }
             });
         });
@@ -189,6 +192,14 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
             myWidget.TypeCode = widget.TypeCode;
+            myWidget.EntityId = widget.EntityId;
+            myWidget.WidgetMeasures = [];
+
+            if (widget.WidgetMeasures) {
+                widget.WidgetMeasures.forEach(item => {
+                    myWidget.WidgetMeasures.push(this.GetWidgetMeasureEntity(item));
+                });
+            }
         }
 
         return myWidget;
@@ -204,10 +215,42 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.DashboardId = widget.DashboardId;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
+            myWidget.EntityId = widget.EntityId;
             myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
+            myWidget.WidgetMeasures = [];
+
+            widget.WidgetMeasures.forEach(item => {
+                myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
+            });
         }
 
         return myWidget;
+    }
+    GetWidgetMeasureEntity(widgetMeasure: ReactWidgetMeasurePM): WidgetMeasurePM {
+        var myWidgetMeasuer: WidgetMeasurePM = new WidgetMeasurePM(null);
+
+        if (widgetMeasure) {
+            myWidgetMeasuer.Id = widgetMeasure.Id;
+            myWidgetMeasuer.Tenant = widgetMeasure.Tenant;
+            myWidgetMeasuer.WidgetId = widgetMeasure.WidgetId;
+            myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
+            myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
+        }
+
+        return myWidgetMeasuer;
+    }
+    GetReactWidgetMeasure(widgetMeasure: WidgetMeasurePM): ReactWidgetMeasurePM {
+        var myWidgetMeasuer: ReactWidgetMeasurePM = {} as ReactWidgetMeasurePM;
+
+        if (widgetMeasure) {
+            myWidgetMeasuer.Id = widgetMeasure.Id;
+            myWidgetMeasuer.Tenant = widgetMeasure.Tenant;
+            myWidgetMeasuer.WidgetId = widgetMeasure.WidgetId;
+            myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
+            myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
+        }
+
+        return myWidgetMeasuer;
     }
 
     private OnChangeDashboard(dashboard: ReactDashboardPM) {

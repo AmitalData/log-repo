@@ -17,7 +17,7 @@
                                     <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogTextBox [ObjectFieldName]="'Title'" [Text]="Title" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'Title'" [Text]="Title" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -33,7 +33,9 @@
                                             [SelectedValue]="EntityId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'AnalyticsFactsMetaData'">
+                                            [LookUpTableName]="'AnalyticsFactsMetaData'"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'Name'">
                                     </LogLov>
                                 </td>
                                 <td>
@@ -52,7 +54,9 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                             [DependencyFilter2Value]="true"
-                                            [DependencyFilter3Value]="EntityId">
+                                            [DependencyFilter3Value]="EntityId"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'DisplayName'">
                                     </LogLov>
                                 </td>
                                 <td>
@@ -68,33 +72,36 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <!--<LogLov [ObjectFieldName]="'MeasureCode'"
+                                                <LogLov [ObjectFieldName]="'MeasureCode'"
                                                         [SelectedValue]="item.MeasureCode"
                                                         [ObjectTableName]="item.ObjectTableName"
                                                         [DataContext]="item.DataContext"
                                                         [LookUpTableName]="'MeasureType'"
                                                         [HideColumns]="true">
-                                                </LogLov>-->
+                                                </LogLov>
                                             </td>
                                             <td style="width: 2px;">
                                                 <div></div>
                                             </td>
                                             <td>
-                                                <!--<LogLov [ObjectFieldName]="'MeasureFieldId'"
+                                                <LogLov [ObjectFieldName]="'MeasureFieldId'"
                                                         [SelectedValue]="item.MeasureFieldId"
                                                         [ObjectTableName]="item.ObjectTableName"
                                                         [DataContext]="item.DataContext"
                                                         [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                                         [DependencyFilter1Value]="true"
-                                                        [HideColumns]="true">
-                                                </LogLov>-->
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'DisplayName'">
+                                                </LogLov>
                                             </td>
                                         </tr>
                                     </table>
                                     
                                 </td>
                                 <td>
-                                    <div></div>
+                                    <div>
+                                        <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
+                                    </div>
                                 </td>
                             </tr>
 

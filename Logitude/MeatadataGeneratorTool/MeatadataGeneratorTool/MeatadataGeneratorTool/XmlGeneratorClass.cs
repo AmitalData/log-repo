@@ -1090,6 +1090,7 @@ namespace MeatadataGeneratorTool
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
             SetAttribute("IsBusinessUnitEnabled", table.IsBusinessUnitEnabled.ToString().ToLower(), entityElement);
             SetAttribute("ParentObjectTableName", GetStringValue(table.ParentObjectTableName), entityElement);
+            SetAttribute("TenantZeroData", table.TenantZeroData.ToString().ToLower(), entityElement);
 
             if (table.IsMetadataOnlyTable != false)
             {

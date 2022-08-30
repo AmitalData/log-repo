@@ -19,7 +19,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
     public partial class AnalyticsFactsMetaDataListQueryService
     {
-        private IQueryable<AnalyticsFactsMetaDataList> GetIqueryableList(IQueryable<AnalyticsFactsMetaData> iQueryable)
+        public IQueryable<AnalyticsFactsMetaDataList> GetIqueryableList(IQueryable<AnalyticsFactsMetaData> iQueryable)
         {
             IQueryable<AnalyticsFactsMetaDataList> query = (from a in iQueryable
                                                             select new AnalyticsFactsMetaDataList()
@@ -32,15 +32,6 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             return query;
         }
 
-        private IQueryable<AnalyticsFactsMetaData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<AnalyticsFactsMetaData> iQueryable)
-        {
-            throw new NotImplementedException();
-        }
-        private IQueryable<AnalyticsFactsMetaData> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<AnalyticsFactsMetaData> iQueryable)
-        {
-            return iQueryable;
-        }
-
         private IQueryable<AnalyticsFactsMetaData> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<AnalyticsFactsMetaData> iQueryable, int tenant)
         {
             return iQueryable;
@@ -49,9 +40,5 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-
-
     }
-
-
 }
