@@ -159,7 +159,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
 
                     if (
-                        requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
+                        (requestParams.RequestVIA != SendRequestVIA.DCABatch || requestParams.RequestVIA != SendRequestVIA.WebServiceBatch)
                         &&
                         !CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight
                         &&

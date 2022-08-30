@@ -57,8 +57,8 @@ namespace WebFreight.Web.WcfApi
                         currTenant = exportReqSignData.Tenant,
                         ResultSignCertificateCheck = new SignCertificateCheck()
                         {
-                            isCompanySignOn = string.IsNullOrWhiteSpace(CompanyTenant),
-                            isPersonalSignOn = string.IsNullOrWhiteSpace(PersonalTenantCommaDelimitedList)
+                            isCompanySignOn = !string.IsNullOrWhiteSpace(CompanyTenant),
+                            isPersonalSignOn = !string.IsNullOrWhiteSpace(PersonalTenantCommaDelimitedList)
                         }
                     };
                 }
