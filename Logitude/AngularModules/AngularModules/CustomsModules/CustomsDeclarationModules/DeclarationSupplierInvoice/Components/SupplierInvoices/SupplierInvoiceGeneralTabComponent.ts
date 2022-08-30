@@ -787,6 +787,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("BuyerName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DutyRegimeProtocolCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportModificationCurrency", this.ObjectTableName, !this.IsDisplayOnly);
 
