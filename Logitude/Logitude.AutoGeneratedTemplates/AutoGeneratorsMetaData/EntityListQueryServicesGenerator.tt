@@ -376,6 +376,11 @@ namespace <#= querylistservicenamespacestring #>
 			 tenantCondition = "&& a.Tenant == tenant";
 			 getalltenantCondition = "\n                   where a.Tenant == tenant";
 
+			 if(entity.TenantZeroData == "true")
+			 {
+				getalltenantCondition += " || a.Tenant == 0";
+			 }
+
 		     tenantKeyCondition = "&& a.Tenant == keys.Tenant";
 			 tenantParamValue=",tenant";
          }

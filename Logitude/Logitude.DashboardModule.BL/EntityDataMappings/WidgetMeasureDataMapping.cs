@@ -19,7 +19,12 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 
         public void CustomPMToPOCO(WidgetMeasurePM entityPM, WidgetMeasure entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert && entityPOCO != null)
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(WidgetMeasurePM entityPM, WidgetMeasure entityPOCO)

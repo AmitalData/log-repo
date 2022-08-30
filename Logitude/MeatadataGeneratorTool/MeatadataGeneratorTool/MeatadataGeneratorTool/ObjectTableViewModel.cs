@@ -1337,6 +1337,13 @@ namespace MeatadataGeneratorTool
             set { applyOnPropertyChangedCode = value; FirePropertyChanged("ApplyOnPropertyChangedCode"); }
         }
 
+        bool tenantZeroData;
+        public bool TenantZeroData
+        {
+            get { return tenantZeroData; }
+            set { tenantZeroData = value; FirePropertyChanged("TenantZeroData"); }
+        }
+
 
         bool hasApiHelper;
         public bool HasApiHelper
