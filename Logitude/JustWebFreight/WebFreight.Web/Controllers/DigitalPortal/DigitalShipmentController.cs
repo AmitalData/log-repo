@@ -44,8 +44,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var tenant = shipmentIdAndTenant.Item2;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+
+                if (shipmentPM.CustomerId == cardId || shipmentPM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
+                {
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+                }
+
+                throw new AutenticationException("Sorry! you are not authorized to read data!");
             }
             catch (Exception ex)
             {
