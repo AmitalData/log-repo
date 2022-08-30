@@ -138,26 +138,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 ThrowIfInterfaceNotActiveOrBelongOurCompanyType();
 
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
-                bool exportSignViaDBQueue = true;
-                if (exportSignViaDBQueue)
-                {
-
-                    if (
-                        !CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight
-                        &&
-                        (
-                        requestParams.ForcePersonalSign
-                        ||
-                        InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None
-                        )
-                        )
-                    {
-                        //requestParams.ForcePersonalSign= true
-                        requestVIA =requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                        requestParams.RequestVIAChangeDue =
-                            requestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
-                    }
-                }
+               
                 bool avoidSign = false;
                 bool notApprovedYet = false;
                 if (!notApprovedYet)
@@ -172,6 +153,28 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         }
                     }
 
+                }
+                bool exportSignViaDBQueue = true;
+                if (exportSignViaDBQueue)
+                {
+
+                    if (
+                        requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
+                        &&
+                        !CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight
+                        &&
+                        (
+                        requestParams.ForcePersonalSign
+                        ||
+                        InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None
+                        )
+                        )
+                    {
+                        //requestParams.ForcePersonalSign= true
+                        requestVIA = requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                        requestParams.RequestVIAChangeDue =
+                            requestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                    }
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
