@@ -1,70 +1,116 @@
 ﻿<View DBType="Main" Name="DigitalShipmentsView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
-	CREATE VIEW [dbo].[DigitalShipmentsView]  
+	Create VIEW [dbo].[DigitalShipmentsView]  
 	AS 
 	SELECT
-	ship.Id,
-    ship.Tenant,
-    ShipMasterData.InlandDomesticFromCountryId,
-	ShipMasterData.InlandDomesticToCountryId,
-    ShipMasterData.InlandDomesticFromTypeCode,
-    ShipMasterData.InlandDomesticToTypeCode,
-    ShipMasterData.InlandDomesticFromCity,
-    ShipMasterData.InlandDomesticToCity,
-    ShipMasterData.Transshipment3ETA,
-    ShipMasterData.Transshipment3ETD,
-    ShipMasterData.Transshipment3ATA,
-    ShipMasterData.Transshipment3ATD,
-    ShipMasterData.Transshipment3ToPortId,
-    ShipMasterData.Transshipment3FromPortId,
-    ShipMasterData.Transshipment2CarrierNumber,
-    ShipMasterData.Transshipment2ETA,
-    ShipMasterData.Transshipment2ETD,
-    ShipMasterData.Transshipment2ATA,
-    ShipMasterData.Transshipment2ATD,
-    ShipMasterData.Transshipment2ToPortId,
-    ShipMasterData.Transshipment2FromPortId,
-    ShipMasterData.Transshipment1CarrierNumber,
-    ShipMasterData.Transshipment1ETA,
-    ShipMasterData.Transshipment1ETD,
-    ShipMasterData.Transshipment1ATA,
-    ShipMasterData.Transshipment1ATD,
-	ship.IsOperationalClosed,
-    dbo.Incoterms.Code AS IncotermCode,
-	FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,
-	FinalDestinationCountries.EnglishName AS MainCarriageFinalDestinationCountryName,
-	ToPortCountries.Code AS ToPortCountryCode,
-    ship.ShipmentNumber,
-	ship.CustomerId,
-    ship.CustomerReference1,
-    ship.CustomerReference2,
-    ship.CustomerReference3,
-	ship.ShipperReference1,
-	ship.ShipperReference2,
-	ship.ConsigneeReference1,
-	ship.ConsigneeReference2,
-	ship.House,
-	ship.AgentId,
-    ship.ShipmentSubTypeId,
-	dbo.ShipmentSubTypes.[Name] AS ShipmentSubTypeName,
-    dbo.TransportModes.[Name] AS TransportModeName,
-    dbo.ShipmentTypes.[Name] AS ShipmentTypeName,
-    dbo.Directions.[Name] AS DirectionName,
-    ShipMasterData.[Master],
-    ship.ConsigneeId,
-    ship.ShipperId,
-    ShipperCards.CountryCode as ShipperCountryCode,
-    ConsigneeCards.CountryCode as ConsigneeCountryCode,
-	ship.DescriptionOfGoods,
-    ship.DirectionId,
-    ship.CreateDateTime,
-    ship.FirstPickupETA,
-    ship.FirstPickupETD,
-    ShipMasterData.MainCarriageATA,
-    ShipMasterData.MainCarriageATD,
-    ShipMasterData.MainCarriageETD,
-    ShipMasterData.MainCarriageETA,
+	Shipment.Id,
+    Shipment.Tenant,
+	Shipment.CarrierLastStatusDate,
+	Shipment.MasterShipmentDataId, 
+	Shipment.IsOperationalClosed, 
+    Shipment.ShipmentNumber,
+	Shipment.CustomerId,
+    Shipment.CustomerReference1,
+    Shipment.CustomerReference2,
+    Shipment.CustomerReference3,
+	Shipment.ShipperReference1,
+	Shipment.ShipperReference2,
+	Shipment.ConsigneeReference1,
+	Shipment.ConsigneeReference2,
+	Shipment.House,
+	Shipment.AgentId,
+    Shipment.ShipmentSubTypeId, 
+    Shipment.ConsigneeId,
+    Shipment.ShipperId, 
+	Shipment.DescriptionOfGoods,
+    Shipment.DirectionId,
+    Shipment.CreateDateTime,
+    Shipment.FirstPickupETA,
+    Shipment.FirstPickupETD,
+	Shipment.PreForwardingETD,
+    Shipment.PreForwardingETA,
+    Shipment.PreForwardingATA,
+    Shipment.PreForwardingATD, 
+	Shipment.AccountManagerUserId,
+    Shipment.OnForwardingETA,
+    Shipment.OnForwardingATA,
+    Shipment.OnForwardingATD,
+    Shipment.OnForwardingETD, 
+    Shipment.TransportModeId,
+    Shipment.ShipperName,
+	Shipment.ConsigneeName,
+	Shipment.SalesmanUserId,
+	Shipment.ComputedStatusDate as StatusDate,
+	Shipment.[From],
+	Shipment.[To],
+	Shipment.NextETA,
+	Shipment.NextETD,
+	Shipment.IsCancelled,
+	Shipment.ShipmentLevelCode,
+	Shipment.IncotermId,
+	Shipment.ShipmentTypeId,
+	Shipment.IsStandalonePickupDelivery,
+    ShipmentMasterData.MainCarriageATA,
+    ShipmentMasterData.MainCarriageATD,
+    ShipmentMasterData.MainCarriageETD,
+    ShipmentMasterData.MainCarriageETA,
+	ShipmentMasterData.InlandDomesticFromCountryId,
+	ShipmentMasterData.InlandDomesticToCountryId,
+    ShipmentMasterData.InlandDomesticFromTypeCode,
+    ShipmentMasterData.InlandDomesticToTypeCode,
+    ShipmentMasterData.InlandDomesticFromCity,
+    ShipmentMasterData.InlandDomesticToCity,
+    ShipmentMasterData.Transshipment3ETA,
+    ShipmentMasterData.Transshipment3ETD,
+    ShipmentMasterData.Transshipment3ATA,
+    ShipmentMasterData.Transshipment3ATD,
+    ShipmentMasterData.Transshipment3ToPortId,
+    ShipmentMasterData.Transshipment3FromPortId,
+    ShipmentMasterData.Transshipment2CarrierNumber,
+    ShipmentMasterData.Transshipment2ETA,
+    ShipmentMasterData.Transshipment2ETD,
+    ShipmentMasterData.Transshipment2ATA,
+    ShipmentMasterData.Transshipment2ATD,
+    ShipmentMasterData.Transshipment2ToPortId,
+    ShipmentMasterData.Transshipment2FromPortId,
+    ShipmentMasterData.Transshipment1CarrierNumber,
+    ShipmentMasterData.Transshipment1ETA,
+    ShipmentMasterData.Transshipment1ETD,
+    ShipmentMasterData.Transshipment1ATA,
+    ShipmentMasterData.Transshipment1ATD,
+	ShipmentMasterData.[Master],
+	ShipmentMasterData.InlandDomesticToAddress1,
+    ShipmentMasterData.InlandDomesticToAddress2,
+    ShipmentMasterData.InlandDomesticToPhone,
+    ShipmentMasterData.InlandDomesticToFax,
+    ShipmentMasterData.InlandDomesticToStateId,
+	ShipmentMasterData.InlandDomesticFromAddress1,
+    ShipmentMasterData.NumberOfTransshipments,
+    ShipmentMasterData.InlandDomesticFromAddress2,
+    ShipmentMasterData.InlandDomesticFromPhone,
+    ShipmentMasterData.InlandDomesticFromFax,
+	ShipmentMasterData.MainCarriageCarrierNumber,
+	ShipmentMasterData.MainCarriageCarrierId,
+    ShipmentMasterData.InlandDomesticFromStateId,
+	ShipmentMasterData.PreCarriageETA,
+    ShipmentMasterData.PreCarriageETD,
+    ShipmentMasterData.PreCarriageATA,
+    ShipmentMasterData.PreCarriageATD,
+	ShipmentMasterData.Transshipment1ToPortId, 
+	ShipmentMasterData.Transshipment1FromPortId,
+	ShipmentMasterData.OnCarriageETD,
+    ShipmentMasterData.OnCarriageETA,
+    ShipmentMasterData.OnCarriageATD,
+    ShipmentMasterData.OnCarriageATA,
+	ShipmentMasterData.DepartureArrivalFromDate as DepartureArrivalFromDate,
+    ShipmentMasterData.DepartureArrivalToDate as DepartureArrivalToDate,
+	ShipmentMasterData.MainCarriageFromAddressId, 
+	ShipmentMasterData.MainCarriageToAddressId,
+	ShipmentMasterData.MainCarriageFinalDestinationETA as MainCarriageFinalDestinationETA,
+	ShipmentMasterData.MainCarriageFinalDestinationATA as MainCarriageFinalDestinationATA,
+	ShipmentMasterData.MainCarriageFromPartnerId,
+	ShipmentMasterData.MainCarriageToPartnerId,
 	MainCarriageToCountries.Code AS MainCarriageToPortCountryCode,
 	MainCarriageToCountries.EnglishName AS MainCarriageToPortCountryName,
     MainCarriageToPorts.EnglishName AS MainCarriageToPortName,
@@ -72,53 +118,21 @@
     MainCarriageFromPorts.EnglishName AS MainCarriageFromPortName,
 	MainCarriageFromPorts.Code AS MainCarriageFromPortCode,
     MainCarriageFromCountries.Code AS MainCarriageFromPortCountryCode,
-    MainCarriageFromCountries.EnglishName AS MainCarriageFromPortCountryName,
-    ShipMasterData.InlandDomesticToAddress1,
-    ShipMasterData.InlandDomesticToAddress2,
-    ShipMasterData.InlandDomesticToPhone,
-    ShipMasterData.InlandDomesticToFax,
-    ShipMasterData.InlandDomesticToStateId,
-    InlandDomesticToState.EnglishName AS InlandDomesticToStateName,
-    ShipMasterData.InlandDomesticFromAddress1,
-    ShipMasterData.NumberOfTransshipments,
-    ShipMasterData.InlandDomesticFromAddress2,
-    ShipMasterData.InlandDomesticFromPhone,
-    ShipMasterData.InlandDomesticFromFax,
-	ShipMasterData.MainCarriageCarrierNumber,
-	ShipMasterData.MainCarriageCarrierId,
-    ShipMasterData.InlandDomesticFromStateId,
+    MainCarriageFromCountries.EnglishName AS MainCarriageFromPortCountryName, 
+    InlandDomesticToState.EnglishName AS InlandDomesticToStateName, 
     InlandDomesticFromState.EnglishName AS InlandDomesticFromStateName,
     ShipmentComputedFields.Transshipments as Transshipments,
-    ship.PreForwardingETD,
-    ship.PreForwardingETA,
-    ship.PreForwardingATA,
-    ship.PreForwardingATD,
-    ShipMasterData.PreCarriageETA,
-    ShipMasterData.PreCarriageETD,
-    ShipMasterData.PreCarriageATA,
-    ShipMasterData.PreCarriageATD,
-    AgentComputedCards.EnglishName AS AgentName,
-	ShipMasterData.Transshipment1ToPortId, 
-	ShipMasterData.Transshipment1FromPortId,
-	ship.AccountManagerUserId,
-    ship.OnForwardingETA,
-    ship.OnForwardingATA,
-    ship.OnForwardingATD,
-    ship.OnForwardingETD,
-    ShipMasterData.OnCarriageETD,
-    ShipMasterData.OnCarriageETA,
-    ShipMasterData.OnCarriageATD,
-    ShipMasterData.OnCarriageATA,
-    ship.TransportModeId,
-    ship.ShipperName,
-	ship.ConsigneeName,
-	ship.SalesmanUserId,
-	ShipMasterData.DepartureArrivalFromDate as DepartureArrivalFromDate,
-    ShipMasterData.DepartureArrivalToDate as DepartureArrivalToDate,
-	ShipMasterData.MainCarriageFromAddressId, 
-	ShipMasterData.MainCarriageToAddressId,
-	ShipMasterData.MainCarriageFinalDestinationETA as MainCarriageFinalDestinationETA,
-	ShipMasterData.MainCarriageFinalDestinationATA as MainCarriageFinalDestinationATA,
+    dbo.Incoterms.Code AS IncotermCode,
+	FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,
+	FinalDestinationCountries.EnglishName AS MainCarriageFinalDestinationCountryName,
+	ToPortCountries.Code AS ToPortCountryCode,
+    dbo.ShipmentSubTypes.[Name] AS ShipmentSubTypeName,
+    dbo.TransportModes.[Name] AS TransportModeName,
+    dbo.ShipmentTypes.[Name] AS ShipmentTypeName,
+    dbo.Directions.[Name] AS DirectionName,
+	ShipperCards.CountryCode as ShipperCountryCode,
+    ConsigneeCards.CountryCode as ConsigneeCountryCode,
+	AgentComputedCards.EnglishName AS AgentName,
 	Transshipment1FromCountries.Code AS Transshipment1FromPortCountryCode,
 	Transshipment1FromCountries.EnglishName AS Transshipment1FromPortCountryName,
 	Transshipment2FromCountries.Code AS Transshipment2FromPortCountryCode,
@@ -143,19 +157,8 @@
 	SalesmanUserContact.EnglishName as SalesmanUserName,
 	dbo.NextLegs.[Name] AS NextLegName,
 	MainCarriageFromAddresses.City AS MainCarriageFromCity,
-	MainCarriageToAddresses.City AS MainCarriageToCity,
-	ship.ComputedStatusDate as StatusDate,
-	ship.[From],
-	ship.[To],
-	ship.NextETA,
-	ship.NextETD,
-	ship.IsCancelled,
-	ship.ShipmentLevelCode,
+	MainCarriageToAddresses.City AS MainCarriageToCity, 
 	dbo.ShipmentLevels.Name AS ShipmentLevelName,
-	ship.ShipmentTypeId,
-	ship.IsStandalonePickupDelivery,
-	ShipMasterData.MainCarriageFromPartnerId,
-	ShipMasterData.MainCarriageToPartnerId,
 	CustomerCards.EnglishName AS CustomerName,
 	CreatedByUserContact.EnglishName as CreatedByUserName,
 	FromPortCountries.Code AS FromPortCountryCode,
@@ -163,7 +166,7 @@
 	FromPorts.Code AS FromPortCode,
 	MainCarriageFromAddressCountries.Code AS MainCarriageFromCountryCode,
 	MainCarriageToAddressCountries.Code AS MainCarriageToCountryCode,
-	ship.IncotermId,
+	
 	ToPortCountries.EnglishName AS ToPortCountryName,
 	FromPortCountries.EnglishName AS FromPortCountryName,
 	CustomAgentImportCards.EnglishName AS CustomAgentImportName,
@@ -174,85 +177,85 @@
 	CASE WHEN (dbo.ShipmentLevels.Name IS NULL) 
 	THEN N'' 
 	ELSE dbo.ShipmentLevels.Name END ELSE dbo.ShipmentLevels.Name END AS ShipmentType,
-	CASE WHEN ( NOT ((MainCarriageFromPortId IS NULL) OR ((LEN(MainCarriageFromPortId)) = 0))) THEN MainCarriageFromPortId ELSE ship.FromPortId END AS FromPortId,
-	CASE WHEN ( NOT ((MainCarriageToPortId IS NULL) OR ((LEN(MainCarriageToPortId)) = 0))) THEN MainCarriageToPortId ELSE ship.ToPortId END AS ToPortId,
+	CASE WHEN ( NOT ((MainCarriageFromPortId IS NULL) OR ((LEN(MainCarriageFromPortId)) = 0))) THEN MainCarriageFromPortId ELSE Shipment.FromPortId END AS FromPortId,
+	CASE WHEN ( NOT ((MainCarriageToPortId IS NULL) OR ((LEN(MainCarriageToPortId)) = 0))) THEN MainCarriageToPortId ELSE Shipment.ToPortId END AS ToPortId,
 	CASE WHEN ( NOT ((MainCarriageFromPorts.Code IS NULL) OR ((LEN(MainCarriageFromPorts.Code)) = 0))) THEN MainCarriageFromPorts.Code ELSE FromPorts.Code END AS FromPort,
 	CASE WHEN ( NOT ((MainCarriageFromPorts.EnglishName IS NULL) OR ((LEN(MainCarriageFromPorts.EnglishName)) = 0))) THEN MainCarriageFromPorts.EnglishName ELSE FromPorts.EnglishName END AS FromPortName,
 	CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.Code IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.Code)) = 0))) THEN MainCarriageFinalDestinationPorts.Code ELSE ToPorts.Code END AS ToPort,
 	CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.EnglishName IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.EnglishName)) = 0))) THEN MainCarriageFinalDestinationPorts.EnglishName ELSE ToPorts.EnglishName END AS ToPortName,
-	CASE WHEN ('A' = ship.TransportModeId) THEN CASE WHEN (MainCarriageCarrierCards.Code IS NULL) THEN N'' ELSE MainCarriageCarrierCards.Code END + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber 
-	END WHEN ('O' = ship.TransportModeId) THEN CASE WHEN (ShipMasterData.MainCarriageVesselName IS NULL) THEN N'' ELSE ShipMasterData.MainCarriageVesselName END + N'/' + CASE WHEN (MainCarriageCarrierNumber IS NULL)
-	THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('I' = ship.TransportModeId AND 'D' = ship.DirectionId) THEN TruckNumber ELSE MainCarriageCarrierNumber END AS CarrierNumber,
-	CASE WHEN (ShipMasterData.MainCarriageATA IS NOT NULL) THEN ShipMasterData.MainCarriageATA ELSE ShipMasterData.MainCarriageETA END AS MainCarriageExpectedOrActual,
-	CASE WHEN (ShipMasterData.MainCarriageATA IS NOT NULL) THEN N'ATA' ELSE N'ETA' END AS MainCarriageETAOrATA,
-	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END AS StatusId,
-	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.StatusWeight ELSE dbo.EntityStatus.StatusWeight END ELSE dbo.EntityStatus.StatusWeight END AS StatusWeight,
-	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
-	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Code ELSE dbo.EntityStatus.Code END ELSE dbo.EntityStatus.Code END AS StatusCode,
-	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipMasterData.StatusLocation ELSE ship.StatusLocation END ELSE ship.StatusLocation END AS StatusLocation,
-	CASE WHEN ('A' = ship.TransportModeId) 
+	CASE WHEN ('A' = Shipment.TransportModeId) THEN CASE WHEN (MainCarriageCarrierCards.Code IS NULL) THEN N'' ELSE MainCarriageCarrierCards.Code END + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber 
+	END WHEN ('O' = Shipment.TransportModeId) THEN CASE WHEN (ShipmentMasterData.MainCarriageVesselName IS NULL) THEN N'' ELSE ShipmentMasterData.MainCarriageVesselName END + N'/' + CASE WHEN (MainCarriageCarrierNumber IS NULL)
+	THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('I' = Shipment.TransportModeId AND 'D' = Shipment.DirectionId) THEN TruckNumber ELSE MainCarriageCarrierNumber END AS CarrierNumber,
+	CASE WHEN (ShipmentMasterData.MainCarriageATA IS NOT NULL) THEN ShipmentMasterData.MainCarriageATA ELSE ShipmentMasterData.MainCarriageETA END AS MainCarriageExpectedOrActual,
+	CASE WHEN (ShipmentMasterData.MainCarriageATA IS NOT NULL) THEN N'ATA' ELSE N'ETA' END AS MainCarriageETAOrATA,
+	Shipment.ComputedStatusId AS StatusId,
+	ComputedStatus.StatusWeight AS StatusWeight,
+	ComputedStatus.Name AS StatusName,
+	ComputedStatus.Code AS StatusCode,
+	CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterData.StatusLocation ELSE Shipment.StatusLocation END ELSE Shipment.StatusLocation END AS StatusLocation,
+	CASE WHEN ('A' = Shipment.TransportModeId) 
 		THEN CASE WHEN (( NOT ((AirlinePrefix IS NULL) OR ((LEN(AirlinePrefix)) = 0))) AND ( NOT ((Master IS NULL) OR ((LEN(Master)) = 0)))) 
 		THEN CASE WHEN (AirlinePrefix IS NULL) THEN N'' ELSE AirlinePrefix END + N'-' + CASE WHEN (Master IS NULL) 
 		THEN N'' ELSE Master END ELSE N'' END ELSE Master END AS LongMaster,
-	CASE WHEN ((ship.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN ship.FromPortId ELSE ShipMasterData.MainCarriageFromPortId END AS MainCarriageFromPortId,
-	CASE WHEN ((ship.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN ship.ToPortId ELSE ShipMasterData.MainCarriageToPortId END AS MainCarriageToPortId
+	CASE WHEN ((Shipment.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN Shipment.FromPortId ELSE ShipmentMasterData.MainCarriageFromPortId END AS MainCarriageFromPortId,
+	CASE WHEN ((Shipment.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN Shipment.ToPortId ELSE ShipmentMasterData.MainCarriageToPortId END AS MainCarriageToPortId
 
     FROM
-        dbo.Shipments as ship
+        dbo.Shipments as Shipment
+	LEFT OUTER JOIN
+        dbo.ShipmentMasterDatas as ShipmentMasterData
+            ON ShipmentMasterData.Id = Shipment.MasterShipmentDataId 
 	LEFT OUTER JOIN
         dbo.Contacts AS CreatedByUserContact 
-		    ON ship.CreatedByUserId = CreatedByUserContact.Id
+		    ON Shipment.CreatedByUserId = CreatedByUserContact.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomerCards 
-		     ON ship.CustomerId = CustomerCards.Id
+		     ON Shipment.CustomerId = CustomerCards.Id
 	LEFT OUTER JOIN
          dbo.Cards AS CustomAgentImportCards 
-		     ON ship.CustomAgentImportId = CustomAgentImportCards.Id
-    LEFT OUTER JOIN
-        dbo.ShipmentMasterDatas as ShipMasterData
-            ON ShipMasterData.Id = ship.MasterShipmentDataId 
+		     ON Shipment.CustomAgentImportId = CustomAgentImportCards.Id 
     LEFT OUTER JOIN
         dbo.Ports AS MainCarriageFromPorts 
-            ON ShipMasterData.MainCarriageFromPortId = MainCarriageFromPorts.Id 
+            ON ShipmentMasterData.MainCarriageFromPortId = MainCarriageFromPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS MainCarriageToPorts 
-            ON ShipMasterData.MainCarriageToPortId = MainCarriageToPorts.Id 
+            ON ShipmentMasterData.MainCarriageToPortId = MainCarriageToPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment1FromPorts 
-            ON ShipMasterData.Transshipment1FromPortId = Transshipment1FromPorts.Id 
+            ON ShipmentMasterData.Transshipment1FromPortId = Transshipment1FromPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment1ToPorts 
-            ON ShipMasterData.Transshipment1ToPortId = Transshipment1ToPorts.Id 
+            ON ShipmentMasterData.Transshipment1ToPortId = Transshipment1ToPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment2FromPorts 
-            ON ShipMasterData.Transshipment2FromPortId = Transshipment2FromPorts.Id 
+            ON ShipmentMasterData.Transshipment2FromPortId = Transshipment2FromPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment2ToPorts 
-            ON ShipMasterData.Transshipment2ToPortId = Transshipment2ToPorts.Id 
+            ON ShipmentMasterData.Transshipment2ToPortId = Transshipment2ToPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment3FromPorts 
-            ON ShipMasterData.Transshipment3FromPortId = Transshipment3FromPorts.Id 
+            ON ShipmentMasterData.Transshipment3FromPortId = Transshipment3FromPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS Transshipment3ToPorts 
-            ON ShipMasterData.Transshipment3ToPortId = Transshipment3ToPorts.Id 
+            ON ShipmentMasterData.Transshipment3ToPortId = Transshipment3ToPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS MainCarriageFinalDestinationPorts 
-            ON ShipMasterData.MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPorts.Id 
+            ON ShipmentMasterData.MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS ToPorts 
-            ON ship.ToPortId = ToPorts.Id 
+            ON Shipment.ToPortId = ToPorts.Id 
     LEFT OUTER JOIN
         dbo.Ports AS FromPorts 
-            ON ship.FromPortId = FromPorts.Id 
+            ON Shipment.FromPortId = FromPorts.Id 
     LEFT OUTER JOIN
         dbo.Cards AS ShipperCards 
-            ON ship.ShipperId = ShipperCards.Id 
+            ON Shipment.ShipperId = ShipperCards.Id 
     LEFT OUTER JOIN
         dbo.Cards AS ConsigneeCards 
-            ON ship.ConsigneeId = ConsigneeCards.Id 
+            ON Shipment.ConsigneeId = ConsigneeCards.Id 
 	LEFT OUTER JOIN
 		dbo.Contacts AS AccountManagerUserContacts 
-			ON ship.AccountManagerUserId = AccountManagerUserContacts.Id 
+			ON Shipment.AccountManagerUserId = AccountManagerUserContacts.Id 
     LEFT OUTER JOIN
         dbo.Countries AS MainCarriageFromCountries 
             ON MainCarriageFromPorts.CountryId = MainCarriageFromCountries.Id 
@@ -288,79 +291,82 @@
             ON MainCarriageFinalDestinationPorts.CountryId = FinalDestinationCountries.Id 
     LEFT OUTER JOIN
         dbo.Contacts AS CustomerContacts 
-            ON ship.CustomerContactId = CustomerContacts.Id 
+            ON Shipment.CustomerContactId = CustomerContacts.Id 
     LEFT OUTER JOIN
         dbo.Cards AS MainCarriageCarrierCards 
-            ON ShipMasterData.MainCarriageCarrierId = MainCarriageCarrierCards.Id 
+            ON ShipmentMasterData.MainCarriageCarrierId = MainCarriageCarrierCards.Id 
     LEFT OUTER JOIN
         dbo.Cards AS Transshipment1CarrierCards 
-            ON ShipMasterData.Transshipment1CarrierId = Transshipment1CarrierCards.Id 
+            ON ShipmentMasterData.Transshipment1CarrierId = Transshipment1CarrierCards.Id 
     LEFT OUTER JOIN
         dbo.Cards AS Transshipment2CarrierCards 
-            ON ShipMasterData.Transshipment2CarrierId = Transshipment2CarrierCards.Id 
+            ON ShipmentMasterData.Transshipment2CarrierId = Transshipment2CarrierCards.Id 
     LEFT OUTER JOIN
         dbo.Cards AS Transshipment3CarrierCards 
-            ON ShipMasterData.Transshipment3CarrierId = Transshipment3CarrierCards.Id 
+            ON ShipmentMasterData.Transshipment3CarrierId = Transshipment3CarrierCards.Id 
     LEFT OUTER JOIN
         dbo.NextLegs 
-            ON ship.NextLegCode = dbo.NextLegs.Code 
+            ON Shipment.NextLegCode = dbo.NextLegs.Code 
     LEFT OUTER JOIN
         dbo.Directions 
-            ON ship.DirectionId = dbo.Directions.Id 
+            ON Shipment.DirectionId = dbo.Directions.Id 
     LEFT OUTER JOIN
         dbo.TransportModes 
-            ON ship.TransportModeId = dbo.TransportModes.Id 
+            ON Shipment.TransportModeId = dbo.TransportModes.Id 
     LEFT OUTER JOIN
         dbo.ShipmentTypes 
-            ON ship.ShipmentTypeId = dbo.ShipmentTypes.Id 
+            ON Shipment.ShipmentTypeId = dbo.ShipmentTypes.Id 
     LEFT OUTER JOIN
         dbo.ShipmentReceivableStatus 
-            ON ship.ShipmentReceivableStatusCode = dbo.ShipmentReceivableStatus.Code 
+            ON Shipment.ShipmentReceivableStatusCode = dbo.ShipmentReceivableStatus.Code 
     LEFT OUTER JOIN
         dbo.ShipmentPayableStatus 
-            ON ship.ShipmentPayableStatusCode = dbo.ShipmentPayableStatus.Code 
+            ON Shipment.ShipmentPayableStatusCode = dbo.ShipmentPayableStatus.Code 
     LEFT OUTER JOIN
         dbo.EntityStatus 
-            ON ship.StatusId = dbo.EntityStatus.Id 
+            ON Shipment.StatusId = dbo.EntityStatus.Id 
+	LEFT OUTER JOIN
+        dbo.EntityStatus As ComputedStatus
+            ON Shipment.ComputedStatusId = ComputedStatus.Id 
     LEFT OUTER JOIN
         dbo.Currencies AS AWBCurrencies 
-            ON ship.AWBCurrencyId = AWBCurrencies.Id 
+            ON Shipment.AWBCurrencyId = AWBCurrencies.Id 
     LEFT OUTER JOIN
         dbo.Branches 
-            ON ship.BranchId = dbo.Branches.Id 
+            ON Shipment.BranchId = dbo.Branches.Id 
     LEFT OUTER JOIN
         dbo.ShipmentSubTypes 
-            ON ship.ShipmentSubTypeId = dbo.ShipmentSubTypes.Id 
+            ON Shipment.ShipmentSubTypeId = dbo.ShipmentSubTypes.Id 
     LEFT OUTER JOIN
         dbo.MoveTypes 
-            ON ship.MoveTypeId = dbo.MoveTypes.Id 
+            ON Shipment.MoveTypeId = dbo.MoveTypes.Id 
     LEFT OUTER JOIN
         dbo.ShipmentLevels 
-            ON ship.ShipmentLevelCode = dbo.ShipmentLevels.Code 
+            ON Shipment.ShipmentLevelCode = dbo.ShipmentLevels.Code 
     LEFT OUTER JOIN
         dbo.EntityStatus AS ShipmentMasterDataEntityStatus 
-            ON ShipMasterData.StatusId = ShipmentMasterDataEntityStatus.Id 
+            ON ShipmentMasterData.StatusId = ShipmentMasterDataEntityStatus.Id 
     LEFT OUTER JOIN
         dbo.Airlines AS MainCarriageAirline 
-            ON ShipMasterData.MainCarriageCarrierId = MainCarriageAirline.Id 
+            ON ShipmentMasterData.MainCarriageCarrierId = MainCarriageAirline.Id 
     LEFT OUTER JOIN
         dbo.Incoterms 
-            ON ship.IncotermId = dbo.Incoterms.Id 
+            ON Shipment.IncotermId = dbo.Incoterms.Id 
     LEFT OUTER JOIN
         dbo.CustomsTransmissionsStatus 
-            ON ship.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code 
+            ON Shipment.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code 
     LEFT OUTER JOIN
         dbo.Addresses AS MainCarriageFromAddresses 
-            ON ShipMasterData.MainCarriageFromAddressId = MainCarriageFromAddresses.Id 
+            ON ShipmentMasterData.MainCarriageFromAddressId = MainCarriageFromAddresses.Id 
     LEFT OUTER JOIN
         dbo.Addresses AS MainCarriageToAddresses 
-            ON ShipMasterData.MainCarriageToAddressId = MainCarriageToAddresses.Id 
+            ON ShipmentMasterData.MainCarriageToAddressId = MainCarriageToAddresses.Id 
     LEFT OUTER JOIN
         dbo.Cards AS MainCarriageToPartners 
-            ON ShipMasterData.MainCarriageToPartnerId = MainCarriageToPartners.Id 
+            ON ShipmentMasterData.MainCarriageToPartnerId = MainCarriageToPartners.Id 
     LEFT OUTER JOIN
         dbo.Cards AS MainCarriageFromPartners 
-            ON ShipMasterData.MainCarriageFromPartnerId = MainCarriageFromPartners.Id 
+            ON ShipmentMasterData.MainCarriageFromPartnerId = MainCarriageFromPartners.Id 
     LEFT OUTER JOIN
         dbo.Countries AS MainCarriageFromAddressCountries 
             ON MainCarriageFromAddresses.CountryId = MainCarriageFromAddressCountries.Id 
@@ -369,31 +375,31 @@
             ON MainCarriageToAddresses.CountryId = MainCarriageToAddressCountries.Id 
     LEFT OUTER JOIN
         dbo.SpecialServicesTypes 
-            ON ship.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id 
+            ON Shipment.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id 
     LEFT OUTER JOIN
         dbo.Vessels 
-            ON ShipMasterData.MainCarriageVesselId = dbo.Vessels.Id 
+            ON ShipmentMasterData.MainCarriageVesselId = dbo.Vessels.Id 
     LEFT OUTER JOIN
         dbo.Contacts AS SalesmanUserContact 
-            ON ship.SalesmanUserId = SalesmanUserContact.Id 
+            ON Shipment.SalesmanUserId = SalesmanUserContact.Id 
     LEFT OUTER JOIN
         dbo.EntityStatus AS OperationalEntityStatus 
-            ON ship.OperationalStatusId = OperationalEntityStatus.Id 
+            ON Shipment.OperationalStatusId = OperationalEntityStatus.Id 
     LEFT OUTER JOIN
         dbo.Contacts AS LastSentByUserContact 
-            ON ship.LastSentByUserId = LastSentByUserContact.Id 
+            ON Shipment.LastSentByUserId = LastSentByUserContact.Id 
     INNER JOIN
         dbo.ShipmentComputedFields AS ShipmentComputedFields 
-            ON ship.Id = ShipmentComputedFields.Id
+            ON Shipment.Id = ShipmentComputedFields.Id
     LEFT OUTER JOIN
         dbo.Cards AS AgentComputedCards 
-		   ON ship.AgentComputed = AgentComputedCards.Id
+		   ON Shipment.AgentComputed = AgentComputedCards.Id
     LEFT OUTER JOIN
         dbo.States AS InlandDomesticToState 
-            ON InlandDomesticToState.Id = ShipMasterData.InlandDomesticToStateId 
+            ON InlandDomesticToState.Id = ShipmentMasterData.InlandDomesticToStateId 
     LEFT OUTER JOIN
         dbo.States AS InlandDomesticFromState 
-            ON InlandDomesticFromState.Id = ShipMasterData.InlandDomesticFromStateId 
+            ON InlandDomesticFromState.Id = ShipmentMasterData.InlandDomesticFromStateId 
     ]]>
   </SqlScript>
   <OracleScript>
