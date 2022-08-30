@@ -91,7 +91,7 @@
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder]="'Field'"
-                                                        [IsDisabled]="!item.MainEntityName"
+                                                        [ForceDisabled]="!item.MainEntityName"
                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                 </LogLov>
                                                 <LogLov *ngIf="!item.IsRefreshField" (SelectedItemChanged)="item.FieldChanged($event)"
@@ -106,7 +106,7 @@
                                                         [HideColumns]="true"
                                                         [HideLastColumn]="true"
                                                         [PlaceHolder]="'Field'"
-                                                        [IsDisabled]="!item.MainEntityName"
+                                                        [ForceDisabled]="!item.MainEntityName"
                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                 </LogLov>
                                             </td>
@@ -145,7 +145,7 @@
                                                 <LogDatePicker [InputType]="'date'" [HideColumns]="true" [IsFreeValue]="true" [NoValidation]="true" [SelectedDateValue]="item.FieldValue" (ValueChanged)="item.DatePickerCondationValueChange($event)" [ObjectFieldName]="item.ObjectFieldName" [ObjectTableName]="item.ObjectTableName" [DataContext]="item"></LogDatePicker>
                                             </td>
 
-                                            <td style="width:120px;max-width:120px;min-width:120px;" *ngIf="!item.ShowOtherEntity && item.Operator && item.ObjectFieldLookUpTableName && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
+                                            <td style="width:138px;max-width:138px;min-width:138px;" *ngIf="!item.ShowOtherEntity && item.Operator && item.ObjectFieldLookUpTableName && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
                                                 <LogLov *ngIf="item.IsRefreshFieldValue" (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
                                                         [ObjectFieldName]="'FieldValue'"
                                                         [ObjectTableName]="item.ObjectTableName"
@@ -154,6 +154,7 @@
                                                         [NoValidation]="true"
                                                         [SelectedValue]="item.FieldValue"
                                                         [LookUpTableName]="item.ObjectFieldLookUpTableName"
+                                                        [HideLastColumn]="true"
                                                         [PlaceHolder]="'Value'"
                                                         [SelectedItemObject]="item.FieldValue">
                                                 </LogLov>
@@ -165,6 +166,7 @@
                                                         [NoValidation]="true"
                                                         [SelectedValue]="item.FieldValue"
                                                         [LookUpTableName]="item.ObjectFieldLookUpTableName"
+                                                        [HideLastColumn]="true"
                                                         [PlaceHolder]="'Value'"
                                                         [SelectedItemObject]="item.FieldValue">
                                                 </LogLov>

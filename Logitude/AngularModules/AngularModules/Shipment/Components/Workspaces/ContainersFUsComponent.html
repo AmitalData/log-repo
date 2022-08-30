@@ -58,9 +58,18 @@
                                         <div>Containers Views</div>
                                         <div>
                                             <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Containers')" *ngIf="IsQueryVisible_Containers">{{'Container.Q.Containers' | TextCodeTranslationPipe}} ({{ContainersCount}})</p>
-                                            <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
-                                            <p attr.data-cy="{{'CancelledContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Cancelled Containers')" *ngIf="IsQueryVisible_CancelledContainers">{{'Container.Q.CancelledContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingPOLDepartureView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingPOLDeparture')" *ngIf="IsQueryVisible_PendingPOLDepartureView">{{'Container.Q.PendingPOLDeparture' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'InTransitNewView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('InTransitNew')" *ngIf="IsQueryVisible_InTransitNewView">{{'Container.Q.InTransitNew' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'InTransitTransshipmentsView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('InTransitTransshipments')" *ngIf="IsQueryVisible_InTransitTransshipmentsView">{{'Container.Q.InTransitTransshipments' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingGateOutView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingGateOut')" *ngIf="IsQueryVisible_PendingGateOutView">{{'Container.Q.PendingGateOut' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingEmptyReturnView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingEmptyReturn')" *ngIf="IsQueryVisible_PendingEmptyReturnView">{{'Container.Q.PendingEmptyReturn' | TextCodeTranslationPipe}}</p>
                                             <p attr.data-cy="{{'AllContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
+
+                                            <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'ExceptionsView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Exceptions')" *ngIf="IsQueryVisible_ExceptionsView">{{'Container.Q.Exceptions' | TextCodeTranslationPipe}}</p>
+
+                                            <p attr.data-cy="{{'CancelledContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Cancelled Containers')" *ngIf="IsQueryVisible_CancelledContainers">{{'Container.Q.CancelledContainers' | TextCodeTranslationPipe}}</p>
+                                            
                                         </div>
                                     </div>
 

@@ -4431,6 +4431,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
                                      where a.Id == id && a.Tenant == tenant
                                      select a).FirstOrDefault();
+                if (shipment == null) return null;
 
                 ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
                                                  where a.Id == shipment.MasterShipmentDataId
@@ -13267,13 +13268,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public IQueryable<ShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
+        public IQueryable<DigitalShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
         {
             var tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
             var myResult = from f in shipments
-                           select new ShipmentList()
+                           select new DigitalShipmentList()
                            {
+                               InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
+                               InlandDomesticToCountryId = f.InlandDomesticToCountryId,
+                               InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,
+                               InlandDomesticToTypeCode = f.InlandDomesticToTypeCode,
+                               InlandDomesticFromCity = f.InlandDomesticFromCity,
+                               InlandDomesticToCity = f.InlandDomesticToCity,
                                Transshipment1ATD = f.Transshipment1ATD,
                                Transshipment1ATA = f.Transshipment1ATA,
                                Transshipment1ETD = f.Transshipment1ETD,
@@ -13286,10 +13293,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
+                               MainCarriageFromAddressId = f.MainCarriageFromAddressId,
+                               MainCarriageToAddressId = f.MainCarriageToAddressId,
+                               ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
+                               FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                                MainCarriageFromCity = f.MainCarriageFromCity,
+                               MainCarriageFromCountryCode = f.MainCarriageFromCountryCode,
                                MainCarriageToCity = f.MainCarriageToCity,
+                               MainCarriageToCountryCode = f.MainCarriageToCountryCode,
                                Tenant = f.Tenant,
-                               ShipmentViewId = f.Id,
+                               CarrierLastStatusDate = f.CarrierLastStatusDate,
                                Id = f.Id,
                                DirectionId = f.DirectionId,
                                DirectionName = f.DirectionName,
@@ -13301,7 +13314,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ShipmentTypeName = f.ShipmentTypeName,
                                ShipmentTypeId = f.ShipmentTypeId,
                                TransportModeId = f.TransportModeId,
-                               ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                               ShipperReference1 = f.ShipperReference1,
                                ShipperCountryCode = f.ShipperCountryCode,
                                ConsigneeCountryCode = f.ConsigneeCountryCode,
                                Master = f.Master,
@@ -13314,11 +13327,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NextLegName = f.NextLegName,
                                FromPortId = f.FromPortId,
                                ToPortId = f.ToPortId,
+                               FromPortCode = f.FromPortCode,
                                FromPort = f.FromPort,
                                FromPortName = f.FromPortName,
                                FromPortCountry = f.MainCarriageFromPortCountryName,
+                               ToPortCode = f.ToPortCode,
                                ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
                                ToPortName = f.ToPortName,
+                               ToPortCountry = f.MainCarriageToPortCountryName,
+                               MasterShipmentDataId = f.MasterShipmentDataId,
                                CustomerName = f.CustomerName,
                                ShipmentLevelCode = f.ShipmentLevelCode,
                                ShipmentLevelName = f.ShipmentLevelName,
@@ -13326,6 +13343,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
                                MainCarriageATA = f.MainCarriageATA,
                                MainCarriageETD = f.MainCarriageETD,
+                               IncotermId = f.IncotermId,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
                                CustomerReference3 = f.CustomerReference3,
@@ -13333,7 +13351,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageCarrierId = f.MainCarriageCarrierId,
                                AgentName = f.AgentName,
                                MainCarriageCarrierName = f.MainCarriageCarrierName,
+                               FromPortCountryCode = f.FromPortCountryCode,
+                               FromPortCountryName = f.FromPortCountryName,
+                               ToPortCountryCode = f.ToPortCountryCode,
+                               ToPortCountryName = f.ToPortCountryName,
                                CarrierNumber = f.CarrierNumber,
+                               AgentId = f.AgentId,
+                               IsOperationalClosed = f.IsOperationalClosed,
                                PreCarriageETD = f.PreCarriageETD,
                                AccountManagerUserName = f.AccountManagerUserName,
                                SalesmanUserName = f.SalesmanUserName,
@@ -13343,6 +13367,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageExpectedOrActual = f.MainCarriageExpectedOrActual,
                                MainCarriageETAOrATA = f.MainCarriageETAOrATA,
                                MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
+                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
+                               MainCarriageFromPortCode = f.MainCarriageFromPortCode,
+                               MainCarriageFromPortCountryName = f.MainCarriageFromPortCountryName,
+                               MainCarriageToPortCode = f.MainCarriageToPortCode,
+                               MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
                                MainCarriageToPortName = f.MainCarriageToPortName,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
@@ -13350,13 +13379,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                LongMaster = f.LongMaster,
                                CustomerId = f.CustomerId,
                                DescriptionOfGoods = f.DescriptionOfGoods,
+                               FirstPickupETA = f.FirstPickupETA,
+                               FirstPickupETD = f.FirstPickupETD,
                                From = f.From,
                                To = f.To,
+                               MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
+                               MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
                                StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
+                               StatusCode = f.StatusCode,
                                PreForwardingETD = f.PreForwardingETD,
+                               IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                StatusWeight = f.StatusWeight,
                                MainCarriageETDTime = f.MainCarriageETD,
                                MainCarriageETATime = f.MainCarriageETA,

@@ -43,8 +43,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var tenant = shipmentIdAndTenant.Item2;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+                if (shipmentPM.CustomerId == cardId || shipmentPM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
+                {
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+                }
+
+                throw new AutenticationException("Sorry! you are not authorized to read data!");
             }
             catch (Exception ex)
             {
@@ -155,7 +161,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
-                    var propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
+                    var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
                     var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant).ToList();
 
                     var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
@@ -170,32 +176,32 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             {
                                 case "text":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "double":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, double>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, double>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "datetime":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, DateTime>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, DateTime>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "integer":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, int>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, int>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "lookup":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                                         break;
                                     }
                                 case "boolean":
                                     {
-                                        entityLists = sortClass.GetSorterQuery<ShipmentList, bool>(queryOperations, entityLists);
+                                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, bool>(queryOperations, entityLists);
                                         break;
                                     }
                                 default:
@@ -207,7 +213,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                         else
                         {
-                            entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                            entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
                         }
                     }
                 }
@@ -226,7 +232,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                List<ShipmentList> listQuery = entityLists.ToList();
+                List<DigitalShipmentList> listQuery = entityLists.ToList();
 
                 myShipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 

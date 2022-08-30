@@ -113,7 +113,7 @@
 
  declare @CustomsReleaseDate as datetime
  declare @CustomsReleaseState as varchar(10)
-
+ declare @IsCancelled as bit
   --@[DeclareCustomFieldsVariable]
 
 
@@ -132,7 +132,7 @@
 	@dw_Containers.CustomFieldsVariable, dw_Containers.GateIn, dw_Containers.AvailablityDate, availabilityLocationPort.Id_Number, dw_Containers.OnCarriageGateOut, dw_Containers.PreCarriageGateIn, dw_Containers.ShipmentNumber, dw_Containers.ContainerNumber,packageType.Id_Number, dw_Containers.IsAutomaticUpdates,
 	dw_Containers.ShipmentPickupFrom, dw_Containers.ShipmentPickupTo, dw_Containers.ShipmentPickupETA, dw_Containers.ShipmentPickupATA, dw_Containers.ShipmentPickupETD, dw_Containers.ShipmentPickupATD, dw_Containers.ShipmentDeliveryFrom, 
 	dw_Containers.ShipmentDeliveryTo, shipmentDeliveryTrucker.Id_Number, dw_Containers.ShipmentDeliveryETA, dw_Containers.ShipmentDeliveryATA, dw_Containers.ShipmentDeliveryETD, dw_Containers.ShipmentDeliveryATD,
-	dw_Containers.CustomsReleaseDate, dw_Containers.CustomsReleaseState 
+	dw_Containers.CustomsReleaseDate, dw_Containers.CustomsReleaseState, dw_Containers.IsCancelled
 
   From dw_Containers
 
@@ -172,7 +172,7 @@
 	@CursorCustomFieldsVariable, @GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	@ShipmentPickupFrom, @ShipmentPickupTo, @ShipmentPickupETA, @ShipmentPickupATA, @ShipmentPickupETD, @ShipmentPickupATD, @ShipmentDeliveryFrom,
 	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD,
-	@CustomsReleaseDate, @CustomsReleaseState
+	@CustomsReleaseDate, @CustomsReleaseState,@IsCancelled
 
 		WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -199,7 +199,7 @@
 	 [POL Gate In],[Availability Date],[Availability Port], [On Carriage Gate Out], [Pre Carriage Gate In],[Shipment Number],[Container Number],[Container Type],[Automatic Updates],
 	 [Shipment Pickup From], [Shipment Pickup To], [Shipment Pickup ETA], [Shipment Pickup ATA], [Shipment Pickup ETD], [Shipment Pickup ATD], [Shipment Delivery From],
 	 [Shipment Delivery To], [Shipment Delivery Trucker], [Shipment Delivery ETA], [Shipment Delivery ATA], [Shipment Delivery ETD], [Shipment Delivery ATD],
-	 [Customs Release Date], [Customs Release State])
+	 [Customs Release Date], [Customs Release State], [Is Cancelled])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
@@ -214,7 +214,7 @@
 	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailabilityDate), @AvailabilityLocationPort, dbo.GetDateFormateAsNumber(@OnCarriageGateOut), dbo.GetDateFormateAsNumber(@PreCarriageGateIn), @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	 @ShipmentPickupFrom, @ShipmentPickupTo, dbo.GetDateFormateAsNumber(@ShipmentPickupETA), dbo.GetDateFormateAsNumber(@ShipmentPickupATA), dbo.GetDateFormateAsNumber(@ShipmentPickupETD), dbo.GetDateFormateAsNumber(@ShipmentPickupATD), @ShipmentDeliveryFrom,
 	 @ShipmentDeliveryTo, @ShipmentDeliveryTrucker, dbo.GetDateFormateAsNumber(@ShipmentDeliveryETA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryETD), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATD),
-	 dbo.GetDateFormateAsNumber(@CustomsReleaseDate), @CustomsReleaseState)
+	 dbo.GetDateFormateAsNumber(@CustomsReleaseDate), @CustomsReleaseState,@IsCancelled)
 
 		END TRY 
 BEGIN CATCH  
@@ -240,7 +240,7 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	@ShipmentPickupFrom, @ShipmentPickupTo, @ShipmentPickupETA, @ShipmentPickupATA, @ShipmentPickupETD, @ShipmentPickupATD, @ShipmentDeliveryFrom,
 	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD,
-	@CustomsReleaseDate, @CustomsReleaseState
+	@CustomsReleaseDate, @CustomsReleaseState,@IsCancelled
 			End
 	CLOSE ContainersCursor
 	DEALLOCATE ContainersCursor

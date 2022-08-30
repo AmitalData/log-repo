@@ -16,6 +16,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery
         public IQueryable<T> Apply<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs)
         {
             if (string.IsNullOrEmpty(treeFilterQueryArgs.AdditionalTreeFilter)) return queryable;
+            treeFilterQueryArgs.Type = typeof(T);
             QueryFilterItem queryFilterItem = new QueryTreeFilterInterpreter(treeFilterQueryArgs).Run();
             if (IsQueryFilterEmtpy(queryFilterItem)) return queryable;
             return queryable.Where(queryFilterItem.GetTreeExpression<T>());

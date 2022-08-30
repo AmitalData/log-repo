@@ -535,8 +535,8 @@
                                 <div style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
                                     <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </div>
-                                <div style="width: 30px;margin-top: 4px;margin-right: 10px;" [style.float]="isRTL ? 'left' : 'right'">
-                                    <IconButton [Name]="'Excel'" (click)="ExportToExcel()" [disabled]="false"></IconButton>
+                                <div  *ngIf="EnableExportChequeDepositsToExcell" style="width: 30px;margin-top: 4px;margin-right: 10px;" [style.float]="isRTL ? 'left' : 'right'">
+                                    <button class="Button" style="height:22px;width:22px;" (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                                   </div>
                             </div>
                         </td>

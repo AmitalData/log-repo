@@ -42,8 +42,10 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     initializeCondition() {
-        let condition = new Condition();
-        this.Conditions.push(condition);
+        if (this.EntityId) {
+            let condition = new Condition();
+            this.Conditions.push(condition);
+        }
     }
 
     cancelButtonClicked() {
@@ -72,6 +74,10 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
+        if(this.Data["entityId"] !== entity?.Id){
+            this.Conditions = [];
+        }
+
         this.Data["entityId"] = entity ? entity.Id : null;
         this.Data["entity"] = entity ? entity.Name : null;
         this.EntityId = entity ? entity.Id : null;
