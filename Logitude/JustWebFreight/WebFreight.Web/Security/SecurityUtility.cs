@@ -980,7 +980,7 @@ namespace WebFreight.Web.Security
         {
             if (tenant != 0)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
                 {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
