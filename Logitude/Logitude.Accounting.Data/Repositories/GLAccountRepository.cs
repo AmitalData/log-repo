@@ -704,6 +704,20 @@ namespace Logitude.Accounting.Data.Repositories
             return q.Take(top).Select(record => record.Id).ToList();
         }
 
+
+        public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
+        {
+            var q = context.GLAccounts.Where(record => record.Tenant == tenant && 
+                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)));
+            if (!String.IsNullOrWhiteSpace(accountTypeCode))
+            {
+                q.Where(record => record.AccountTypeCode == accountTypeCode);
+            }
+
+            return q.Select(record => record.Id).ToList();
+        }
+
+
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
             if (revaluationEnabled.HasValue && revaluationEnabled.Value)
