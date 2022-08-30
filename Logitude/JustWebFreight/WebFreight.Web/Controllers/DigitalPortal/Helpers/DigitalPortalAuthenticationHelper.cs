@@ -19,7 +19,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
         public Tuple<string, int> AuthenticateResponse(string cardId, string entityId)
         {
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            string securityKey = null;
             int tenant;
 
             if (authToken != null)
@@ -30,16 +29,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 return Tuple.Create(entityId, tenant);
             }
 
-            securityKey = HttpContext.Current.Request.Headers["securitykey"];
+            string securityKey = HttpContext.Current.Request.Headers["securitykey"];
+
             var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
+            
             if (shipmentIdAndTenant == null)
             {
-                return null;
+                throw new AutenticationException("Sorry! this user is not authorized!");
             }
 
             entityId = shipmentIdAndTenant.Item1;
             tenant = shipmentIdAndTenant.Item2;
-
             return Tuple.Create(entityId, tenant);
         }
 

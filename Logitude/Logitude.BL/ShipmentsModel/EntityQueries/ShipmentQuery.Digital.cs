@@ -1595,12 +1595,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public Tuple <string, int> GetShipmentIdBySecurityKey(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
+            {
                 return null;
+            }
 
-            Shipment shipment = repository.context.Shipments.FirstOrDefault(a=>a.SecurityKey.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+            Shipment shipment = repository.context
+                                          .Shipments
+                                          .FirstOrDefault(a=>a.SecurityKey.Equals(key, StringComparison.InvariantCultureIgnoreCase));
 
             if (shipment == null)
+            {
                 return null;
+            }
 
             return Tuple.Create(shipment.Id, shipment.Tenant);
         }
