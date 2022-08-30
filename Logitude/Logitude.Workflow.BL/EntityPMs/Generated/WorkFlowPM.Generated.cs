@@ -411,6 +411,29 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private string trigger ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Trigger  
+	   {
+	    
+	     get
+		{
+		   return trigger;
+		 }
+		 set
+		 {
+		   if(trigger != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Trigger",OldValue=trigger,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   trigger=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

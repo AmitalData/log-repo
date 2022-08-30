@@ -194,12 +194,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IWorkflowContext MyContext = WorkflowContext.GetContext(tenant);
 				WorkFlowInstanceStatusListQueryService workFlowInstanceStatusQuery = new WorkFlowInstanceStatusListQueryService(MyContext);
 
-                List<WorkFlowInstanceStatusList> entityLists = workFlowInstanceStatusQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "WorkFlowInstanceStatus",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<WorkFlowInstanceStatusList> entityLists = workFlowInstanceStatusQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = workFlowInstanceStatusQuery.GetListCount(queryOperations);
+                    int count = workFlowInstanceStatusQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

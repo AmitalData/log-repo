@@ -57,6 +57,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string FlowJson { get; set; }
         [Column("Entity")]
 	    public string Entity { get; set; }
+        [Column("Trigger")]
+	    public string Trigger { get; set; }
     }
 }
 	 
