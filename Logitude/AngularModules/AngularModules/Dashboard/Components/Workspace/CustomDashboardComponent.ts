@@ -193,6 +193,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.EndPosition = widget.EndPosition;
             myWidget.TypeCode = widget.TypeCode;
             myWidget.EntityId = widget.EntityId;
+            myWidget.Filters = widget.Filters;
             myWidget.WidgetMeasures = [];
 
             if (widget.WidgetMeasures) {
@@ -218,6 +219,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.EntityId = widget.EntityId;
             myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
             myWidget.WidgetMeasures = [];
+            myWidget.Filters = widget.Filters;
 
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));

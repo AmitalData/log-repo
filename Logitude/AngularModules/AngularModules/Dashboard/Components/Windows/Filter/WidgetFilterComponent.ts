@@ -20,7 +20,8 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     }
 
     LoadDefaultAdditionalFilters() {
-        // if (this.IsRoot) this.DataSource = this.GetAllFilters(this.DataSource[0]);
+        if (this.IsRoot && this.DataSource && this.DataSource.QueryFilterItems && this.DataSource.QueryFilterItems.length != 0)
+            this.DataSource = this.GetAllFilters(this.DataSource);
     }
 
     get FilterItems(): WidgetFilterItem[] {
@@ -31,38 +32,37 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
         let groupTreeFilter = new WidgetFilterItem();
         groupTreeFilter.IsGroup = true;
         groupTreeFilter.setAndOrOperation(oldValue.FilterType);
-        groupTreeFilter.IndexOrder = 1;
-        let myFilter = this.RestoreFilters(oldValue, groupTreeFilter);
-        let myFilterList = [];
-        myFilterList.push(myFilter);
-        return myFilterList;
+
+        let myFilter = this.RestoreFilters(oldValue, groupTreeFilter);        
+        let parentItem = new WidgetFilterItem();
+
+        parentItem.QueryFilterItems.push(myFilter);
+        return parentItem;
     }
 
-    RestoreFilters(baseFilter: WidgetFilterItem, myFilter: WidgetFilterItem) {
-        baseFilter.QueryFilterItems?.forEach((field) => {
-            this.BuildFilter(field, myFilter);
+    RestoreFilters(oldFilter: WidgetFilterItem, newFilter: WidgetFilterItem) {
+        oldFilter.QueryFilterItems?.forEach((oldField) => {
+            this.BuildFilter(oldField, newFilter);
         });
-        return myFilter;
+        return newFilter;
     }
 
-    private BuildFilter(field: WidgetFilterItem, myFilter: WidgetFilterItem) {
-        if (field.QueryFilterItems.length == 0) {
+    private BuildFilter(oldField: WidgetFilterItem, myFilter: WidgetFilterItem) {
+        if (oldField.QueryFilterItems.length == 0) {
             let groupTreeFilter = new WidgetFilterItem();
             myFilter.QueryFilterItems.push(groupTreeFilter);
             return;
         }
-        var DWObjectField = new WidgetFilterItem();
-        DWObjectField.IsGroup = true;
-        DWObjectField.IndexOrder = myFilter.QueryFilterItems.length;
-        DWObjectField.setAndOrOperation(field.FilterType);
-        this.RestoreFilters(field, DWObjectField);
-        myFilter.QueryFilterItems.push(DWObjectField);
+        var field = new WidgetFilterItem();
+        field.IsGroup = true;
+        field.setAndOrOperation(oldField.FilterType);
+        this.RestoreFilters(oldField, field);
+        myFilter.QueryFilterItems.push(field);
     }
 
     AddEmptyFilter() {
         var groupFilter = new WidgetFilterItem();
         groupFilter.IsGroup = true;
-        groupFilter.IndexOrder = this.FilterItems.length;
         groupFilter.QueryFilterItems.push(new WidgetFilterItem());
         this.DataSource.QueryFilterItems.push(groupFilter);
     }
@@ -72,18 +72,14 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     }
 
     AddFilterToGroup(item: WidgetFilterItem) {
-        var newTreeFilter = new WidgetFilterItem();
-        newTreeFilter.IndexOrder = this.FilterItems.length;
-        item.QueryFilterItems.push(newTreeFilter);
+        item.QueryFilterItems.push(new WidgetFilterItem());
     }
 
     AddGroup(item: WidgetFilterItem) {
         let newGroupTreeFilter = new WidgetFilterItem();
         newGroupTreeFilter.IsGroup = true;
-        newGroupTreeFilter.IndexOrder = this.FilterItems.length;
 
         var newGroupField = new WidgetFilterItem();
-        newGroupField.IndexOrder = newGroupTreeFilter.QueryFilterItems.length;
         newGroupTreeFilter.QueryFilterItems.push(newGroupField);
 
         item.QueryFilterItems.push(newGroupTreeFilter);

@@ -122,6 +122,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
+            this.GroupRoot = new WidgetFilterItem();
         }
     }
 
@@ -154,7 +155,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     public TableChanged() {
-        this.GroupRoot = new WidgetFilterItem();
+     
     }
 
     CancelButtonClicked() {
@@ -169,22 +170,29 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
         });
-
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
-            if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
-              //  this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0]);
+            this.SetFiltersString();
             if (this.isNew) {
                 this.isNew = false;
                 this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.DashboardPM.AddWidget(this.EntityPM);
             }
-
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
     private myCloner: Cloner;
+    private SetFiltersString() {
+        if (!this.GroupRoot || !this.GroupRoot.QueryFilterItems || this.GroupRoot.QueryFilterItems.length == 0) return;
+        this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0], function (key, val) {
+            if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
+                key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
+                key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
+                key !== "null" && key !== "SelectedField") return val;
+        });
+    }
+
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Title');

@@ -7,9 +7,8 @@ import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver'
 export class WidgetFilterItem {
     public UIProperties: UIProperties;
     public FieldName: string;
-    public IndexOrder: number;
     public IsGroup: boolean = false;
-    public QueryFilterItems: WidgetFilterItem[] = [];
+
 
     public FilterType: string = 'And'
     private andOr: string = "And";
@@ -23,7 +22,8 @@ export class WidgetFilterItem {
 
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
-
+    public QueryFilterItems: WidgetFilterItem[] = [];
+    
     constructor() {
         this.UIProperties = new UIProperties;
     }
