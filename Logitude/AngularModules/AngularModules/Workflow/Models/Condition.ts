@@ -1,4 +1,4 @@
-import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
+import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 
 export class Condition {
@@ -14,7 +14,7 @@ export class Condition {
 
     constructor(isGroup: boolean = false) {
         this.isGroup = isGroup;
-        this.groupOperation = isGroup ? ConditionGroupOperations.And : null;
+        this.groupOperation = isGroup ? ConditionOperations.And : null;
         this.field = null;
         this.fieldCode = null;
         this.type = null;

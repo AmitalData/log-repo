@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
 import { Condition } from "Workflow/Models/Condition";
+import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
 import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
@@ -12,15 +12,15 @@ import { ListItem } from "Workflow/Models/ListItem";
 export class ConditionsComponent extends BaseComponent implements OnInit {
 
     @Input() EntityId: string;
+    @Input() ShowChangedOperator: boolean;
     @Input() ConditionsOperation: string;
     @Input() Conditions: Condition[];
 
     @Output() ConditionsOperationChange = new EventEmitter<string>();
 
-    public ConditionGroupOperations: ListItem[] = [
-        new ListItem(ConditionGroupOperations.And),
-        new ListItem(ConditionGroupOperations.Or),
-    ];
+    public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
+
+    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     DataContext: any = this;
 
@@ -34,9 +34,5 @@ export class ConditionsComponent extends BaseComponent implements OnInit {
 
     updateConditionsOperation(conditionsOperation: any) {
         this.ConditionsOperationChange.emit(conditionsOperation ? conditionsOperation.Code : null);
-    }
-
-    getConditionGroupItem(operationCode: string) {
-        return this.ConditionGroupOperations.filter(o => o.Code === operationCode)[0] || null;
     }
 }

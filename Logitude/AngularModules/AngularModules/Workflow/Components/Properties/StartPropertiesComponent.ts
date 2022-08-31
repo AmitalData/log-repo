@@ -3,7 +3,8 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
+import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
+import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { Condition } from "Workflow/Models/Condition";
 
 @Component({
@@ -17,6 +18,8 @@ export class StartPropertiesComponent extends BaseComponent {
 
     public Conditions: Condition[];
     public ConditionsOperation: string;
+
+    public CreateTrigger: string = "create";
 
     public ValidationErrorsList: string[];
 
@@ -36,7 +39,7 @@ export class StartPropertiesComponent extends BaseComponent {
         this.Trigger = this.Data["trigger"] || null;
 
         this.Conditions = this.Data["conditions"] || [];
-        this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionGroupOperations.And;
+        this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
         this.setUIProperties();
     }
@@ -59,7 +62,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
             this.setConditionsData();
 
-            //console.log(this.Data);
+            console.log(this.Data);
 
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
@@ -74,7 +77,7 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
-        if(this.Data["entityId"] !== entity?.Id){
+        if (this.Data["entityId"] !== entity?.Id) {
             this.Conditions = [];
         }
 
@@ -87,6 +90,11 @@ export class StartPropertiesComponent extends BaseComponent {
     updateTrigger(trigger: string) {
         this.Data["trigger"] = trigger;
         this.Trigger = trigger;
+
+        if (trigger === this.CreateTrigger) {
+            this.resetConditionsOperatorAndValue();
+        }
+
         this.setUIProperties();
     }
 
@@ -99,5 +107,17 @@ export class StartPropertiesComponent extends BaseComponent {
         let apiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.addAdditionalFilter("Name", "Shipment", null, null, "Equals", false, false, false, "Text");
         return apiQueryFilters;
+    }
+
+    resetConditionsOperatorAndValue(conditions: Condition[] | null = null) {
+        for (let condition of (conditions || this.Conditions)) {
+            if (condition.operator === ConditionOperators.Changed) {
+                condition.operator = ConditionOperators.Equals;
+                condition.value = null;
+            }
+            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
+                this.resetConditionsOperatorAndValue(condition.conditions);
+            }
+        }
     }
 }
