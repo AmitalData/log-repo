@@ -313,7 +313,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPInvoiceLinePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -405,7 +405,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPInvoiceEntityPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -501,7 +501,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPInvoicePaymentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -593,7 +593,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPInvoiceMultipleShipmentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -689,7 +689,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPTransferLinePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -785,7 +785,7 @@ export class APInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newAPInvoiceTotalVATPM[pmProperty] = jItem[pmProperty];
             }
            
