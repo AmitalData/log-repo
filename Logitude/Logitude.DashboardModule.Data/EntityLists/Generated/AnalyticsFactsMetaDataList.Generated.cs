@@ -22,6 +22,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string TableName  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

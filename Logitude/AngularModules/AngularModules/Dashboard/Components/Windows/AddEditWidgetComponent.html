@@ -103,6 +103,7 @@
                                 <td>
                                     <div>
                                         <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
+                                        <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                     </div>
                                 </td>
                             </tr>
