@@ -733,6 +733,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string operationalStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OperationalStatusName  
+	   {
+	    
+	     get
+		{
+		   return operationalStatusName;
+		 }
+		 set
+		 {
+		   if(operationalStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OperationalStatusName",OldValue=operationalStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   operationalStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

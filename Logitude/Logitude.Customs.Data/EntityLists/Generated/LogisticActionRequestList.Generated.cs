@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CalculatedExporterName  { get; set; }
        [DataMember]
        public bool MyCloseCheckBox  { get; set; }
+       [DataMember]
+       public string OperationalStatusName  { get; set; }
    }
 
 }

@@ -72,6 +72,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                OperationalStatus = a.OperationalStatus,
 
+                                                               OperationalStatusName = a.LogisticActionResponseReqS.LocalName,
+
                                                                Direction = a.Direction,
 
                                                                TransportmodeId = a.TransportmodeId,
