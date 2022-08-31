@@ -383,6 +383,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
+                    entityPM.ExportLoadingPortCode = consignment.ExportLoadingPortCode;
                     entityPM.StorageSiteCode = consignment.StorageSiteCode;
                     if (entityPM.IsCourierDeclaration)
                     {
