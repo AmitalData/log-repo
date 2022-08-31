@@ -437,7 +437,7 @@ export class ConsigmentTabContentComponent
     public get CargoTypeCodeForExport() { return this.EntityPM ? this.EntityPM.CargoTypeCode : null; }
     public set CargoTypeCodeForExport(newValue: string) {
         this.EntityPM.CargoTypeCode = newValue;
-      
+     
     if(this.declarationPM.Direction=='E')
         this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
     }
@@ -660,15 +660,16 @@ export class ConsigmentTabContentComponent
     //#endregion
 
     setRequired() {
+       
         if (this.declarationPM.Direction == 'E') {
             this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, true);
-            if (this.ManifestNumber != null) {
+            if (!AppTool.IsNullOrEmpty(this.ManifestNumber)) {
                 this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, false);
             }
 
             if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
                 this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, true);
-                if (this.SecondCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
                     this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
                 }
             } else {
@@ -676,7 +677,7 @@ export class ConsigmentTabContentComponent
             }
             if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
                 this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, true);
-                if (this.ThirdCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.ThirdCargoID)) {
                     this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
                 }
             } else {
