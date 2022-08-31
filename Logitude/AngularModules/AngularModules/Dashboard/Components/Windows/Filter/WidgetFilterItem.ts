@@ -7,6 +7,7 @@ import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver'
 export class WidgetFilterItem {
     public UIProperties: UIProperties;
     public FieldName: string;
+    public FieldId: string;
     public IsGroup: boolean = false;
 
 
@@ -19,13 +20,37 @@ export class WidgetFilterItem {
     public Operators: any;
     public SelectedOperator: Operator;
     public IsChecked: boolean;
+    private DontRefreshFieldData: boolean = false;
 
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
-    
-    constructor() {
+
+    constructor(field: WidgetFilterItem = null) {
         this.UIProperties = new UIProperties;
+        if (field) this.BuildFieldData(field);
+    }
+
+    BuildFieldData(field: WidgetFilterItem) {
+        this.DontRefreshFieldData = true;
+        this.FieldId = field.FieldId;
+        this.FieldName = field.FieldName;
+        this.FillFieldValue(field);
+        this.Operator = field.Operator;
+        this.FieldDataType = field.FieldDataType;
+        this.FilterType = field.FilterType;
+        this.QueryFilterItems = field.QueryFilterItems;
+        this.FillOperators(this.FieldDataType);
+        this.SelectedOperator = this.Operators.filter(x => x.Code == field.Operator)[0];
+    }
+
+    FillFieldValue(field: WidgetFilterItem) {
+        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') return;
+        if (this.FieldDataType == 'Boolean') {
+            this.BooleanListValueChanged(field.FieldValue?.toString() == 'true');
+            return;
+        }
+        this.FieldValue = field.FieldValue;
     }
 
     public setAndOrOperation(Newvalue: string) {
@@ -54,6 +79,7 @@ export class WidgetFilterItem {
 
     private ResetField() {
         this.FieldName = "";
+        this.FieldId = "";
         this.Operator = null;
         this.SelectedField = null;
     }
@@ -61,8 +87,12 @@ export class WidgetFilterItem {
     FieldSelectedChanged(field: AnalyticsFactsFieldsMetaDataList) {
         this.SelectedField = field;
         this.FieldName = field.FieldCode;
-
+        this.FieldId = field.Id;
         this.FieldDataType = field.DataTypeCode;
+        if (this.DontRefreshFieldData) {
+            this.DontRefreshFieldData = false;
+            return;
+        }
         this.FillOperators(field.DataTypeCode);
         this.Operator = null;
         this.SelectedOperator = null;

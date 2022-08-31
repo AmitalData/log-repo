@@ -29,35 +29,24 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     }
 
     private GetAllFilters(oldValue: WidgetFilterItem) {
-        let groupTreeFilter = new WidgetFilterItem();
-        groupTreeFilter.IsGroup = true;
-        groupTreeFilter.setAndOrOperation(oldValue.FilterType);
-
-        let myFilter = this.RestoreFilters(oldValue, groupTreeFilter);        
         let parentItem = new WidgetFilterItem();
-
-        parentItem.QueryFilterItems.push(myFilter);
+        parentItem.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
         return parentItem;
     }
 
-    RestoreFilters(oldFilter: WidgetFilterItem, newFilter: WidgetFilterItem) {
+    BuildGroupFilter(oldFilter: WidgetFilterItem) {
+        let groupTreeFilter = new WidgetFilterItem();
+        groupTreeFilter.IsGroup = true;
+        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
         oldFilter.QueryFilterItems?.forEach((oldField) => {
-            this.BuildFilter(oldField, newFilter);
+            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
         });
-        return newFilter;
+        return groupTreeFilter;
     }
 
-    private BuildFilter(oldField: WidgetFilterItem, myFilter: WidgetFilterItem) {
-        if (oldField.QueryFilterItems.length == 0) {
-            let groupTreeFilter = new WidgetFilterItem();
-            myFilter.QueryFilterItems.push(groupTreeFilter);
-            return;
-        }
-        var field = new WidgetFilterItem();
-        field.IsGroup = true;
-        field.setAndOrOperation(oldField.FilterType);
-        this.RestoreFilters(oldField, field);
-        myFilter.QueryFilterItems.push(field);
+    private BuildFilter(oldField: WidgetFilterItem) {
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        return this.BuildGroupFilter(oldField);
     }
 
     AddEmptyFilter() {
