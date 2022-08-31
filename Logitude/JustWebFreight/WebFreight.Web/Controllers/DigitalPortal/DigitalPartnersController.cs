@@ -48,14 +48,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-
             var partners = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                && cardType.Equals("CS") 
-                                                    ? a.CustomerId.Equals(cardId) 
-                                                    : a.AgentId.Equals(cardId)
-                                                && a.CustomerId == cardId
-                                                &&(a.ConsigneeName.Contains(searchText) 
-                                                   || a.ShipperName.Contains(searchText)))
+                                                && (cardType == null 
+                                                    || cardType.Trim() == string.Empty 
+                                                    || (cardType.Equals("CS")
+                                                        ? a.CustomerId.Equals(cardId)
+                                                        : a.AgentId.Equals(cardId)))
+                                                &&(!(searchText == null 
+                                                     || searchText.Trim() == string.Empty)
+                                                   || a.ConsigneeName.StartsWith(searchText) 
+                                                   || a.ShipperName.StartsWith(searchText)))
                                     .Take(100)
                                     .SelectMany(a => new List<Partner> 
                                     {
@@ -71,7 +73,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         } 
                                     })
                                     .DistinctBy(a => a.Id)
-                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
+                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) 
+                                                && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
                                     .Take(10)
                                     .OrderBy(x => x.Name)
                                     .ToList();
