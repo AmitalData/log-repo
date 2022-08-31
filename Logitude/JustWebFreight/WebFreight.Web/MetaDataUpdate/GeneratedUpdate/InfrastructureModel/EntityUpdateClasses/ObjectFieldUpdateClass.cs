@@ -74,13 +74,18 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class ObjectFieldUpdateClass
    {  		
-		public const string HashString = "2323ad406e81f75951eb173fcd7807a4";
-
+		public const string HashString = "622c07fc1d3bc0bbb01a0f04a01c1862";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7792,7 +7797,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "Is List Filter",
 					  						ListFieldLable =  "IsListFilterListLable",
 					  						ListLableDefaultText =  "Is List Filter",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
