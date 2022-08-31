@@ -85,109 +85,125 @@
                                 <div>
                                     <table style="height:30px;">
                                         <tr style="height:30px;" class="MyFilterItem">
-                                            <!-- <td style="width:170px;max-width:170px;min-width:87px;">
-                                                <LogLov (SelectedItemChanged)="item.FieldChanged($event)"
-                                                        [ObjectFieldName]="'ObjectFieldCode'"
-                                                        [QueryFilterItems]="item.MainEntityFieldsFilterItems"
-                                                        [ObjectTableName]="'ObjectField'"
+                                            <td style="width:170px;max-width:170px;min-width:87px;">
+                                                <LogLov [SelectedValue]="item.FieldName"
+                                                        [ObjectTableName]="'Widget'"
                                                         [DataContext]="item"
-                                                        [LookUpTableName]="'ObjectField'"
+                                                        [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                                        [DependencyFilter3Value]="EntityId"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'DisplayName'"
+                                                        (SelectedItemChanged)="item.FieldChanged($event)"
                                                         [NoValidation]="true"
                                                         [IsFreeText]="true"
-                                                        [SelectedValue]="item.ObjectFieldCode"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="true"
-                                                        [PlaceHolder] ="'Field'"
-                                                        [IsDisabled]="!item.MainEntityName"
-                                                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                                                        [PlaceHolder]="'Field'"
+                                                        [ObjectFieldName]="'FieldCode'">
                                                 </LogLov>
                                             </td>
                                             <td style="width:7px;">
                                                 <div style="width:7px;"></div>
                                             </td>
                                             <td style="width:170px;max-width:170px;min-width:87px;">
-                                                <ComboBox style="width:100px;" [ItemsSource]="item.Operators" [SelectedItem]="item.SelectedOperator" [Binding]="'Name'" [WaterMark]="'Operator'" [IsDisabled]="!item.FieldName" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                                                <ComboBox 
+                                                        style="width:100px;" 
+                                                        [ItemsSource]="item.Operators"
+                                                        [SelectedItem]="item.SelectedOperator"
+                                                        [Binding]="'Name'"
+                                                        [WaterMark]="'Operator'" 
+                                                        [IsDisabled]="!item.FieldName"
+                                                        (SelectedItemChanged)="item.OperationValueChanged($event)">
+                                                </ComboBox>
                                             </td>
-                                            <td *ngIf="item.ShowOtherEntity" style="width:7px;">
-                                                <div style="width:7px;"></div>
-                                            </td>
-                                            <td *ngIf="item.ShowOtherEntity" style="width:170px;max-width:170px;min-width:87px;">
-                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [SelectedItem]="item.SecondaryEntityName" (SelectedItemChanged)="item.SecondaryEntityChanged($event)" [WaterMark]="'Table'" [IsDisabled]="!item.Operator"></ComboBox>
-                                            </td>
-                                            <td style="width:7px;">
+                                        <td style="width:7px;">
                                                 <div style="width:7px;"></div>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (!item.FieldDataType || item.FieldDataType == '' ||item.FieldDataType == 'Text' || item.FieldDataType == 'nText' || item.FieldDataType == 'Integer' || item.FieldDataType == 'Double' || item.FieldDataType == 'SigDouble' ||item.FieldDataType == 'Decimal')">
+                                            <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (!item.FieldDataType || item.FieldDataType == '' ||item.FieldDataType == 'Text' || item.FieldDataType == 'nText' || item.FieldDataType == 'Integer' || item.FieldDataType == 'Double' || item.FieldDataType == 'SigDouble' ||item.FieldDataType == 'Decimal')">
                                                 <div>
-                                                    <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [ObjectFieldName]="item.ObjectFieldName" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" HideLastColumn="true" HideColumns="true" DontAllowAutoSelect="true"></LogTextBox>
+                                                    <LogTextBox 
+                                                        [NoValidation]="true" 
+                                                        [HideLastColumn]="true"
+                                                        [Text]="item.FieldValue" 
+                                                        [IsFreeText]="true"
+                                                        (ValueChanged)="item.TextBoxCondationValueChange($event)"
+                                                        style="height:22px" 
+                                                        [DataContext]="item"
+                                                        HideLastColumn="true"
+                                                        HideColumns="true"
+                                                        DontAllowAutoSelect="true"></LogTextBox>
                                                 </div>
                                             </td>
 
-                                  
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && item.FieldDataType == 'Boolean' && item.Operator == 'Equal'">
-                                                <ComboBox style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked" [WaterMark]="'Value'"></ComboBox>
+
+                                           <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="item.Operator && item.FieldDataType == 'Boolean' && item.Operator == 'Equal'">
+                                                <ComboBox 
+                                                    style="width:107px;"
+                                                    (SelectedItemChanged)="item.BooleanListValueChanged($event)"
+                                                    [ItemsSource]="item.BooleanList" 
+                                                    [SelectedItem]="item.IsChecked"
+                                                    [WaterMark]="'Value'"></ComboBox>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.Operator || item.Operator == 'IsEmpty' || item.Operator == 'IsNotEmpty'">
+                                            <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="!item.Operator || item.Operator == 'IsEmpty' || item.Operator == 'IsNotEmpty'">
                                                 <div></div>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date')">
-                                                <LogDatePicker [InputType]="'date'" [HideColumns]="true" [IsFreeValue]="true" [NoValidation]="true" [SelectedDateValue]="item.FieldValue" (ValueChanged)="item.DatePickerCondationValueChange($event)" [ObjectFieldName]="item.ObjectFieldName" [ObjectTableName]="item.ObjectTableName" [DataContext]="item"></LogDatePicker>
+                                           <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date')">
+                                                <LogDatePicker 
+                                                    [InputType]="'date'" 
+                                                    [HideColumns]="true"
+                                                    [IsFreeValue]="true" 
+                                                    [NoValidation]="true"
+                                                    [SelectedDateValue]="item.FieldValue"
+                                                    (ValueChanged)="item.DatePickerCondationValueChange($event)"
+                                                    [DataContext]="item">
+                                                </LogDatePicker>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
+                                                 <!--    <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
-                                                        [ObjectFieldName]="'FieldValue'"
-                                                        [ObjectTableName]="item.ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [IsFreeText]="true"
-                                                        [NoValidation]="true"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="true"
-                                                        [SelectedValue]="item.FieldValue"
-                                                        [LookUpTableName]="item.ObjectFieldLookUpTableName"
-                                                        [PlaceHolder] ="'Value'"
-                                                        [SelectedItemObject]="item.FieldValue">
+                                                    [ObjectFieldName]="'FieldValue'"
+                                                    [ObjectTableName]="item.ObjectTableName" [DataContext]="item"
+                                                    [IsFreeText]="true" [NoValidation]="true" [HideColumns]="true"
+                                                    [HideLastColumn]="true" [SelectedValue]="item.FieldValue"
+                                                    [LookUpTableName]="item.ObjectFieldLookUpTableName"
+                                                    [PlaceHolder]="'Value'" [SelectedItemObject]="item.FieldValue">
                                                 </LogLov>
-                                            </td>
+                                            </td> -->
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'PickList'">
+                                               <!--     <td style="width:170px;max-width:170px;min-width:87px;"
+                                                *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'PickList'">
                                                 <PickList [ObjectFieldName]="item.FieldName"
-                                                          [ObjectTableName]="item.ObjectTableName"
-                                                          [SelectedValue]="item.FieldValue"
-                                                          [DataContext]="item"
-                                                          [IsFreeText]="true"
-                                                          [NoValidation]="true"
-                                                          [HideLastColumn]="true"
-                                                          [HideColumns]="true"
-                                                          [PlaceHolder] ="'Value'"
-                                                          (SelectedItemChanged)="item.LogLovCondationValueChange($event)">
+                                                    [ObjectTableName]="item.ObjectTableName"
+                                                    [SelectedValue]="item.FieldValue" [DataContext]="item"
+                                                    [IsFreeText]="true" [NoValidation]="true" [HideLastColumn]="true"
+                                                    [HideColumns]="true" [PlaceHolder]="'Value'"
+                                                    (SelectedItemChanged)="item.LogLovCondationValueChange($event)">
                                                 </PickList>
                                             </td>
 
-                                            <td *ngIf="item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty')" style="width:170px;max-width:170px;min-width:87px;">
+                                            <td *ngIf="item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty')"
+                                                style="width:170px;max-width:170px;min-width:87px;">
                                                 <LogLov (SelectedItemChanged)="item.ValueChanged($event)"
-                                                        [ObjectFieldName]="'ObjectFieldCode'"
-                                                        [QueryFilterItems]="item.SecondaryEntityFieldsFilterItems"
-                                                        [ObjectTableName]="'ObjectField'"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'ObjectField'"
-                                                        [NoValidation]="true"
-                                                        [IsFreeText]="true"
-                                                        [SelectedValue]="item.ObjectFieldCode"
-                                                        [HideColumns]="true"
-                                                        [HideLastColumn]="true"
-                                                        [PlaceHolder] ="'Value'"
-                                                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                                                    [ObjectFieldName]="'ObjectFieldCode'"
+                                                    [QueryFilterItems]="item.SecondaryEntityFieldsFilterItems"
+                                                    [ObjectTableName]="'ObjectField'" [DataContext]="item"
+                                                    [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                                                    [IsFreeText]="true" [SelectedValue]="item.ObjectFieldCode"
+                                                    [HideColumns]="true" [HideLastColumn]="true" [PlaceHolder]="'Value'"
+                                                    [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                 </LogLov>
                                             </td>
 
                                             <td *ngIf="!item.ShowOtherEntity" style="width:127px;">
                                                 <div style="width:127px;"></div>
-                                            </td> -->
-
+                                            </td>
+ -->
                                             <td colspan="5">
                                                 <div></div>
                                             </td>
@@ -238,6 +254,5 @@
         </td>
     </tr>
 </table>
-
 
 <!-- <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator> -->
