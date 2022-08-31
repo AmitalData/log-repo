@@ -49,6 +49,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string JoinedTableKey { get; set; }
         [Column("JoinedTableDisplayField")]
 	    public string JoinedTableDisplayField { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 
