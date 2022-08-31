@@ -387,8 +387,9 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.IsDirty = false
     }
  
-    SetWindowArgs(winArg: any) {        
+    SetWindowArgs(winArg: any) { 
         if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
+        this.IsFromDeclaration = true;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
@@ -892,6 +893,13 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
         }
         else {
+            if(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && !this.IsFromDeclaration && this.Direction == "E")
+            {
+                for (let i = this.Tabs.length - 1; i >= 0; i--) {
+                    this.DeleteTabs(this.Tabs[i]);
+                }
+                this.AddTab(null);
+            }
         
             this.IsCustomsFileRetrieved = true;
             this.CurrentSession.StartBusyIndicator("")
