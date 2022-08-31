@@ -928,6 +928,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     public ShowStorageStatusMessage: boolean;
 
     DisplayOnlyCheck() {
+     
         var declarationDisplayOnly: boolean = false;
         this.DrawMe = true;
         this.ShowStorageStatusMessage = false;
@@ -991,12 +992,26 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
 
             else if (declarationDisplayOnly2) {
-                this.IsDisplayOnly = true;
-                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-
-                this.IsDisplayOnly = true;
-                this.OkButtonEnabled = false;
-                this.SendButtonEnabled = false;
+                
+                if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
+                {
+                    this.IsDisplayOnly = false;
+                    this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+    
+                    this.IsDisplayOnly = false;
+                    this.OkButtonEnabled = true;
+                    this.SendButtonEnabled = true;
+                }
+               
+                else{
+                    this.IsDisplayOnly = true;
+                    this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+    
+                    this.IsDisplayOnly = true;
+                    this.OkButtonEnabled = false;
+                    this.SendButtonEnabled = false;
+                }
+               
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;

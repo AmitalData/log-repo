@@ -234,9 +234,9 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-           
-           
-            if(this._DeclarationPM.IsExportClosed&& this._DeclarationPM.DeclarationStatusTypeCode=="36"){
+
+
+            if (this._DeclarationPM.IsExportClosed && this._DeclarationPM.DeclarationStatusTypeCode == "36") {
                 errorMessage = "Customs.General.O.DeclarationStatClosed";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
@@ -255,8 +255,8 @@ export class DeclarationValidator {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-          
-           
+
+
         }
     }
 
@@ -337,11 +337,25 @@ export class DeclarationValidator {
         //Check if Declaration Paid and there waiting for constraint approval
         if (this._DeclarationPM != null) {
             if (this._DeclarationPM.DeclarationStatusTypeCode == "11") {
+
                 var errorMessage = "Customs.General.O.ConstraintsInProgress";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
+            else {
+
+                if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
+                    var errorMessage = "Customs.General.O.HappinessConstraints";
+                    if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                        this.ValidationErrorMessageCodes.push(errorMessage);
+                    }
+                }
+                
+            }
+
+
+
             //Check if there are constraints in progress
             //if (false)//yaron
             //{
@@ -450,7 +464,7 @@ export class DeclarationValidator {
     private CheckConsignmentPackages() {
         var errorMessage = "";
 
-        if (this._DeclarationPM.Consignments == null  || (this._DeclarationPM.Direction === 'E' &&  this._DeclarationPM.ExcludeConsignment)) {
+        if (this._DeclarationPM.Consignments == null || (this._DeclarationPM.Direction === 'E' && this._DeclarationPM.ExcludeConsignment)) {
             return;
         }
 
@@ -648,7 +662,7 @@ export class DeclarationValidator {
     }
 
     public Validate(entityPM: DeclarationPM) {
-
+        
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
