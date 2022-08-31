@@ -401,6 +401,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationOrg != null && !isUpdateAfterAccept)
                 {
                     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMs = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, "Declaration");
+                    customsDocumentsTicketPMs.AddRange(customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, parentEntityCode :"ExportDeclarationClosingData"));
+
+
                     CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
 
                     foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMs)
