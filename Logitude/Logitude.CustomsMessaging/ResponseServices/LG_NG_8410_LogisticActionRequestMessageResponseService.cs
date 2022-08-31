@@ -29,8 +29,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogisticActionRequestQueryService logisticActionRequestQueryService = new LogisticActionRequestQueryService(requestParams.Tenant);
             LogisticActionRequestUpdateService logisticActionRequestUpdateService = new LogisticActionRequestUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var logisticActionRequestPM = logisticActionRequestQueryService.GetSingle(requestParams.LogisticActionRequestId, false, false);
+            if (customResponse.ResponseContentHeader.Exception != null)
+            {
+                logisticActionRequestPM.OperationalStatus = "3";
+                logisticActionRequestPM.ResponseStatusCode = "3";
+            }
+            else
+            {
+                logisticActionRequestPM.OperationalStatus = "2";
+                logisticActionRequestPM.ResponseStatusCode = "2";
+            }
 
-            logisticActionRequestPM.OperationalStatus = (customResponse.ResponseContentHeader.Exception != null) ? "נכשלה" : "נשלחה";
+
+            //logisticActionRequestPM.OperationalStatus = (customResponse.ResponseContentHeader.Exception != null) ? "נכשלה" : "נשלחה";
             logisticActionRequestPM.ChangeSetOp = ChangeSetOperation.Update;
             logisticActionRequestUpdateService.Update(logisticActionRequestPM, true);
         }
