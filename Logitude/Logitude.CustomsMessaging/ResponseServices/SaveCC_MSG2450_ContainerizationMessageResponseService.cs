@@ -54,19 +54,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
             if (customResponse.ResponseContentHeader.Exception == null || !customResponse.ResponseContentHeader.Exception.Any(x=>x.ExceptionLevel == 3))
-            {
+            { 
                 if (_ContainerizationPM.OperationMode == "3")
                 {
                     _ContainerizationPM.ContainerizationStatus = "3";
                     _ContainerizationPM.ConnectedDeclarations = null;
-                    var myDeclarationQueryService = new DeclarationQueryService(dbContext);
-                    var declarationPMs = myDeclarationQueryService.GetDeclarationsByExportContainerizationId(containerizationID);
-                    foreach (var item in declarationPMs)
+                    _ContainerizationPM.CargoTypeCode = null;
+                    _ContainerizationPM.ManifestNumber = null;
+                    _ContainerizationPM.SecondCargoID = null;
+                    _ContainerizationPM.ThirdCargoID = null;
+                    var myConsigmentQueryService = new ConsignmentQueryService(dbContext);
+                    var consigmentPMs = myConsigmentQueryService.GetConsigmentByExportContainerizationID(containerizationID, requestParams.Tenant);
+                    foreach (var item in consigmentPMs)
                     {
                         item.ExportContainerizationID = null;
                         item.ChangeSetOp = ChangeSetOperation.Update;
-                        var DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
-                        DeclarationUpdateService.Update(item, true);
+                        var ConsigmentUpdateService = new ConsignmentUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                        ConsigmentUpdateService.Update(item, true);
                     }
                 }
                 else

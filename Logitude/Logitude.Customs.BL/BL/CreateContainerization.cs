@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.BL
                     {
                         var ContainerizationPM = new ContainerizationPM();
 
-
+                        
                         ContainerizationPM.AgentDeclaration = entityPM.AgentDeclaration;
                         ContainerizationPM.Tenant = entityPM.Tenant;
                         ContainerizationPM.OperationMode = entityPM.OperationMode;
@@ -66,6 +66,7 @@ namespace Logitude.Customs.BL.BL
                         ContainerizationPM.ManifestNumber = dec.ManifestNumber;
                         ContainerizationPM.SecondCargoID = dec.SecondCargoId;
                         ContainerizationPM.ThirdCargoID = dec.ThirdCargoId;
+                        ContainerizationPM.TransportModeId = dec.TransportModeId;
                         ContainerizationPM.ChangeSetOp = ChangeSetOperation.Insert;
                         containerizationList.Add(ContainerizationPM);
                     }

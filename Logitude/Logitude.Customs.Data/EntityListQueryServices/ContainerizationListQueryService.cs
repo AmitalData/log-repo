@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											              ExportFile = a.IsMultiExportFiles == true ? "List" : ed.dec.FirstOrDefault().ExportFile,
 														  HataraStatusName = a.ContainerizationHataraStatus != null? a.ContainerizationHataraStatus.Name:null,
 														  ImporterName = a.IsMultiCustomers,
-														  TransportModeForExport = ed.dec.FirstOrDefault().TransportModeId ,
+														  TransportModeForExport =a.TransportModeId,// ed.dec.FirstOrDefault().TransportModeId ,
 														  HataraStatusIsNull = a.HataraStatus != null ? false :true,
 														  CargoTypeCode = a.CargoTypeCode,
 														  ManifestNumber = a.ManifestNumber,
