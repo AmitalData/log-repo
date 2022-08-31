@@ -56,7 +56,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
         private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, ref InterestTransactionsCheckAArg args, string message)
         {
             bool isSuccess = false;
-            bool v_closeOnlyZeroes = false;
             if (String.IsNullOrWhiteSpace(gLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode)) // 2=Client, 3=Vendor
             {
                 message = "AccountTypeCode is a must, when no GLAccountId is provided";

@@ -190,7 +190,8 @@ namespace Logitude.Accounting.BL.Utils
                             if (success)
                             {
                                 rv_success = true;
-                                runAgain = true; // try more from the oldData, oldId
+                                //     runAgain = true; // try more from the oldData, oldId
+                                moveOn = true;
                             }
                             else
                             {
@@ -243,7 +244,7 @@ namespace Logitude.Accounting.BL.Utils
                                     List<GLAccountCurrencyPM> gLAccountCurrencies = gLAccountCurrencyQuery.GetRelatedCurrenciesAccountByCustomerGLAccount(myGLAccountId, tenant);
                                     if (gLAccountCurrencies == null)
                                     {
-                                        CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
+                                        CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
                                     }
                                     else
                                     {
@@ -264,16 +265,16 @@ namespace Logitude.Accounting.BL.Utils
                                             if (curr == aRInvoicePM.InvoiceCurrencyId)
                                             {
                                                 if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
                                                 else
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
                                             }
                                             else
                                             {
                                                 if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, null, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                                 else
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, null, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                             }
                                         });
 
@@ -281,7 +282,7 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
+                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
                                 }
                             }
                             break;
@@ -303,27 +304,27 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 GLAccountPM glac_incurr = GetARPaymentGLAccount(aRPaymentPM.BillToId, tenant, aRPaymentPM.PaymentCurrencyId);
                                 if (glac_incurr != null)
-                                    CheckOneRef(interestTransactionQueryService, accountingEntityCode, glac_incurr.Id, myGLAccountId, "", tenant, lt_list);
+                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), glac_incurr.Id, myGLAccountId, "", tenant, lt_list);
                                 else
-                                    CheckOneRef(interestTransactionQueryService, accountingEntityCode, aRPaymentPM.Id, myGLAccountId, "", tenant, lt_list);
+                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRPaymentPM.Id, myGLAccountId, "", tenant, lt_list);
                             }
                             break;
 
                         case AccountingEntityValues.Journal:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
                             break;
 
                         case AccountingEntityValues.BankAdjustment:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
                             break;
 
                         default:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
                             break;
                     }
                 }
 
-
+                rv = true;
                 return rv;
             }
             catch (Exception e)
@@ -334,11 +335,11 @@ namespace Logitude.Accounting.BL.Utils
 
         private void CheckOneRef(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, string currencyId, int tenant, List<LedgerTransactionList> lt_list)
         {
-            List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccount(accountingEntityCode, accountingEntityId, gLAccountId, tenant);
+            decimal lt_group_total = lt_list.Sum(lt => lt.LocalAmountDebit - lt.LocalAmountCredit);
+            List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccount(TranslateToInterestEntity(accountingEntityCode), accountingEntityId, gLAccountId, tenant);
             if (itlist_j != null && itlist_j.Count > 0)
             {
                 decimal inttt_total = itlist_j.Sum(it => it.LocalAmount);
-                decimal lt_group_total = lt_list.Sum(lt => lt.LocalAmountDebit - lt.LocalAmountCredit);
                 if (inttt_total == lt_group_total)
                 {
                     this.MyInterestTransactionsCheckARunResult.SuccessAccountLineCount++;
@@ -348,25 +349,56 @@ namespace Logitude.Accounting.BL.Utils
                     this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, lt_group_total, inttt_total, "Not equal");
                 }
             }
+            else
+            {
+                this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, lt_group_total, 0m, "Nothing found");
+            }
 
         }
 
+        private string TranslateToInterestEntity(string accountingEntityCode)
+        {
+            string rv = "3"; // Journal by default
+            switch (accountingEntityCode)
+            {
+                case "2": // ARInvoice
+                    rv = "1";
+                    break;
+                case "3": // ARPayment
+                    rv = "2";
+                    break;
+                case "10": // Adjustment
+                    rv = "5";
+                    break;
+                case "12": // Bank Adjustment
+                    rv = "5";
+                    break;
+                case "11": // Year Transfer
+                    rv = "4"; // Open Balance
+                    break;
+                default:
+                    rv = "3"; // Journal
+                    break;
+            }
+            return rv;
+        }
 
         private void CheckOneRefInv(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, int tenant, 
             List<ARInvoiceLinePM> invline_list, List<ARInvoiceTotalVATPM> vatline_list, string currencyId = null)
         {
+            decimal inv_group_total = 0m;
+            if (invline_list != null && invline_list.Count > 0)
+                inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+
+            decimal vat_group_total = 0m;
+            if (vatline_list != null && vatline_list.Count > 0)
+                vat_group_total = vatline_list.Sum(vl => vl.LocalVATAmount.HasValue ? (decimal)vl.LocalVATAmount.Value : 0.0m);
+
             List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccountCurr(accountingEntityCode, accountingEntityId, gLAccountId, tenant, currencyId);
             if (itlist_j != null && itlist_j.Count > 0)
             {
                 decimal inttt_total = itlist_j.Sum(it => it.LocalAmount);
 
-                decimal inv_group_total = 0m;
-                if (invline_list != null && invline_list.Count > 0)
-                    inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal) il.LocalCurrencyAmount.Value : 0.0m);
-
-                decimal vat_group_total = 0m;
-                if (vatline_list != null && vatline_list.Count > 0)
-                    vat_group_total = vatline_list.Sum(vl => vl.LocalVATAmount.HasValue ? (decimal)vl.LocalVATAmount.Value : 0.0m);
 
                 if (inttt_total == inv_group_total + vat_group_total)
                 {
@@ -376,6 +408,10 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, inv_group_total, inttt_total, "Not equal");
                 }
+            }
+            else
+            {
+                this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, inv_group_total, 0m, "Nothing found");
             }
 
         }
@@ -534,13 +570,6 @@ namespace Logitude.Accounting.BL.Utils
         //    }
         //}
 
-        private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
-        {
-            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
-            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-            return batchTaskExecutionUpdateService;
-        }
-
     }
     public class InterestTransactionsCheckAArg
     {
@@ -555,8 +584,6 @@ namespace Logitude.Accounting.BL.Utils
         public int MaxPageSize { get; set; }
 
         public decimal MaximalDifference { get; set; }
-
-        public BatchTaskExecutionPM BatchTask { get; set; }
 
     }
 
