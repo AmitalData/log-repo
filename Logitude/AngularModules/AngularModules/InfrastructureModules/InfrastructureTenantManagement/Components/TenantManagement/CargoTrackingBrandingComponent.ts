@@ -430,11 +430,11 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
 
     onGenerateClicked() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating ..");
+        this.CurrentSession.StartBusyIndicator("Generating ..");
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomerURL).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
