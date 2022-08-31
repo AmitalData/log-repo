@@ -29,6 +29,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public WidgetMeasuresList: WidgetMeasureItem[];
     public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
+
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -44,6 +45,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.BuildMeasures();
         this.CheckAddNewMeasureVisible();
         this.Clone();
+        this.GetFilters();
+    }
+
+    GetFilters() {
+        if (!this.EntityPM.Filters) return;
+        var filters = JSON.parse(this.EntityPM.Filters);
+        if (!filters) return;
+        this.GroupRoot = filters;
     }
 
     private ComputeChartImageSrc() {
@@ -144,6 +153,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    public TableChanged() {
+        this.GroupRoot = new WidgetFilterItem();
+    }
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -159,6 +172,8 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
+            if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
+              //  this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0]);
             if (this.isNew) {
                 this.isNew = false;
                 this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
@@ -167,7 +182,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
-    }   
+    }
 
     private myCloner: Cloner;
     private Clone() {
@@ -195,7 +210,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 }
 
-export class WidgetMeasureItem extends BaseComponent{
+export class WidgetMeasureItem extends BaseComponent {
     public ObjectTableName: string = "WidgetMeasure";
     public EntityPM: WidgetMeasurePM;
     public Widget: WidgetPM;

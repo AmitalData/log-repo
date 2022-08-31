@@ -28,7 +28,7 @@
   <Column
     Name="MeasureCode"
     Type="varchar"
-    Size="3">
+    Size="17">
     <Constraints
       Nullable="false" />
   </Column>
