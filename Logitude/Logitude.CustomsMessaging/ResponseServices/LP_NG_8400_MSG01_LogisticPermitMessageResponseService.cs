@@ -179,12 +179,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             }
-                this.MyRequestSheetParam.EntityId2 = exportstorage.Id;
-                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
            
             if (exportstorage != null)
             {
+
+
+                this.MyRequestSheetParam.EntityId2 = exportstorage.Id;
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
+
+
                 exportstorage.ChangeSetOp = ChangeSetOperation.Update;
                 exportstorage.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
                 exportStorageUpdateService.Update(exportstorage, true);
