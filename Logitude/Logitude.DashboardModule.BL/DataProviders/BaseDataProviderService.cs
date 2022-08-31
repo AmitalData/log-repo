@@ -8,9 +8,7 @@ using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +40,8 @@ namespace Logitude.DashboardModule.BL.DataProviders
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
+
+
             return seriesMeasures;
         }
 
@@ -56,42 +56,13 @@ namespace Logitude.DashboardModule.BL.DataProviders
             
             var querys = $@"select 
                             data.{groupBy.FieldCode} as Label,
-                            {measure.MeasureCode}(data.{measureField.FieldCode}) as Value From 
+                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(7,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             group by {groupBy.FieldCode}";
             var conterxt = DashboardContext.GetContext(0);
-            var data = ExecuteQuery(querys, conterxt.GetActiveDbContext().Database.Connection.ConnectionString);
+            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
 
-            return data;
-        }
-
-        private List<SeriesMeasureVulue> ExecuteQuery(string query, string connection)
-        {
-            var results = new List<SeriesMeasureVulue>();
-            using (SqlConnection sqlConnection = new SqlConnection(connection))
-            {
-                sqlConnection.Open();
-                
-                try
-                {
-                    SqlCommand command = new SqlCommand(query, sqlConnection);
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        results.Add(new SeriesMeasureVulue()
-                        {
-                            Label = reader.GetString(0),
-                            Value = reader.GetDecimal(1)
-                        });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-            }
-            return results;
+            return resultQueryables.ToList();
         }
 
         private void FillEntityFields()
