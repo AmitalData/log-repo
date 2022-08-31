@@ -232,8 +232,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 lock ((this._MyQueue as ICollection).SyncRoot)
                 {
                     var mySignServer = _MySubscribeSignServerStatusList
-                        .Where(rec => rec.MachineName.Equals(myReqSignData.MachineName, StringComparison.OrdinalIgnoreCase))
-                        .Where(rec => rec.UserName.Equals(myReqSignData.UserName, StringComparison.OrdinalIgnoreCase))
+                        .Where(rec => (rec.MachineName ?? "").Equals(myReqSignData.MachineName, StringComparison.OrdinalIgnoreCase))
+                        .Where(rec => (rec.UserName ?? "").Equals(myReqSignData.UserName, StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault();
                     if (mySignServer != null)
                     {
