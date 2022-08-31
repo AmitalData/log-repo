@@ -180,7 +180,7 @@ namespace WebFreight.Web.WcfApi
                 Logger.LogMe(stringBuilder.Replace(Environment.NewLine, "|").ToString(), false, "ExportSignTaskFromQueue_" + (exportReqSignData?.Tenant ?? 0).ToString());
                 try
                 {
-                    SignQueue.Instance.UpsertMySubscribeSignServerList(exportReqSignData.CurrentSignCertificate, exportReqSignData.isCompanySignOn, exportReqSignData.isPersonalSignOn);
+                    SignQueue.Instance.UpsertMySubscribeSignServerList(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
                     var dSignCertificateClass = SignCertificateClass.Get(exportReqSignData.CurrentSignCertificate);
                     SignQueue.Instance.UpsertSignStationStatus(
                         new SignStationStatus()
