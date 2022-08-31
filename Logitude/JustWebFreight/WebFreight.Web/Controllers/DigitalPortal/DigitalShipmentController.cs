@@ -295,9 +295,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
 
-                var resultQuery = cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
-                                  ? dataQuery.Where(d => d.IsAgentView)
-                                  : dataQuery.Where(d => d.IsCustomerView);
+                var resultQuery = cardType == null 
+                                  || cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
+                                     ? dataQuery.Where(d => d.IsAgentView)
+                                     : dataQuery.Where(d => d.IsCustomerView);
 
                 return Ok(resultQuery.OrderByDescending(s => s.EventDateTime).ToList());
             }
