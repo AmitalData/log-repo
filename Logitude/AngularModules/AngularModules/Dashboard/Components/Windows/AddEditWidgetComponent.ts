@@ -259,23 +259,6 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
-
-            //var itemIndex = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
-
-            //if (AppTool.IsNullOrEmpty(this.EntityPM.MeasureFieldId)) {
-            //    if (itemIndex > -1) {
-            //        this.Widget.RemoveWidgetMeasure(this.EntityPM);
-            //    }
-            //}
-
-            //else {
-            //    if (itemIndex == -1) {
-            //        this.Widget.AddWidgetMeasure(this.EntityPM);
-            //    }
-            //}
-
-            //this.fatherComponent.BuildMeasures();
-            //this.fatherComponent.CheckMeasureActionsVisiblity();
         }
     }
 
@@ -287,11 +270,11 @@ export class WidgetMeasureItem extends BaseComponent {
     }
 
     DeleteMeasureClicked() {
-        if (this.fatherComponent.EntityPM.WidgetMeasures.indexOf(this.EntityPM) != -1) {
-            this.fatherComponent.EntityPM.RemoveWidgetMeasure(this.EntityPM);
+        var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
+        if (index != -1) {
+            this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
 
-        this.fatherComponent.BuildMeasures();
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

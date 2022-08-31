@@ -40,9 +40,11 @@ export class CustomDashboardComponent implements  AfterViewInit {
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
+    private myDashboardPM: DashboardPM;
     constructor() {
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
+        this.myDashboardPM = new DashboardPM();
     }
 
     ngAfterViewInit(): void {
@@ -83,9 +85,9 @@ export class CustomDashboardComponent implements  AfterViewInit {
     GetSingleDashboardWithWidgets(dashboardId: string) {
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                var myDashbord: DashboardPM = myResponse.Result;
-                if (myDashbord) {
-                    var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(myDashbord)
+                this.myDashboardPM = myResponse.Result;
+                if (this.myDashboardPM) {
+                    var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(this.myDashboardPM)
                     this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
                     this.selectedDashboard = myReactDashboard;
                 }
@@ -107,16 +109,14 @@ export class CustomDashboardComponent implements  AfterViewInit {
             this.reactDashboradContainer.nativeElement);
     }
     private OpenDashboardWindow(dashboard: ReactDashboardPM) {
-        var myDashboard: DashboardPM = this.GetDashboardEntity(dashboard);
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
-        logitudeWindow.WindowArgs = { EntityPM: myDashboard, };
+        logitudeWindow.WindowArgs = { EntityPM: this.myDashboardPM, };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.GetDashboards();
-                    //this.dashboardDataBinding.onGetDashboard.next(this.GetReactDashboard(myDashboard));
                 }
             });
         });
@@ -142,37 +142,17 @@ export class CustomDashboardComponent implements  AfterViewInit {
 
         return myDashboard;
     }
-    GetDashboardEntity(dashboard: ReactDashboardPM): DashboardPM {
-        var myDashboard: DashboardPM = new DashboardPM();
-
-        if (dashboard) {
-            myDashboard.Id = dashboard.Id;
-            myDashboard.Tenant = dashboard.Tenant;
-            myDashboard.Name = dashboard.Name;
-            myDashboard.Description = dashboard.Description;
-            myDashboard.CreateDate = dashboard.CreateDate;
-            myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
-            myDashboard.UpdateDate = dashboard.UpdateDate;
-            myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
-            myDashboard.Widgets = [];
-
-            dashboard.Widgets.forEach(item => {
-                myDashboard.Widgets.push(this.GetWidgetEntity(item));
-            });
-        }
-
-        return myDashboard;
-    }
     private OpenDashboardWidgetWindow(widget: ReactWidgetPM) {
         var myWidget: WidgetPM = this.GetWidgetEntity(widget);
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
-        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: widget.ChangeSetOp == "Insert", DashboardPM: this.GetDashboardEntity(this.selectedDashboard) };
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: widget.ChangeSetOp == "Insert", DashboardPM: this.myDashboardPM };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.selectedDashboard = this.GetReactDashboard(comp.DashboardPM);
+                    this.myDashboardPM = comp.DashboardPM;
                     this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
                     this.dashboardDataBinding.onAddUpdateWidget.next(true);
                 }
@@ -194,7 +174,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.EntityId = widget.EntityId;
             myWidget.Filters = widget.Filters;
             myWidget.WidgetMeasures = [];
-            //myWidget.ChangeSetOp = AppTool.IsNullOrEmpty(widget.Id)? "Insert" : "Update";
+            myWidget.ChangeSetOp = widget.ChangeSetOp;
 
             if (widget.WidgetMeasures) {
                 widget.WidgetMeasures.forEach(item => {
@@ -259,16 +239,12 @@ export class CustomDashboardComponent implements  AfterViewInit {
         this.GetSingleDashboardWithWidgets(dashboard.Id);
     }
     private OnSaveDashboard(dashboard: ReactDashboardPM) {        
-        var savedEntity: DashboardPM = this.GetDashboardEntity(dashboard);
-
-        this.dashboardPMService.update(savedEntity).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                //this.EntityPM = myResponse.Result;
+                this.selectedDashboard = this.GetReactDashboard(myResponse.Result);
             }
 
             this.CurrentSession.StopBusyIndicator();
         });
     }
-
-
 }
