@@ -212,7 +212,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.Id = widget.Id;
             myWidget.Tenant = widget.Tenant;
             myWidget.Title = widget.Title;
-            myWidget.GroupBy = widget.GroupById;
+            myWidget.GroupById = widget.GroupById;
             myWidget.DashboardId = widget.DashboardId;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
