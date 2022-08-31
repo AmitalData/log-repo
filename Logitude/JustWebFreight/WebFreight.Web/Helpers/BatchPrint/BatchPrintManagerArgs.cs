@@ -21,6 +21,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
     public class PrintEntityKeys
     {
         public string EntityId { get; set; }
+        public string EntityNumber { get; set; }
         public string ChildEntityId { get; set; }
 
     }
