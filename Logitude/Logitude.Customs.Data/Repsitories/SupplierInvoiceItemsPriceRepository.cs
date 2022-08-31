@@ -43,8 +43,8 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<string> GetSupplierInvoiceItemsPriceByDeclarationId(string declarationId, int tenant)
         {
-            var query = (from a in context.SupplierInvoiceItemsPrices.Include("AdditionalPriceType")
-                         where a.DeclarationId == declarationId && a.Tenant == tenant// && a.InvoiceCounterKey == invoiceCounterKey
+            var query = (from a in context.SupplierInvoiceItemsPrices
+                         where a.DeclarationId == declarationId && a.Tenant == tenant
                          select a.AdditionalPriceTypeCode).ToList();
 
 
