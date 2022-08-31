@@ -72,6 +72,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                     .DistinctBy(a => a.Id)
                                     .Where(a => !string.IsNullOrWhiteSpace(a.Name) && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
                                     .Take(10)
+                                    .OrderBy(x => x.Name)
                                     .ToList();
 
             return Ok(partners);
