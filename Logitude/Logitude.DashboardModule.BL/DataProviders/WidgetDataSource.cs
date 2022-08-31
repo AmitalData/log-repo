@@ -12,7 +12,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
     }
     public class SeriesMeasureVulue
     {
-        public string Lable { get; set; }
+        public string Label { get; set; }
         public decimal Value { get; set; }
     }
 }
