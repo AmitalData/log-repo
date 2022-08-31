@@ -158,8 +158,8 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
             /*if (this.declarationPM.CancelRequestStatusCode == "2" || this.declarationPM.CancelRequestStatusCode == "5")
                 rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: "לתצוגה בלבד" };
             else*/
-                
-            response.Result = { IsDisplayOnly: this.declarationPM.IsExportClosed, DisplayOnlyMessage: "" };            
+            var message=this.declarationPM.IsExportClosed?"הצהרה סגורה":"";
+            response.Result = { IsDisplayOnly: this.declarationPM.IsExportClosed, DisplayOnlyMessage:message };            
             
             return of(response);
         });
