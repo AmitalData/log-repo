@@ -2617,7 +2617,7 @@
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatusName&quot;"
-        ColumnWidth="145" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="2"
@@ -2709,60 +2709,55 @@
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatusName&quot;"
-        ColumnWidth="145" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;OperationalStatus&quot;"
-        ColumnWidth="145" />
-      <QueryColumn
-        QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="3"
         ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="8"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="9"
+        IndexOrder="8"
         ObjectFieldName="&quot;TransportmodeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="10"
+        IndexOrder="9"
         ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="11"
+        IndexOrder="10"
         ObjectFieldName="&quot;RequestNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="12"
+        IndexOrder="11"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
@@ -2801,7 +2796,7 @@
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatusName&quot;"
-        ColumnWidth="145" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="2"
@@ -2880,7 +2875,7 @@
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatusName&quot;"
-        ColumnWidth="145" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="2"
@@ -2967,7 +2962,7 @@
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatusName&quot;"
-        ColumnWidth="145" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="2"
