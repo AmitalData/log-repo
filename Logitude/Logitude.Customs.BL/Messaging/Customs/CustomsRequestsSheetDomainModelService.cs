@@ -482,10 +482,20 @@ namespace Logitude.Customs.BL.Messaging.Customs
             string queueName = "";
             if (SignatureBy == SignQueueByType.SignQueueByPersonId)
             {
+                if (string.IsNullOrWhiteSpace(personId))
+                {
+                    throw new Exception($"personId is null, for userId {requestParams.LoggingUserId} - cache ?? ");
+                }
                 queueName = "PersonalSign_" + requestParams.Tenant + "_" + personId;
             }
             else
             {
+
+                if (string.IsNullOrWhiteSpace(CustomsAgentId))
+                {
+                    throw new Exception($"CustomsAgentId is null, for tenant ?!? {requestParams.Tenant} - cache ?? ");
+                }
+
                 queueName = "CompanySign_" + requestParams.Tenant + "_" + CustomsAgentId;
             }
 
