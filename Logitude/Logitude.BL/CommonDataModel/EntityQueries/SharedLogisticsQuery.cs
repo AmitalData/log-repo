@@ -26,7 +26,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             string cargoTrackingPath = GetCargoTrackingUrlPath(url);
             string brandingURLPath = GetBrandingURLPath(systemURL);
-            string brandingURLButton = "<button " + " onclick=location.href='" + brandingURLPath + "'" + " style='Background-color:" + GetBrandingURLBackgroundButton (tenant) + ";width:140px;height:30px;border-color:#1890ff;border-radius:5px;border:0px;color:white'>  join </button>";
+            string brandingURLButton = "<button "  + " style='cursor: pointer;Background-color:" + GetBrandingURLBackgroundButton (tenant) + ";width:140px;height:30px;border-color:#1890ff;border-radius:5px;border:0px;color:white'>  join </button>";
             return new SharedLogisticsPM()
             {
                 SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url + "</a>",
@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 InviteeName = "[InviteeName]",
                 URLprivateCargoTracking = "<a style=" + styleLink + " href='" + cargoTrackingPath + "'" + ">" + cargoTrackingPath + "</a>",
                 BrandingURL = "<a style=" + styleLink + " href='" + brandingURLPath + "'" + ">" + brandingURLPath + "</a>",
-                BrandingURLButton = brandingURLButton,
+                BrandingURLButton = "<a style=" + styleLink + " href='" + brandingURLPath + "'" + ">" + brandingURLButton + "</a>",
             };
         }
 
@@ -59,14 +59,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private static string GetBrandingURLBackgroundButton(int tenant)
         {
+            string defultColorhex = "#1890ff";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
-                return tenantManagementPM?.SecondaryColor;
+                return (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM?.SecondaryColor)) ? tenantManagementPM.SecondaryColor : defultColorhex;  
                 scope.Complete();
             }
-            return "#1890ff";
         }
 
     }
