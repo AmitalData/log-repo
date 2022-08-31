@@ -37,7 +37,6 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
 
 export class CustomDashboardComponent implements  AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;    
-    private isNewDashboardRendered: boolean = false;
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
@@ -168,7 +167,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
         var myWidget: WidgetPM = this.GetWidgetEntity(widget);
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
-        logitudeWindow.WindowArgs = { EntityPM: myWidget, DashboardPM: this.GetDashboardEntity(this.selectedDashboard) };
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: widget.ChangeSetOp == "Insert", DashboardPM: this.GetDashboardEntity(this.selectedDashboard) };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
@@ -187,13 +186,14 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.Id = widget.Id;
             myWidget.Tenant = widget.Tenant;
             myWidget.Title = widget.Title;
-            myWidget.GroupById = widget.GroupBy;
+            myWidget.GroupById = widget.GroupById;
             myWidget.DashboardId = widget.DashboardId;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
             myWidget.TypeCode = widget.TypeCode;
             myWidget.EntityId = widget.EntityId;
             myWidget.WidgetMeasures = [];
+            //myWidget.ChangeSetOp = AppTool.IsNullOrEmpty(widget.Id)? "Insert" : "Update";
 
             if (widget.WidgetMeasures) {
                 widget.WidgetMeasures.forEach(item => {
@@ -211,7 +211,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             myWidget.Id = widget.Id;
             myWidget.Tenant = widget.Tenant;
             myWidget.Title = widget.Title;
-            myWidget.GroupBy = widget.GroupById;
+            myWidget.GroupById = widget.GroupById;
             myWidget.DashboardId = widget.DashboardId;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
@@ -254,7 +254,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
     }
 
     private OnChangeDashboard(dashboard: ReactDashboardPM) {
-        this.selectedDashboard = dashboard;
+        this.GetSingleDashboardWithWidgets(dashboard.Id);
     }
     private OnSaveDashboard(dashboard: ReactDashboardPM) {        
         var savedEntity: DashboardPM = this.GetDashboardEntity(dashboard);
