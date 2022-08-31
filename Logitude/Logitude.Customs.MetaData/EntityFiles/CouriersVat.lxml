@@ -4,11 +4,12 @@
   ObjectTableName="&quot;Customs.CouriersVat&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CouriersVats&quot;"
-  OldDBTableName="&quot;Customs.CouriersVats&quot;"
+  DBTableOldNames="Customs.CouriersVats"
   ObjectTableSingular="&quot;CouriersVat&quot;"
   ObjectTablePlural="&quot;CouriersVats&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -49,24 +50,27 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;c1c6&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;75e1efd1-1b3b-4c48-a7ec-cd5ab77f49f4&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -75,7 +79,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -83,6 +89,7 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -113,6 +120,7 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -126,16 +134,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;119348a2-3e74-4b04-99c9-3a65e5f46b86&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -144,7 +154,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -152,6 +164,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -182,6 +195,7 @@
     ListLocalDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -195,16 +209,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5c8754c8-772b-447a-a469-64933d8abcbd&quot;"
     FieldName="&quot;VatNumber&quot;"
-    OldFieldName="&quot;VatNumber&quot;"
+    OldNames="VatNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -213,7 +229,9 @@
     MinLength="0"
     MaxLength="20"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -221,6 +239,7 @@
     SystemMaxLength="20"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -252,6 +271,7 @@
     ListLocalDefaultText="&quot;ח''פ&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -265,16 +285,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;22dd3638-f058-4763-947d-df3070c21964&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -283,7 +305,9 @@
     MinLength="0"
     MaxLength="100"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -291,6 +315,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -322,6 +347,7 @@
     ListLocalDefaultText="&quot;שם עברית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -335,16 +361,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;eb04fe85-705b-459b-8d96-6c68a2cca991&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -353,7 +381,9 @@
     MinLength="0"
     MaxLength="70"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -361,6 +391,7 @@
     SystemMaxLength="70"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -392,6 +423,7 @@
     ListLocalDefaultText="&quot;שם באנגלית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -405,16 +437,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d57ad729-20af-4547-9b06-fad2f0649c2f&quot;"
     FieldName="&quot;InActive&quot;"
-    OldFieldName="&quot;InActive&quot;"
+    OldNames="InActive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -423,7 +457,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -431,6 +467,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -462,6 +499,7 @@
     ListLocalDefaultText="&quot;לא פעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -475,16 +513,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;66a7de10-1b49-4235-a5c6-dc6e5a234a98&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -493,7 +533,9 @@
     MinLength="0"
     MaxLength="500"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -501,6 +543,7 @@
     SystemMaxLength="500"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -531,6 +574,7 @@
     ListLocalDefaultText="&quot;חפש...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -544,12 +588,109 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;AllCouriersVats&quot;"
+    TextCode="&quot;All Couriers Vat&quot;"
+    LocalTextCode="&quot;רשימת בלדרים&quot;"
+    QueryGroupCode="&quot;77f9&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    QuerySection="&quot;Customs.CouriersVat&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;EnglishName&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    QueryGroupName="&quot;Customs.CouriersVat Query Group&quot;"
+    TextCodeCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
+    FeatureCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
+    FeatureTextCodeCode="&quot;CouriersVat.Features.AllCouriersVats&quot;"
+    FeatureDefaultText="&quot;AllCouriersVats&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCouriersVats&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;AllCouriersVats&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="240" />
+      <QueryColumn
+        QueryCode="&quot;AllCouriersVats&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="220" />
+      <QueryColumn
+        QueryCode="&quot;AllCouriersVats&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;Customs.CouriersVatHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;CouriersVat.Customs.CouriersVatHeaderScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ScreenName="Customs.CouriersVatHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="Customs.CouriersVatHeaderScreen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;CouriersVat.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="4">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;InActive&quot;"
+        ScreenName="GeneralTabScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -557,14 +698,15 @@
     Code="&quot;VCGT&quot;"
     ControlPath="&quot;&quot;"
     TextCode="&quot;Customs.CouriersVat.TH.General&quot;"
-    IsPackagable="True"
+    IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierVat/AddEditCouriersVatComponent&quot;"
     HtmlComponentName="&quot;AddEditCouriersVatComponent&quot;"
-    IsSpellChecked="false"
     FeatureCode="&quot;CouriersVat.Tab.General&quot;"
     FeatureTextCodeCode="&quot;CouriersVat.Features.General&quot;"
-    FeatureDefaultText="&quot;General&quot;" />
+    FeatureDefaultText="&quot;General&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Event&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -572,121 +714,23 @@
     Code="&quot;VCVT&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CouriersVat.TH.Event&quot;"
-    IsPackagable="False"
+    IsPackagable="false"
     IndexOrder="1"
-    IsSpellChecked="false"
-    HtmlComponentName="&quot;&quot;"
     HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CouriersVat.Tab.Event&quot;"
     FeatureTextCodeCode="&quot;CouriersVat.Features.Event&quot;"
-    FeatureDefaultText="&quot;Event&quot;" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures></AdditionalFeatures>
-  <Query
-    Code="&quot;AllCouriersVats&quot;"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
-    DefaultSortName="&quot;EnglishName&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CouriersVat&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;77f9&quot;"
-    QueryGroupName="&quot;Customs.CouriersVat Query Group&quot;"
-    LocalTextCode="&quot;רשימת בלדרים&quot;"
-    TextCode="&quot;All Couriers Vat&quot;"
-    TextCodeCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
+    FeatureDefaultText="&quot;Event&quot;"
     IsSpellChecked="false"
-    FeatureCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;CouriersVat.Features.AllCouriersVats&quot;"
-    FeatureDefaultText="&quot;AllCouriersVats&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;VatNumber&quot;"
-        QueryCode="&quot;AllCouriersVats&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="240"
-        ObjectFieldName="&quot;LocalName&quot;"
-        QueryCode="&quot;AllCouriersVats&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="220"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        QueryCode="&quot;AllCouriersVats&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;InActive&quot;"
-        QueryCode="&quot;AllCouriersVats&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Code="&quot;CouriersVat.Customs.CouriersVatHeaderScreen&quot;"
-    Name="&quot;Customs.CouriersVatHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    IsHeaderScreen="true"
-    IsReadOnly="true"
-    NumberOfRows="1"
-    NumberOfColumns="2">
-    <ScreenFields>
-      <ScreenField
-        ObjectFieldName="&quot;VatNumber&quot;"
-        ScreenName="CouriersVat.Customs.CouriersVatHeaderScreen"
-        Row="0"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="CouriersVat.Customs.CouriersVatHeaderScreen"
-        Row="0"
-        Column="1" />
-    </ScreenFields>
-  </Screen>
-  <Screen
-    Code="&quot;CouriersVat.GeneralTabScreen&quot;"
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    IsHeaderScreen="false"
-    IsReadOnly="false"
-    NumberOfRows="4"
-    NumberOfColumns="1">
-    <ScreenFields>
-      <ScreenField
-        ObjectFieldName="&quot;VatNumber&quot;"
-        ScreenName="CouriersVat.GeneralTabScreen"
-        Row="0"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="CouriersVat.GeneralTabScreen"
-        Row="1"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="CouriersVat.GeneralTabScreen"
-        Row="2"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;InActive&quot;"
-        ScreenName="CouriersVat.GeneralTabScreen"
-        Row="3"
-        Column="0" />
-    </ScreenFields>
-  </Screen>
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CouriersVat&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -697,10 +741,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CouriersVat&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -709,4 +753,8 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

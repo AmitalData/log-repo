@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;WarehouseEntries&quot;"
   HasCustomFilter="true"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="true"

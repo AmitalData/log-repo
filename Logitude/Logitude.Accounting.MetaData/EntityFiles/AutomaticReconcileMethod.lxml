@@ -4,12 +4,13 @@
   ObjectTableName="&quot;AutomaticReconcileMethod&quot;"
   IsNew="false"
   DBTableName="&quot;AutomaticReconcileMethods&quot;"
-  OldDBTableName="&quot;AutomaticReconcileMethods&quot;"
+  DBTableOldNames="AutomaticReconcileMethods"
   ObjectTableSingular="&quot;Automatic Reconcile Method&quot;"
   ObjectTablePlural="&quot;Automatic Reconcile Methods&quot;"
   DescriptionDefaultText="&quot;Manage your Reconcile methods, you can assemble your methods from 7 different values&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -49,24 +50,27 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;ce36&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;409b264c-ada0-426b-b2ad-94482c579b22&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -75,7 +79,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -83,9 +89,10 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
     DisplayInLookUpIndex="0"
@@ -113,6 +120,7 @@
     ListLocalDefaultText="&quot;מזהה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -126,16 +134,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5d61fb8a-247d-4f13-b546-746fe8dba247&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -144,7 +154,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -152,6 +164,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -182,6 +195,7 @@
     ListLocalDefaultText="&quot;tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -195,16 +209,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;bcbccc81-c137-4bee-9f95-c8925d6531a5&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -213,7 +229,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -221,6 +239,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -252,6 +271,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -265,16 +285,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5484b086-ce0e-4512-9874-a308b2a5a2b2&quot;"
     FieldName="&quot;AutomaticReconcile1&quot;"
-    OldFieldName="&quot;AutomaticReconcile1&quot;"
+    OldNames="AutomaticReconcile1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -284,7 +306,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -292,6 +316,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -323,8 +348,9 @@
     ListLocalDefaultText="&quot;התאמה אוטומטית 1&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="AutomaticReconcile"
-    NavigationPropertyName="AutomaticReconcileField1"
+    ForeignEntity="&quot;AutomaticReconcile&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;AutomaticReconcileField1&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -338,16 +364,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;8fee4bad-051e-441a-8fc6-4a37ff568796&quot;"
     FieldName="&quot;AutomaticReconcile2&quot;"
-    OldFieldName="&quot;AutomaticReconcile2&quot;"
+    OldNames="AutomaticReconcile2"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -357,7 +385,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -365,6 +395,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -396,8 +427,9 @@
     ListLocalDefaultText="&quot;התאמה אוטומטית 2&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="AutomaticReconcile"
-    NavigationPropertyName="AutomaticReconcileField2"
+    ForeignEntity="&quot;AutomaticReconcile&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;AutomaticReconcileField2&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -411,16 +443,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;678692c4-1280-404c-af83-92ee7a4da0a3&quot;"
     FieldName="&quot;AutomaticReconcile3&quot;"
-    OldFieldName="&quot;AutomaticReconcile3&quot;"
+    OldNames="AutomaticReconcile3"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -430,7 +464,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -438,6 +474,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -469,8 +506,9 @@
     ListLocalDefaultText="&quot;התאמה אוטומטית 3&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="AutomaticReconcile"
-    NavigationPropertyName="AutomaticReconcileField3"
+    ForeignEntity="&quot;AutomaticReconcile&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;AutomaticReconcileField3&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -484,16 +522,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;9b99f528-c8f5-4b8d-b6c1-95939143d153&quot;"
     FieldName="&quot;AutomaticReconcileName1&quot;"
-    OldFieldName="&quot;AutomaticReconcileName1&quot;"
+    OldNames="AutomaticReconcileName1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -502,7 +542,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -510,6 +552,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -541,6 +584,7 @@
     ListLocalDefaultText="&quot;התאמה הוטומטית 1&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -554,16 +598,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d03a99c6-d5b2-4e04-99dc-c42553ea1545&quot;"
     FieldName="&quot;AutomaticReconcileName2&quot;"
-    OldFieldName="&quot;AutomaticReconcileName2&quot;"
+    OldNames="AutomaticReconcileName2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -572,7 +618,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -580,6 +628,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -611,6 +660,7 @@
     ListLocalDefaultText="&quot;התאמה הוטומטית 2&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -624,16 +674,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;9cf0fe20-276d-478c-b5ef-c24309e9509f&quot;"
     FieldName="&quot;AutomaticReconcileName3&quot;"
-    OldFieldName="&quot;AutomaticReconcileName3&quot;"
+    OldNames="AutomaticReconcileName3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -642,7 +694,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -650,6 +704,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -681,6 +736,7 @@
     ListLocalDefaultText="&quot;התאמה הוטומטית 3&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -694,16 +750,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;75e6e644-f997-4d76-a108-b00c9dd3fff7&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -712,7 +770,9 @@
     MinLength="0"
     MaxLength="200"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -720,6 +780,7 @@
     SystemMaxLength="200"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -751,6 +812,7 @@
     ListLocalDefaultText="&quot;שם&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -764,16 +826,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;2ec4bba1-f453-401d-b9fe-cba6668b1611&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -782,7 +846,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -790,6 +856,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -821,6 +888,7 @@
     ListLocalDefaultText="&quot;חסום&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -834,16 +902,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;95aa76b3-3287-4ae1-9947-e446743c3dbf&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -852,7 +922,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -860,6 +932,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -888,6 +961,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -901,16 +975,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;958b4426-e1a0-4a11-960f-6cb10c597608&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -919,7 +995,9 @@
     MinLength="0"
     MaxLength="200"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -927,6 +1005,7 @@
     SystemMaxLength="200"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -957,6 +1036,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -970,12 +1050,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Automatic Reconcile Methods&quot;"
     TextCode="&quot;Automatic Reconcile Methods&quot;"
@@ -1025,11 +1107,11 @@
   <Screen
     Name="&quot;AutomaticReconcileMethodHeaderScreen&quot;"
     ObjectTableName="&quot;AutomaticReconcileMethod&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="1"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;AutomaticReconcileMethod.AutomaticReconcileMethodHeaderScreen&quot;">
+    Code="&quot;AutomaticReconcileMethod.AutomaticReconcileMethodHeaderScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1041,11 +1123,11 @@
   <Screen
     Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;AutomaticReconcileMethod&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="4"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;AutomaticReconcileMethod.GeneralTabScreen&quot;">
+    Code="&quot;AutomaticReconcileMethod.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1083,7 +1165,8 @@
     FeatureCode="&quot;AutomaticReconcileMethod.Tab.General&quot;"
     FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -1096,7 +1179,8 @@
     FeatureCode="&quot;EVENTS&quot;"
     FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1131,7 +1215,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;AutomaticReconcileMethod&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -1145,7 +1230,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -1159,7 +1245,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LogitudeCode&quot;"
         FieldName="&quot;Code&quot;"
@@ -1173,7 +1260,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcile1&quot;"
         FieldName="&quot;AutomaticReconcile1&quot;"
@@ -1187,7 +1275,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="true"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileName1&quot;"
         FieldName="&quot;AutomaticReconcileName1&quot;"
@@ -1201,7 +1290,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileName2&quot;"
         FieldName="&quot;AutomaticReconcileName2&quot;"
@@ -1215,7 +1305,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileName3&quot;"
         FieldName="&quot;AutomaticReconcileName3&quot;"
@@ -1229,7 +1320,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         FieldName="&quot;Name&quot;"
@@ -1243,7 +1335,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -1257,7 +1350,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcile2&quot;"
         FieldName="&quot;AutomaticReconcile2&quot;"
@@ -1271,7 +1365,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="true"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcile3&quot;"
         FieldName="&quot;AutomaticReconcile3&quot;"
@@ -1285,7 +1380,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="true"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -1299,29 +1395,10 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalFeatures>
-    <Feature
-      Code="&quot;GENERAL&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.General&quot;"
-      FeatureDefaultText="&quot;General&quot;" />
-    <Feature
-      Code="&quot;AUTORECOMETHODSMENU&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.AutomaticReconcileMethodsMenu&quot;"
-      FeatureDefaultText="&quot;Automatic Reconcile Methods&quot;" />
-  </AdditionalFeatures>
   <AdditionalTextCodes>
     <TextCode
       Code="&quot;General.MC.ACC.AutomaticReconcileMethods&quot;"
@@ -1348,4 +1425,24 @@
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AUTORECOMETHODSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.AutomaticReconcileMethodsMenu&quot;"
+      FeatureDefaultText="&quot;Automatic Reconcile Methods&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

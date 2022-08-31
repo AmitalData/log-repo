@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;Quotes&quot;"
   HasCustomFilter="true"
   HasCustomFields="true"
+  AvailableInCustomization="true"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="true"

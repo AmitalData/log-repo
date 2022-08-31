@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;Containers&quot;"
   HasCustomFilter="true"
   HasCustomFields="true"
+  AvailableInCustomization="true"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"

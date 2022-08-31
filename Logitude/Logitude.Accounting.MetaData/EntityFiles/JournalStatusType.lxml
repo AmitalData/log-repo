@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;JournalStatusTypes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוס פקודה&quot;"
   DefaultText="&quot;Journal Status Type&quot;"
-  Code="&quot;28b6&quot;"
+  Code="&quot;79d9&quot;"
   Name="&quot;JournalStatusType Query Group&quot;"
   CloseTableCode="&quot;JournalStatusID&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -87,6 +88,7 @@
     SystemMaxLength="3"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -162,6 +164,7 @@
     SystemMaxLength="20"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -237,6 +240,7 @@
     SystemMaxLength="50"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -312,6 +316,7 @@
     SystemMaxLength="200"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -384,6 +389,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -517,7 +523,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;JournalStatusType&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;JournalStatusID&quot;"
