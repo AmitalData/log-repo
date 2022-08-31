@@ -2,6 +2,9 @@
 using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
+using Logitude.Server.Tools.TreeFilterQuery;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +24,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var measure in widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
-                seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(widget, entity, entityFields);
+                seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(widget, entity, entityFields, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
 
@@ -29,12 +32,18 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return seriesMeasures;
         }
 
-        private List<SeriesMeasureVulue> GetSeriesMeasureVulues(WidgetPM widget, AnalyticsFactsMetaData entity, Dictionary<string, AnalyticsFactsFieldsMetaData> entityFields)
+        private List<SeriesMeasureVulue> GetSeriesMeasureVulues(WidgetPM widget, AnalyticsFactsMetaData entity, Dictionary<string, AnalyticsFactsFieldsMetaData> entityFields, WidgetMeasurePM measure)
         {
             var groupBy = entityFields.ContainsKey(widget.GroupById) ? entityFields[widget.GroupById] : throw new Exception($"Meta Data Field '{widget.GroupById}' not found");
-            var query = $@"select {groupBy.FieldCode} as GroupName, Value From {entity.TableName} group by {groupBy.FieldCode} ";
+            var measureField = entityFields.ContainsKey(measure.MeasureFieldId) ? entityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{widget.GroupById}' not found");
+            
+            var query = $@"select {groupBy.FieldCode} as GroupName, {measure.MeasureCode}({measureField.FieldCode}) Value From {entity.TableName} group by {groupBy.FieldCode} ";
             var conterxt = DashboardContext.GetContext(0);
-            var result = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(query, new object[0]).ToListAsync().Result;
+            var resultQueryable = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(query, new object[0]).AsQueryable();
+
+            TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
+            resultQueryable = treeFilterQueryService.Apply(resultQueryable, new TreeFilterQueryArgs() { AdditionalTreeFilter = widget.Filters, ObjectTableName = "", Tenant = 0 });
+            var result = resultQueryable.ToList();
             return result;
         }
 

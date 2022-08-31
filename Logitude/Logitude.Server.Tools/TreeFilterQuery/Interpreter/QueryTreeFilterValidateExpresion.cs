@@ -13,12 +13,12 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         
         private string[] operatorsHaveFieldValue = new string[] { "LessThan", "LessThanOrEqual", "GreaterThanOrEqual", "LargerThan", "Contains", "NotContains", "Equal", "NotEqual" , "StartsWith", "InList", "InListExact", "Exclude", "InListInt" };
         private QueryTreeFilterContext queryTreeFilterContext;
-        private List<string> fieldsNames;
+        private List<string> fieldsNames = new List<string>();
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             this.queryTreeFilterContext = queryTreeFilterContext;
-            RemoveEmptyFilters(queryTreeFilterContext.QueryFilterItem);
             FillFiledsNames(queryTreeFilterContext.Type);
+            RemoveEmptyFilters(queryTreeFilterContext.QueryFilterItem);
         }
 
 
@@ -44,13 +44,12 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.Operator) && d.Operator.Contains("Field") && d.FieldValue != null && !string.IsNullOrEmpty(d.FieldValue.ToString()) && d.FieldValue.ToString().Split('.')[0] == queryTreeFilterContext.ParentObjectTableName);
             queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldName) && d.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName);
             queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldName) && !fieldsNames.Contains(d.FieldName));
-            queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldValue.ToString()) && d.Operator.Contains("Field") && !fieldsNames.Contains(d.FieldValue.ToString()));
+            queryFilterItem.QueryFilterItems.RemoveAll(d => !string.IsNullOrEmpty(d.FieldValue?.ToString()) && d.Operator.Contains("Field") && !fieldsNames.Contains(d.FieldValue?.ToString()));
 
         }
 
         private void FillFiledsNames(Type type)
         {
-            fieldsNames = new List<string>();
             fieldsNames.Add("PartnerEntityField");
             if (type == null)
             {

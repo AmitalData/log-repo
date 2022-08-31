@@ -336,9 +336,9 @@
     ListLocalDefaultText="&quot;יוצר ההפקדה&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="CreatedByUser"
+    NavigationPropertyName="&quot;CreatedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -486,9 +486,9 @@
     ListLocalDefaultText="&quot;עודכן ע''י משתמש&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="User"
+    ForeignEntity="&quot;User&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="UpdatedByUser"
+    NavigationPropertyName="&quot;UpdatedByUser&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -788,9 +788,9 @@
     ListLocalDefaultText="&quot;מטבע הפקדה&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Currency"
+    ForeignEntity="&quot;Currency&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Currency"
+    NavigationPropertyName="&quot;Currency&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1020,9 +1020,9 @@
     ListLocalDefaultText="&quot;בנק להפקדה&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="BankAccount"
+    ForeignEntity="&quot;BankAccount&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="BankAccount"
+    NavigationPropertyName="&quot;BankAccount&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1098,9 +1098,9 @@
     ListLocalDefaultText="&quot;קופה&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="CashBook"
+    ForeignEntity="&quot;CashBook&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="CashBook"
+    NavigationPropertyName="&quot;CashBook&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2511,7 +2511,8 @@
         IsPredefined="true"
         PredefinedValue2="&quot;#today&quot;"
         Operator="&quot;Between&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -2575,7 +2576,8 @@
         ObjectFieldName="&quot;IsCashDeposit&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -2639,7 +2641,8 @@
         ObjectFieldName="&quot;IsCashDeposit&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -2974,6 +2977,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;BankDeposit.Features.BankDepositMenu&quot;"
       FeatureDefaultText="&quot;Bank Deposit&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ExpChDepToExcell&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;BankDeposit.Features.ExpChDepToExcell&quot;"
+      FeatureDefaultText="&quot;Export Cheque Deposits To Excell&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

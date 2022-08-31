@@ -401,6 +401,24 @@ namespace RestClientApplication
                         break;
                     }
                 #endregion
+                #region ClosedMonthCheck
+                case "ClosedMonthCheck":
+                    {
+                        txtParameter.Visible = true;
+                        lblParameter.Visible = true;
+                        lblParameter.Text = "Year:";
+
+                        txtParameter2.Visible = true;
+                        lblParameter2.Visible = true;
+                        lblParameter2.Text = "Month:";
+
+                        txtParameter3.Visible = true;
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "Period type:";
+                        apiName = "ClosedMonthCheck";
+                        break;
+                    }
+                #endregion
 
                 #region GLAccount
                 case "GLAccount":
@@ -722,7 +740,11 @@ namespace RestClientApplication
 
                         else
                         {
-                            if (!string.IsNullOrEmpty(txtParameter.Text))
+                            if (apiName == "ClosedMonthCheck")
+                            {
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?year=" + txtParameter.Text + "&month=" + txtParameter2.Text + "&periodTypeCode=" + txtParameter3.Text);
+                            }
+                            else if (!string.IsNullOrEmpty(txtParameter.Text))
                             {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text);
                             }

@@ -117,10 +117,12 @@ namespace WebFreight.Web.Security
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
+
                 if (contactinfo.IsApi && (contactinfo.Tenant != tenant) && contactinfo.Tenant != 0)
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
+
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
@@ -978,29 +980,35 @@ namespace WebFreight.Web.Security
         {
             if (tenant != 0)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
                 {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     string email = HttpContext.Current.User.Identity.Name;
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
 
                     Contact customerCareContact = contactrep.GetSingleContactByEmail(email, 0);
+                    
                     if (customerCareContact != null)
                     {
                         return true;
                     }
+
                     Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
                     if (contact != null)
                     {
                         CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        
                         if (cardContact != null)
                         {
                             return true;
                         }
                     }
                 }
+
                 throw new AutenticationException("Sorry! you are not authorized to read data!");
             }
+
             return true;
         }
 

@@ -48,7 +48,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck","DataCy"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy","ForceDisabled"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -115,6 +115,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     imgNgStyle: any;
     private isDisabled: boolean;
     public UseCompactSearch: boolean;
+    public ForceDisabled: boolean;
     public IsDecendingSort: boolean = false;
 
     public get IsVisible() {
@@ -1197,7 +1198,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.IsDisabled = false;
         }
         else {
-            this.IsDisabled = !this.uiProperty.IsEnabled;
+            this.IsDisabled = this.ForceDisabled ? true : !this.uiProperty.IsEnabled;
         }
         this.ClearIsDisabledTimer();
     }
@@ -3360,7 +3361,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     FillTreeFilterDetails(filters) {
-        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
 
