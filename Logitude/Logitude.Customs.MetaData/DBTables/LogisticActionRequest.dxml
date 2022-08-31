@@ -213,7 +213,7 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="ResponseStatusCode"
+    ForeignKeyColumn="ResponseStatusCode,OperationalStatus"
     ReferencedTable="LogisticActionResponseReqSes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
