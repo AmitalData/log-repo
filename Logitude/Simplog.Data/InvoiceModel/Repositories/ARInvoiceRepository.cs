@@ -241,7 +241,9 @@ namespace Simplog.Data.InvoiceModel.Repositories
            
             iQuery = FilterInvoicesStatuses(iQuery);
 
-            List<ARInvoice> list = iQuery.Where(d => d.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            List<ARInvoice> list = iQuery.Where(d => cardId == null 
+                                                     || cardId.Trim() == string.Empty 
+                                                     || d.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
             return list;
         }

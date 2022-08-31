@@ -36,7 +36,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             if (shipment != null)
             {
-                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
                 output = GetShipmentSharedDocuments(shipment, partnerType, tenant, false).OrderBy(o => o.Name).ToList();
             }
 
