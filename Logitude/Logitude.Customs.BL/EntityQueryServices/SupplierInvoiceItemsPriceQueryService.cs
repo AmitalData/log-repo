@@ -35,6 +35,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-    
+        public List<string> GetSupplierInvoiceItemsPriceByDeclarationId(string declarationId, int tenant)
+        {   
+            return repository.GetSupplierInvoiceItemsPriceByDeclarationId(declarationId, tenant);
+
+        }
     }
 }
