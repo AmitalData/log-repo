@@ -12,6 +12,7 @@ export class AnalyticsFactsMetaDataList {
 	Name: string;
 	TableName: string;
 	Tenant: number;
+	SearchFields: string;
 	
 }
  
