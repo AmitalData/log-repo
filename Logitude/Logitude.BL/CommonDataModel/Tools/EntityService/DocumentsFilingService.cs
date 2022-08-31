@@ -938,6 +938,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
         {
+            if (IsLogboxEnvironment()) return false;
             documentFiling.DocumentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
             if (shipmentObjectTable?.Name != "Shipment")
@@ -957,6 +958,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             return true;            
         }
+
+        private bool IsLogboxEnvironment()
+        {
+            return !string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1");
+        }
+
         private bool IsDocumentWillUpdateShipment(string documentTypeCode)
         {
             if (documentTypeCode == "POD")
