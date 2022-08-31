@@ -68,7 +68,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.GetExportDeclarationClosingData(this.DecPM.Id);
             this.SetUIProperty();
             if (this.DecPM.IsExportClosed) {
-                // this.DeclarationIsClosed = true
+                this.DeclarationIsClosed = true
                 this.setInputsReadOnly();
             }
         });
