@@ -62,7 +62,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
             this.setConditionsData();
 
-            console.log(this.Data);
+            //console.log(this.Data);
 
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {

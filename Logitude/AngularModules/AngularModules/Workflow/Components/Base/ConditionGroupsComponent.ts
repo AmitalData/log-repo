@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { BooleanItems } from "Workflow/Constants/BooleanItems";
