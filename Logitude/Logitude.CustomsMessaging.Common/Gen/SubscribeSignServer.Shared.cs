@@ -42,6 +42,9 @@ namespace Logitude.CustomsMessaging.Common.Gen
 
                 MachineName = GetValue(signCertificate, "MachineName");
                 UserName = GetValue(signCertificate, "UserName");
+                //VER=1.20,STS=OK
+                SignServerVersionByFeature = GetValue(signCertificate, "VER");
+                SignServerStatus = GetValue(signCertificate, "STS");
             }
             catch (Exception)
             {
@@ -59,7 +62,8 @@ namespace Logitude.CustomsMessaging.Common.Gen
 
         public string MachineName { get; private set; }
         public string UserName { get; private set; }
-
+        public string SignServerVersionByFeature { get; }
+        public string SignServerStatus { get; }
 
         public override string ToString()
         {
@@ -109,8 +113,8 @@ namespace Logitude.CustomsMessaging.Common.Gen
 
     public class SubscribeSignServerStatus : SubscribeSignServer
     {
-        public string MachineName { get; set; }
-        public string UserName { get; set; }
+        public string MachineName { get; set; } = "";
+        public string UserName { get; set; } = "";
         public string Status { get; set; }
         public DateTime LastSuccessSignningAt { get; set; }
         public bool? IsOk { get; set; }

@@ -181,6 +181,18 @@ namespace WebFreight.Web.WcfApi
                 try
                 {
                     SignQueue.Instance.UpsertMySubscribeSignServerList(exportReqSignData.CurrentSignCertificate, exportReqSignData.isCompanySignOn, exportReqSignData.isPersonalSignOn);
+                    var dSignCertificateClass = SignCertificateClass.Get(exportReqSignData.CurrentSignCertificate);
+                    SignQueue.Instance.UpsertSignStationStatus(
+                        new SignStationStatus()
+                        {
+                            CurrentSignCertificate = exportReqSignData.CurrentSignCertificate,
+                            isCompanySignOn = exportReqSignData.isCompanySignOn,
+                            isPersonalSignOn = exportReqSignData.isPersonalSignOn,
+                            VersionByFeatures = dSignCertificateClass.SignServerVersionByFeature,
+                            Status = dSignCertificateClass.SignServerStatus,
+                            MachineName = dSignCertificateClass.MachineName,
+                            UserName = dSignCertificateClass.UserName,
+                        });
                 }
                 catch 
                 {
