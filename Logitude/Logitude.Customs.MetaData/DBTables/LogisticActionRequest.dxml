@@ -147,7 +147,7 @@
   <Column
     Name="OperationalStatus"
     Type="varchar"
-    Size="2">
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
