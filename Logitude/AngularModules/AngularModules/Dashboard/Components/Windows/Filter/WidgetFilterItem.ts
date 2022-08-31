@@ -1,15 +1,10 @@
-import { WidgetFilterComponent } from './WidgetFilterComponent';
 import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIProperties';
 import { AppTool } from 'Infrastructure/Tools';
-import { QueryFilterViewItem } from 'Infrastructure/DataContracts/QueryFilterViewItem';
-import { FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver';
 
 
 export class WidgetFilterItem {
-    public BaseTreeFilter: WidgetFilterItem;
     public UIProperties: UIProperties;
     public FieldName: string;
     public IndexOrder: number;
@@ -29,9 +24,7 @@ export class WidgetFilterItem {
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
 
-
-    constructor(treeFilter: WidgetFilterItem = null) {
-        this.BaseTreeFilter = treeFilter;
+    constructor() {
         this.UIProperties = new UIProperties;
     }
 
@@ -86,12 +79,6 @@ export class WidgetFilterItem {
             this.Operators.push(new Operator("Less Than", "LessThan"));
             this.Operators.push(new Operator("Greater Than Or Equal", "GreaterThanOrEqual"));
             this.Operators.push(new Operator("Less Than Or Equal", "LessThanOrEqual"));
-            this.Operators.push(new Operator("Equal [Field]", "EqualField"));
-            this.Operators.push(new Operator("Does Not Equal [Field]", "NotEqualField"));
-            this.Operators.push(new Operator("Greater Than [Field]", "GreaterThanField"));
-            this.Operators.push(new Operator("Less Than [Field]", "LessThanField"));
-            this.Operators.push(new Operator("Greater Than Or Equal [Field]", "GreaterThanOrEqualField"));
-            this.Operators.push(new Operator("Less Than Or Equal [Field]", "LessThanOrEqualField"));
         }
         else if (dataTypeCode == "Boolean") {
             this.Operators.push(new Operator("Equal", "Equal"));
@@ -99,18 +86,12 @@ export class WidgetFilterItem {
         else if (dataTypeCode == "LookUp") {
             this.Operators.push(new Operator("Equal", "Equal"));
             this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
-            this.Operators.push(new Operator("Equal [Field]", "EqualField"));
-            this.Operators.push(new Operator("Does Not Equal [Field]", "NotEqualField"));
         }
         else {
             this.Operators.push(new Operator("Equal", "Equal"));
             this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
-            this.Operators.push(new Operator("Equal [Field]", "EqualField"));
-            this.Operators.push(new Operator("Does Not Equal [Field]", "NotEqualField"));
             this.Operators.push(new Operator("Contains", "Contains"));
             this.Operators.push(new Operator("Does Not Contain", "NotContains"));
-            this.Operators.push(new Operator("Contains [Field]", "ContainsField"));
-            this.Operators.push(new Operator("Does Not Contain [Field]", "NotContainsField"));
         }
 
         this.Operators.push(new Operator("Is Empty", "IsEmpty"));
@@ -134,6 +115,11 @@ export class WidgetFilterItem {
 
     DatePickerCondationValueChange(newValue) {
         this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue) : "";
+    }
+
+    public AndOrOpsChanged(value) {
+        this.AndOr = value;
+        this.FilterType = value;
     }
 
 }
