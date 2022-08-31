@@ -16,9 +16,12 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div>
-                                    <RadioButton [Name]="'TariffRadio'" [IsChecked]="true" [IsEnabled]="false" [Text]="'Customs.General.O.Export' | TextCodeTranslationPipe"></RadioButton>
-
+                                <div class="RadioButton">
+                                    <input [id]="'TariffRadio'" type="radio" name="TariffRadio" [disabled]="true"
+                                        checked />
+                                    <label style="font-size:12px;"> 
+                                        {{'Customs.General.O.Export' | TextCodeTranslationPipe}}
+                                     </label>
                                     <img style="left:-15px" class="CenterCenter" src="./Images/Directions/E.png" />
                                 </div>
                             </div>
@@ -35,9 +38,12 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div>
-                                    <RadioButton [Name]="'air'" [IsChecked]="isTransportA"  (Checked)="TransportModeClicked('A')" [Text]="'Customs.General.O.Air' | TextCodeTranslationPipe"></RadioButton>
-                                    
+                                <div class="RadioButton">
+                                    <input type="radio" id="air" value="air" name="TransportMode"
+                                        (click)="TransportModeClicked('A')" [checked]="entityPM.TransportmodeId === 'A'" />
+                                    <label for="air" style="font-size:12px;">
+                                        {{'Customs.General.O.Air' | TextCodeTranslationPipe}}
+                                    </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/A.png" />
                                 </div>
                             </div>
@@ -48,9 +54,12 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div>
-                                    <RadioButton [Name]="'ocean'" [IsChecked]="isTransportO" (Checked)="TransportModeClicked('O')" [Text]="'Customs.General.O.Ocean' | TextCodeTranslationPipe"></RadioButton>
-                                    
+                                <div class="RadioButton">
+                                    <input id="ocean" type="radio" value="ocean" (click)="TransportModeClicked('O')"
+                                        name="TransportMode"  [checked]="entityPM.TransportmodeId === 'O'"/>
+                                    <label for="ocean" style="font-size:12px;">
+                                        {{'Customs.General.O.Ocean' | TextCodeTranslationPipe}}
+                                    </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/O.png" />
                                 </div>
                             </div>
@@ -61,9 +70,12 @@
                     <td title="Export" style="vertical-align:top;">
                         <div style="margin-top:8px">
                             <div style="position: relative;">
-                                <div>
-                                    <RadioButton [Name]="'land'" [IsChecked]="isTransportL" (Checked)="TransportModeClicked('L')" [Text]="'Customs.General.O.Land' | TextCodeTranslationPipe"></RadioButton>
-                                    
+                                <div class="RadioButton">
+                                    <input type="radio" id="land" value="land" (click)="TransportModeClicked('L')"
+                                        name="TransportMode"  [checked]="entityPM.TransportmodeId === 'L'"/>
+                                    <label for="land" style="font-size:12px;">
+                                        {{'Customs.General.O.Land' | TextCodeTranslationPipe}}
+                                     </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/I.png" />
                                 </div>
                             </div>
@@ -376,14 +388,14 @@
                                 </td>
                                 <td style="width: 57px;vertical-align: bottom;">
                                     <button class="RedButton" (click)="OkButtonClicked()"
-                                        [disabled]="!OKButtonEnabled">{{'General.B.Save' |
+                                        [disabled]="!OKButtonEnabled || entityPM.OperationalStatus === 'נשלחה'">{{'General.B.Save' |
                                         TextCodeTranslationPipe}}</button>
                                 </td>
                                 <td style="width: 10px;vertical-align: bottom;">
                                     <div></div>
                                 </td>
                                 <td style="width:110px;  vertical-align: bottom;">
-                                    <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
+                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.OperationalStatus === 'נשלחה'" [AvoidDoubleClick]="true"
                                         #MyCustomSendOptionsComponent
                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
