@@ -29,6 +29,7 @@ using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Extensions;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -258,12 +259,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
+                shipmentId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
 
-                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, authToken.Tenant);
+                var shipmentQuery = new ShipmentQuery(tenant);
+                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId,tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
             catch (Exception ex)

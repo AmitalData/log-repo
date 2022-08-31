@@ -446,6 +446,10 @@
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.DashboardModule.MetaData\Logitude.DashboardModule.MetaData.csproj">
+      <Project>{e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9}</Project>
+      <Name>Logitude.DashboardModule.MetaData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>
       <Name>Logitude.Infrastructure.BL</Name>

@@ -292,6 +292,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return allIdAccounts;// new HashSet<string>(allIdAccounts);
         }
+
+
+        public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
+        {
+            List<string> allIdAccounts = repository.GetGLAccountIdByTypeControl(tenant, accountTypeCode, isControlAccount);
+
+            return allIdAccounts; 
+        }
+
         private int? GetSecurityLevel(bool useSecurityLevel, int tenant)
         {
             UserPM loggedUser = GetLoggedUser(tenant);

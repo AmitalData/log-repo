@@ -109,6 +109,11 @@ export class WorkFlowPM {
     public set Entity(newValue: string) { if (this.entity != newValue) { this.entity = newValue; this.MarkAsDirty("Entity"); } }
        
 	 
+    private trigger: string;
+    public get Trigger() { return this.trigger; }
+    public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

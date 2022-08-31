@@ -4,6 +4,7 @@ import {AirLineDashboardComponent} from '../Dashboard/Components/Workspace/AirLi
 import { AddEditDashboardComponent } from '../Dashboard/Components/Windows/AddEditDashboardComponent';
 import { AddEditWidgetComponent } from '../Dashboard/Components/Windows/AddEditWidgetComponent';
 import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/CustomDashboardComponent';
+import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilterComponent';
 
 export const Components =
     [
@@ -13,6 +14,7 @@ export const Components =
         AddEditDashboardComponent,
         AddEditWidgetComponent,
         CustomDashboardComponent,
+        WidgetFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -27,6 +29,7 @@ export class ModuleDeclarations {
             case "AddEditDashboardComponent": { myResult = AddEditDashboardComponent; break; }
             case "AddEditWidgetComponent": { myResult = AddEditWidgetComponent; break; }
             case "CustomDashboardComponent": { myResult = CustomDashboardComponent; break; }
+            case "WidgetFilterComponent": { myResult = WidgetFilterComponent; break; }
         }
 
         return myResult;

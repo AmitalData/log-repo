@@ -50,6 +50,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             if (fieldValue.GetType() == typeof(CustomFieldClass)) fieldValue = (fieldValue as CustomFieldClass).Value;
             else fieldValue = FieldValueResolver.GetFieldStringValue(new ObjectField() { DataTypeCode = queryFilterItem.FieldDataType, FieldName = queryFilterItem.FieldName }, fieldValue);
             queryFilterItem.FieldValue = fieldValue;
+            queryFilterItem.Operator = queryFilterItem.Operator?.Replace("Field","");
 
         }
 

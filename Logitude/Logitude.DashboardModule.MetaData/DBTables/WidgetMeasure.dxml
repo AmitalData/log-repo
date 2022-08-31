@@ -44,11 +44,11 @@
     ReferencedTable="Widgets"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
+  <!--<Relation
     ForeignKeyColumn="MeasureCode"
     ReferencedTable="MeasureTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo" />-->
   <Relation
     ForeignKeyColumn="MeasureFieldId"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

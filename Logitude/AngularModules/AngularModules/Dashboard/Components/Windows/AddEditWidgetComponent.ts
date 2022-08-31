@@ -10,6 +10,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -26,9 +27,12 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
+    public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
+    public IsAddNewMeasureVisible: boolean = true;
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
+        this.WidgetMeasuresList = [];
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -38,6 +42,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
         this.ComputeChartImageSrc();
         this.BuildMeasures();
+        this.CheckAddNewMeasureVisible();
         this.Clone();
     }
 
@@ -69,10 +74,32 @@ export class AddEditWidgetComponent extends BaseComponent {
             }
         }
     }
-    private BuildMeasures() {
+    public BuildMeasures() {
+        this.WidgetMeasuresList = [];
+
         this.EntityPM.WidgetMeasures.forEach(item => {
-            this.WidgetMeasuresList.push(new WidgetMeasureItem(item));
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(item, this));
         });
+
+        if (this.WidgetMeasuresList.length == 0) {
+            var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
+            newItem.Tenant = this.EntityPM.Tenant;
+            newItem.WidgetId = this.EntityPM.Id;
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, this));
+        }
+    }
+    public CheckAddNewMeasureVisible() {
+        var isVisible: boolean = true;
+
+        if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
+            isVisible = false;
+        }
+
+        else if (this.WidgetMeasuresList.length != 1) {
+            isVisible = false;
+        }
+
+        this.IsAddNewMeasureVisible = isVisible;
     }
 
     get Title() { return this.EntityPM.Title }
@@ -126,6 +153,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
+        this.WidgetMeasuresList.forEach(item => {
+            Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
+        });
+
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
             if (this.isNew) {
@@ -153,20 +184,49 @@ export class AddEditWidgetComponent extends BaseComponent {
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
+
+    AddNewMeasureClicked() {
+        var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
+        newItem.Tenant = this.EntityPM.Tenant;
+        newItem.WidgetId = this.EntityPM.Id;
+        this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, this));
+
+        this.CheckAddNewMeasureVisible();
+    }
 }
 
-export class WidgetMeasureItem {
+export class WidgetMeasureItem extends BaseComponent{
     public ObjectTableName: string = "WidgetMeasure";
     public EntityPM: WidgetMeasurePM;
+    public Widget: WidgetPM;
     public DataContext: WidgetMeasureItem = this;
-    constructor(entityPM: WidgetMeasurePM) {
+    constructor(entityPM: WidgetMeasurePM, public fatherComponent: AddEditWidgetComponent) {
+        super();
         this.EntityPM = entityPM;
+        this.Widget = fatherComponent.EntityPM;
     }
 
     get MeasureFieldId() { return this.EntityPM.MeasureFieldId; }
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
+
+            var itemIndex = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.MeasureFieldId)) {
+                if (itemIndex > -1) {
+                    this.Widget.RemoveWidgetMeasure(this.EntityPM);
+                }
+            }
+
+            else {
+                if (itemIndex == -1) {
+                    this.Widget.AddWidgetMeasure(this.EntityPM);
+                }
+            }
+
+            this.fatherComponent.BuildMeasures();
+            this.fatherComponent.CheckAddNewMeasureVisible();
         }
     }
 

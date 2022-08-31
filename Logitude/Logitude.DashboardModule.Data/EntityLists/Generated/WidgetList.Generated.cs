@@ -20,6 +20,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string Title  { get; set; }
+       [DataMember]
+       public string Filters  { get; set; }
    }
 
 }

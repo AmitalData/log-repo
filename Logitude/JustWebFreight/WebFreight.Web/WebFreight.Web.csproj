@@ -1037,6 +1037,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCardsDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountFollowUpDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\UserDefinedReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\InterestTransactionsCheckAController.cs" />
     <Compile Include="Controllers\AccountingModel\LedgerTransactionBalanceFilterCreateLTBFilter.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoSessionController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingIncrementalStatController.cs" />
@@ -1118,6 +1119,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Extended\AnalyticsFactsFieldsMetaDataPMExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardPMExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsFieldsMetaDataViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
@@ -1176,6 +1178,7 @@
     <Compile Include="Controllers\ShipmentOrderModel\ShipmentOrderExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\ContainerTrackingController.cs" />
+    <Compile Include="Controllers\DashboardModel\DashboardAnalyticsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainerTrackingProvidersController.Extended.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
@@ -1203,6 +1206,7 @@
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceController.Generated.cs" />
+    <Compile Include="DashboardModel\DomainServices\DashboardDomainService.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
@@ -1241,6 +1245,7 @@
     <Compile Include="ExternalAPIs\GetShipmentsByReferencesController.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\ClosedMonthCheckController.cs" />
     <Compile Include="ExternalAPIs\V1\ContainerController.cs" />
     <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
@@ -7505,6 +7510,7 @@
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
     <Folder Include="MobileApplication\Views\CurrencyType\" />
+    <Folder Include="MobileApplication\Views\DashboardAnalytics\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />

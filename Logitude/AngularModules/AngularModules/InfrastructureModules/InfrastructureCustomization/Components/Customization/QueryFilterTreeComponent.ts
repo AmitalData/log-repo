@@ -29,6 +29,9 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         if (this.MustAddEmptyFilter()) {
             this.AddEmptyFilter();
         }
+        else if (this.IsRoot && AppTool.IsNullOrEmpty(this.ObjectTableName)) {
+            this.AddEmptyFilter();
+        }
         else if (this.IsRoot) {
             this.LoadLookUpTableResources();
         }
