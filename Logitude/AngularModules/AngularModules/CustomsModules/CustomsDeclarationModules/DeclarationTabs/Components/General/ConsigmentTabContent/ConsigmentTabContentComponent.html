@@ -656,10 +656,9 @@
                                         <tr style="height: 25px;">
                                             <!-- CargoTypeCode -->
                                             <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLabel [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'מזהה מטען'"></LogLabel>
+                                                    [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
                                                 <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
@@ -885,14 +884,14 @@
 
 
                                             <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'StorageSiteCode'"
-                                                    [ObjectTableName]="ObjectTableName" [Text]="'אתר מסירה'"
+                                                <LogLabel [ObjectFieldName]="'StorageSiteCodeExport'"
+                                                    [ObjectTableName]="ObjectTableName" 
                                                     [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td style="width: 160px;">
 
-                                                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Customs.DeliverySiteType'"
                                                     [DisplayMemberPath]="'LocalName'" [HideColumns]="true">
