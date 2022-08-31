@@ -19,6 +19,7 @@ import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { ExportDeclarationClosingDatasExtendPMService } from 'Customs/Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { ExportDeclarationClosingWebService } from 'Customs/Services/WebServices/ExportDeclarationClosingWebService';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -45,7 +46,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     constructor(
         private EntityResourceService: EntityResourceService, 
-        private readonly cdr: ChangeDetectorRef, 
+        private readonly cdr: ChangeDetectorRef, public entityArgs: EntityArgs,
         ) {
         super();
     }
@@ -248,7 +249,30 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
+    ViewDocumentsComponent() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.DecPM;
+        //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
+        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "ExportDeclarationClosingData";
+        //    windowArgs.SkipCtor = this.SkipCtor;
+        windowArgs.IsFromStandAloneScreen = true;
+        var windowTitle = "Customs.Declaration.TH.Documents";
 
+        var logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+        this.entityArgs.SkipCtor = true;
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    }
+    OnDocumentsWindowClosed(event) {
+        this.entityArgs.SkipCtor = false;
+    }
     SendButtonClicked(event: CustomSendOptionsArgs) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
             var msg = " שדה תאריך טעינה שדה חובה";
