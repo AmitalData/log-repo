@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { BooleanItems } from "Workflow/Constants/BooleanItems";
-import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { BooleanItemsList } from "Workflow/Models/BooleanItemsList";
 import { Condition } from "Workflow/Models/Condition";
+import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
+import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
 import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
@@ -12,31 +14,22 @@ import { ListItem } from "Workflow/Models/ListItem";
     templateUrl: "./ConditionGroupsComponent.html"
 })
 
-export class ConditionGroupsComponent extends BaseComponent implements OnInit {
+export class ConditionGroupsComponent extends BaseComponent implements OnInit, OnChanges {
 
     @Input() EntityId: string;
+    @Input() ShowChangedOperator: boolean = true;
     @Input() Conditions: Condition[];
     @Input() IsRootConditions: boolean = true;
 
     public ObjectFields: any = {};
 
-    public IsEmptyOperator = ConditionOperators.IsEmpty;
+    public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
 
-    public ConditionGroupOperations: ListItem[] = [
-        new ListItem(ConditionGroupOperations.And),
-        new ListItem(ConditionGroupOperations.Or),
-    ];
+    public BooleanItems: ListItem[] = new BooleanItemsList().BooleanItems;
 
-    public ConditionOperators: ListItem[] = [
-        new ListItem(ConditionOperators.Equals),
-        new ListItem(ConditionOperators.NotEquals),
-        new ListItem(ConditionOperators.IsEmpty),
-    ];
+    public ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
 
-    public BooleanFieldValues: ListItem[] = [
-        new ListItem(BooleanItems.True),
-        new ListItem(BooleanItems.False),
-    ];
+    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     DataContext: any = this;
 
@@ -48,7 +41,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
 
     }
 
-    updateConditionGroupOperation(operationCode: any, conditionIndex: number) {
+    ngOnChanges() {
+        this.ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
+    }
+
+    updateConditionGroupOperation(operationCode: string, conditionIndex: number) {
         if (operationCode !== this.Conditions[conditionIndex]?.groupOperation) {
             this.Conditions[conditionIndex].groupOperation = operationCode;
         }
@@ -69,11 +66,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         }
     }
 
-    updateConditionOperator(operatorCode: any, conditionIndex: number) {
+    updateConditionOperator(operatorCode: string, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
 
-            if (operatorCode === ConditionOperators.IsEmpty || this.Conditions[conditionIndex]?.operator === ConditionOperators.IsEmpty) {
-                let value = operatorCode === ConditionOperators.IsEmpty ? BooleanItems.True : null;
+            if (this.isNoValueOperator(operatorCode) || this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)) {
+                let value = this.isNoValueOperator(operatorCode) ? BooleanItems.True : null;
                 this.updateConditionValue(value, conditionIndex);
             }
 
@@ -116,10 +113,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         return apiQueryFilters;
     }
 
-    getListItem(itemsList: ListItem[], itemCode: string) {
-        return itemsList.filter(o => o.Code === itemCode)[0] || null;
-    }
-
     isValidConditions(conditions: Condition[] | null = null) {
         let result = true;
         for (let condition of (conditions || this.Conditions)) {
@@ -135,5 +128,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
             }
         }
         return result;
+    }
+
+    isNoValueOperator(operatorCode: string) {
+        return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
     }
 }
