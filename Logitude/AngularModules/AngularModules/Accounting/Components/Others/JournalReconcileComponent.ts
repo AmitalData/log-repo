@@ -345,6 +345,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Reference1 = selectedTransaction.Reference1;
             newLine.Reference2 = selectedTransaction.Reference2;
             newLine.Reference3 = selectedTransaction.Reference3;
+            newLine.Notes = selectedTransaction.Notes;
             //newLine.GroupNumber = selectedTransaction.GroupHash;
 
             myReconciliationLines.push(newLine);
