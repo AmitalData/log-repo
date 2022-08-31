@@ -254,20 +254,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<APInvoiceLinePM> GetInvoiceLinesByInvoiceIds(List<string> invoiceIds, int tenant)
         {
-            List<APInvoiceLinePM> lines = (from a in repository.context.APInvoiceLines
-                                          where a.Tenant == tenant
-                                          && invoiceIds.Contains(a.APInvoiceId)
-                                          select new APInvoiceLinePM() {
+            List<APInvoiceLinePM> list = new List<APInvoiceLinePM>();
+            const int sqlLimit = 5000;
+            int iterations = invoiceIds.Count() / sqlLimit;
+            for (int i = 0; i <= iterations; i++)
+            {
+                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
+                List<APInvoiceLinePM> tempList = (from a in repository.context.APInvoiceLines
+                                                  where a.Tenant == tenant
+                                                  && tempInvoiceIds.Contains(a.APInvoiceId)
+                                                  select new APInvoiceLinePM()
+                                                  {
 
-                                              APInvoiceId = a.APInvoiceId,
-                                              Description = a.Description,
-                                              VatPercentage = a.VatPercentage,
-                                              LineNumber = a.LineNumber,
-                                              LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                          }).ToList();
+                                                      APInvoiceId = a.APInvoiceId,
+                                                      Description = a.Description,
+                                                      VatPercentage = a.VatPercentage,
+                                                      LineNumber = a.LineNumber,
+                                                      LocalCurrencyAmount = a.LocalCurrencyAmount,
+                                                  }).ToList();
+                list.AddRange(tempList);
+            }
+            return list;
 
-
-            return lines;
         }
 
     }
