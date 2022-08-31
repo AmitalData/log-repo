@@ -600,6 +600,44 @@ Line3
 
     }
 
+
+    ButtonCheckInterestTransactionsFromAccounts_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+     // defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _InterestTransactionsCheckAUrl = ServiceHelper.GetLogitudeURL() + '/api/InterestTransactionsCheckA';
+        let myUrl = _InterestTransactionsCheckAUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+     // myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+     // myUrl = myUrl + "&noBatch=1"; // always no batch
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
     ButtonAllOpenRevaluationsNoBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;

@@ -37,16 +37,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
                 id = shipmentIdAndTenant.Item1;
                 var tenant = shipmentIdAndTenant.Item2;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
-
                 if (shipmentPM.CustomerId == cardId || shipmentPM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
                 {
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                     return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
                 }
@@ -296,9 +295,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
 
-                var resultQuery = cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
-                                  ? dataQuery.Where(d => d.IsAgentView)
-                                  : dataQuery.Where(d => d.IsCustomerView);
+                var resultQuery = cardType == null 
+                                  || cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
+                                     ? dataQuery.Where(d => d.IsAgentView)
+                                     : dataQuery.Where(d => d.IsCustomerView);
 
                 return Ok(resultQuery.OrderByDescending(s => s.EventDateTime).ToList());
             }

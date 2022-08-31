@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "16e6b57d3660557552f39e7438f7c4c5";
+		public const string HashString = "d0582bd7b6244da9d0258c0af41b166f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2322,7 +2322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature BankDepositFeature_BANKDEPOSITMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositMenu", NameTextCodeDefaultText = @"Bank Deposit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
-		   Feature BankDepositFeature_ExpChDepToExcell = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExpChDepToExcell", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.ExpChDepToExcell", NameTextCodeDefaultText = @"Export Cheque Deposits To Excell" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
+		   Feature BankDepositFeature_ExpChDepToExcell = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExpChDepToExcell", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.ExpChDepToExcell", NameTextCodeDefaultText = @"Export Cheque Deposits To Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
    
 	    

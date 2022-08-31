@@ -28,7 +28,7 @@
   <Column
     Name="MeasureCode"
     Type="varchar"
-    Size="3">
+    Size="17">
     <Constraints
       Nullable="false" />
   </Column>
@@ -44,11 +44,11 @@
     ReferencedTable="Widgets"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
+  <!--<Relation
     ForeignKeyColumn="MeasureCode"
     ReferencedTable="MeasureTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo" />-->
   <Relation
     ForeignKeyColumn="MeasureFieldId"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

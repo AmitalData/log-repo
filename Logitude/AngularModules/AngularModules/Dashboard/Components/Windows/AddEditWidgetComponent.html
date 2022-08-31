@@ -35,7 +35,9 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'AnalyticsFactsMetaData'"
                                             [HideColumns]="true"
-                                            [DisplayMemberPath]="'Name'">
+                                            [DisplayMemberPath]="'Name'"
+                                            [IgnoreFeatureCheck]="true"                                         
+                                            (SelectedItemChanged)="TableChanged()">
                                     </LogLov>
                                 </td>
                                 <td>
@@ -101,6 +103,7 @@
                                 <td>
                                     <div>
                                         <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
+                                        <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                     </div>
                                 </td>
                             </tr>
@@ -113,6 +116,17 @@
 
                     <td>
                         <img width="150" height="150" [attr.src]="ChartImageSrc" class="CenterCenter" />
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="EntityId">
+                    <td style="width: 800px; height: 280px;">
+                        <div style="overflow-x: SCROLL; overflow-y: SCROLL;HEIGHT: 100%; width: 100%;">
+                            <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
+                        </div>
+                    </td>
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 
