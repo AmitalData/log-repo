@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
@@ -88,7 +86,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         if (this.WidgetMeasuresList.length == 0) {
             var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
-            newItem.Tenant = this.EntityPM.Tenant;
+            newItem.Tenant = SessionInfo.LoggedUserTenant;
             newItem.WidgetId = this.EntityPM.Id;
             this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
         }
@@ -222,7 +220,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     AddNewMeasureClicked() {
         var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
-        newItem.Tenant = this.EntityPM.Tenant;
+        newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
 
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
