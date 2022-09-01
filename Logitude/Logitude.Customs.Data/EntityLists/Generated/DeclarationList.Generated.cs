@@ -429,7 +429,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool? IsExportDeclarationAmendments  { get; set; }
        [DataMember]
-
        public string CargoTypeCode  { get; set; }
        [DataMember]
        public string LoadingPortName  { get; set; }
