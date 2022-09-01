@@ -2314,7 +2314,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                 //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
                                                 let title: string = (myResponse.Result?.RequestCancelStatus || myResponse.Result?.OperationalStatus);
                                                 title = title ? ' - ' + title : '';
-                                                logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest') + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                                                logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.CancelExportRequest') + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                 logWindow.WindowArgs = windowArgs;
                                                 logWindow.ShowCloseButton = true;
                                                 //logWindow.IsHideHeader = true;
@@ -2698,7 +2698,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
             }
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
-                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.CancelExportRequest')
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
