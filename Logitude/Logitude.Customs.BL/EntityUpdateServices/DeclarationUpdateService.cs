@@ -3323,18 +3323,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             
             if (entityPM.Direction == "E" &&  entityPM.HatraDate!= entityPOCO.HatraDate)
             {
-                ICustomContext context = MainContext as CustomContext;
-                ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(context);
+               
+                ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(entityPM.Tenant);
                 var list = consignmentQueryService.GetConsgnmentByDeclarationId(entityPM.Id, entityPM.Tenant);
                 list?.ForEach(x =>
                 {
                     if (!string.IsNullOrEmpty(x.ExportContainerizationID))
                     {
-                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                         var listDec = declarationQueryService.GetByConsigmentExportContainerizationID(x.ExportContainerizationID, entityPM.Tenant);
                         if (listDec.All(y => y.HatraDate.HasValue||y.Id == entityPM.Id))
                         {
-                            ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
+                            ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(entityPM.Tenant);
                             var containerization = containerizationQueryService.GetSingle(x.ExportContainerizationID, false, true);
                             containerization.HataraStatus = "1";
                             containerization.ChangeSetOp = ChangeSetOperation.Update;
