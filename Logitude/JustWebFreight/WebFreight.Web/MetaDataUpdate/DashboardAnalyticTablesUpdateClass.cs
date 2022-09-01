@@ -1,6 +1,7 @@
 ﻿using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.MetaData.AnalyticsEntityFiles;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel;
@@ -28,12 +29,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         internal void Update()
         {
-            return;
-            var analyticTables = new List<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>();
-            foreach (string fileName in Directory.GetFiles(GetProjectPath(), "*.ljson"))
-            {
-                analyticTables.Add(BuildFileJson(fileName));
-            }
+            var analyticTables = new AnalyticsMetadatas<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>().GetAllTables();
             if (!analyticTables.Any()) return;
             UpdateAnalyticsFactsMetaDatas(analyticTables);
             AnalyticsFactsMetaDataRepository.SubmitChanges();
@@ -108,13 +104,6 @@ namespace WebFreight.Web.MetaDataUpdate
         private static string GetProjectPath()
         {
             return "AnalyticsEntityFiles";
-        }
-
-        private Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData BuildFileJson(string fileName)
-        {
-            StreamReader r = new StreamReader(fileName);
-            var analyticsFactsMetaData = JsonConvert.DeserializeObject<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>(r.ReadToEnd());
-            return analyticsFactsMetaData;
         }
 
     }

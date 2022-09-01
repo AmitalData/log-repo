@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+//-----------------------------------------------------------------------
+//
+// THIS IS AUTO GENERATED FILE. DO NOT MAKE MANUAL CHANGES
+//
+//-----------------------------------------------------------------------
+namespace Logitude.DashboardModule.MetaData.AnalyticsEntityFiles
+{   
+    public partial class AnalyticsMetadatas<T>
+    {
+
+        public List<T> GetAllTables()
+        {
+            var tables = new List<T>();
+                          
+            tables.Add(JsonConvert.DeserializeObject<T>("{\"HashString\":\"0e89fb2d185e4e7993c1ee69450e89da\",\"Name\":\"ShipmentAnalytics\",\"TableName\":\"ShipmentAnalytics\",\"AnalyticsFactsFieldsMetaDatas\":[{\"HashString\":\"8902806364754301a848db2f1574b9b8\",\"DataTypeCode\":\"Text\",\"CanMeasure\":null,\"CanGroup\":\"True\",\"FieldCode\":\"QuoteNumber\",\"DisplayName\":\"Quote Number\",\"DisplayNamePlural\":\"Quotes Numbers\",\"JoinedTableName\":null,\"JoinedTableKey\":null,\"JoinedTableDisplayField\":null},{\"HashString\":\"f178932734d6453e92e7263486349bf7\",\"DataTypeCode\":\"Text\",\"CanMeasure\":\"True\",\"CanGroup\":\"True\",\"FieldCode\":\"CustomerId\",\"DisplayName\":\"Customer\",\"DisplayNamePlural\":\"Customers\",\"JoinedTableName\":null,\"JoinedTableKey\":null,\"JoinedTableDisplayField\":null},{\"HashString\":\"74779349ef83419da24456f63023ff1f\",\"DataTypeCode\":\"Decimal\",\"CanMeasure\":\"True\",\"CanGroup\":\"False\",\"FieldCode\":\"OpenReceivablesInLocalCurrency\",\"DisplayName\":\"OpenReceivablesInLocalCurrency\",\"DisplayNamePlural\":\"OpenReceivablesInLocalCurrency\",\"JoinedTableName\":null,\"JoinedTableKey\":null,\"JoinedTableDisplayField\":null}]}"));
+                
+            return tables;
+        }
+    }
+}
