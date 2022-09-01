@@ -16,37 +16,11 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     @Input() public EntityId: string;
 
     ngOnInit() {
-        this.LoadDefaultAdditionalFilters();
-    }
-
-    LoadDefaultAdditionalFilters() {
-        if (this.IsRoot && this.DataSource && this.DataSource.QueryFilterItems && this.DataSource.QueryFilterItems.length != 0)
-            this.DataSource = this.GetAllFilters(this.DataSource);
+ 
     }
 
     get FilterItems(): WidgetFilterItem[] {
         return this.DataSource.QueryFilterItems;
-    }
-
-    private GetAllFilters(oldValue: WidgetFilterItem) {
-        let parentItem = new WidgetFilterItem();
-        parentItem.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
-        return parentItem;
-    }
-
-    BuildGroupFilter(oldFilter: WidgetFilterItem) {
-        let groupTreeFilter = new WidgetFilterItem();
-        groupTreeFilter.IsGroup = true;
-        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
-        oldFilter.QueryFilterItems?.forEach((oldField) => {
-            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
-        });
-        return groupTreeFilter;
-    }
-
-    private BuildFilter(oldField: WidgetFilterItem) {
-        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
-        return this.BuildGroupFilter(oldField);
     }
 
     AddEmptyFilter() {
