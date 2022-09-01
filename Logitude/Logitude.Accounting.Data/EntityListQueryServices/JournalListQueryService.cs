@@ -203,6 +203,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             getNextGroupArgs.ActualDifference = 0m;
             string old_journalId_saved = getNextGroupArgs.OldJournalId;
+            string specificJournalId = getNextGroupArgs.SpecificJournalId;
             int myMAX = getNextGroupArgs.MaxPageSize; //getNextGroupArgs.LT_LinesMaximum;
             InterestTransactionsGetNextGroupArgs args = getNextGroupArgs;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
@@ -210,7 +211,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             JournalListQueryService journalListQueryService = new JournalListQueryService(context);
             IQueryable<IGrouping<string, LedgerTransaction>> group_query;
 
-            if (getNextGroupArgs.MoveOn)
+            if (!String.IsNullOrEmpty(specificJournalId))
+                group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                      && String.Compare(rec.JournalId, args.OldJournalId) == 0).
+                      GroupBy(item => item.JournalId).OrderBy(gr => gr.Key).Take(myMAX);
+
+            else if (getNextGroupArgs.MoveOn)
             {
                 group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                       && String.Compare(rec.JournalId, args.OldJournalId) > 0).
@@ -239,14 +245,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
             List<IGrouping<string, LedgerTransaction>> group_list = group_query.ToList();
-            List<string> q = group_query.Select(g => g.Key).ToList();
+            List<string> q;
+            if (group_query != null)
+                q = group_query.Select(g => g.Key).ToList();
+            else
+                q = new List<string>();
             string long_text = "";
             int ctr = 1;
             q.ForEach(item => long_text += "#" + ctr++ + "," + item + "\n");
             List<JournalLT_GroupItem> result = new List<JournalLT_GroupItem>();
-            getNextGroupArgs.OldJournalId = q.Last();
 
-            if (group_list == null || group_list.Count == 0)
+            if (group_list == null || group_list.Count == 0 || q.Count == 0)
             {
                 //Nothing retrieved. Stop here!
                 getNextGroupArgs.Stop = true;
@@ -372,6 +381,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public decimal MaximalDifference { get; set; }
         public decimal ActualDifference { get; set; }
         public bool OnlyZeroes { get; set; }
+        public string SpecificJournalId { get; set; }
 
     }
 
