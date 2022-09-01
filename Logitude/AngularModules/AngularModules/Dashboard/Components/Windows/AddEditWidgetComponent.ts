@@ -51,28 +51,23 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     private ComputeChartImageSrc() {
         switch (this.EntityPM.TypeCode) {
-            case "Pie": {
-                this.ChartImageSrc = "./Images/PieChart.png";
+            case "pie": {
+                this.ChartImageSrc = "./Images/Charts/PieChart.png";
                 break;
             }
 
-            case "Bar": {
-                this.ChartImageSrc = "./Images/BarChart.png";
+            case "bar": {
+                this.ChartImageSrc = "./Images/Charts/BarChart.png";
                 break;
             }
 
-            case "Are": {
-                this.ChartImageSrc = "./Images/AreaChart.png";
+            case "line": {
+                this.ChartImageSrc = "./Images/Charts/LineChart.png";
                 break;
             }
 
-            case "Don": {
-                this.ChartImageSrc = "./Images/DonutChart.png";
-                break;
-            }
-
-            case "Co": {
-                this.ChartImageSrc = "";
+            case "donut": {
+                this.ChartImageSrc = "./Images/Charts/DonutChart.png";
                 break;
             }
         }
