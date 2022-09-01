@@ -170,19 +170,19 @@ namespace Logitude.Accounting.BL.Utils
                         runAgain = false;
                         moveOn = false;
                         List<JournalLT_GroupItem> journal_List = GetNextJournal_List(ref getNextGroupArgs);
-                        if (getNextGroupArgs.Stop) // Nothing retrieved from the DB 
-                        {
-                            toContinue = false;
-                        }
                         oldDate = getNextGroupArgs.OldDate;
                         oldJournalId = getNextGroupArgs.OldJournalId;
                         oldAmount = getNextGroupArgs.OldAmount;
-                        if (journal_List.Count == 0) // Some records retrieved but no sum<=MaxDiff
+                        if (getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0) // Nothing retrieved from the DB 
+                        {
+                            toContinue = false;
+                        }
+                        if (journal_List == null || journal_List.Count == 0) // Some records retrieved but no sum<=MaxDiff
                         {
                             runAgain = false;
                             moveOn = true;
                         }
-                        else
+                        else if (!(getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0))
                         {
                             decimal actualDifference = getNextGroupArgs.ActualDifference;
 
