@@ -35,6 +35,7 @@ namespace Logitude.Accounting.BL.Utils
         public const int LT_LinesMaximum_MIN = 2;
         public const int LT_LinesMaximum_MAX = 200;
         public const int MaxPageSize_MAX = 1000;
+        public string SpecificJournalId = "";
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;
@@ -64,6 +65,7 @@ namespace Logitude.Accounting.BL.Utils
                 //  decimal oldAmount = Decimal.MaxValue;
                 int tenant = interestTransactionsCheckAArg.Tenant;
                 string myGLAccountId = interestTransactionsCheckAArg.GLAccountId;
+                SpecificJournalId = interestTransactionsCheckAArg.SpecificJournalId;
                 badList = new List<string>();
                 goodList = new List<string>();
                 madeList = new List<string>();
@@ -164,7 +166,7 @@ namespace Logitude.Accounting.BL.Utils
                             OldJournalId = oldJournalId,
                             OldAmount = oldAmount,
                             MaximalDifference = interestTransactionsCheckAArg.MaximalDifference,
-                            //   UpToDueDate = interestTransactionsCheckAArg.UpToDueDate,
+                            SpecificJournalId = interestTransactionsCheckAArg.SpecificJournalId,
                             Stop = false,
                         };
                         runAgain = false;
@@ -173,7 +175,8 @@ namespace Logitude.Accounting.BL.Utils
                         oldDate = getNextGroupArgs.OldDate;
                         oldJournalId = getNextGroupArgs.OldJournalId;
                         oldAmount = getNextGroupArgs.OldAmount;
-                        if (getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0) // Nothing retrieved from the DB 
+                        if (getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0 
+                                  || !String.IsNullOrWhiteSpace(interestTransactionsCheckAArg.SpecificJournalId)) // Nothing retrieved from the DB, or a specific journal given
                         {
                             toContinue = false;
                         }
@@ -305,7 +308,7 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 GLAccountPM glac_incurr = GetARPaymentGLAccount(aRPaymentPM.BillToId, tenant, aRPaymentPM.PaymentCurrencyId);
                                 if (glac_incurr != null)
-                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), glac_incurr.Id, myGLAccountId, "", journalId, tenant, lt_list);
+                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRPaymentPM.Id, glac_incurr.Id, "", journalId, tenant, lt_list);
                                 else
                                     CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRPaymentPM.Id, myGLAccountId, "", journalId, tenant, lt_list);
                             }
@@ -587,6 +590,8 @@ namespace Logitude.Accounting.BL.Utils
         public int MaxPageSize { get; set; }
 
         public decimal MaximalDifference { get; set; }
+
+        public string SpecificJournalId { get; set; }
 
     }
 
