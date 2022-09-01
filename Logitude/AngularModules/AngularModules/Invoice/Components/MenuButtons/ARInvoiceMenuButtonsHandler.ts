@@ -934,7 +934,7 @@ export class ARInvoiceMenuButtonsHandler {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
-        logWindow.Height = 150;
+        logWindow.Height = 170;
         logWindow.Title = "Void";
         logWindow.Show('./Invoice/Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent');
 
