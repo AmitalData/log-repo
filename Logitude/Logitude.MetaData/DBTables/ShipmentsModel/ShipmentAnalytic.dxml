@@ -301,4 +301,99 @@
 		<Constraints
 		  Nullable="true" />
 	</Column>
+	<Relation
+	  ForeignKeyColumn="BranchId"
+	  ReferencedTable="Branches"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="IncotermId"
+	  ReferencedTable="Incoterms"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="SalesmanUserId"
+	  ReferencedTable="Users"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="AccountManagerUserId"
+	  ReferencedTable="Users"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ShipmentTypeId"
+	  ReferencedTable="ShipmentTypes"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="DirectionId"
+	  ReferencedTable="Directions"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="TransportModeId"
+	  ReferencedTable="TransportModes"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ShipmentLevelCode"
+	  ReferencedTable="ShipmentLevels"
+	  ReferencedColumn="Code"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ShipperId"
+	  ReferencedTable="Cards"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ConsigneeId"
+	  ReferencedTable="Cards"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="AgentId"
+	  ReferencedTable="Cards"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="CustomerId"
+	  ReferencedTable="Cards"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="StatusId"
+	  ReferencedTable="EntityStatus"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="MainCarriageFromPortId"
+	  ReferencedTable="Ports"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="MainCarriageToPortId"
+	  ReferencedTable="Ports"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ShipmentSubTypeId"
+	  ReferencedTable="ShipmentSubTypes"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="MainCarriageCarrierId"
+	  ReferencedTable="Cards"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="FromCountryId"
+	  ReferencedTable="Countries"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
+	<Relation
+	  ForeignKeyColumn="ToCountryId"
+	  ReferencedTable="Countries"
+	  ReferencedColumn="Id"
+	  ReferencedTableSchema="dbo" />
 </Table>

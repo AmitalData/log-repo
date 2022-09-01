@@ -1,0 +1,48 @@
+﻿<Script DBType="Main" Module="Dashboard" AOT="true" TargetTableName="Shipments" BatchSize="10000" Env="Logitude,local,test">
+  <Sql Version="1">
+    <![CDATA[
+
+        INSERT INTO ShipmentAnalytics 
+        (
+        Id, Tenant, CreateDateTime, ShipmentNumber, BranchId, IncotermId,
+        SalesmanUserId, AccountManagerUserId, ShipmentTypeId, TransportModeId,
+        DirectionId, ShipmentLevelCode, ShipperId, ConsigneeId, AgentId,
+        CustomerId, IsOperationalClosed, IsAccountingClosed, GrossWeightInKG,
+        ChargeableWeightInKG, VolumeInCBM, TEU, PackagesQuantity, StatusId,
+        IsCancelled, OpenReceivablesInLocalCurrency, AccountedReceivablesInLocalCurrency,
+        ProfitInLocalCurrency, ProfitInProfitCurrency,OpenReceivablesInProfitCurrency,
+        AccountedReceivablesInProfitCurrency,OpenPayablesInLocalCurrency, AccountedPayablesInLocalCurrency,
+        OpenPayablesInProfitCurrency,AccountedPayablesInProfitCurrency, ARInvoiceIssued,
+        ShipmentSubTypeId,MainCarriageCarrierId, NumberOfPackages, NumberOfContainers, OperationalDate,
+        FromCountryId, ToCountryId,
+        MainCarriageFromPortId,
+        MainCarriageToPortId
+        )
+
+        SELECT
+        Shipments.Id, Shipments.Tenant, Shipments.CreateDateTime, Shipments.ShipmentNumber, Shipments.BranchId, Shipments.IncotermId, 
+        Shipments.SalesmanUserId, Shipments.AccountManagerUserId, Shipments.ShipmentTypeId, Shipments.TransportModeId, 
+        Shipments.DirectionId, Shipments.ShipmentLevelCode, Shipments.ShipperId, Shipments.ConsigneeId, Shipments.AgentId, 
+        Shipments.CustomerId, Shipments.IsOperationalClosed, Shipments.IsAccountingClosed, Shipments.GrossWeightInKG, 
+        Shipments.ChargeableWeightInKG, Shipments.VolumeInCBM, Shipments.TEU, Shipments.PackagesQuantity, Shipments.StatusId, 
+        Shipments.IsCancelled, Shipments.OpenReceivablesInLocalCurrency, Shipments.AccountedReceivablesInLocalCurrency, 
+        Shipments.ProfitInLocalCurrency, Shipments.ProfitInProfitCurrency, Shipments.OpenReceivablesInProfitCurrency, 
+        Shipments.AccountedReceivablesInProfitCurrency, Shipments.OpenPayablesInLocalCurrency, Shipments.AccountedPayablesInLocalCurrency,
+        Shipments.OpenPayablesInProfitCurrency, Shipments.AccountedPayablesInProfitCurrency, Shipments.ARInvoiceIssued,
+        Shipments.ShipmentSubTypeId, ShipmentMasterData.MainCarriageCarrierId, Shipments.NumberOfPackages, Shipments.NumberOfContainers, Shipments.OperationalDate,
+        IIF (Shipments.DirectionId = 'D' and Shipments.TransportModeId = 'I', InlandDomesticFromAddress.CountryId , FromPort.CountryId ),
+        IIF (Shipments.DirectionId = 'D' and Shipments.TransportModeId = 'I', InlandDomesticToAddress.CountryId   , ToPort.CountryId ),
+        IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.FromPortId, ShipmentMasterData.MainCarriageFromPortId),
+        IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.ToPortId, ShipmentMasterData.MainCarriageToPortId)
+
+        FROM Shipments
+        LEFT JOIN ShipmentMasterDatas AS ShipmentMasterData ON ShipmentMasterData.Id = Shipments.Id
+        LEFT JOIN Addresses AS InlandDomesticFromAddress ON InlandDomesticFromAddress.Id = ShipmentMasterData.MainCarriageFromAddressId
+        LEFT JOIN Addresses AS InlandDomesticToAddress   ON InlandDomesticToAddress.Id   = ShipmentMasterData.MainCarriageToAddressId
+        LEFT JOIN Ports AS FromPort ON FromPort.Id = IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.FromPortId, ShipmentMasterData.MainCarriageFromPortId)
+        LEFT JOIN Ports AS ToPort   ON ToPort.Id   = IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.ToPortId  , ShipmentMasterData.MainCarriageToPortId)
+		
+		WHERE $LastCounterWhere$
+    ]]>       
+  </Sql>
+</Script>
