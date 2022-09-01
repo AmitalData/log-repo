@@ -1037,7 +1037,7 @@ namespace WebFreight.Web.Helpers
             if (entityTable != null && entityTable.Name == "SharedLogistics")
             {
                 SharedLogisticsQuery sharedLogisticsQuery = new SharedLogisticsQuery();
-                entity = sharedLogisticsQuery.GetSinglePM(entityTable.Tenant, SystemUrl);
+                entity = sharedLogisticsQuery.GetSinglePM(tenant, SystemUrl);
             }
 
             else
