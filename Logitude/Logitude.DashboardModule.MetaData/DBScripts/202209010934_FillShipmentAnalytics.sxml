@@ -1,26 +1,72 @@
 ﻿<Script DBType="Main" Module="Dashboard" AOT="true" TargetTableName="Shipments" BatchSize="10000" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 
-        INSERT INTO ShipmentAnalytics 
-        (
-        Id, Tenant, CreateDateTime, ShipmentNumber, BranchId, IncotermId,
-        SalesmanUserId, AccountManagerUserId, ShipmentTypeId, TransportModeId,
-        DirectionId, ShipmentLevelCode, ShipperId, ConsigneeId, AgentId,
-        CustomerId, IsOperationalClosed, IsAccountingClosed, GrossWeightInKG,
-        ChargeableWeightInKG, VolumeInCBM, TEU, PackagesQuantity, StatusId,
-        IsCancelled, OpenReceivablesInLocalCurrency, AccountedReceivablesInLocalCurrency,
-        ProfitInLocalCurrency, ProfitInProfitCurrency,OpenReceivablesInProfitCurrency,
-        AccountedReceivablesInProfitCurrency,OpenPayablesInLocalCurrency, AccountedPayablesInLocalCurrency,
-        OpenPayablesInProfitCurrency,AccountedPayablesInProfitCurrency, ARInvoiceIssued,
-        ShipmentSubTypeId,MainCarriageCarrierId, NumberOfPackages, NumberOfContainers, OperationalDate,
-        FromCountryId, ToCountryId,
-        MainCarriageFromPortId,
-        MainCarriageToPortId
-        )
+    
+--select * from ShipmentAnalytics
 
-        SELECT
-        Shipments.Id, Shipments.Tenant, Shipments.CreateDateTime, Shipments.ShipmentNumber, Shipments.BranchId, Shipments.IncotermId, 
+declare @Id as varchar (15)
+declare @Tenant as int
+declare @CreateDateTime as datetime
+declare @ShipmentNumber as varchar (20)
+declare @BranchId as varchar (15)
+declare @IncotermId as varchar (15)
+        declare @SalesmanUserId as varchar (15)
+        declare @AccountManagerUserId as varchar (15) 
+        declare @ShipmentTypeId as varchar (4)
+        declare @TransportModeId as varchar (1)
+        declare @DirectionId as varchar (1)
+        declare @ShipmentLevelCode as varchar (1)
+        declare @ShipperId as varchar (15)
+        declare @ConsigneeId as varchar (15)
+        declare @AgentId as varchar (15)
+        declare @CustomerId as varchar (15)
+        declare @IsOperationalClosed as bit
+        declare @IsAccountingClosed as bit
+        declare @GrossWeightInKG as decimal
+        declare @ChargeableWeightInKG as decimal
+        declare @VolumeInCBM as decimal
+        declare @TEU as decimal
+        declare @PackagesQuantity as int
+        declare @StatusId as varchar (15)
+        declare @IsCancelled as bit
+        declare @OpenReceivablesInLocalCurrency as decimal
+        declare @AccountedReceivablesInLocalCurrency as decimal
+        declare @ProfitInLocalCurrency as decimal 
+        declare @ProfitInProfitCurrency as decimal
+        declare @OpenReceivablesInProfitCurrency as decimal
+        declare @AccountedReceivablesInProfitCurrency as decimal
+        declare @OpenPayablesInLocalCurrency as decimal
+        declare @AccountedPayablesInLocalCurrency as decimal
+        declare @OpenPayablesInProfitCurrency as decimal
+        declare @AccountedPayablesInProfitCurrency as decimal
+        declare @ARInvoiceIssued as bit
+        declare @ShipmentSubTypeId as varchar (15)
+        declare @MainCarriageCarrierId as varchar (15) 
+        declare @NumberOfPackages as int
+        declare @NumberOfContainers as int
+        declare @OperationalDate as datetime
+        declare @FromCountryId as varchar (15) 
+        declare @ToCountryId as varchar (15)
+        declare @MainCarriageFromPortId as varchar (15)
+        declare @MainCarriageToPortId as varchar (15)
+        declare @FromPortId as varchar (15)
+        declare @ToPortId as varchar (15)
+        declare @MainCarriageFromAddressId as varchar (15)
+        declare @MainCarriageToAddressId as varchar (15)
+        declare @MasterDataId as varchar (15)
+        declare @InlandDomesticFromTypeCode as varchar (15)
+        declare @InlandDomesticToTypeCode as varchar (15)
+        declare @InlandDomesticFromCountryId as varchar (15)
+        declare @InlandDomesticToCountryId as varchar (15)
+
+        declare @AnalyticsFromPortId as varchar (15)
+        declare @AnalyticsToPortId as varchar (15)
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Shipments.Id, Shipments.Tenant, Shipments.CreateDateTime, Shipments.ShipmentNumber, Shipments.BranchId, Shipments.IncotermId, 
         Shipments.SalesmanUserId, Shipments.AccountManagerUserId, Shipments.ShipmentTypeId, Shipments.TransportModeId, 
         Shipments.DirectionId, Shipments.ShipmentLevelCode, Shipments.ShipperId, Shipments.ConsigneeId, Shipments.AgentId, 
         Shipments.CustomerId, Shipments.IsOperationalClosed, Shipments.IsAccountingClosed, Shipments.GrossWeightInKG, 
@@ -29,20 +75,152 @@
         Shipments.ProfitInLocalCurrency, Shipments.ProfitInProfitCurrency, Shipments.OpenReceivablesInProfitCurrency, 
         Shipments.AccountedReceivablesInProfitCurrency, Shipments.OpenPayablesInLocalCurrency, Shipments.AccountedPayablesInLocalCurrency,
         Shipments.OpenPayablesInProfitCurrency, Shipments.AccountedPayablesInProfitCurrency, Shipments.ARInvoiceIssued,
-        Shipments.ShipmentSubTypeId, ShipmentMasterData.MainCarriageCarrierId, Shipments.NumberOfPackages, Shipments.NumberOfContainers, Shipments.OperationalDate,
-        IIF (Shipments.DirectionId = 'D' and Shipments.TransportModeId = 'I', InlandDomesticFromAddress.CountryId , FromPort.CountryId ),
-        IIF (Shipments.DirectionId = 'D' and Shipments.TransportModeId = 'I', InlandDomesticToAddress.CountryId   , ToPort.CountryId ),
-        IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.FromPortId, ShipmentMasterData.MainCarriageFromPortId),
-        IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.ToPortId, ShipmentMasterData.MainCarriageToPortId)
+        Shipments.ShipmentSubTypeId, Shipments.NumberOfPackages, Shipments.NumberOfContainers, Shipments.OperationalDate,
+        Shipments.FromPortId, Shipments.ToPortId,
+        ShipmentMasterDatas.MainCarriageCarrierId, ShipmentMasterDatas.MainCarriageFromPortId,ShipmentMasterDatas.MainCarriageToPortId,
+        ShipmentMasterDatas.MainCarriageFromAddressId, ShipmentMasterDatas.MainCarriageToAddressId, Shipments.MasterShipmentDataId,
+        ShipmentMasterDatas.InlandDomesticFromTypeCode, ShipmentMasterDatas.InlandDomesticToTypeCode,
+        ShipmentMasterDatas.InlandDomesticFromCountryId, ShipmentMasterDatas.InlandDomesticToCountryId
 
-        FROM Shipments
-        LEFT JOIN ShipmentMasterDatas AS ShipmentMasterData ON ShipmentMasterData.Id = Shipments.Id
-        LEFT JOIN Addresses AS InlandDomesticFromAddress ON InlandDomesticFromAddress.Id = ShipmentMasterData.MainCarriageFromAddressId
-        LEFT JOIN Addresses AS InlandDomesticToAddress   ON InlandDomesticToAddress.Id   = ShipmentMasterData.MainCarriageToAddressId
-        LEFT JOIN Ports AS FromPort ON FromPort.Id = IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.FromPortId, ShipmentMasterData.MainCarriageFromPortId)
-        LEFT JOIN Ports AS ToPort   ON ToPort.Id   = IIF (Shipments.MasterShipmentDataId IS NULL, Shipments.ToPortId  , ShipmentMasterData.MainCarriageToPortId)
-		
-		WHERE $LastCounterWhere$
+       FROM Shipments
+       LEFT JOIN ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.Id
+       WHERE $LastCounterWhere$
+       
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @CreateDateTime, @ShipmentNumber, @BranchId, @IncotermId, 
+        @SalesmanUserId, @AccountManagerUserId, @ShipmentTypeId, @TransportModeId, 
+        @DirectionId, @ShipmentLevelCode, @ShipperId, @ConsigneeId, @AgentId, 
+        @CustomerId, @IsOperationalClosed, @IsAccountingClosed, @GrossWeightInKG, 
+        @ChargeableWeightInKG, @VolumeInCBM, @TEU, @PackagesQuantity, @StatusId, 
+        @IsCancelled, @OpenReceivablesInLocalCurrency, @AccountedReceivablesInLocalCurrency, 
+        @ProfitInLocalCurrency, @ProfitInProfitCurrency, @OpenReceivablesInProfitCurrency, 
+        @AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency, @AccountedPayablesInLocalCurrency,
+        @OpenPayablesInProfitCurrency, @AccountedPayablesInProfitCurrency, @ARInvoiceIssued,
+        @ShipmentSubTypeId, @NumberOfPackages, @NumberOfContainers, @OperationalDate,
+        @FromPortId, @ToPortId, @MainCarriageCarrierId, @MainCarriageFromPortId, @MainCarriageToPortId,
+        @MainCarriageFromAddressId, @MainCarriageToAddressId, @MasterDataId,
+        @InlandDomesticFromTypeCode, @InlandDomesticToTypeCode,
+        @InlandDomesticFromCountryId, @InlandDomesticToCountryId
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+              if not exists (select * from ShipmentAnalytics where Id = @Id and Tenant = @Tenant)
+              begin                     
+                    set @AnalyticsFromPortId = null
+                    set @AnalyticsToPortId = null
+                    set @FromCountryId = null
+                    set @ToCountryId = null
+                    set @AnalyticsFromPortId = null
+                    set @AnalyticsToPortId = null
+
+                    ----------------------------
+                    if (@MasterDataId IS NULL)
+                    begin
+                        set @AnalyticsFromPortId = @FromPortId
+                        set @AnalyticsToPortId = @ToPortId
+                    end
+
+                    else
+                    begin
+                        set @AnalyticsFromPortId = @MainCarriageFromPortId
+                        set @AnalyticsToPortId = @MainCarriageToPortId
+                    end
+
+                    -----------------------------
+                    if (@DirectionId = 'D' and @TransportModeId = 'I')
+                    begin                        
+		                --from
+			            if (@InlandDomesticFromTypeCode = 'PART')
+			            begin
+				            set @FromCountryId = (select CountryId from Addresses where Id = @MainCarriageFromAddressId and Tenant = @Tenant)
+			            end
+
+                        else if (@InlandDomesticFromTypeCode = 'PORT')
+			            begin
+			               set @FromCountryId = (select CountryId from Ports where Id = @AnalyticsFromPortId and Tenant = @Tenant)
+			            end
+
+			            else if (@InlandDomesticFromTypeCode = 'CASL')
+			            begin
+				            set @FromCountryId = @InlandDomesticFromCountryId
+			            end
+
+                        --to
+			            if (@InlandDomesticToTypeCode = 'PART')
+			            begin
+				            set @ToCountryId = (select CountryId from Addresses where Id = @MainCarriageToAddressId and Tenant = @Tenant)
+			            end
+
+                        else if (@InlandDomesticToTypeCode = 'PORT')
+			            begin
+			               set @ToCountryId = (select CountryId from Ports where Id = @AnalyticsFromPortId and Tenant = @Tenant)
+			            end
+
+			            else if (@InlandDomesticToTypeCode = 'CASL')
+			            begin
+				            set @ToCountryId = @InlandDomesticToCountryId
+			            end
+                    end
+
+                    else
+                    begin
+                        set @FromCountryId = (select CountryId from Ports where Id = @AnalyticsFromPortId and Tenant = @Tenant)
+                        set @ToCountryId = (select CountryId from Ports where Id = @AnalyticsToPortId and Tenant = @Tenant)
+                    end
+
+                    ------insert
+                    INSERT INTO ShipmentAnalytics 
+                    (
+                    Id, Tenant, CreateDateTime, ShipmentNumber, BranchId, IncotermId,
+                    SalesmanUserId, AccountManagerUserId, ShipmentTypeId, TransportModeId,
+                    DirectionId, ShipmentLevelCode, ShipperId, ConsigneeId, AgentId,
+                    CustomerId, IsOperationalClosed, IsAccountingClosed, GrossWeightInKG,
+                    ChargeableWeightInKG, VolumeInCBM, TEU, PackagesQuantity, StatusId,
+                    IsCancelled, OpenReceivablesInLocalCurrency, AccountedReceivablesInLocalCurrency,
+                    ProfitInLocalCurrency, ProfitInProfitCurrency,OpenReceivablesInProfitCurrency,
+                    AccountedReceivablesInProfitCurrency,OpenPayablesInLocalCurrency, AccountedPayablesInLocalCurrency,
+                    OpenPayablesInProfitCurrency,AccountedPayablesInProfitCurrency, ARInvoiceIssued,
+                    ShipmentSubTypeId,MainCarriageCarrierId, NumberOfPackages, NumberOfContainers, OperationalDate,
+                    FromCountryId, ToCountryId,
+                    MainCarriageFromPortId,
+                    MainCarriageToPortId
+                    )
+                    values
+                    (
+                    @Id, @Tenant, @CreateDateTime, @ShipmentNumber, @BranchId, @IncotermId,
+                    @SalesmanUserId, @AccountManagerUserId, @ShipmentTypeId, @TransportModeId,
+                    @DirectionId, @ShipmentLevelCode, @ShipperId, @ConsigneeId, @AgentId,
+                    @CustomerId, @IsOperationalClosed, @IsAccountingClosed, @GrossWeightInKG,
+                    @ChargeableWeightInKG, @VolumeInCBM, @TEU, @PackagesQuantity, @StatusId,
+                    @IsCancelled, @OpenReceivablesInLocalCurrency, @AccountedReceivablesInLocalCurrency,
+                    @ProfitInLocalCurrency, @ProfitInProfitCurrency, @OpenReceivablesInProfitCurrency,
+                    @AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency, @AccountedPayablesInLocalCurrency,
+                    @OpenPayablesInProfitCurrency, @AccountedPayablesInProfitCurrency, @ARInvoiceIssued,
+                    @ShipmentSubTypeId, @MainCarriageCarrierId, @NumberOfPackages, @NumberOfContainers, @OperationalDate,
+                    @FromCountryId, @ToCountryId,
+                    @AnalyticsFromPortId,
+                    @AnalyticsToPortId
+                    )
+
+              end  
+              
+       FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @CreateDateTime, @ShipmentNumber, @BranchId, @IncotermId, 
+        @SalesmanUserId, @AccountManagerUserId, @ShipmentTypeId, @TransportModeId, 
+        @DirectionId, @ShipmentLevelCode, @ShipperId, @ConsigneeId, @AgentId, 
+        @CustomerId, @IsOperationalClosed, @IsAccountingClosed, @GrossWeightInKG, 
+        @ChargeableWeightInKG, @VolumeInCBM, @TEU, @PackagesQuantity, @StatusId, 
+        @IsCancelled, @OpenReceivablesInLocalCurrency, @AccountedReceivablesInLocalCurrency, 
+        @ProfitInLocalCurrency, @ProfitInProfitCurrency, @OpenReceivablesInProfitCurrency, 
+        @AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency, @AccountedPayablesInLocalCurrency,
+        @OpenPayablesInProfitCurrency, @AccountedPayablesInProfitCurrency, @ARInvoiceIssued,
+        @ShipmentSubTypeId, @NumberOfPackages, @NumberOfContainers, @OperationalDate,
+        @FromPortId, @ToPortId, @MainCarriageCarrierId, @MainCarriageFromPortId, @MainCarriageToPortId,
+        @MainCarriageFromAddressId, @MainCarriageToAddressId, @MasterDataId,
+        @InlandDomesticFromTypeCode, @InlandDomesticToTypeCode,
+        @InlandDomesticFromCountryId, @InlandDomesticToCountryId
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+
     ]]>       
   </Sql>
 </Script>
