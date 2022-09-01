@@ -509,10 +509,10 @@
 <log-cell-template  #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                        <span>{{item.InvoiceNumber | NumbersPipe:'N3'}}</span>
+                                                                        <span>{{item.InvoiceNumber}}</span>
                                                                     </div>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
-                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceNumber'" [InputType]="'double'" [DataContext]="item"
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceNumber'" [InputType]="'text'" [DataContext]="item"
                                                                                     [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                                     </div>
                                                                 </div>
