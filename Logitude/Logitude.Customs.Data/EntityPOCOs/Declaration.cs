@@ -447,6 +447,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsExportClosed { get; set; }
         [Column("ExportClosedErrorXML")]
 	    public string ExportClosedErrorXML { get; set; }
+        [ForeignKey("ExportLoadingPort")]
+        [Column("ExportLoadingPortCode")]
+	    public string ExportLoadingPortCode { get; set; }
+	      
+        public virtual LoadingSiteType ExportLoadingPort { get; set; }
     }
 }
 	 

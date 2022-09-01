@@ -70,12 +70,17 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'DeliverySiteID',
         'RequestReason',
     ]
-
+    public isTransportA: boolean = false;
+    public isTransportO: boolean = false;
+    public isTransportL: boolean = false;
     public SecondCargoIDPlaceholder: string = " ";
     public ThirdCargoIdPlaceholder: string = " ";
     public ManifestNumberPlaceholder: string = " ";
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     LogisticActionRequestService: LogisticActionRequestService = new LogisticActionRequestService();
+    exportFileNoCurrentValue: string = '';
+    private isImporterClicked: boolean = false;
+    private currentClient: ClientList;
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -180,8 +185,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     SetWindowArgs(winArg: any) {
         this.entityPM = winArg.CurrentEntity;
+        this.exportFileNoCurrentValue = this.entityPM.ExportFileNo;
 
-        this.setTransportModeId();
         this.setRequiredCargoKey();
         this.setPlaceholderForCargoKey()
     }
@@ -220,40 +225,11 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private setTransportModeId() {
-        if (!this.entityPM.TransportmodeId) return;
-
-        let checked;
-        switch (this.entityPM.TransportmodeId) {
-            case 'A':
-                checked = 'air';
-                break;
-
-            case 'O':
-                checked = 'ocean';
-                break;
-
-            case 'L':
-                checked = 'land';
-                break;
-        }
-
-        (<HTMLInputElement>document.getElementById(checked)).checked = true;
-    }
-
-
-    // subscribesyncDeclaration() {
-    //     this.subscriber = this.syncDeclaration$
-    //         .pipe(debounceTime(500))
-    //         .subscribe(x => this.syncDeclaration())
-    // }
-
-
     private async syncDeclaration() {
         const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
 
         this.ExporterNumber = declaration.ImporterCode;
         this.entityPM.DeclarationId = declaration.Id;
@@ -274,8 +250,16 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
+    private async openConfirmWindow(msg: string): Promise<boolean> {
+        const myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(msg);
+        const res = await myConfirmWindow.WindowClosedPromise() as any;
+        return res.Yes;
+    }
+
+
     private async confirmSyncDeclaration() {
-        debugger
         const exporterName = this.exporterName ? TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ForImporter') + ' ' + this.exporterName + ' ' : '';
 
         const myConfirmWindow = new ConfirmWindow();
@@ -331,19 +315,43 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     onBlurExportFileNo() {
-        if (this.entityPM.ExportFileNo)
+        if (this.entityPM.ExportFileNo && this.entityPM.ExportFileNo !== this.exportFileNoCurrentValue)
             this.syncDeclaration()
+
+        this.exportFileNoCurrentValue = this.entityPM.ExportFileNo;
         // this.syncDeclaration$.next()
     }
 
 
-    TransportModeClicked(value: string) {
-        if (this.entityPM.TransportmodeId != value)
-            this.entityPM.TransportmodeId = value;
+    async TransportModeClicked(value: string) {
+        if (this.entityPM.TransportmodeId == value) return;
+        if (this.entityPM.TransportmodeId) {
+            if (await this.openConfirmWindow(' האם אתה מעוניין לשנות סוג שילוח?'))
+                this.clearField();
+            else {
+                value = this.entityPM.TransportmodeId;
+                this.entityPM.TransportmodeId = '';
+                this.cdr.detectChanges();
+            }
+        }
+
+        this.entityPM.TransportmodeId = value;
     }
 
-    private isImporterClicked: boolean = false;
-    private currentClient: ClientList;
+
+    private clearField() {
+        this.ExportFileNo = '';
+        this.ExporterNumber = '';
+        this.CargoIdentifierKey1 = '';
+        this.CargoIdentifierKey2 = '';
+        this.CargoIdentifierKey3 = '';
+        this.PackagingTypeCode = '';
+        this.Quantity = 0;
+        this.DeliverySiteID = '';
+        this.RequestReason = '';
+    }
+
+
     ImporterClicked(type, client: ClientList) {
         this.ExporterNumber = client?.Code;
         this.exporterName = client?.FullName;
@@ -421,7 +429,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    async SaveEntityChanges() {
+    async SaveEntityChanges(DontClose: boolean = false) {
         this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -436,7 +444,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
-        SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+        if (!DontClose)
+            SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+
         SessionLocator.SelectedSession.StopBusyIndicator();
         return res;
     }
@@ -522,7 +532,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.submit = true;
         // if (this.invalidate()) return;
         this.logger.sendError('OkButtonClicked');
-        this.SaveEntityChanges();        
+        this.SaveEntityChanges();
     }
 
 
@@ -562,7 +572,14 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    ViewDocumentsComponent() {
+    async ViewDocumentsComponent() {
+
+        //save entity
+        this.submit = true;
+        //this.SaveEntityChanges(true);
+        const entity: LogisticActionRequestPM = await this.SaveEntityChanges(true);
+        this.entityPM.Id = entity.Id;
+
         var windowArgs: any = {};
         windowArgs.EntityPM = this.entityPM;
         windowArgs.ObjectTableName = this.ObjectTableName;

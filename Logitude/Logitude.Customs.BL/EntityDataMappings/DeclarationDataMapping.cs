@@ -541,8 +541,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.FinalLoadingSiteName = entityPOCO.LoadingSiteType.LocalName;
             }
-
-
+            entityPM.ExportTaxationDateTime = entityPOCO.TaxationDateTime;
+            entityPM.TransferExporterCode = entityPOCO.TransferImporterCode;
+            entityPM.ExporterImporterCode = entityPOCO.ImporterCode;
+            entityPM.DeclarationOfficeHandlerCode = entityPOCO.DeclarationOfficeCode;
         }
 
         public static void UpdateCourierDeclarationFields(DeclarationPM entityPM, Declaration entityPOCO)

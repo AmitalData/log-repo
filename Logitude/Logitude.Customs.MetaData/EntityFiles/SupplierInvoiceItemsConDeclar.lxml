@@ -39,7 +39,7 @@
   ParentTableName="SupplierInvoiceItem"
   LocalDefaultText="&quot;הצהרות קשורות לפרט מכס&quot;"
   DefaultText="&quot;Supplier Invoice Items Connected Declaration&quot;"
-  Code="&quot;caa9&quot;"
+  Code="&quot;e818&quot;"
   Name="&quot;Customs.SupplierInvoiceItemsConDeclar Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1085,6 +1085,13 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.SupplierInvoiceItemsConnectedDeclaration.O.InvoiceSequence&quot;"
+      DefaultText="&quot;Invoice Sequence&quot;"
+      LocalDefaultText="&quot;רצף חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

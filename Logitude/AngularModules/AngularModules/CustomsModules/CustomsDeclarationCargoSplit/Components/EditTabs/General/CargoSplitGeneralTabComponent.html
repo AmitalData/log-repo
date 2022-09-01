@@ -117,12 +117,18 @@
         font-size: 12px;
         color: black;
     }
+    
+    :host() ::ng-deep .is-required label {
+        border-color: red !important;
+        opacity: 1 !important;
+    }
+
 </style>
 
 <div *ngIf="_EntityResourceFinished && EntityPM" style="margin:10px;" class="MediaFill">
     <table>
         <tr>
-            <td *ngIf="IsNewEntity && Direction!='I' && Direction!='E'" class="AppLeftMenuBackgroundRTL" style="width:150px;">
+            <td *ngIf="IsNewEntity && !IsFromDeclaration" class="AppLeftMenuBackgroundRTL" style="width:150px;">
                 <table>
                     <tr> 
                         <td>
@@ -137,10 +143,9 @@
                                     <td style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
-                                                <div class="RadioButton">
-                                                    <input [checked]="isDirection" type="radio" id="Import" value="Import" name="Direction"
-                                                        (click)="DirectionModeClicked('Import')" checked/>
-                                                    <label for="Import" style="font-size:12px;"> יבוא </label>
+                                                <div>
+                                                    <RadioButton [Name]="'DirectionI'" [IsChecked]="DirectionI" (Checked)="DirectionModeClicked('Import')" [Text]="'יבוא'"></RadioButton>
+
                                                     <img style="left:30px " class="CenterCenter" src="./Images/Directions/I.png" />
                                                 </div>
                                             </div>
@@ -151,32 +156,30 @@
                                     <td style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
-                                                <div class="RadioButton">
-                                                    <input [checked]="!isDirection"  type="radio" id="Export" value="Export" name="Direction"
-                                                    (click)="DirectionModeClicked('Export')" />
-                                                    <label for="Export" style="font-size:12px;"> יצוא </label>
-                                                    <img style="left:30px " class="CenterCenter"
-                                                        src="./Images/Directions/E.png" />
+                                                <div>
+                                                    <RadioButton [Name]="'DirectionE'" [IsChecked]="DirectionE" (Checked)="DirectionModeClicked('Export')" [Text]="'יצוא'"></RadioButton>
+                                                 <img style="left:30px " class="CenterCenter"
+                                                        src="./Images/Directions/E.png" /> 
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr>                                
                                 <tr style="height:50px">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'TransportModeId'"
                                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                 </tr>
+                                <div>
                                 <tr style="height:30px">
                                     <td  style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
-                                                <div class="RadioButton">
-                                                    <input [(ngModel)]="air" type="radio" id="air" value="air" name="TransportMode"
-                                                        (click)="TransportModeClicked('A')" [disabled]="IsImportDeclaration" [checked]="isTransportA"/>
-                                                    <label for="air" style="font-size:12px;"> אויר </label>
-                                                    <img style="left:30px " class="CenterCenter"
+                                                <div>
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'air'" [IsChecked]="isTransportA && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('A')" [Text]="'אויר'"></RadioButton>
+ 
+                                                    <img style="left:-90px " class="CenterCenter"
                                                         src="./Images/TransportModes/A.png" />
                                                 </div>
                                             </div>
@@ -187,11 +190,10 @@
                                     <td  style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
-                                                <div class="RadioButton">
-                                                    <input [(ngModel)]="ocean" id="ocean" type="radio" value="ocean"
-                                                        (click)="TransportModeClicked('O')" name="TransportMode" [disabled]="IsImportDeclaration" [checked]="isTransportO"/>
-                                                    <label for="ocean" style="font-size:12px;"> ים </label>
-                                                    <img style="left:30px" class="CenterCenter"
+                                                <div>
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'ocean'" [IsChecked]="isTransportO && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('O')" [Text]="'ים'"></RadioButton>
+
+                                                    <img style="left:-90px" class="CenterCenter"
                                                         src="./Images/TransportModes/O.png" />
                                                 </div>
                                             </div>
@@ -202,17 +204,17 @@
                                     <td style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
-                                                <div class="RadioButton">
-                                                    <input [(ngModel)]="land" type="radio" id="land" value="land"
-                                                        (click)="TransportModeClicked('L')" name="TransportMode" [disabled]="IsImportDeclaration" [checked]="isTransportL"/>
-                                                    <label for="land" style="font-size:12px;"> יבשה </label>
-                                                    <img style="left:30px " class="CenterCenter"
+                                                <div>
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'land'" [IsChecked]="isTransportL && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('L')" [Text]="'יבשה'"></RadioButton>
+                                                    <img style="left:-90px " class="CenterCenter"
                                                         src="./Images/TransportModes/I.png" />
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                            </div>
+                                
                                 <tr style="height:150px">
                                     <td>
                                         <div></div>
@@ -226,14 +228,15 @@
                     </tr>
                 </table>
             </td>
-            <td [class.disabled]="!TransportmodeId" style="width: 700px;">
+            <td style="width: 700px;">
                 <table>
+      
                     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                         <td colspan="2">
                             <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
                         </td>
                     </tr>
-                    <tr> 
+                    <tr [class.disabled]="!TransportmodeId"> 
                         <td colspan="2">
                             <!--<div class="TableHolder" [class.NoPadding]="IsWindowMode">-->
                             <table style="height: 410px;padding-top: 10px;float:right;">
@@ -452,7 +455,7 @@
                     </tr>
 
 
-                    <tr *ngIf="!isExportConsignmentFetched">
+                    <tr *ngIf="!IsExportDeclaration">
                         <td colspan="5" style="padding-right: 10px; padding-left: 35px; height : 30%">
                             <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
@@ -501,7 +504,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="isExportConsignmentFetched">
+                    <tr *ngIf="IsExportDeclaration" [class.disabled]="!TransportmodeId">
                         <td colspan="2" style=" height: 100%;">
                             <div class="CellContent">
                                 <table style="width: 700px;height: 70px;float:right;">
@@ -700,7 +703,7 @@
                                         <div></div>
                                     </td>
                                     <!--[IsDisabled]="!OKButtonEnabled"-->
-                                    <td style="width: 57px;vertical-align: bottom;">
+                                    <td [class.disabled]="!TransportmodeId" style="width: 57px;vertical-align: bottom;">
                                         <button class="RedButton" (click)="OkButtonClicked()"
                                             [disabled]="!OKButtonEnabled">{{'General.B.Save' |
                                             TextCodeTranslationPipe}}</button>
@@ -709,7 +712,7 @@
                                         <div></div>
                                     </td>
                                     <!--[IsDisabled]="!SendButtonEnabled"-->
-                                    <td style="width:110px;  vertical-align: bottom;">
+                                    <td [class.disabled]="!TransportmodeId" style="width:110px;  vertical-align: bottom;">
                                         <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
                                             #MyCustomSendOptionsComponent
                                             (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">

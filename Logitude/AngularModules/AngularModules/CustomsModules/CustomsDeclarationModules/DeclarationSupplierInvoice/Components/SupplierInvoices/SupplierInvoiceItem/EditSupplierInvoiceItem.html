@@ -1668,7 +1668,7 @@
                                                                 </log-column>
 
                                                                 <!-- InvoiceNumber -->
-                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
+                                                                <log-column [header]="InvoiceNumberText | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template #logcelltemplate>
                                                                             <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">

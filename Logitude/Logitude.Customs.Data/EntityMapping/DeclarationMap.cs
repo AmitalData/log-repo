@@ -324,6 +324,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsExportClosed).HasColumnName("IsExportClosed");
 
             this.Property(t => t.ExportClosedErrorXML).HasColumnName("ExportClosedErrorXML").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.ExportLoadingPortCode).HasColumnName("ExportLoadingPortCode").HasMaxLength(10).IsUnicode(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using System;
@@ -29,7 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
               }
           }
       }
-        public List<int?> GetConsiPackageSequeList(string declarationid)
+        public List<ConsignmentPackage> GetConsiPackageSequeList(string declarationid)
         {
             DecCargoSplitConRepository DecCargoSplitConsRepository = new DecCargoSplitConRepository(context);
             return DecCargoSplitConsRepository.GetConsiPackageSequeList(declarationid);

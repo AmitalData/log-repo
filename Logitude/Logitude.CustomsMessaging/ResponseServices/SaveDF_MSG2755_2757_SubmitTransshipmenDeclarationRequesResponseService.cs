@@ -23,10 +23,11 @@ using Logitude.Customs.BL.Utils;
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesResponseService :
-        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
+            ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        private DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
+        
+        private DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService _DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService = new DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService();
         private INF_MSG_GenericResponseData _MyDefaultResponseData;
         //ITZIK+MIRT public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption { get; set; }
 
@@ -72,7 +73,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Entname = "CFIFILEM",
                         PrimaryNum = _MyDeclarationPM.CustomFileNo,
                     };
-                    if (customResponse.ResponseContentHeader!= null && customResponse.ResponseContentHeader.Exception!= null && customResponse.ResponseContentHeader.Exception.Count()>0)
+                    if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                     {
                         MyUnifreightEventParam.EventRemarks = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
 
@@ -100,33 +101,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse castCustomResponse =
                 Serializer.CastXML<UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse, DF_NG_2757_MSG10004_ExportDeclarationResponse>(customResponse);
 
-            var service = new DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService();
-            service.Update(castCustomResponse, requestParams);
+            _DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.Update(castCustomResponse, requestParams);
 
-            MyResponseData = service.MyResponseData;
+            MyResponseData = _DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.MyResponseData;
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
-            //var respose = _DF_NG_2754_MSG10004_ImportDeclarationResponseService.MyResponseData ?? _MyDefaultResponseData;
-            //return respose;
+            if (_MyDefaultResponseData == null && _DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService._DF_NG_2757_MSG10004_ExportDeclarationResponseService_GetOnly.MyResponseData != null)
+                _MyDefaultResponseData = _DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService._DF_NG_2757_MSG10004_ExportDeclarationResponseService_GetOnly.MyResponseData;
 
-            if (_MyDefaultResponseData == null && _DF_NG_2757_MSG10004_ExportDeclarationResponseService.MyResponseData != null)
-            {
-                this._MyDefaultResponseData = _DF_NG_2757_MSG10004_ExportDeclarationResponseService.MyResponseData;
-            }
-            else
-            {
-                //Send interactive declaration Status request
-                if (_MyDeclarationPM != null && !_MyDeclarationPM.IsCourierDeclaration)
-                {
-                    SendDeclarationStatus();
-                }
-            }
-            return this._MyDefaultResponseData;
+            else if (_MyDeclarationPM != null && !_MyDeclarationPM.IsCourierDeclaration)
+                SendDeclarationStatus();
+
+            return _MyDefaultResponseData;
         }
 
-        public void SendDeclarationStatus() 
+        public void SendDeclarationStatus()
         {
             try
             {

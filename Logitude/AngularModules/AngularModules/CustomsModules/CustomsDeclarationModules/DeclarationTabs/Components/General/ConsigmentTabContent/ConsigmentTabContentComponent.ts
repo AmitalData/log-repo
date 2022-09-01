@@ -356,6 +356,7 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportLoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CargoTypeCodeForExport", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ManifestDate", this.ObjectTableName, !this.IsDisplayOnly);
@@ -365,6 +366,7 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StorageSiteCodeExport", this.ObjectTableName, !this.IsDisplayOnly);
         if (this.declarationPM.TransportModeId != 'O') {
             this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, false);
         }
@@ -431,6 +433,14 @@ export class ConsigmentTabContentComponent
         this.SetTipsInsideCargoIdentifires(newValue);
         if (newValue == "17")
             this.LoadCouriersVat();        
+    }
+
+    public get CargoTypeCodeForExport() { return this.EntityPM ? this.EntityPM.CargoTypeCode : null; }
+    public set CargoTypeCodeForExport(newValue: string) {
+        this.EntityPM.CargoTypeCode = newValue;
+     
+    if(this.declarationPM.Direction=='E')
+        this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
     }
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
@@ -542,6 +552,9 @@ export class ConsigmentTabContentComponent
     public get StorageSiteCode() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
     public set StorageSiteCode(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
 
+    public get StorageSiteCodeExport() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
+    public set StorageSiteCodeExport(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
+
     public get LoadingPortCode() { return this.EntityPM ? this.EntityPM.LoadingPortCode : null; }
     public set LoadingPortCode(newValue: string) { this.EntityPM.LoadingPortCode = newValue; }
 
@@ -648,15 +661,16 @@ export class ConsigmentTabContentComponent
     //#endregion
 
     setRequired() {
+       
         if (this.declarationPM.Direction == 'E') {
             this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, true);
-            if (this.ManifestNumber != null) {
+            if (!AppTool.IsNullOrEmpty(this.ManifestNumber)) {
                 this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, false);
             }
 
             if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
                 this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, true);
-                if (this.SecondCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
                     this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
                 }
             } else {
@@ -664,14 +678,14 @@ export class ConsigmentTabContentComponent
             }
             if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
                 this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, true);
-                if (this.ThirdCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.ThirdCargoID)) {
                     this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
                 }
             } else {
                 this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
             }
         }
-    }
+    }   
     SetTipsInsideCargoIdentifires(value: string) {
 
          if (this.declarationPM.Direction == 'E') {

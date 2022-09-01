@@ -25,6 +25,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationListQueryService
     {
+    
+
 #if false
         private IQueryable<DeclarationList> GetIqueryableList_old(IQueryable<Declaration> iQueryable)
         {
@@ -165,7 +167,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     CourierPendingReasonName = tablecode1 != null ? tablecode1.LocalName : "רשימה"
                 }
                    );
-            
+
             */
 
             var qJoin =
@@ -284,9 +286,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
-            }
+            }         
 
-
+        
+          
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
@@ -306,12 +309,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
-
+                                              
+                                                
                                                  join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                             on a.AmendmentStatus equals AmendmentRequestStatus.Code
                                                             into qStatusAmendJoin
                                                  from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
-
+                                                
                                                      /*
                                                      join pr in qCourierPendingReasonLocalName
                                                      on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
@@ -506,11 +510,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueNIS = a.FOBValueNIS,
                                                      FOBValueDollar = a.FOBValueDollar,
 
-                                                     AmendmentStatusName=myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null
-
+                                                     AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
+                                                     ExportLoadingPortCode = a.ExportLoadingPortCode,
+                                                     LoadingPortName = a.ExportLoadingPort.LocalName,
+                                                    
                                                  });
 
-
+           
+          
                 return query;
         }
 
@@ -553,6 +560,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = iQueryable.Where(x => query1.Contains(x.Id));
             }
 
+            
             return iQueryable;
         }
         /*

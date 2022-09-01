@@ -526,6 +526,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string transportModeId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeId  
+	   {
+	    
+	     get
+		{
+		   return transportModeId;
+		 }
+		 set
+		 {
+		   if(transportModeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeId",OldValue=transportModeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

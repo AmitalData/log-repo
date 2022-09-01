@@ -403,6 +403,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationOrg != null && !isUpdateAfterAccept)
                 {
                     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMs = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, "Declaration");
+                    customsDocumentsTicketPMs.AddRange(customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, parentEntityCode :"ExportDeclarationClosingData"));
+
+
                     CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
 
                     foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMs)
@@ -879,7 +882,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                
             }
-
+         
             foreach (var item in declaration.GoodsShipment.OrderBy(x => x.SequenceNumeric))
             {
                 SupplierInvoicePM supplierInvoicePM = new SupplierInvoicePM()
@@ -1218,25 +1221,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             List<SupplierInvoiceItemsPricePM> SupplierInvoiceItemsPricePM = new List<SupplierInvoiceItemsPricePM>();
             
-            //SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(tenant);
-            //supplierInvoiceItemsPricePMS = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
+            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(tenant);
+            var AdditionalPriceTypeCodes = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPriceByDeclarationId(declarationId, tenant);
             
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
-           {
-               foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
+           { 
+                var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
+                foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
-                    if (GetValueCodeType(GoodsItemAmount.AmountType) != "1")
+                    var AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
+                    bool IsExist = SupplierInvoiceItemsPricePM.Any(x => x.AdditionalPriceTypeCode == GetValueCodeType(GoodsItemAmount.AmountType));
+                    
+                    if (!IsExist&&GetValueCodeType(GoodsItemAmount.AmountType) != "1" && GoodsItemAmount.CustomsValueAmount.currencyID.ToString()== cur)
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
-                        supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                        supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
 
+                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        else if(isFromImporter)
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                       
+                        supplierInvoiceItemsPrice.DeclarationId = declarationId;
+                       
+                        supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
+                       
                         supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
                         supplierInvoiceItemsPrice.Tenant = tenant;
                         SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
-                    }
-               }
+                        
+                    } 
+                    
+                }
             }
             return SupplierInvoiceItemsPricePM;
         }

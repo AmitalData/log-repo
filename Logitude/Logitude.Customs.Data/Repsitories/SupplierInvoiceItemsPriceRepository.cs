@@ -41,7 +41,16 @@ namespace Logitude.Customs.Data.Repsitories
 
             return query.ToList();
         }
- 
+        public List<string> GetSupplierInvoiceItemsPriceByDeclarationId(string declarationId, int tenant)
+        {
+            var query = (from a in context.SupplierInvoiceItemsPrices
+                         where a.DeclarationId == declarationId && a.Tenant == tenant
+                         select a.AdditionalPriceTypeCode).ToList();
+
+
+          
+            return query;
+        }
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {

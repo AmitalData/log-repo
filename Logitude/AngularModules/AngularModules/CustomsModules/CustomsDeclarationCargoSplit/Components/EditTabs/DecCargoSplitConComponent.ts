@@ -88,11 +88,24 @@ export class DecCargoSplitConComponent extends BaseComponent {
     ParentCargoConsinmentItemList: any;
     decCargoSplitConExtendedPMService: DecCargoSplitConExtendedPMService;
     DeclarationDirection: string;
+    IsDataFromFile: boolean=true;
     declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
 
-    RefreshTabs(direction) {
+    ChangeRequestReason(RequestReasonName , RequestReason){
+        for (let conItem of this.EntityPM.DecCargoSplitConsItems) {
+
+            if(conItem.RequestReasonName == null)
+            {
+                conItem.RequestReasonName = RequestReasonName;
+                conItem.RequestReasonCode = RequestReason; 
+            }
+        }
+    }
+
+    RefreshTabs(direction , isDataFromFile) {
         this.DeclarationDirection = direction;
+        this.IsDataFromFile= isDataFromFile;
         this.PreceduralFilterItems = new ApiQueryFilters();
         if (this.DeclarationDirection == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
@@ -101,7 +114,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean", false, false);
         }
         this.SetDisplayFields();
-        this.setParentCargoConsinmentItemList(false)
+        this.setParentCargoConsinmentItemList(false);
+        
     }
 
 
@@ -115,6 +129,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
                 this.SetClosedDeclarationCargoSplitScreesn(res.IsClosed);
             })
         );
+        this.DeclarationDirection = this.EntityPM.EntityParentPM.direction;
         this.PreceduralFilterItems = new ApiQueryFilters();
         if (!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.EntityParentPM.direction == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
@@ -178,26 +193,33 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
     }
     setParentCargoConsinmentItemList(isInsert:boolean=true) {
+
+        if(!(this.EntityPM?.EntityParentPM.direction !="E" &&  this.DeclarationDirection !="E" && this.declarationCargoSplitPM.Direction!="E"))
+            {
+
         if (this.declarationCargoSplitPM != null) {
             this.declarationExtendedListService = new DeclarationExtendedListService();
             this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
-                if (response.Result != null) {
+                if (response.Result != null &&  this.IsDataFromFile) {
 
                     this.DeclarationDirection = response.Result.Direction;
                     this.decCargoSplitConExtendedPMService = new DecCargoSplitConExtendedPMService();
                     this.decCargoSplitConExtendedPMService.GetConsiPackageSequeList(response.Result.Id).subscribe((responseCon: any) => {
                         if (responseCon != null) {
                             this.ParentCargoConsinmentItemList = responseCon.Result;
+                            if ((!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems) && !isInsert && this.ItemsList.Length == 0))  {
+                                this.AddItem();
+                            } 
                         }
                     });
                     this.SetDisplayFields();
                 }
             });
 
-        }
+        }}
         //this.PreceduralFilterItems = new ApiQueryFilters();
         this.IsClosed = this.declarationCargoSplitPM.IsClosed;
-        this.IsDisplayOnly = this.disabeld;
+        //this.IsDisplayOnly = this.disabeld;
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems)&& isInsert) {
             for (let conItem of this.EntityPM.DecCargoSplitConsItems) {
                 if (item != null && this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
@@ -225,11 +247,18 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, true);
             this.DisplayOnlyMessageVisibility = false;
         }
-        if (this.DeclarationDirection == "E") {
-            this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
+         if (this.DeclarationDirection == "E" || this.DeclarationDirection == "I") {
+             this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
+            if(this.EntityPM.EntityParentPM.responseStatusCode == "1" || this.EntityPM.EntityParentPM.responseStatusCode == "3" || this.EntityPM.EntityParentPM.responseStatusCode == "6"){
+
+                this.IsDisplayOnly = true
+
+            }
+
+
         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
-    }
+    } 
 
 
     SetClosedDeclarationCargoSplitScreesn(IsClosed: boolean) {
@@ -251,7 +280,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
             //}
 
 
-        }
+        } 
         else {
             this.IsClosed = false;
             /*
@@ -365,6 +394,10 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     AddItem() {
+
+        if(this.ParentCargoConsinmentItemList == null && this.DeclarationDirection =="E")
+            return;
+
         if (!this.IsDisplayOnly) {
             var counter: number = 0;
             if (this.EntityPM.DecCargoSplitConsItems.length > 0) {
@@ -381,20 +414,37 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
             var item: DecCargoSplitConsItemPM = new DecCargoSplitConsItemPM(this.EntityPM);
 
-            item.DeclarationCargoSplitId = this.EntityPM.DeclarationCargoSplitId;
-            item.Tenant = this.EntityPM.Tenant;
-            item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
-            item.ItemLine = counter;
-            if (this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
-                item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0];
+                    item.DeclarationCargoSplitId = this.EntityPM.DeclarationCargoSplitId;
+                    item.Tenant = this.EntityPM.Tenant;
+                    item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
+                    item.ItemLine = counter;
+                    if(this.DeclarationDirection == "E" && !AppTool.IsNullOrEmpty(item.EntityParentPM.entityParentPM.RequestReason))
+                    { 
+                        item.RequestReasonName = item.EntityParentPM.entityParentPM?.RequestReasonName;
+                        item.RequestReasonCode = item.EntityParentPM.entityParentPM?.RequestReason;
+
+                    }     
+            
+            if (this.ParentCargoConsinmentItemList?.length == 1) {
+                
+                    item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0]?.SequenceNumeric;
+                    if(this.DeclarationDirection == "E"){
+                        item.GrossMassMeasure = this.ParentCargoConsinmentItemList[0].GrossMassMeasure;
+                        item.CargoDescription = this.ParentCargoConsinmentItemList[0].MarksNumbers;                       
+                        
+                        
+                }
+
             }
+
             if (!this.EntityPM.DecCargoSplitConsItems.includes(item)) {
                 this.EntityPM.AddDecCargoSplitConsItem(item);
                 var line = new DecCargoSplitConsItemModel(item);
                 this.ItemsList.Insert(line);
             }
-
+            
         }
+        
 
     }
 
@@ -501,12 +551,21 @@ export class DecCargoSplitConComponent extends BaseComponent {
         //});
 
         //this.CurrentSession.CurrentEditComponent.SaveChanges();
-
+ 
     }
 
-    ParentCargoConsinmentItemSelectionChanged(item, value) {
-        if (item != null) {
-            item.ParentCargoConsinmentItem = value;
+    ParentCargoConsinmentItemSelectionChanged(currentItem, selectedValue) {
+
+        if (currentItem != null) {
+            var selectedItem = this.ParentCargoConsinmentItemList.filter(t => t.SequenceNumeric == selectedValue)[0];
+                    currentItem.ParentCargoConsinmentItem = selectedItem?.SequenceNumeric;
+                    currentItem.GrossMassMeasure = selectedItem?.GrossMassMeasure;
+                    currentItem.CargoDescription = selectedItem?.MarksNumbers;
+                    currentItem.RequestReasonCode=this.EntityPM.EntityParentPM?.RequestReason;
+                    currentItem.RequestReasonName=this.EntityPM.EntityParentPM?.RequestReasonName;
+                    
+
+
         }
     }
 
@@ -517,7 +576,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
             windowArgs.DecCargoSplitConsItemPM = item.EntityPM;
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
             windowArgs.DeclarationCargoSplitPM = this.declarationCargoSplitPM;
-            windowArgs.DeclarationDirection = this.DeclarationDirection
+            windowArgs.DeclarationDirection = this.DeclarationDirection;
+            windowArgs.IsDataFromFile = this.IsDataFromFile;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackages");
 
             var logWindow = new LogitudeWindow();

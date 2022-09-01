@@ -1,22 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Script DBType="Main" Module="Customs" >
+<Script DBType="Main" Module="Customs"  Pre="true">
 	<Sql Version="1">
 	</Sql>
 
 	<Oracle Version="1">
 		<![CDATA[
-EXECUTE IMMEDIATE ' alter table EXPORTSTORAGES add tmpEXPORTDEALIDENTIFICATION NCLOB';
-EXECUTE IMMEDIATE 'update EXPORTSTORAGES set tmpEXPORTDEALIDENTIFICATION=EXPORTDEALIDENTIFICATION';
-EXECUTE IMMEDIATE 'commit';
+		declare
+ n int := 0;
+begin
+  select count(*) into n FROM EXPORTSTORAGES;
+  if n = 0 then
 EXECUTE IMMEDIATE 'alter table EXPORTSTORAGES drop column EXPORTDEALIDENTIFICATION';
-EXECUTE IMMEDIATE 'alter table EXPORTSTORAGES rename column tmpEXPORTDEALIDENTIFICATION to EXPORTDEALIDENTIFICATION';
-
-
-EXECUTE IMMEDIATE ' alter table EXPORTSTORAGES add STORAGENO1 NCLOB';
-EXECUTE IMMEDIATE 'update EXPORTSTORAGES set STORAGENO1=STORAGENO';
-EXECUTE IMMEDIATE 'commit';
 EXECUTE IMMEDIATE 'alter table EXPORTSTORAGES drop column STORAGENO';
-EXECUTE IMMEDIATE 'alter table EXPORTSTORAGES rename column STORAGENO1 to STORAGENO';
+   end if;
+end;
     ]]>
 	</Oracle>
 </Script>

@@ -126,6 +126,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     IsValueForCustomsOnlyVisible: boolean = false;
     isInsurance: boolean = false;
     isFreightCharge: boolean = false;
+    TooltipCopy: string 
+    TooltipCertificate: string;
+    TooltipCar: string;
+    TooltipEdit: string;
+
 
     old_currency;
     old_amount;
@@ -182,15 +187,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     ngOnInit() {
         if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-
+            this.TooltipCopy = "שכפל שורה";
+            this.TooltipCertificate = "אישורים"
+            this.TooltipCar = "נתוני רכב";
+            this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
         }
     }
@@ -788,6 +788,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("BuyerName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DutyRegimeProtocolCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportModificationCurrency", this.ObjectTableName, !this.IsDisplayOnly);
 
@@ -879,16 +880,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
     public set AccountTypeCode(newValue: string) {
         this.EntityPM.AccountTypeCode = newValue;
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(this.BuyerName) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && newValue != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
     }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
@@ -908,23 +899,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
-    public set BuyerName(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
-
-        this.EntityPM.BuyerName = newValue;
-    }
+    public set BuyerName(newValue: string) { this.EntityPM.BuyerName = newValue; }
 
     public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-        if (this.allowExport) {
-            if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
-            else
-                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
-        }
         this.EntityPM.BuyerAddress = newValue;
     }
 
@@ -1438,7 +1416,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         confirm.ShowNoButton = true;
         confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
         confirm.WindowClosed.subscribe((event: any) => {
-            debugger
+
             if (confirm.Yes) {
                 confirm.Close();
                 for (let item of this.ItemsSource.Collection) {
@@ -3054,7 +3032,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = true;
             this.IsBlueBorderVisibile = true;
         }
-
 
         if (this.entityPM.ItemAdditionalStatus) {
             this.ItemAdditionalStatusVisibility = true;

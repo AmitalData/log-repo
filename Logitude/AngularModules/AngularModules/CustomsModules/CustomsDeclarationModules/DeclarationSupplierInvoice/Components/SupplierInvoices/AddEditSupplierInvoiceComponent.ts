@@ -1516,28 +1516,42 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
 
-        //if (this.declarationPM.Direction == 'E') {
+        if (this.declarationPM.Direction == 'E') {
         //    if (this.EntityPM.SupplierInvoicePayments == null || this.EntityPM.SupplierInvoicePayments.length == 0) {
         //        errors.push("חובה להזין פרטי תשלום- מסך נוספים");
 
         //    }
-        //    for (let item of this.EntityPM.SupplierInvoicePayments) {
+           for (let item of this.EntityPM.SupplierInvoicePayments) {
 
-        //        Validator.TryValidateObject(item, "Customs.SupplierInvoicePayment", errors);
+               Validator.TryValidateObject(item, "Customs.SupplierInvoicePayment", errors);
 
-        //        if (AppTool.IsNullOrEmpty(item.PaymentTypeCode)) {
-        //            errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentTypeCode"));
-        //        }
+               if (AppTool.IsNullOrEmpty(item.PaymentTypeCode)) {
+                   errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentTypeCode"));
+               }
 
-        //        else if (AppTool.IsNullOrEmpty(item.PaymentAmount)) {
-        //            errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentAmount"));
+                if (AppTool.IsNullOrEmpty(item.PaymentAmount)) {
+                   errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentAmount")); 
 
-        //        }
+               }
 
-        //    }
+           }
+           for (let item of this.EntityPM.SupplierInvoiceUCRs) {
+            Validator.TryValidateObject(item, "Customs.SupplierInvoiceUCR", errors);
 
-        //}
-      
+            if (AppTool.IsNullOrEmpty(item.SupplierChargeID)) {
+                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceUCR.F.SupplierChargeID"));
+            }
+
+            if (AppTool.IsNullOrEmpty(item.AgentChargeID)) {
+                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceUCR.F.AgentChargeID")); 
+
+            }
+
+
+           }
+           
+
+        }
         // SupplierInvoiceItem
         var emptyItems: string[] = [];
         for (let item of this.EntityPM.SupplierInvoiceItems) {
@@ -2238,7 +2252,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             var validationErrors = [];
 
             this.EntityPM.SupplierInvoiceModifications.forEach((mod) => {
-
+              
 
                 var typeCode = mod.TypeCode;
                 if (typeCode == "I02") {

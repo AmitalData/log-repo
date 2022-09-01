@@ -534,14 +534,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public get TaxationDateTime() { return this.EntityPM.TaxationDateTime; }
     public set TaxationDateTime(newValue: Date) {
         if (this.EntityPM.TaxationDateTime != newValue) {
-            this.EntityPM.ExportTaxationDateTime = newValue;
             this.EntityPM.TaxationDateTime = newValue;
         }
     }
-    public get ExportTaxationDateTime() { return this.EntityPM.ExportTaxationDateTime; }
+    public get ExportTaxationDateTime() { return this.EntityPM.TaxationDateTime; }
     public set ExportTaxationDateTime(newValue: Date) {
-        if (this.EntityPM.ExportTaxationDateTime != newValue) {
-            this.EntityPM.ExportTaxationDateTime = newValue;
+        if (this.EntityPM.TaxationDateTime != newValue) {
             this.EntityPM.TaxationDateTime = newValue;
         }
     }

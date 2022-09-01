@@ -144,7 +144,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 succeeded = true;
                 applicationId = customResponse.ResponseContentHeader.ApplicationID.ToString();
                 hasException = false;
-                exceptionMessage = "מענה לבקשת פיצול מטען נשלח בהצלחה";
+                exceptionMessage = "בקשה לפיצול מטען נשלחה בהצלחה";
                 string userMess = null;
 
                 if ((customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))

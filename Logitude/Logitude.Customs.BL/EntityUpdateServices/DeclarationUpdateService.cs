@@ -383,6 +383,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
+                    entityPM.ExportLoadingPortCode = consignment.ExportLoadingPortCode;
                     entityPM.StorageSiteCode = consignment.StorageSiteCode;
                     if (entityPM.IsCourierDeclaration)
                     {
@@ -3320,7 +3321,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public void UpdateHataraStatusByContarization(DeclarationPM entityPM, Declaration entityPOCO)
         {
             
-            if (entityPM.Direction == "E")
+            if (entityPM.Direction == "E" &&  entityPM.HatraDate!= entityPOCO.HatraDate)
             {
                 ICustomContext context = MainContext as CustomContext;
                 ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(context);
@@ -3329,12 +3330,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (!string.IsNullOrEmpty(x.ExportContainerizationID))
                     {
-                        ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
-                        var containerization = containerizationQueryService.GetSingle(x.ExportContainerizationID, false, true);
-                        containerization.HataraStatus = "1";
-                        containerization.ChangeSetOp = ChangeSetOperation.Update;
-                        ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        containerizationUpdateService.Update(containerization, true);
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+                        var listDec = declarationQueryService.GetByConsigmentExportContainerizationID(x.ExportContainerizationID, entityPM.Tenant);
+                        if (listDec.All(y => y.HatraDate.HasValue||y.Id == entityPM.Id))
+                        {
+                            ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
+                            var containerization = containerizationQueryService.GetSingle(x.ExportContainerizationID, false, true);
+                            containerization.HataraStatus = "1";
+                            containerization.ChangeSetOp = ChangeSetOperation.Update;
+                            ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            containerizationUpdateService.Update(containerization, true);
+                        }
                     }
 
                 });       
