@@ -2530,61 +2530,73 @@
     DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;MyCloseCheckBox&quot;"
-                       ColumnWidth="120" />
-
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;ExportFileNo&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;OperationalStatus&quot;"
-                       ColumnWidth="145" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;RequestDate&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
-                       ColumnWidth="125" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
-                       ColumnWidth="132" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="6"
-                       ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
-                       ColumnWidth="139" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="7"
-                       ObjectFieldName="&quot;RequestReason&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="8"
-                       ObjectFieldName="&quot;DeclarationNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="9"
-                       ObjectFieldName="&quot;TransportmodeId&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="10"
-                       ObjectFieldName="&quot;DecisionRmarks&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="11"
-                       ObjectFieldName="&quot;RequestNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;OpenImportCancelRequest&quot;"
-                       IndexOrder="12"
-                       ObjectFieldName="&quot;IsClosed&quot;"
-                       ColumnWidth="40" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;MyCloseCheckBox&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="125" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="132" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="139" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="40" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenImportCancelRequest&quot;"
@@ -2610,57 +2622,68 @@
     DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;ExportFileNo&quot;"
-                       ColumnWidth="100" />
-
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;OperationalStatus&quot;"
-                       ColumnWidth="145" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;RequestDate&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="6"
-                       ObjectFieldName="&quot;RequestReason&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="7"
-                       ObjectFieldName="&quot;DeclarationNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="8"
-                       ObjectFieldName="&quot;TransportmodeId&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="9"
-                       ObjectFieldName="&quot;DecisionRmarks&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="10"
-                       ObjectFieldName="&quot;RequestNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;ClosedImportCancelRequest&quot;"
-                       IndexOrder="11"
-                       ObjectFieldName="&quot;IsClosed&quot;"
-                       ColumnWidth="40" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="40" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
@@ -2686,57 +2709,68 @@
     DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;ExportFileNo&quot;"
-                       ColumnWidth="100" />
-
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;OperationalStatus&quot;"
-                       ColumnWidth="145" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;RequestDate&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="6"
-                       ObjectFieldName="&quot;RequestReason&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="7"
-                       ObjectFieldName="&quot;DeclarationNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="8"
-                       ObjectFieldName="&quot;TransportmodeId&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="9"
-                       ObjectFieldName="&quot;DecisionRmarks&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="10"
-                       ObjectFieldName="&quot;RequestNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;AllImportCancelRequest&quot;"
-                       IndexOrder="11"
-                       ObjectFieldName="&quot;IsClosed&quot;"
-                       ColumnWidth="40" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="40" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
   <Query
@@ -2754,57 +2788,68 @@
     DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;ExportFileNo&quot;"
-                       ColumnWidth="100" />
-
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;OperationalStatus&quot;"
-                       ColumnWidth="145" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;RequestDate&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="6"
-                       ObjectFieldName="&quot;RequestReason&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="7"
-                       ObjectFieldName="&quot;DeclarationNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="8"
-                       ObjectFieldName="&quot;TransportmodeId&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="9"
-                       ObjectFieldName="&quot;DecisionRmarks&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="10"
-                       ObjectFieldName="&quot;RequestNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsConnctedRequest&quot;"
-                       IndexOrder="11"
-                       ObjectFieldName="&quot;IsClosed&quot;"
-                       ColumnWidth="40" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="40" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
@@ -2830,57 +2875,68 @@
     DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;ExportFileNo&quot;"
-                       ColumnWidth="100" />
-
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;RequestDate&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;RequestReason&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="6"
-                       ObjectFieldName="&quot;DeclarationNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="7"
-                       ObjectFieldName="&quot;TransportmodeId&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="8"
-                       ObjectFieldName="&quot;OperationalStatus&quot;"
-                       ColumnWidth="145" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="9"
-                       ObjectFieldName="&quot;DecisionRmarks&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="10"
-                       ObjectFieldName="&quot;RequestNumber&quot;"
-                       ColumnWidth="100" />
-          <QueryColumn QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-                       IndexOrder="11"
-                       ObjectFieldName="&quot;IsClosed&quot;"
-                       ColumnWidth="40" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="40" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
@@ -2959,6 +3015,12 @@
       Code="&quot;Customs.LogisticActionRequest.O.FindDeclaration2&quot;"
       DefaultText="&quot;According to the file number, whether to make a link&quot;"
       LocalDefaultText="&quot;לפי מס' התיק , האם לבצע קישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.ChangeTransportType&quot;"
+      DefaultText="&quot;Are you interested in changing the shipping type&quot;"
+      LocalDefaultText="&quot;האם אתה מעוניין לשנות סוג שילוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

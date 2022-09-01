@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
   selector: 'app-edit-export-storage',
@@ -55,7 +56,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   }
 
 
-  public get ShipType() { return this.EntityPM.DeclarationId ? 'יצוא' : ''; }
+  public get ShipType() { return this.EntityPM.DeclarationId ? TextCodeTranslator.Translate('Customs.General.O.Export') : ''; }
   public get CargoTypeCodeName() { return this.EntityPM.CargoTypeCodeName; }
   public get CargoTypeName() { return this.EntityPM.CargoTypeName; }
   public get SecondCargoID() { return this.EntityPM.SecondCargoID; }
