@@ -5271,6 +5271,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     var shipmentPM = new ShipmentPM();
                     shipmentPM.Id = shipment.Id;
+                    shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
                     shipmentPM.Tenant = shipment.Tenant;
                     shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
                     shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
