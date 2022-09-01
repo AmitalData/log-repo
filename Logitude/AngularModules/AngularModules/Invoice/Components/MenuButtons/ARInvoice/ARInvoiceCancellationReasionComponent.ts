@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     templateUrl: './ARInvoiceCancellationReasionComponent.html',
@@ -10,6 +11,7 @@ export class ARInvoiceCancellationReasionComponent extends BaseComponent {
     public DataContext: ARInvoiceCancellationReasionComponent = this;
     public ObjectTableName: string = "ARInvoice";
     public SATCancelReasons: SATCancelReasonDetails[] = [];
+    public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -38,7 +40,13 @@ export class ARInvoiceCancellationReasionComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit(this.SelectdSATCancelReason.Code);
+        this.ValidationErrorsList = [];
+        if (!this.SelectdSATCancelReason || AppTool.IsNullOrEmpty(this.SelectdSATCancelReason.Code)) {
+            this.ValidationErrorsList.push("Cancel Reason is required.");
+        }
+        else {
+            this.CurrentSession.CloseCurrentWindowEmit(this.SelectdSATCancelReason.Code);
+        }
     }
 }
 
