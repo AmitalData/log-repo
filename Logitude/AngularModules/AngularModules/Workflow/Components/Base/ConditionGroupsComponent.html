@@ -175,14 +175,15 @@
 
                 <ConditionGroups *ngIf="Condition.conditions && Condition.conditions.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Condition.conditions"
-                    [IsRootConditions]="false"></ConditionGroups>
+                    [IsValidConditions]="IsValidConditions" [IsRootConditions]="false"
+                    (ConditionsChangedEvent)="emitConditionsChanged()"></ConditionGroups>
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
-                    <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+                    <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                         (click)="addCondition(conditionIndex, false)">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
-                    <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+                    <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
                         (click)="addCondition(conditionIndex, true)">
                         <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
@@ -194,11 +195,11 @@
         </div>
 
         <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
-            <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+            <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                 (click)="addCondition(null, false)">
                 <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
-            <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+            <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
                 (click)="addCondition(null, true)">
                 <span class="plus-sign">+</span><span>Add Group</span>
             </span>
