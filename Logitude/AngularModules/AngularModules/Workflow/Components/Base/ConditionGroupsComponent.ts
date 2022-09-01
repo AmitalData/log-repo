@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { BooleanItems } from "Workflow/Constants/BooleanItems";
@@ -20,6 +20,10 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() ShowChangedOperator: boolean = true;
     @Input() Conditions: Condition[];
     @Input() IsRootConditions: boolean = true;
+
+    @Input() IsValidConditions: boolean = true;
+
+    @Output() ConditionsChangedEvent = new EventEmitter();
 
     public ObjectFields: any = {};
 
@@ -48,6 +52,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     updateConditionGroupOperation(operationCode: string, conditionIndex: number) {
         if (operationCode !== this.Conditions[conditionIndex]?.groupOperation) {
             this.Conditions[conditionIndex].groupOperation = operationCode;
+
+            this.emitConditionsChanged();
         }
     }
 
@@ -63,6 +69,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+
+            this.emitConditionsChanged();
         }
     }
 
@@ -75,22 +83,28 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             }
 
             this.Conditions[conditionIndex].operator = operatorCode;
+
+            this.emitConditionsChanged();
         }
     }
 
     updateConditionValue(value: string, conditionIndex: number) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+
+            this.emitConditionsChanged();
         }
     }
 
     addCondition(conditionIndex: number, isGroup: boolean) {
-        if (this.isValidConditions()) {
+        if (this.IsValidConditions) {
             if (conditionIndex === null) {
                 this.Conditions.push(new Condition(isGroup));
             } else {
                 this.Conditions[conditionIndex].conditions.push(new Condition(isGroup));
             }
+
+            this.emitConditionsChanged();
         }
     }
 
@@ -105,6 +119,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         } else {
             this.Conditions.splice(conditionIndex, 1);
         }
+
+        this.emitConditionsChanged();
     }
 
     getObjectFieldsQueryFilters() {
@@ -113,24 +129,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         return apiQueryFilters;
     }
 
-    isValidConditions(conditions: Condition[] | null = null) {
-        let result = true;
-        for (let condition of (conditions || this.Conditions)) {
-            if (!condition.fieldCode || !condition.value) {
-                result = false;
-                break;
-            }
-            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
-                result = this.isValidConditions(condition.conditions);
-                if (!result) {
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     isNoValueOperator(operatorCode: string) {
         return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
+    }
+
+    emitConditionsChanged() {
+        this.ConditionsChangedEvent.emit();
     }
 }
