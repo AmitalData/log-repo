@@ -10,7 +10,7 @@
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" /> 
+      Nullable="false" />
   </Column>
   <Column
     Name="Tenant"
@@ -147,7 +147,7 @@
   <Column
     Name="OperationalStatus"
     Type="varchar"
-    Size="35">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -213,7 +213,12 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="ResponseStatusCode,OperationalStatus"
+    ForeignKeyColumn="ResponseStatusCode"
+    ReferencedTable="LogisticActionResponseReqSes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OperationalStatus"
     ReferencedTable="LogisticActionResponseReqSes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
