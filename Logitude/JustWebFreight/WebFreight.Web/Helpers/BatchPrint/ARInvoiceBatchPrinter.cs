@@ -36,11 +36,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             
             if (aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.ManifestInvoice && documentType.Code != DocumentTypeCodes.ManifestInvoice)
                 throw new Exception($"This invoice does not support the selected document type. Please print it with the 'Manifest Invoice' document type");
-
         }
-
         
-
         private ARInvoicePM GetARInvoicePM(PrintEntityKeys item)
         {
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(_batchPrinterArgs.Tenant);
