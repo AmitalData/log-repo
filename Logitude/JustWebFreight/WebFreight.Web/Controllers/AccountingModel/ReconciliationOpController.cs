@@ -668,20 +668,12 @@ tenant);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                 int tenant = authToken.Tenant;
-
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var createJournalReconcileService = new CreateJournalReconcileService();
-                var pm = createJournalReconcileService
-                    .Create(
-                    accountingContext, authToken.Tenant
-                    , ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
-
+                var pm = createJournalReconcileService.Create(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId
+                    , AdjustAccountId,AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
-
-
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -713,11 +705,9 @@ tenant);
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var createJournalReconcileService = new CreateJournalReconcileService();
                 var journals = createJournalReconcileService
-                    .CreateSplitJournals(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
-
+                    .CreateSplitJournals(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId, AdjustAccountId
+                    ,AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, journals);
-
                 return reponseMessage;
             }
             catch (Exception ex)
