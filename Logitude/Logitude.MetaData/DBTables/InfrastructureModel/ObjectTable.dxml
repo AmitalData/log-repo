@@ -355,7 +355,7 @@
   <Column
     Name="SplitComponentPath"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -413,10 +413,8 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <!--try fix-->
   <Column
     Name="AllowedInTicket"
-
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -454,6 +452,12 @@
     Size="50">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AvailableInCustomization"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"

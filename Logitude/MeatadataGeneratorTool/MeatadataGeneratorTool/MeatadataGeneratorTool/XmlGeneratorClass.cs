@@ -1016,6 +1016,7 @@ namespace MeatadataGeneratorTool
 
             SetAttribute("HasCustomFilter", table.HasCustomFilter.ToString().ToLower(), entityElement);
             SetAttribute("HasCustomFields", table.HasCustomFields.ToString().ToLower(), entityElement);
+            SetAttribute("AvailableInCustomization", table.AvailableInCustomization.ToString().ToLower(), entityElement);
 
             SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);

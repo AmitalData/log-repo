@@ -4,11 +4,12 @@
   ObjectTableName="&quot;TMProjectCategory&quot;"
   IsNew="true"
   DBTableName="&quot;TMProjectCategories&quot;"
-  OldDBTableName="&quot;TMProjectCategories&quot;"
+  DBTableOldNames="TMProjectCategories"
   ObjectTableSingular="&quot;TMProjectCategory&quot;"
   ObjectTablePlural="&quot;TMProjectCategories&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -48,24 +49,27 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2d87&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;872fd8ae-d006-43fd-b192-793c1d87834e&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -74,7 +78,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -82,6 +88,7 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -110,6 +117,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -123,16 +131,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;59c61ddf-5074-4229-bad5-6221ff4e5c92&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -141,7 +151,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -149,6 +161,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -177,6 +190,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -190,16 +204,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e279e903-25be-4870-b82e-07e190b25fec&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -208,7 +224,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -216,6 +234,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -244,6 +263,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -257,16 +277,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;3e884e8a-e87d-43b7-b2c6-ed7519b0cac4&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -275,7 +297,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -283,6 +307,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -311,6 +336,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -324,16 +350,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5a27e8c4-8ac4-4774-8574-f95c53c7a35c&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -342,7 +370,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -350,6 +380,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -378,6 +409,7 @@
     ListLableDefaultText="&quot;Inactive&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -391,12 +423,14 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;All Categories&quot;"
     TextCode="&quot;All Categories&quot;"
@@ -428,10 +462,10 @@
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;TMProjectCategory&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="2"
     IsReadOnly="false"
-    IsHeaderScreen="false">
+    IsHeaderScreen="false"
+    NumberOfColumns="1"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -448,10 +482,10 @@
   <Screen
     Name="&quot;TMProjectCategoryHeaderScreen&quot;"
     ObjectTableName="&quot;TMProjectCategory&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="1"
     IsReadOnly="true"
-    IsHeaderScreen="true">
+    IsHeaderScreen="true"
+    NumberOfColumns="1"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -469,7 +503,8 @@
     TextCode="&quot;TMProjectCategory.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;Events&quot;"
@@ -479,7 +514,8 @@
     TextCode="&quot;TMProjectCategory.TH.Events&quot;"
     IsPackagable="true"
     IndexOrder="1"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -536,4 +572,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

@@ -4,11 +4,12 @@
   ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CustomsCollaterals&quot;"
-  OldDBTableName="&quot;Customs.CustomsCollaterals&quot;"
+  DBTableOldNames="Customs.CustomsCollaterals"
   ObjectTableSingular="&quot;Customs Collateral&quot;"
   ObjectTablePlural="&quot;Customs Collaterals&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -51,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;f77e&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -63,7 +65,7 @@
   <field
     Id="&quot;6bc02f6f-6e56-4943-9276-cb002386b209&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -82,6 +84,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -110,6 +113,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -123,6 +127,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -133,7 +138,7 @@
   <field
     Id="&quot;e4f767af-ba83-4f98-aba9-a087a97efa99&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -152,6 +157,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -180,6 +186,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -193,6 +200,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -203,7 +211,7 @@
   <field
     Id="&quot;b07b2000-f5dd-4687-9028-035c553231e9&quot;"
     FieldName="&quot;CollateralRequestNumber&quot;"
-    OldFieldName="&quot;CollateralRequestNumber&quot;"
+    OldNames="CollateralRequestNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -222,6 +230,7 @@
     SystemMaxLength="9"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -252,6 +261,7 @@
     ListLocalDefaultText="&quot;מספר דרישה לבטוחה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -265,6 +275,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -275,7 +286,7 @@
   <field
     Id="&quot;8c266e33-bcfc-41bb-8490-6f2b77bb3a99&quot;"
     FieldName="&quot;RequestValidityDate&quot;"
-    OldFieldName="&quot;RequestValidityDate&quot;"
+    OldNames="RequestValidityDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -296,6 +307,7 @@
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeToRoutingString&quot;"
     DataTemplateName="&quot;RequestValidityDateDataTemplate&quot;"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -326,6 +338,7 @@
     ListLocalDefaultText="&quot;תוקף הדרישה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -339,6 +352,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -349,7 +363,7 @@
   <field
     Id="&quot;79c1c950-d3db-448b-8a6e-2a8e7f1dff59&quot;"
     FieldName="&quot;CollateralValidityDate&quot;"
-    OldFieldName="&quot;CollateralValidityDate&quot;"
+    OldNames="CollateralValidityDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -370,6 +384,7 @@
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeToRoutingString&quot;"
     DataTemplateName="&quot;CollateralValidityDateTemplate&quot;"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -400,6 +415,7 @@
     ListLocalDefaultText="&quot;תוקף בטוחה נדרש&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -413,6 +429,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -423,7 +440,7 @@
   <field
     Id="&quot;1b61ee07-c717-4d50-a21f-7b80c88cead7&quot;"
     FieldName="&quot;CollateralRequestStatusCode&quot;"
-    OldFieldName="&quot;CollateralRequestStatusCode&quot;"
+    OldNames="CollateralRequestStatusCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -443,6 +460,7 @@
     SystemMaxLength="2"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -474,8 +492,9 @@
     ListLocalDefaultText="&quot;סטטוס הדרישה לבטוחה&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="CollateralRequestStatus"
-    NavigationPropertyName="CollateralRequestStatus"
+    ForeignEntity="&quot;CollateralRequestStatus&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;CollateralRequestStatus&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -489,6 +508,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -499,7 +519,7 @@
   <field
     Id="&quot;301c7dc2-a8db-4d4d-9656-7caea2f7772b&quot;"
     FieldName="&quot;RequestedCollateralTypeCode&quot;"
-    OldFieldName="&quot;RequestedCollateralTypeCode&quot;"
+    OldNames="RequestedCollateralTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -519,6 +539,7 @@
     SystemMaxLength="2"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -550,8 +571,9 @@
     ListLocalDefaultText="&quot;סוג בטוחה נדרש&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="CollateralType"
-    NavigationPropertyName="RequestedCollateralType"
+    ForeignEntity="&quot;CollateralType&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;RequestedCollateralType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -565,6 +587,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -575,7 +598,7 @@
   <field
     Id="&quot;ec6d242d-55ae-44eb-8a80-6c89b03c9be8&quot;"
     FieldName="&quot;OrganizationUnitTypeCode&quot;"
-    OldFieldName="&quot;OrganizationUnitTypeCode&quot;"
+    OldNames="OrganizationUnitTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -595,6 +618,7 @@
     SystemMaxLength="5"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -626,8 +650,9 @@
     ListLocalDefaultText="&quot;יחידה מקצועית&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="OrganizationUnitType"
-    NavigationPropertyName="OrganizationUnitType"
+    ForeignEntity="&quot;OrganizationUnitType&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;OrganizationUnitType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -641,6 +666,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -651,7 +677,7 @@
   <field
     Id="&quot;b9d33ad4-962c-4563-be18-9eb03c980bbb&quot;"
     FieldName="&quot;CustomsHouseTypeCode&quot;"
-    OldFieldName="&quot;CustomsHouseTypeCode&quot;"
+    OldNames="CustomsHouseTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -671,6 +697,7 @@
     SystemMaxLength="17"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -702,8 +729,9 @@
     ListLocalDefaultText="&quot;בית מכס&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="CustomsHouseType"
-    NavigationPropertyName="CustomsHouseType"
+    ForeignEntity="&quot;CustomsHouseType&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;CustomsHouseType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -717,6 +745,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -727,7 +756,7 @@
   <field
     Id="&quot;1fbedf57-107a-4a00-9e9d-7ed69409019f&quot;"
     FieldName="&quot;WorkerName&quot;"
-    OldFieldName="&quot;WorkerName&quot;"
+    OldNames="WorkerName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -746,6 +775,7 @@
     SystemMaxLength="35"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -777,6 +807,7 @@
     ListLocalDefaultText="&quot;שם עובד מכס&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -790,6 +821,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -800,7 +832,7 @@
   <field
     Id="&quot;e015d7f8-43c7-4e6d-b324-b14dc42e222f&quot;"
     FieldName="&quot;Remarks&quot;"
-    OldFieldName="&quot;Remarks&quot;"
+    OldNames="Remarks"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -819,6 +851,7 @@
     SystemMaxLength="512"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -849,6 +882,7 @@
     ListLocalDefaultText="&quot;הערות המכס&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -862,6 +896,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -872,7 +907,7 @@
   <field
     Id="&quot;64424b4b-81e9-464f-91c7-98be7695ee70&quot;"
     FieldName="&quot;FileNo&quot;"
-    OldFieldName="&quot;FileNo&quot;"
+    OldNames="FileNo"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -891,6 +926,7 @@
     SystemMaxLength="35"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -922,6 +958,7 @@
     ListLocalDefaultText="&quot;מספר תיק סוכן&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -935,6 +972,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -945,7 +983,7 @@
   <field
     Id="&quot;986724eb-9645-403c-9f2b-0c2304360e0b&quot;"
     FieldName="&quot;CustomsEntityTypeCode&quot;"
-    OldFieldName="&quot;CustomsEntityTypeCode&quot;"
+    OldNames="CustomsEntityTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -964,6 +1002,7 @@
     SystemMaxLength="9"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -995,8 +1034,9 @@
     ListLocalDefaultText="&quot;סוג ישות&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="EntityTypeLookup"
-    NavigationPropertyName="EntityTypeLookup"
+    ForeignEntity="&quot;EntityTypeLookup&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;EntityTypeLookup&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1010,6 +1050,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1020,7 +1061,7 @@
   <field
     Id="&quot;c83cdf04-e560-4daa-aa66-feb2728f1991&quot;"
     FieldName="&quot;EntityIdKey1&quot;"
-    OldFieldName="&quot;EntityIdKey1&quot;"
+    OldNames="EntityIdKey1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1039,6 +1080,7 @@
     SystemMaxLength="35"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1070,6 +1112,7 @@
     ListLocalDefaultText="&quot;מזהה ישות ראשון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1083,6 +1126,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1093,7 +1137,7 @@
   <field
     Id="&quot;b8d34106-8e82-4c9e-871f-b62dfe7fc814&quot;"
     FieldName="&quot;EntityIdKey2&quot;"
-    OldFieldName="&quot;EntityIdKey2&quot;"
+    OldNames="EntityIdKey2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1112,6 +1156,7 @@
     SystemMaxLength="35"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1143,6 +1188,7 @@
     ListLocalDefaultText="&quot;מזהה ישות שני&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1156,6 +1202,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1166,7 +1213,7 @@
   <field
     Id="&quot;7b6f7308-98e6-4cbf-827a-3ca83c145830&quot;"
     FieldName="&quot;EntityIdKey3&quot;"
-    OldFieldName="&quot;EntityIdKey3&quot;"
+    OldNames="EntityIdKey3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1185,6 +1232,7 @@
     SystemMaxLength="35"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1216,6 +1264,7 @@
     ListLocalDefaultText="&quot;מזהה יישות שלישי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1229,6 +1278,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1239,7 +1289,7 @@
   <field
     Id="&quot;95d5a15b-87f8-416d-8672-876afab1d7e5&quot;"
     FieldName="&quot;CustomsCollateralsConditions&quot;"
-    OldFieldName="&quot;CustomsCollateralsConditions&quot;"
+    OldNames="CustomsCollateralsConditions"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1258,6 +1308,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1284,6 +1335,7 @@
     DefaultText="&quot;CustomsCollateralsConditions&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1300,6 +1352,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1310,7 +1363,7 @@
   <field
     Id="&quot;ca75f8a8-9f7b-4e04-aef5-37570b5219ff&quot;"
     FieldName="&quot;CustomsCollateralsAnswers&quot;"
-    OldFieldName="&quot;CustomsCollateralsAnswers&quot;"
+    OldNames="CustomsCollateralsAnswers"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1329,6 +1382,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1355,6 +1409,7 @@
     DefaultText="&quot;CustomsCollateralsAnswers&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1371,6 +1426,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1381,7 +1437,7 @@
   <field
     Id="&quot;48c7d195-738a-4272-813b-af35fa63f628&quot;"
     FieldName="&quot;CollateralRequestStatusName&quot;"
-    OldFieldName="&quot;CollateralRequestStatusName&quot;"
+    OldNames="CollateralRequestStatusName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1400,6 +1456,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1430,6 +1487,7 @@
     ListLocalDefaultText="&quot;שם סטטוס בקשה בטחונות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1443,6 +1501,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1453,7 +1512,7 @@
   <field
     Id="&quot;d206b494-6bae-413f-8da6-f95fa312336a&quot;"
     FieldName="&quot;RequestedCollateralTypeName&quot;"
-    OldFieldName="&quot;RequestedCollateralTypeName&quot;"
+    OldNames="RequestedCollateralTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1472,6 +1531,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1502,6 +1562,7 @@
     ListLocalDefaultText="&quot;ביקש סוג שם בטחונות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1515,6 +1576,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1525,7 +1587,7 @@
   <field
     Id="&quot;2b02ace5-be23-4b11-8cec-3e12dc5d8cb5&quot;"
     FieldName="&quot;CustomsEntityTypeName&quot;"
-    OldFieldName="&quot;CustomsEntityTypeName&quot;"
+    OldNames="CustomsEntityTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1544,6 +1606,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1572,6 +1635,7 @@
     ListLableDefaultText="&quot;Customs Entity Type &quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1585,6 +1649,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1595,7 +1660,7 @@
   <field
     Id="&quot;79fab0ce-cb54-47be-a023-f7318045e8b1&quot;"
     FieldName="&quot;IncludingThirdPartyGuarantee&quot;"
-    OldFieldName="&quot;IncludingThirdPartyGuarantee&quot;"
+    OldNames="IncludingThirdPartyGuarantee"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1614,6 +1679,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1645,6 +1711,7 @@
     ListLocalDefaultText="&quot; החלטת מכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1658,6 +1725,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1668,7 +1736,7 @@
   <field
     Id="&quot;82d787bb-539c-402c-86d6-689ca38e6993&quot;"
     FieldName="&quot;DeclarationId&quot;"
-    OldFieldName="&quot;DeclarationId&quot;"
+    OldNames="DeclarationId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1687,6 +1755,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="true"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1713,8 +1782,9 @@
     DefaultText="&quot;Declaration Id&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="Declaration"
-    NavigationPropertyName="Declaration"
+    ForeignEntity="&quot;Declaration&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;Declaration&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1728,6 +1798,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1738,7 +1809,7 @@
   <field
     Id="&quot;b2df724b-9ef4-4928-828f-3a1bca9cec3a&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1757,6 +1828,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1783,6 +1855,7 @@
     FullLocalDefaultText="&quot;מספר בטוחה , מזהה מטען , תיק עמילות , הצהרה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1796,6 +1869,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1806,7 +1880,7 @@
   <field
     Id="&quot;e9f08c66-409e-4e3b-9fb8-9be35073b706&quot;"
     FieldName="&quot;CustomsHouseTypeName&quot;"
-    OldFieldName="&quot;CustomsHouseTypeName&quot;"
+    OldNames="CustomsHouseTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1825,6 +1899,7 @@
     SystemMaxLength="40"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1855,6 +1930,7 @@
     ListLocalDefaultText="&quot;בית מכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1868,6 +1944,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1878,7 +1955,7 @@
   <field
     Id="&quot;9774d392-9a7c-4752-a236-f3a0f609ea96&quot;"
     FieldName="&quot;OrganizationUnitTypeName&quot;"
-    OldFieldName="&quot;OrganizationUnitTypeName&quot;"
+    OldNames="OrganizationUnitTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1897,6 +1974,7 @@
     SystemMaxLength="40"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1927,6 +2005,7 @@
     ListLocalDefaultText="&quot;יחידה מקצועית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1940,6 +2019,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1950,7 +2030,7 @@
   <field
     Id="&quot;d4efbdb0-5e39-4e16-a8ff-5fdf5144c4f8&quot;"
     FieldName="&quot;CreateDateTime&quot;"
-    OldFieldName="&quot;CreateDateTime&quot;"
+    OldNames="CreateDateTime"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1970,6 +2050,7 @@
     DisplayInList="true"
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeToRoutingString&quot;"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -2001,6 +2082,7 @@
     ListLocalDefaultText="&quot;תאריך יצירה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2014,6 +2096,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2024,7 +2107,7 @@
   <field
     Id="&quot;8c6fdc00-1e1d-4a10-a5d3-a3ca51e6e50e&quot;"
     FieldName="&quot;IsClosed&quot;"
-    OldFieldName="&quot;IsClosed&quot;"
+    OldNames="IsClosed"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2043,6 +2126,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -2074,6 +2158,7 @@
     ListLocalDefaultText="&quot;סגור&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2087,6 +2172,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2097,7 +2183,7 @@
   <field
     Id="&quot;e175c446-1d51-49b8-b9df-ca8c7b89ea86&quot;"
     FieldName="&quot;CustomerId&quot;"
-    OldFieldName="&quot;CustomerId&quot;"
+    OldNames="CustomerId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2116,6 +2202,7 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -2144,8 +2231,9 @@
     ListLableDefaultText="&quot;שם לקוח&quot;"
     IsNullable="true"
     IsForeignKey="true"
-    ForeignEntity="Customer"
-    NavigationPropertyName="Customer"
+    ForeignEntity="&quot;Customer&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;Customer&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2159,6 +2247,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2169,7 +2258,7 @@
   <field
     Id="&quot;02b59a10-f2be-40e0-b833-3b7f5910893c&quot;"
     FieldName="&quot;PaymentNumber&quot;"
-    OldFieldName="&quot;PaymentNumber&quot;"
+    OldNames="PaymentNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2188,6 +2277,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -2213,6 +2303,7 @@
     DefaultText="&quot;Payment Number&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2226,6 +2317,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2236,7 +2328,7 @@
   <field
     Id="&quot;4df04498-71e3-47e0-a208-1441202d0e47&quot;"
     FieldName="&quot;PaymentOrderId&quot;"
-    OldFieldName="&quot;PaymentOrderId&quot;"
+    OldNames="PaymentOrderId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2255,6 +2347,7 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -2280,6 +2373,7 @@
     DefaultText="&quot;PaymentOrder&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2293,6 +2387,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2303,7 +2398,7 @@
   <field
     Id="&quot;7649d6f3-1eab-42a5-b0bd-a7a4f3b05c5d&quot;"
     FieldName="&quot;CustomerName&quot;"
-    OldFieldName="&quot;CustomerName&quot;"
+    OldNames="CustomerName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2322,6 +2417,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -2353,6 +2449,7 @@
     ListLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2366,6 +2463,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2376,7 +2474,7 @@
   <field
     Id="&quot;af8f3aff-4f80-4a7a-aef9-77713d9a552a&quot;"
     FieldName="&quot;IsAnswer&quot;"
-    OldFieldName="&quot;IsAnswer&quot;"
+    OldNames="IsAnswer"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2395,6 +2493,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -2420,6 +2519,7 @@
     DefaultText="&quot;Is Answer&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2433,6 +2533,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2440,6 +2541,262 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;AllCollaterals&quot;"
+    TextCode="&quot;All Collaterals&quot;"
+    LocalTextCode="&quot;כל הבטוחות&quot;"
+    QueryGroupCode="&quot;CCQG&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.AllCollaterals&quot;"
+    FeatureCode="&quot;ALLCOLLATERALS&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.AllCollaterals&quot;"
+    FeatureDefaultText="&quot;All Collaterals&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllCollaterals&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;OpenCollaterals&quot;"
+    TextCode="&quot;Open Collaterals&quot;"
+    LocalTextCode="&quot;בטוחות פתוחות&quot;"
+    QueryGroupCode="&quot;CCQG&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.OpenCollaterals&quot;"
+    FeatureCode="&quot;OPENCOLLATERALS&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.OpenCollaterals&quot;"
+    FeatureDefaultText="&quot;Open Collaterals&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenCollaterals&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedCollaterals&quot;"
+    TextCode="&quot;Closed Collaterals&quot;"
+    LocalTextCode="&quot;בטוחות סגורות&quot;"
+    QueryGroupCode="&quot;CCQG&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.ClosedCollaterals&quot;"
+    FeatureCode="&quot;CLOSEDCOLLATERALS&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
+    FeatureDefaultText="&quot;Closed Collaterals&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Screen
+    Name="&quot;Customs.CustomsCollateralHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <EventTypes>
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+  </EventTypes>
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
@@ -2592,265 +2949,20 @@
     <Feature
       Code="&quot;GENERAL&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.General&quot;"
-      FeatureDefaultText="&quot;General&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;CLOSEDCOLLATERALS&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
+      FeatureDefaultText="&quot;Closed Collaterals&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
-      FeatureDefaultText="&quot;Closed Collaterals&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
-  <Query
-    Code="&quot;AllCollaterals&quot;"
-    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CustomsCollateral&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;CCQG&quot;"
-    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
-    LocalTextCode="&quot;כל הבטוחות&quot;"
-    TextCode="&quot;All Collaterals&quot;"
-    TextCodeCode="&quot;Customs.CustomsCollateral.Q.AllCollaterals&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;ALLCOLLATERALS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.AllCollaterals&quot;"
-    FeatureDefaultText="&quot;All Collaterals&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;RequestValidityDate&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey1&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey2&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey3&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;AllCollaterals&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Query
-    Code="&quot;OpenCollaterals&quot;"
-    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CustomsCollateral&quot;"
-    IndexOrder="1"
-    QueryGroupCode="&quot;CCQG&quot;"
-    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
-    LocalTextCode="&quot;בטוחות פתוחות&quot;"
-    TextCode="&quot;Open Collaterals&quot;"
-    TextCodeCode="&quot;Customs.CustomsCollateral.Q.OpenCollaterals&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;OPENCOLLATERALS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.OpenCollaterals&quot;"
-    FeatureDefaultText="&quot;Open Collaterals&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;RequestValidityDate&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey1&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey2&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey3&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;OpenCollaterals&quot;" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter
-        QueryCode="&quot;OpenCollaterals&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        PredefinedValue="&quot;false&quot;" />
-    </QueryFilters>
-  </Query>
-  <Query
-    Code="&quot;ClosedCollaterals&quot;"
-    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CustomsCollateral&quot;"
-    IndexOrder="2"
-    QueryGroupCode="&quot;CCQG&quot;"
-    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
-    LocalTextCode="&quot;בטוחות סגורות&quot;"
-    TextCode="&quot;Closed Collaterals&quot;"
-    TextCodeCode="&quot;Customs.CustomsCollateral.Q.ClosedCollaterals&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CLOSEDCOLLATERALS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
-    FeatureDefaultText="&quot;Closed Collaterals&quot;"
-    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;RequestValidityDate&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;CustomerName&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey1&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey2&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EntityIdKey3&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        QueryCode="&quot;ClosedCollaterals&quot;" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter
-        QueryCode="&quot;ClosedCollaterals&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        PredefinedValue="&quot;true&quot;" />
-    </QueryFilters>
-  </Query>
-  <EventTypes>
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
-      EnglishName="&quot;Created&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
-      EnglishName="&quot;Updated&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-  </EventTypes>
 </entity>

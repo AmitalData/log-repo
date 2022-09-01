@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;Cards&quot;"
   HasCustomFilter="true"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
