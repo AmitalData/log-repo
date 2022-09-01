@@ -19672,6 +19672,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
+
     Id="&quot;cc2ba802-af56-41e5-b6d7-136c94923cd1&quot;"
     FieldName="&quot;CargoTypeCode&quot;"
     OldNames="CargoTypeCode"

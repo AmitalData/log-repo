@@ -2975,8 +2975,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     private OnContainerizationWindowClosed($event: any) {
 
+
          if($event!=null && $event!="0"&& $event!="cancel"){
             var item = this.CurrentQueryFilters.AdditionalFilters.filter(d=> d.FieldName == "Id")[0];
+
             if (item) {
                 var index = this.CurrentQueryFilters.AdditionalFilters.indexOf(item);
                 this.CurrentQueryFilters.AdditionalFilters.splice(index, 1);
