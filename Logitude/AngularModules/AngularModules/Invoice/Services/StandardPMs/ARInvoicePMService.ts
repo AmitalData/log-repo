@@ -13,189 +13,186 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
+import { ARInvoicePM } from '../../EntityPMs/ARInvoicePM';
 
-import {ARInvoiceLinePM} from '../../EntityPMs/ARInvoiceLinePM';
-import {ARInvoiceEntityPM} from '../../EntityPMs/ARInvoiceEntityPM';
-import {ARInvoicePaymentPM} from '../../EntityPMs/ARInvoicePaymentPM';
-import {ARInvoiceTransferHistoryPM} from '../../EntityPMs/ARInvoiceTransferHistoryPM';
-import {ConstituentPM} from '../../EntityPMs/ConstituentPM';
-import {ARInvoiceTotalVATPM} from '../../EntityPMs/ARInvoiceTotalVATPM';
-import {ARInvoicePMInitService} from '../../EntityPMInitServices/ARInvoicePMInitService';
-import {ARInvoiceValidator} from '../../Validators/ARInvoiceValidator';
+import { ARInvoiceLinePM } from '../../EntityPMs/ARInvoiceLinePM';
+import { ARInvoiceEntityPM } from '../../EntityPMs/ARInvoiceEntityPM';
+import { ARInvoicePaymentPM } from '../../EntityPMs/ARInvoicePaymentPM';
+import { ARInvoiceTransferHistoryPM } from '../../EntityPMs/ARInvoiceTransferHistoryPM';
+import { ConstituentPM } from '../../EntityPMs/ConstituentPM';
+import { ARInvoiceTotalVATPM } from '../../EntityPMs/ARInvoiceTotalVATPM';
+import { ARInvoicePMInitService } from '../../EntityPMInitServices/ARInvoicePMInitService';
+import { ARInvoiceValidator } from '../../Validators/ARInvoiceValidator';
 
 @Injectable()
 
 export class ARInvoicePMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arinvoices';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arinvoices';
     }
 
-	get(id: string) {       
+    get(id: string) {
 
-		var callTime = new Date();		
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-				
-						var entity: ARInvoicePM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-                      ARInvoicePMInitService.InitValues(entity, false);
-                      ARInvoicePMInitService.ApplyUIPoperties(entity, false);
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
-              
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "GetSinglePM", 'id=' + id);
-				 
-						return serviceResponse;
+                        var entity: ARInvoicePM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                            ARInvoicePMInitService.InitValues(entity, false);
+                            ARInvoicePMInitService.ApplyUIPoperties(entity, false);
+                        }
 
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});                    
-	}
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-	insert(entityPM: ARInvoicePM) {
- 
-		var callTime = new Date();  
-		
-		return defer(() => {
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "GetSinglePM", 'id=' + id);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("ARInvoice", entityPM);
+                        return serviceResponse;
 
-			var customValidator :ARInvoiceValidator = new ARInvoiceValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+                    }),
 
-			if (errorsArray.length == 0) {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-				var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+    insert(entityPM: ARInvoicePM) {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ARInvoicePM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+        var callTime = new Date();
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+        return defer(() => {
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ARInvoice", entityPM);
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            var customValidator: ARInvoiceValidator = new ARInvoiceValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
-	update(entityPM: ARInvoicePM) {
+            if (errorsArray.length == 0) {
 
-		var callTime = new Date();     
-		
-		return defer(() => {
+                var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("ARInvoice", entityPM);
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-			var customValidator :ARInvoiceValidator = new ARInvoiceValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ARInvoicePM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-			if (errorsArray.length == 0) {
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "SaveChanges", "");
 
-				var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-                 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ARInvoicePM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
-							 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "SaveChanges", "");                    
-					                           
-							return serviceResponse;
-						}),
+                            return serviceResponse;
+                        }),
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                        catchError(ServiceHelper.HandleServiceError));
+            }
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
 
-   
+    update(entityPM: ARInvoicePM) {
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARInvoicePM = null) {
+        var callTime = new Date();
 
-         
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ARInvoice", entityPM);
+
+            var customValidator: ARInvoiceValidator = new ARInvoiceValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
+
+            if (errorsArray.length == 0) {
+
+                var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ARInvoicePM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARInvoicePM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new ARInvoicePM();
-			entityPM.DisableMarkAsDirty = true;
+            entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -204,82 +201,82 @@ export class ARInvoicePMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapInvoiceLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapInvoiceEntities(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapInvoicePayments(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapInvoiceTransfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapConstituentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapInvoiceLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapInvoiceEntities(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapInvoicePayments(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapInvoiceTransfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapConstituentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.InvoiceLines = [];
             for (var item in entityPM.InvoiceLines) {
-            var myARInvoiceLinePM = entityPM.InvoiceLines[item];
-            var newARInvoiceLinePM: ARInvoiceLinePM = this.clone(myARInvoiceLinePM);
-						
-							 
-            entityPM.OldEntityPM.InvoiceLines.push(newARInvoiceLinePM);
+                var myARInvoiceLinePM = entityPM.InvoiceLines[item];
+                var newARInvoiceLinePM: ARInvoiceLinePM = this.clone(myARInvoiceLinePM);
+
+
+                entityPM.OldEntityPM.InvoiceLines.push(newARInvoiceLinePM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.InvoiceEntities = [];
             for (var item in entityPM.InvoiceEntities) {
-            var myARInvoiceEntityPM = entityPM.InvoiceEntities[item];
-            var newARInvoiceEntityPM: ARInvoiceEntityPM = this.clone(myARInvoiceEntityPM);
-						
-							 
-            entityPM.OldEntityPM.InvoiceEntities.push(newARInvoiceEntityPM);
+                var myARInvoiceEntityPM = entityPM.InvoiceEntities[item];
+                var newARInvoiceEntityPM: ARInvoiceEntityPM = this.clone(myARInvoiceEntityPM);
+
+
+                entityPM.OldEntityPM.InvoiceEntities.push(newARInvoiceEntityPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.InvoicePayments = [];
             for (var item in entityPM.InvoicePayments) {
-            var myARInvoicePaymentPM = entityPM.InvoicePayments[item];
-            var newARInvoicePaymentPM: ARInvoicePaymentPM = this.clone(myARInvoicePaymentPM);
-						
-							 
-            entityPM.OldEntityPM.InvoicePayments.push(newARInvoicePaymentPM);
+                var myARInvoicePaymentPM = entityPM.InvoicePayments[item];
+                var newARInvoicePaymentPM: ARInvoicePaymentPM = this.clone(myARInvoicePaymentPM);
+
+
+                entityPM.OldEntityPM.InvoicePayments.push(newARInvoicePaymentPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.InvoiceTransfers = [];
             for (var item in entityPM.InvoiceTransfers) {
-            var myARInvoiceTransferHistoryPM = entityPM.InvoiceTransfers[item];
-            var newARInvoiceTransferHistoryPM: ARInvoiceTransferHistoryPM = this.clone(myARInvoiceTransferHistoryPM);
-						
-							 
-            entityPM.OldEntityPM.InvoiceTransfers.push(newARInvoiceTransferHistoryPM);
+                var myARInvoiceTransferHistoryPM = entityPM.InvoiceTransfers[item];
+                var newARInvoiceTransferHistoryPM: ARInvoiceTransferHistoryPM = this.clone(myARInvoiceTransferHistoryPM);
+
+
+                entityPM.OldEntityPM.InvoiceTransfers.push(newARInvoiceTransferHistoryPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.ConstituentInvoices = [];
             for (var item in entityPM.ConstituentInvoices) {
-            var myConstituentPM = entityPM.ConstituentInvoices[item];
-            var newConstituentPM: ConstituentPM = this.clone(myConstituentPM);
-						
-							 
-            entityPM.OldEntityPM.ConstituentInvoices.push(newConstituentPM);
+                var myConstituentPM = entityPM.ConstituentInvoices[item];
+                var newConstituentPM: ConstituentPM = this.clone(myConstituentPM);
+
+
+                entityPM.OldEntityPM.ConstituentInvoices.push(newConstituentPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.TotalVATs = [];
             for (var item in entityPM.TotalVATs) {
-            var myARInvoiceTotalVATPM = entityPM.TotalVATs[item];
-            var newARInvoiceTotalVATPM: ARInvoiceTotalVATPM = this.clone(myARInvoiceTotalVATPM);
-						
-							 
-            entityPM.OldEntityPM.TotalVATs.push(newARInvoiceTotalVATPM);
+                var myARInvoiceTotalVATPM = entityPM.TotalVATs[item];
+                var newARInvoiceTotalVATPM: ARInvoiceTotalVATPM = this.clone(myARInvoiceTotalVATPM);
+
+
+                entityPM.OldEntityPM.TotalVATs.push(newARInvoiceTotalVATPM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
     }
@@ -298,33 +295,32 @@ export class ARInvoicePMService {
                 continue;
             }
             var newARInvoiceLinePM: ARInvoiceLinePM;
-	  
+
             if (mapParent) {
                 newARInvoiceLinePM = new ARInvoiceLinePM(entityPM);
             }
-            else
-            {
+            else {
                 newARInvoiceLinePM = new ARInvoiceLinePM(null);
             }
- 			newARInvoiceLinePM.DisableMarkAsDirty = true;
-               
+            newARInvoiceLinePM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-				                  var pmProperty = pmKeysArray[pmKey];
+                var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceLinePM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newARInvoiceLinePM.UniqueKey = Guid.newGuid();
                 newARInvoiceLinePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newARInvoiceLinePM.OldEntityPM = this.clone(newARInvoiceLinePM);
 
-				
+
             }
             else {
                 if (newARInvoiceLinePM.UniqueKey) {
@@ -333,27 +329,27 @@ export class ARInvoicePMService {
                         newARInvoiceLinePM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARInvoiceLinePM.ChangeSetOp = "Insert";
+                    newARInvoiceLinePM.ChangeSetOp = "Insert";
                 }
- 
+
                 newARInvoiceLinePM.OldEntityPM = null;
                 newARInvoiceLinePM.EntityParentPM = null;
             }
-			 newARInvoiceLinePM.DisableMarkAsDirty = false;
-			 newARInvoiceLinePM.IsDirty = false;
+            newARInvoiceLinePM.DisableMarkAsDirty = false;
+            newARInvoiceLinePM.IsDirty = false;
             entityPM.InvoiceLines.push(newARInvoiceLinePM);
         }
         if (oldInvoiceLines) {
-            
+
             for (var itemKey in oldInvoiceLines) {
-                if (entityPM.InvoiceLines.filter(p=> p.UniqueKey === oldInvoiceLines[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.InvoiceLines.filter(p => p.UniqueKey === oldInvoiceLines[itemKey].UniqueKey).length === 0) {
+
                     if (oldInvoiceLines[itemKey]) {
                         //oldInvoiceLines[itemKey].ChangeSetOp = "Delete";
                         //entityPM.InvoiceLines.push(oldInvoiceLines[itemKey]);
-						var oldItemJson = oldInvoiceLines[itemKey];
+                        var oldItemJson = oldInvoiceLines[itemKey];
                         var deletedPM: ARInvoiceLinePM = new ARInvoiceLinePM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -365,10 +361,10 @@ export class ARInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.InvoiceLines.push(deletedPM);
                     }
@@ -387,17 +383,17 @@ export class ARInvoicePMService {
             }
             var newARInvoiceEntityPM: ARInvoiceEntityPM;
             newARInvoiceEntityPM = new ARInvoiceEntityPM();
-		    newARInvoiceEntityPM.DisableMarkAsDirty = true;                
+            newARInvoiceEntityPM.DisableMarkAsDirty = true;
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceEntityPM[pmProperty] = jItem[pmProperty];
             }
-			newARInvoiceEntityPM.DisableMarkAsDirty = false;
+            newARInvoiceEntityPM.DisableMarkAsDirty = false;
             newARInvoiceEntityPM.IsDirty = false;
             entityPM.InvoiceEntities.push(newARInvoiceEntityPM);
         }
@@ -416,33 +412,32 @@ export class ARInvoicePMService {
                 continue;
             }
             var newARInvoicePaymentPM: ARInvoicePaymentPM;
-	  
+
             if (mapParent) {
                 newARInvoicePaymentPM = new ARInvoicePaymentPM(entityPM);
             }
-            else
-            {
+            else {
                 newARInvoicePaymentPM = new ARInvoicePaymentPM(null);
             }
- 			newARInvoicePaymentPM.DisableMarkAsDirty = true;
-               
+            newARInvoicePaymentPM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-				                  var pmProperty = pmKeysArray[pmKey];
+                var pmProperty = pmKeysArray[pmKey];
                 newARInvoicePaymentPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newARInvoicePaymentPM.UniqueKey = Guid.newGuid();
                 newARInvoicePaymentPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newARInvoicePaymentPM.OldEntityPM = this.clone(newARInvoicePaymentPM);
 
-				
+
             }
             else {
                 if (newARInvoicePaymentPM.UniqueKey) {
@@ -451,27 +446,27 @@ export class ARInvoicePMService {
                         newARInvoicePaymentPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARInvoicePaymentPM.ChangeSetOp = "Insert";
+                    newARInvoicePaymentPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newARInvoicePaymentPM.OldEntityPM = null;
                 newARInvoicePaymentPM.EntityParentPM = null;
             }
-			 newARInvoicePaymentPM.DisableMarkAsDirty = false;
-			 newARInvoicePaymentPM.IsDirty = false;
+            newARInvoicePaymentPM.DisableMarkAsDirty = false;
+            newARInvoicePaymentPM.IsDirty = false;
             entityPM.InvoicePayments.push(newARInvoicePaymentPM);
         }
         if (oldInvoicePayments) {
-            
+
             for (var itemKey in oldInvoicePayments) {
-                if (entityPM.InvoicePayments.filter(p=> p.UniqueKey === oldInvoicePayments[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.InvoicePayments.filter(p => p.UniqueKey === oldInvoicePayments[itemKey].UniqueKey).length === 0) {
+
                     if (oldInvoicePayments[itemKey]) {
                         //oldInvoicePayments[itemKey].ChangeSetOp = "Delete";
                         //entityPM.InvoicePayments.push(oldInvoicePayments[itemKey]);
-						var oldItemJson = oldInvoicePayments[itemKey];
+                        var oldItemJson = oldInvoicePayments[itemKey];
                         var deletedPM: ARInvoicePaymentPM = new ARInvoicePaymentPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -483,10 +478,10 @@ export class ARInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.InvoicePayments.push(deletedPM);
                     }
@@ -505,17 +500,17 @@ export class ARInvoicePMService {
             }
             var newARInvoiceTransferHistoryPM: ARInvoiceTransferHistoryPM;
             newARInvoiceTransferHistoryPM = new ARInvoiceTransferHistoryPM();
-		    newARInvoiceTransferHistoryPM.DisableMarkAsDirty = true;                
+            newARInvoiceTransferHistoryPM.DisableMarkAsDirty = true;
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceTransferHistoryPM[pmProperty] = jItem[pmProperty];
             }
-			newARInvoiceTransferHistoryPM.DisableMarkAsDirty = false;
+            newARInvoiceTransferHistoryPM.DisableMarkAsDirty = false;
             newARInvoiceTransferHistoryPM.IsDirty = false;
             entityPM.InvoiceTransfers.push(newARInvoiceTransferHistoryPM);
         }
@@ -534,34 +529,33 @@ export class ARInvoicePMService {
                 continue;
             }
             var newConstituentPM: ConstituentPM;
-	  
+
             if (mapParent) {
                 newConstituentPM = new ConstituentPM(entityPM);
             }
-            else
-            {
+            else {
                 newConstituentPM = new ConstituentPM(null);
             }
- 			newConstituentPM.DisableMarkAsDirty = true;
-               
+            newConstituentPM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-				                  var pmProperty = pmKeysArray[pmKey];
+                var pmProperty = pmKeysArray[pmKey];
                 newConstituentPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newConstituentPM.UniqueKey = Guid.newGuid();
                 newConstituentPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newConstituentPM.OldEntityPM = this.clone(newConstituentPM);
-//file not found! child composition Constituent
+                //file not found! child composition Constituent
 
-				
+
             }
             else {
                 if (newConstituentPM.UniqueKey) {
@@ -570,28 +564,28 @@ export class ARInvoicePMService {
                         newConstituentPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newConstituentPM.ChangeSetOp = "Insert";
+                    newConstituentPM.ChangeSetOp = "Insert";
                 }
-//file not found! child composition Constituent
- 
+                //file not found! child composition Constituent
+
                 newConstituentPM.OldEntityPM = null;
                 newConstituentPM.EntityParentPM = null;
             }
-			 newConstituentPM.DisableMarkAsDirty = false;
-			 newConstituentPM.IsDirty = false;
+            newConstituentPM.DisableMarkAsDirty = false;
+            newConstituentPM.IsDirty = false;
             entityPM.ConstituentInvoices.push(newConstituentPM);
         }
         if (oldConstituentInvoices) {
-            
+
             for (var itemKey in oldConstituentInvoices) {
-                if (entityPM.ConstituentInvoices.filter(p=> p.UniqueKey === oldConstituentInvoices[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.ConstituentInvoices.filter(p => p.UniqueKey === oldConstituentInvoices[itemKey].UniqueKey).length === 0) {
+
                     if (oldConstituentInvoices[itemKey]) {
                         //oldConstituentInvoices[itemKey].ChangeSetOp = "Delete";
                         //entityPM.ConstituentInvoices.push(oldConstituentInvoices[itemKey]);
-						var oldItemJson = oldConstituentInvoices[itemKey];
+                        var oldItemJson = oldConstituentInvoices[itemKey];
                         var deletedPM: ConstituentPM = new ConstituentPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -603,11 +597,11 @@ export class ARInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
-//file not found! child composition Constituent
+
+                        //file not found! child composition Constituent
                         deletedPM.OldEntityPM = null;
                         entityPM.ConstituentInvoices.push(deletedPM);
                     }
@@ -615,7 +609,7 @@ export class ARInvoicePMService {
             }
         }
     }
-//file not found! for child composition Constituent
+    //file not found! for child composition Constituent
     MapTotalVATs(entityPM: ARInvoicePM, jsonPM: any, mapParent: boolean = true) {
 
         var oldTotalVATs: ARInvoiceTotalVATPM[] = [];
@@ -630,33 +624,32 @@ export class ARInvoicePMService {
                 continue;
             }
             var newARInvoiceTotalVATPM: ARInvoiceTotalVATPM;
-	  
+
             if (mapParent) {
                 newARInvoiceTotalVATPM = new ARInvoiceTotalVATPM(entityPM);
             }
-            else
-            {
+            else {
                 newARInvoiceTotalVATPM = new ARInvoiceTotalVATPM(null);
             }
- 			newARInvoiceTotalVATPM.DisableMarkAsDirty = true;
-               
+            newARInvoiceTotalVATPM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-				                  var pmProperty = pmKeysArray[pmKey];
+                var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceTotalVATPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newARInvoiceTotalVATPM.UniqueKey = Guid.newGuid();
                 newARInvoiceTotalVATPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newARInvoiceTotalVATPM.OldEntityPM = this.clone(newARInvoiceTotalVATPM);
 
-				
+
             }
             else {
                 if (newARInvoiceTotalVATPM.UniqueKey) {
@@ -665,27 +658,27 @@ export class ARInvoicePMService {
                         newARInvoiceTotalVATPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARInvoiceTotalVATPM.ChangeSetOp = "Insert";
+                    newARInvoiceTotalVATPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newARInvoiceTotalVATPM.OldEntityPM = null;
                 newARInvoiceTotalVATPM.EntityParentPM = null;
             }
-			 newARInvoiceTotalVATPM.DisableMarkAsDirty = false;
-			 newARInvoiceTotalVATPM.IsDirty = false;
+            newARInvoiceTotalVATPM.DisableMarkAsDirty = false;
+            newARInvoiceTotalVATPM.IsDirty = false;
             entityPM.TotalVATs.push(newARInvoiceTotalVATPM);
         }
         if (oldTotalVATs) {
-            
+
             for (var itemKey in oldTotalVATs) {
-                if (entityPM.TotalVATs.filter(p=> p.UniqueKey === oldTotalVATs[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.TotalVATs.filter(p => p.UniqueKey === oldTotalVATs[itemKey].UniqueKey).length === 0) {
+
                     if (oldTotalVATs[itemKey]) {
                         //oldTotalVATs[itemKey].ChangeSetOp = "Delete";
                         //entityPM.TotalVATs.push(oldTotalVATs[itemKey]);
-						var oldItemJson = oldTotalVATs[itemKey];
+                        var oldItemJson = oldTotalVATs[itemKey];
                         var deletedPM: ARInvoiceTotalVATPM = new ARInvoiceTotalVATPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -697,10 +690,10 @@ export class ARInvoicePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.TotalVATs.push(deletedPM);
                     }
@@ -709,13 +702,13 @@ export class ARInvoicePMService {
         }
     }
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -727,16 +720,16 @@ export class ARInvoicePMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: ARInvoicePM;
-			entityPM = new ARInvoicePM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
+    public GetNewEntityPM() {
+        var entityPM: ARInvoicePM;
+        entityPM = new ARInvoicePM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
 
-			ARInvoicePMInitService.InitValues(entityPM, true);
-			ARInvoicePMInitService.ApplyUIPoperties(entityPM, true);
+        ARInvoicePMInitService.InitValues(entityPM, true);
+        ARInvoicePMInitService.ApplyUIPoperties(entityPM, true);
 
-			return entityPM;
+        return entityPM;
     }
-		 
+
 
 }
