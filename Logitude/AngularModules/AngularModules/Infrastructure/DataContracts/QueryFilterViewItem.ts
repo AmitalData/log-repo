@@ -32,7 +32,7 @@ export class QueryFilterViewItem extends FilterItem  {
         this.BaseTreeFilter = TreeFilter;
         this.UIProperties = new UIProperties;
         this.Initialize(ParentClass);
-        
+
     }
 
     Initialize(ParentClass: QueryFilterTreeComponent) {
@@ -81,7 +81,7 @@ export class QueryFilterViewItem extends FilterItem  {
     }
 
     DatePickerCondationValueChange(newValue) {
-        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue) : "";
+        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue,"TreeFilter") : "";
     }
 
     LogLovCondationValueChange(newValue) {
@@ -130,7 +130,7 @@ export class QueryFilterViewItem extends FilterItem  {
         this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : fieldValueAndObjectTableName[1];
         this.SecondaryEntityName = this.FieldValue ? fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.SecondaryEntityName;
         if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') {
-            this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue);
+            this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue,"TreeFilter");
         }
         else {
             this.ValueChanged(window.ObjectFields.filter(f => this.FieldValue == f.FieldName && this.SecondaryEntityName == f.ObjectTableName)[0]);

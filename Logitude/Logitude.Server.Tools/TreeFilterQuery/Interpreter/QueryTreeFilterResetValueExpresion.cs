@@ -19,6 +19,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         private List<ObjectField> mainObjectFields;
         private List<ObjectField> partnerObjectFields;
         private QueryTreeFilterContext queryTreeFilterContext;
+        private CustomFieldClass customFilterClass = new CustomFieldClass();
+
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             this.queryTreeFilterContext = queryTreeFilterContext;
@@ -41,27 +43,48 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         {
             var objectField = GetObjectField(queryFilterItem);
             if (objectField == null) return;
-            queryFilterItem.FieldValue = FieldValueResolver.GetFieldDataValue(objectField, (queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : null));
-            queryFilterItem.FieldValue2 = FieldValueResolver.GetFieldDataValue(objectField, (queryFilterItem.FieldValue2 != null ? queryFilterItem.FieldValue2.ToString() : null));
             queryFilterItem.IsCustomField = objectField.IsCustom;
             queryFilterItem.FieldDataType = objectField.DataTypeCode;
+            if (queryFilterItem.IsCustomField || (!string.IsNullOrEmpty(queryFilterItem.Operator) &&  queryFilterItem.Operator.Contains("Field"))) return;
+            queryFilterItem.FieldValue = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode , queryFilterItem.FieldValue));
+            queryFilterItem.FieldValue2 = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode, queryFilterItem.FieldValue2));
+ 
         }
 
-
+        public string GetFieldValue(string dataTypeCode , object fieldValue)
+        {
+            if (fieldValue == null || (dataTypeCode != "DateTime" && dataTypeCode != "Date")) return fieldValue != null ? fieldValue.ToString() : null;
+            try
+            {
+                return FieldValueResolver.ConvertToDate(fieldValue.ToString()).ToString();
+            }
+            catch (Exception exception)
+            {
+                return fieldValue != null ? fieldValue.ToString() : null;
+            }
+        }
 
 
         private ObjectField GetObjectField(QueryFilterItem queryFilterItem)
         {
-            string tableName = queryFilterItem.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName ? queryTreeFilterContext.ParentObjectTableName : queryTreeFilterContext.ParentObjectTableName;
+            string tableName = queryFilterItem.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName ? queryTreeFilterContext.ParentObjectTableName : queryTreeFilterContext.ObjectTableName;
+            string fieldName = GetFieldName(queryFilterItem);
             if(tableName == queryTreeFilterContext.ParentObjectTableName)
             {
-                return partnerObjectFields?.FirstOrDefault(f => f.FieldName == queryFilterItem.FieldName.Split('.')[0]);
+                return partnerObjectFields?.FirstOrDefault(f => f.FieldName == fieldName);
             }
 
-            return mainObjectFields?.FirstOrDefault(f => f.FieldName == queryFilterItem.FieldName.Split('.')[0]);
+            return mainObjectFields?.FirstOrDefault(f => f.FieldName == fieldName);
         }
 
-  
+        private string GetFieldName(QueryFilterItem queryFilterItem)
+        {
+            if (string.IsNullOrEmpty(queryFilterItem.FieldName)) return "";
+            var fieldNames = queryFilterItem.FieldName.Split('.');
+            if (fieldNames.Length == 0) return null;
+            return fieldNames[fieldNames.Length - 1];
+
+        }
 
     }
 }
