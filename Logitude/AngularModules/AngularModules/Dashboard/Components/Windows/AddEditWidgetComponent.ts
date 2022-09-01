@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
@@ -22,7 +19,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
-    private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
@@ -31,15 +27,14 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsAddNewMeasureVisible: boolean = true;    
     constructor() {
         super();
-        this.dashboardService = new DashboardPMService();
         this.WidgetMeasuresList = [];
     }
 
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs['EntityPM'];
         this.DashboardPM = windowArgs['DashboardPM'];
-        this.DataContext = this;
-        this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
+        this.isNew = windowArgs['IsNew'];
+        this.DataContext = this;        
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -56,28 +51,23 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     private ComputeChartImageSrc() {
         switch (this.EntityPM.TypeCode) {
-            case "Pie": {
-                this.ChartImageSrc = "./Images/PieChart.png";
+            case "pie": {
+                this.ChartImageSrc = "./Images/Charts/PieChart.png";
                 break;
             }
 
-            case "Bar": {
-                this.ChartImageSrc = "./Images/BarChart.png";
+            case "bar": {
+                this.ChartImageSrc = "./Images/Charts/BarChart.png";
                 break;
             }
 
-            case "Are": {
-                this.ChartImageSrc = "./Images/AreaChart.png";
+            case "line": {
+                this.ChartImageSrc = "./Images/Charts/LineChart.png";
                 break;
             }
 
-            case "Don": {
-                this.ChartImageSrc = "./Images/DonutChart.png";
-                break;
-            }
-
-            case "Co": {
-                this.ChartImageSrc = "";
+            case "donut": {
+                this.ChartImageSrc = "./Images/Charts/DonutChart.png";
                 break;
             }
         }
@@ -91,10 +81,14 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         if (this.WidgetMeasuresList.length == 0) {
             var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
-            newItem.Tenant = this.EntityPM.Tenant;
+            newItem.Tenant = SessionInfo.LoggedUserTenant;
             newItem.WidgetId = this.EntityPM.Id;
             this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
         }
+
+        this.WidgetMeasuresList.forEach(item => {
+            item.CheckMeasureDeleteVisiblity();
+        });
     }
     public CheckMeasureAddVisiblity() {
         var isAddVisible: boolean = true;
@@ -121,6 +115,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
+            this.GroupRoot = new WidgetFilterItem();
         }
     }
 
@@ -153,7 +148,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     public TableChanged() {
-        this.GroupRoot = new WidgetFilterItem();
+     
     }
 
     CancelButtonClicked() {
@@ -171,6 +166,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
+            this.SetFiltersString();
             this.WidgetMeasuresList.forEach(item => {
                 if (item.IsNew) {
                     if (this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
@@ -180,19 +176,28 @@ export class AddEditWidgetComponent extends BaseComponent {
                 }
             });
 
-            if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
+            //if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
               //  this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0]);
             if (this.isNew) {
                 this.isNew = false;
                 this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.DashboardPM.AddWidget(this.EntityPM);
             }
-
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
     private myCloner: Cloner;
+    private SetFiltersString() {
+        if (!this.GroupRoot || !this.GroupRoot.QueryFilterItems || this.GroupRoot.QueryFilterItems.length == 0) return;
+        this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0], function (key, val) {
+            if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
+                key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
+                key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
+                key !== "null" && key !== "SelectedField") return val;
+        });
+    }
+
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Title');
@@ -210,9 +215,12 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     AddNewMeasureClicked() {
         var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
-        newItem.Tenant = this.EntityPM.Tenant;
+        newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
-        this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
+
+        var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
+        this.WidgetMeasuresList.push(newWidgetMeasureItem);
+        newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
         this.CheckMeasureAddVisiblity();
     }
@@ -236,32 +244,14 @@ export class WidgetMeasureItem extends BaseComponent {
         var isVisible: boolean = false;
 
         var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
-        //this.fatherComponent.WidgetMeasuresList.length == 2;
 
-        this.IsDeleteMeasureVisible = isVisible;
+        this.IsDeleteMeasureVisible = (index == 1);
     }
 
     get MeasureFieldId() { return this.EntityPM.MeasureFieldId; }
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
-
-            //var itemIndex = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
-
-            //if (AppTool.IsNullOrEmpty(this.EntityPM.MeasureFieldId)) {
-            //    if (itemIndex > -1) {
-            //        this.Widget.RemoveWidgetMeasure(this.EntityPM);
-            //    }
-            //}
-
-            //else {
-            //    if (itemIndex == -1) {
-            //        this.Widget.AddWidgetMeasure(this.EntityPM);
-            //    }
-            //}
-
-            //this.fatherComponent.BuildMeasures();
-            //this.fatherComponent.CheckMeasureActionsVisiblity();
         }
     }
 
@@ -273,11 +263,11 @@ export class WidgetMeasureItem extends BaseComponent {
     }
 
     DeleteMeasureClicked() {
-        if (this.fatherComponent.EntityPM.WidgetMeasures.indexOf(this.EntityPM) != -1) {
-            this.fatherComponent.EntityPM.RemoveWidgetMeasure(this.EntityPM);
+        var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
+        if (index != -1) {
+            this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
 
-        this.fatherComponent.BuildMeasures();
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

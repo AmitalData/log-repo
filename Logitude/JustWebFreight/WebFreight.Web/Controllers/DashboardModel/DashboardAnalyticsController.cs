@@ -32,8 +32,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var dataProvicer = new DataProviderService();
-                var result = dataProvicer.GetData(widget);
+                var dataProvicer = new DataProviderFactory().GetDataProviderService(widget);
+                var result = dataProvicer.GetWidgetData();
                 return Request.CreateResponse(result);
             }
             catch (Exception ex)

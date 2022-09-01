@@ -1,8 +1,1 @@
-Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ListFieldLableObjectFieldTextCode, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ObjectFieldTextCode, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_TextCodeObjectField, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_TextCodeObjectField1, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_ObjectFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_ForwarderShipmentNumber, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_AgentSharedManifestRef, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_IsCancelled, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File WidgetMeasure.dxml, The Found Index On DB Is IX_WidgetMeasures_MeasureCode, The Index Should Added To The DXML File

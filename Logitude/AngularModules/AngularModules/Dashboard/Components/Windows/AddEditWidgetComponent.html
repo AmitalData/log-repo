@@ -7,135 +7,134 @@
     </tr>
 
     <tr style="height:1px;">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:400px;">
+        <td style="height: 100%;">
+            <div class="FillParent">
+                <div class="ScrollViewer">
+                    <div class="ScrollContent">
                         <table>
-                            <tr class="FormFieldRow">
-                                <td style="width:120px;">
-                                    <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:250px;">
-                                    <LogTextBox [ObjectFieldName]="'Title'" [Text]="Title" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'EntityId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogLov [ObjectFieldName]="'EntityId'"
-                                            [SelectedValue]="EntityId"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'AnalyticsFactsMetaData'"
-                                            [HideColumns]="true"
-                                            [DisplayMemberPath]="'Name'"
-                                            [IgnoreFeatureCheck]="true"                                         
-                                            (SelectedItemChanged)="TableChanged()">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'GroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogLov [ObjectFieldName]="'GroupById'"
-                                            [SelectedValue]="GroupById"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
-                                            [DependencyFilter2Value]="true"
-                                            [DependencyFilter3Value]="EntityId"
-                                            [HideColumns]="true"
-                                            [DisplayMemberPath]="'DisplayName'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
-                                </td>
-                                <td>
+                            <tr>
+                                <td style="width:400px;">
                                     <table>
-                                        <tr>
-                                            <td>
-                                                <LogLov [ObjectFieldName]="'MeasureCode'"
-                                                        [SelectedValue]="item.MeasureCode"
-                                                        [ObjectTableName]="item.ObjectTableName"
-                                                        [DataContext]="item.DataContext"
-                                                        [LookUpTableName]="'MeasureType'"
-                                                        [HideColumns]="true">
-                                                </LogLov>
+                                        <tr class="FormFieldRow">
+                                            <td style="width:120px;">
+                                                <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td style="width: 2px;">
+                                            <td style="width:250px;">
+                                                <LogTextBox [ObjectFieldName]="'Title'" [Text]="Title" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td>
                                                 <div></div>
                                             </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
                                             <td>
-                                                <LogLov [ObjectFieldName]="'MeasureFieldId'"
-                                                        [SelectedValue]="item.MeasureFieldId"
-                                                        [ObjectTableName]="item.ObjectTableName"
-                                                        [DataContext]="item.DataContext"
+                                                <LogLabel [ObjectFieldName]="'EntityId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'EntityId'"
+                                                        [SelectedValue]="EntityId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'AnalyticsFactsMetaData'"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'Name'"
+                                                        [IgnoreFeatureCheck]="true"
+                                                        (SelectedItemChanged)="TableChanged()">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'GroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'GroupById'"
+                                                        [SelectedValue]="GroupById"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
                                                         [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
-                                                        [DependencyFilter1Value]="true"
+                                                        [DependencyFilter2Value]="true"
+                                                        [DependencyFilter3Value]="EntityId"
                                                         [HideColumns]="true"
                                                         [DisplayMemberPath]="'DisplayName'">
                                                 </LogLov>
                                             </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'MeasureCode'"
+                                                                    [SelectedValue]="item.MeasureCode"
+                                                                    [ObjectTableName]="item.ObjectTableName"
+                                                                    [DataContext]="item.DataContext"
+                                                                    [LookUpTableName]="'MeasureType'"
+                                                                    [HideColumns]="true">
+                                                            </LogLov>
+                                                        </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'MeasureFieldId'"
+                                                                    [SelectedValue]="item.MeasureFieldId"
+                                                                    [ObjectTableName]="item.ObjectTableName"
+                                                                    [DataContext]="item.DataContext"
+                                                                    [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                                                    [DependencyFilter1Value]="true"
+                                                                    [HideColumns]="true"
+                                                                    [DisplayMemberPath]="'DisplayName'">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
+                                                    <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                         </tr>
                                     </table>
-                                    
                                 </td>
-                                <td>
-                                    <div>
-                                        <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
-                                        <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
+
+                                <td style="vertical-align:top">
+                                    <img width="180" [attr.src]="ChartImageSrc" />
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="EntityId">
+                                <td colspan="2" style="height: 250px;">
+                                    <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
+                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
                                     </div>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td><div></div></td>
-                            </tr>
                         </table>
-                    </td>
-
-                    <td>
-                        <img width="150" height="150" [attr.src]="ChartImageSrc" class="CenterCenter" />
-                    </td>
-                </tr>
-
-                <tr class="FormFieldRow" *ngIf="EntityId">
-                    <td style="width: 800px; height: 280px;">
-                        <div style="overflow-x: SCROLL; overflow-y: SCROLL;HEIGHT: 100%; width: 100%;">
-                            <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
-                        </div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
 
