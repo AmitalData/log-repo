@@ -123,6 +123,14 @@ export class CustomDashboardComponent implements  AfterViewInit {
     }    
     private OpenDashboardWidgetWindow(widget: ReactWidgetPM) {
         var myWidget: WidgetPM = this.myDashboardPM.Widgets.filter(d => d.Id == widget.Id)[0];
+        if (myWidget == null) {
+            myWidget = new WidgetPM(this.myDashboardPM);
+            myWidget.TypeCode = widget.TypeCode;
+            myWidget.Tenant = SessionInfo.LoggedUserTenant;
+            myWidget.StartPotistion = widget.StartPotistion;
+            myWidget.EndPosition = widget.EndPosition;
+        }
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = !AppTool.IsNullOrEmpty(widget.Id) ? "Edit Widget" : "Add Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: widget.ChangeSetOp == "Insert", DashboardPM: this.myDashboardPM };
