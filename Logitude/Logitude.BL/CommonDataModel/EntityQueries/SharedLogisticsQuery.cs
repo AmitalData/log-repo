@@ -26,7 +26,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             string cargoTrackingPath = GetCargoTrackingUrlPath(url);
             string brandingURLPath = GetBrandingURLPath(systemURL);
-            string brandingURLButton = "<button "  + " style='cursor: pointer;Background-color:" + GetBrandingURLBackgroundButton (tenant) + ";width:140px;height:30px;border-color:#1890ff;border-radius:5px;border:0px;color:white'>  join </button>";
+         
             return new SharedLogisticsPM()
             {
                 SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url + "</a>",
@@ -38,8 +38,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 InviteeName = "[InviteeName]",
                 URLprivateCargoTracking = "<a style=" + styleLink + " href='" + cargoTrackingPath + "'" + ">" + cargoTrackingPath + "</a>",
                 BrandingURL = "<a style=" + styleLink + " href='" + brandingURLPath + "'" + ">" + brandingURLPath + "</a>",
-                BrandingURLButton = "<a style=" + styleLink + " href='" + brandingURLPath + "'" + ">" + brandingURLButton + "</a>",
+                BrandingURLButton = GetBrandingURLButton(tenant, brandingURLPath),
             };
+        }
+
+
+        public string GetBrandingURLButton(int tenant , string brandingURLPath)
+        {
+            return " <table " + "style='cursor: pointer;width:120px;height:30px;border-color:#1890ff;border-radius:5px;border:0px;color:white'" + " width ='120px'  bgcolor='"+ GetBrandingURLBackgroundButton(tenant) + "' border='0'  cellspacing='0' cellpadding='0'>" +
+                "<tr>" +
+                "<td align='center'  style='padding: 8px 12px; border-radius: 2px;'>" +
+                "<a  style='font-weight: 500; font-size: 14px;text-decoration: none; padding: 0px; display: inline-block; color: #ffffff'" +" href='" + brandingURLPath + "'" + " > Join </ a >" +
+                "</ td >" +
+                "</ tr >" +
+                "</ table >";
         }
 
         private static string GetCargoTrackingUrlPath(string url)
