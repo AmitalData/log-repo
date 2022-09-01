@@ -609,6 +609,7 @@ Line3
      // defaultParam.UpToDueDate = "01.01.2020";
         defaultParam.LT_LinesMaximum = 50;
         defaultParam.MaxPageSize = 1000;
+        defaultParam.SpecificJournalId = "";
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this._TextBoxParam = JSON.stringify(defaultParam);
             return;
@@ -621,7 +622,7 @@ Line3
      // myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
         myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
         myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
-     // myUrl = myUrl + "&noBatch=1"; // always no batch
+        myUrl = myUrl + "&specificJournalId=" + objToCheck1.SpecificJournalId;
         this.CurrentSession.StartBusyIndicatorCreating();
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
