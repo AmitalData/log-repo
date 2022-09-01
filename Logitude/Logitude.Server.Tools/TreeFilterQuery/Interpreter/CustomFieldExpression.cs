@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.TreeFilterQuery.Iterator;
+﻿using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery.Iterator;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         private void Handel(QueryFilterItem filterItem, QueryTreeFilterContext queryTreeFilterContext)
         {
             if(!filterItem.IsCustomField || filterItem.Operator.Contains("Field")) return;
-            filterItem.FieldValue = GetCustomFieldStringValue(filterItem.FieldValue , filterItem.FieldDataType);
-            filterItem.FieldValue2 = GetCustomFieldStringValue(filterItem.FieldValue2, filterItem.FieldDataType);
+            filterItem.FieldValue = GetCustomFieldStringValue(GetFieldValue(filterItem.FieldDataType, filterItem.FieldValue), filterItem.FieldDataType);
+            filterItem.FieldValue2 = GetCustomFieldStringValue(GetFieldValue(filterItem.FieldDataType, filterItem.FieldValue2), filterItem.FieldDataType);
 
         }
 
@@ -40,6 +41,19 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             return result;
         }
 
+
+        public string GetFieldValue(string dataTypeCode, object fieldValue)
+        {
+            if (fieldValue == null || (dataTypeCode != "DateTime" && dataTypeCode != "Date")) return fieldValue != null ? fieldValue.ToString() : null;
+            try
+            {
+                return FieldValueResolver.ConvertToDate(fieldValue.ToString()).ToString();
+            }
+            catch (Exception exception)
+            {
+                return fieldValue != null ? fieldValue.ToString() : null;
+            }
+        }
 
         private QueryTreeFilterIterator CreateIterator(QueryTreeFilterContext queryTreeFilterContext)
         {

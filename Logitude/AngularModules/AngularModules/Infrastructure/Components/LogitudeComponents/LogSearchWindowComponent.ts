@@ -447,15 +447,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //}
     }
 
+
     FillTreeFilterDetails(filters) {
-        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
-
-
         return filters;
     }
-
 
     //#endregion
 
