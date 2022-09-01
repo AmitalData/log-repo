@@ -4496,6 +4496,9 @@
   <Index
     Columns="Tenant,ShipmentReceivableStatusCode,ShipmentLevelCode" />
  
+    <Index
+    Columns="Tenant,ShipmentPayableStatusCode,IsAccountingClosed,IsCancelled,ShipmentLevelCode" />
+  
   
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
