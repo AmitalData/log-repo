@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ParticipantUpdateClass
    {  		
-		public const string HashString = "5355ccd334f40e0b21f670925cbcda49";
+		public const string HashString = "8275afe1dd0c072279a17f9a1631ee58";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4012,15 +4012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ParticipantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Participant" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ParticipantTextCode_ParticipantFSearchFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.F.SearchFields", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

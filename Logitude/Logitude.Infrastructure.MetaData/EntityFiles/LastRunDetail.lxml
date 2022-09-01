@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Last Run Detail&quot;"
-  Code="&quot;f16a&quot;"
+  Code="&quot;42cf&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"

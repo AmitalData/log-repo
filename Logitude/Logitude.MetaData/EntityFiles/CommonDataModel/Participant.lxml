@@ -4636,13 +4636,7 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;Participant.F.SearchFields&quot;"
-      DefaultText="&quot;Search&quot;"
-      TextCodeTypeCode="&quot;F&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
       Code="&quot;EVENTS&quot;"
