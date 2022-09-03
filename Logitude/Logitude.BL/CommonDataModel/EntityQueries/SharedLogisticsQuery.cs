@@ -90,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private static string ConvertRgbaToHexColor(string rgbaColor)
         {
             string defultBlueColor = "#1890ff";
-            if (string.IsNullOrEmpty(rgbaColor)) return defultBlueColor;
+            if (string.IsNullOrEmpty(rgbaColor) || string.IsNullOrWhiteSpace(rgbaColor)) return defultBlueColor;
             if (!rgbaColor.ToLower().Contains("rgba")) return rgbaColor;
             var colorVlues = rgbaColor.Replace("rgba(", "").Replace(")", "").Split(',');
             int red = int.Parse(colorVlues[0], CultureInfo.InvariantCulture);
