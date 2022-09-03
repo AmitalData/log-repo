@@ -4,6 +4,8 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +47,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string GetBrandingURLButton(int tenant , string brandingURLPath)
         {
-            return " <table " + "style='cursor: pointer;width:120px;height:30px;border-color:#1890ff;border-radius:5px;border:0px;color:white'" + " width ='120px'  bgcolor='"+ GetBrandingURLBackgroundButton(tenant) + "' border='0'  cellspacing='0' cellpadding='0'>" +
+            string brandingBackgroundColor = GetBrandingURLBackgroundButton(tenant);
+            return " <table " + "style='cursor: pointer;width:120px;height:30px;border-color:" + brandingBackgroundColor + ";border-radius:5px;border:0px;color:white'" + " width ='120px'  bgcolor='"+ brandingBackgroundColor + "' border='0'  cellspacing='0' cellpadding='0'>" +
                 "<tr>" +
                 "<td align='center'  style='padding: 8px 12px; border-radius: 2px;'>" +
                 "<a  style='font-weight: 500; font-size: 14px;text-decoration: none; padding: 0px; display: inline-block; color: #ffffff'" +" href='" + brandingURLPath + "'" + " > Join </ a >" +
@@ -71,15 +74,33 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private static string GetBrandingURLBackgroundButton(int tenant)
         {
-            string defultColorhex = "#1890ff";
+            string brandingBackgroundColor = string.Empty;
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
-                return (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM?.SecondaryColor)) ? tenantManagementPM.SecondaryColor : defultColorhex;  
+                brandingBackgroundColor = tenantManagementPM?.SecondaryColor;
                 scope.Complete();
             }
+            return ConvertRgbaToHexColor(brandingBackgroundColor);
         }
+
+
+        private static string ConvertRgbaToHexColor(string rgbaColor)
+        {
+            string defultBlueColor = "#1890ff";
+            if (string.IsNullOrEmpty(rgbaColor)) return defultBlueColor;
+            if (!rgbaColor.ToLower().Contains("rgba")) return rgbaColor;
+            var colorVlues = rgbaColor.Replace("rgba(", "").Replace(")", "").Split(',');
+            int red = int.Parse(colorVlues[0], CultureInfo.InvariantCulture);
+            int green = int.Parse(colorVlues[1], CultureInfo.InvariantCulture);
+            int blue = int.Parse(colorVlues[2], CultureInfo.InvariantCulture);
+            if (colorVlues.Length == 3) return "#" + Color.FromArgb(red, green, blue).Name;
+            if (colorVlues.Length == 4) return "#" + Color.FromArgb((int)(float.Parse(colorVlues[3], CultureInfo.InvariantCulture) * 255), red, green, blue).Name;
+            return defultBlueColor;
+        }
+
 
     }
 }
