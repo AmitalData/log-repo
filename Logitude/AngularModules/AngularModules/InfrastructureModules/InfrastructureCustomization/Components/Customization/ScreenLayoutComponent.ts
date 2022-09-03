@@ -24,6 +24,7 @@ import { MuiltSectionScreenLayoutService } from '../../ExternalService/MuiltSect
 import { ClassicScreenLayoutService } from '../../ExternalService/ClassicScreenLayoutService';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 
 
 
@@ -112,17 +113,50 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     SectionScreens: SectionScreenItem[] = [];
 
-    BuildScreenRowDetails(columnIndex: number, sectionNumber: number=null ) {
+    BuildScreenRowDetails(columnIndex: number, sectionNumber: number = null) {
         var screenRowDetails = new ScreenRowDetails();
         screenRowDetails.ColumnIndex = columnIndex;
         var screenObjectFields = this.GetScreenObjectFields(columnIndex, sectionNumber);
+        var row = 0;
         screenObjectFields.forEach(field => {
+
+            if (field.Row != row) {
+                var spaceLineCount = field.Row - row;
+                this.AddSpaceLine(spaceLineCount, screenRowDetails, sectionNumber, row);
+            }
             screenRowDetails.ScreenFieldPMs.push(field);
             screenRowDetails.ObjectFieldPMs.push(window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0]);
+
+            row += 1;
         });
         return screenRowDetails;
     }
 
+
+
+    AddSpaceLine(spaceLineCount: number, screenRowDetails: any, sectionNumber, row) {
+        var myitem = this.GetSpaceLine();
+        var count = 0;
+        while (count < spaceLineCount) {
+            var screenField = new ScreenFieldPM();
+            screenField.Column = screenRowDetails.ColumnIndex;
+            screenField.ObjectFieldId = myitem.Id;
+            screenField.ScreenId = this.SelectedItem.ScreenPM.Id;
+            screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
+            screenField.Tenant = SessionLocator.Tenant;
+            screenField.Row = row;
+            screenField.ObjectFieldCode = myitem.FieldCode;
+            if (this.IsMuiltSectionScreen) screenField.SectionNumber = sectionNumber
+            screenRowDetails.ScreenFieldPMs.push(myitem);
+            screenRowDetails.ObjectFieldPMs.push(screenField);
+            count += 1;
+            row += 1;
+        }
+
+
+
+
+    }
 
     private GetScreenObjectFields(columnIndex: number, sectionNumber: number) {
         var screenObjectFields = this.currentScreenFields.filter(a => a.Column == columnIndex);
@@ -156,7 +190,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                 this.TableScreensCollection.push(item);
             });
 
-            if(changeSelection)
+            if (changeSelection)
                 this.SelectionChanged(this.TableScreensCollection[0]);
         }
     }
@@ -177,6 +211,11 @@ export class ScreenLayoutComponent extends BaseComponent {
     FillbanckStackFields() {
         this.banckStackFields = [];
         this.AllbanckStackFields = [];
+
+        var lineSpaceField = this.GetSpaceLine();
+        this.AllbanckStackFields.push(lineSpaceField);
+        this.banckStackFields.push(lineSpaceField);
+
         const table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
         if (table.Name === "Master") {
             const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
@@ -210,6 +249,17 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
 
         //this.SelectionChanged(this.ListBoxItemSource[0]);
+    }
+
+    private GetSpaceLine() {
+        var lineSpaceField = new ObjectFieldPM();
+        lineSpaceField.FieldCode = "LineSpace";
+        lineSpaceField.FieldName = "LineSpace";
+        lineSpaceField.ObjectTableName = this.ObjectTableName;
+        lineSpaceField.ObjectTableId = this.ObjecttableId;
+        lineSpaceField.Id = Guid.newGuid();
+        window.ObjectFields.push(lineSpaceField);
+        return lineSpaceField;
     }
 
     ListBoxSelectionMethod(Item: CodeNameClass) {
@@ -316,18 +366,17 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     }
     prevSelectedItem;
-    GetScreensFromDB(){
+    GetScreensFromDB() {
         const authHeader = new Headers();
         authHeader.append('Content-Type', 'application/json');
         authHeader.append('Accept', 'application/json');
         this.loginService.AuthHeader = authHeader;
         this.loginService.CurrentTenant = SessionLocator.Tenant;
-        this.loginService.GetScreens().subscribe((myScreensResult: any) =>
-        {
+        this.loginService.GetScreens().subscribe((myScreensResult: any) => {
             window.Screens = myScreensResult;
             this.prevSelectedItem = this.SelectedItem;
             this.FillTableScreensCollection(false);
-            const editedItem = this.TableScreensCollection.find(s=>s.ScreenPM.Id == this.prevSelectedItem.ScreenPM.Id);
+            const editedItem = this.TableScreensCollection.find(s => s.ScreenPM.Id == this.prevSelectedItem.ScreenPM.Id);
             this.SelectionChanged(editedItem)
         });
     }
@@ -351,7 +400,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         event.preventDefault();
     }
 
-    get IsMuiltSectionScreen (){
+    get IsMuiltSectionScreen() {
         var screen = this.OldItem ? this.OldItem : this.SelectedItem;
         return screen && screen.Type == 'LIGHTENING';
     }
@@ -410,7 +459,7 @@ export class ScreenLayoutComponent extends BaseComponent {
 
         }
     }
-    public ChangeScreenFieldPosition(screenRow  , args: any) {
+    public ChangeScreenFieldPosition(screenRow, args: any) {
 
         if (screenRow.ObjectFieldPMs) {
 
@@ -487,10 +536,10 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
-    DeleteSectionFields(editedSection: SectionScreenItem){
-        editedSection.ScreenRows.forEach(row=>{
-            row.ObjectFieldPMs.forEach(field=>{
-                this.OnDeleteField(field,editedSection.Section.Number);
+    DeleteSectionFields(editedSection: SectionScreenItem) {
+        editedSection.ScreenRows.forEach(row => {
+            row.ObjectFieldPMs.forEach(field => {
+                this.OnDeleteField(field, editedSection.Section.Number);
             });
         });
 
@@ -498,10 +547,12 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     }
 
-    OnDeleteField(item, sectionNumber:number=null ) {
+    OnDeleteField(item, sectionNumber: number = null) {
         this.Modified = true;
-        this.AllbanckStackFields.push(item);
 
+        if (item.FieldCode != "LineSpace") {
+            this.AllbanckStackFields.push(item);
+        }
 
         var screenRows = this.screenLayoutService.GetScreenRows(sectionNumber);
 
@@ -527,7 +578,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
 
-    public HideSectionAreaClicked(sectionScreen: SectionScreenItem ) {
+    public HideSectionAreaClicked(sectionScreen: SectionScreenItem) {
         sectionScreen.HideSectionArea = !sectionScreen.HideSectionArea;
     }
 
@@ -588,7 +639,7 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     }
 
-    EditSelectedScreen(){
+    EditSelectedScreen() {
         const logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = AddEditScreenWidth;
         logitudeWindow.Height = AddEditScreenHeight;
@@ -604,7 +655,9 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
     }
 
-
+   public IsLineField(objectFieldCode) {
+        return objectFieldCode == "LineSpace" ? true : false;
+    }
 
 
     private Retries: number = 0;
@@ -637,12 +690,12 @@ export class ScreenLayoutComponent extends BaseComponent {
             if (myGeneratedComponentLocation != null) {
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load(this.GetScreenComponentPath(screenType), myGeneratedComponentLocation.viewContainerRef)
-                    .then(cmpRef => { cmpRef.instance.Run(this);});
+                    .then(cmpRef => { cmpRef.instance.Run(this); });
             }
         }
     }
 
-    GetScreenComponentPath(screenType:string) {
+    GetScreenComponentPath(screenType: string) {
         if (screenType == "LIGHTENING") {
             return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/LighteningScreenComponent';
         }
@@ -664,7 +717,10 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     private AddScreenField(screenRowDetails: ScreenRowDetails, sectionScreen: SectionScreenItem) {
         screenRowDetails.ScreenFieldPMs.forEach(screenField => {
-            this.MyArgs.ScreenFields.push(screenField);
+
+            if (screenField.ObjectFieldCode != "LineSpace") {
+                this.MyArgs.ScreenFields.push(screenField);
+            }
             this.MyArgs.Rows += 1;
             if (sectionScreen)
                 sectionScreen.Section.NumberOfRows += 1;
@@ -715,7 +771,6 @@ export class ScreenRowDetails {
     ColumnIndex: number;
 
 }
-
 
 
 
