@@ -22,6 +22,7 @@ export class ConditionOperatorsList {
                     new ListItem(ConditionOperators.Equals),
                     new ListItem(ConditionOperators.NotEquals),
                     new ListItem(ConditionOperators.Contains),
+                    new ListItem(ConditionOperators.NotContains),
                     new ListItem(ConditionOperators.StartsWith),
                     new ListItem(ConditionOperators.EndsWith),
                     new ListItem(ConditionOperators.IsEmpty),
