@@ -10,7 +10,7 @@ import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/Dash
 import { BehaviorSubject } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
@@ -111,7 +111,22 @@ export class CustomDashboardComponent implements  AfterViewInit {
     private OpenDashboardWindow(dashboard: ReactDashboardPM) {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
-        logitudeWindow.WindowArgs = { EntityPM: this.myDashboardPM, };
+
+        var dashboardPM: DashboardPM = null;
+        if (dashboard != null) {
+            dashboardPM = this.myDashboardPM;
+        }
+
+        else {
+            dashboardPM = new DashboardPM();
+            dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
+            dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
+            dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
+            dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+            dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        }
+
+        logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
@@ -213,7 +228,10 @@ export class CustomDashboardComponent implements  AfterViewInit {
 
         this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.selectedDashboard = this.GetReactDashboard(myResponse.Result);
+                this.myDashboardPM = myResponse.Result;
+                this.selectedDashboard = this.GetReactDashboard(this.myDashboardPM);
+                this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
+                this.dashboardDataBinding.onAddUpdateWidget.next(true);
             }
 
             this.CurrentSession.StopBusyIndicator();

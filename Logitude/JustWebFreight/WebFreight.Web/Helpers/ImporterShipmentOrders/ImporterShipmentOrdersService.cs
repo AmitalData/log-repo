@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -6,6 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.ShipmentOrderModule.Def.EntityAMs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -31,6 +33,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
         private APILogsPM apiLog;
         private ObjectTable objectTable;
         private ShipmentOrderAM shipmentOrder;
+        private bool isNew;
         private readonly string correlationId;
 
         public ImporterShipmentOrdersService(int tenant, string correlationId)
@@ -68,8 +71,11 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
                 ShipmentPM shipment = shipmentQuery.GetSingleShipmentPMByNumber(shipmentOrder.CustomerShipmentNumber, tenant);
                 if (shipment == null)
                     throw new Exception("Shipment number does not exist");
+                isNew = string.IsNullOrEmpty(shipment.ForwarderShipmentNumber);
                 shipment = shipmentOrderAmMap.Map(shipmentOrder, shipment);
                 SubmitShipmentUpdate(shipment);
+                SendDocumentsFillingToForwarder(shipment);
+
                 return shipment;
             }
             catch (Exception ex)
@@ -89,6 +95,27 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
 
             var msg = "Shipment Updated Successfully " + DateTime.Now;
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, null, shipment.Id, null, "");
+        }
+
+        private void SendDocumentsFillingToForwarder(ShipmentPM shipment)
+        {
+            if (!isNew) return;
+            const string inDocumentFillingDirectionCode = "I";
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(shipment.Tenant);
+            List<string> DocumentFillingPMsIds = documentsFilingQuery.GetSharedWithAgentDocumentsFilingPMsIdsByEntityId(shipment.Id, inDocumentFillingDirectionCode, shipment.Tenant);
+            if (DocumentFillingPMsIds == null || DocumentFillingPMsIds.Count == 0) return;
+
+            foreach (string DocumentFillingPMId in DocumentFillingPMsIds)
+            {
+                AddForwardersShipmentDocumentsQueue(shipment, DocumentFillingPMId);
+            }
+        }
+
+        private void AddForwardersShipmentDocumentsQueue(ShipmentPM shipment, string DocumentFillingPMId)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", shipment.Id }, { "DocumentFilingId", DocumentFillingPMId }, { "Tenant", shipment.Tenant.ToString() } }, shipment.Tenant);
         }
 
         private void HandleExeption(Exception exception)

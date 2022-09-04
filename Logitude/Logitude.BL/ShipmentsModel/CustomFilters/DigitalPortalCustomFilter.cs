@@ -28,17 +28,17 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 {
                     if (item.FieldName == "InTransit")
                     {
-                        queryableData = DigitalPortalCustomFilter.ApplyInTransitFilter(item, queryableData, shipmentRepository);
+                        queryableData = ApplyInTransitFilter(item, queryableData, shipmentRepository);
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")
                     {
-                        queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
+                        queryableData = ApplyDigitalPortalSearchFilter(item, queryableData);
                     }
 
                     if (item.FieldName == "ConsigneeShipperIds")
                     {
-                        queryableData = DigitalPortalCustomFilter.ApplyShipperConsigneeFilter(item, queryableData);
+                        queryableData = ApplyShipperConsigneeFilter(item, queryableData);
                     }
 
                     if (item.FieldName == "AllShipments")
@@ -78,7 +78,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
             queryableData = queryableData.Where(d =>
-             d.ShipperReference1.Contains(digitalPortalSearchFields)
+                 d.ShipperReference1.Contains(digitalPortalSearchFields)
               || d.ShipperReference2.Contains(digitalPortalSearchFields)
               || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
               || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
@@ -89,11 +89,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
               || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
               || d.House.Contains(digitalPortalSearchFields)
               || d.Master.Contains(digitalPortalSearchFields)
-              || d.AgentName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.CustomAgentImportName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ConsigneeName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ShipperName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.CustomerName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)

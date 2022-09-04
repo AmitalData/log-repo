@@ -23,8 +23,7 @@
 
     <div class="entity-conditions-operation-container">
 
-        <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
-            [SelectedItem]="getConditionGroupItem(ConditionsOperation)"
+        <ComboBox [ItemsSource]="ConditionOperations" [Binding]="'Name'" [SelectedItem]="ListItem(ConditionsOperation)"
             (SelectedItemChanged)="updateConditionsOperation($event)">
         </ComboBox>
 
@@ -32,7 +31,8 @@
 
     <div class="entity-condition-groups-container">
 
-        <ConditionGroups [EntityId]="EntityId" [(Conditions)]="Conditions"></ConditionGroups>
+        <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
+            [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged()"></ConditionGroups>
 
     </div>
 

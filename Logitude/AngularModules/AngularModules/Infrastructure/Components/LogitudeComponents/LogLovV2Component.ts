@@ -3365,8 +3365,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
-
-
         return filters;
     }
 

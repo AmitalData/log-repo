@@ -2791,6 +2791,7 @@
     <Compile Include="Helpers\BatchPrint\BatchPrintManagerArgs.cs" />
     <Compile Include="Helpers\BatchPrint\BatchPrintService.cs" />
     <Compile Include="Helpers\BatchPrint\PrintingResult.cs" />
+    <Compile Include="Helpers\BatchPrint\ShipmentBatchPrinter.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\CallBack\CallBackService.cs" />

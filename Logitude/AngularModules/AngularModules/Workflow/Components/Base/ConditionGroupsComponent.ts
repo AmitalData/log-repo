@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { BooleanItems } from "Workflow/Constants/BooleanItems";
-import { ConditionGroupOperations } from "Workflow/Constants/ConditionGroupOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { BooleanItemsList } from "Workflow/Models/BooleanItemsList";
 import { Condition } from "Workflow/Models/Condition";
+import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
+import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
 import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
@@ -12,31 +14,26 @@ import { ListItem } from "Workflow/Models/ListItem";
     templateUrl: "./ConditionGroupsComponent.html"
 })
 
-export class ConditionGroupsComponent extends BaseComponent implements OnInit {
+export class ConditionGroupsComponent extends BaseComponent implements OnInit, OnChanges {
 
     @Input() EntityId: string;
+    @Input() ShowChangedOperator: boolean = true;
     @Input() Conditions: Condition[];
     @Input() IsRootConditions: boolean = true;
 
+    @Input() IsValidConditions: boolean = true;
+
+    @Output() ConditionsChangedEvent = new EventEmitter();
+
     public ObjectFields: any = {};
 
-    public IsEmptyOperator = ConditionOperators.IsEmpty;
+    public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
 
-    public ConditionGroupOperations: ListItem[] = [
-        new ListItem(ConditionGroupOperations.And),
-        new ListItem(ConditionGroupOperations.Or),
-    ];
+    public BooleanItems: ListItem[] = new BooleanItemsList().BooleanItems;
 
-    public ConditionOperators: ListItem[] = [
-        new ListItem(ConditionOperators.Equals),
-        new ListItem(ConditionOperators.NotEquals),
-        new ListItem(ConditionOperators.IsEmpty),
-    ];
+    public ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
 
-    public BooleanFieldValues: ListItem[] = [
-        new ListItem(BooleanItems.True),
-        new ListItem(BooleanItems.False),
-    ];
+    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     DataContext: any = this;
 
@@ -48,9 +45,15 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
 
     }
 
-    updateConditionGroupOperation(operationCode: any, conditionIndex: number) {
+    ngOnChanges() {
+        this.ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
+    }
+
+    updateConditionGroupOperation(operationCode: string, conditionIndex: number) {
         if (operationCode !== this.Conditions[conditionIndex]?.groupOperation) {
             this.Conditions[conditionIndex].groupOperation = operationCode;
+
+            this.emitConditionsChanged();
         }
     }
 
@@ -66,34 +69,42 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+
+            this.emitConditionsChanged();
         }
     }
 
-    updateConditionOperator(operatorCode: any, conditionIndex: number) {
+    updateConditionOperator(operatorCode: string, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
 
-            if (operatorCode === ConditionOperators.IsEmpty || this.Conditions[conditionIndex]?.operator === ConditionOperators.IsEmpty) {
-                let value = operatorCode === ConditionOperators.IsEmpty ? BooleanItems.True : null;
+            if (this.isNoValueOperator(operatorCode) || this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)) {
+                let value = this.isNoValueOperator(operatorCode) ? BooleanItems.True : null;
                 this.updateConditionValue(value, conditionIndex);
             }
 
             this.Conditions[conditionIndex].operator = operatorCode;
+
+            this.emitConditionsChanged();
         }
     }
 
     updateConditionValue(value: string, conditionIndex: number) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+
+            this.emitConditionsChanged();
         }
     }
 
     addCondition(conditionIndex: number, isGroup: boolean) {
-        if (this.isValidConditions()) {
+        if (this.IsValidConditions) {
             if (conditionIndex === null) {
                 this.Conditions.push(new Condition(isGroup));
             } else {
                 this.Conditions[conditionIndex].conditions.push(new Condition(isGroup));
             }
+
+            this.emitConditionsChanged();
         }
     }
 
@@ -108,6 +119,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         } else {
             this.Conditions.splice(conditionIndex, 1);
         }
+
+        this.emitConditionsChanged();
     }
 
     getObjectFieldsQueryFilters() {
@@ -116,24 +129,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         return apiQueryFilters;
     }
 
-    getListItem(itemsList: ListItem[], itemCode: string) {
-        return itemsList.filter(o => o.Code === itemCode)[0] || null;
+    isNoValueOperator(operatorCode: string) {
+        return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
     }
 
-    isValidConditions(conditions: Condition[] | null = null) {
-        let result = true;
-        for (let condition of (conditions || this.Conditions)) {
-            if (!condition.fieldCode || !condition.value) {
-                result = false;
-                break;
-            }
-            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
-                result = this.isValidConditions(condition.conditions);
-                if (!result) {
-                    break;
-                }
-            }
-        }
-        return result;
+    emitConditionsChanged() {
+        this.ConditionsChangedEvent.emit();
     }
 }

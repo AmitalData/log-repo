@@ -107,8 +107,8 @@
 
             <div *ngIf="Condition.isGroup" class="group-operation-container">
 
-                <ComboBox [ItemsSource]="ConditionGroupOperations" [Binding]="'Name'"
-                    [SelectedItem]="getListItem(ConditionGroupOperations, Condition.groupOperation)"
+                <ComboBox [ItemsSource]="ConditionOperations" [Binding]="'Name'"
+                    [SelectedItem]="ListItem(Condition.groupOperation)"
                     (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)">
                 </ComboBox>
 
@@ -138,14 +138,14 @@
 
                     <div class="condition-operator-container">
 
-                        <ComboBox [ItemsSource]="ConditionOperators" [Binding]="'Name'"
-                            [SelectedItem]="getListItem(ConditionOperators, Condition.operator)"
+                        <ComboBox [ItemsSource]="ConditionOperators[Condition.type] || ConditionOperators['default']"
+                            [Binding]="'Name'" [SelectedItem]="ListItem(Condition.operator)"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)">
                         </ComboBox>
 
                     </div>
 
-                    <div *ngIf="Condition.operator !== IsEmptyOperator" class="condition-value-container">
+                    <div *ngIf="!isNoValueOperator(Condition.operator)" class="condition-value-container">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
                             [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'FieldValue' + conditionIndex"
@@ -162,10 +162,10 @@
                     </div>
 
 
-                    <div *ngIf="Condition.operator === IsEmptyOperator" class="condition-value-container">
+                    <div *ngIf="isNoValueOperator(Condition.operator)" class="condition-value-container">
 
-                        <ComboBox [ItemsSource]="BooleanFieldValues" [Binding]="'Name'"
-                            [SelectedItem]="getListItem(BooleanFieldValues, Condition.value)"
+                        <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'"
+                            [SelectedItem]="ListItem(Condition.value)"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)">
                         </ComboBox>
 
@@ -174,14 +174,16 @@
                 </div>
 
                 <ConditionGroups *ngIf="Condition.conditions && Condition.conditions.length > 0" [EntityId]="EntityId"
-                    [Conditions]="Condition.conditions" [IsRootConditions]="false"></ConditionGroups>
+                    [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Condition.conditions"
+                    [IsValidConditions]="IsValidConditions" [IsRootConditions]="false"
+                    (ConditionsChangedEvent)="emitConditionsChanged()"></ConditionGroups>
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
-                    <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+                    <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                         (click)="addCondition(conditionIndex, false)">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
-                    <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+                    <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
                         (click)="addCondition(conditionIndex, true)">
                         <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
@@ -193,11 +195,11 @@
         </div>
 
         <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
-            <span class="link-button add-condition-button" [ngClass]="{'disabled': !isValidConditions()}"
+            <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                 (click)="addCondition(null, false)">
                 <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
-            <span class="link-button add-group-button" [ngClass]="{'disabled': !isValidConditions()}"
+            <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
                 (click)="addCondition(null, true)">
                 <span class="plus-sign">+</span><span>Add Group</span>
             </span>

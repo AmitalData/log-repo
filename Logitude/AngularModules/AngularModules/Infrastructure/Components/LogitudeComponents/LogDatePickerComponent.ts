@@ -95,7 +95,8 @@ export class LogDatePickerComponent
         return this.isDisabled;
     }
     public set IsDisabled(newValue: boolean) {
-        this.isDisabled = newValue;
+
+        this.isDisabled = this.IsFreeValue ? false: newValue;
     }
 
     private isDisabledWithColor: boolean;

@@ -35,6 +35,7 @@ namespace Logitude.Accounting.BL.Utils
         public const int LT_LinesMaximum_MIN = 2;
         public const int LT_LinesMaximum_MAX = 200;
         public const int MaxPageSize_MAX = 1000;
+        public string SpecificJournalId = "";
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;
@@ -64,6 +65,7 @@ namespace Logitude.Accounting.BL.Utils
                 //  decimal oldAmount = Decimal.MaxValue;
                 int tenant = interestTransactionsCheckAArg.Tenant;
                 string myGLAccountId = interestTransactionsCheckAArg.GLAccountId;
+                SpecificJournalId = interestTransactionsCheckAArg.SpecificJournalId;
                 badList = new List<string>();
                 goodList = new List<string>();
                 madeList = new List<string>();
@@ -164,25 +166,26 @@ namespace Logitude.Accounting.BL.Utils
                             OldJournalId = oldJournalId,
                             OldAmount = oldAmount,
                             MaximalDifference = interestTransactionsCheckAArg.MaximalDifference,
-                            //   UpToDueDate = interestTransactionsCheckAArg.UpToDueDate,
+                            SpecificJournalId = interestTransactionsCheckAArg.SpecificJournalId,
                             Stop = false,
                         };
                         runAgain = false;
                         moveOn = false;
                         List<JournalLT_GroupItem> journal_List = GetNextJournal_List(ref getNextGroupArgs);
-                        if (getNextGroupArgs.Stop) // Nothing retrieved from the DB 
-                        {
-                            toContinue = false;
-                        }
                         oldDate = getNextGroupArgs.OldDate;
                         oldJournalId = getNextGroupArgs.OldJournalId;
                         oldAmount = getNextGroupArgs.OldAmount;
-                        if (journal_List.Count == 0) // Some records retrieved but no sum<=MaxDiff
+                        if (getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0 
+                                  || !String.IsNullOrWhiteSpace(interestTransactionsCheckAArg.SpecificJournalId)) // Nothing retrieved from the DB, or a specific journal given
+                        {
+                            toContinue = false;
+                        }
+                        if (journal_List == null || journal_List.Count == 0) // Some records retrieved but no sum<=MaxDiff
                         {
                             runAgain = false;
                             moveOn = true;
                         }
-                        else
+                        else if (!(getNextGroupArgs.Stop || journal_List == null || journal_List.Count == 0))
                         {
                             decimal actualDifference = getNextGroupArgs.ActualDifference;
 
@@ -190,7 +193,8 @@ namespace Logitude.Accounting.BL.Utils
                             if (success)
                             {
                                 rv_success = true;
-                                runAgain = true; // try more from the oldData, oldId
+                                //     runAgain = true; // try more from the oldData, oldId
+                                moveOn = true;
                             }
                             else
                             {
@@ -220,6 +224,7 @@ namespace Logitude.Accounting.BL.Utils
                 InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(context);
                 foreach (JournalLT_GroupItem journal_LT_group in journal_List)
                 {
+                    string journalId = journal_LT_group.JournalList.Id;
                     string accountingEntityCode = journal_LT_group.JournalList.AccountingEntityCode;
                     string accountingEntityReference = journal_LT_group.JournalList.AccountingEntityReference;
                     List<LedgerTransactionList> lt_list = journal_LT_group.LT_List;
@@ -243,7 +248,7 @@ namespace Logitude.Accounting.BL.Utils
                                     List<GLAccountCurrencyPM> gLAccountCurrencies = gLAccountCurrencyQuery.GetRelatedCurrenciesAccountByCustomerGLAccount(myGLAccountId, tenant);
                                     if (gLAccountCurrencies == null)
                                     {
-                                        CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
+                                        CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
                                     }
                                     else
                                     {
@@ -264,16 +269,16 @@ namespace Logitude.Accounting.BL.Utils
                                             if (curr == aRInvoicePM.InvoiceCurrencyId)
                                             {
                                                 if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, journalId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
                                                 else
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
                                             }
                                             else
                                             {
                                                 if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, glac_incurr.Id, tenant, aRInvoicePM.InvoiceLines, null, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, journalId, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                                 else
-                                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, null, curr);
+                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                             }
                                         });
 
@@ -281,7 +286,7 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    CheckOneRefInv(interestTransactionQueryService, accountingEntityCode, aRInvoicePM.Id, myGLAccountId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
+                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs);
                                 }
                             }
                             break;
@@ -303,27 +308,27 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 GLAccountPM glac_incurr = GetARPaymentGLAccount(aRPaymentPM.BillToId, tenant, aRPaymentPM.PaymentCurrencyId);
                                 if (glac_incurr != null)
-                                    CheckOneRef(interestTransactionQueryService, accountingEntityCode, glac_incurr.Id, myGLAccountId, "", tenant, lt_list);
+                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRPaymentPM.Id, glac_incurr.Id, "", journalId, tenant, lt_list);
                                 else
-                                    CheckOneRef(interestTransactionQueryService, accountingEntityCode, aRPaymentPM.Id, myGLAccountId, "", tenant, lt_list);
+                                    CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRPaymentPM.Id, myGLAccountId, "", journalId, tenant, lt_list);
                             }
                             break;
 
                         case AccountingEntityValues.Journal:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", journalId, tenant, lt_list);
                             break;
 
                         case AccountingEntityValues.BankAdjustment:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", journalId, tenant, lt_list);
                             break;
 
                         default:
-                            CheckOneRef(interestTransactionQueryService, accountingEntityCode, journal_LT_group.JournalList.Id, myGLAccountId, "", tenant, lt_list);
+                            CheckOneRef(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), journal_LT_group.JournalList.Id, myGLAccountId, "", journalId, tenant, lt_list);
                             break;
                     }
                 }
 
-
+                rv = true;
                 return rv;
             }
             catch (Exception e)
@@ -331,42 +336,75 @@ namespace Logitude.Accounting.BL.Utils
                 throw new Exception($"InterestTransactionsCheckARun failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
-
-        private void CheckOneRef(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, string currencyId, int tenant, List<LedgerTransactionList> lt_list)
+        private string TranslateToInterestEntity(string accountingEntityCode)
         {
-            List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccount(accountingEntityCode, accountingEntityId, gLAccountId, tenant);
+            string rv = "3"; // Journal by default
+            switch (accountingEntityCode)
+            {
+                case "2": // ARInvoice
+                    rv = "1";
+                    break;
+                case "3": // ARPayment
+                    rv = "2";
+                    break;
+                case "10": // Adjustment
+                    rv = "5";
+                    break;
+                case "12": // Bank Adjustment
+                    rv = "5";
+                    break;
+                case "11": // Year Transfer
+                    rv = "4"; // Open Balance
+                    break;
+                default:
+                    rv = "3"; // Journal
+                    break;
+            }
+            return rv;
+        }
+
+
+
+        private void CheckOneRef(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, string currencyId, string journalId, int tenant, List<LedgerTransactionList> lt_list)
+        {
+            decimal lt_group_total = lt_list.Sum(lt => lt.LocalAmountDebit - lt.LocalAmountCredit);
+            List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccount(TranslateToInterestEntity(accountingEntityCode), accountingEntityId, gLAccountId, tenant);
             if (itlist_j != null && itlist_j.Count > 0)
             {
                 decimal inttt_total = itlist_j.Sum(it => it.LocalAmount);
-                decimal lt_group_total = lt_list.Sum(lt => lt.LocalAmountDebit - lt.LocalAmountCredit);
                 if (inttt_total == lt_group_total)
                 {
                     this.MyInterestTransactionsCheckARunResult.SuccessAccountLineCount++;
                 }
                 else
                 {
-                    this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, lt_group_total, inttt_total, "Not equal");
+                    this.AddErrorRowList(gLAccountId, journalId, accountingEntityCode, accountingEntityId, currencyId, lt_group_total, inttt_total, "Not equal");
                 }
+            }
+            else
+            {
+                this.AddErrorRowList(gLAccountId, journalId, accountingEntityCode, accountingEntityId, currencyId, lt_group_total, 0m, "Nothing found");
             }
 
         }
 
 
-        private void CheckOneRefInv(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, int tenant, 
+        private void CheckOneRefInv(InterestTransactionQueryService interestTransactionQueryService, string accountingEntityCode, string accountingEntityId, string gLAccountId, string journalId, int tenant, 
             List<ARInvoiceLinePM> invline_list, List<ARInvoiceTotalVATPM> vatline_list, string currencyId = null)
         {
+            decimal inv_group_total = 0m;
+            if (invline_list != null && invline_list.Count > 0)
+                inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+
+            decimal vat_group_total = 0m;
+            if (vatline_list != null && vatline_list.Count > 0)
+                vat_group_total = vatline_list.Sum(vl => vl.LocalVATAmount.HasValue ? (decimal)vl.LocalVATAmount.Value : 0.0m);
+
             List<InterestTransactionPM> itlist_j = interestTransactionQueryService.GetInterestTransactionPMsByEntityTypeCodeIdAccountCurr(accountingEntityCode, accountingEntityId, gLAccountId, tenant, currencyId);
             if (itlist_j != null && itlist_j.Count > 0)
             {
                 decimal inttt_total = itlist_j.Sum(it => it.LocalAmount);
 
-                decimal inv_group_total = 0m;
-                if (invline_list != null && invline_list.Count > 0)
-                    inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal) il.LocalCurrencyAmount.Value : 0.0m);
-
-                decimal vat_group_total = 0m;
-                if (vatline_list != null && vatline_list.Count > 0)
-                    vat_group_total = vatline_list.Sum(vl => vl.LocalVATAmount.HasValue ? (decimal)vl.LocalVATAmount.Value : 0.0m);
 
                 if (inttt_total == inv_group_total + vat_group_total)
                 {
@@ -374,8 +412,12 @@ namespace Logitude.Accounting.BL.Utils
                 }
                 else
                 {
-                    this.AddErrorRowList(gLAccountId, accountingEntityCode, accountingEntityId, currencyId, inv_group_total, inttt_total, "Not equal");
+                    this.AddErrorRowList(gLAccountId, journalId, accountingEntityCode, accountingEntityId, currencyId, inv_group_total, inttt_total, "Not equal");
                 }
+            }
+            else
+            {
+                this.AddErrorRowList(gLAccountId, journalId, accountingEntityCode, accountingEntityId, currencyId, inv_group_total, 0m, "Nothing found");
             }
 
         }
@@ -467,10 +509,10 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private void AddErrorRowList(string gLAccount_id, string accountingEntityCode, string accountingEntityId, string currencyId, decimal totalLT, decimal total_intt, string message)
+        private void AddErrorRowList(string gLAccount_id, string journalId, string accountingEntityCode, string accountingEntityId, string currencyId, decimal totalLT, decimal total_intt, string message)
         {
-            string separator = "    "; // tab 
-            this.AddErrorRow($"{gLAccount_id}{separator}{accountingEntityCode}{separator}{accountingEntityId}{separator}{currencyId}{separator}{totalLT.ToString()}{separator}{total_intt.ToString()}{separator}{message}");
+            string separator = ";"; 
+            this.AddErrorRow($"{gLAccount_id}{separator}{journalId}{separator}{accountingEntityCode}{separator}{accountingEntityId}{separator}{currencyId}{separator}{totalLT.ToString()}{separator}{total_intt.ToString()}{separator}{message}");
         }
 
 
@@ -534,13 +576,6 @@ namespace Logitude.Accounting.BL.Utils
         //    }
         //}
 
-        private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
-        {
-            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
-            BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-            return batchTaskExecutionUpdateService;
-        }
-
     }
     public class InterestTransactionsCheckAArg
     {
@@ -556,7 +591,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public decimal MaximalDifference { get; set; }
 
-        public BatchTaskExecutionPM BatchTask { get; set; }
+        public string SpecificJournalId { get; set; }
 
     }
 

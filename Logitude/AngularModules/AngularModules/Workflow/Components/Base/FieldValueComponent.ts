@@ -3,6 +3,10 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { ObjectTablePMService } from "Infrastructure/Services/StandardPMs/ObjectTablePMService";
+import { BooleanItems } from "Workflow/Constants/BooleanItems";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { BooleanItemsList } from "Workflow/Models/BooleanItemsList";
+import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
     selector: "FieldValue",
@@ -13,15 +17,19 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     @Input() ObjectField: ObjectFieldPM;
     @Input() Name: string;
-    @Input() CurrentValue: any;
+    @Input() CurrentValue: string;
 
-    @Input() DataCy: string;
-
-    @Output() ValueChanged = new EventEmitter<any>();
+    @Output() ValueChanged = new EventEmitter<string>();
 
     public LookupTable: ObjectTablePM;
 
     public ObjectTablePMService = new ObjectTablePMService();
+
+    public BooleanItems: ListItem[] = new BooleanItemsList().BooleanItems;
+
+    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
+
+    public FieldTypes = FieldTypes;
 
     DataContext: any = this;
 
@@ -30,7 +38,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.ObjectField && this.ObjectField.DataTypeCode === "LookUp") {
+        if (this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.LookUp) {
             this.setLookupTable();
         }
     }

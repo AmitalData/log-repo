@@ -158,8 +158,8 @@ export class PrintComponent extends BaseComponent implements OnInit {
 
             if (entity && entity.Error) {
                 var row: PrintingRow = new PrintingRow();
-                row.EntityId = record.Id;
-                row.EntityNumber = record.InvoiceNumber;
+                row.EntityId = entity.EntityId;
+                row.EntityNumber = entity.EntityNumber;
                 row.Error = entity.Error;
                 results.push(row);
             }
@@ -359,6 +359,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.SelectedRecords.forEach((item) => {
             var key: PrintEntityKeys = new PrintEntityKeys();
             key.EntityId = item.Id;
+            key.EntityNumber = this.ObjectTableName == "Shipment" ? item.ShipmentNumber : item.InvoiceNumber;
             args.EntityIds.push(key);
             this.selectedEntitiesIds.push(item.Id);
         });

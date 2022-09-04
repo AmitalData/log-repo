@@ -14,7 +14,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.LocalName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.EntityStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);

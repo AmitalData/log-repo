@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetInterestTransactionsCheckA(int tenant, string gLAccountId, string accountTypeCode, int lT_LinesMaximum, int maxPageSize)
+        public HttpResponseMessage GetInterestTransactionsCheckA(int tenant, string gLAccountId, string accountTypeCode, int lT_LinesMaximum, int maxPageSize, string specificJournalId)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 InterestTransactionsCheckAArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, lT_LinesMaximum, maxPageSize, maximalDifference, ref args, message);
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, lT_LinesMaximum, maxPageSize, maximalDifference, specificJournalId, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -53,10 +53,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
-        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, ref InterestTransactionsCheckAArg args, string message)
+        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, string specificJournalId, ref InterestTransactionsCheckAArg args, string message)
         {
             bool isSuccess = false;
-            bool v_closeOnlyZeroes = false;
             if (String.IsNullOrWhiteSpace(gLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode)) // 2=Client, 3=Vendor
             {
                 message = "AccountTypeCode is a must, when no GLAccountId is provided";
@@ -103,6 +102,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 LT_LinesMaximum = lT_LinesMaximum,
                 MaxPageSize = maxPageSize,
                 MaximalDifference = maximalDifference,
+                SpecificJournalId = specificJournalId, 
             };
             isSuccess = true;
             return isSuccess;

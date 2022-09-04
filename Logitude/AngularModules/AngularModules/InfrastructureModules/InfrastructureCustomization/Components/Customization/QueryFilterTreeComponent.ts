@@ -73,24 +73,27 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
 
     RestoreFilters(BaseFilter: QueryFilterViewItem, MyFilter: QueryFilterViewItem) {
         BaseFilter.QueryFilterItems?.forEach((field) => {
-            if (field.QueryFilterItems.length == 0) {
-                let groupTreeFilter = new QueryFilterViewItem(field, this);
-                MyFilter.QueryFilterItems.push(groupTreeFilter);
-            }
-            else {
-                var DWObjectField = new QueryFilterViewItem(null, this);
-                DWObjectField.IsGroup = true;
-                DWObjectField.IndexOrder = MyFilter.QueryFilterItems.length;
-                DWObjectField.setAndOrOperation(field.FilterType);
-                this.RestoreFilters(field, DWObjectField);
-                MyFilter.QueryFilterItems.push(DWObjectField);
-            }
+            this.RestoreQueryFilterViewItem(field, MyFilter);
         });
 
         return MyFilter;
     }
 
     public dataSource: any;
+    private RestoreQueryFilterViewItem(field: QueryFilterViewItem, MyFilter: QueryFilterViewItem) {
+        if (field.QueryFilterItems.length == 0) {
+            MyFilter.QueryFilterItems.push(new QueryFilterViewItem(field, this));
+            return;
+        }
+
+        var DWObjectField = new QueryFilterViewItem(null, this);
+        DWObjectField.IsGroup = true;
+        DWObjectField.IndexOrder = MyFilter.QueryFilterItems.length;
+        DWObjectField.setAndOrOperation(field.FilterType);
+        this.RestoreFilters(field, DWObjectField);
+        MyFilter.QueryFilterItems.push(DWObjectField);
+    }
+
     public get DataSource() { return this.dataSource; }
     public set DataSource(newValue: any) {
         this.dataSource = newValue;
@@ -166,14 +169,20 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     }
 
     private DeleteSpecificFilter(Myfilter: QueryFilterViewItem, Item: QueryFilterViewItem, ListItems: QueryFilterViewItem[]) {
+
         if (Myfilter.QueryFilterItems.length > 0) {
-            Myfilter.QueryFilterItems = this.DeleteFilter(Item, Myfilter.QueryFilterItems);
-            if (Myfilter.QueryFilterItems.length == 0) {
-                ListItems = ListItems.filter(a => a != Myfilter);
-            }
+            ListItems = this.DeleteChildFilter(Myfilter, Item, ListItems);
         }
         else if (Myfilter == Item) {
             ListItems = ListItems.filter(a => a != Item);
+        }
+        return ListItems;
+    }
+
+    private DeleteChildFilter(Myfilter: QueryFilterViewItem, Item: QueryFilterViewItem, ListItems: QueryFilterViewItem[]) {
+        Myfilter.QueryFilterItems = this.DeleteFilter(Item, Myfilter.QueryFilterItems);
+        if (Myfilter.QueryFilterItems.length == 0) {
+            ListItems = ListItems.filter(a => a != Myfilter);
         }
         return ListItems;
     }

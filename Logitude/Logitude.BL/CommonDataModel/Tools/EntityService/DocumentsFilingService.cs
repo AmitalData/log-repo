@@ -376,6 +376,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
+            AddImporterQueueWithDelay(theEntityPm, tenantPM, HavingDREL);
             new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
             if (!string.IsNullOrEmpty(this.entityPM.DocumentId))
@@ -391,9 +392,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddImporterQueue(DocumentsFilingPM theEntityPm, TenantPM tenantPM, bool HavingDREL)
         {
-            if (!LogitudeSettings.IsCostomsDeploy && !tenantPM.IsDocumentsArchive && IsDocumentMatchesLogboxConditions(theEntityPm, HavingDREL))
+            if (!LogitudeSettings.IsCostomsDeploy && !tenantPM.IsDocumentsArchive && IsDocumentMatchesLogboxConditions(theEntityPm, HavingDREL) && HasConnectedShipmentInLogbox(theEntityPm))
             {
-                AddImportersShipmentDocumentsQueueMessage();
+                AddImportersShipmentDocumentsQueueMessage(null);
+            }
+        }
+
+        private void AddImporterQueueWithDelay(DocumentsFilingPM theEntityPm, TenantPM tenantPM, bool HavingDREL)
+        {
+            const int delayInSeconds = 25;
+            if (!LogitudeSettings.IsCostomsDeploy && !tenantPM.IsDocumentsArchive && IsDocumentMatchesLogboxConditions(theEntityPm, HavingDREL) && !HasConnectedShipmentInLogbox(theEntityPm))
+            {
+                AddImportersShipmentDocumentsQueueMessage(new TimeSpan(0, 0, delayInSeconds));
             }
         }
 
@@ -412,7 +422,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!isDocumentMatchsLogboxConditions)
                 return false;
 
-            isDocumentMatchsLogboxConditions = HasConnectedShipmentInLogbox(theEntityPm);
             return isDocumentMatchsLogboxConditions;
         }
 
@@ -449,11 +458,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             return hasShipmentInLogbox;
         }
 
-        private void AddImportersShipmentDocumentsQueueMessage()
+        private void AddImportersShipmentDocumentsQueueMessage(TimeSpan? timeSpan)
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant, timeSpan);
         }
 
         private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
@@ -938,6 +947,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
         {
+            if (IsLogboxEnvironment()) return false;
             documentFiling.DocumentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
             if (shipmentObjectTable?.Name != "Shipment")
@@ -957,6 +967,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             return true;            
         }
+
+        private bool IsLogboxEnvironment()
+        {
+            return !string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1");
+        }
+
         private bool IsDocumentWillUpdateShipment(string documentTypeCode)
         {
             if (documentTypeCode == "POD")

@@ -1749,6 +1749,13 @@ namespace MeatadataGeneratorTool
             set { hasCustomFields = value; FirePropertyChanged("HasCustomFields"); }
         }
 
+        bool availableInCustomization;
+
+        public bool AvailableInCustomization
+        {
+            get { return availableInCustomization; }
+            set { availableInCustomization = value; FirePropertyChanged("AvailableInCustomization"); }
+        }
 
         bool hasShortTitle;
 
@@ -1783,9 +1790,6 @@ namespace MeatadataGeneratorTool
             get { return hasCustomValidator; }
             set { hasCustomValidator = value; FirePropertyChanged("HasCustomValidator"); }
         }
-
-
-
 
         string clientModuleName;
 

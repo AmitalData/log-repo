@@ -4,12 +4,13 @@
   ObjectTableName="&quot;Category1&quot;"
   IsNew="false"
   DBTableName="&quot;Category1&quot;"
-  OldDBTableName="&quot;Category1&quot;"
+  DBTableOldNames="Category1"
   ObjectTableSingular="&quot;Category 1&quot;"
   ObjectTablePlural="&quot;Categories 1&quot;"
   DescriptionDefaultText="&quot;This table allow user to categorize GLAccounts&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -48,24 +49,27 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;e95a&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8786c377-6cb2-4af3-a337-75bb541aa143&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -74,7 +78,9 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -82,9 +88,10 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
     DisplayInLookUpIndex="0"
@@ -110,6 +117,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -123,16 +131,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;0d90c936-b2f4-4ebc-b9e1-dad8e3c980c9&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -141,7 +151,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -149,6 +161,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -177,6 +190,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -190,16 +204,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;7ae99d21-0626-48e5-b221-549e7ffefde1&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -208,7 +224,9 @@
     MinLength="0"
     MaxLength="30"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -216,6 +234,7 @@
     SystemMaxLength="30"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -246,6 +265,7 @@
     ListLocalDefaultText="&quot;שם באנגלית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -259,16 +279,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d91c8b0d-970a-44fe-aa67-a49960a41ace&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -277,7 +299,9 @@
     MinLength="0"
     MaxLength="30"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -285,6 +309,7 @@
     SystemMaxLength="30"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -315,6 +340,7 @@
     ListLocalDefaultText="&quot;שם&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -328,16 +354,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;1a3ee7a2-a080-475f-b417-1ead109f2ea2&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -346,7 +374,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -354,6 +384,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -384,6 +415,7 @@
     ListLocalDefaultText="&quot;לא פעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -397,16 +429,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;21a241e2-58a3-4a82-9e8a-3aba53709c2d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -415,7 +449,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -423,6 +459,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -451,6 +488,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -464,20 +502,59 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;allcategory1&quot;"
+    TextCode="&quot;Categories 1&quot;"
+    QueryGroupCode="&quot;f86a&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Category1&quot;"
+    QuerySection="&quot;Category1&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;EnglishName&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    QueryGroupName="&quot;Category1 Query Group&quot;"
+    TextCodeCode="&quot;Category1.Q.allcategory1&quot;"
+    FeatureCode="&quot;Category1.Q.allcategory1&quot;"
+    FeatureTextCodeCode="&quot;Category1.Features.allcategory1&quot;"
+    FeatureDefaultText="&quot;allcategory1&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;allcategory1&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;allcategory1&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;allcategory1&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;HeaderScreen&quot;"
     ObjectTableName="&quot;Category1&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="2"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;Category1.HeaderScreen&quot;">
+    Code="&quot;Category1.HeaderScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -499,11 +576,11 @@
   <Screen
     Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;Category1&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="3"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;Category1.GeneralTabScreen&quot;">
+    Code="&quot;Category1.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -535,7 +612,8 @@
     FeatureCode="&quot;Category1.Tab.General&quot;"
     FeatureTextCodeCode="&quot;Category1.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     ObjectTableName="&quot;Category1&quot;"
@@ -549,7 +627,8 @@
     FeatureCode="&quot;Category1.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;Category1.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -584,7 +663,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Category1&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -596,7 +676,10 @@
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
-        IgnoreCustomTypeCheck="false" />
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -608,7 +691,10 @@
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
-        IgnoreCustomTypeCheck="false" />
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -620,7 +706,10 @@
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
-        IgnoreCustomTypeCheck="false" />
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -632,7 +721,10 @@
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
-        IgnoreCustomTypeCheck="false" />
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -644,57 +736,12 @@
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
-        IgnoreCustomTypeCheck="false" />
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
-  <Query
-    Code="&quot;allcategory1&quot;"
-    ObjectTableName="&quot;Category1&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
-    DefaultSortName="&quot;EnglishName&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Category1&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;f86a&quot;"
-    QueryGroupName="&quot;Category1 Query Group&quot;"
-    TextCode="&quot;Categories 1&quot;"
-    TextCodeCode="&quot;Category1.Q.allcategory1&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;Category1.Q.allcategory1&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Category1.Features.allcategory1&quot;"
-    FeatureDefaultText="&quot;allcategory1&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        QueryCode="&quot;allcategory1&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;LocalName&quot;"
-        QueryCode="&quot;allcategory1&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;Inactive&quot;"
-        QueryCode="&quot;allcategory1&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <AdditionalFeatures>
-    <Feature
-      Code="&quot;Category1.Features.Category1&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Category1.Features.Category1&quot;"
-      FeatureDefaultText="&quot;Category 1&quot;" />
-  </AdditionalFeatures>
   <AdditionalTextCodes>
     <TextCode
       Code="&quot;General.MC.ACC.Category1&quot;"
@@ -703,4 +750,15 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Category1.Features.Category1&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Category1.Features.Category1&quot;"
+      FeatureDefaultText="&quot;Category 1&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

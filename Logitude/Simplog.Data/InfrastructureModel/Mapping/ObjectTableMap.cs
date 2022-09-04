@@ -116,6 +116,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DescriptionTextCodeCode).HasColumnName("DescriptionTextCodeCode");
             this.Property(t => t.NewButtonTextCodeCode).HasColumnName("NewButtonTextCodeCode");
             this.Property(t => t.ParentObjectTableName).HasColumnName("ParentObjectTableName");
+            this.Property(t => t.AvailableInCustomization).HasColumnName("AvailableInCustomization");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

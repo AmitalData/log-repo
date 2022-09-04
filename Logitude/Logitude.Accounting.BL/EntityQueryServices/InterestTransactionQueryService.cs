@@ -146,27 +146,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<InterestTransactionPM> GetInterestTransactionPMsByEntityTypeCodeIdAccountCurr(string typeCode, string entityId, string gLAccountId, int tenant, string currId)
         {
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
-            InterestTransactionPM interestTransactionPM = (from a in context.InterestTransactions
-                                                           where a.EntityId == entityId && a.Tenant == tenant && (String.IsNullOrEmpty(currId) || a.CurrencyId == currId)
-                                                           select new InterestTransactionPM()
-                                                           {
-                                                               Id = a.Id,
-                                                               OriginalEntityLineNumber = a.OriginalEntityLineNumber,
-                                                               EntityId = a.EntityId,
-                                                               InterestEntityTypeCode = a.InterestEntityTypeCode
 
-                                                           }).FirstOrDefault();
-
-            var q = (from a in context.InterestTransactions
+            var lt_list = (from a in context.InterestTransactions
                      where
                          a.InterestEntityTypeCode == typeCode
                          && a.Tenant == tenant
                          && a.GLAccountId == gLAccountId
                          && a.EntityId == entityId
+                         && (String.IsNullOrEmpty(currId) || a.CurrencyId == currId)
                      select a).ToList();
 
             List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
-            q.ForEach(intt => interestTransactionPMs.Add(GetEntityPM(intt)));
+            lt_list.ForEach(intt => interestTransactionPMs.Add(GetEntityPM(intt)));
             return interestTransactionPMs;
 
         }
