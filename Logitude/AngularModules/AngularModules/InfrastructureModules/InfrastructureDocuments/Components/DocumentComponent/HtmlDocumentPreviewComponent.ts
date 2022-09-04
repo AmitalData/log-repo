@@ -121,6 +121,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
     DontShowToField: boolean = false;
+    DontShowBCCField: boolean = false;
+
+    
     public DataViewModel: any;
     SetWindowArgs(args: any) {
 
@@ -136,6 +139,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.ChildEntityId = args.ChildEntityId ? args.ChildEntityId : "";
         this.ChildObjectTableId = args.ChildObjectTableId ? args.ChildObjectTableId : "";
         this.DontShowToField = args.DontShowToField;
+        this.DontShowBCCField = args.DontShowBCCField;
+
         this.RequsetPageName = args.RequsetPageName;
         this.AutomationId = args.AutomationId;
 
