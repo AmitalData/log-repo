@@ -317,6 +317,8 @@ namespace AmitalCustomsWindowsService.Tester
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            clsTester.Check_CourierSchedulerServiceIsTimeRange();
+            return;
 
             Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
             return;

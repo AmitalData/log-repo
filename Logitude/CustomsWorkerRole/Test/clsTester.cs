@@ -61,9 +61,9 @@ namespace CustomsWorkerRole.Test
             }
 
             // req.RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive;    
-            
+
             var res = messageService.Send(req);
-            
+
         }
 
         public static void RequestSheetRepushQService(string customsRequestsSheetId, int tenant)
@@ -233,7 +233,7 @@ SELECT TOP 1000 [Id]
         {
             try
             {
-                
+
                 var DeclarationQueryService = new DeclarationQueryService(tenant);
 
 
@@ -258,7 +258,7 @@ SELECT TOP 1000 [Id]
         }
 
 
-        
+
 
         public static void SendDeclarationsThatCanResendInBatch()
         {
@@ -314,6 +314,31 @@ SELECT TOP 1000 [Id]
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+        public static void Check_CourierSchedulerServiceIsTimeRange()
+        {
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            bool IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("09:00-13:00", DateTime.Now.Date.AddHours(12), stringBuilder);
+            Debug.Assert(IsTimeRange == true , "12:00 -Expected true 09:00-13:00");
+
+            stringBuilder.Clear();
+            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("09:00-13:00", DateTime.Now.Date.AddHours(8), stringBuilder);
+            Debug.Assert(IsTimeRange  == false, "08:00 -Expected false  09:00-13:00");
+
+            stringBuilder.Clear();
+
+            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(5), stringBuilder);
+            Debug.Assert(IsTimeRange == true, "05:00 -Expected true 17:00-06:00");
+
+            stringBuilder.Clear();
+            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(20), stringBuilder);
+            Debug.Assert(IsTimeRange == true, "20:00 -Expected true 17:00-06:00");
+            stringBuilder.Clear();
+
+            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(8), stringBuilder);
+            Debug.Assert(IsTimeRange == false, "08:00 -Expected false  17:00-06:00");
+
         }
 
         public static void GetPointer()
