@@ -45,6 +45,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var rep = new ShipmentRepository(tenant);
             var shipment = rep.GetSingleShipment(shipmentId, tenant);
+            CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
             var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
             var arInvoices = new List<ShipmentARInvoicePM>();
             var arInvoiceReps = new ARInvoiceRepository(tenant);
@@ -55,6 +56,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
             var documentOutQuery = new DocumentOutQuery(tenant);
             var documentTypeQuery = new DocumentTypeQuery(tenant);
+            var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
 
             foreach (var item in invoices.Where(d=> d.IsPrinted))
             {
@@ -97,6 +99,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     entity.InvoiceNumber = item.DraftNumber + " (Draft)";
                 }
+
+                var invoiceType = aRInvoiceTypeRepository.GetSingleARInvoiceType(entity.InvoiceTypeCode);
+                entity.InvoiceTypeName = localCurrency?.EnglishName;
 
                 arInvoices.Add(entity);
             }
@@ -419,6 +424,46 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
                 
+                if (!exists)
+                {
+                    throw new AutenticationException("Sorry! you are not authorized to read data!");
+                }
+
+                return exists;
+            }
+
+            return true;
+        }
+
+        private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
+        {
+            if (tenant != 0)
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                bool exists = false;
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
+                {
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                    string email = HttpContext.Current.User.Identity.Name;
+
+                    ContactRepository contactrep = new ContactRepository(commonDataContext);
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
+                    if (contact != null)
+                    {
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && (d.CardId == customerId || d.CardId == agentId)).FirstOrDefault();
+                        if (cardContact != null)
+                        {
+                            exists = true;
+
+                        }
+                    }
+                }
+
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");

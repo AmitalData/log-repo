@@ -431,5 +431,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsCreatedFromPickupDelivery{ get; set; }
         public bool IsPackageCheckedInLeg { get; set; }
         public string ChangeSet { get; set; }
+
+        public double? VolumeInCBM { get; set; }
+        public double? GrossWeightInKG { get; set; }
+
     }
 }

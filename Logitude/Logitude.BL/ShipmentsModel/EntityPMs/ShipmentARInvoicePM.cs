@@ -12,6 +12,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusName { get; set; }
         public string InvoiceNumber { get; set; }
         public string InvoiceTypeCode { get; set; }
+        public string InvoiceTypeName { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public bool IsAutoCredit { get; set; }

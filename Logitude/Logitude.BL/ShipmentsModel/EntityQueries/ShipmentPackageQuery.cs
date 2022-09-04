@@ -10,6 +10,7 @@ using Simplog.Data.CommonDataModel;
 using System;
 using Simplog.Data.InfrastructureModel;
 using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -327,6 +328,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume) ;
+                package.GrossWeightInKG  = ShipmentMapping.GetWeightInKG("KG", package.Weight); ;
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
