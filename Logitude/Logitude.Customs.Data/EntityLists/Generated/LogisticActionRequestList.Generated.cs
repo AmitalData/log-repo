@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool MyCloseCheckBox  { get; set; }
        [DataMember]
        public string OperationalStatusName  { get; set; }
+       [DataMember]
+       public string ResponseStatus  { get; set; }
    }
 
 }

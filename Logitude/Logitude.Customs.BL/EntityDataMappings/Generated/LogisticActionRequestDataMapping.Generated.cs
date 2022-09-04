@@ -86,7 +86,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestCancelStatus, 
 	         HaveDeclarationId, 
 	         CalculatedExporterName, 
-	         OperationalStatusName,
+	         OperationalStatusName, 
+	         ResponseStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -70,9 +70,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                ResponseStatusCode = a.ResponseStatusCode,
 
-                                                               OperationalStatus = a.OperationalStatus,
+                                                               //OperationalStatus = a.OperationalStatus,
 
-                                                               OperationalStatusName = a.LogisticActionResponseReqS.LocalName,
+                                                               ResponseStatus = a.LogisticActionResponseReqS.LocalName,
 
                                                                Direction = a.Direction,
 

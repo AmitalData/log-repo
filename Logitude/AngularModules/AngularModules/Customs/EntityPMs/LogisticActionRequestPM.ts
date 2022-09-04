@@ -184,6 +184,11 @@ export class LogisticActionRequestPM {
     public set OperationalStatusName(newValue: string) { if (this.operationalStatusName != newValue) { this.operationalStatusName = newValue; this.MarkAsDirty("OperationalStatusName"); } }
        
 	 
+    private responseStatus: string;
+    public get ResponseStatus() { return this.responseStatus; }
+    public set ResponseStatus(newValue: string) { if (this.responseStatus != newValue) { this.responseStatus = newValue; this.MarkAsDirty("ResponseStatus"); } }
+       
+	 
 
     public OldEntityPM: LogisticActionRequestPM;
 		

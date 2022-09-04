@@ -41,6 +41,7 @@ export class LogisticActionRequestList {
 	CalculatedExporterName: string;
 	MyCloseCheckBox: boolean;
 	OperationalStatusName: string;
+	ResponseStatus: string;
 	
 }
  
