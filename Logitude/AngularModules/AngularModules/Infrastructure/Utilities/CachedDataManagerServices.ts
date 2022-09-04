@@ -80,6 +80,7 @@ import { AmountTypeListService } from '../../Customs/Services/StandardLists/Amou
 import { ClaimReasonTypeListService } from '../../Customs/Services/StandardLists/ClaimReasonTypeListService';
 import { ClassificationTypeListService } from '../../Customs/Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
+import { LogisticActionResponseReqSListService } from '../../Customs/Services/StandardLists/LogisticActionResponseReqSListService';
 //import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
 
 // Business Process
@@ -258,6 +259,8 @@ export class CachedDataManagerServices {
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
+            case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
+
 
             default: {
 
