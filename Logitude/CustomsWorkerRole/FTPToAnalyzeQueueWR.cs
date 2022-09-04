@@ -263,7 +263,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 }
                 string p_message = "";
                 string p_status = "";
-
+                bool toDir= !String.IsNullOrWhiteSpace( System.Configuration.ConfigurationManager.AppSettings.Get("SftpToDir")); ;
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
@@ -274,7 +274,8 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 sftpService = new SFTPService();
                 sftpService.Logon(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password, "22", ftpDetail.Folder, out p_status, out p_message);
                 Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
-               
+
+                
                 var directoryFiles = sftpService.DirList("*", true, false, out p_status, out p_message).ToList();
                 Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
@@ -308,7 +309,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
                     var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
-                    byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
+                    byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message, toDir);
                     Debug.WriteLine($"SaveMessageToAnalyzeQueue");
                     int tenant = customsPartnerFtpPM.Tenant;
                     LastActivity = DateTime.UtcNow;
@@ -322,7 +323,13 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                             SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
                         }
                         Debug.WriteLine($"ftpService.Delete({fileName})");
-                        sftpService.DeleteFile(fileName, out p_status, out p_message);
+                        sftpService.DeleteFile(fileName, out p_status, out p_message, toDir);
+                        if (p_status=="-1")
+                        {
+                            Debug.WriteLine($"ftpService.Delete({fileName})");
+                            _BadFileNamesCache.Add(fileName);
+                        }
+                        
                         LogDoneItemInMemory();
 
                     }
