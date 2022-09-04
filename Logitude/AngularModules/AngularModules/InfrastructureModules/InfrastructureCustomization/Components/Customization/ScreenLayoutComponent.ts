@@ -550,7 +550,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     OnDeleteField(item, sectionNumber: number = null) {
         this.Modified = true;
 
-        if (item.FieldCode != "LineSpace") {
+        if (!this.IsLineSpaceField (item.FieldCode)) {
             this.AllbanckStackFields.push(item);
         }
 
@@ -655,8 +655,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
     }
 
-   public IsLineField(objectFieldCode) {
-        return objectFieldCode == "LineSpace" ? true : false;
+   public IsLineSpaceField(fieldCode) {
+       return fieldCode == "LineSpace" ? true : false;
     }
 
 
@@ -718,7 +718,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     private AddScreenField(screenRowDetails: ScreenRowDetails, sectionScreen: SectionScreenItem) {
         screenRowDetails.ScreenFieldPMs.forEach(screenField => {
 
-            if (screenField.ObjectFieldCode != "LineSpace") {
+            if (!this.IsLineSpaceField(screenField.ObjectFieldCode)) {
                 this.MyArgs.ScreenFields.push(screenField);
             }
             this.MyArgs.Rows += 1;
