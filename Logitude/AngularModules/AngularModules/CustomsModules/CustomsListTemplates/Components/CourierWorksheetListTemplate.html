@@ -187,7 +187,7 @@
                 </div>
 
                 <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
-                    <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:120px; ">
+                    <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:160px; ">
                         <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'');">
                             <span>Pending</span>
                         </li>
@@ -202,11 +202,31 @@
         <span>מחיקת Pending</span>
     </li>
         -->
-                        <li style="text-align: center; border-bottom: 1px solid #555;"></li>
+                       
                         <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
                             <span>כניסה ל-F/U</span>
                         </li>
 
+                        <li (click)="DeclarationsStatusRequestMethod()">
+                            <span>שאילתא לסטטוס הצהרה</span>
+                        </li>
+
+                        <li *ngIf="IsClosedForFollowUp" (click)="SetCLSHWBEvent(0)">
+                            <span>ביטול סגירה ש.מ.ב</span>
+                        </li>
+
+                        <li *ngIf="!IsClosedForFollowUp" (click)="SetCLSHWBEvent(1)">
+                            <span>סגירה ש.מ.ב</span>
+                        </li>
+
+                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
+                            <span>העברה לפרטני</span>
+                        </li>
+                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'F');">
+                            <span>העברה למהיר</span>
+                        </li>
+
+                        <li style="text-align: center; border-bottom: 1px solid #555;"></li>
 
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
                             <span>הפקת תעודת עיכוב</span>
@@ -221,10 +241,10 @@
                             <span>ביטול הפקת מדבקה</span>
                         </li>
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
-                            <span>הדפסת מסמכים</span>
+                            <span>מסוף-מסר הפקת מסמכים</span>
                         </li>
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
-                            <span>ביטול הדפסת מסמכים</span>
+                            <span>ביטול מסוף-מסר הפקת מסמכים</span>
                         </li>
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','6');">
                             <span>סב''ן</span>
@@ -232,23 +252,10 @@
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','6');">
                             <span>ביטול סב''ן</span>
                         </li>
-                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
-                            <span>העברה לפרטני</span>
-                        </li>
-                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'F');">
-                            <span>העברה למהיר</span>
-                        </li>
+                       
 
-                        <li *ngIf="IsClosedForFollowUp" (click)="SetCLSHWBEvent(0)">
-                            <span>ביטול סגירה ש.מ.ב</span>
-                        </li>
-
-                        <li *ngIf="!IsClosedForFollowUp" (click)="SetCLSHWBEvent(1)">
-                            <span>סגירה ש.מ.ב</span>
-                        </li>
-                        <li (click)="DeclarationsStatusRequestMethod()">
-                            <span>שאילתא לסטטוס הצהרה</span>
-                        </li>
+                       
+                       
 
                     </ul>
                 </div>
