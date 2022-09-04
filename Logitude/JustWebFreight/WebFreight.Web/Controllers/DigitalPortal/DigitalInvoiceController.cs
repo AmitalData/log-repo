@@ -38,92 +38,98 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalInvoice/GetDigitalShipmentARInvoicesCharges")]
         public IHttpActionResult GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId)
         {
-            var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
-            shipmentId = shipmentIdAndTenant.Item1;
-            var tenant = shipmentIdAndTenant.Item2;
-
-            var rep = new ShipmentRepository(tenant);
-            var shipment = rep.GetSingleShipment(shipmentId, tenant);
-            var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
-            var arInvoices = new List<ShipmentARInvoicePM>();
-            var arInvoiceReps = new ARInvoiceRepository(tenant);
-            var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
-            var invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
-            var lines = new List<ARInvoiceLinePM>();
-            var currencyRepository = new CurrencyRepository(tenant);
-            var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
-            var documentOutQuery = new DocumentOutQuery(tenant);
-            var documentTypeQuery = new DocumentTypeQuery(tenant);
-            var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
-
-            foreach (var item in invoices.Where(d=> d.IsPrinted))
+            try
             {
-                var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
-                lines.AddRange(itemLines);
-                var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
-                var entity = new ShipmentARInvoicePM()
-                {
-                    Id = item.Id,
-                    ShipmentId = shipmentId,
-                    InvoiceNumber = item.InvoiceNumber,
-                    InvoiceCurrencyId = item.InvoiceCurrencyId,
-                    DueDate = item.DueDate,
-                    StatusCode = item.StatusCode,
-                    InvoiceTypeCode = item.ARInvoiceTypeCode,
-                    AmountInLocalCurrency = item.AmountInLocalCurrency,
-                    AmountInProfitCurrency = item.AmountInProfitCurrency,
-                    AmountInInvoiceCurrency = item.AmountInInvoiceCurrency,
-                    AmountDue = item.AmountDue,
-                    IsAutoCredit = item.IsAutoCredit,
-                    IsCancelled = item.IsCancelled,
-                    InvoiceDate = item.InvoiceDate,
-                    StatusName = item.Status?.Name,
-                };
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId, true);
+                shipmentId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
 
-                entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
+                var rep = new ShipmentRepository(tenant);
+                var shipment = rep.GetSingleShipment(shipmentId, tenant);
+                var resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
+                var arInvoices = new List<ShipmentARInvoicePM>();
+                var arInvoiceReps = new ARInvoiceRepository(tenant);
+                var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
+                var invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
+                var lines = new List<ARInvoiceLinePM>();
+                var currencyRepository = new CurrencyRepository(tenant);
+                var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
+                var documentOutQuery = new DocumentOutQuery(tenant);
+                var documentTypeQuery = new DocumentTypeQuery(tenant);
+                var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
 
-                var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId,tenant);
-                if (currency != null)
+                foreach (var item in invoices.Where(d => d.IsPrinted))
                 {
-                    entity.InvoiceCurrencyCode = currency.Code;
+                    var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
+                    lines.AddRange(itemLines);
+                    var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
+                    var entity = new ShipmentARInvoicePM()
+                    {
+                        Id = item.Id,
+                        ShipmentId = shipmentId,
+                        InvoiceNumber = item.InvoiceNumber,
+                        InvoiceCurrencyId = item.InvoiceCurrencyId,
+                        DueDate = item.DueDate,
+                        StatusCode = item.StatusCode,
+                        InvoiceTypeCode = item.ARInvoiceTypeCode,
+                        AmountInLocalCurrency = item.AmountInLocalCurrency,
+                        AmountInProfitCurrency = item.AmountInProfitCurrency,
+                        AmountInInvoiceCurrency = item.AmountInInvoiceCurrency,
+                        AmountDue = item.AmountDue,
+                        IsAutoCredit = item.IsAutoCredit,
+                        IsCancelled = item.IsCancelled,
+                        InvoiceDate = item.InvoiceDate,
+                        StatusName = item.Status?.Name,
+                    };
+
+                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
+
+                    var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
+                    if (currency != null)
+                    {
+                        entity.InvoiceCurrencyCode = currency.Code;
+                    }
+
+                    var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
+                    entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
+
+                    entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
+
+                    if (entity.Id == entity.InvoiceNumber)
+                    {
+                        entity.InvoiceNumber = item.DraftNumber + " (Draft)";
+                    }
+
+                    var invoiceType = aRInvoiceTypeRepository.GetSingleARInvoiceType(entity.InvoiceTypeCode);
+                    entity.InvoiceTypeName = invoiceType?.Name;
+                    arInvoices.Add(entity);
                 }
 
-                var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
-                entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
-
-                entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
-
-                if (entity.Id == entity.InvoiceNumber)
+                var myId = 0;
+                resultClass.ARInvoices = arInvoices;
+                resultClass.ARCharges = lines.GroupBy(d => new {
+                    d.Description,
+                    d.InvoiceCurrencyCode,
+                    d.InvoiceLocalCurrencyCode
+                })
+                .Select(g => new ARInvoiceChargePM()
                 {
-                    entity.InvoiceNumber = item.DraftNumber + " (Draft)";
-                }
+                    Id = ++myId,
+                    Description = g.Key.Description,
+                    InvoiceCurrencyCode = g.Key.InvoiceCurrencyCode,
+                    LocalCurrencyCode = g.Key.InvoiceLocalCurrencyCode,
+                    AmountInInvoiceCurrency = g.Sum(s => s.InvoiceCurrencyAmount),
+                    AmountInLocalCurrency = g.Sum(s => s.LocalCurrencyAmount)
+                }).ToList();
 
-                var invoiceType = aRInvoiceTypeRepository.GetSingleARInvoiceType(entity.InvoiceTypeCode);
-                entity.InvoiceTypeName = invoiceType?.Name;
-
-                arInvoices.Add(entity);
+                resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
+                return Ok(resultClass);
             }
-
-            var myId = 0;
-            resultClass.ARInvoices = arInvoices;
-            resultClass.ARCharges = lines.GroupBy(d => new {
-                                                            d.Description,
-                                                            d.InvoiceCurrencyCode,
-                                                            d.InvoiceLocalCurrencyCode
-                                                        })
-                                         .Select(g => new ARInvoiceChargePM()
-                                         {
-                                             Id = ++myId,
-                                             Description = g.Key.Description,
-                                             InvoiceCurrencyCode = g.Key.InvoiceCurrencyCode,
-                                             LocalCurrencyCode = g.Key.InvoiceLocalCurrencyCode,
-                                             AmountInInvoiceCurrency = g.Sum(s => s.InvoiceCurrencyAmount),
-                                             AmountInLocalCurrency = g.Sum(s => s.LocalCurrencyAmount)
-                                         }).ToList();
-
-            resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
-            return Ok(resultClass);
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpGet]
