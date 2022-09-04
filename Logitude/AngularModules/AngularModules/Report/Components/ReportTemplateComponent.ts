@@ -259,6 +259,8 @@ export class ReportTemplateComponent implements OnInit {
                 windowArgs.IsNewEntity = isNew;
                 windowArgs.ReportTemplatePM = item;
                 windowArgs.ReportComponentArea = "Maintenance";
+                windowArgs.DontShowToField = true;
+                windowArgs.DontShowBCCField = true;
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
 
