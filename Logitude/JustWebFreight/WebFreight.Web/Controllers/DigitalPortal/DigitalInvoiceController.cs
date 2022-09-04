@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var invoiceType = aRInvoiceTypeRepository.GetSingleARInvoiceType(entity.InvoiceTypeCode);
-                entity.InvoiceTypeName = localCurrency?.EnglishName;
+                entity.InvoiceTypeName = invoiceType?.Name;
 
                 arInvoices.Add(entity);
             }
