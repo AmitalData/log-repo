@@ -659,8 +659,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                             Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
-                            List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
-                            
+                            List<ChargeTypeGroupClass> lines_Grouped = new List<ChargeTypeGroupClass>();
+                            if (housesAndDirectOnly)
+                            {
+                                lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && (d.ShipmentId == myShipment.Id || d.ShipmentId == myShipment.MasterShipmentDataId)).ToList();
+                            }
+
+                            else
+                            {
+                                lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
+                            }
+
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
                             {
                                 ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
