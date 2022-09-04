@@ -91,8 +91,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
               || d.Master.Contains(digitalPortalSearchFields)
               || d.AgentName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.CustomAgentImportName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ConsigneeName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ShipperName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.CustomerName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
               || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
