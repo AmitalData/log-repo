@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -149,7 +150,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private StatisticsByClientDataProvider LoadDataProvider()
         {
             StatisticsByClientDataProvider myDataProvider = new StatisticsByClientDataProvider();
+            myDataProvider.StatisticsList_NoGroup = new List<StatisticsByClientReport>();
 
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CardRepository cardRepository = new CardRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
@@ -274,13 +278,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         record.CustomerName = shipment.CustomerName;
                     }
 
+                    Card myCustomer = cardRepository.GetSingleCard(record.CustomerId, tenant);
+                    if (myCustomer != null)
+                    {
+                        record.CustomerSalesman = myCustomer.SalesmanUser != null ? (myCustomer.SalesmanUser.Contact != null ? myCustomer.SalesmanUser.Contact.EnglishName : "") : "";
+
+                        if (myCustomer.Customer != null)
+                        {
+                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, myCustomer.Customer, record);
+                        }
+                    }
+
+                    record.ChargeableWeightInKg = shipment.ChargeableWeightInKG;
                     record.TransportMode = shipment.TransportModeName;
                     record.Direction = shipment.DirectionName;
                     record.TransmodeDirection = shipment.DirectionName + shipment.TransportModeName;
                     record.GrossWeight = shipment.GrossWeight;
                     record.Volume = shipment.Volume;
                     record.TEU = shipment.TEU;
-
+                    
                     if (currencytype == "profit")
                     {
                         record.Payables = shipment.OpenPayablesInProfitCurrency + shipment.AccountedPayablesInProfitCurrency;
@@ -297,6 +313,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     tempList.Add(record);
                 }
+                myDataProvider.StatisticsList_NoGroup = tempList;
             }
             #endregion
 
