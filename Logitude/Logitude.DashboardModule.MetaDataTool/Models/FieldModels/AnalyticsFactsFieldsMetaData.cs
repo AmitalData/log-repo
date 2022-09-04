@@ -23,8 +23,8 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
         }
 
 
-        private string canMeasure;
-        public string CanMeasure
+        private bool canMeasure;
+        public bool CanMeasure
         {
             get { return canMeasure; }
             set
@@ -34,8 +34,8 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
         }
 
 
-        private string canGroup;
-        public string CanGroup
+        private bool canGroup;
+        public bool CanGroup
         {
             get { return canGroup; }
             set

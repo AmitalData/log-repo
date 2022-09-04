@@ -1,11 +1,13 @@
 ﻿using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.MetaData.AnalyticsEntityFiles;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 
@@ -28,12 +30,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         internal void Update()
         {
-            return;
-            var analyticTables = new List<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>();
-            foreach (string fileName in Directory.GetFiles(GetProjectPath(), "*.ljson"))
-            {
-                analyticTables.Add(BuildFileJson(fileName));
-            }
+            var analyticTables = new AnalyticsMetadatas<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>().GetAllTables();
             if (!analyticTables.Any()) return;
             UpdateAnalyticsFactsMetaDatas(analyticTables);
             AnalyticsFactsMetaDataRepository.SubmitChanges();
@@ -51,13 +48,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private Dictionary<string, AnalyticsFactsMetaData> GetAnalyticsFactsMetaDatasFromDataBase()
         {
-            return DashboardContext.AnalyticsFactsMetaDatas.ToDictionary(d => d.TableName, a => a);
+            return DashboardContext.AnalyticsFactsMetaDatas.AsNoTracking().ToDictionary(d => d.TableName, a => a);
         }
 
         private void UpdateAnalyticsFactsMetaData(Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData jsonTable, AnalyticsFactsMetaData sqlTable)
         {
             if (sqlTable == null) AddNewTableToDB(jsonTable);
-            else if (sqlTable.HashString != sqlTable.HashString) UpdateTable(jsonTable, sqlTable);
+            else if (jsonTable.HashString != sqlTable.HashString) UpdateTable(jsonTable, sqlTable);
         }
 
         private void UpdateTable(Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData jsonTable, AnalyticsFactsMetaData sqlTable)
@@ -70,6 +67,17 @@ namespace WebFreight.Web.MetaDataUpdate
             foreach (var jsonField in jsonTable.AnalyticsFactsFieldsMetaDatas)
             {
                 UpdateField(jsonField, sqlFields.ContainsKey(jsonField.FieldCode) ? sqlFields[jsonField.FieldCode] : null, table.Id);
+            }
+           // RemoveDeletedFields(jsonTable.AnalyticsFactsFieldsMetaDatas, sqlFields);
+        }
+
+        private void RemoveDeletedFields(List<Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData> analyticsFactsFieldsMetaDatas, Dictionary<string, AnalyticsFactsFieldsMetaData> sqlFields)
+        {
+
+            var fieldDictionary = analyticsFactsFieldsMetaDatas.ToDictionary(d => d.FieldCode, a => a);
+            foreach (var item in sqlFields)
+            {
+                if (!fieldDictionary.ContainsKey(item.Key)) AnalyticsFactsFieldsMetaDataRepository.Remove(item.Value);
             }
         }
 
@@ -103,18 +111,6 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 AddField(item, table.Id);
             }
-        }
-
-        private static string GetProjectPath()
-        {
-            return "AnalyticsEntityFiles";
-        }
-
-        private Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData BuildFileJson(string fileName)
-        {
-            StreamReader r = new StreamReader(fileName);
-            var analyticsFactsMetaData = JsonConvert.DeserializeObject<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>(r.ReadToEnd());
-            return analyticsFactsMetaData;
         }
 
     }

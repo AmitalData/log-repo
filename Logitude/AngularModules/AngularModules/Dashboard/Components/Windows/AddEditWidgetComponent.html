@@ -39,8 +39,7 @@
                                                         [LookUpTableName]="'AnalyticsFactsMetaData'"
                                                         [HideColumns]="true"
                                                         [DisplayMemberPath]="'Name'"
-                                                        [IgnoreFeatureCheck]="true"
-                                                        (SelectedItemChanged)="TableChanged()">
+                                                        [IgnoreFeatureCheck]="true">
                                                 </LogLov>
                                             </td>
                                             <td>
@@ -127,7 +126,7 @@
                             <tr class="FormFieldRow" *ngIf="EntityId">
                                 <td colspan="2" style="height: 250px;">
                                     <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
-                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="GroupRoot"></WidgetFilter>
+                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter"></WidgetFilter>
                                     </div>
                                 </td>
                             </tr>

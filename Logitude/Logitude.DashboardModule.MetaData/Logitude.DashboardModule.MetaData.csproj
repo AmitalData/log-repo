@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticsEntityFiles\AnalyticsMetadatas.cs" />
+    <Compile Include="AutoGenerators\AnalyticMetadataClassGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnalyticMetadataClassGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\ContextGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,8 +62,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="AutoGenerators\AnalyticMetadataClassGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AnalyticMetadataClassGenerator.cs</LastGenOutput>
+    </Content>
     <Content Include="AutoGenerators\ContextGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
@@ -68,9 +80,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AnalyticsEntityFiles\ShipmentAnalytic.ljson">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="AnalyticsEntityFiles\ShipmentAnalytic.ljson" />
+    <None Include="app.config" />
     <None Include="DBScripts\202209010934_AddShipmentAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_DeleteShipmentAnalytics.sxml" />
     <None Include="DBScripts\202209010934_FillShipmentAnalytics.sxml" />
@@ -88,6 +99,7 @@
     <None Include="EntityFiles\Widget.lxml" />
     <None Include="EntityFiles\WidgetMeasure.lxml" />
     <None Include="EntityFiles\WidgetType.lxml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

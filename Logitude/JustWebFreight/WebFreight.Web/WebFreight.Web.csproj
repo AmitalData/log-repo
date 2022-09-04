@@ -7630,6 +7630,10 @@
       <Project>{15DB9300-FB4E-415F-AEB4-965365250127}</Project>
       <Name>Logitude.DashboardModule.MetaDataTool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DashboardModule.MetaData\Logitude.DashboardModule.MetaData.csproj">
+      <Project>{E6E7DB5E-6C25-41E2-819E-9F52C7B4FFB9}</Project>
+      <Name>Logitude.DashboardModule.MetaData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>
       <Name>Logitude.Infrastructure.BL</Name>
