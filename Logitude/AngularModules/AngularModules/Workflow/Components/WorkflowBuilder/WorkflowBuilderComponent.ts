@@ -138,18 +138,40 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     getPropertiesComponentPath = (nodeType: string) => {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
+        let propertiesComponentName = "";
         switch (nodeType) {
             case "startNode":
-                return (propertiesComponentPath + "StartPropertiesComponent");
+                propertiesComponentName = "StartPropertiesComponent";
+                break;
             case "conditionNode":
-                return (propertiesComponentPath + "ConditionPropertiesComponent");
+                propertiesComponentName = "ConditionPropertiesComponent";
+                break;
             case "loopNode":
-                return (propertiesComponentPath + "LoopPropertiesComponent");
+                propertiesComponentName = "LoopPropertiesComponent";
+                break;
             case "setValueNode":
-                return (propertiesComponentPath + "SetValuePropertiesComponent");
+                propertiesComponentName = "SetValuePropertiesComponent";
+                break;
+            case "declareVariableNode":
+                propertiesComponentName = "DeclareVariablePropertiesComponent";
+                break;
+            case "createRecordNode":
+                propertiesComponentName = "CreateRecordPropertiesComponent";
+                break;
+            case "updateRecordNode":
+                propertiesComponentName = "UpdateRecordPropertiesComponent";
+                break;
+            case "getRecordNode":
+                propertiesComponentName = "GetRecordPropertiesComponent";
+                break;
+            case "sendEmailNode":
+                propertiesComponentName = "SendEmailPropertiesComponent";
+                break;
             default:
-                return null;
+                propertiesComponentName = "";
+                break;
         }
+        return (propertiesComponentPath + propertiesComponentName);
     }
 
     buildPropertiesWindow = (openPropertiesEventObject: any) => {
