@@ -63,7 +63,7 @@ namespace WebFreight.Web.MetaDataUpdate
             table.Id = sqlTable.Id;
             AnalyticsFactsMetaDataRepository.Update(table);
 
-            var sqlFields = DashboardContext.AnalyticsFactsFieldsMetaDatas.ToDictionary(d => d.FieldCode, a => a);
+            var sqlFields = DashboardContext.AnalyticsFactsFieldsMetaDatas.AsNoTracking().ToDictionary(d => d.FieldCode, a => a);
             foreach (var jsonField in jsonTable.AnalyticsFactsFieldsMetaDatas)
             {
                 UpdateField(jsonField, sqlFields.ContainsKey(jsonField.FieldCode) ? sqlFields[jsonField.FieldCode] : null, table.Id);
