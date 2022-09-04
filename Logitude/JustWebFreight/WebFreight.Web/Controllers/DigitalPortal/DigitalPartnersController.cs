@@ -44,6 +44,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                return Ok(new List<Partner>());
+            }
+
             var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
             IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
@@ -54,9 +59,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                     || (cardType.Equals("CS")
                                                         ? a.CustomerId.Equals(cardId)
                                                         : a.AgentId.Equals(cardId)))
-                                                &&(!(searchText == null 
-                                                     || searchText.Trim() == string.Empty)
-                                                   || a.ConsigneeName.StartsWith(searchText) 
+                                                &&(a.ConsigneeName.StartsWith(searchText) 
                                                    || a.ShipperName.StartsWith(searchText)))
                                     .Take(100)
                                     .SelectMany(a => new List<Partner> 
