@@ -321,7 +321,7 @@
                     </tr>
 
 
-                    <tr style="vertical-align:top;height:33px">
+                    <tr *ngIf="!IsLogitudeEnvironment" style="vertical-align:top;height:33px">
                         <td style="width:8px">
                             <div></div>
                         </td>
@@ -347,7 +347,31 @@
                                     <td> <div></div> </td>
                                 </tr>
                             </table>
-                            
+
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="IsLogitudeEnvironment" style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:70px">
+                                        <div style="padding: 0px 5px;">
+                                            <button class="Button" (click)="onGenerateClicked()">Generate</button>
+                                        </div>
+                                    </td>
+                                    <td> <div></div> </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 
@@ -389,164 +413,164 @@
                     </tr>
                     <tr>
                         <!-- Declaration Message -->
-                        <tr style="vertical-align:top;height:100px">
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:200px;">
-                                <LogLabel [ObjectFieldName]="'DeclarationMessage'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
-                            </td>
+                    <tr style="vertical-align:top;height:100px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'DeclarationMessage'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
 
-                            <td style="width: 250px;height:50px;">
-                                <div class="MediaFill">
-                                    <LogTextBox [RowsCount]="5" [ObjectFieldName]="'DeclarationMessage'" [Text]="DeclarationMessage" [ObjectTableName]="'TenantManagement'" [InputType]="'ntext'" [DataContext]="DataContext" [IsMultiline]="true" [class.disabled]="!ActivatedforDeclarationApprove"></LogTextBox>
-                                </div>
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr style="height:10px">
-                            <td colspan="3">
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:18px;height:30px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'BackgroundId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                            </td>
+                        <td style="width: 250px;height:50px;">
+                            <div class="MediaFill">
+                                <LogTextBox [RowsCount]="5" [ObjectFieldName]="'DeclarationMessage'" [Text]="DeclarationMessage" [ObjectTableName]="'TenantManagement'" [InputType]="'ntext'" [DataContext]="DataContext" [IsMultiline]="true" [class.disabled]="!ActivatedforDeclarationApprove"></LogTextBox>
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:18px;height:30px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'BackgroundId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-                            <td style="vertical-align:top">
-                                <div style="width:160px;height:100px">
-                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
-                                        style="height:72px;width:72px">
-                                    </ImageComponent>
-                                </div>
-                                <a (click)="RemoveImage('bg')">remove</a>
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr style="height:10px">
-                            <td colspan="3">
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                            </td>
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('bg')">remove</a>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-                            <td style="vertical-align:top">
-                                <div style="width:160px;height:100px">
-                                    <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ComapnylogoId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="ComapnylogoUploadedCompleted($event)"
-                                        style="height:72px;width:72px">
-                                    </ImageComponent>
-                                </div>
-                                <a (click)="RemoveImage('company')">remove</a>
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ComapnylogoId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="ComapnylogoUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('company')">remove</a>
 
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'InvertedLogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                            </td>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'InvertedLogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-                            <td style="vertical-align:top">
-                                <div style="width:160px;height:100px">
-                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
-                                        style="height:72px;width:72px">
-                                    </ImageComponent>
-                                </div>
-                                <a (click)="RemoveImage('inverted')">remove</a>
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('inverted')">remove</a>
 
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr style="height:10px">
-                            <td colspan="3">
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'BrowserIconId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                            </td>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'BrowserIconId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-                            <td style="vertical-align:top">
-                                <div style="width:50px;height:50px">
-                                    <ImageComponent [ImageResizeWidth]="16" [ImageResizeHeight]="16" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BrowserIconId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="BrowserIconUploadedCompleted($event)"
-                                        style="height:72px;width:72px">
-                                    </ImageComponent>
-                                </div>
-                                <a (click)="RemoveImage('favicon')">remove</a>
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr style="height:10px">
-                            <td colspan="3">
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'ShipmentHeaderImageId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                            </td>
+                        <td style="vertical-align:top">
+                            <div style="width:50px;height:50px">
+                                <ImageComponent [ImageResizeWidth]="16" [ImageResizeHeight]="16" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BrowserIconId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="BrowserIconUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('favicon')">remove</a>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'ShipmentHeaderImageId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-                            <td style="vertical-align:top">
-                                <div style="width:160px;height:100px">
-                                    <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'160px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ShipmentHeaderImageId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="ShipmentHeaderImageUploadedCompleted($event)"
-                                        style="height:72px;width:72px">
-                                    </ImageComponent>
-                                </div>
-                                <a (click)="RemoveImage('ShipmentHeader')">remove</a>
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:8px">
-                                <div></div>
-                            </td>
-                            <td style="width:180px;height:22px; vertical-align:top">
-                                <LogLabel [ObjectFieldName]="'PermissionBuildMonths'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
-                            </td>
-                            <td style="width:160px">
-                                <LogTextBox InputType="double" [HideColumns]="true" [ObjectFieldName]="'PermissionBuildMonths'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
-                            </td>
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'160px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ShipmentHeaderImageId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="ShipmentHeaderImageUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('ShipmentHeader')">remove</a>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'PermissionBuildMonths'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox InputType="double" [HideColumns]="true" [ObjectFieldName]="'PermissionBuildMonths'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
 
-                            <td>
-                                <div style="margin: 0px 6px 0px 6px;">Month/s</div>
-                            </td>
-                        </tr>
+                        <td>
+                            <div style="margin: 0px 6px 0px 6px;">Month/s</div>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td colspan="4"></td>
-                        </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                    </tr>
                 </table>
 
             </td>

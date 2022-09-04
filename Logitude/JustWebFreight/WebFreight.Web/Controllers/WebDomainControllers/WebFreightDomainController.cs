@@ -439,11 +439,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        [HttpGet]
         public async Task<HttpResponseMessage> GetGenerateDigitalPortalDomainAsync(string customerURL)
         {
             try
             {
-                await RunAddingDNSRecord();
+                await RunAddingDNSRecordAsync();
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
             catch (Exception ex)
@@ -452,24 +453,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private async Task  RunAddingDNSRecord()
+        private static async Task RunAddingDNSRecordAsync()
         {
             var tenantId = "a46b1446-9af4-4079-87ad-3304ee9ed758";
             var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
             var secret = "~Tc8Q~6IvteQMJKc.-Ya1TvBKNl.f16mAuS7Pc2w";
             var subscriptionId = "faa01774-0b55-482b-a317-742a1f1479f8";
-
             var resourceGroupName = "globallogitude";
-
             var zoneName = "logitudeworld.com";
             var DNSIPAddress = "13.80.79.173";
+            var recordSetName = "samplesite1";
 
-            RunAddingARecordSample(tenantId, clientId, secret, subscriptionId, resourceGroupName, zoneName, DNSIPAddress).Wait();
-
-            var serviceCreds = ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret).Result;
+            var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
             var dnsClient = new DnsManagementClient(serviceCreds);
             dnsClient.SubscriptionId = subscriptionId;
-            var recordSetName = "samplesite1";
 
             try
             {
@@ -484,47 +481,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 throw e;
             }
-        }
-
-        public static async Task RunAddingARecordSample(string tenantId, string clientId, string secret, string subscriptionId, string resourceGroupName, string zoneName, string DNSIPAddress)
-        {
-            // Build the service credentials and DNS management client
-            var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
-            var dnsClient = new DnsManagementClient(serviceCreds);
-            dnsClient.SubscriptionId = subscriptionId;
-
-            #region Create A Record
-            // **********************************************************************************************************
-            // Create A Record
-            // **********************************************************************************************************
-
-            var recordSetName = "testrabi";
-            Console.Write("Creating DNS 'A' record set with name '{0}'...", recordSetName);
-            try
-            {
-                // Create record set parameters
-                var recordSetParams = new RecordSet();
-                recordSetParams.TTL = 3600;
-
-                // Add records to the record set parameter object.  In this case, we'll add a record of type 'A'
-                recordSetParams.ARecords = new List<ARecord>();
-                recordSetParams.ARecords.Add(new ARecord(DNSIPAddress));
-
-                // Add metadata to the record set.  Similar to Azure Resource Manager tags, this is optional and you can add multiple metadata name/value pairs
-                //recordSetParams.Metadata = new Dictionary<string, string>();
-                //recordSetParams.Metadata.Add("user", "Mary");
-
-                // Create the actual record set in Azure DNS
-                // Note: no ETAG checks specified, will overwrite existing record set if one exists
-                var recordSet = await dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, recordSetName, RecordType.A, recordSetParams);
-
-                Console.WriteLine("success");
-            }
-            catch (System.Exception e)
-            {
-                Console.WriteLine("failed: {0}", e.Message);
-            }
-            #endregion 
         }
 
 

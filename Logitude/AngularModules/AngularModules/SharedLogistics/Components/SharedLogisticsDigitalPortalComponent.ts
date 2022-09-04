@@ -18,6 +18,7 @@ import { TenantPM } from '../../Common/EntityPMs/TenantPM';
 import { ApiQueryFilters } from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomerPM } from '../../Common/EntityPMs/CustomerPM';
 import { SharedLogisticsService } from '../Services/Others/SharedLogisticsService';
+import { AppTool } from '../../Infrastructure/Tools';
 
 @Component({
     templateUrl: './SharedLogisticsDigitalPortalComponent.html',
@@ -78,6 +79,8 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     private InviteQueryCode: string = "Shared Logistics Customers";
     public IsShowDisplaySetting: boolean = false;
     public IsShowAgentStatisticsArea: boolean = false;
+    public ValidationWarningsMessage: string = null;
+    public IsValidationWarningsVisible: boolean = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
         this.InitalizeServices();
@@ -93,8 +96,17 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         this.SetVisibility();
         this.SetTitles();
         this.LoadData();
+        this.ValidateDomainSettings();
     }
 
+    private ValidateDomainSettings() {
+        this.IsValidationWarningsVisible = false;
+        this.ValidationWarningsMessage = null;
+        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.CustomerURL)) {
+            this.IsValidationWarningsVisible = true;
+            this.ValidationWarningsMessage = "Please contact your Administrator to define your Digital Portal domain!";
+        }
+    }
 
     InviteLinkClick() {
         var backButtonTitle = "Digital Portal";

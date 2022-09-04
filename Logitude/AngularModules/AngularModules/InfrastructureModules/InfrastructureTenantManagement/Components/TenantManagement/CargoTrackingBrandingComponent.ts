@@ -48,6 +48,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public BrandingTabName = "Cargo Tracking Branding";
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsLogitudeEnvironment: boolean = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -70,8 +71,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
     SetBrandingTabName() {
         this.BrandingTabName = "Cargo Tracking Branding";
+        this.IsLogitudeEnvironment = false;
         if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog") {
             this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
+            this.IsLogitudeEnvironment = true;
         }
     }
     private InitializeImageIds() {
@@ -353,12 +356,19 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);
         this.UIProperties.SetEnabled("SecondaryColor", "TenantManagement", value);
-        this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
         this.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
         this.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);
+        this.SetCustomerURLProperties(value);
     }
 
+    SetCustomerURLProperties(isBranding: boolean) {
+        this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", isBranding);
 
+        if (this.IsLogitudeEnvironment) {
+            this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", !(isBranding && !AppTool.IsNullOrEmpty(this.CustomerURL)));
+            this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
+        }
+    }
 
     ConvertHexToRGBColor(hex: string, alpha: number) {
         if (hex && hex.length >= 7) {

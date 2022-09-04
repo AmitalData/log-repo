@@ -27,6 +27,12 @@
 
                                         <div>
 
+                                            <div *ngIf="IsValidationWarningsVisible == true" style="height: 30px; width: 350px;">
+                                                <div [title]="ValidationWarningsMessage" style="padding: 1px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; width: 350px; text-align: left; background-color: #FFF9BA; border: 1px solid #FEAC10; border-radius: 3px; -webkit-border-radius: 3px; ">
+                                                    <span style="padding: 1px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; vertical-align: middle; width: 350px;"> {{ValidationWarningsMessage}} </span>
+                                                </div>
+                                            </div>
+
                                             <!-- Activation -->
                                             <div class="QueriesSection">
                                                 <div>Activation</div>
