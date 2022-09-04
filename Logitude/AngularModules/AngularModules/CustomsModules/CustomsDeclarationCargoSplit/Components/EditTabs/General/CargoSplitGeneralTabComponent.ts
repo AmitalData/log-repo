@@ -893,8 +893,8 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
         }
         else {
-            if(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && !this.IsFromDeclaration && this.Direction == "E")
-            {
+            if(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && !this.IsFromDeclaration && this.IsExportDeclaration)
+            { 
                 for (let i = this.Tabs.length - 1; i >= 0; i--) {
                     this.DeleteTabs(this.Tabs[i]);
                 }
@@ -1191,7 +1191,7 @@ export class CargoSplitGeneralTabComponent
                 ).catch((err) => {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(err);
-                });
+                }); 
 
 
             this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
@@ -1204,6 +1204,7 @@ export class CargoSplitGeneralTabComponent
                                         if (!response.HasError) {
                                             if (response.Result instanceof DeclarationCargoSplitPM) this.EntityPM = response.Result;
                                             this.BuildTabs();
+                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                         }
                                     }
 
@@ -1223,7 +1224,7 @@ export class CargoSplitGeneralTabComponent
             this.FillValidationErrorList.emit(errors);
         }
         this.EntityPM.IsDirty = true
-
+       
     }
 
     OnMassageDisplayMethod() {
