@@ -22,10 +22,8 @@ export class customsItemsService {
     static initTaxExemptCodeTypesFilter(isExport: boolean): ApiQueryFilters {
         const taxExemptCodeTypesFilter = new ApiQueryFilters();
         taxExemptCodeTypesFilter.GetAll = true; 
-        taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")
-        
-        if(!isExport)
-            taxExemptCodeTypesFilter.addAdditionalFilter("CustomsItemCategoryID", '2', '3', null, 'Equals', false, false, false, "string")
+        taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")        
+        taxExemptCodeTypesFilter.addAdditionalFilter("CustomsItemCategoryID", '2', '3', null, 'Equals', false, false, false, "string")
 
         return taxExemptCodeTypesFilter;
     }
