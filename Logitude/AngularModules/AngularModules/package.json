@@ -44,7 +44,7 @@
     "ag-grid-angular": "^20.0.0",
     "ag-grid-community": "^20.0.0",
     "ag-grid-enterprise": "^20.0.0",
-    "collaboration-tool-tasks-list": "^11.2.19",
+    "collaboration-tool-tasks-list": "latest",
     "logitude-dashboard-library": "^1.2.62",
     "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
