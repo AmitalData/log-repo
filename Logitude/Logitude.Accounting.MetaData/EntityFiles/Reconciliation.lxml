@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;Reconciliation&quot;"
-  Code="&quot;678b&quot;"
+  Code="&quot;0387&quot;"
   Name="&quot;Reconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1347,6 +1347,18 @@
       DefaultText="&quot;A currency GLAccount is attached to the MULTI GLAccount - disconnection must be performed before performing a adjust journal&quot;"
       LocalDefaultText="&quot;לכרטיס המולטי חובר כרטיס מטבעי - יש לבצע ניתוק בטרם ביצוע פעולת מיון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.B.AdjustInOneJournal&quot;"
+      DefaultText="&quot;Adjust in one journal&quot;"
+      LocalDefaultText="&quot;פקודת יומן בשורה אחת&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.B.AdjustInSplitJournal&quot;"
+      DefaultText="&quot;Adjust in split journal&quot;"
+      LocalDefaultText="&quot;פקודת יומן מפוצלת כמספר השורות המסומנות&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

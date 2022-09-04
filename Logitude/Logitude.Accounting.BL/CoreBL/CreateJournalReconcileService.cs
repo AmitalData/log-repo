@@ -23,6 +23,12 @@ namespace Logitude.Accounting.BL.CoreBL
         private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         private static Object thisLock = new Object();
+        private const string CreditActionCode = "1";
+        private const string DebitActionCode = "2";
+        private const string RegularTypeCode = "0";
+        private const string ApprovedStatusCode = "2";
+        private const string AdjustmentAccountingEntityName = "Adjustment";
+
         public JournalPM Create(
             IAccountingContext accountingContext,
             int tenant,
@@ -291,6 +297,217 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        
+        public List<JournalPM> CreateSplitJournals(
+            IAccountingContext accountingContext,
+            int tenant,
+            List<ReconciliationLinePM> ReconciliationLines,
+            string TheAccountId,
+            string AdjustAccountId,
+            DateTime AccountDate,
+            DateTime? DueDate,
+            DateTime? RefDate,
+            string Ref1,
+            string Ref2,
+            string Ref3,
+            string Remarks
+            )
+        {
+            lock (thisLock)
+            {
+                using (var scope = TransactionFactory.GetTransaction())
+                {
+                    DateTime dueDate = new DateTime();
+                    DateTime refDate = new DateTime();
+                    dueDate = DueDate != null ? DueDate.Value : AccountDate;
+                    refDate = RefDate != null ? RefDate.Value : AccountDate;
+                    _AccountingContext = accountingContext;
+                    var usrid = AuthenticationUtil.ResolveUserId(tenant);
+                    ValidateTotalReconciliationAmount(ReconciliationLines);
+                    DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    var gLAccountQueryService = new GLAccountQueryService(_AccountingContext);
+                    var glAccountPM = gLAccountQueryService.GetSingle(TheAccountId, false, false);
+                    TenantQuery tenantQuery = new TenantQuery(tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                    string accountingCurrencyId = tPM.CurrencyId;
+
+                    var theCurrencyId = ReconciliationLines.First().CurrencyId;
+                    var ratesTablesRepository = new RatesTableRepository(tenant);
+                    var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+
+                    var myAccountingEntityDetails = new AccountingEntityDetails();
+                    var adjustmentAccountingEntityDetails = myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName == AdjustmentAccountingEntityName);
+
+                    string theJournalLineCurrencyId = !String.IsNullOrWhiteSpace(glAccountPM.CurrencyId) ? glAccountPM.CurrencyId : accountingCurrencyId;
+                    theCurrencyId = theJournalLineCurrencyId;
+                    RatesTablePM rate = null;
+                    rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,AccountDate);
+                    if (rate == null && theCurrencyId == accountingCurrencyId)
+                    {
+                        rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
+                    }
+                    ValidateRate(rate);
+                    List<JournalPM> addedJournalPMs = new List<JournalPM>();
+                    ReconciliationLines.ForEach(reconciliationLine =>
+                    {
+                        JournalPM journal = CreateJournalForReconciliationLine(reconciliationLine, TheAccountId, AdjustAccountId, dueDate, refDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks,
+                            tenant, @now, usrid, AccountDate, adjustmentAccountingEntityDetails.Code);
+                        var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                        JournalUP.Update(journal, true);
+                        addedJournalPMs.Add(journal);
+                    });
+
+                    scope.Complete();
+                    return addedJournalPMs;
+                }
+            }
+        }
+
+        private JournalPM CreateJournalForReconciliationLine(ReconciliationLinePM reconciliationLine, string TheAccountId, string AdjustAccountId,
+            DateTime dueDate, DateTime refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks,
+            int tenant, DateTime @now, string usrid, DateTime AccountDate, string accountingEntityCode)
+        {
+            JournalPM journal = new JournalPM()
+            {
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                Tenant = tenant,
+                CreateDate = @now,
+                AccountingDate = AccountDate,
+                TypeCode = RegularTypeCode,
+                StatusCode = ApprovedStatusCode,
+                AccountingEntityCode = accountingEntityCode, // adjustmentAccountingEntityDetails.Code, //Adjustment
+                AccountingEntityId = null,
+                AccountingEntityReference = null,
+                DueDate = dueDate,
+                DocumentDate = refDate,
+                UpdateDate = @now,
+                ApproveDate = @now,
+                CreatedByUserId = usrid,
+                ApprovedByUserId = usrid,
+                ExternalNo = null,
+                ExternalSystem = null,
+                OriginalJournalId = null
+            };
+            AddJournalLines(journal, reconciliationLine, TheAccountId, AdjustAccountId, dueDate, refDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks);
+            var JournalReconcile = new JournalReconcilePM()
+            {
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                Tenant = journal.Tenant,
+                JournalId = journal.Id,
+                LedgerTransactionId = reconciliationLine.TransactionId,
+                Line = reconciliationLine.Line,
+                CurrencyId = reconciliationLine.CurrencyId,
+                ReconciliationAmount = reconciliationLine.ReconciliationAmount,
+                IsPartial = reconciliationLine.IsPartial,
+
+            };
+            journal.JournalReconciles.Add(JournalReconcile);
+            return journal;
+        }
+
+        private void ValidateRate(RatesTablePM rate)
+        {
+            if (rate == null)
+            {
+                throw new ApplicationException("שער המטבע לא קיים בטבלת שערי המטבעות");
+            }
+        }
+
+        private void ValidateTotalReconciliationAmount(List<ReconciliationLinePM> ReconciliationLines)
+        {
+            decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
+            if (totReconciliationAmountFromUnknownCurrency == 0)
+            {
+                throw new ApplicationException("Total ReconciliationAmount is zero");
+            }
+            if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
+            {
+                throw new ApplicationException("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+            }
+        }
+
+        private void AddJournalLines(JournalPM journal, ReconciliationLinePM reconciliationLine, string TheAccountId, string adjustAccountId,
+            DateTime dueDate, DateTime refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks) {
+            decimal totForeign = reconciliationLine.ReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+            if (reconciliationLine.ReconciliationAmount < 0)///credit //Ohad :
+            {
+                decimal reconciliationAmount = -1 * reconciliationLine.ReconciliationAmount;
+                totForeign = -1 * totForeign; //Ohad :
+                journal.JournalLines.Add(new JournalLinePM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = journal.Tenant,
+                    JournalId = journal.Id,
+                    AccountingDate = journal.AccountingDate,
+                    ActionCode = DebitActionCode,//- Debit
+                    DebitAccountId = TheAccountId,
+                    LocalAmount = reconciliationAmount,
+                    CurrencyId = theCurrencyId,
+                    ForeignAmount = totForeign,
+                    DocumentDate = refDate,
+                    DueDate = dueDate,
+                    CreditAccountId = adjustAccountId,
+                });
+
+                journal.JournalLines.Add(new JournalLinePM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = journal.Tenant,
+                    JournalId = journal.Id,
+                    AccountingDate = journal.AccountingDate,
+                    ActionCode = CreditActionCode,//- Credit
+                    CreditAccountId = adjustAccountId,
+                    LocalAmount = reconciliationAmount,
+                    CurrencyId = theCurrencyId,
+                    ForeignAmount = totForeign,
+                    DocumentDate = refDate,
+                    DueDate = dueDate,
+                    DebitAccountId = TheAccountId,
+                });
+
+            }
+            else//debit  //Ohad :
+            {
+                journal.JournalLines.Add(new JournalLinePM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = journal.Tenant,
+                    JournalId = journal.Id,
+                    AccountingDate = journal.AccountingDate,
+                    ActionCode = CreditActionCode,//- Credit 
+                    CreditAccountId = TheAccountId,
+                    LocalAmount = reconciliationLine.ReconciliationAmount,
+                    CurrencyId = theCurrencyId,
+                    ForeignAmount = totForeign,
+                    DocumentDate = refDate,
+                    DueDate = dueDate,
+                    DebitAccountId = adjustAccountId
+                });
+
+                journal.JournalLines.Add(new JournalLinePM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = journal.Tenant,
+                    JournalId = journal.Id,
+                    AccountingDate = journal.AccountingDate,
+
+                    ActionCode = DebitActionCode,//- Debit
+                    DebitAccountId = adjustAccountId,
+                    LocalAmount = reconciliationLine.ReconciliationAmount,
+                    CurrencyId = theCurrencyId,
+                    ForeignAmount = totForeign,
+                    DocumentDate = refDate,
+                    DueDate = dueDate,
+                    CreditAccountId = TheAccountId,
+                });
+            }
+
+            foreach (var item in journal.JournalLines) {
+                        item.Reference1 = Ref1 != null ? Ref1 : reconciliationLine.Reference1;
+                        item.Reference2 = Ref2 != null ? Ref2 : reconciliationLine.Reference2;
+                        item.Reference3 = Ref3 != null ? Ref3 : reconciliationLine.Reference3;
+                        item.Notes = Remarks != null ? Remarks : reconciliationLine.Notes;
+                    }
+        }
+
     }
 }

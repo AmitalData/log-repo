@@ -320,7 +320,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         }
     }
-    OkButtonClicked() {
+    OkButtonClicked(isSplitJournal: boolean) {
         this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
@@ -342,15 +342,38 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.TransactionId = selectedTransaction.Id;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.IsPartial = selectedTransaction.IsPartial;
-
+            newLine.Reference1 = selectedTransaction.Reference1;
+            newLine.Reference2 = selectedTransaction.Reference2;
+            newLine.Reference3 = selectedTransaction.Reference3;
+            newLine.Notes = selectedTransaction.Notes;
             //newLine.GroupNumber = selectedTransaction.GroupHash;
 
             myReconciliationLines.push(newLine);
         }
 
         //var AdjustAccountId: string = "1-19";
-
-        this._ReconciliationExtendedPMService.CreateJournalReconcile(
+        if(isSplitJournal) {
+            this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
+                myReconciliationLines,
+                this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
+                this.reference1, this.reference2, this.reference3, this.Notes)
+                .subscribe(
+                (res:ServiceResponse) => {
+    
+                    this.CurrentSession.StopBusyIndicator();
+                    if (res.HasError) {
+                        this.ValidationErrorsList = res.ErrorsArray;
+    
+                    } else {
+                        var journalsArray: JournalPM[];
+                        journalsArray = res.Result;
+                        this._NewJournals = journalsArray;
+                    }
+    
+                });
+            
+        } else {
+            this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
             this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
@@ -369,15 +392,16 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 }
 
             });
-
+        }
     }
     _NewJournalPM: JournalPM;
-    OpenJournal() {
-        if (!AppTool.IsNullOrEmpty(this._NewJournalPM.Id)) {
+    _NewJournals: JournalPM[];
+    OpenJournal(id: string) {
+        if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this._NewJournalPM.Id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
@@ -386,6 +410,25 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+    getScreenHeight() { return self.innerHeight; }
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+        var item = document.getElementById("adjustbutton");
+        var itemRect = item.getBoundingClientRect();
+
+        let DDLHeight =22.5;//    height: 22px; * 3 +30 
+        let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
+        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true                
+            document.getElementById("dropdowmenu").style.top = (itemRect.bottom - DDLHeight - Extra) + 'px';
+        }
+      
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
     }
 }
 

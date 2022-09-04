@@ -139,6 +139,32 @@ export class ReconciliationExtendedPMService {
 
     }
 
+    CreateSplitJournalReconcile(
+        myReconciliationLines: ReconciliationLinePM[],
+
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string, DueDate: string, RefDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
+            return this.httpClient.post(this._apiUrl + "/PostCreateSplitJournalReconcile?"
+            + "&TheAccountId=" + TheAccountId
+            + "&AdjustAccountId=" + AdjustAccountId
+            +"&AccountDate=" + AccountDate
+            +"&DueDate=" + DueDate
+            +"&RefDate=" + RefDate
+            +"&Ref1=" + Ref1
+            +"&Ref2=" + Ref2
+            +"&Ref3=" + Ref3
+            +"&Remarks=" + Remarks
+            , JSON.stringify(myReconciliationLines),  ServiceHelper.GetHttpHeaders()).pipe(
+                map(res => {
+                    if (res) {
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = res;
+                    }
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+    }
+
     getByNumber(number: string){
 
         return this.httpClient.get(this._apiUrl + '/GetByNumber?number=' + number, ServiceHelper.GetHttpHeaders()).pipe(
