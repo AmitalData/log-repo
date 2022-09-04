@@ -225,6 +225,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
     }
     private OnSaveDashboard(dashboard: ReactDashboardPM) {
         this.CheckDeletedWidgets(dashboard);
+        this.MapWidgetsPositions(dashboard);
 
         this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -249,6 +250,15 @@ export class CustomDashboardComponent implements  AfterViewInit {
 
         deletedWidgets.forEach(item => {
             this.myDashboardPM.RemoveWidget(item);
+        });
+    }
+    private MapWidgetsPositions(dashboard: ReactDashboardPM) {
+        dashboard.Widgets.forEach(item => {
+            var myWidgetPm: WidgetPM = this.myDashboardPM.Widgets.filter(d => d.Id == item.Id)[0];
+            if (myWidgetPm) {
+                myWidgetPm.EndPosition = item.EndPosition;
+                myWidgetPm.StartPotistion = item.StartPotistion;
+            }
         });
     }
 }

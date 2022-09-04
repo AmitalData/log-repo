@@ -49,14 +49,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
 
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
-            var measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+            var measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
             
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
             
             var querys = $@"select 
                             data.{groupBy.FieldCode} as Label,
-                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(7,2) ) as Value From 
+                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(16,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             group by {groupBy.FieldCode}";
             var conterxt = DashboardContext.GetContext(0);
