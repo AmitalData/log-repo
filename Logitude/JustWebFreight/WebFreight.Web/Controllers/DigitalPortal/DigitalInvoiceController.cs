@@ -55,6 +55,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
             var documentOutQuery = new DocumentOutQuery(tenant);
             var documentTypeQuery = new DocumentTypeQuery(tenant);
+            var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
 
             foreach (var item in invoices.Where(d=> d.IsPrinted))
             {
@@ -97,6 +98,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     entity.InvoiceNumber = item.DraftNumber + " (Draft)";
                 }
+
+                var invoiceType = aRInvoiceTypeRepository.GetSingleARInvoiceType(entity.InvoiceTypeCode);
+                entity.InvoiceTypeName = invoiceType?.Name;
 
                 arInvoices.Add(entity);
             }
@@ -429,7 +433,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return true;
         }
-        
+
         private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
         {
             bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
