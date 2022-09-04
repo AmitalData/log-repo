@@ -23,8 +23,9 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
-    public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
-    public IsAddNewMeasureVisible: boolean = true;    
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem();
+    public IsAddNewMeasureVisible: boolean = true;
+
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -34,7 +35,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.EntityPM = windowArgs['EntityPM'];
         this.DashboardPM = windowArgs['DashboardPM'];
         this.isNew = windowArgs['IsNew'];
-        this.DataContext = this;        
+        this.DataContext = this;
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -46,8 +47,30 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
         if (!filters) return;
-        this.GroupRoot = filters;
+        this.RootFilter = this.BuildRootFilter(filters);
     }
+
+    private BuildRootFilter(oldValue: WidgetFilterItem) {
+        let parentItem = new WidgetFilterItem();
+        parentItem.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
+        return parentItem;
+    }
+
+    private BuildGroupFilter(oldFilter: WidgetFilterItem) {
+        let groupTreeFilter = new WidgetFilterItem();
+        groupTreeFilter.IsGroup = true;
+        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
+        oldFilter.QueryFilterItems?.forEach((oldField) => {
+            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
+        });
+        return groupTreeFilter;
+    }
+
+    private BuildFilter(oldField: WidgetFilterItem) {
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        return this.BuildGroupFilter(oldField);
+    }
+
 
     private ComputeChartImageSrc() {
         switch (this.EntityPM.TypeCode) {
@@ -115,7 +138,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
-            this.GroupRoot = new WidgetFilterItem();
+            this.RootFilter = new WidgetFilterItem();
         }
     }
 
@@ -147,10 +170,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    public TableChanged() {
-     
-    }
-
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -165,36 +184,34 @@ export class AddEditWidgetComponent extends BaseComponent {
         });
 
         this.ValidationErrorsList = errors;
-        if (errors.length == 0) {
-            this.SetFiltersString();
-            this.WidgetMeasuresList.forEach(item => {
-                if (item.IsNew) {
-                    if (this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
-                        item.IsNew = false;
-                        this.DataContext.EntityPM.AddWidgetMeasure(item.EntityPM);
-                    }
-                }
-            });
+        if (errors.length != 0) return;
 
-            //if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
-              //  this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0]);
-            if (this.isNew) {
-                this.isNew = false;
-                this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
-                this.DashboardPM.AddWidget(this.EntityPM);
+        this.SetFiltersString();
+        this.WidgetMeasuresList.forEach(item => {
+            if (item.IsNew && this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
+                item.IsNew = false;
+                this.DataContext.EntityPM.AddWidgetMeasure(item.EntityPM);
             }
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        });
+        if (this.isNew) {
+            this.isNew = false;
+            this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
+            this.DashboardPM.AddWidget(this.EntityPM);
         }
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;
     private SetFiltersString() {
-        if (!this.GroupRoot || !this.GroupRoot.QueryFilterItems || this.GroupRoot.QueryFilterItems.length == 0) return;
-        this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0], function (key, val) {
+        if (!this.RootFilter || !this.RootFilter.QueryFilterItems || this.RootFilter.QueryFilterItems.length == 0) {
+            this.EntityPM.Filters = null;
+            return;
+        }
+        this.EntityPM.Filters = JSON.stringify(this.RootFilter.QueryFilterItems[0], function (key, val) {
             if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
                 key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
                 key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
-                key !== "null" && key !== "SelectedField") return val;
+                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData") return val;
         });
     }
 
