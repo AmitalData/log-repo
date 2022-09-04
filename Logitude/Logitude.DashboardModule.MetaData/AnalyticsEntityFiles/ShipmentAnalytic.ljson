@@ -1,5 +1,5 @@
 {
-  "HashString": "225a62e25d4743d2b3185d73e29f52d0",
+  "HashString": "e48e6c17f8eb4e63881c11a8032f54cf",
   "Name": "ShipmentAnalytics",
   "TableName": "ShipmentAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -143,6 +143,18 @@
       "FieldCode": "ShipmentNumber",
       "DisplayName": "Shipment Number",
       "DisplayNamePlural": "Shipment Number",
+      "JoinedTableName": null,
+      "JoinedTableKey": null,
+      "JoinedTableDisplayField": null
+    },
+    {
+      "HashString": "ca7a20c245fd421fbf3eb5ba68faf228",
+      "DataTypeCode": "Text",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "BranchId",
+      "DisplayName": "Brnach",
+      "DisplayNamePlural": "Branch",
       "JoinedTableName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null

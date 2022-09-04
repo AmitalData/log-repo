@@ -8,7 +8,6 @@ using Simplog.Data.InfrastructureModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 
 namespace WebFreight.Web.MetaDataUpdate
@@ -88,17 +87,23 @@ namespace WebFreight.Web.MetaDataUpdate
                 AddField(jsonField, tableId);
                 return;
             }
-            var field = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaData>(JsonConvert.SerializeObject(jsonField));
-            field.Id = analyticsFactsFieldsMetaData.Id;
+            AnalyticsFactsFieldsMetaData field = ConvertJsonFieldToSqlField(jsonField, analyticsFactsFieldsMetaData.Id, tableId);
             AnalyticsFactsFieldsMetaDataRepository.Update(field);
         }
 
         private void AddField(Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData jsonField, string tableId)
         {
-            var field = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaData>(JsonConvert.SerializeObject(jsonField));
-            field.Id = IdCounter.GetNumber("AnalyticsFactsFieldsMetaData", 0);
-            field.AnalyticsFactsMetaDataId = tableId;
+
+            AnalyticsFactsFieldsMetaData field = ConvertJsonFieldToSqlField(jsonField, IdCounter.GetNumber("AnalyticsFactsFieldsMetaData", 0), tableId);
             AnalyticsFactsFieldsMetaDataRepository.Add(field);
+        }
+
+        private static AnalyticsFactsFieldsMetaData ConvertJsonFieldToSqlField(Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData jsonField, string fieldId, string tableId)
+        {
+            var field = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaData>(JsonConvert.SerializeObject(jsonField));
+            field.Id = fieldId;
+            field.AnalyticsFactsMetaDataId = tableId;
+            return field;
         }
 
         private void AddNewTableToDB(Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData jsonTable)
