@@ -258,17 +258,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-                int tenant = authToken.Tenant;
-                SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
-                var entityStatusQuery = new EntityStatusQuery(tenant);
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY",StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                if (deliveryStatus != null)
-                    deliveryStatus.DisplayName = "Out for Delivery";
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(authToken.Tenant);
 
-                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SHOR", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code
+                                                                             .Equals("SDLY",StringComparison.InvariantCultureIgnoreCase))
+                                                                .FirstOrDefault();
+                if (deliveryStatus != null)
+                {
+                    deliveryStatus.DisplayName = "Out for Delivery";
+                }
+
+                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code
+                                                                          .Equals("SHOR", StringComparison.InvariantCultureIgnoreCase))
+                                                             .FirstOrDefault();
                 if (orderStatus != null)
+                {
                     orderStatus.DisplayName = "Created";
+                }
+
+                digitalPortalActiveStatuses = digitalPortalActiveStatuses.OrderBy(a => a.StatusWeight)
+                                                                         .ThenBy(a => a.Name)
+                                                                         .ToList();
 
                 return Ok(digitalPortalActiveStatuses);
             }

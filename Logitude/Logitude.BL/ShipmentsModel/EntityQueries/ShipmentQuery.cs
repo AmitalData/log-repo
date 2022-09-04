@@ -4264,11 +4264,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (string.IsNullOrEmpty(key))
                 return null;
 
-            Shipment shipment = (from a in repository.context.Shipments
-                                 where a.SecurityKey == key
-                                 select a).FirstOrDefault();
+            Shipment shipment = repository.context
+                                          .Shipments
+                                          .FirstOrDefault(a => a.SecurityKey == key);
 
-            if (shipment == null) return null;
+            if (shipment == null)
+            {
+                return null;
+            }
+
             return shipment.Tenant;
         }
 
@@ -4365,12 +4369,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (shipment != null)
                 {
-                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
-                                                     where a.Id == shipment.MasterShipmentDataId
-                                                     select a).FirstOrDefault();
+                    ShipmentMasterData masterData = repository.context
+                                                              .ShipmentMasterDatas
+                                                              .FirstOrDefault( a => a.Id == shipment.MasterShipmentDataId);
 
                     ShipmentPM shipmentPM = new ShipmentPM();
-
 
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
@@ -4380,13 +4383,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
-
-
-
-                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
-                                     where a.Id == shipment.Id
-                                     select a).FirstOrDefault();
-
+                    var CLoudData = repository.context
+                                              .ShipmentAdditionalCloudDatas
+                                              .FirstOrDefault(a => a.Id == shipment.Id);
                     if (CLoudData != null)
                     {
                         returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
@@ -4408,11 +4407,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
-
-
-
                     MapShipmentComputedFields(returnShipment, masterData);
-
                     return returnShipment;
                 }
                 else
