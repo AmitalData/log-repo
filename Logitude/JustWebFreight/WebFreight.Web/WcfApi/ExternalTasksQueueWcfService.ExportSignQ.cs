@@ -21,7 +21,7 @@ namespace WebFreight.Web.WcfApi
     public partial class ExternalTasksQueueWcfService
     {
 
-        const bool ON_PREMISE= true;
+        const bool ON_PREMISE= false;
 
         public ResponseExportSignTask GetExportSignTaskFromQueue(ExportReqSignData exportReqSignData)
         {
