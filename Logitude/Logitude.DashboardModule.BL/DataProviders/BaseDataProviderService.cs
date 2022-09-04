@@ -56,7 +56,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             
             var querys = $@"select 
                             data.{groupBy.FieldCode} as Label,
-                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(7,2) ) as Value From 
+                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(16,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             group by {groupBy.FieldCode}";
             var conterxt = DashboardContext.GetContext(0);
