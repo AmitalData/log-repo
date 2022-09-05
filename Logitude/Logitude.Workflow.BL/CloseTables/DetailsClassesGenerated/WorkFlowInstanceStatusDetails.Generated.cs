@@ -34,6 +34,13 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Completed", 
                 SearchFields = "COED,Completed", 
 			});
+			 
+            all.Add(new WorkFlowInstanceStatusDetails()
+            {    
+                Name = "Failed", 
+                Code = "FAED", 
+                SearchFields = "FAED,Failed", 
+			});
 			
             return all;
        }

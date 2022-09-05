@@ -32,6 +32,14 @@ namespace Logitude.Workflow.Data.EntityLists
        public string WorkflowId  { get; set; }
        [DataMember]
        public string StatusCode  { get; set; }
+       [DataMember]
+       public DateTime? StartTime  { get; set; }
+       [DataMember]
+       public DateTime? EndTime  { get; set; }
+       [DataMember]
+       public string BusinessKey  { get; set; }
+       [DataMember]
+       public string Duration  { get; set; }
    }
 
 }

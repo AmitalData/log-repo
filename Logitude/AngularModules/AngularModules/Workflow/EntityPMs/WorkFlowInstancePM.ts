@@ -69,6 +69,26 @@ export class WorkFlowInstancePM {
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
        
 	 
+    private startTime: Date;
+    public get StartTime() { return this.startTime; }
+    public set StartTime(newValue: Date) { if (this.startTime != newValue) { this.startTime = newValue; this.MarkAsDirty("StartTime"); } }
+       
+	 
+    private endTime: Date;
+    public get EndTime() { return this.endTime; }
+    public set EndTime(newValue: Date) { if (this.endTime != newValue) { this.endTime = newValue; this.MarkAsDirty("EndTime"); } }
+       
+	 
+    private businessKey: string;
+    public get BusinessKey() { return this.businessKey; }
+    public set BusinessKey(newValue: string) { if (this.businessKey != newValue) { this.businessKey = newValue; this.MarkAsDirty("BusinessKey"); } }
+       
+	 
+    private duration: string;
+    public get Duration() { return this.duration; }
+    public set Duration(newValue: string) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		
