@@ -14886,7 +14886,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              .Include("MainCarriageCarrierCard.PartnerType")
                                              .FirstOrDefault();
 
-            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false, true);
+            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false, false);
 
             CreateShipmentPMForCargoTracking(tenant, shipment, shipmentPM);
 
