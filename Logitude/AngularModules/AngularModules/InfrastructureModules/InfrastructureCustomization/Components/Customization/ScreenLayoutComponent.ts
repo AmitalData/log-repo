@@ -271,6 +271,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         lineSpaceField.FieldCode = lineSpaceField.Id;
         lineSpaceField.FieldName = lineSpaceField.Id;
         lineSpaceField.DataTypeCode = "LineSpace";
+        lineSpaceField.FullNameTextCodeDefaultText = "";
         var objectTable = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
         lineSpaceField.ObjectTableName = objectTable ? objectTable.Name : this.ObjectTableName;
         lineSpaceField.ObjectTableId = this.ObjecttableId;
