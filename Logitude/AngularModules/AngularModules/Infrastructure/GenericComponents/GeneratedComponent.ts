@@ -231,6 +231,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     BuildScreenColumn(columnIndex,section: ScreenSectionPM,screenFields, objectFields){
         const column = new ScreenColumn(columnIndex);
+        let row = 0;
+
         for (let r = 0; r < section.NumberOfRows; r++) {
             const screenField = screenFields.filter((f: any) => f.Column == columnIndex && f.Row == r && f.SectionNumber == section.Number)[0];
             if(!screenField)
@@ -241,10 +243,23 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                     continue;
 
                 this.SetValidityForCommunicationLog(objectField);
+                row = this.AddEmptyRows(screenField, row, column);
+               column.ObjectFields.push(objectField);
 
-                column.ObjectFields.push(objectField);
+            row += 1;
         }
         return column;
+    }
+
+    private AddEmptyRows(screenField: any, row: number, column: ScreenColumn) {
+  
+        if (screenField.Row == row) return row;
+        var count = 0;
+        while (count < (screenField.Row - row)) {
+            column.ObjectFields.push(new ObjectFieldPM());
+            count += 1;
+        }
+        return screenField.Row;
     }
 
     private SetValidityForCommunicationLog(objectField)

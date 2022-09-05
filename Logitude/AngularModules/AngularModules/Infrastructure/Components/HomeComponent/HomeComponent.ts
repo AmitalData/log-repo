@@ -247,6 +247,7 @@ export class HomeComponent implements OnDestroy{
     }
 
     CustomizationSettingPermession(): boolean {
+
         if (SessionLocator.Tenant == 261) {
             return true;
         }

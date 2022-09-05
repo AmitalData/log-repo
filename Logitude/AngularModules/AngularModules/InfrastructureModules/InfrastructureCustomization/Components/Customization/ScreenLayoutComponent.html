@@ -165,22 +165,30 @@
 
                             <div class="SimpleGridViewBody" style="top: 75px;">
 
-                                <div class="ObjectField PreventSelect" draggable="true" (dragstart)="OnObjectFieldDragStart($event,item)" *ngFor="let item of banckStackFields">
+                                <div [style.background-color]="IsLineSpaceField(item.DataTypeCode) ? 'darkgrey':''" class="ObjectField PreventSelect" draggable="true" (dragstart)="OnObjectFieldDragStart($event,item)" *ngFor="let item of banckStackFields">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div attr.data-cy="{{'Column_ ' + item.FieldName}}">
                                                     <table>
-                                                        <tr style="height:1px;">
+                                                        <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
                                                             <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
                                                                 {{item != null ? item.FullNameTextCodeDefaultText : ''}}
                                                             </td>
                                                         </tr>
-                                                        <tr style="height:1px;">
+                                                        <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
                                                             <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                ({{item != null ? item.PMPropertyPath : ''}})
+                                                                <span > ({{item != null ? item.PMPropertyPath : ''}})</span>
                                                             </td>
                                                         </tr>
+
+                                                        <tr *ngIf="IsLineSpaceField(item.DataTypeCode)"style="height:1px;text-align:center">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                <span style="color:ivory;font-style:italic">Insert Space</span>
+                                                            </td>
+                                                        </tr>
+
+
                                                         <tr>
                                                             <td></td>
                                                         </tr>
