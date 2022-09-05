@@ -681,7 +681,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                 myRecord.Salesman = myShipment.SalesmanUserName;
-                                myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                myRecord.Receivables = this.ComputeReceivables(item, invoice, myShipment);
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
@@ -976,12 +976,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return (from d in myInvoiceContext.ARInvoiceLines
                     where d.Tenant == tenant
                     && allARInvoicesIds.Contains(d.ARInvoiceId)
-                    group d by new { d.ARInvoiceId, d.EntityId, d.ChargesTypeId } into g
+                    group d by new { d.ARInvoiceId, d.EntityId, d.ChargesTypeId, d.ReceivableId } into g
                     select new ChargeTypeGroupClass()
                     {
                         InvoiceId = g.Key.ARInvoiceId,
                         ShipmentId = g.Key.EntityId,
                         ChargesTypeId = g.Key.ChargesTypeId,
+                        ReceivableId = g.Key.ReceivableId,
                         AmountInLocal = g.Sum(s => s.LocalCurrencyAmount),
                         AmountInProfit = g.Sum(s => s.ProfitCurrencyAmount)
                     }).ToList();
@@ -1420,6 +1421,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 else
                 {
                     myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                }
+            }
+
+            return myResult;
+        }
+        private double? ComputeReceivables(ChargeTypeGroupClass item, ARInvoice invoice, ShipmentDataView myShipment)
+        {
+            double? myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+
+            if (housesAndDirectOnly && myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+            {
+                ShipmentReceivable houseReceivable = (from d in myShipmentsContext.ShipmentReceivables
+                                                where d.Tenant == tenant
+                                                && d.ShipmentReceivableParentId == item.ReceivableId
+                                                && d.ShipmentId == myShipment.Id
+                                                select d).FirstOrDefault();
+
+                if (houseReceivable != null)
+                {
+                    myResult = this.IsLocalCurrency ? houseReceivable.TotalAmountLocal : houseReceivable.AmountInProfitCurrency;
                 }
             }
 
