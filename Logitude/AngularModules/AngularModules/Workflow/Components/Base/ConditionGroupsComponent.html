@@ -122,7 +122,8 @@
 
                     <div class="delete-condition-container">
                         <img class="delete-condition-button" src="./Images/Trash-can.png"
-                            (click)="deleteCondition(conditionIndex, Condition.isGroup)" />
+                            (click)="deleteCondition(conditionIndex, Condition.isGroup)"
+                            [attr.data-cy]="'DeleteConditionButton_' + Condition.id" />
                     </div>
 
                     <div class="condition-field-container">
@@ -186,11 +187,12 @@
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
                     <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
-                        (click)="addCondition(conditionIndex, false)">
+                        (click)="addCondition(conditionIndex, false)"
+                        [attr.data-cy]="'AddConditionButton_' + Condition.id">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                     <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
-                        (click)="addCondition(conditionIndex, true)">
+                        (click)="addCondition(conditionIndex, true)" [attr.data-cy]="'AddGroupButton_' + Condition.id">
                         <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
                 </div>
@@ -202,11 +204,11 @@
 
         <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
             <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
-                (click)="addCondition(null, false)">
+                (click)="addCondition(null, false)" [attr.data-cy]="'AddRootConditionButton'">
                 <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
             <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
-                (click)="addCondition(null, true)">
+                (click)="addCondition(null, true)" [attr.data-cy]="'AddRootGroupButton'">
                 <span class="plus-sign">+</span><span>Add Group</span>
             </span>
         </div>
