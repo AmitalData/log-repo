@@ -36,6 +36,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? Transshipment2ATA { get; set; }
         public DateTime? Transshipment2ETD { get; set; }
         public DateTime? Transshipment2ETA { get; set; }
+        public DateTime LastUpdateDate { get; set; }
 
         public string Transshipment1FromPortId { get; set; }
         public string Transshipment1ToPortId { get; set; }

@@ -13289,6 +13289,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
+                               LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
                                ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
