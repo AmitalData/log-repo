@@ -322,31 +322,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
-                        try
-                        {
-                            if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false)))
-                            {
-                                IQueueService queueservice = new DbQueueService();
-                                queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
-                            }
-
-
-                        }
-                        catch (Exception ex)
-                        {
-                            string ip = "";
-                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                            {
-                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                                if (string.IsNullOrEmpty(currentIP))
-                                {
-                                    currentIP = HttpContext.Current.Request.UserHostAddress;
-                                }
-                                ip = currentIP;
-                            }
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
-                        }
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
+                    }
+                    else if (OTName != null && OTName.Name == "ShipmentOrder" && !string.IsNullOrEmpty(this.Poco.EntityId))
+                    {
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
                     }
                 }
             }
@@ -387,6 +369,32 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
+        }
+
+        private void SendShipmentToForwarder(bool shouldBeSent)
+        {
+            try
+            {
+                if (!shouldBeSent) return;
+
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+            }
+            catch (Exception ex)
+            {
+                string ip = "";
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                    if (string.IsNullOrEmpty(currentIP))
+                    {
+                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    ip = currentIP;
+                }
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
+            }
         }
 
         private void AddImporterQueue(DocumentsFilingPM theEntityPm, TenantPM tenantPM, bool HavingDREL)
@@ -633,33 +641,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         //shipmentComputedFieldsRepository.SubmitChanges();
-                        try
-                        {
-                             
-                            if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true)))
-                            {
-                                IQueueService queueservice = new DbQueueService();
-                                queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
-                            }
-
-                          
-                        }
-                        catch (Exception ex)
-                        {
-                            string ip = "";
-                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                            {
-                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                                if (string.IsNullOrEmpty(currentIP))
-                                {
-                                    currentIP = HttpContext.Current.Request.UserHostAddress;
-                                }
-                                ip = currentIP;
-                            }
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
-                        }
-
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
+                    }
+                    else if (OTName != null && OTName.Name == "ShipmentOrder" && !string.IsNullOrEmpty(this.Poco.EntityId))
+                    {
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
                     }
                 }
             }
@@ -838,31 +826,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         //shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
-                        try
-                        {
 
-                            if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true)))
-                            {
-                                IQueueService queueservice = new DbQueueService();
-                                queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string ip = "";
-                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                            {
-                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                                if (string.IsNullOrEmpty(currentIP))
-                                {
-                                    currentIP = HttpContext.Current.Request.UserHostAddress;
-                                }
-                                ip = currentIP;
-                            }
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
-                        }
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
 
+                    }
+                    else if (OTName != null && OTName.Name == "ShipmentOrder" && !string.IsNullOrEmpty(this.Poco.EntityId))
+                    {
+                        bool shouldBeSentToForwarder = !entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true));
+                        SendShipmentToForwarder(shouldBeSentToForwarder);
                     }
                 }
             }
@@ -1335,7 +1307,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);
                 if (this.HaveENDOC_DocumentsFilingMetaDataValues ||
                     
-                    (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" ||
+                    (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" || docTable.Name == "ShipmentOrder" ||
                     docTable.Name == "Customs.Declaration"
                     || docTable.Name == "Customs.Claim"
                     || docTable.Name == "Customs.PaymentOrder"
