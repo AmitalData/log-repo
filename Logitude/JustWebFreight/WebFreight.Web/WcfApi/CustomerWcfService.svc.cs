@@ -489,6 +489,10 @@ namespace WebFreight.Web.WcfApi
                             entityPM.CreditLimitAmount = entity.CreditLimitAmount;
                         }
 
+                        if (IsPrivateLabelFieldChanged(entityPM, entity, "cloud"))
+                        {
+                            return GetIsPrivateLabelFieldErrorResponse(response);
+                        }
 
                         if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
                         {
@@ -611,6 +615,18 @@ namespace WebFreight.Web.WcfApi
 
 
 
+        }
+
+        private bool IsPrivateLabelFieldChanged(CustomerPM customerPM, Customer customer, string workEnvironemnt)
+        {
+            return LogitudeSettings.WorkEnvironment == workEnvironemnt && (customer.IsPrivateLabelCustomer != customerPM.IsPrivateLabelCustomer);
+        }
+
+        private Response GetIsPrivateLabelFieldErrorResponse(Response response)
+        {
+            response.HasError = true;
+            response.ErrorMessage = "Sorry you can't update IsPrivateLabelCustomer field";
+            return response;
         }
 
         private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)

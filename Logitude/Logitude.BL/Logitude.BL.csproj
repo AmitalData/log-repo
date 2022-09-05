@@ -408,6 +408,7 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityAMs\CustomerTenantAccessUpdaterAM.cs" />
     <Compile Include="CommonDataModel\EntityLists\CargoTenantMilestoneDefinitionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierServiceLineList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerGroupList.cs" />

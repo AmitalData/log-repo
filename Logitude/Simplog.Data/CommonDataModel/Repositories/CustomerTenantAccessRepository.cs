@@ -32,6 +32,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return from a in context.CustomerTenantAccesses where a.Tenant == tenant select a;
         }
+        public IQueryable<CustomerTenantAccess> GetCustomerTenantAccessesByCustomerTenant(int customerTenant)
+        {
+            return from a in context.CustomerTenantAccesses where a.CustomerTenant == customerTenant select a;
+        }
 
         public IQueryable<CustomerTenantAccess> GetCustomerTenantAccessesByTenant(int tenant)
         {
