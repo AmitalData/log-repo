@@ -1,8 +1,5 @@
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
 using System.Transactions;
 using Simplog.Data.ShipmentModel.Mapping;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -21,7 +18,6 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataView { get; set; }
 
         public ShipmentDataViewContext()
-            
         {
             Database.SetInitializer<ShipmentDataViewContext>(null);
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();

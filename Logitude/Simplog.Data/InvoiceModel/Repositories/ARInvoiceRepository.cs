@@ -584,7 +584,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
                 "VD",
                 "DR",
                 "LL",
-                "AC",
                 "AR"
             };
 

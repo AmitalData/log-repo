@@ -11,7 +11,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.ToTable("DigitalShipmentsView");
 
             // Primary Key
-            this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.IsCancelled, t.IsOperationalClosed, t.DirectionId, t.TransportModeId, t.CreateDateTime });
+            this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.IsCancelled, t.IsOperationalClosed, t.DirectionId, t.LastUpdateDate, t.TransportModeId, t.CreateDateTime });
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -162,6 +162,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
+            this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
 
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
             this.Property(t => t.AgentId).HasColumnName("AgentId");

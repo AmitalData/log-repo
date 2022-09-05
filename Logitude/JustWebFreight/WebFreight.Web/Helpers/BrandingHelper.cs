@@ -25,8 +25,12 @@ namespace WebFreight.Web.Helpers
 
             if (!tenantManagementPM.EnableBranding)
             {
-                brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "rgba(1,44,84,1)" : tenantManagementPM.MainColor;
-                brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "rgba(24,144,255,1)" : tenantManagementPM.SecondaryColor;
+                brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor)
+                                         ? "rgba(1,44,84,1)"
+                                         : tenantManagementPM.MainColor;
+                brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor)
+                                              ? "rgba(24,144,255,1)"
+                                              : tenantManagementPM.SecondaryColor;
                 brandingData.Tenant = tenantManagementPM.Id;
                 brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
                 brandingData.Email = tenantManagementPM.ContactEmail;

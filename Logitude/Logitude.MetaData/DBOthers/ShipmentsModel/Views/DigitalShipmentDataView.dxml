@@ -18,6 +18,7 @@
 	Shipment.ShipperReference2,
 	Shipment.ConsigneeReference1,
 	Shipment.ConsigneeReference2,
+	Shipment.LastUpdateDate,
 	Shipment.House,
 	Shipment.AgentId,
     Shipment.ShipmentSubTypeId, 
