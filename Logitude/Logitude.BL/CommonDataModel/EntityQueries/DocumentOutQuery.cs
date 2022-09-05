@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentOutPM GetSinglePM(string id, int tenant)
         {
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var FollowUps = followUpRepository.GetFollowUps(tenant);
             DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(repository.context);
             DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(documentOutCopyRep);
 
@@ -95,16 +95,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             };
 
             docPm.DocumentOutCopies = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOut(docPm.Id, docPm.Tenant);
-            if (FollowUps != null)
+            List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
+            if (docFollowUp.Count != 0)
             {
-                List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
-                if (docFollowUp.Count != 0)
-                {
-                    docPm.FollowUpCount = docFollowUp.Count;
-                    docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                    docPm.HasFollowUp = docFollowUp.Any();
-                }
+                docPm.FollowUpCount = docFollowUp.Count;
+                docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
+                docPm.HasFollowUp = docFollowUp.Any();
             }
+
             if (user != null)
             {
                 docPm.IssuedByUserName = user.Contact.EnglishName;
@@ -120,7 +118,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentOutPM> GetDocumentOutPMsByTenant(int tenant)
         {
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var FollowUps = followUpRepository.GetFollowUps(tenant);
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
             DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(tenant);
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(repository.context);
@@ -178,15 +176,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 };
 
                 docPm.DocumentOutCopies = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOut(docPm.Id, docPm.Tenant);
-                if (FollowUps != null)
+                List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
+                if (docFollowUp.Count != 0)
                 {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        docPm.FollowUpCount = docFollowUp.Count;
-                        docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        docPm.HasFollowUp = docFollowUp.Any();
-                    }
+                    docPm.FollowUpCount = docFollowUp.Count;
+                    docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
+                    docPm.HasFollowUp = docFollowUp.Any();
                 }
                 if (user != null)
                 {
@@ -206,7 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentOutPM> GetDocumentOutPMsByEntityId(string id, int tenant)
         {
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var FollowUps = followUpRepository.GetFollowUps(tenant);
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
             DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(tenant);
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(repository.context);
@@ -268,15 +263,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 };
 
                 docPm.DocumentOutCopies = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOut(docPm.Id, docPm.Tenant);
-                if (FollowUps != null)
+                List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
+                if (docFollowUp.Count != 0)
                 {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        docPm.FollowUpCount = docFollowUp.Count;
-                        docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        docPm.HasFollowUp = docFollowUp.Any();
-                    }
+                    docPm.FollowUpCount = docFollowUp.Count;
+                    docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
+                    docPm.HasFollowUp = docFollowUp.Any();
                 }
                 if (user != null)
                 {
@@ -401,7 +393,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentOutPM> GetDocumentOutPMsByEntityIdAndObjectTable(string entityId, string childEntityId, string objectTableId, int tenant)
         {
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var FollowUps = followUpRepository.GetFollowUps(tenant);
             DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(repository.context);
             DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(documentOutCopyRep);
             List<DocumentOut> documentOuts;
@@ -472,16 +464,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SecurityId = doc.DocumentsFiling.SecurityId,
                     
                 };
-              
-                if (FollowUps != null)
+
+                List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
+                if (docFollowUp.Count != 0)
                 {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.InternalDocumentId == doc.Id && d.Tenant == doc.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        docPm.FollowUpCount = docFollowUp.Count;
-                        docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        docPm.HasFollowUp = docFollowUp.Any();
-                    }
+                    docPm.FollowUpCount = docFollowUp.Count;
+                    docPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
+                    docPm.HasFollowUp = docFollowUp.Any();
                 }
                 //if (user != null)
                 //{
