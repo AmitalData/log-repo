@@ -99,7 +99,7 @@ export class CustomizationMainComponent {
 
         myTablesItems.forEach(field => {
             var table: ObjectTablePM = tablesList.filter(d => d.Id == field.ObjectTableID)[0];
-            if (table != null && this.HaveObjectTableAccess(table)) {
+            if (table != null && this.HasEntityPermessions(table.Name) && this.HaveObjectTableAccess(table)) {
                 myData.push(field);
             }
         });
@@ -111,6 +111,11 @@ export class CustomizationMainComponent {
             this.ShowPackageMessage();
         }
         this.IsReady = true;
+    }
+
+    HasEntityPermessions(objectTableName: string) {
+        return FeatureLocator.HasEntityPermessions(objectTableName, "READ", false);
+
     }
 
     ShowPackageMessage() {
@@ -126,8 +131,7 @@ export class CustomizationMainComponent {
     HaveObjectTableAccess(table: ObjectTablePM): boolean {
         if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
-        if (this.IsCustomizationToggleActive) return true;
-        return FeatureLocator.HasEntityPermessions(table.Name, "READ", false);
+        if (!this.IsCustomizationToggleActive) return false;
     }
 
     HaveFieldsCustomization(objectTableName: string): boolean {
