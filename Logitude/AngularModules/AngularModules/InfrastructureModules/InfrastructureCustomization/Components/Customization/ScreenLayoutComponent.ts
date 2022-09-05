@@ -275,7 +275,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         lineSpaceField.ObjectTableName = objectTable ? objectTable.Name : this.ObjectTableName;
         lineSpaceField.ObjectTableId = this.ObjecttableId;
         lineSpaceField.Id = Guid.newGuid();
-        window.ObjectTables.push(lineSpaceField);
+        //window.ObjectFields.push(lineSpaceField);
 
         return lineSpaceField;
     }
