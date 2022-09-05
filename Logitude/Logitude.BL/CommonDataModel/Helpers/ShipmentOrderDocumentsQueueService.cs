@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.Helpers
             if (!ValidForLogBoxTransfer(shipmentOrder)) return;
 
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ImporterShipmentOrderDocumentsQueue", 0);
+            queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
             queueservice.Send(new Dictionary<string, string>() { { "ShipmentOrderId", shipmentOrder.Id }, { "DocumentFilingId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() }, }, documentsFiling.Tenant);
         }
 

@@ -14,6 +14,8 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
+using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -122,6 +124,7 @@ namespace CommunicationWorkerRole
                             if (response != null && response.MessageId != null)
                             {
                                 string ShipmentId = response.MessageValues["ShipmentId"] != null ? response.MessageValues["ShipmentId"].ToString():"";
+                                string ShipmentOrderId = response.MessageValues["ShipmentOrderId"] != null ? response.MessageValues["ShipmentOrderId"].ToString() : "";
                                 string DocumentFilingId = response.MessageValues["DocumentFilingId"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
                                 string CorrelationId = response.MessageId;
@@ -183,18 +186,22 @@ namespace CommunicationWorkerRole
                                 {
                                     DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                                     DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
-                                    if (!string.IsNullOrEmpty(ShipmentId) && !DocumentFilingPM.IsDeleted)
+                                    if ((!string.IsNullOrEmpty(ShipmentId) || !string.IsNullOrEmpty(ShipmentOrderId)) && !DocumentFilingPM.IsDeleted)
                                     {
+                                        bool isShipmentOrder = !string.IsNullOrEmpty(ShipmentOrderId);
                                         LogPM.Tenant = tenant;
                                         LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
                                         LogPM.Refrence = DocumentFilingPM.Code;
                                         ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                                        ShipmentPM ForwarderShipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
+                                        ShipmentPM ForwarderShipment = isShipmentOrder ? null : shipmentQuery.GetSinglePM(ShipmentId, tenant);
+                                        ShipmentOrderQueryService shipmentOrderQueryService = new ShipmentOrderQueryService(tenant);
+                                        ShipmentOrderPM ForwarderShipmentOrder = isShipmentOrder ? shipmentOrderQueryService.GetSinglePM(ShipmentOrderId, tenant) : null;
+                                        int forwarderShipmentTenant = isShipmentOrder ? ForwarderShipmentOrder.Tenant : ForwarderShipment.Tenant;
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                                        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, ForwarderShipment.CustomerId);
-                                        var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
-                                        var tenantPM = TenantQuery.GetSingleTenantPM(ForwarderShipment.Tenant, false);
+                                        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, isShipmentOrder ? ForwarderShipmentOrder.CustomerId : ForwarderShipment.CustomerId);
+                                        var tenantQuery = new TenantQuery(forwarderShipmentTenant);
+                                        var tenantPM = TenantQuery.GetSingleTenantPM(forwarderShipmentTenant, false);
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                         if (customerTenantAccessInfo != null)
                                         {
@@ -216,13 +223,17 @@ namespace CommunicationWorkerRole
                                             {
                                                 PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
 
-                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox() && !privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment))
+                                                if (!isShipmentOrder && !privateLabelShipmentService.IsShipmentsAllowedForLogBox() && !privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment))
                                                 {
                                                     queueservice.Complete(); 
                                                 }
+                                                else if (isShipmentOrder && !IsShipmentsOrderAllowedForLogBox(ForwarderShipmentOrder, tenantPM, customerTenantAccessInfo))
+                                                {
+                                                    queueservice.Complete();
+                                                }
                                                 else
                                                 {
-                                                    LogPM.Tenant = ForwarderShipment.Tenant;
+                                                    LogPM.Tenant = forwarderShipmentTenant;
                                                     LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
                                                     LogPM.Refrence = DocumentFilingPM.Code;
                                                     if (IsNewLog)
@@ -236,7 +247,7 @@ namespace CommunicationWorkerRole
                                                     var msg = "Start Checking Parent Entity Direction" + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
-                                                    if (ForwarderShipment.DirectionId.ToUpper() == "I" && !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                    if (!isShipmentOrder && ForwarderShipment.DirectionId.ToUpper() == "I" && !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                     {
 
                                                         var CustomsShipmentPM = shipmentQuery.GetSingleShipmentPM(ForwarderShipment.CustomFileId, tenant); // todo: I Should Ask About this
@@ -255,7 +266,7 @@ namespace CommunicationWorkerRole
                                                         msg = "Getting Custom shipment number" + DateTime.Now;
                                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
-                                                        EntityNumber = ForwarderShipment.CustomerShipmentNumber;// ImporterShipment.ShipmentNumber;
+                                                        EntityNumber = isShipmentOrder ? ForwarderShipmentOrder.CustomerShipmentNumber : ForwarderShipment.CustomerShipmentNumber;// ImporterShipment.ShipmentNumber;
                                                     }
                                                 }
                                                 
@@ -316,7 +327,7 @@ namespace CommunicationWorkerRole
                                                 LogPM.ObjectTableId = Objecttable.Id;
                                                 LogPM.EntityId = EntityNumber;
                                                 LogPM.Refrence = DocumentFilingPM.Code;
-                                                LogPM.Tenant = ForwarderShipment.Tenant;
+                                                LogPM.Tenant = isShipmentOrder ? ForwarderShipmentOrder.Tenant: ForwarderShipment.Tenant;
                                                 List<DocumentsFilingMetaDataValueAM> DocFilingMetaDataValues = new List<DocumentsFilingMetaDataValueAM>();
                                                 ICommonDataContext objectContext = CommonDataContext.GetContext(DocumentFilingPM.Tenant);
 
@@ -353,7 +364,7 @@ namespace CommunicationWorkerRole
                                                     #endregion
 
                                                     Objecttable = objectTabelRepository.GetSingleObjectTable(DocumentFilingPM.ObjectTableId, tenant, true);
-                                                    if (IsNew && !ForwarderShipment.IsCancelled)
+                                                    if (IsNew && ((!isShipmentOrder && !ForwarderShipment.IsCancelled) || (isShipmentOrder && !ForwarderShipmentOrder.IsCancelled)))
                                                     {
                                                         #region New Document
                                                         #region DocumentsFilingAMProperties
@@ -377,7 +388,7 @@ namespace CommunicationWorkerRole
                                                             SignersList = DocumentFilingPM.SignersList,
                                                             FileName = DocumentFilingPM.FileName,
                                                             IsSharedWithCustomer = DocumentFilingPM.IsSharedWithCustomer,
-                                                            IsDeleted = ForwarderShipment.IsCancelled ? true : DocumentFilingPM.IsDeleted,
+                                                            IsDeleted = (isShipmentOrder ? ForwarderShipmentOrder.IsCancelled : ForwarderShipment.IsCancelled) ? true : DocumentFilingPM.IsDeleted,
                                                             Code = DocumentFilingPM.Code,
                                                             ExternalCode = DocumentFilingPM.Code,
                                                             IsRequested = DocumentFilingPM.IsRequested,
@@ -512,7 +523,7 @@ namespace CommunicationWorkerRole
                                                             {
                                                                 string ImporterDocId = JsonConvert.DeserializeObject<string>(temp1);
                                                                 DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
-                                                                if (DocumentFilingPM.IsDeleted || ForwarderShipment.IsCancelled)
+                                                                if (DocumentFilingPM.IsDeleted || isShipmentOrder ? ForwarderShipmentOrder.IsCancelled : ForwarderShipment.IsCancelled)
                                                                 {
                                                                     DocumentFilingPM.CustomerDocumentId = ImporterDocId;
                                                                 }
@@ -586,7 +597,7 @@ namespace CommunicationWorkerRole
                                                             SignersList = DocumentFilingPM.SignersList,
                                                             FileName = DocumentFilingPM.FileName,
                                                             IsSharedWithCustomer = DocumentFilingPM.IsSharedWithCustomer,
-                                                            IsDeleted = ForwarderShipment.IsCancelled ? true : DocumentFilingPM.IsDeleted,
+                                                            IsDeleted = (isShipmentOrder ? ForwarderShipmentOrder.IsCancelled : ForwarderShipment.IsCancelled) ? true : DocumentFilingPM.IsDeleted,
                                                             Code = DocumentFilingPM.Code,
                                                             IsRequested = DocumentFilingPM.IsRequested,
                                                             Tenant = DocumentFilingPM.Tenant,
@@ -717,7 +728,7 @@ namespace CommunicationWorkerRole
                                                             string ImporterDocId = JsonConvert.DeserializeObject<string>(temp1);
                                                             DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
                                                             DocumentFilingPM.CustomerTenantNumber = importerTenant;
-                                                            if (DocumentFilingPM.IsDeleted || ForwarderShipment.IsCancelled)
+                                                            if (DocumentFilingPM.IsDeleted || isShipmentOrder ? ForwarderShipmentOrder.IsCancelled : ForwarderShipment.IsCancelled)
                                                             {
                                                                 DocumentFilingPM.CustomerDocumentId = null;
                                                                 DocumentFilingPM.DontAddToQueue = true;
@@ -988,7 +999,11 @@ namespace CommunicationWorkerRole
             }
         }
 
-        
+        private bool IsShipmentsOrderAllowedForLogBox(ShipmentOrderPM forwarderShipmentOrder, TenantPM tenantPM, CustomerTenantAccessInfo customerTenantAccessInfo)
+        {
+            return tenantPM.CustomerTenantShareExportFile && customerTenantAccessInfo.IsExportActivated && forwarderShipmentOrder.DirectionId.ToUpper() == "E";
+        }
+
         private async void StartUploading(BlobFileInfo fileInfo, byte[] FileData, string Token, int tenant, DocumentsFilingAM NewDocumentFilingAM)
         {
             if (FileData.Length > 0)
