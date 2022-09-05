@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             int tenant;
 
-            if (securityKey != null && !blockAccess)
+            if (securityKey != null && (!blockAccess || authToken != null))
             {
                 var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
                 if (shipmentIdAndTenant == null)
