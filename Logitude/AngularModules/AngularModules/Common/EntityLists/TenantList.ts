@@ -113,5 +113,6 @@ export class TenantList {
 		EnableDeliveryOptions: boolean;
 		EmptyReturnClosingDays: number;
 		ShipmentATAClosingDays: number;
+		IsDigitalPortalAccessActivated: boolean;
 	
 }

@@ -34,6 +34,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     MainMessage: string;
     HasAgentDocumentsPermission: boolean = false;
     IsCloud: boolean = false;
+    IsDigitalPortal: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
@@ -60,6 +61,9 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
         }
         this.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Shipment")[0].Id;
         this.LoadTenantZeroDate();
+
+        if (this.IsDigitalPortal)
+            this.HasAgentDocumentsPermission = false;
     }
 
     SelectedTabChange(selectedTabCode) {
@@ -71,6 +75,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
     SetWindowArgs(args: any) {
         this.FullComponentsVisibility = true;
+        this.IsDigitalPortal = args.IsDigitalPortal;
     }
 
     LoadTenantZeroDate() {

@@ -94,6 +94,7 @@ export class SharedLogisticMainMenuComponent {
     private Page_SHIP: any = null;
     private Page_CATR: any = null;
     private Page_CTOOL: any = null;
+    private Page_DIGP: any = null;
 
     SelectionChanged() {
         if (this.isLoaderReady) {
@@ -117,10 +118,11 @@ export class SharedLogisticMainMenuComponent {
                         }
                         //DIGP
                         case "DIGP": {
-                            if (this.Page_BOOK == null) {
+                            if (this.Page_DIGP == null) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsDigitalPortalComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
-                                        this.Page_SHIP = cmpRef.instance;
+                                        this.Page_DIGP = cmpRef.instance;
+                                        this.Page_DIGP.SetSharedTitleType("DigitalPortal");
                                         //this.Page_SHIP.InitComponent();
                                     });
                             }

@@ -68,6 +68,19 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
+    public get IsDigitalPortalAccessActivated() {
+
+        if (this.TenantPM) {
+            return this.TenantPM.IsDigitalPortalAccessActivated;
+        }
+        else return false;
+    }
+    public set IsDigitalPortalAccessActivated(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.IsDigitalPortalAccessActivated = value;
+        }
+
+    }
 
     public get IsMobileActivated() {
 
@@ -132,7 +145,8 @@ export class SharedLogisticsSettingComponent implements OnInit {
     IsSharedLogisticsActivatedCheckboxBoxId: string;
     IsMobileActivatedCheckboxBoxId: string;
     IsWebAccessActivatedCheckboxBoxId: string;
-    IsCargoTrackWebAccessActivatedCheckboxBoxId; string;
+    IsCargoTrackWebAccessActivatedCheckboxBoxId: string;
+    IsDigitalPortalAccessActivatedCheckboxBoxId: string;
     SharedLogisticsMessageLinkCheckboxBoxId: string;
     SharedLogisticsMasterMessageLinkCheckboxBoxId: string;
 
@@ -179,20 +193,17 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
          this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
          this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
-         this.IsCargoTrackWebAccessActivated = this.TenantPM.IsCargoTrackWebAccessActivated;
+        this.IsCargoTrackWebAccessActivated = this.TenantPM.IsCargoTrackWebAccessActivated;
+        this.IsDigitalPortalAccessActivated = this.TenantPM.IsDigitalPortalAccessActivated;
          this.IsMobileActivated = this.TenantPM.IsMobileActivated;
          this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
          this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
         this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
 
-        if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking") {
+        if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking" || this.SharedTitleType == "DigitalPortal") {
             this.IsShowMobileActivateArea = false;
         }
-        else {
-            this.IsShowMobileActivateArea = true;
-        }
-
-
+       
         if (!FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) {
             this.IsShowActivateWebAccessArea = false;
         }
@@ -200,7 +211,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.IsShowActivateWebAccessArea = true;
         }
 
-        if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK")) {
+        if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK") || this.SharedTitleType == "DigitalPortal") {
             this.SharedLogisticsMasterMessageLinkEnable = false;
         }
 
@@ -210,6 +221,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.IsMobileActivatedCheckboxBoxId = Guid.newGuid();
         this.IsWebAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.IsCargoTrackWebAccessActivatedCheckboxBoxId = Guid.newGuid();
+        this.IsDigitalPortalAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
 
@@ -276,6 +288,10 @@ export class SharedLogisticsSettingComponent implements OnInit {
         return this.SharedTitleType == "CargoTracking";
     }
 
+    public get IsDigitalPortal() {
+        return this.SharedTitleType == "DigitalPortal";
+    }
+
     SetWindowArgs(args: any) {
 
         this.TenantPM = args.TenantPM;
@@ -299,6 +315,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('SharedLogisticsMasterMessageLink');
         this.myCloner.AddField('IsQuotesRequestActivatedInShared');
         this.myCloner.AddField('IsCargoTrackWebAccessActivated');
+        this.myCloner.AddField('IsDigitalPortalAccessActivated');
 
         this.myCloner.AddEntity(this.TenantPM);
     }

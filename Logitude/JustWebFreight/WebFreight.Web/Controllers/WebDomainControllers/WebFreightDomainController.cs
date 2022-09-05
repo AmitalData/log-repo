@@ -1,7 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Checksums;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityQueryServices;
@@ -12,7 +11,10 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
+using Microsoft.Azure.Management.Dns;
+using Microsoft.Azure.Management.Dns.Models;
 using Microsoft.Practices.Unity;
+using Microsoft.Rest.Azure.Authentication;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -23,18 +25,18 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.BIReport;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
+using Microsoft.Azure.Management.ResourceManager;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -438,7 +440,49 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-      
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetGenerateDigitalPortalDomainAsync(string customerURL)
+        {
+            try
+            {
+                await RunAddingDNSRecordAsync(customerURL);
+                return Request.CreateResponse(HttpStatusCode.OK, "Success");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static async Task RunAddingDNSRecordAsync(string customerURL)
+        {
+            var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
+            var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
+            var secret = LogitudeSettings.AzurePrincipalSecretKey;
+            var subscriptionId = "faa01774-0b55-482b-a317-742a1f1479f8";
+            var resourceGroupName = "globallogitude";
+            var zoneName = LogitudeSettings.DNSZone; 
+            var DNSIPAddress = LogitudeSettings.DNSIPAddress;
+            var recordSetName = customerURL;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12;
+            var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
+            var dnsClient = new DnsManagementClient(serviceCreds);
+            dnsClient.SubscriptionId = subscriptionId;
+            try
+            {
+                // Build the service credentials and DNS management client
+                var recordSetParams = new RecordSet();
+                recordSetParams.TTL = 3600;
+                recordSetParams.ARecords = new List<ARecord>();
+                recordSetParams.ARecords.Add(new ARecord(DNSIPAddress));
+                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, recordSetName, RecordType.A, recordSetParams).Result;
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         #region SendBlockToServer
         int counter = -1;

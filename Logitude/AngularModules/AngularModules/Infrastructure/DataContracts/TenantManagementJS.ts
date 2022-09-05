@@ -69,4 +69,6 @@ export class TenantManagementJS {
             this.tenantManagementLicenses = newValue;
         }
     }
+
+    public CustomerURL: string;
 }

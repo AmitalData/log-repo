@@ -200,5 +200,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableDeliveryOptions { get; set; }
         public int? EmptyReturnClosingDays { get; set; }
         public int? ShipmentATAClosingDays { get; set; }
+        public bool IsDigitalPortalAccessActivated { get; set; }
     }
 }

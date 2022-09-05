@@ -80,6 +80,9 @@ namespace Simplog.Server.Infrastructure
                 return (WorkEnvironment ?? "").Equals("customs", StringComparison.InvariantCultureIgnoreCase);
             }
         }
+        public static string AzurePrincipalSecretKey { get; set; }
+        public static string DNSIPAddress { get; set; }
+        public static string DNSZone { get; set; }
 
         public static Func<int, string> GetUserNameInject { get; set; }
         // this project no need but in FilingManager is must 

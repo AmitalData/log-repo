@@ -97,6 +97,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
      
             poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
             poco.IsCargoTrackWebAccessActivated = entityPM.IsCargoTrackWebAccessActivated;
+            poco.IsDigitalPortalAccessActivated = entityPM.IsDigitalPortalAccessActivated;
             poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
             poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
             poco.AccountingActivationDate = entityPM.AccountingActivationDate;
