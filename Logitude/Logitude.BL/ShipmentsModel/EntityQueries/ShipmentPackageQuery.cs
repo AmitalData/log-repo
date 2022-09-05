@@ -329,7 +329,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
                 package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume) ;
-                package.GrossWeightInKG  = ShipmentMapping.GetWeightInKG("KG", package.Weight); ;
+                package.GrossWeightInKG  = ShipmentMapping.GetWeightInKG("KG", package.Weight);
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);

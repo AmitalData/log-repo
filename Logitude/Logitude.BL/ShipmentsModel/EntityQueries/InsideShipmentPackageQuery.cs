@@ -5,6 +5,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -80,6 +81,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             foreach (InsideShipmentPackagePM package in myResult)
             {
                 package.InsidePackageHarmonizes = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(package.Id, package.Tenant);
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
             }
 
             return myResult;
