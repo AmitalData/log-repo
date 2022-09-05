@@ -221,7 +221,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.AllbanckStackFields = [];
 
         if (this.IsMuiltSectionScreen) {
-            this.AddEmptyRow();
+            this.AddSpaceRowToBanckStackFields();
         }
 
         const table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
@@ -259,7 +259,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         //this.SelectionChanged(this.ListBoxItemSource[0]);
     }
 
-    private AddEmptyRow() {
+    private AddSpaceRowToBanckStackFields() {
         var lineSpaceField = this.GetSpaceLine();
         this.AllbanckStackFields.push(lineSpaceField);
         this.banckStackFields.push(lineSpaceField);
