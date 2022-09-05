@@ -113,7 +113,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var partnerCard = new PartnerCard()
             {
                 Type = partnerType,
-                Name = !IsDashesOrNullOrEmpty(user.Contact?.LocalName) ? user.Contact?.LocalName : !IsDashesOrNullOrEmpty(user.Contact?.EnglishName) ? user.Contact?.EnglishName: null ,
+                Name = GetCardName(user),
                 Address = GetAddressFromContact(user.Contact),
                 PhoneNumber = user.Contact?.BusinessPhone,
                 Mobile = user.Contact?.Mobile,
@@ -123,9 +123,24 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             partnerCards.Add(partnerCard);
         }
 
+        private string GetCardName(User user)
+        {
+            if (!IsDashesOrNullOrEmpty(user.Contact?.EnglishName))
+            {
+                return user.Contact?.EnglishName;
+            }
+            else if (!IsDashesOrNullOrEmpty(user.Contact?.LocalName))
+            {
+                return user.Contact?.LocalName;
+            }
+            else {
+                return user.Contact?.EnglishName;
+            }
+        }
+
         private bool IsDashesOrNullOrEmpty(string name)
         {
-            return string.IsNullOrEmpty(name) || name.Equals("---");
+            return string.IsNullOrEmpty(name) || name.Equals("---") || name.Contains("?");
         }
         private string GetAddressFromContact(Contact contact)
         {

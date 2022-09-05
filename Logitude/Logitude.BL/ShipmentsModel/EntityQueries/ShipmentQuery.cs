@@ -2704,12 +2704,34 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCardName(bool byLocalName, Card cardObject)
         {
-            return byLocalName && !IsDashesOrNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : !IsDashesOrNullOrEmpty(cardObject.EnglishName) ? cardObject.EnglishName : null;
+            if (byLocalName)
+            {
+                return byLocalName && !IsDashesOrNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : !IsDashesOrNullOrEmpty(cardObject.EnglishName) ? cardObject.EnglishName : null;
+            }
+            else
+            {
+                return GetEnglishCardName(cardObject);
+            }
         }
 
+        private string GetEnglishCardName(Card cardObject)
+        {
+            if (!IsDashesOrNullOrEmpty(cardObject.EnglishName))
+            {
+                return cardObject.EnglishName;
+            }
+            else if (!IsDashesOrNullOrEmpty(cardObject.LocalName))
+            {
+                return cardObject.LocalName;
+            }
+            else
+            {
+                return cardObject.EnglishName;
+            }
+        }
         private bool IsDashesOrNullOrEmpty(string name)
         {
-            return string.IsNullOrEmpty(name) || name.Equals("---");
+            return string.IsNullOrEmpty(name) || name.Equals("---") || name.Contains("?");
         }
 
         public void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
