@@ -29,6 +29,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false); 
             this.Property(t => t.PaymentReferences).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.SATCancelReasonCode).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.PaidStatus).HasMaxLength(40).IsUnicode(false);
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS"); 
             if (dbms == "oracle")
             {
@@ -213,6 +215,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.GlobalTaxCalculation).HasColumnName("GlobalTaxCalculation");
             this.Property(t => t.PaymentReferences).HasColumnName("PaymentReferences");
             this.Property(t => t.SATCancelReasonCode).HasColumnName("SATCancelReasonCode");
+            this.Property(t => t.PaidStatus).HasColumnName("PaidStatus");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);

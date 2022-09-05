@@ -187,8 +187,10 @@ namespace Logitude.BL.InvoiceModel.EntityLists
 
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
+        public string PaidStatus { get; set; }
 
         public DateTime? PaidDate { get; set; }
+
         public string PartnerId { get; set; }
         public string PartnerName { get; set; }
         public string ShipmentsNumbers { get; set; }

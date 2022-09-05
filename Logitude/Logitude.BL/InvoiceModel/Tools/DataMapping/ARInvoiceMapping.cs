@@ -273,6 +273,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.RegionalTaxId = entityPM.RegionalTaxId;
             entity.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
             entity.PaidDate = entityPM.PaidDate;
+            entity.PaidStatus= entityPM.PaidStatus;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
