@@ -16,6 +16,8 @@ using System.Data.Entity;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using System;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -23,61 +25,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalDocuments/GetDigitalEntityDocuments")]
-        public List<SharedLogisticDocumentPM> GetDigitalEntityDocuments(string entityId, string partnerType, string cardId)
+        public IHttpActionResult GetDigitalEntityDocuments(string entityId, string partnerType, string cardId)
         {
-            var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId);
-            entityId = shipmentIdAndTenant.Item1;
-            var tenant = shipmentIdAndTenant.Item2;
-
-            List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
-
-            if (shipment != null)
+            try
             {
-                output = GetShipmentSharedDocuments(shipment, partnerType, tenant, false).OrderBy(o => o.Name).ToList();
-            }
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true);
+                entityId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
 
-            return output;
+                List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
+
+                if (shipment != null)
+                {
+                    output = GetShipmentSharedDocuments(shipment, partnerType, tenant, false).OrderBy(o => o.Name).ToList();
+                }
+
+                return Ok(output);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         #region private 
-        
-        private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
-        {
-            if (tenant != 0)
-            {
-                bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
-
-                    ContactRepository contactrep = new ContactRepository(commonDataContext);
-                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-
-                    if (contact != null)
-                    {
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && (d.CardId == customerId || d.CardId == agentId)).FirstOrDefault();
-                        if (cardContact != null)
-                        {
-                            exists = true;
-
-                        }
-                    }
-                }
-
-                if (!exists)
-                {
-                    throw new AutenticationException("Sorry! you are not authorized to read data!");
-                }
-
-                return exists;
-            }
-            return true;
-        }
-        
+                
         private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(Shipment shipment, string partnerType, int tenant, bool isExternalURL)
         {
             string entityId = shipment.Id;

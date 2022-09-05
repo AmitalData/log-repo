@@ -16,13 +16,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             return shipmentIdAndTenant;
         }
 
-        public Tuple<string, int> AuthenticateResponse(string cardId, string entityId)
+        public Tuple<string, int> AuthenticateResponse(string cardId, string entityId, bool blockAccess = false)
         {
             string securityKey = HttpContext.Current.Request.Headers["securitykey"];
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             int tenant;
 
-            if (securityKey != null)
+            if (securityKey != null && !blockAccess)
             {
                 var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
                 if (shipmentIdAndTenant == null)
@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 return Tuple.Create(entityId, tenant);
             }
 
-            return null;
+            throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
         public void CheckSecurityByToken(int tenant, string cardId)
