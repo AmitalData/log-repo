@@ -64,7 +64,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             return $@"select 
                             data.{groupBy.FieldCode} as Label,
-                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , 0 , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
+                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             group by {groupBy.FieldCode}";
         }
