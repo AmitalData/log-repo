@@ -118,7 +118,7 @@
                                                     [IsEnabled]="!item.WasApproved"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
-                                                    *ngIf="!item.CourierPendingRequireApr">{{item.Approval}}</span>
+                                                    *ngIf="!item.CourierPendingRequireApr"></span>
                                             </div>
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsEditMode">
@@ -127,7 +127,7 @@
                                                     [IsEnabled]="!item.WasApproved"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
-                                                    *ngIf="!item.CourierPendingRequireApr">{{item.Approval}}</span>
+                                                    *ngIf="!item.CourierPendingRequireApr"></span>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
