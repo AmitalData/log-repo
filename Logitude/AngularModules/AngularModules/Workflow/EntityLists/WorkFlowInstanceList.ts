@@ -17,6 +17,10 @@ export class WorkFlowInstanceList {
 	SearchFields: string;
 	WorkflowId: string;
 	StatusCode: string;
+	StartTime: Date;
+	EndTime: Date;
+	BusinessKey: string;
+	Duration: string;
 	
 }
  

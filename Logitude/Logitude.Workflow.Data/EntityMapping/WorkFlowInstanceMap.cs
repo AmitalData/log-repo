@@ -40,6 +40,12 @@ namespace Logitude.Workflow.Data.EntityMapping
             this.Property(t => t.WorkflowId).HasColumnName("WorkflowId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.StartTime).HasColumnName("StartTime");
+
+            this.Property(t => t.EndTime).HasColumnName("EndTime");
+
+            this.Property(t => t.BusinessKey).HasColumnName("BusinessKey").HasMaxLength(50).IsUnicode(false);
         }
     }
 }

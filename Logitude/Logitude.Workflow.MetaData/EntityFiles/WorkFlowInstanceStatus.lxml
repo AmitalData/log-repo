@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;WorkFlowInstanceStatuses&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Workflow Instance Status&quot;"
-  Code="&quot;ba6d&quot;"
+  Code="&quot;86c7&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -57,6 +58,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;36d3&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -331,6 +333,10 @@
       Code="&quot;COED&quot;"
       Name="&quot;Completed&quot;"
       SearchFields="&quot;COED,Completed&quot;" />
+    <Record
+      Name="&quot;Failed&quot;"
+      Code="&quot;FAED&quot;"
+      SearchFields="&quot;FAED,Failed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

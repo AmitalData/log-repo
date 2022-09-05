@@ -49,6 +49,12 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string StatusCode { get; set; }
 	      
         public virtual WorkFlowInstanceStatus Status { get; set; }
+        [Column("StartTime")]
+	    public DateTime? StartTime { get; set; }
+        [Column("EndTime")]
+	    public DateTime? EndTime { get; set; }
+        [Column("BusinessKey")]
+	    public string BusinessKey { get; set; }
     }
 }
 	 
