@@ -109,8 +109,6 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.FillTableScreensCollection();
     }
 
-
-
     SectionScreens: SectionScreenItem[] = [];
 
     BuildScreenRowDetails(columnIndex: number, sectionNumber: number = null) {
@@ -119,43 +117,50 @@ export class ScreenLayoutComponent extends BaseComponent {
         var screenObjectFields = this.GetScreenObjectFields(columnIndex, sectionNumber);
         var row = 0;
         screenObjectFields.forEach(field => {
-
-            if (field.Row != row) {
-                var spaceLineCount = field.Row - row;
-                this.AddSpaceLine(spaceLineCount, screenRowDetails, sectionNumber, row);
-            }
+            row = this.AddEmptyLines(field, row, screenRowDetails, sectionNumber);
             screenRowDetails.ScreenFieldPMs.push(field);
             screenRowDetails.ObjectFieldPMs.push(window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0]);
-
             row += 1;
         });
         return screenRowDetails;
     }
 
 
+    private AddEmptyLines(field: any, row: number, screenRowDetails: ScreenRowDetails, sectionNumber: number) {
+        if (field.Row == row || !this.IsMuiltSectionScreen) return row;
+        this.AddSpaceLine((field.Row - row), screenRowDetails, sectionNumber, row);
+        row = field.Row;
+        return row;
+    }
+
 
     AddSpaceLine(spaceLineCount: number, screenRowDetails: any, sectionNumber, row) {
-        var myitem = this.GetSpaceLine();
         var count = 0;
         while (count < spaceLineCount) {
-            var screenField = new ScreenFieldPM();
-            screenField.Column = screenRowDetails.ColumnIndex;
-            screenField.ObjectFieldId = myitem.Id;
-            screenField.ScreenId = this.SelectedItem.ScreenPM.Id;
-            screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
-            screenField.Tenant = SessionLocator.Tenant;
-            screenField.Row = row;
-            screenField.ObjectFieldCode = myitem.FieldCode;
+            let spaceLineField = this.GetSpaceLine();
+            let screenField = this.GetScreenFieldPM(screenRowDetails, spaceLineField, row);
             if (this.IsMuiltSectionScreen) screenField.SectionNumber = sectionNumber
-            screenRowDetails.ScreenFieldPMs.push(myitem);
-            screenRowDetails.ObjectFieldPMs.push(screenField);
+            screenRowDetails.ObjectFieldPMs.push(spaceLineField);
+            screenRowDetails.ScreenFieldPMs.push(screenField);
             count += 1;
-            row += 1;
         }
 
 
 
 
+    }
+
+    private GetScreenFieldPM(screenRowDetails: any, spaceLineField: ObjectFieldPM, row: any) {
+        let screenField = new ScreenFieldPM();
+        screenField.Column = screenRowDetails.ColumnIndex;
+        screenField.ObjectFieldId = spaceLineField.Id;
+        screenField.ScreenId = this.SelectedItem.ScreenPM.Id;
+        screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
+        screenField.Tenant = SessionLocator.Tenant;
+        screenField.DataTypeCode = spaceLineField.DataTypeCode;
+        screenField.Row = row;
+        screenField.ObjectFieldCode = spaceLineField.FieldCode;
+        return screenField;
     }
 
     private GetScreenObjectFields(columnIndex: number, sectionNumber: number) {
@@ -212,9 +217,9 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.banckStackFields = [];
         this.AllbanckStackFields = [];
 
-        var lineSpaceField = this.GetSpaceLine();
-        this.AllbanckStackFields.push(lineSpaceField);
-        this.banckStackFields.push(lineSpaceField);
+        if (this.IsMuiltSectionScreen) {
+            this.AddEmptyRow();
+        }
 
         const table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
         if (table.Name === "Master") {
@@ -251,14 +256,24 @@ export class ScreenLayoutComponent extends BaseComponent {
         //this.SelectionChanged(this.ListBoxItemSource[0]);
     }
 
+    private AddEmptyRow() {
+        var lineSpaceField = this.GetSpaceLine();
+        this.AllbanckStackFields.push(lineSpaceField);
+        this.banckStackFields.push(lineSpaceField);
+    }
+
     private GetSpaceLine() {
         var lineSpaceField = new ObjectFieldPM();
-        lineSpaceField.FieldCode = "LineSpace";
-        lineSpaceField.FieldName = "LineSpace";
-        lineSpaceField.ObjectTableName = this.ObjectTableName;
+        lineSpaceField.Id = Guid.newGuid();
+        lineSpaceField.FieldCode = lineSpaceField.Id;
+        lineSpaceField.FieldName = lineSpaceField.Id;
+        lineSpaceField.DataTypeCode = "LineSpace";
+        var objectTable = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
+        lineSpaceField.ObjectTableName = objectTable ? objectTable.Name : this.ObjectTableName;
         lineSpaceField.ObjectTableId = this.ObjecttableId;
         lineSpaceField.Id = Guid.newGuid();
-        window.ObjectFields.push(lineSpaceField);
+        window.ObjectTables.push(lineSpaceField);
+
         return lineSpaceField;
     }
 
@@ -415,7 +430,10 @@ export class ScreenLayoutComponent extends BaseComponent {
         let myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == objectFieldId)[0];
 
         if (myitem) {
-            let objectField = window.ObjectFields.filter(a => a.Id == myitem.Id)[0];
+            let objectField = this.GetObjectField(myitem);
+            objectFieldId = objectField.Id;
+            myitem = objectField;
+
             if (AppTool.IsNullOrEmpty(objectField.ObjectTableName)) {
                 var table = window.ObjectTables.filter(d => d.Id == objectField.ObjectTableId)[0];
                 window.ObjectFields.filter(a => a.Id == myitem.Id)[0].ObjectTableName = table.Name;
@@ -438,6 +456,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                 screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
                 screenField.Tenant = SessionLocator.Tenant;
                 screenField.Row = position;
+                screenField.DataTypeCode = myitem.DataTypeCode;
                 screenField.ObjectFieldCode = myitem.FieldCode;
                 if (this.IsMuiltSectionScreen) screenField.SectionNumber = sectionNumber
                 rows.ScreenFieldPMs.splice(position, 0, screenField);
@@ -458,6 +477,14 @@ export class ScreenLayoutComponent extends BaseComponent {
                 });
 
         }
+    }
+
+
+    private GetObjectField(myitem: ObjectFieldPM) {
+        let objectField = window.ObjectFields.filter(a => a.Id == myitem.Id)[0];
+        if (!this.IsMuiltSectionScreen) return objectField;
+        if (!this.IsLineSpaceField(myitem.DataTypeCode)) return objectField;
+        return this.GetSpaceLine();
     }
     public ChangeScreenFieldPosition(screenRow, args: any) {
 
@@ -550,7 +577,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     OnDeleteField(item, sectionNumber: number = null) {
         this.Modified = true;
 
-        if (!this.IsLineSpaceField (item.FieldCode)) {
+        if (!this.IsLineSpaceField(item.DataTypeCode)) {
             this.AllbanckStackFields.push(item);
         }
 
@@ -566,7 +593,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                     if (this.MyArgs.RemovedScreenFields == null) {
                         this.MyArgs.RemovedScreenFields = [];
                     }
-                    this.MyArgs.RemovedScreenFields.push(myItem);
+                    if (!this.IsLineSpaceField(myItem.DataTypeCode)) {
+                        this.MyArgs.RemovedScreenFields.push(myItem);
+                    }
                 }
 
                 sItem.ScreenFieldPMs.forEach(myfield => {
@@ -655,8 +684,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
     }
 
-   public IsLineSpaceField(fieldCode) {
-       return fieldCode == "LineSpace" ? true : false;
+    public IsLineSpaceField(dataTypeCode) {
+        return dataTypeCode == "LineSpace" ? true : false;
     }
 
 
@@ -718,7 +747,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     private AddScreenField(screenRowDetails: ScreenRowDetails, sectionScreen: SectionScreenItem) {
         screenRowDetails.ScreenFieldPMs.forEach(screenField => {
 
-            if (!this.IsLineSpaceField(screenField.ObjectFieldCode)) {
+            if (!this.IsLineSpaceField(screenField.DataTypeCode)) {
                 this.MyArgs.ScreenFields.push(screenField);
             }
             this.MyArgs.Rows += 1;

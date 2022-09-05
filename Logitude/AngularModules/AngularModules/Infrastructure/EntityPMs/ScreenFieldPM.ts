@@ -48,6 +48,13 @@ export class ScreenFieldPM {
     private sectionNumber: number;
     public get SectionNumber() { return this.sectionNumber; }
     public set SectionNumber(newValue: number) { this.sectionNumber = newValue; }
+
+    private dataTypeCode: string;
+    public get DataTypeCode() { return this.dataTypeCode; }
+    public set DataTypeCode(newValue: string) { this.dataTypeCode = newValue; }
+
+    
+
     
 
 }
