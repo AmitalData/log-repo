@@ -74,13 +74,13 @@ namespace CommunicationWorkerRole.Services.Logbox
 
         private static void RequestsUpdatedFailed(CustomerTenantAccessRequestUpdaterArgs customerTenantAccessRequestUpdaterArgs, Task<HttpResponseMessage> result)
         {
-            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-            if (EXC == null) return;
+            APIException aPIException = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+            if (aPIException == null) return;
 
             const string failedStatusCode = "F";
-            var Failmsg = EXC.ErrorType + " Fail To Update All Forwarder Requests" + DateTime.Now;
-            APILogsUtility.UpdateAPILogStatus(customerTenantAccessRequestUpdaterArgs.LogPM.Id, customerTenantAccessRequestUpdaterArgs.Tenant, failedStatusCode, customerTenantAccessRequestUpdaterArgs.Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
-            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+            var Failmsg = aPIException.ErrorType + " Fail To Update All Forwarder Requests" + DateTime.Now;
+            APILogsUtility.UpdateAPILogStatus(customerTenantAccessRequestUpdaterArgs.LogPM.Id, customerTenantAccessRequestUpdaterArgs.Tenant, failedStatusCode, customerTenantAccessRequestUpdaterArgs.Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(aPIException), null, "");
+            throw new Exception(aPIException.ErrorType, new Exception(aPIException.ErrorMessage));
         }
 
         private static void RequestsUpdatedSuccessfully(CustomerTenantAccessRequestUpdaterArgs customerTenantAccessRequestUpdaterArgs, Task<HttpResponseMessage> result)

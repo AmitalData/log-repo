@@ -97,13 +97,13 @@ namespace CommunicationWorkerRole.Services.Logbox
 
         private static void RequestCreatedFailed(CustomerTenantAccessCreatorArgs customerTenantAccessCreatorArgs, Task<HttpResponseMessage> result)
         {
-            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-            if (EXC != null) return;
+            APIException aPIException = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+            if (aPIException != null) return;
             
             const string failedStatusCode = "F";
-            var Failmsg = EXC.ErrorType + " Fail To Send Request To Forwarder Tenant " + DateTime.Now;
-            APILogsUtility.UpdateAPILogStatus(customerTenantAccessCreatorArgs.LogPM.Id, customerTenantAccessCreatorArgs.Tenant, failedStatusCode, customerTenantAccessCreatorArgs.Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
-            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+            var Failmsg = aPIException.ErrorType + " Fail To Send Request To Forwarder Tenant " + DateTime.Now;
+            APILogsUtility.UpdateAPILogStatus(customerTenantAccessCreatorArgs.LogPM.Id, customerTenantAccessCreatorArgs.Tenant, failedStatusCode, customerTenantAccessCreatorArgs.Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(aPIException), null, "");
+            throw new Exception(aPIException.ErrorType, new Exception(aPIException.ErrorMessage));
         }
 
         private static void RequestCreatedSuccessfully(CustomerTenantAccessCreatorArgs customerTenantAccessCreatorArgs, Task<HttpResponseMessage> result)
