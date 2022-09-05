@@ -2075,8 +2075,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
                 {
 
-                    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
-                    ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
+                    SecondCargoID =  consignmentPM.SecondCargoID !=null? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID): new SecondCargoIDType() { Value=""}, // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+                    ThirdCargoID =    SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID)  // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
                 }
             };
             if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))
