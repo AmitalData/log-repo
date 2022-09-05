@@ -32,6 +32,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.Property(t => t.HashString).HasColumnName("HashString").HasMaxLength(32).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

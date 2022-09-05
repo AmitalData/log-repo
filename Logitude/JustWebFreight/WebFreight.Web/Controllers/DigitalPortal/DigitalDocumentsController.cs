@@ -15,7 +15,7 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -25,17 +25,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalDocuments/GetDigitalEntityDocuments")]
         public List<SharedLogisticDocumentPM> GetDigitalEntityDocuments(string entityId, string partnerType, string cardId)
         {
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId);
+            entityId = shipmentIdAndTenant.Item1;
+            var tenant = shipmentIdAndTenant.Item2;
+
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-            ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, authToken.Tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
 
             if (shipment != null)
             {
-                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, authToken.Tenant);
-                output = GetShipmentSharedDocuments(shipment, partnerType, authToken.Tenant, false).OrderBy(o => o.Name).ToList();
+                output = GetShipmentSharedDocuments(shipment, partnerType, tenant, false).OrderBy(o => o.Name).ToList();
             }
 
             return output;

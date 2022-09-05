@@ -10,6 +10,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -26,7 +27,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
-    public IsAddNewMeasureVisible: boolean = true;
+    public GroupRoot: WidgetFilterItem = new WidgetFilterItem();
+    public IsAddNewMeasureVisible: boolean = true;    
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
@@ -40,8 +42,16 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
         this.ComputeChartImageSrc();
         this.BuildMeasures();
-        this.CheckAddNewMeasureVisible();
+        this.CheckMeasureAddVisiblity();
         this.Clone();
+        this.GetFilters();
+    }
+
+    GetFilters() {
+        if (!this.EntityPM.Filters) return;
+        var filters = JSON.parse(this.EntityPM.Filters);
+        if (!filters) return;
+        this.GroupRoot = filters;
     }
 
     private ComputeChartImageSrc() {
@@ -76,28 +86,28 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList = [];
 
         this.EntityPM.WidgetMeasures.forEach(item => {
-            this.WidgetMeasuresList.push(new WidgetMeasureItem(item, this));
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(item, false, this));
         });
 
         if (this.WidgetMeasuresList.length == 0) {
             var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
             newItem.Tenant = this.EntityPM.Tenant;
             newItem.WidgetId = this.EntityPM.Id;
-            this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, this));
+            this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
         }
     }
-    public CheckAddNewMeasureVisible() {
-        var isVisible: boolean = true;
+    public CheckMeasureAddVisiblity() {
+        var isAddVisible: boolean = true;
 
         if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
-            isVisible = false;
+            isAddVisible = false;
         }
 
         else if (this.WidgetMeasuresList.length != 1) {
-            isVisible = false;
+            isAddVisible = false;
         }
 
-        this.IsAddNewMeasureVisible = isVisible;
+        this.IsAddNewMeasureVisible = isAddVisible;
     }
 
     get Title() { return this.EntityPM.Title }
@@ -142,6 +152,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    public TableChanged() {
+        this.GroupRoot = new WidgetFilterItem();
+    }
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -157,6 +171,17 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
+            this.WidgetMeasuresList.forEach(item => {
+                if (item.IsNew) {
+                    if (this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
+                        item.IsNew = false;
+                        this.DataContext.EntityPM.AddWidgetMeasure(item.EntityPM);
+                    }
+                }
+            });
+
+            if(this.GroupRoot && this.GroupRoot.QueryFilterItems && this.GroupRoot.QueryFilterItems.length !=0)
+              //  this.EntityPM.Filters = JSON.stringify(this.GroupRoot.QueryFilterItems[0]);
             if (this.isNew) {
                 this.isNew = false;
                 this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
@@ -165,7 +190,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
-    }   
+    }
 
     private myCloner: Cloner;
     private Clone() {
@@ -187,21 +212,33 @@ export class AddEditWidgetComponent extends BaseComponent {
         var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
         newItem.Tenant = this.EntityPM.Tenant;
         newItem.WidgetId = this.EntityPM.Id;
-        this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, this));
+        this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
 
-        this.CheckAddNewMeasureVisible();
+        this.CheckMeasureAddVisiblity();
     }
 }
 
-export class WidgetMeasureItem extends BaseComponent{
+export class WidgetMeasureItem extends BaseComponent {
     public ObjectTableName: string = "WidgetMeasure";
     public EntityPM: WidgetMeasurePM;
     public Widget: WidgetPM;
     public DataContext: WidgetMeasureItem = this;
-    constructor(entityPM: WidgetMeasurePM, public fatherComponent: AddEditWidgetComponent) {
+    public IsNew: boolean = false;
+    public IsDeleteMeasureVisible: boolean = false;
+    constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
+        this.IsNew = isNew;
+    }
+
+    public CheckMeasureDeleteVisiblity() {
+        var isVisible: boolean = false;
+
+        var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
+        //this.fatherComponent.WidgetMeasuresList.length == 2;
+
+        this.IsDeleteMeasureVisible = isVisible;
     }
 
     get MeasureFieldId() { return this.EntityPM.MeasureFieldId; }
@@ -209,22 +246,22 @@ export class WidgetMeasureItem extends BaseComponent{
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
 
-            var itemIndex = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
+            //var itemIndex = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.MeasureFieldId)) {
-                if (itemIndex > -1) {
-                    this.Widget.RemoveWidgetMeasure(this.EntityPM);
-                }
-            }
+            //if (AppTool.IsNullOrEmpty(this.EntityPM.MeasureFieldId)) {
+            //    if (itemIndex > -1) {
+            //        this.Widget.RemoveWidgetMeasure(this.EntityPM);
+            //    }
+            //}
 
-            else {
-                if (itemIndex == -1) {
-                    this.Widget.AddWidgetMeasure(this.EntityPM);
-                }
-            }
+            //else {
+            //    if (itemIndex == -1) {
+            //        this.Widget.AddWidgetMeasure(this.EntityPM);
+            //    }
+            //}
 
-            this.fatherComponent.BuildMeasures();
-            this.fatherComponent.CheckAddNewMeasureVisible();
+            //this.fatherComponent.BuildMeasures();
+            //this.fatherComponent.CheckMeasureActionsVisiblity();
         }
     }
 
@@ -233,5 +270,14 @@ export class WidgetMeasureItem extends BaseComponent{
         if (this.EntityPM.MeasureCode != value) {
             this.EntityPM.MeasureCode = value;
         }
+    }
+
+    DeleteMeasureClicked() {
+        if (this.fatherComponent.EntityPM.WidgetMeasures.indexOf(this.EntityPM) != -1) {
+            this.fatherComponent.EntityPM.RemoveWidgetMeasure(this.EntityPM);
+        }
+
+        this.fatherComponent.BuildMeasures();
+        this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

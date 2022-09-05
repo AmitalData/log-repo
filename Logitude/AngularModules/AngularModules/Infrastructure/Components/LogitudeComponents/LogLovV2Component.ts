@@ -3361,7 +3361,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     FillTreeFilterDetails(filters) {
-        filters.TreeFilters = this.ObjectField?.DefaultAdditionalFilters;
+        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
 

@@ -112,6 +112,7 @@ export class BatchPrintManagerArgs {
 
 export class PrintEntityKeys {
     public EntityId: string;
+    public EntityNumber: string;
     public ChildEntityId: string;
 }
 

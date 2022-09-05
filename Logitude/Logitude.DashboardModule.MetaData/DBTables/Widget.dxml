@@ -68,6 +68,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Filters"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

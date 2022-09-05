@@ -134,7 +134,13 @@ namespace WebFreight.Web.Helpers.BatchPrint
             {
                 result.SecurityId = documentFiling.SecurityId;
             }
-            result.NotValidRows = itemPrintingResults.Where(e => !e.IsSuccessfullyPrinted).Select(e => new PrintingRow() { EntityId = e.EntityId, Error = e.Error }).ToList();
+            
+            result.NotValidRows = itemPrintingResults.Where(e => !e.IsSuccessfullyPrinted).Select(e => new PrintingRow() 
+            { 
+                EntityId = e.EntityId,
+                EntityNumber = e.EntityNumber,
+                Error = e.Error 
+            }).ToList();
             return result;
         }
 
@@ -196,7 +202,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         }
         private ItemPrintingResult Print(PrintEntityKeys item)
         {
-            var result = new ItemPrintingResult(item.EntityId);
+            var result = new ItemPrintingResult(item.EntityId, item.EntityNumber);
 
             if (!CheckValidation(item, result))
                 return result;

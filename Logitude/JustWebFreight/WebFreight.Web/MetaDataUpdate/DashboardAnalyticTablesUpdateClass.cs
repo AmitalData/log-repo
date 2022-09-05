@@ -28,6 +28,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         internal void Update()
         {
+            return;
             var analyticTables = new List<Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData>();
             foreach (string fileName in Directory.GetFiles(GetProjectPath(), "*.ljson"))
             {
@@ -106,10 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static string GetProjectPath()
         {
-            var dir = AppDomain.CurrentDomain.BaseDirectory;
-            dir = dir.Split(new string[] { @"\Logitude.Update\" }, StringSplitOptions.None)[0];
-            dir = dir + "/Logitude.DashboardModule.MetaData\\AnalyticsEntityFiles";
-            return dir;
+            return "AnalyticsEntityFiles";
         }
 
         private Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData BuildFileJson(string fileName)

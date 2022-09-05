@@ -2985,7 +2985,7 @@
       Code="&quot;ExpChDepToExcell&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;BankDeposit.Features.ExpChDepToExcell&quot;"
-      FeatureDefaultText="&quot;Export Cheque Deposits To Excell&quot;"
+      FeatureDefaultText="&quot;Export Cheque Deposits To Excel&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
