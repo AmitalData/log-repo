@@ -50,19 +50,23 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
             var measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
-            
+
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
-            
-            var querys = $@"select 
-                            data.{groupBy.FieldCode} as Label,
-                            CAST({measure.MeasureCode}(data.{measureField.FieldCode}) AS DECIMAL(16,2) ) as Value From 
-                            ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            group by {groupBy.FieldCode}";
+            string querys = CreateQuery(measure, groupBy, measureField, resultQueryable);
             var conterxt = DashboardContext.GetContext(0);
             var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
 
             return resultQueryables.ToList();
+        }
+
+        private static string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        {
+            return $@"select 
+                            data.{groupBy.FieldCode} as Label,
+                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , 0 , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
+                            ({resultQueryable.ToQueryStringWithParameter()}) as data
+                            group by {groupBy.FieldCode}";
         }
 
         private void FillEntityFields()
