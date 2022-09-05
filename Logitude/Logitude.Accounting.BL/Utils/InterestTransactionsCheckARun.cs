@@ -519,7 +519,7 @@ namespace Logitude.Accounting.BL.Utils
 
         private void AddErrorRow(String errorLine)
         {
-            this.MyInterestTransactionsCheckARunResult.ErrorRowList.Add(errorLine + " " + Environment.NewLine);
+            this.MyInterestTransactionsCheckARunResult.ErrorRowList.Add(errorLine);
             this.MyInterestTransactionsCheckARunResult.BadAccountLineCount++;
         }
 
