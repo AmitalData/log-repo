@@ -30,7 +30,7 @@ export function AssertOpenFlowBuilder() {
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
     OpenEditStartNode();
-    cy.SelectComboDropDownListItem(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object, 0)
+    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object)
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger))
 }
 
@@ -43,7 +43,7 @@ export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
 
 export function OpenEditStartNode() {
     cy.get(WorkflowSelectors.WorkflowStartNode).then(() => {
-        cy.Click(WorkflowSelectors.WorkflowSpan, WorkflowSelectors.WorkflowEdit, null)
+        cy.Click(WorkflowSelectors.WorkflowStartEditButton, null)
     })
 }
 
@@ -55,17 +55,17 @@ export function OpenNewWorkflow() {
 
 export function CreateNewWorkflow() {
     cy.DefineRequestWait(RestAPI.POST, URLs.WorkflowRequest, RequestAliases.PostWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowButton, WorkflowSelectors.WorkflowCreate, null)
+    cy.Click(WorkflowSelectors.WorkflowCreateButton, null)
 }
 
 export function CloseEditStartNodeWindow() {
-    cy.Click(WorkflowSelectors.WorkflowOkButton, WorkflowSelectors.WorkflowOK, null )
+    cy.Click(WorkflowSelectors.WorkflowStartOkButton, null )
 }
 
 
 export function SaveWorkflow() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowSaveButton, WorkflowSelectors.WorkflowSave, true)
+    cy.Click(WorkflowSelectors.WorkflowSaveButton, null)
 }
 
 export function AssertSaveWorkflow() {
