@@ -20,6 +20,8 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     public IsValidConditions: boolean = true;
 
+    public ConditionsCounter: number = 1;
+
     public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
 
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
@@ -31,7 +33,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     }
 
     ngOnInit() {
-
+        this.initializeConditionsIds();
     }
 
     ngOnChanges() {
@@ -42,8 +44,11 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
         this.ConditionsOperationChange.emit(conditionsOperation ? conditionsOperation.Code : null);
     }
 
-    conditionsChanged() {
+    conditionsChanged(event: any = null) {
         this.IsValidConditions = this.isValidConditions();
+        if (event === "add") {
+            this.increaseConditionsCounter();
+        }
     }
 
     isValidConditions(conditions: Condition[] | null = null) {
@@ -61,5 +66,21 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
             }
         }
         return result;
+    }
+
+    initializeConditionsIds(conditions: Condition[] | null = null) {
+        for (let condition of (conditions || this.Conditions)) {
+            if (condition.id === undefined || condition.id === null) {
+                condition.id = this.ConditionsCounter;
+            }
+            this.increaseConditionsCounter();
+            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
+                this.initializeConditionsIds(condition.conditions);
+            }
+        }
+    }
+
+    increaseConditionsCounter() {
+        this.ConditionsCounter++;
     }
 }

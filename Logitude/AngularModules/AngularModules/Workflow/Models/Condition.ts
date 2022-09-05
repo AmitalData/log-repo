@@ -2,6 +2,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 
 export class Condition {
+    public id: number;
     public isGroup: boolean;
     public groupOperation: string;
     public field: string;
@@ -13,6 +14,7 @@ export class Condition {
     public fieldChangedToggle: boolean;
 
     constructor(isGroup: boolean = false) {
+        this.id = null;
         this.isGroup = isGroup;
         this.groupOperation = isGroup ? ConditionOperations.And : null;
         this.field = null;

@@ -9,7 +9,8 @@
         [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true"
         [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
         [SelectedValue]="CurrentValue" [HideColumns]="!LookupTable.AutoCompleteSearchWindow"
-        [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event?.Id)">
+        [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event?.Id)"
+        [DataCy]="Name">
     </LogLov>
 
 </div>
@@ -19,7 +20,7 @@
     *ngIf="ObjectField && (ObjectField.DataTypeCode === FieldTypes.Text || ObjectField.DataTypeCode === FieldTypes.NText)">
 
     <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-        [Text]="CurrentValue" [HideColumns]="true" (ValueChanged)="updateValue($event)"></LogTextBox>
+        [Text]="CurrentValue" [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name"></LogTextBox>
 
 </div>
 
@@ -27,7 +28,7 @@
 <div *ngIf="ObjectField && ObjectField.DataTypeCode === FieldTypes.Boolean">
 
     <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
-        (SelectedItemChanged)="updateValue($event.Code)">
+        (SelectedItemChanged)="updateValue($event.Code)" [CyData]="Name">
     </ComboBox>
 
 </div>

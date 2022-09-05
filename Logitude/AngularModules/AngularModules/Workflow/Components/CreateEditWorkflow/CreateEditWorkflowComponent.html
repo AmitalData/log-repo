@@ -59,7 +59,7 @@
             </div>
             <div class="name-input-container">
                 <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    [DataContext]="DataContext" [HideColumns]="true" [DataCy]="'Workflow_Name'"></LogTextBox>
             </div>
         </td>
     </tr>
@@ -78,7 +78,7 @@
             </div>
             <div class="description-input-container">
                 <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    [DataContext]="DataContext" [HideColumns]="true" [DataCy]="'Workflow_Description'"></LogTextBox>
             </div>
         </td>
     </tr>
@@ -97,7 +97,8 @@
             </div>
             <div class="owner-input-container">
                 <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [SelectedValue]="OwnerId"
-                    [DataContext]="DataContext" [LookUpTableName]="'User'" [HideColumns]="true"></LogLov>
+                    [DataContext]="DataContext" [LookUpTableName]="'User'" [HideColumns]="true"
+                    [DataCy]="'Workflow_Owner'"></LogLov>
             </div>
         </td>
     </tr>

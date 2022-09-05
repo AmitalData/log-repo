@@ -23,6 +23,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     @Input() IsValidConditions: boolean = true;
 
+    @Input() ConditionsCounter: number = 1;
+
     @Output() ConditionsChangedEvent = new EventEmitter();
 
     public ObjectFields: any = {};
@@ -98,13 +100,16 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     addCondition(conditionIndex: number, isGroup: boolean) {
         if (this.IsValidConditions) {
+            let condition = new Condition(isGroup);
+            condition.id = this.ConditionsCounter;
+
             if (conditionIndex === null) {
-                this.Conditions.push(new Condition(isGroup));
+                this.Conditions.push(condition);
             } else {
-                this.Conditions[conditionIndex].conditions.push(new Condition(isGroup));
+                this.Conditions[conditionIndex].conditions.push(condition);
             }
 
-            this.emitConditionsChanged();
+            this.emitConditionsChanged("add");
         }
     }
 
@@ -133,7 +138,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
     }
 
-    emitConditionsChanged() {
-        this.ConditionsChangedEvent.emit();
+    emitConditionsChanged(event: any = null) {
+        this.ConditionsChangedEvent.emit(event);
     }
 }
