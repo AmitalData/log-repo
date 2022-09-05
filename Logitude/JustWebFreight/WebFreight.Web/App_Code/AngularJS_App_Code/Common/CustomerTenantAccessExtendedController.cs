@@ -73,15 +73,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     TableLastUpdateClass.UpdateTableHistory(customerTenantAccessUpdaterAM.Tenant, "CustomerTenantAccess", webfreightcontext);
                     return Request.CreateResponse(HttpStatusCode.OK, "OK");
                 }
-                catch (Exception exc)
+                catch (Exception exception)
                 {
-                    string errorMessage = exc.Message + Environment.NewLine;
-                    errorMessage = exc.InnerException != null ? errorMessage + " (" + (exc.InnerException.InnerException != null ? exc.InnerException.InnerException.Message : exc.InnerException.Message) + ")" + Environment.NewLine : errorMessage;
-                    errorMessage = errorMessage + exc.StackTrace + Environment.NewLine;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, exc.Message, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
-                    APIException Responce = new APIException();
-                    Responce.ErrorType = exc.GetType().Name;
-                    Responce.ErrorMessage = errorMessage;
+                    APIException Responce = HandleException(LogPM, exception);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, Responce);
                 }
             }
@@ -89,6 +83,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private static APIException HandleException(APILogsPM LogPM, Exception exception)
+        {
+            string errorMessage = exception.Message + Environment.NewLine;
+            errorMessage = exception.InnerException != null ? errorMessage + " (" + (exception.InnerException.InnerException != null ? exception.InnerException.InnerException.Message : exception.InnerException.Message) + ")" + Environment.NewLine : errorMessage;
+            errorMessage = errorMessage + exception.StackTrace + Environment.NewLine;
+            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, exception.Message, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
+            APIException Responce = new APIException();
+            Responce.ErrorType = exception.GetType().Name;
+            Responce.ErrorMessage = errorMessage;
+            return Responce;
         }
     }
 }
