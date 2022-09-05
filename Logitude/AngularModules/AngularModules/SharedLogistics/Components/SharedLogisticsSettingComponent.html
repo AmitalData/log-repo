@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td>
-                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : 'Shared Logistics'}}</div>
+                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : (SharedTitleType == 'DigitalPortal' ? 'Digital Portal' : 'Shared Logistics')}}</div>
                     </td>
                 </tr>
 
@@ -62,10 +62,12 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.data-cy]="'Activate Web Access'" *ngIf="SharedTitleType != 'CargoTracking'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                            <label *ngIf="SharedTitleType != 'CargoTracking'" [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                            <input [attr.data-cy]="'Activate Web Access'" *ngIf="SharedTitleType != 'CargoTracking' && SharedTitleType != 'DigitalPortal'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label *ngIf="SharedTitleType != 'CargoTracking' && SharedTitleType != 'DigitalPortal'" [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                             <input *ngIf="SharedTitleType == 'CargoTracking'" [attr.id]="IsCargoTrackWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsCargoTrackWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
                                                             <label *ngIf="SharedTitleType == 'CargoTracking'" [attr.for]="IsCargoTrackWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                            <input *ngIf="SharedTitleType == 'DigitalPortal'" [attr.id]="IsDigitalPortalAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsDigitalPortalAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label *ngIf="SharedTitleType == 'DigitalPortal'" [attr.for]="IsDigitalPortalAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -164,7 +166,7 @@
 
 
                                     <!-- DisplayDocumentsAndEvents -->
-                                    <tr style="height:80px;vertical-align:top" *ngIf="!IsCargoTracking">
+                                    <tr style="height:80px;vertical-align:top" *ngIf="!IsCargoTracking && !IsDigitalPortal">
                                         <td>
                                             <table style="text-align:left">
                                                 <tr style="height:30px;">

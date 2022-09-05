@@ -146,36 +146,19 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     }
 
     public get IsShowActivatedMobileArea(): boolean {
-        if (this.SharedTitleType == "CargoTracking") return false;
-        return true;
+         return false;
     }
 
     public get TitleStatus(): string {
-
-        if (this.SharedTitleType == "CargoTracking") return "Cargo Tracking";
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics & Mobile Status";
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) return "Mobile Status";
-        if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics Status";
-        return "Shared Logistics Status";
+        return "Digital Portal Status";
     }
 
     public get ActivatedLabel(): string {
-        if (this.SharedTitleType == "CargoTracking") return "Activated Cargo Tracking";
-        return "Activated Shared Logistics";
+        return "Activate Digital Portal";
     }
 
     SetTitles() {
-        if (this.SharedTitleType == "CargoTracking") {
-            this.TitleSettings = "Cargo Tracking Settings";
-        }
-        else {
-            if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
-                this.TitleSettings = "Shared Logistics & Mobile Settings";
-            else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
-                this.TitleSettings = "Mobile Settings";
-            else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
-                this.TitleSettings = "Shared Logistics Settings";
-        }
+        this.TitleSettings = "Digital Portal Settings";
     }
 
 
@@ -279,13 +262,8 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
                     else {
                         this.ActivatedCustomersForMobileCountIsEnabled = false;
                     }
-
-
                 }
-
             }
-
-
         });
     }
 
@@ -351,23 +329,15 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsEventPermissiosComponent");
     }
 
-    MilestonesPermissionsLinkClick() {
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 820;
-        logWindow.Height = 520;
-        logWindow.Title = "Milestones Permissions";
-        logWindow.Show("./SharedLogistics/Components/CargoTrackingMilestonesPermissiosComponent");
-    }
-
     DocumentsPermissionsLinkClick() {
         var windowArgs: any = {};
+        windowArgs.IsDigitalPortal = true;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 820;
         logWindow.Height = 520;
         logWindow.Title = "Documents Permissions";
+
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsDocumentPermissiosComponent");
     }
 
@@ -383,7 +353,6 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
 
     PartnersPermissionsLinkClick() {
         var windowArgs: any = {};
-        windowArgs.IsCargoTracking = this.SharedTitleType == "CargoTracking";
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 820;
@@ -412,7 +381,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 900;
         logWindow.Height = 550;
-        logWindow.Title = this.SharedTitleType == "CargoTracking" ? "Cargo Tracking Settings" : "Shared Logistics Settings";
+        logWindow.Title = "Digital Portal Settings";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsSettingComponent");
     }
 

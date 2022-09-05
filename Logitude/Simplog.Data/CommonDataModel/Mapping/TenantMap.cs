@@ -183,7 +183,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SharedLogisticsMessageLink).HasColumnName("SharedLogisticsMessageLink");
             this.Property(t => t.IsWebAccessActivated).HasColumnName("IsWebAccessActivated");
             this.Property(t => t.IsCargoTrackWebAccessActivated).HasColumnName("IsCargoTrackWebAccessActivated");
-
+            this.Property(t => t.IsDigitalPortalAccessActivated).HasColumnName("IsDigitalPortalAccessActivated");
+            
             this.Property(t => t.LocalCustomsCode).HasColumnName("LocalCustomsCode");
             this.Property(t => t.IsHybrid).HasColumnName("IsHybrid");
             this.Property(t => t.VatUniqueTypeCode).HasColumnName("VatUniqueTypeCode");
