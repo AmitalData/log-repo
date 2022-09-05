@@ -273,27 +273,31 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<EntityStatusList> GetDigitalPortalActiveStatuses(int tenant)
         {
-            
-            var result = (from a in repository.context.EntityStatus.Include("ObjectTable")
-                          where a.Tenant == tenant && a.InActive == false && a.IsDigitalPortal == true && a.ObjectTable.Name ==  "Shipment"
-                          select new EntityStatusList()
-                          {
-                              Id = a.Id,
-                              Name = a.Name,
-                              ObjectTableId = a.ObjectTableId,
-                              StatusWeight = a.StatusWeight,
-                              Tenant = a.Tenant,
-                              ObjectTableName = a.ObjectTable.Name,
-                              Code = a.Code,
-                              SearchFields = a.SearchFields,
-                              InActive = a.InActive,
-                              DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
-                              EntityStatusTypeCode = a.EntityStatusTypeCode,
-                              StatusLocalWeight = a.StatusLocalWeight,
-                              AllowPartial = a.AllowPartial,
-                              IsDigitalPortal = a.IsDigitalPortal,
-                          }).ToList();
+            var blockedStatus = new List<string> { "PSDL", "PODR" };
 
+            var result = repository.context
+                                   .EntityStatus
+                                   .Include("ObjectTable")
+                                   .Where(a => a.Tenant == tenant
+                                               && !a.InActive
+                                               && a.IsDigitalPortal
+                                               && a.ObjectTable.Name.Equals("Shipment")
+                                               && !blockedStatus.Contains(a.Code))
+                                   .Select(a =>  new EntityStatusList()
+                                   {
+                                       Id = a.Id,
+                                       Name = a.Name,
+                                       ObjectTableId = a.ObjectTableId,
+                                       StatusWeight = a.StatusWeight,
+                                       Tenant = a.Tenant,
+                                       ObjectTableName = a.ObjectTable.Name,
+                                       Code = a.Code,
+                                       DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                                       EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                       StatusLocalWeight = a.StatusLocalWeight,
+                                       AllowPartial = a.AllowPartial
+                                   })
+                                   .ToList();
             return result;
         }
     }
