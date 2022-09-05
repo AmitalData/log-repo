@@ -1,6 +1,13 @@
-﻿using Logitude.Server.Tools.Helpers;
+﻿using Logitude.BL.CommonDataModel.EntityAMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +54,41 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             }
         }
 
-
-
-
+        public HttpResponseMessage Put(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
+        {
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(customerTenantAccessUpdaterAM.Tenant);
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(customerTenantAccessUpdaterAM.Tenant);
+                APILogsService apiLogsService = new APILogsService(webFreightContext, customerTenantAccessUpdaterAM.Tenant);
+                APILogsPM LogPM  = apiLogsService.GetAPILogsPMByCorrelationId("Update All Forwarder Requests", "CustomerTenantAccess");
+                try
+                {
+                    var msg = "Start Updating All Forwarder CustomerTenantAccess" + DateTime.Now;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, msg, "", null, null, "");
+                    CustomerTenantAccessService.UpdateAllCustomerTenantAccesses(customerTenantAccessUpdaterAM);
+                    var Donemsg = "CustomerTenantAccess Forwarder Requests Updated Successfully " + DateTime.Now;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
+                    IWebFreightContext webfreightcontext = WebFreightContext.GetContext(customerTenantAccessUpdaterAM.Tenant);
+                    TableLastUpdateClass.UpdateTableHistory(customerTenantAccessUpdaterAM.Tenant, "CustomerTenantAccess", webfreightcontext);
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch (Exception exc)
+                {
+                    string errorMessage = exc.Message + Environment.NewLine;
+                    errorMessage = exc.InnerException != null ? errorMessage + " (" + (exc.InnerException.InnerException != null ? exc.InnerException.InnerException.Message : exc.InnerException.Message) + ")" + Environment.NewLine : errorMessage;
+                    errorMessage = errorMessage + exc.StackTrace + Environment.NewLine;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, exc.Message, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
+                    APIException Responce = new APIException();
+                    Responce.ErrorType = exc.GetType().Name;
+                    Responce.ErrorMessage = errorMessage;
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, Responce);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

@@ -400,6 +400,8 @@
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
+    <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
+    <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
     <Compile Include="UpdateContainerStatusWorkerRole.cs" />
     <Compile Include="CreateRequestContainerStatusWorkerRole.cs" />
