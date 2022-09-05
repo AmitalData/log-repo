@@ -132,6 +132,7 @@ export class CustomizationMainComponent {
         if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
         if (this.IsCustomizationToggleActive) return true;
+        return false;
     }
 
     HaveFieldsCustomization(objectTableName: string): boolean {
