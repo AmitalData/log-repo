@@ -254,17 +254,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private AddEmptyRows(screenField: any, row: number, column: ScreenColumn) {
   
         if (screenField.Row == row) return row;
-        var emptyRowCount = screenField.Row - row;
-
         var count = 0;
-        while (count < emptyRowCount) {
+        while (count < (screenField.Row - row)) {
             column.ObjectFields.push(new ObjectFieldPM());
             count += 1;
         }
-
-        row = screenField.Row;
-
-        return row;
+        return screenField.Row;
     }
 
     private SetValidityForCommunicationLog(objectField)

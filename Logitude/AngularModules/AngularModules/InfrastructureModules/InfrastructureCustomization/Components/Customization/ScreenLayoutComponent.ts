@@ -117,7 +117,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         var screenObjectFields = this.GetScreenObjectFields(columnIndex, sectionNumber);
         var row = 0;
         screenObjectFields.forEach(field => {
-            row = this.AddEmptyLines(field, row, screenRowDetails, sectionNumber);
+            row = this.AddSpaceLines({ Field: field, Row: row, ScreenRowDetails: screenRowDetails, SectionNumber: sectionNumber });
             screenRowDetails.ScreenFieldPMs.push(field);
             screenRowDetails.ObjectFieldPMs.push(window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0]);
             row += 1;
@@ -126,29 +126,32 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
 
-    private AddEmptyLines(field: any, row: number, screenRowDetails: ScreenRowDetails, sectionNumber: number) {
-        if (field.Row == row || !this.IsMuiltSectionScreen) return row;
-        this.AddSpaceLine((field.Row - row), screenRowDetails, sectionNumber, row);
-        row = field.Row;
-        return row;
+    private AddSpaceLines(spaceLineArgs) {
+        if (spaceLineArgs.Field.Row == spaceLineArgs.Row || !this.IsMuiltSectionScreen) return spaceLineArgs.Row;
+        this.AddSpaceLine((spaceLineArgs.Field.Row - spaceLineArgs.Row), spaceLineArgs);
+        return spaceLineArgs.Field.Row;
     }
 
 
-    AddSpaceLine(spaceLineCount: number, screenRowDetails: any, sectionNumber, row) {
+
+
+    AddSpaceLine(spaceLineCount: number, spaceLineArgs:any) {
         var count = 0;
         while (count < spaceLineCount) {
-            let spaceLineField = this.GetSpaceLine();
-            let screenField = this.GetScreenFieldPM(screenRowDetails, spaceLineField, row);
-            if (this.IsMuiltSectionScreen) screenField.SectionNumber = sectionNumber
-            screenRowDetails.ObjectFieldPMs.push(spaceLineField);
-            screenRowDetails.ScreenFieldPMs.push(screenField);
+           this.AddSpaceScreenField(spaceLineArgs);
             count += 1;
         }
-
-
-
-
     }
+
+    AddSpaceScreenField(spaceLineArgs: any) {
+
+        let spaceLineField = this.GetSpaceLine();
+        let screenField = this.GetScreenFieldPM(spaceLineArgs.ScreenRowDetails, spaceLineField, spaceLineArgs.Row);
+        if (this.IsMuiltSectionScreen) screenField.SectionNumber = spaceLineArgs.SectionNumber;
+        spaceLineArgs.ScreenRowDetails.ObjectFieldPMs.push(spaceLineField);
+        spaceLineArgs.ScreenRowDetails.ScreenFieldPMs.push(screenField);
+    }
+
 
     private GetScreenFieldPM(screenRowDetails: any, spaceLineField: ObjectFieldPM, row: any) {
         let screenField = new ScreenFieldPM();
