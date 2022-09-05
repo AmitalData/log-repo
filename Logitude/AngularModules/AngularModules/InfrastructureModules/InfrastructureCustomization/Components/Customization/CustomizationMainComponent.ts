@@ -126,8 +126,8 @@ export class CustomizationMainComponent {
     HaveObjectTableAccess(table: ObjectTablePM): boolean {
         if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
-        if (!this.IsCustomizationToggleActive) return false;
-        return this.HaveFieldsCustomization(table.Name) || this.HaveRulesCustomization(table.Name) || this.HaveTabsCustomization(table.Name);
+        if (this.IsCustomizationToggleActive) return true;
+        return FeatureLocator.HasEntityPermessions(table.Name, "READ", false);
     }
 
     HaveFieldsCustomization(objectTableName: string): boolean {

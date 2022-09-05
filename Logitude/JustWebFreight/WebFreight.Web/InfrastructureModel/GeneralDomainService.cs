@@ -3722,14 +3722,14 @@ namespace WebFreight.Web.InfrastructureModel
             fieldsTranslationList = new List<FieldsTranslations>();
             List<TextCode> textCodesList;
             GeneralDomainService defaultDomain = new GeneralDomainService();
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(translationTenant);
+            objectTables = GetObjectTablesByTenant(translationTenant, typeCode, tableId);
             if (!string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
             {
                 textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode && t.ObjectTableId == tableId).ToList<TextCode>();
             }
             else if (string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
             {
-                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode).ToList<TextCode>();
+                textCodesList = GetTextCodesByTenantAndType(translationTenant, typeCode);
             }
             else if (!string.IsNullOrEmpty(tableId) && string.IsNullOrEmpty(typeCode))
             {
@@ -3739,7 +3739,7 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 throw new ApplicationException("Error Loading Translations");
             }
-            objectTables = objectTableRepository.GetObjectsByTenant(translationTenant).ToList();
+
             translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode).ToList();
             defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();
             foreach (TextCode textcode in textCodesList)
@@ -3747,6 +3747,38 @@ namespace WebFreight.Web.InfrastructureModel
                 FillTranslationList(textcode, translationTenant, translationLanguageCode);
             }
             return fieldsTranslationList.OrderBy(f => f.Code).ToList();
+        }
+
+        private List<TextCode> GetTextCodesByTenantAndType(int translationTenant, string typeCode)
+        {
+            List<TextCode> textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode).ToList<TextCode>();
+            return FiltertextCodesLists(textCodesList, objectTables);
+        }
+
+        private List<ObjectTable> GetObjectTablesByTenant(int translationTenant, string typeCode, string tableId)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(translationTenant);
+
+            if (string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                return   objectTableRepository.GetObjectsByTenant(translationTenant).Where(d => d.AvailableInCustomization).ToList();
+            }
+
+            return   objectTableRepository.GetObjectsByTenant(translationTenant).ToList();
+
+        }
+
+        private List<TextCode> FiltertextCodesLists(List<TextCode> textCodesList , List<ObjectTable> objectTables)
+        {
+            List<TextCode> textCodes = new List<TextCode>();
+          
+            foreach (ObjectTable objectTable in objectTables)
+            {
+                TextCode textCode = textCodesList.Where(d => d.ObjectTableId == objectTable.Id && d.Id != objectTable.DescriptionTextCodeId).FirstOrDefault();
+                textCodes.Add(textCode);
+            }
+
+            return textCodes;
         }
 
         private void FillTranslationList(TextCode textcode, int translationTenant, string translationLanguageCode)
