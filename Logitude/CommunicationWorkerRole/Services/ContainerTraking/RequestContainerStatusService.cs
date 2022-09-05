@@ -178,12 +178,12 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             if (ContainerStatusSimulatorArgs.IsSimulator)
             {
                 VisionContainerStatus vizionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(ContainerStatusSimulatorArgs.Data);
-                requestId = vizionContainerStatus.reference_id;
+                requestId = ContainerStatusSimulatorArgs.IsFromContainer ? vizionContainerStatus.reference_id : vizionContainerStatus.parent_reference_id;
             }
             else
             {
                 var result = new VizionService().SendRequest(ContainerStatusSimulatorArgs, Shipment);
-                requestId = result.reference.id;
+                requestId = ContainerStatusSimulatorArgs.IsFromContainer ? result.reference.id : result.reference.parent_reference_id;
             }
             return requestId;
         }

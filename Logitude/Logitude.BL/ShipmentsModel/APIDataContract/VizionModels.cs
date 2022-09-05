@@ -34,7 +34,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string organization_id { get; set; }
         public bool auto_carrier { get; set; }
         public object bill_of_lading { get; set; }
-        public object parent_reference_id { get; set; }
+        public string parent_reference_id { get; set; }
         public object last_update_status { get; set; }
         public object last_update_attempted_at { get; set; }
         public string id { get; set; }
