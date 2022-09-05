@@ -139,14 +139,16 @@
                     <tr>
                         <td class="trigger-radio-cell">
                             <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'create'"
-                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5">
+                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5"
+                                [DataCy]="'CreateTrigger'">
                             </RadioButton>
                         </td>
                     </tr>
                     <tr>
                         <td class="trigger-radio-cell">
                             <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'update'"
-                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5">
+                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5"
+                                [DataCy]="'UpdateTrigger'">
                             </RadioButton>
                         </td>
                     </tr>
@@ -154,7 +156,7 @@
                         <td class="trigger-radio-cell">
                             <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'createOrUpdate'"
                                 (Checked)="updateTrigger('createOrUpdate')" [Text]="'A record is created or updated'"
-                                [Top]="5"></RadioButton>
+                                [Top]="5" [DataCy]="'CreateOrUpdateTrigger'"></RadioButton>
                         </td>
                     </tr>
                 </table>
@@ -187,8 +189,9 @@
                     </span>
                 </div>
 
-                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId" [ShowChangedOperator]="Trigger !== CreateTrigger"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"></Conditions>
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                    [ShowChangedOperator]="Trigger !== CreateTrigger" [(ConditionsOperation)]="ConditionsOperation"
+                    [(Conditions)]="Conditions"></Conditions>
 
             </div>
         </td>

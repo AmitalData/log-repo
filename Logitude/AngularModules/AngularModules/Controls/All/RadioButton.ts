@@ -4,7 +4,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {IdGeneratorPipe} from '../Pipes/IdGeneratorPipe';
 @Component({
     selector: "RadioButton",
-    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'Name', 'IsGreenText','IsComboBoxWithCheck'],
+    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'Name', 'IsGreenText','IsComboBoxWithCheck', 'DataCy'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -19,7 +19,7 @@ import {IdGeneratorPipe} from '../Pipes/IdGeneratorPipe';
         <tr>
             <td style="width: 16px; min-width: 16px;">
                 <div class="LogitudeRadioButton">
-                    <input [attr.id]="ControlId" type="radio" [attr.name]="Name" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" />
+                    <input [attr.data-cy]="DataCy" [attr.id]="ControlId" type="radio" [attr.name]="Name" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" />
                     <label  [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
@@ -118,6 +118,7 @@ export class RadioButton implements OnInit {
     public Top: number = null;
     public TextColor: string = FontTool.Gray;
     public IsComboBoxWithCheck: boolean = false;
+    public DataCy: string;
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {

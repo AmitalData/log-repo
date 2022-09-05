@@ -166,7 +166,7 @@
                 [className]="IsRatioBox == true ? 'InputDivNoBorder' : 'InputDiv'" [id]="InputDivId"
                 (mouseover)="OnMouseOver()"
                 (mouseleave)="OnMouseLeave()">
-                    <input [disabled]="IsDisabled" type="text" autocomplete="off"
+                    <input [attr.data-cy]="DataCy" [disabled]="IsDisabled" type="text" autocomplete="off"
                            style="-moz-box-shadow: inset 0 0 3px #AAAAAA;
                                   -webkit-box-shadow: inset 0 0 3px #AAAAAA;
                                   box-shadow: inset 0 0 3px #AAAAAA;
@@ -210,7 +210,7 @@
                      (mouseover)="OnMouseOver()"
                      (mouseleave)="OnMouseLeave()">
 
-                    <textarea [readonly]="IsDisabled"
+                    <textarea [attr.data-cy]="DataCy" [readonly]="IsDisabled"
                               wrap="hard"
                               [class.ArialFont]="UseArialFont == true"
                               [(ngModel)]="TextValue"
