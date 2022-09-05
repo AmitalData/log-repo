@@ -343,6 +343,7 @@
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\Vizion\VizionAutomaticRequestComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.html" />
     <Content Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
@@ -1963,6 +1964,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\CargoTrackingBrandingComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />

@@ -4,7 +4,7 @@ declare var window: any;
 
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -18,23 +18,17 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { UIProperty, UIProperties } from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { WebFreightDomainService } from '../../../../Infrastructure/Services/WebFreightDomainService'
 
 @Component({
-
-
     selector: 'CargoTrackingBrandingComponent',
     templateUrl: './CargoTrackingBrandingComponent.html',
-
-
 })
 
-export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit {
+export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit, OnDestroy  {
     public EntityPM: TenantManagementPM;
     public myForm: FormGroup;
     public DataContext: any = this;
@@ -49,6 +43,8 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public BrandingTabName = "Cargo Tracking Branding";
     private CurrentSession = SessionLocator.SelectedSession;
     public IsLogitudeEnvironment: boolean = false;
+    isGenerateClicked = false;
+    isGenerateEnabled = true;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -57,6 +53,30 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InitializeImageIds();
         this.SetColorsFromEntity();
         this.SetBrandingTabName();
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                   
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     private SetColorsFromEntity() {
@@ -245,7 +265,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     set CustomerURL(value: string) {
         if (this.EntityPM.CustomerURL != value) {
             this.EntityPM.CustomerURL = value;
-
+            this.SetCustomerURLProperties(this.EntityPM.EnableBranding);
         }
     }
 
@@ -363,10 +383,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     SetCustomerURLProperties(isBranding: boolean) {
         this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", isBranding);
-
+        this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
         if (this.IsLogitudeEnvironment) {
-            this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", !(isBranding && !AppTool.IsNullOrEmpty(this.CustomerURL)));
-            this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
+            this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", false);
+            this.isGenerateEnabled = AppTool.IsNullOrEmpty(this.CustomerURL) ? true : false;
         }
     }
 
@@ -440,11 +460,16 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
 
     onGenerateClicked() {
-        this.CurrentSession.StartBusyIndicator("Generating ..");
-        var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.GetGenerateDigitalPortalDomain(this.CustomerURL).subscribe((myResult: ServiceResponse) => {
-            if (myResult) {
-                this.CurrentSession.StopBusyIndicator();
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Generate Sub domain";
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        var args = this.EntityPM;
+        logitudeWindow.WindowArgs = args;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SubDomainGenerateComponent');
+        logitudeWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
     }

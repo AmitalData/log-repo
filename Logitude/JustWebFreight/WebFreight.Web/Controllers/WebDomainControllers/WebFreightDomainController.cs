@@ -36,6 +36,7 @@ using WebFreight.Web.Helpers.BIReport;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using Microsoft.Azure.Management.ResourceManager;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -444,7 +445,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                await RunAddingDNSRecordAsync();
+                await RunAddingDNSRecordAsync(customerURL);
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
             catch (Exception ex)
@@ -453,21 +454,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private static async Task RunAddingDNSRecordAsync()
+        private static async Task RunAddingDNSRecordAsync(string customerURL)
         {
-            var tenantId = "a46b1446-9af4-4079-87ad-3304ee9ed758";
+            var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
             var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
-            var secret = "~Tc8Q~6IvteQMJKc.-Ya1TvBKNl.f16mAuS7Pc2w";
+            var secret = LogitudeSettings.AzurePrincipalSecretKey;
             var subscriptionId = "faa01774-0b55-482b-a317-742a1f1479f8";
             var resourceGroupName = "globallogitude";
-            var zoneName = "logitudeworld.com";
-            var DNSIPAddress = "13.80.79.173";
-            var recordSetName = "samplesite1";
-
+            var zoneName = LogitudeSettings.DNSZone; 
+            var DNSIPAddress = LogitudeSettings.DNSIPAddress;
+            var recordSetName = customerURL;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12;
             var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
             var dnsClient = new DnsManagementClient(serviceCreds);
             dnsClient.SubscriptionId = subscriptionId;
-
             try
             {
                 // Build the service credentials and DNS management client

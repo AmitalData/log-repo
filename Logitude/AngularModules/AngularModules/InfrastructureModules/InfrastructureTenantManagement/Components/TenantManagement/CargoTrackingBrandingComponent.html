@@ -366,7 +366,7 @@
                                 <tr>
                                     <td style="width:70px">
                                         <div style="padding: 0px 5px;">
-                                            <button class="Button" (click)="onGenerateClicked()">Generate</button>
+                                            <button class="Button" [disabled]="!isGenerateEnabled" (click)="onGenerateClicked()">Generate</button>
                                         </div>
                                     </td>
                                     <td> <div></div> </td>
