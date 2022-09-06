@@ -189,7 +189,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             var decPM = declarationQueryService.GetSingleDeclarationById(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                            decPM.PhysicalCheck = 2;
+                            decPM.PhysicalCheck = "2";
                             decPM.ChangeSetOp = ChangeSetOperation.Update;
                             LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + decPM.CourierCustomStatusCode);
                             LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));

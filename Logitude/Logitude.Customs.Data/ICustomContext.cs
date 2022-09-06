@@ -296,6 +296,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PendingByKeyword> PendingByKeywords { get; }
 		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
+		 IDbSet<PhysicalCheckCode> PhysicalCheckCodes { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
 		 IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }

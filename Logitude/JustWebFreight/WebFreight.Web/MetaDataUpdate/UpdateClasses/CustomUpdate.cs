@@ -18551,6 +18551,23 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             storageStatusTableRepository.SubmitChanges();
 
         }
+
+        public void FillPhysicalCheckCode()
+        {
+
+
+            PhysicalCheckCodeRepository physicalCheckCodeRepository = new PhysicalCheckCodeRepository(0);
+            Dictionary<string, PhysicalCheckCode> TenantPhysicalCheckCode = physicalCheckCodeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "1", Name = "בדיקה פיזית פתוחה", SearchFields = "בדיקה פיזית פתוחה,1" }, physicalCheckCodeRepository);
+            AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "2", Name = "בדיקה פיזית סגורה", SearchFields = "בדיקה פיזית סגורה,2" }, physicalCheckCodeRepository);
+            AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
+
+            physicalCheckCodeRepository.SubmitChanges();
+
+        }
+
+
     }
 
 

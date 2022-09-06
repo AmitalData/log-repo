@@ -195,7 +195,7 @@ export class DeclarationList {
 	TransshipmentApprovalDateTime: Date;
 	FinalLoadingSite: string;
 	ExportDeclarationOfficeCode: string;
-	PhysicalCheck: number;
+	PhysicalCheck: string;
 	CargoTypeName: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
