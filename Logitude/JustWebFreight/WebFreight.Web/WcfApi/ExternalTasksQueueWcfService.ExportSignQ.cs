@@ -9,8 +9,11 @@ using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Text;
 using WebFreight.Web.CustomWebServices.SignChunks.Common;
 using WebFreight.Web.Security;
@@ -174,10 +177,11 @@ namespace WebFreight.Web.WcfApi
             finally
             {
 
-                
 
 
-                Logger.LogMe(stringBuilder.Replace(Environment.NewLine, "|").ToString(), false, "ExportSignTaskFromQueue_" + (exportReqSignData?.Tenant ?? 0).ToString());
+                LogitudeSettings.HandleLogMe
+                /*Logger.LogMe*/(stringBuilder.Replace(Environment.NewLine, "|").ToString(), false, "ExportSignTaskFromQueue_" + (exportReqSignData?.Tenant ?? 0).ToString()
+                , GetStopLogAt());
                 try
                 {
                     SignQueue.Instance.UpsertMySubscribeSignServerList(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
@@ -254,8 +258,10 @@ namespace WebFreight.Web.WcfApi
             }
             finally
             {
+                LogitudeSettings.HandleLogMe
+                /*Logger.LogMe*/(stringBuilder.Replace(Environment.NewLine,"|").ToString(), false, "MarkExportSignTaskAsDone_" + tenant.ToString(), 
+                GetStopLogAt());
                 
-                Logger.LogMe(stringBuilder.Replace(Environment.NewLine,"|").ToString(), false, "MarkExportSignTaskAsDone_" + tenant.ToString());
             }
 
             return response;
@@ -264,6 +270,29 @@ namespace WebFreight.Web.WcfApi
         public Response MarkExportSignTaskAsFail(int tenant, String queueId, String customsRequestsSheetId, string interfaceTypeCode, string ErrorMessage)
         {
             throw new NotImplementedException();
+        }
+
+
+        DateTime GetStopLogAt()
+        {
+            DateTime stopLogAt = new DateTime(2023, 03, 01);
+            try
+            {
+                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["ExportSignQ.LogUntilDateyyyyMMdd"];
+                if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                {
+                    stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        style: DateTimeStyles.None);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return stopLogAt;
+
         }
     }
 }
