@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -760,8 +761,7 @@ namespace RestClientApplication
                                 }
                                 else if (apiName == "APInvoice")
                                 {
-
-                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalId=" + txtParameter3.Text + "&internalNumber=" + null);
+                                    response = await client.GetAsync(EncodeUrl(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalId=" + txtParameter3.Text + "&internalNumber=" + null));
                                 }
                                 else if (apiName == "Journal")
                                 {
@@ -835,6 +835,12 @@ namespace RestClientApplication
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        private string EncodeUrl(string url)
+        {
+            string encodedUrl = url.Replace("+", "%2b");
+            return encodedUrl;
         }
 
         private void rdbJson_CheckedChanged(object sender, EventArgs e)
