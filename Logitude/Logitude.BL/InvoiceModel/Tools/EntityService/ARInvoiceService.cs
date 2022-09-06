@@ -651,6 +651,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdatePaidDate();
                 }
 
+                entityPM.PaidStatus = invoice.PaidStatus = GetPaidStatus();
+
                 this.BuildSearchFields();
                 entityAutomationService.RunAutomation();
             }
@@ -3665,6 +3667,61 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             invoice.PaidDate = entityPM.PaidDate;
+        }
+
+        private string GetPaidStatus()
+        {
+            if (entityPM.StatusCode.Equals("PP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Partially Paid";
+            }
+
+            if (entityPM.StatusCode.Equals("PD", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Paid";
+            }
+
+            if (entityPM.StatusCode.Equals("AD", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Unpaid";
+            }
+
+            if (entityPM.StatusCode.Equals("AC", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return CalculateStatusByAmountue();
+            }
+
+            if (entityPM.StatusCode.Equals("CN", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return CalculateStatusByAmountue();
+            }
+
+            if (entityPM.StatusCode.Equals("NT", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return CalculateStatusByAmountue();
+            }
+
+            return null;
+        }
+
+        private string CalculateStatusByAmountue()
+        {
+            var payments = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete);
+            if (payments == null || payments?.Count() == 0)
+            {
+                return "Unpaid";
+            }
+
+            if (entityPM.AmountDue == null || entityPM.AmountDue == 0)
+            {
+                return "Paid";
+            }
+
+            if (entityPM.AmountDue > 0)
+            {
+                return "Partially Paid";
+            }
+            return null;
         }
 
         private void ValidateIfSameRecordAdded(ARInvoicePaymentPM item)
