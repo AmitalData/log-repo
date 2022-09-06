@@ -5,6 +5,7 @@ import { WebFreightDomainService } from '../../../../Infrastructure/Services/Web
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'SubDomainGenerateComponent',
@@ -25,6 +26,7 @@ export class SubDomainGenerateComponent extends BaseComponent  {
 
     SetWindowArgs(args) {
         this.EntityPM = args;
+        this.Clone();
     }
 
     get CustomerURL() {
@@ -37,6 +39,7 @@ export class SubDomainGenerateComponent extends BaseComponent  {
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -49,5 +52,16 @@ export class SubDomainGenerateComponent extends BaseComponent  {
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
         });
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('CustomerURL');
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 }
