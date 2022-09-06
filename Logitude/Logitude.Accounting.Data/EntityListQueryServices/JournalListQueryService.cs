@@ -213,7 +213,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (!String.IsNullOrEmpty(specificJournalId))
                 group_query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
-                      && String.Compare(rec.JournalId, args.OldJournalId) == 0).
+                      && String.Compare(rec.JournalId, specificJournalId) == 0).
                       GroupBy(item => item.JournalId).OrderBy(gr => gr.Key).Take(myMAX);
 
             else if (getNextGroupArgs.MoveOn)
