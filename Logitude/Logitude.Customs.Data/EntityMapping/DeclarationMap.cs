@@ -313,7 +313,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExportDeclarationOfficeCode).HasColumnName("ExportDeclarationOfficeCode").HasMaxLength(17).IsUnicode(false);
 
-            this.Property(t => t.PhysicalCheck).HasColumnName("PhysicalCheck").HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PhysicalCheck).HasColumnName("PhysicalCheck").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.ExportContainerizationID).HasColumnName("ExportContainerizationID").HasMaxLength(15).IsUnicode(false);
 
