@@ -96,6 +96,10 @@
         display: block;
         height: 10px;
     }
+    .disabled {
+      pointer-events:none; 
+      opacity:0.6;         
+   }
 </style>
 
 <div>
@@ -228,8 +232,8 @@
 
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
 
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
-                            <span>הפקת תעודת עיכוב</span>
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" [ngClass]="{disabled : Isdisabled}"  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
+                            <span>{{CertificateDelay}}</span>
                         </li>
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
                             <span>ביטול תעודת עיכוב</span>
