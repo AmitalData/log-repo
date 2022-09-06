@@ -131,6 +131,7 @@
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
+    <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
@@ -232,7 +233,6 @@
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
     <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
-
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
@@ -276,6 +276,7 @@
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
@@ -365,6 +366,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
@@ -465,7 +467,6 @@
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StorageStatusTableListQueryService.Generated.cs" />
-
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
@@ -521,7 +522,6 @@
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StorageStatusTableListQueryService.cs" />
-
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
@@ -566,6 +566,7 @@
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClientsTapagList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationHataraStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
@@ -668,7 +669,6 @@
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StatusFieldTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StorageStatusTableList.Generated.cs" />
-
     <Compile Include="EntityLists\Generated\StuffingSiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SuppInvoiceItemsAbachStatementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoiceItemsPriceList.Generated.cs" />
@@ -712,6 +712,7 @@
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
+    <Compile Include="EntityMapping\ClientsTapagMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
     <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
@@ -813,7 +814,6 @@
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
     <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
-
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
@@ -857,6 +857,7 @@
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
+    <Compile Include="EntityPOCOs\ClientsTapag.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
     <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
@@ -1002,6 +1003,7 @@
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
+    <Compile Include="Repsitories\ClientsTapagRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
     <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
@@ -1091,6 +1093,7 @@
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
@@ -1245,7 +1248,6 @@
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
     <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
-
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
