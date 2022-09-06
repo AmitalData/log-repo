@@ -10,6 +10,7 @@
 import {ClientAddressPM} from './ClientAddressPM';
 import {ClientDrivingLicensePM} from './ClientDrivingLicensePM';
 import {ClientsPoaPM} from './ClientsPoaPM';
+import {ClientsTapagPM} from './ClientsTapagPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -309,7 +310,41 @@ export class ClientPM {
     public set IsExportPoaActive(newValue: boolean) { if (this.isExportPoaActive != newValue) { this.isExportPoaActive = newValue; this.MarkAsDirty("IsExportPoaActive"); } }
        
 	 
+     
+	private clientsTapags: ClientsTapagPM[];
+    get  ClientsTapags() {
+        if (this.clientsTapags == null) {
+            this.clientsTapags = [];
+        }
 
+        return this.clientsTapags;
+    }
+    set  ClientsTapags(newValue: ClientsTapagPM[]) {
+        if (this.clientsTapags != newValue) {
+            this.clientsTapags = newValue;
+        }
+    }
+    public AddClientsTapag(item: ClientsTapagPM) {
+        if (item != null) {
+            var index = this. ClientsTapags.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClientsTapags.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClientsTapag(item: ClientsTapagPM) {
+        if (item != null) {
+            var index = this. ClientsTapags.indexOf(item);
+            if (index > -1) {
+                this. ClientsTapags.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClientsTapags: Array<ClientsTapagPM>= [];
+ 
     public OldEntityPM: ClientPM;
 		
     public IsDirty: boolean;

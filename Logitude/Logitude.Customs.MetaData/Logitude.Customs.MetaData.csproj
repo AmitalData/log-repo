@@ -200,6 +200,7 @@
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
     <None Include="DBTables\CargoStatus.dxml" />
+    <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
@@ -230,6 +231,7 @@
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
+    <None Include="DBTables\ClientsTapag.dxml" />
     <None Include="DBTables\ClosedTableStatus.dxml" />
     <None Include="DBTables\CollateralAnswerStatus.dxml" />
     <None Include="DBTables\CollateralAnswerType.dxml" />
@@ -542,6 +544,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />
