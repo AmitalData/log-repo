@@ -1,0 +1,75 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
+	<Sql Version="1">
+    <![CDATA[
+	declare @Tenant as int
+	declare @Id as varchar(15)
+	declare @ARInvoicePaymentId as varchar(15)
+	declare @Count as int
+	declare @PaidStatus as nvarchar(40)
+	declare @StatusCode as nvarchar(2)
+	declare @AmountDue as float
+	set @Count = 0;
+
+	BEGIN
+    DECLARE InvoicesCursor CURSOR READ_ONLY
+    FOR
+    SELECT Id,Tenant, StatusCode, AmountDue
+    FROM ARInvoices where $LastCounterWhere$
+    OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor INTO @Id, @Tenant, @StatusCode, @AmountDue      
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+	    set @PaidStatus = null;
+		if(@StatusCode = 'PP')
+		begin
+		   set @PaidStatus = 'Partially Paid';
+		end
+
+		if(@StatusCode = 'PD')
+		begin
+		   set @PaidStatus = 'Paid';
+		end
+
+		if(@StatusCode = 'AD')
+		begin
+		   set @PaidStatus = 'Unpaid';
+		end
+	    
+		if(@StatusCode = 'AC' Or @StatusCode = 'CN' or @StatusCode = 'NT')
+		begin
+			set @ARInvoicePaymentId = (select top 1 Id from ARInvoicePayments where Tenant = @Tenant AND ARInvoiceId = @Id)
+			if (@ARInvoicePaymentId is null)
+			begin
+				set @PaidStatus = 'Unpaid';
+			end
+			else 
+			begin 
+				if (@AmountDue = 0)
+				begin
+					 set @PaidStatus = 'Paid';
+				end
+
+				else if (@AmountDue > 0)
+				begin
+					set @PaidStatus = 'Partially Paid'
+				end
+			end
+		end
+
+		update ARInvoices  set PaidStatus =  @PaidStatus where  Id = @Id and Tenant = @Tenant
+
+		set @Count = @Count + 1;
+		if(@Count = 1000)
+		begin
+			WAITFOR DELAY '00:00:01'
+		    set @Count = 0;
+		end
+
+    FETCH NEXT FROM InvoicesCursor INTO @Id, @Tenant, @StatusCode, @AmountDue              
+    END
+    CLOSE InvoicesCursor
+    DEALLOCATE InvoicesCursor
+	END
+		
+    ]]>
+  </Sql>
+</Script>

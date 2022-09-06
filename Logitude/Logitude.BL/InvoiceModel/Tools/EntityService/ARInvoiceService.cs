@@ -318,6 +318,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetPrintNotesForInterestInvoice(entityPM);
             entityAutomationService.RunAutomation();
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
+
+            entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
+
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -651,7 +654,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdatePaidDate();
                 }
 
-                entityPM.PaidStatus = invoice.PaidStatus = GetPaidStatus();
+                entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
 
                 this.BuildSearchFields();
                 entityAutomationService.RunAutomation();
@@ -3669,7 +3672,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoice.PaidDate = entityPM.PaidDate;
         }
 
-        private string GetPaidStatus()
+        private string SetPaidStatus()
         {
             if (entityPM.StatusCode.Equals("PP", StringComparison.InvariantCultureIgnoreCase))
             {
