@@ -166,7 +166,21 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 importerVat = myDeclarationPM.ImporterCode;
             }
-
+            string SwissportSuspendedCode = "";
+            var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
+            var courierPendingListWithSwissportSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithSwissportSuspendedCode(myDeclarationPM.Tenant);
+            if (!string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonList))
+            {
+                var pendingCounted = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).Count();  
+                if (pendingCounted == 1)
+                {
+                    SwissportSuspendedCode = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().SwissportSuspendedCode;
+                }
+                if (pendingCounted > 1)
+                {
+                    SwissportSuspendedCode = "";
+                }
+            }
             string Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "";
             Description= Description.Substring(0, Math.Min(Description.Length, 60));
             var courierHawbMamanModel = new CourierSWSHAWBRequest()
@@ -200,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
                 DeclarationNumber = myDeclarationPM.DeclarationNumber??"",
-                CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
+                CustomsSuspention = myDeclarationPM.CourierSuspentionCode != null ?myDeclarationPM.CourierSuspentionCode : SwissportSuspendedCode,
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
                 ImporterVat = importerVat,

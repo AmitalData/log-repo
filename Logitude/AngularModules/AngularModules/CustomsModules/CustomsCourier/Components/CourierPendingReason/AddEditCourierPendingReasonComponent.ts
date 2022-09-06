@@ -181,6 +181,11 @@ export class AddEditCourierPendingReasonComponent
         this.EntityPM.MamanSuspendedCode = newValue;
     }
 
+    public get SwissportSuspendedCode() { return this.EntityPM.SwissportSuspendedCode; }
+    public set SwissportSuspendedCode(newValue: string) {
+        this.EntityPM.SwissportSuspendedCode = newValue;
+    }
+
     public get ErrorPlace() { return this.EntityPM.ErrorPlace; }
     public set ErrorPlace(newValue: string) {
         this.EntityPM.ErrorPlace = newValue;
