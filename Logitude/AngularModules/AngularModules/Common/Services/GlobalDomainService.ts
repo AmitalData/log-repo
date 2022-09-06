@@ -483,6 +483,7 @@ export class GlobalDomainService {
         myResult.PackagesCodes_PK = entityPM.PackagesCodes_PK;
         myResult.PackagesCodes_BS = entityPM.PackagesCodes_BS;
         myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
+        myResult.CustomerURL = entityPM.CustomerURL;
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 
