@@ -79,10 +79,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidatePartnerTypes(entityPM);
                 ValidateShipmentSubType(entityPM);
 
-                if (FeatureToggleHelper.HasFeatureToggle("TSV", entityPM.Tenant) || entityPM.IsMultiUpdate)
+                if (entityPM.IsMultiUpdate)
                 {
                     ValidateShipmentOperationalClose(entityPM, entityPoco);
                     ValidateShipmentAccountingClose(entityPM, entityPoco);
+
+                    ValidateShipmentOperationalReOpen(entityPM, entityPoco);
+                    ValidateShipmentAccountingReOpen(entityPM, entityPoco);
                 }
             }
         }
@@ -1493,44 +1496,56 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentOperationalClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.IsOperationalClosed || entityPoco.IsOperationalClosed) return;
-            if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
+            if (entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
             {
-                var errorMsg = "House shipments cannot be operational closed. They can only be closed by closing the connected Master shipment";
-                throw new ApplicationException(errorMsg);
+                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)            
+                throw new ApplicationException("House shipments cannot be operational closed. They can only be closed by closing the connected Master shipment");
+                
+                OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM, entityPoco);
+                string errorMessage = operationalCloseValidator.StartValidating();
+                if (!string.IsNullOrEmpty(errorMessage))
+                    throw new ApplicationException(errorMessage.TrimStart(','));                
             }
-
-            OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM, entityPoco);
-            string errorMessage = operationalCloseValidator.StartValidating();
-            if (!string.IsNullOrEmpty(errorMessage))
+        }
+        private static void ValidateShipmentOperationalReOpen(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            if (!entityPM.IsOperationalClosed && entityPoco.IsOperationalClosed)
             {
-                throw new ApplicationException(errorMessage.TrimStart(','));
+                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
+                    throw new ApplicationException("House shipments cannot be operational reopened. They can only be opened by opening the connected Master shipment");
+
+                if (entityPM.IsAccountingClosed)
+                    throw new ApplicationException("Can't operational reopen shipment, beacause it not accounting closed");
+            }
+        }
+        private static void ValidateShipmentAccountingReOpen(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            if (!entityPM.IsAccountingClosed && entityPoco.IsAccountingClosed)
+            {
+                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
+                    throw new ApplicationException("House shipments cannot be accounting reopened. They can only be opened by opening the connected Master shipment");
             }
         }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.IsAccountingClosed || entityPoco.IsAccountingClosed) return;
-            if (!entityPM.IsOperationalClosed)
+            if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
             {
-                var errorMsg = "Can't accouting close shipment, beacause it's not operationaly closed";
-                throw new ApplicationException(errorMsg);
-            }
+                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
+                    throw new ApplicationException("House shipments cannot be accounting closed. They can only be closed by closing the connected Master shipment");
 
-            if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
-            {
-                var errorMsg = "House shipments cannot be accounting closed. They can only be closed by closing the connected Master shipment";
-                throw new ApplicationException(errorMsg);
-            }
+                if (!entityPM.IsOperationalClosed)
+                    throw new ApplicationException("Can't accouting close shipment, beacause it's not operationaly closed");
 
-            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
-            AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
+                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
+                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
 
-            bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
-            bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
+                bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
+                bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
 
-            if (hasOpenPayables || hasOpenReceivables)
-            {
-                ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
+                if (hasOpenPayables || hasOpenReceivables)
+                {
+                    ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
+                }
             }
         }
         private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
