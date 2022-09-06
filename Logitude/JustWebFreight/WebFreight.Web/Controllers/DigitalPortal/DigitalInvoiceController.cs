@@ -80,7 +80,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         IsAutoCredit = item.IsAutoCredit,
                         IsCancelled = item.IsCancelled,
                         InvoiceDate = item.InvoiceDate,
-                        StatusName = item.Status?.Name,
+                        StatusName = item.PaidStatus,
                     };
 
                     entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
