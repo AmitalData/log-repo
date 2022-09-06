@@ -74,15 +74,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="RequiresApproval"
-    Type="bit">
+    Name="SwissportSuspendedCode"
+    Type="varchar"
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="SwissportSuspendedCode"
-    Type="varchar"
-    Size="4">
+    Name="RequiresApproval"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

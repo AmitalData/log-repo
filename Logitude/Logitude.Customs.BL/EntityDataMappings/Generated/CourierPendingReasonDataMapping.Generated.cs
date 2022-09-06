@@ -32,6 +32,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         UnifreightStatusCode, 
 	         MamanSuspendedCode, 
+	         SwissportSuspendedCode, 
 	         RequiresApproval,
 	      }
 
@@ -50,6 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightStatusCode, 
 	         ErrorPlaceName, 
 	         MamanSuspendedCode, 
+	         SwissportSuspendedCode, 
 	         RequiresApproval,
 	      }
 
@@ -102,6 +104,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
             {
 				entityPOCO.MamanSuspendedCode = entityPM.MamanSuspendedCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
+            {
+				entityPOCO.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
@@ -165,6 +172,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MamanSuspendedCode = entityPOCO.MamanSuspendedCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SwissportSuspendedCode))
+            {
+					entityPM.SwissportSuspendedCode = entityPOCO.SwissportSuspendedCode;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequiresApproval))
             {
 					entityPM.RequiresApproval = entityPOCO.RequiresApproval;
@@ -219,6 +231,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
             {
                 oldEntityPM.MamanSuspendedCode = entityPM.MamanSuspendedCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
+            {
+                oldEntityPM.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
