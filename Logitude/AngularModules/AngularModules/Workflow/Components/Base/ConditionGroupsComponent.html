@@ -28,7 +28,7 @@
         display: table-cell;
         vertical-align: middle;
         width: 70px;
-        padding-right: 10px;
+        padding-right: 5px;
         border-right: 1px solid #808080;
     }
 
@@ -46,20 +46,31 @@
         display: table-cell;
         vertical-align: middle;
         width: 180px;
-        padding-right: 10px;
+        padding-right: 5px;
     }
 
     .condition-operator-container {
         display: table-cell;
         vertical-align: middle;
-        width: 100px;
-        padding-right: 10px;
+        width: 150px;
+        padding-right: 5px;
     }
 
     .condition-value-container {
         display: table-cell;
         vertical-align: middle;
-        width: 180px;
+        width: 220px;
+    }
+
+    .condition-date-value-container {
+        width: 130px !important;
+    }
+
+    .condition-value-expression-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 90px;
+        padding-right: 5px;
     }
 
     .condition-container {
@@ -107,9 +118,9 @@
 
             <div *ngIf="Condition.isGroup" class="group-operation-container">
 
-                <ComboBox [ItemsSource]="ConditionOperations" [Binding]="'Name'"
+                <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
                     [SelectedItem]="ListItem(Condition.groupOperation)"
-                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)"
+                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)" [ListType]="''"
                     [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
@@ -141,24 +152,41 @@
 
                     <div class="condition-operator-container">
 
-                        <ComboBox [ItemsSource]="ConditionOperators[Condition.type] || ConditionOperators['default']"
+                        <ComboBox
+                            [ItemsSource]="ConditionOperatorsItems[Condition.type] || ConditionOperatorsItems['default']"
                             [Binding]="'Name'" [SelectedItem]="ListItem(Condition.operator)"
-                            (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)"
+                            (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
                             [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
 
-                    <div *ngIf="!isNoValueOperator(Condition.operator)" class="condition-value-container">
+
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && isDateTimeField(Condition.fieldCode)"
+                        class="condition-value-expression-container">
+
+                        <ComboBox [ItemsSource]="DateTimeValueExpressionsItems" [Binding]="'Name'"
+                            [SelectedItem]="ListItem(Condition.valueExpression)"
+                            (SelectedItemChanged)="updateConditionValueExpression($event.Code, conditionIndex)"
+                            [ListType]="''" [CyData]="'ConditionValueExpression_' + Condition.id">
+                        </ComboBox>
+
+                    </div>
+
+
+                    <div *ngIf="!isNoValueOperator(Condition.operator)" class="condition-value-container"
+                        [ngClass]="{'condition-date-value-container': isDateTimeField(Condition.fieldCode)}">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
                             [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'ConditionValue_' + Condition.id"
+                            [ShowIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
                         <FieldValue *ngIf="!Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
                             [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'ConditionValue_' + Condition.id"
+                            [ShowIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
@@ -170,7 +198,7 @@
 
                         <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'"
                             [SelectedItem]="ListItem(Condition.value)"
-                            (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)"
+                            (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
                             [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
 

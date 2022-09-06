@@ -3,10 +3,13 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { BooleanItems } from "Workflow/Constants/BooleanItems";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { BooleanItemsList } from "Workflow/Models/BooleanItemsList";
 import { Condition } from "Workflow/Models/Condition";
 import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
 import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
+import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
 import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
@@ -29,13 +32,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     public ObjectFields: any = {};
 
-    public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
+    public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().ConditionOperations;
 
     public BooleanItems: ListItem[] = new BooleanItemsList().BooleanItems;
 
-    public ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
+    public DateTimeValueExpressionsItems: ListItem[] = new DateTimeValueExpressionsList().DateTimeValueExpressions;
+
+    public ConditionOperatorsItems = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
 
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
+
+    public DateTimeValueExpressions = DateTimeValueExpressions;
 
     DataContext: any = this;
 
@@ -48,7 +55,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     ngOnChanges() {
-        this.ConditionOperators = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
+        this.ConditionOperatorsItems = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ConditionOperatorsLists;
     }
 
     updateConditionGroupOperation(operationCode: string, conditionIndex: number) {
@@ -70,6 +77,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.Conditions[conditionIndex].type = field ? field.DataTypeCode : null;
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
+            this.Conditions[conditionIndex].valueExpression = this.isDateTimeType(field?.DataTypeCode) ? DateTimeValueExpressions.Date : null;
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
 
             this.emitConditionsChanged();
@@ -82,6 +90,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             if (this.isNoValueOperator(operatorCode) || this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)) {
                 let value = this.isNoValueOperator(operatorCode) ? BooleanItems.True : null;
                 this.updateConditionValue(value, conditionIndex);
+
+                let valueExpression = this.isNoValueOperator(operatorCode) ? null : (this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null);
+                this.updateConditionValueExpression(valueExpression, conditionIndex, false);
             }
 
             this.Conditions[conditionIndex].operator = operatorCode;
@@ -93,6 +104,21 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     updateConditionValue(value: string, conditionIndex: number) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+
+            this.emitConditionsChanged();
+        }
+    }
+
+    updateConditionValueExpression(valueExpressionCode: string, conditionIndex: number, resetValue: boolean = true) {
+        if (valueExpressionCode !== this.Conditions[conditionIndex]?.valueExpression) {
+
+            if (resetValue) {
+                this.updateConditionValue(null, conditionIndex);
+            }
+
+            this.Conditions[conditionIndex].valueExpression = valueExpressionCode;
+
+            this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
 
             this.emitConditionsChanged();
         }
@@ -136,6 +162,15 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     isNoValueOperator(operatorCode: string) {
         return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
+    }
+
+    isDateTimeField(fieldCode: string) {
+        let objectField = this.ObjectFields[fieldCode];
+        return objectField && (objectField.DataTypeCode === FieldTypes.DateTime || objectField.DataTypeCode === FieldTypes.Date);
+    }
+
+    isDateTimeType(fieldType: string) {
+        return fieldType && (fieldType === FieldTypes.DateTime || fieldType === FieldTypes.Date);
     }
 
     emitConditionsChanged(event: any = null) {

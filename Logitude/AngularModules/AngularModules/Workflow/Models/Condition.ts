@@ -9,6 +9,7 @@ export class Condition {
     public fieldCode: string;
     public type: string;
     public value: string;
+    public valueExpression: string;
     public operator: string;
     public conditions: Condition[];
     public fieldChangedToggle: boolean;
@@ -21,6 +22,7 @@ export class Condition {
         this.fieldCode = null;
         this.type = null;
         this.value = null;
+        this.valueExpression = null;
         this.operator = ConditionOperators.Equals;
         this.conditions = isGroup ? [] : null;
         this.fieldChangedToggle = false;

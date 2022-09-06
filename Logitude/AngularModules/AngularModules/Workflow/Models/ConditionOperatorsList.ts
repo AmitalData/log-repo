@@ -47,6 +47,27 @@ export class ConditionOperatorsList {
                 ];
                 break;
 
+            case FieldTypes.DateTime:
+            case FieldTypes.Date:
+            case FieldTypes.BigInteger:
+            case FieldTypes.Decimal:
+            case FieldTypes.Double:
+            case FieldTypes.Integer:
+            case FieldTypes.SigDouble:
+            case FieldTypes.UnsDecimal:
+            case FieldTypes.UnsInteger:
+                this.ConditionOperators = [
+                    new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.GreaterThan),
+                    new ListItem(ConditionOperators.LessThan),
+                    new ListItem(ConditionOperators.GreaterThanOrEquals),
+                    new ListItem(ConditionOperators.LessThanOrEquals),
+                    new ListItem(ConditionOperators.IsEmpty),
+                    new ListItem(ConditionOperators.Changed)
+                ];
+                break;
+
             default:
                 this.ConditionOperators = [
                     new ListItem(ConditionOperators.Equals)
