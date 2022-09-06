@@ -168,9 +168,26 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
         {
-            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
-                    where a.Id == id && a.Tenant == tenant
-                    select a).FirstOrDefault();
+            return context.ARInvoices
+                          .Include("BillTo")
+                          .Include("BillTo.PartnerType")
+                          .Include("CreatedByUser.Contact")
+                          .Include("InvoiceCurrency")
+                          .Include("Status")
+                          .Include("ARInvoiceType")
+                          .Include("IssuedByUser.Contact")
+                          .Include("PrintByUser.Contact")
+                          .Include("PaymentTerm")
+                          .Include("ProfitCurrency")
+                          .Include("LocalCurrency")
+                          .Include("TransferStatus")
+                          .Include("ApprovedByUser.Contact")
+                          .Include("SalesmanUser.Contact")
+                          .Include("SATInvoiceStatus")
+                          .Include("SATTransferStatus")
+                          .Include("Branch")
+                          .FirstOrDefault(a => a.Id == id 
+                                               && a.Tenant == tenant);
         }
 
         public IQueryable<ARInvoice> GetARInvoices(int tenant)
@@ -562,14 +579,17 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARInvoice> FilterInvoicesStatuses(IQueryable<ARInvoice> invoices)
         {
-            var newInvoices = invoices.Where(d =>
-              !d.StatusCode.Equals("VD", StringComparison.InvariantCultureIgnoreCase) &&
-              !d.StatusCode.Equals("DR", StringComparison.InvariantCultureIgnoreCase) &&
-              !d.StatusCode.Equals("LL", StringComparison.InvariantCultureIgnoreCase) &&
-              !d.StatusCode.Equals("AC", StringComparison.InvariantCultureIgnoreCase)
-           );
+            var blockedStatusCode = new List<string> 
+            {
+                "VD",
+                "DR",
+                "LL",
+                "AR"
+            };
 
-            return newInvoices;
+            var filteredInvoices = invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
+
+            return filteredInvoices;
         }
 
     }

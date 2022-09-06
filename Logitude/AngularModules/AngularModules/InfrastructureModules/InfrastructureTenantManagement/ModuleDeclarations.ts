@@ -9,6 +9,7 @@ import {AddEditPrivateLabelsComponent} from './Components/TenantManagement/AddEd
 import {PrivateLabelLoadComponent} from './Components/TenantManagement/PrivateLabelLoadComponent';
 import { CargoTrackingBrandingComponent } from './Components/TenantManagement/CargoTrackingBrandingComponent'; 
 import { CargoLoginPolicyComponent } from './Components/TenantManagement/CargoLoginPolicy/CargoLoginPolicy.component';
+import { SubDomainGenerateComponent } from './Components/TenantManagement/SubDomainGenerateComponent';
 
 export const Components =
     [
@@ -23,6 +24,7 @@ export const Components =
         PrivateLabelLoadComponent,
         CargoTrackingBrandingComponent,
         CargoLoginPolicyComponent,
+        SubDomainGenerateComponent,
  
     ];
 
@@ -43,7 +45,7 @@ export class ModuleDeclarations {
             case "PrivateLabelLoadComponent": { myResult = PrivateLabelLoadComponent; break; }
             case "CargoTrackingBrandingComponent": { myResult = CargoTrackingBrandingComponent; break; }
             case "CargoLoginPolicyComponent": { myResult = CargoLoginPolicyComponent; break; }
-             
+            case "SubDomainGenerateComponent": { myResult = SubDomainGenerateComponent; break; }
 
         }
 

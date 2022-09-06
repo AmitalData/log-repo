@@ -135,7 +135,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatSize = a.VatSize,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
                                                 IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
-
+                                                IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -318,6 +318,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        
                         IsWebAccessActivated = tt.IsWebAccessActivated,
                         IsCargoTrackWebAccessActivated = tt.IsCargoTrackWebAccessActivated,
+                        IsDigitalPortalAccessActivated = tt.IsDigitalPortalAccessActivated,
                         IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                         IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
                         AccountingActivationDate = tt.AccountingActivationDate,
@@ -487,6 +488,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     
                     IsWebAccessActivated = tt.IsWebAccessActivated,
                     IsCargoTrackWebAccessActivated = tt.IsCargoTrackWebAccessActivated,
+                    IsDigitalPortalAccessActivated = tt.IsDigitalPortalAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
                     AccountingActivationDate = tt.AccountingActivationDate,
@@ -651,6 +653,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            IsWebAccessActivated = a.IsWebAccessActivated,
                                            IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                           IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                            IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -803,6 +806,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               
                                        IsWebAccessActivated = a.IsWebAccessActivated,
                                        IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                       IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                        IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -959,6 +963,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              
                                                IsWebAccessActivated = a.IsWebAccessActivated,
                                                IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                               IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                AccountingActivated = a.AccountingActivated,
@@ -1124,6 +1129,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            IsWebAccessActivated = a.IsWebAccessActivated,
                                            IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                           IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                            AccountingActivated = a.AccountingActivated,
@@ -1279,6 +1285,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      
                                        IsWebAccessActivated = a.IsWebAccessActivated,
                                        IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                       IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                        AccountingActivated = a.AccountingActivated,
@@ -1452,6 +1459,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     IsWebAccessActivated = myPOCO.IsWebAccessActivated,
                     IsCargoTrackWebAccessActivated = myPOCO.IsCargoTrackWebAccessActivated,
+                    IsDigitalPortalAccessActivated = myPOCO.IsDigitalPortalAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = myPOCO.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = myPOCO.IsNotesRightToLeftEnabled,
                     AccountingActivationDate = myPOCO.AccountingActivationDate,
@@ -1597,6 +1605,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
                                                 IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                                IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,

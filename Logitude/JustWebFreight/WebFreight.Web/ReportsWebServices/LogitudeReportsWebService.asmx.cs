@@ -12041,14 +12041,16 @@ namespace WebFreight.Web.ReportsWebServices
             // Update chart of account types total amounts
             foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
             {
-                item.LocalCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCloseBalance);
-                item.LocalOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalOpenBalance);
-                item.LocalCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCredit);
-                item.LocalDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalDebit);
-                item.ForeignCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCloseBalance);
-                item.ForeignCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCredit);
-                item.ForeignDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignDebit);
-                item.ForeignOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignOpenBalance);
+                if (totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Count() > 0) {
+                    item.LocalCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCloseBalance);
+                    item.LocalOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalOpenBalance);
+                    item.LocalCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCredit);
+                    item.LocalDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalDebit);
+                    item.ForeignCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCloseBalance);
+                    item.ForeignCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCredit);
+                    item.ForeignDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignDebit);
+                    item.ForeignOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignOpenBalance);
+                }
             }
         }
 

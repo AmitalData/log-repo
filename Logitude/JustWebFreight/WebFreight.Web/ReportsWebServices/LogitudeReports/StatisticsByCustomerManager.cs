@@ -154,6 +154,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             CardRepository cardRepository = new CardRepository(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
@@ -281,7 +282,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     Card myCustomer = cardRepository.GetSingleCard(record.CustomerId, tenant);
                     if (myCustomer != null)
                     {
-                        record.CustomerSalesman = myCustomer.SalesmanUser != null ? (myCustomer.SalesmanUser.Contact != null ? myCustomer.SalesmanUser.Contact.EnglishName : "") : "";
+                        if(!string.IsNullOrEmpty(myCustomer.SalesmanUserId))
+                        {
+                            Contact salesman = contactRepository.GetSingleContact(myCustomer.SalesmanUserId, tenant);
+                            record.CustomerSalesman = salesman?.EnglishName;
+                        }
 
                         if (myCustomer.Customer != null)
                         {

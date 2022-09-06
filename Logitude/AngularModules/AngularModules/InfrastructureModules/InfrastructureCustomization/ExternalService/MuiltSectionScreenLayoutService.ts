@@ -92,7 +92,9 @@ export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
 
     private AddScreenField(screenField, sectionScreen, screenFieldRow ) {
         screenField.Row = screenFieldRow;
-        this.screenComponent.MyArgs.ScreenFields.push(screenField);
+        if (!this.screenComponent.IsLineSpaceField(screenField.DataTypeCode)) {
+            this.screenComponent.MyArgs.ScreenFields.push(screenField);
+        }
         this.screenComponent.MyArgs.Rows += 1;
         sectionScreen.Section.NumberOfRows += 1;
     }

@@ -777,6 +777,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsDigitalPortalAccessActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

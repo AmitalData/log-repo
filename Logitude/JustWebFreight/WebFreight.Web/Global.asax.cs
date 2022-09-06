@@ -521,6 +521,9 @@ namespace WebFreight.Web
             LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
             LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
             LogitudeSettings.OITenantNumber = setting.OITenantNumber;
+            LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
+            LogitudeSettings.DNSZone = setting.DNSZone;
+            LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
         }
 
         private void StartSignalRTopicThread()

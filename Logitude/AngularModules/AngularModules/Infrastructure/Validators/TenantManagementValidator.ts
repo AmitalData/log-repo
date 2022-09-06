@@ -2,6 +2,7 @@ import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
 import {AppTool} from '../Tools';
 import {Validator} from './Validator';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
 
 export class TenantManagementValidator {
 
@@ -60,6 +61,12 @@ export class TenantManagementValidator {
 
             if (AppTool.IsNullOrZero(entityPM.NumberOfUsers) && AppTool.IsNullOrZero(entityPM.FreeUsers)) {
                 errors.push("You should enter Number of Users or Free Users");
+            }
+
+            if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog") {
+                if (AppTool.IsNullOrEmpty(entityPM.CustomerURL)) {
+                    errors.push("Domain is Required");
+                }
             }
 
             entityPM.TenantManagementLicenses.forEach(item => {

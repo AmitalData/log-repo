@@ -227,6 +227,98 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? startTime ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? StartTime  
+	   {
+	    
+	     get
+		{
+		   return startTime;
+		 }
+		 set
+		 {
+		   if(startTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartTime",OldValue=startTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   startTime=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? endTime ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? EndTime  
+	   {
+	    
+	     get
+		{
+		   return endTime;
+		 }
+		 set
+		 {
+		   if(endTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndTime",OldValue=endTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   endTime=value;
+		   }
+			
+		 }
+	   }
+	  private string businessKey ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BusinessKey  
+	   {
+	    
+	     get
+		{
+		   return businessKey;
+		 }
+		 set
+		 {
+		   if(businessKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessKey",OldValue=businessKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   businessKey=value;
+		   }
+			
+		 }
+	   }
+	  private string duration ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Duration  
+	   {
+	    
+	     get
+		{
+		   return duration;
+		 }
+		 set
+		 {
+		   if(duration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=duration,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   duration=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

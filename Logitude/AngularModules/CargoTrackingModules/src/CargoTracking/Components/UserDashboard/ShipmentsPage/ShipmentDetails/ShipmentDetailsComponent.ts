@@ -600,7 +600,6 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.ExpectedDate = milstone.Date ? null : milstone.EstimationDate;
                 newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
-                newCard.Description = milstone.Notes;
 
                 let cardDateTime = new Date(newCard.Date ? newCard.Date : newCard.ExpectedDate);
                 var cardDate = new Date(cardDateTime.getFullYear(), cardDateTime.getMonth(), cardDateTime.getDate());
@@ -610,8 +609,6 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
-                if(milstone.Code == MilestoneCodes.BookingNote && newCard.Description)
-                    newCard.Description = "BK#: "+ newCard.Description;
                 return newCard;
             });
         this.SetNoMilstonesFound();

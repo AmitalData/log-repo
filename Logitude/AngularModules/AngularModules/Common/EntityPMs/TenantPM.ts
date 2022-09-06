@@ -750,6 +750,11 @@ export class TenantPM {
     public set ShipmentATAClosingDays(newValue: number) { if (this.shipmentATAClosingDays != newValue) { this.shipmentATAClosingDays = newValue; this.MarkAsDirty("ShipmentATAClosingDays"); } }
        
 	 
+    private isDigitalPortalAccessActivated: boolean;
+    public get IsDigitalPortalAccessActivated() { return this.isDigitalPortalAccessActivated; }
+    public set IsDigitalPortalAccessActivated(newValue: boolean) { if (this.isDigitalPortalAccessActivated != newValue) { this.isDigitalPortalAccessActivated = newValue; this.MarkAsDirty("IsDigitalPortalAccessActivated"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

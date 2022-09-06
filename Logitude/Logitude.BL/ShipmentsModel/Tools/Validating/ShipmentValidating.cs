@@ -1493,10 +1493,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentOperationalClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if ((!entityPM.IsOperationalClosed || entityPoco.IsOperationalClosed) && entityPM.ShipmentLevelCode == "C") return;
+            if (!entityPM.IsOperationalClosed || entityPoco.IsOperationalClosed) return;
+            if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
+            {
+                var errorMsg = "House shipments cannot be operational closed. They can only be closed by closing the connected Master shipment";
+                throw new ApplicationException(errorMsg);
+            }
+
             OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM, entityPoco);
             string errorMessage = operationalCloseValidator.StartValidating();
-
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 throw new ApplicationException(errorMessage.TrimStart(','));
@@ -1504,9 +1509,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if ((!entityPM.IsAccountingClosed || entityPoco.IsAccountingClosed) && entityPM.ShipmentLevelCode == "C") return;
+            if (!entityPM.IsAccountingClosed || entityPoco.IsAccountingClosed) return;
+            if (!entityPM.IsOperationalClosed)
+            {
+                var errorMsg = "Can't accouting close shipment, beacause it's not operationaly closed";
+                throw new ApplicationException(errorMsg);
+            }
 
-            if (AccountingClosedChangedFromHouse(entityPM, entityPoco))
+            if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
             {
                 var errorMsg = "House shipments cannot be accounting closed. They can only be closed by closing the connected Master shipment";
                 throw new ApplicationException(errorMsg);
@@ -1522,10 +1532,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
             }
-        }
-        private static bool AccountingClosedChangedFromHouse(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            return entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster && (entityPoco.IsAccountingClosed != entityPM.IsAccountingClosed);
         }
         private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
         {

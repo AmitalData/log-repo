@@ -109,7 +109,8 @@
 
                 <ComboBox [ItemsSource]="ConditionOperations" [Binding]="'Name'"
                     [SelectedItem]="ListItem(Condition.groupOperation)"
-                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)">
+                    (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)"
+                    [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
             </div>
@@ -121,17 +122,19 @@
 
                     <div class="delete-condition-container">
                         <img class="delete-condition-button" src="./Images/Trash-can.png"
-                            (click)="deleteCondition(conditionIndex, Condition.isGroup)" />
+                            (click)="deleteCondition(conditionIndex, Condition.isGroup)"
+                            [attr.data-cy]="'DeleteConditionButton_' + Condition.id" />
                     </div>
 
                     <div class="condition-field-container">
 
-                        <LogLov [NoObjectField]="true" [ObjectFieldName]="'Field' + conditionIndex"
+                        <LogLov [NoObjectField]="true" [ObjectFieldName]="'ConditionField_' + Condition.id"
                             [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsQueryFilters()"
                             [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                            (SelectedItemChanged)="updateConditionField($event, conditionIndex)">
+                            (SelectedItemChanged)="updateConditionField($event, conditionIndex)"
+                            [DataCy]="'ConditionField_' + Condition.id">
                         </LogLov>
 
                     </div>
@@ -140,7 +143,8 @@
 
                         <ComboBox [ItemsSource]="ConditionOperators[Condition.type] || ConditionOperators['default']"
                             [Binding]="'Name'" [SelectedItem]="ListItem(Condition.operator)"
-                            (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)">
+                            (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)"
+                            [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -148,13 +152,13 @@
                     <div *ngIf="!isNoValueOperator(Condition.operator)" class="condition-value-container">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
-                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'FieldValue' + conditionIndex"
+                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'ConditionValue_' + Condition.id"
                             [CurrentValue]="Condition.value"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
                         <FieldValue *ngIf="!Condition.fieldChangedToggle && ObjectFields[Condition.fieldCode]"
-                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'FieldValue' + conditionIndex"
+                            [ObjectField]="ObjectFields[Condition.fieldCode]" [Name]="'ConditionValue_' + Condition.id"
                             [CurrentValue]="Condition.value"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
@@ -166,25 +170,29 @@
 
                         <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'"
                             [SelectedItem]="ListItem(Condition.value)"
-                            (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)">
+                            (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)"
+                            [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
 
                     </div>
 
                 </div>
 
-                <ConditionGroups *ngIf="Condition.conditions && Condition.conditions.length > 0" [EntityId]="EntityId"
-                    [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Condition.conditions"
-                    [IsValidConditions]="IsValidConditions" [IsRootConditions]="false"
-                    (ConditionsChangedEvent)="emitConditionsChanged()"></ConditionGroups>
+                <ConditionGroups *ngIf="Condition.isGroup && Condition.conditions && Condition.conditions.length > 0"
+                    [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator"
+                    [(Conditions)]="Condition.conditions" [IsValidConditions]="IsValidConditions"
+                    [IsRootConditions]="false" (ConditionsChangedEvent)="emitConditionsChanged($event)"
+                    [ConditionsCounter]="ConditionsCounter">
+                </ConditionGroups>
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
                     <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
-                        (click)="addCondition(conditionIndex, false)">
+                        (click)="addCondition(conditionIndex, false)"
+                        [attr.data-cy]="'AddConditionButton_' + Condition.id">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                     <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
-                        (click)="addCondition(conditionIndex, true)">
+                        (click)="addCondition(conditionIndex, true)" [attr.data-cy]="'AddGroupButton_' + Condition.id">
                         <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
                 </div>
@@ -196,11 +204,11 @@
 
         <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
             <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
-                (click)="addCondition(null, false)">
+                (click)="addCondition(null, false)" [attr.data-cy]="'AddRootConditionButton'">
                 <span class="plus-sign">+</span><span>Add Condition</span>
             </span>
             <span class="link-button add-group-button" [ngClass]="{'disabled': !IsValidConditions}"
-                (click)="addCondition(null, true)">
+                (click)="addCondition(null, true)" [attr.data-cy]="'AddRootGroupButton'">
                 <span class="plus-sign">+</span><span>Add Group</span>
             </span>
         </div>

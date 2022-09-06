@@ -115,5 +115,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool EnableDeliveryOptions { get; set; }
         public int? EmptyReturnClosingDays { get; set; }
         public int? ShipmentATAClosingDays { get; set; }
+        public bool IsDigitalPortalAccessActivated { get; set; }
     }
 }

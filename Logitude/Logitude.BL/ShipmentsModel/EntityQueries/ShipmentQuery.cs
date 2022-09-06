@@ -2704,12 +2704,34 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCardName(bool byLocalName, Card cardObject)
         {
-            return byLocalName && !IsDashesOrNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : !IsDashesOrNullOrEmpty(cardObject.EnglishName) ? cardObject.EnglishName : null;
+            if (byLocalName)
+            {
+                return byLocalName && !IsDashesOrNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : !IsDashesOrNullOrEmpty(cardObject.EnglishName) ? cardObject.EnglishName : null;
+            }
+            else
+            {
+                return GetEnglishCardName(cardObject);
+            }
         }
 
+        private string GetEnglishCardName(Card cardObject)
+        {
+            if (!IsDashesOrNullOrEmpty(cardObject.EnglishName))
+            {
+                return cardObject.EnglishName;
+            }
+            else if (!IsDashesOrNullOrEmpty(cardObject.LocalName))
+            {
+                return cardObject.LocalName;
+            }
+            else
+            {
+                return cardObject.EnglishName;
+            }
+        }
         private bool IsDashesOrNullOrEmpty(string name)
         {
-            return string.IsNullOrEmpty(name) || name.Equals("---");
+            return string.IsNullOrEmpty(name) || name.Equals("---") || name.Contains("?");
         }
 
         public void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
@@ -13289,6 +13311,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
+                               LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
                                ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
@@ -14863,7 +14886,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              .Include("MainCarriageCarrierCard.PartnerType")
                                              .FirstOrDefault();
 
-            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false, true);
+            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false, false);
 
             CreateShipmentPMForCargoTracking(tenant, shipment, shipmentPM);
 

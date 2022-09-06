@@ -4,7 +4,7 @@ declare var window: any;
 
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -18,23 +18,17 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { UIProperty, UIProperties } from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-
-
     selector: 'CargoTrackingBrandingComponent',
     templateUrl: './CargoTrackingBrandingComponent.html',
-
-
 })
 
-export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit
-{
+export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit, OnDestroy  {
     public EntityPM: TenantManagementPM;
     public myForm: FormGroup;
     public DataContext: any = this;
@@ -47,19 +41,45 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public ShipmentHeaderImageId: string;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public BrandingTabName = "Cargo Tracking Branding";
-    constructor(public entityArgs: EntityArgs)
-    {
+    private CurrentSession = SessionLocator.SelectedSession;
+    public IsLogitudeEnvironment: boolean = false;
+    isGenerateClicked = false;
+    isGenerateEnabled = true;
+
+    constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
         this.InitializeImageIds();
-
         this.SetColorsFromEntity();
         this.SetBrandingTabName();
+        this.Listen();
     }
 
-    private SetColorsFromEntity()
-    {
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                   
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    private SetColorsFromEntity() {
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
@@ -71,12 +91,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
     SetBrandingTabName() {
         this.BrandingTabName = "Cargo Tracking Branding";
+        this.IsLogitudeEnvironment = false;
         if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog") {
             this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
+            this.IsLogitudeEnvironment = true;
         }
     }
-    private InitializeImageIds()
-    {
+    private InitializeImageIds() {
         this.BackgroundId = this.EntityPM.BackgroundId;
         this.ComapnylogoId = this.EntityPM.ComapnylogoId;
         this.InvertedLogoId = this.EntityPM.InvertedLogoId;
@@ -85,37 +106,34 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     }
 
-    RemoveImage(name){
-        if(name=='inverted'){
-            this.EntityPM.InvertedLogoId=null;
-            this.InvertedLogoId=null;
+    RemoveImage(name) {
+        if (name == 'inverted') {
+            this.EntityPM.InvertedLogoId = null;
+            this.InvertedLogoId = null;
         }
-        if(name=='company'){
-            this.EntityPM.ComapnylogoId=null;
-            this.ComapnylogoId=null;
+        if (name == 'company') {
+            this.EntityPM.ComapnylogoId = null;
+            this.ComapnylogoId = null;
         }
-        if(name=='favicon'){
-            this.EntityPM.BrowserIconId=null;
-            this.BrowserIconId=null;
+        if (name == 'favicon') {
+            this.EntityPM.BrowserIconId = null;
+            this.BrowserIconId = null;
         }
-        if(name=='bg'){
-            this.EntityPM.BackgroundId=null;
-            this.BackgroundId=null;
+        if (name == 'bg') {
+            this.EntityPM.BackgroundId = null;
+            this.BackgroundId = null;
         }
         if (name == 'ShipmentHeader') {
             this.EntityPM.ShipmentHeaderImageId = null;
             this.ShipmentHeaderImageId = null;
         }
     }
-    ngAfterViewInit()
-    {
+    ngAfterViewInit() {
         this.ListenToEntitySavedEvent();
     }
 
-    ListenToEntitySavedEvent()
-    {
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) =>
-        {
+    ListenToEntitySavedEvent() {
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             if (isSaveSuccess) {
                 this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                 this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
@@ -124,44 +142,36 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
 
     mainColorOpacity: number = 100;
-    get MainColorOpacity()
-    {
+    get MainColorOpacity() {
         return this.mainColorOpacity;
     }
-    set MainColorOpacity(value: number)
-    {
+    set MainColorOpacity(value: number) {
         this.mainColorOpacity = value;
         this.UpdateEntityMainColor();
     }
 
     private mainColorCode: string;
-    private UpdateEntityMainColor()
-    {
+    private UpdateEntityMainColor() {
         this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
     }
 
-    public get MainColorCode(): string
-    {
+    public get MainColorCode(): string {
         return this.mainColorCode;
     }
-    public set MainColorCode(hexColor: string)
-    {
+    public set MainColorCode(hexColor: string) {
         this.mainColorCode = hexColor;
         this.ValidateMainColorCode(hexColor);
         this.UpdateEntityMainColor();
     }
 
-    get PermissionBuildMonths()
-    {
+    get PermissionBuildMonths() {
         return this.EntityPM.PermissionBuildMonths;
     }
-    set PermissionBuildMonths(value: number)
-    {
+    set PermissionBuildMonths(value: number) {
         this.EntityPM.PermissionBuildMonths = value;
 
     }
-    private ValidateMainColorCode(hexColor: string)
-    {
+    private ValidateMainColorCode(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;
         else
@@ -170,8 +180,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.UpdateEditComponentValidationErrors();
     }
 
-    private UpdateEditComponentValidationErrors()
-    {
+    private UpdateEditComponentValidationErrors() {
         if (this.wrongMainColor || this.wrongSecondaryColor) {
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
             SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Please enter valid color hex code'];
@@ -181,35 +190,29 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
-    get EntityMainColor()
-    {
+    get EntityMainColor() {
         return this.EntityPM.MainColor;
     }
-    set EntityMainColor(value: string)
-    {
+    set EntityMainColor(value: string) {
         this.EntityPM.MainColor = value;
 
     }
 
 
 
-    get EntitySecondaryColor()
-    {
+    get EntitySecondaryColor() {
         return this.EntityPM.SecondaryColor;
     }
-    set EntitySecondaryColor(value: string)
-    {
+    set EntitySecondaryColor(value: string) {
         this.EntityPM.SecondaryColor = value;
 
     }
 
     secondaryColorOpacity: any = 100;
-    get SecondaryColorOpacity()
-    {
+    get SecondaryColorOpacity() {
         return this.secondaryColorOpacity;
     }
-    set SecondaryColorOpacity(value: number)
-    {
+    set SecondaryColorOpacity(value: number) {
         this.secondaryColorOpacity = value;
 
 
@@ -220,17 +223,14 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     wrongSecondaryColor: boolean = false;
     wrongMainColor: boolean = false;
     private secondaryColorCode: string;
-    private SetEntitySecondaryColor()
-    {
+    private SetEntitySecondaryColor() {
         this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
     }
 
-    public get SecondaryColorCode(): string
-    {
+    public get SecondaryColorCode(): string {
         return this.secondaryColorCode;
     }
-    public set SecondaryColorCode(hexColor: string)
-    {
+    public set SecondaryColorCode(hexColor: string) {
         this.secondaryColorCode = hexColor;
 
         this.ValidateSecondaryColor(hexColor);
@@ -240,8 +240,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
 
 
-    private ValidateSecondaryColor(hexColor: string)
-    {
+    private ValidateSecondaryColor(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
             this.wrongSecondaryColor = true;
 
@@ -251,26 +250,22 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.UpdateEditComponentValidationErrors();
     }
 
-    get ContactEmail()
-    {
+    get ContactEmail() {
         return this.EntityPM.ContactEmail;
     }
-    set ContactEmail(value: string)
-    {
+    set ContactEmail(value: string) {
         if (this.EntityPM.ContactEmail != value) {
             this.EntityPM.ContactEmail = value;
 
         }
     }
-    get CustomerURL()
-    {
+    get CustomerURL() {
         return this.EntityPM.CustomerURL;
     }
-    set CustomerURL(value: string)
-    {
+    set CustomerURL(value: string) {
         if (this.EntityPM.CustomerURL != value) {
             this.EntityPM.CustomerURL = value;
-
+            this.SetCustomerURLProperties(this.EntityPM.EnableBranding);
         }
     }
 
@@ -304,20 +299,17 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
-    public get EnableBranding()
-    {
+    public get EnableBranding() {
         return this.EntityPM.EnableBranding;
     }
-    public set EnableBranding(value: boolean)
-    {
+    public set EnableBranding(value: boolean) {
         if (this.EntityPM.EnableBranding != value) {
             this.EntityPM.EnableBranding = value;
             this.EnableBrandingChange(value);
         }
     }
 
-    ValidateHexCode(value: string, fieldName: string)
-    {
+    ValidateHexCode(value: string, fieldName: string) {
 
         const regex = new RegExp('^#([a-fA-F0-9]{6})$');
         var valid: boolean = regex.test(value);
@@ -332,10 +324,8 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
 
 
-    ngOnInit()
-    {
-        this.entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) =>
-        {
+    ngOnInit() {
+        this.entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -349,23 +339,19 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     }
 
-    BackgroundImageUploadedCompleted(code)
-    {
+    BackgroundImageUploadedCompleted(code) {
         this.BackgroundId = code;
         this.EntityPM.BackgroundId = code;
     }
-    ComapnylogoUploadedCompleted(code)
-    {
+    ComapnylogoUploadedCompleted(code) {
         this.ComapnylogoId = code;
         this.EntityPM.ComapnylogoId = code;
     }
-    InvertedLogoUploadedCompleted(code)
-    {
+    InvertedLogoUploadedCompleted(code) {
         this.InvertedLogoId = code;
         this.EntityPM.InvertedLogoId = code;
     }
-    BrowserIconUploadedCompleted(code)
-    {
+    BrowserIconUploadedCompleted(code) {
         this.BrowserIconId = code;
         this.EntityPM.BrowserIconId = code;
     }
@@ -374,8 +360,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM.ShipmentHeaderImageId = code;
     }
 
-    EnableBrandingChange(value: any)
-    {
+    EnableBrandingChange(value: any) {
 
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
         this.EnableBranding = value;
@@ -387,20 +372,25 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM.ActivatedforDeclarationApprove = value;
     }
 
-    SetUIPropertiesEnabled(value: boolean)
-    {
+    SetUIPropertiesEnabled(value: boolean) {
 
         this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);
         this.UIProperties.SetEnabled("SecondaryColor", "TenantManagement", value);
-        this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
         this.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
         this.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);
+        this.SetCustomerURLProperties(value);
     }
 
+    SetCustomerURLProperties(isBranding: boolean) {
+        this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", isBranding);
+        this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
+        if (this.IsLogitudeEnvironment) {
+            this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", false);
+            this.isGenerateEnabled = AppTool.IsNullOrEmpty(this.CustomerURL) ? true : false;
+        }
+    }
 
-
-    ConvertHexToRGBColor(hex: string, alpha: number)
-    {
+    ConvertHexToRGBColor(hex: string, alpha: number) {
         if (hex && hex.length >= 7) {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -416,8 +406,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
-    RGBToHex(r, g, b)
-    {
+    RGBToHex(r, g, b) {
         r = r.toString(16);
         g = g.toString(16);
         b = b.toString(16);
@@ -431,8 +420,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         return "#" + r + g + b;
     }
-    ConvertRGBAToHexColor(rgba: string)
-    {
+    ConvertRGBAToHexColor(rgba: string) {
         var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
         var splittedNumbers = numbers.split(',');
         var red = parseInt(splittedNumbers[0].trim());
@@ -453,15 +441,14 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         return "#" + r + g + b;
     }
-    GetOpacityFromRGBA(rgba: string)
-    {
+    GetOpacityFromRGBA(rgba: string) {
         var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
         var splittedNumbers = numbers.split(',');
         var opacity = parseFloat(splittedNumbers[3].trim());
         return opacity * 100;
     }
 
-    openLoginPolicyPopup(){
+    openLoginPolicyPopup() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Login Policy";
         logitudeWindow.Width = 500;
@@ -472,7 +459,20 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         logitudeWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CargoLoginPolicy/CargoLoginPolicyComponent');
     }
 
-
+    onGenerateClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Generate Sub domain";
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        var args = this.EntityPM;
+        logitudeWindow.WindowArgs = args;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SubDomainGenerateComponent');
+        logitudeWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        });
+    }
 }
 
 

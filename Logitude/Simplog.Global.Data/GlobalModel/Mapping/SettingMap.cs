@@ -75,6 +75,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.AmitalCloudEnvironmentURL).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasMaxLength(50).IsUnicode(true);
             this.Property(t => t.ReleaseDateString).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.DNSZone).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.DNSIPAddress).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.AzurePrincipalSecretKey).HasMaxLength(1000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Settings");
@@ -133,7 +136,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL");
             this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
             this.Property(t => t.ReleaseDateString).HasColumnName("ReleaseDateString");
-
+            this.Property(t => t.DNSZone).HasColumnName("DNSZone");
+            this.Property(t => t.DNSIPAddress).HasColumnName("DNSIPAddress");
+            this.Property(t => t.AzurePrincipalSecretKey).HasColumnName("AzurePrincipalSecretKey");
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? Transshipment3ATA { get; set; }
         public DateTime? Transshipment3ETD { get; set; }
         public DateTime? Transshipment3ETA { get; set; }
+        public DateTime LastUpdateDate { get; set; }
         public string Transshipment3FromPortId { get; set; }
         public string Transshipment3ToPortId { get; set; }
         public string Transshipment2FromPortId { get; set; }

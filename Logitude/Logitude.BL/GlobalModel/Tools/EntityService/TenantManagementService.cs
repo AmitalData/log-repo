@@ -7,6 +7,8 @@ using Logitude.BL.GlobalModel.Tools.TraceEvents;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -26,6 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Web;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
@@ -277,15 +280,93 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         private void UpdateGlobalTenants()
         {
-            GlobalTenantRepository Rep = new GlobalTenantRepository();
-            GlobalTenant Gtenant = Rep.GetGlobalTenantsByTenant(this.entityPM.Id);
-            if (Gtenant != null)
+            GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
+            GlobalTenant globalTenant = globalTenantRepository.GetGlobalTenantsByTenant(this.entityPM.Id);
+            if (globalTenant == null) return;
+
+            string oldPrivateLabelId = globalTenant.PrivateLabelId;
+            bool oldIsActive = globalTenant.IsActive;
+            globalTenant.PrivateLabelId = this.entityPM.PrivateLabelId;
+            globalTenantRepository.Update(globalTenant);
+            globalTenantRepository.SubmitChanges();
+            BuildForwarderQueues(oldPrivateLabelId, oldIsActive);
+        }
+
+        private void BuildForwarderQueues(string oldPrivateLabelId, bool oldIsActive)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                Gtenant.PrivateLabelId = this.entityPM.PrivateLabelId;
-                Rep.Update(Gtenant);
-                Rep.SubmitChanges();
+                BuildPrivateLabelQueue(oldPrivateLabelId);
+                BuildIsActiveQueue(oldIsActive);
+                BuildIsTrialQueue();
+                scope.Complete();
             }
         }
+
+        private void BuildPrivateLabelQueue(string oldPrivateLabelId)
+        {
+            if (string.IsNullOrEmpty(oldPrivateLabelId) && string.IsNullOrEmpty(this.entityPM.PrivateLabelId)) return;
+            if (!string.IsNullOrEmpty(oldPrivateLabelId) && !string.IsNullOrEmpty(this.entityPM.PrivateLabelId)) return;
+            bool isPrivateLabel = !string.IsNullOrEmpty(this.entityPM.PrivateLabelId);
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsPrivateLabel", isPrivateLabel.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private void BuildIsActiveQueue(bool oldIsActive)
+        {
+            if (oldIsActive && this.entityPM.IsActive) return;
+            if (!oldIsActive && !this.entityPM.IsActive) return;
+            if (this.entityPM.IsActive) return;
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsActiveTenant", this.entityPM.IsActive.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private void BuildIsTrialQueue()
+        {
+            if (!this.entityPM.IsTrial || this.entityPM.TrialEndDate == null) return;
+            bool IsPassedTrialEndDate = this.entityPM.TrialEndDate < DateTime.Now.Date;
+            if (!IsPassedTrialEndDate) return;
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsPassedTrialEndDate", IsPassedTrialEndDate.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private static void HandleForwarderQueuesException(Exception ex)
+        {
+            string ip = "";
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                ip = string.IsNullOrEmpty(HttpContext.Current.Request.Headers["X-Real-IP"]) ? HttpContext.Current.Request.UserHostAddress : HttpContext.Current.Request.Headers["X-Real-IP"];
+            }
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "TenantManagement Service", null, ip);
+        }
+
         private void CheckSubscriptionSwitch()
         {
             if (entityPM.MainAdditionalPackageApplied != entityPoco.MainAdditionalPackageApplied)

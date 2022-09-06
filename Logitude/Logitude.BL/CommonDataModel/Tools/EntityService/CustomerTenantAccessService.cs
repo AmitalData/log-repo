@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityAMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.Security;
@@ -412,5 +413,46 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         }
 
+        public static void UpdateAllCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
+        {
+            if ((customerTenantAccessUpdaterAM.IsActive != null && customerTenantAccessUpdaterAM.IsActive == false) || (customerTenantAccessUpdaterAM.IsPassedTrialEndDate != null && customerTenantAccessUpdaterAM.IsPassedTrialEndDate == true))
+            {
+                UpdateStatusCustomerTenantAccesses(customerTenantAccessUpdaterAM);
+            }
+
+            if (customerTenantAccessUpdaterAM.IsPrivateLabel != null)
+            {
+                UpdateIsPrivateLabelCustomerTenantAccesses(customerTenantAccessUpdaterAM);
+            }
+        }
+
+        private static void UpdateStatusCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
+        {
+            CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
+            IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
+            const string inActiveStatusCode = "IA";
+            foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
+            {
+                customerTenantAccess.Status = inActiveStatusCode;
+                CustomerTenantAccessRepository.Update(customerTenantAccess);
+            }
+
+            CustomerTenantAccessRepository.SubmitChanges();
+        }
+
+        private static void UpdateIsPrivateLabelCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
+        {
+            CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
+            IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
+            const string waitingStatusCode = "W";
+            CustomerTenantAccesses = CustomerTenantAccesses.Where(CustomerTenantAccess => CustomerTenantAccess.Status == waitingStatusCode);
+            foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
+            {
+                customerTenantAccess.IsPrivateLabelCustomer = (bool)customerTenantAccessUpdaterAM.IsPrivateLabel;
+                CustomerTenantAccessRepository.Update(customerTenantAccess);
+            }
+
+            CustomerTenantAccessRepository.SubmitChanges();
+        }
     }
 }

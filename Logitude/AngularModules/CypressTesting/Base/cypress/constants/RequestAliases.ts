@@ -312,5 +312,7 @@ export class RequestAliases {
     //Workflow
     public static readonly GetWorkflowViews = 'GetWorkflowViews';
     public static readonly GetWorkflowFlowBuilder = 'GetWorkflowFlowBuilder';
-
+    public static readonly PutWorkflowFlowBuilder = 'PutWorkflowFlowBuilder';
+    public static readonly PostWorkflowFlowBuilder = 'PostWorkflowFlowBuilder';
+    public static readonly GetNewWorkflow = 'GetNewWorkflow';
 }
