@@ -43,6 +43,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.MamanSuspendedCode).HasColumnName("MamanSuspendedCode").HasMaxLength(4).IsUnicode(false);
 
+            this.Property(t => t.SwissportSuspendedCode).HasColumnName("SwissportSuspendedCode").HasMaxLength(4).IsUnicode(false);
+
             this.Property(t => t.RequiresApproval).HasColumnName("RequiresApproval");
         }
     }
