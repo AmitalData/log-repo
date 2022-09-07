@@ -9,7 +9,6 @@ import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMServi
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { EntityPMService } from "Infrastructure/Services/EntityPMService";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
