@@ -55,6 +55,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public DateTime? EndTime { get; set; }
         [Column("BusinessKey")]
 	    public string BusinessKey { get; set; }
+        [Column("Duration")]
+	    public decimal? Duration { get; set; }
     }
 }
 	 

@@ -264,10 +264,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             {
                 var stream = GetReportStreamFromCopy(printedCopy);
                 if(stream != null) return stream;
-
             }
-                
-
+              
             var documentOut = BuildDocumentOut(item);
             var reportStream = CreateReportStream(item);
             var document = UploadPDFToStorage(reportStream, _batchPrinterArgs.Tenant, "docsout");
@@ -386,6 +384,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 ObjectTableId = _batchPrinterArgs.ObjectTableId,
                 DocumentTypeCopyId = _batchPrinterArgs.CopyId,
                 DocumentTypeId = _batchPrinterArgs.DocumentTypeId,
+                DocumentTemplateId = _batchPrinterArgs.TemplateId,
             };
             return documentsFilingRepository.GetDocumentOutCopy(args);
         }

@@ -77,22 +77,20 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
-            queryableData = queryableData.Where(d =>
-                 d.ShipperReference1.Contains(digitalPortalSearchFields)
-              || d.ShipperReference2.Contains(digitalPortalSearchFields)
-              || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
-              || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
-              || d.CustomerReference1.Contains(digitalPortalSearchFields)
-              || d.CustomerReference2.Contains(digitalPortalSearchFields)
-              || d.CustomerReference2.Contains(digitalPortalSearchFields)
-              || d.ShipmentNumber.Contains(digitalPortalSearchFields)
-              || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
-              || d.House.Contains(digitalPortalSearchFields)
-              || d.Master.Contains(digitalPortalSearchFields)
-              || d.CustomAgentImportName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
+            queryableData = queryableData.Where(d => d.ShipperReference1.Contains(digitalPortalSearchFields)
+                                                      || d.ShipperReference2.Contains(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference1.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
+                                                      || d.ShipmentNumber.Contains(digitalPortalSearchFields)
+                                                      || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
+                                                      || d.House.Contains(digitalPortalSearchFields)
+                                                      || d.Master.Contains(digitalPortalSearchFields)
+                                                      || d.FromPortName.StartsWith(digitalPortalSearchFields)
+                                                      || d.ToPortName.StartsWith(digitalPortalSearchFields)
+                                                      || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields)
            );
 
             return queryableData;

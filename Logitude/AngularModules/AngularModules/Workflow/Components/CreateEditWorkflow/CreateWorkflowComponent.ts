@@ -8,15 +8,15 @@ import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
 
 @Component({
-    templateUrl: './CreateEditWorkflowComponent.html',
+    templateUrl: './CreateWorkflowComponent.html',
 })
 
-export class CreateEditWorkflowComponent extends BaseComponent implements OnInit {
+export class CreateWorkflowComponent extends BaseComponent implements OnInit {
     public IsNewEntity: boolean = true;
     public EntityPM: WorkFlowPM;
     public EntityId: string;
     public ObjectTableName: string = "WorkFlow";
-    public DataContext: CreateEditWorkflowComponent = this;
+    public DataContext: CreateWorkflowComponent = this;
     public ValidationErrorsList: string[];
 
     public CurrentSession = SessionLocator.SelectedSession;
@@ -33,7 +33,7 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
 
     SetWindowArgs(args: any) {
         this.EntityId = args['EntityId'];
-        this.IsNewEntity = args['IsNewEntity'];
+        //this.IsNewEntity = args['IsNewEntity'];
     }
 
     get Name() { return this.EntityPM.Name; }

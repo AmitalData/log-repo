@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;9b54&quot;"
+  Code="&quot;e6df&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -88,6 +88,7 @@
     SystemMaxLength="3"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -160,6 +161,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -232,6 +234,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -304,6 +307,7 @@
     SystemMaxLength="400"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -713,11 +717,6 @@
       SearchFields="&quot;TAU,Ticket Entity In Automation&quot;"
       Description="&quot;Use Ticket Entity In Automation&quot;" />
     <Record
-      Code="&quot;RFF&quot;"
-      Name="&quot;Regimen Fiscal Field&quot;"
-      SearchFields="&quot;RFF,Regimen Fiscal Field&quot;"
-      Description="&quot;Show Regimen Fiscal Field&quot;" />
-    <Record
       Name="&quot;Managing Destination Warehouse Leg&quot;"
       Description="&quot;Managing Destination Warehouse Leg in Drop Shipments&quot;"
       SearchFields="&quot;MDW,Managing Destination Warehouse Leg&quot;"
@@ -737,11 +736,6 @@
       Name="&quot;Test Server Validations&quot;"
       SearchFields="&quot;TSV,Test Server Validations&quot;"
       Description="&quot;Test Operational/ Accounting close rules validations in server side&quot;" />
-    <Record
-      Code="&quot;PF4&quot;"
-      Name="&quot;Profact 4.0&quot;"
-      SearchFields="&quot;PF4,Profact 4.0&quot;"
-      Description="&quot;Add Profact Version 4.0 to SAT Interfaces&quot;" />
     <Record
       Code="&quot;BAR&quot;"
       Name="&quot;ARInvoice BI Report Scheduler&quot;"
@@ -787,11 +781,6 @@
       Name="&quot;Shipment BI Report Scheduler&quot;"
       SearchFields="&quot;BSH,Shipment BI Report Scheduler&quot;"
       Description="&quot;Shipment BI Report Scheduler&quot;" />
-    <Record
-      Code="&quot;CP4&quot;"
-      Name="&quot;SAT New Cancellation process&quot;"
-      SearchFields="&quot;CP4,SAT New Cancellation process&quot;"
-      Description="&quot;Activate SAT New Cancellation process&quot;" />
     <Record
       Name="&quot;Show Agents in Opportunities' Customers LOV&quot;"
       Description="&quot;Show Agents in Opportunities' Customers LOV&quot;"

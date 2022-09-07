@@ -41,7 +41,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     && e.DocumentTypeCopy.DocumentTypeId == args.DocumentTypeId
                     && e.DocumentOut.DocumentsFiling.EntityId == args.EntityId
                     && e.DocumentOut.DocumentsFiling.ObjectTableId == args.ObjectTableId
-                    && e.Tenant == args.Tenant)
+                    && e.Tenant == args.Tenant
+                    && e.DocumentOut.DocumentTemplateId == args.DocumentTemplateId)
                 .FirstOrDefault();
         }
 

@@ -435,6 +435,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
    declare @ISFNumber as varchar(25)
 
    declare @PackagesQuantityAndType as NVARCHAR(2000) 
+   declare @NotesSharedWithCustomer as nvarchar(2000)
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
@@ -490,7 +491,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	 NewDIM_ShipmentSubTypes.Id_Number, dw_Shipments.PODReceivedDate, dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA, Transshipment2Vessel.Id_Number ,Transshipment3Vessel.Id_Number,dw_ShipmentMasterDatas.MainCarriageCarrierNumber,
 	 dw_Shipments.WarehouseLegVGMCutOffDate,dw_Shipments.WarehouseLegCutOffDate,
 	 dw_Shipments.ENSNumber, dw_Shipments.ENSDate, dw_Shipments.ITDate, dw_Shipments.ITNumber,
-	 dw_Shipments.ISFDate, dw_Shipments.ISFNumber, dw_ShipmentComputedFields.PackagesQuantityAndType
+	 dw_Shipments.ISFDate, dw_Shipments.ISFNumber, dw_ShipmentComputedFields.PackagesQuantityAndType,dw_Shipments.NotesSharedWithCustomer 
 
 
 	 
@@ -638,7 +639,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	  @ConsolidatorAddress,@ConsolidatorContact,
 	  @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,@WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
 	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
-	  @ISFDate, @ISFNumber, @PackagesQuantityAndType
+	  @ISFDate, @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer 
 
 
 	  
@@ -831,7 +832,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
 	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery],[Shipment Sub Type], [POD Received Date],[Main Carriage Final Destination ATA],[Transshipment 2 Vessel],[Transshipment 3 Vessel],[OBL], [VGM cut off date],[Warehouse Cut off],
 	   [ENS #],[ENS Date],[IT Date],[IT #],
-	   [ISF Date], [ISF #], [Package Quantity and Type]
+	   [ISF Date], [ISF #], [Package Quantity and Type],[Notes Shared with Customer]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -859,7 +860,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
 	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,dbo.GetDateFormateAsNumber(@WarehouseLegVGMCutOffDate), dbo.GetDateFormateAsNumber(@WarehouseLegCutOffDate),
 	  @ENSNumber, dbo.GetDateFormateAsNumber(@ENSDate), dbo.GetDateFormateAsNumber(@ITDate), @ITNumber,
-	  dbo.GetDateFormateAsNumber(@ISFDate), @ISFNumber, @PackagesQuantityAndType
+	  dbo.GetDateFormateAsNumber(@ISFDate), @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer 
 	  	  )
 	END TRY 
 BEGIN CATCH  
@@ -908,7 +909,7 @@ END CATCH
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
 	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA, @Transshipment2Vessel,@Transshipment3Vessel,@OBL, @WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
 	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
-	  @ISFDate, @ISFNumber, @PackagesQuantityAndType
+	  @ISFDate, @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer 
  
 
 

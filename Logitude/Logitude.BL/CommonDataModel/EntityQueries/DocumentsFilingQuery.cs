@@ -134,24 +134,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
             return extDocPm;
+        }
+
+        private static void SetDocumentFollowUp(DocumentsFilingPM document, string followUpId = null)
+        {
+            if (followUpId == null) followUpId = new FollowUpRepository(document.Tenant).GetFollowUpIdByDocumentsFilingId(document.Tenant, document.Id);
+            if (string.IsNullOrEmpty(followUpId)) return;
+
+            document.FollowUpCount = 1;
+            document.HasFollowUp = true;
+            document.FollowUpId = followUpId;
         }
 
         public DocumentsFilingPM GetSinglePMByCode(string code, int tenant)
@@ -236,19 +233,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -339,19 +324,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -445,20 +418,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -547,20 +507,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -649,20 +596,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -751,20 +685,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -851,8 +772,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
 
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
@@ -860,18 +780,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false, tenant);
                 if (customsDoc != null)
                 {
@@ -970,26 +879,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a=>a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {
@@ -1341,9 +1238,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             //Islam: this code caused an exception in logitude!!! if you want to add a code like this which is only required for customs please check the settings.deployment first
             //ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
@@ -1366,17 +1262,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         }
                     }
                 }
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 //CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 //if (customsDoc != null)
                 //{
@@ -1657,26 +1543,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {
@@ -2312,25 +2186,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
 
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
@@ -2431,19 +2294,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -2530,19 +2381,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -2634,19 +2473,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -3420,25 +3247,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
 
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false, tenant);
                 if (customsDoc != null)
@@ -3538,25 +3354,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
             var documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant1(tenant);
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {

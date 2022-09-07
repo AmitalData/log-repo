@@ -628,13 +628,17 @@ Line3
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
             .subscribe(
                 r => {
+                    this.CurrentSession.StopBusyIndicator();
                     this._LabelLog = JSON.stringify(r);
                     let resObj = JSON.parse(this.JsonOut);
                     if (Array.isArray(resObj)) {
                         this.JsonList = resObj;
                     }
                 },
-                e => { this._LabelLog = JSON.stringify(e); },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }

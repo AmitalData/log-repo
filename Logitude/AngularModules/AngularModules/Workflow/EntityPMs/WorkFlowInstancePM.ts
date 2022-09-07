@@ -84,9 +84,9 @@ export class WorkFlowInstancePM {
     public set BusinessKey(newValue: string) { if (this.businessKey != newValue) { this.businessKey = newValue; this.MarkAsDirty("BusinessKey"); } }
        
 	 
-    private duration: string;
+    private duration: number;
     public get Duration() { return this.duration; }
-    public set Duration(newValue: string) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
+    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
        
 	 
 

@@ -123,9 +123,9 @@ namespace CommunicationWorkerRole
 
                             if (response != null && response.MessageId != null)
                             {
-                                string ShipmentId = response.MessageValues["ShipmentId"] != null ? response.MessageValues["ShipmentId"].ToString():"";
-                                string ShipmentOrderId = response.MessageValues["ShipmentOrderId"] != null ? response.MessageValues["ShipmentOrderId"].ToString() : "";
-                                string DocumentFilingId = response.MessageValues["DocumentFilingId"].ToString();
+                                string ShipmentId = response.MessageValues != null && response.MessageValues.Keys.Contains("ShipmentId") ? response.MessageValues["ShipmentId"].ToString() : "";
+                                string ShipmentOrderId = response.MessageValues != null && response.MessageValues.Keys.Contains("ShipmentOrderId") ? response.MessageValues["ShipmentOrderId"].ToString() : "";
+                                string DocumentFilingId = response.MessageValues != null && response.MessageValues.Keys.Contains("DocumentFilingId") ? response.MessageValues["DocumentFilingId"].ToString() : "";
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
                                 string CorrelationId = response.MessageId;
                                 ContactRepository contactRepository = new ContactRepository(tenant);

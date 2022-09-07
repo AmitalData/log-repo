@@ -4499,14 +4499,10 @@
     Columns="Tenant,ComputedStatusDate" />
   <Index
     Columns="Tenant,House" />
-  
   <Index
     Columns="Tenant,ShipmentReceivableStatusCode,ShipmentLevelCode" />
- 
-    <Index
+  <Index
     Columns="Tenant,ShipmentPayableStatusCode,IsAccountingClosed,IsCancelled,ShipmentLevelCode" />
-  
-  
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint

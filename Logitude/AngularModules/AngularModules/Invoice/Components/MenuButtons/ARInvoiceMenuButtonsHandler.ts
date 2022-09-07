@@ -926,12 +926,6 @@ export class ARInvoiceMenuButtonsHandler {
             return;
         }
 
-        let hasNewSATCancellationFeatureToggle = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CP4");
-        if (!hasNewSATCancellationFeatureToggle && this.EntityPM.SATTransferStatusCode == "TD" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.ShowBlockVoidingInvoicesInSATMessage();
-            return;
-        }
-
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
         logWindow.Height = 170;

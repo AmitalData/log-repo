@@ -551,8 +551,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
-
-
         public static TenantPM GetSingleTenantPM(int id)
         {
             string entityName = "TenantPM" + id;
@@ -1647,6 +1645,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CustomerPhone = a.CustomerCard != null && a.CustomerCard.PrimaryContact != null ? a.CustomerCard.PrimaryContact.BusinessPhone : "",
                                  
                                }).FirstOrDefault();
+            return entity;
+        }
+
+        public TenantPM GetDigitalSingleTenantId(int id)
+        {
+            TenantPM entity = repository.context
+                                        .Tenants
+                                        .Select(a => new TenantPM()
+                                        {
+                                            Id = a.Id,
+                                            CurrencyCode = a.Currency.Code,
+                                            ProfitCurrencyCode = a.ProfitCurrency.Code
+                                        })
+                                        .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 

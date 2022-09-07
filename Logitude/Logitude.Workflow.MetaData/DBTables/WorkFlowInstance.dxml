@@ -84,6 +84,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Duration"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -5,6 +5,7 @@ import { WebFreightDomainService } from '../../../../Infrastructure/Services/Web
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'SubDomainGenerateComponent',
@@ -25,29 +26,44 @@ export class SubDomainGenerateComponent extends BaseComponent  {
 
     SetWindowArgs(args) {
         this.EntityPM = args;
+        this.Clone();
     }
 
-    get CustomerURL() {
-        return this.EntityPM.CustomerURL;
+    private customCustomerURL: string;
+    get CustomCustomerURL() {
+        return this.customCustomerURL;
     }
-    set CustomerURL(value: string) {
-        if (this.EntityPM.CustomerURL != value) {
-            this.EntityPM.CustomerURL = value;
+    set CustomCustomerURL(value: string) {
+        if (this.customCustomerURL != value) {
+            this.customCustomerURL = value;
         }
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicator("Generating ..");
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.GetGenerateDigitalPortalDomain(this.CustomerURL).subscribe((myResult: ServiceResponse) => {
+        myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
+                this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
         });
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('CustomerURL');
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 }

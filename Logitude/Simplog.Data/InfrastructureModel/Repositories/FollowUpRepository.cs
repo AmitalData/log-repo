@@ -29,6 +29,26 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (from record in context.FollowUps.Include("EventType").Include("OwnerUser.Contact") where record.Tenant == tenant select record);
         }
 
+        public string GetFollowUpIdByInternalDocumentId(int tenant, string internalDocumentId)
+        {
+            return context.FollowUps.FirstOrDefault(x => x.Tenant == tenant && x.InternalDocumentId == internalDocumentId)?.Id;
+        }
+
+        public Dictionary<string, string> GetFollowUpIdByInternalDocumentIds(int tenant, string[] internalDocumentIds)
+        {
+            return context.FollowUps.Where(x => x.Tenant == tenant && internalDocumentIds.Contains(x.InternalDocumentId)).ToDictionary(x => x.InternalDocumentId, x => x.Id);
+        }
+
+        public string GetFollowUpIdByDocumentsFilingId(int tenant, string documentsFilingId)
+        {
+            return context.FollowUps.FirstOrDefault(x => x.Tenant == tenant && x.DocumentsFilingId == documentsFilingId)?.Id;
+        }
+
+        public Dictionary<string, string> GetFollowUpIdByDocumentsFilingIds(int tenant, string[] documentsFilingId)
+        {
+            return context.FollowUps.Where(x => x.Tenant == tenant && documentsFilingId.Contains(x.DocumentsFilingId)).ToDictionary(x => x.DocumentsFilingId, x => x.Id);
+        }
+
         public List<FollowUp> GetFollowUpsForDocOut(string docOutId,int tenant)
         {
             return (from record in context.FollowUps.Include("EventType").Include("OwnerUser.Contact")
