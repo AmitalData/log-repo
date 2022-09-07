@@ -17,6 +17,35 @@ export class WorkflowSelectors {
     public static readonly WorkflowCreateButton = "button[data-cy^='workflow-save-button'";
     public static readonly WorkflowSaveButton = "button[class^='EntityChangesButton']";
     public static readonly WorkflowStartEditButton = ".edit-button";
+    public static readonly WorkflowAddCondition = ".link-button";
 
+    public static WorkflowConditionField(index: number): string {
+        return "input[data-cy^='ConditionField_"+ index.toString()+ "']";
+    }
 
+    public static WorkflowConditionOperation(index: number): string {
+        return "div[data-cy^='ConditionOperator_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowConditionValue(index: number): string {
+        return "input[data-cy^='ConditionValue_"+ index.toString()+ "']";
+    }
+
+    public static readonly WorkflowRootGroupCondition = "span[data-cy^='AddRootGroupButton']";
+
+    public static WorkflowAddGroupCondition(index: number): string {
+        return "div[data-cy^='ConditionValue_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowAddConditionButton(index: number): string {
+        return "span[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowGroupCondition(index: number): string {
+        return "span[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowGroupOperation(index: number): string {
+        return "div[data-cy^='ConditionOperation_"+ index.toString()+ "']";
+    }
 }

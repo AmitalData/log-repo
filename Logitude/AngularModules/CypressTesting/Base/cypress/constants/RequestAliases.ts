@@ -315,4 +315,5 @@ export class RequestAliases {
     public static readonly PutWorkflowFlowBuilder = 'PutWorkflowFlowBuilder';
     public static readonly PostWorkflowFlowBuilder = 'PostWorkflowFlowBuilder';
     public static readonly GetNewWorkflow = 'GetNewWorkflow';
+    public static readonly GetObjectFieldViews = 'GetObjectFieldViews';
 }
