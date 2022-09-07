@@ -115,7 +115,7 @@ namespace WebFreight.Web.ContainerTracking
 
         private void MapOriginLocation()
         {
-            containerUpdatedFields.OriginLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.OriginLocation;
+            containerUpdatedFields.POLLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.POLLocation;
         }
 
         private void MapEmptyPickup()
