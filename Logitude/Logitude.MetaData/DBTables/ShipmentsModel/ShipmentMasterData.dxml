@@ -355,7 +355,7 @@
   <Column
     Name="MasterShipmentNumber"
     Type="varchar"
-    Size="20">
+    Size="25">
     <Constraints
       Nullable="true" />
   </Column>
