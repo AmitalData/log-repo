@@ -8,6 +8,8 @@ import { WorkFlowPM } from "Workflow/EntityPMs/WorkFlowPM";
 import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMService";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { EntityPMService } from "Infrastructure/Services/EntityPMService";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -38,6 +40,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + this.EventKeyPostfix;
 
     public WorkFlowPMService: WorkFlowPMService;
+
+    private CurrentSession = SessionLocator.SelectedSession;
 
     // private hasChanges = false;
     // get HasChanges() {
@@ -247,9 +251,18 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     editWorkflowClicked() {
-        let editWindow = this.buildEditWindow();
-        editWindow.Show("./Workflow/Components/CreateEditWorkflow/CreateEditWorkflowComponent");
-        editWindow.WindowClosed.subscribe((entityPM: WorkFlowPM) => { this.handleEditWindowClosed(entityPM); });
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: "WorkFlow", BackButtonLabel: 'WorkFlows' });
+                    cmpRef.instance.BackCompleted.subscribe(_result => {
+                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                            if (!serviceResponse.HasError) {
+                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
+                            }
+                        });
+                    });
+                });
     }
 
     handleEditWindowClosed(entityPM: WorkFlowPM) {
