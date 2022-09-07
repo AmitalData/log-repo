@@ -260,17 +260,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-                int tenant = authToken.Tenant;
-                SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
-                var entityStatusQuery = new EntityStatusQuery(tenant);
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY",StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                if (deliveryStatus != null)
-                    deliveryStatus.DisplayName = "Out for Delivery";
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(authToken.Tenant);
 
-                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SHOR", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code
+                                                                             .Equals("SDLY",StringComparison.InvariantCultureIgnoreCase))
+                                                                .FirstOrDefault();
+                if (deliveryStatus != null)
+                {
+                    deliveryStatus.DisplayName = "Out for Delivery";
+                }
+
+                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code
+                                                                          .Equals("SHOR", StringComparison.InvariantCultureIgnoreCase))
+                                                             .FirstOrDefault();
                 if (orderStatus != null)
+                {
                     orderStatus.DisplayName = "Created";
+                }
+
+                digitalPortalActiveStatuses = digitalPortalActiveStatuses.OrderBy(a => a.StatusWeight)
+                                                                         .ThenBy(a => a.Name)
+                                                                         .ToList();
 
                 return Ok(digitalPortalActiveStatuses);
             }
@@ -284,28 +296,38 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalShipment/GetEntityEvents")]
         public IHttpActionResult GetEntityEvents(string entityId, string objectTableName, string cardType, string cardId)
         {
-            var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId);
-            entityId = shipmentIdAndTenant.Item1;
-            var tenant = shipmentIdAndTenant.Item2;
-            var result = new List<TraceEventPM>();
-            var objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, 0, true);
-            if (objectTable != null)
+            try
             {
-                var traceEventsRepository = new TraceEventRepository(tenant);
-                var traceEventQuery = new TraceEventQuery(traceEventsRepository);
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true);
+                entityId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
+                var result = new List<TraceEventPM>();
+                var objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, 0, true);
+                if (objectTable != null)
+                {
+                    var traceEventsRepository = new TraceEventRepository(tenant);
+                    var traceEventQuery = new TraceEventQuery(traceEventsRepository);
 
-                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
+                    var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
+
 
                 var resultQuery = cardType == null
-                                     || cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
+                                      || cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
+
                                         ? dataQuery.Where(d => d.IsAgentView)
-                                        : dataQuery.Where(d => d.IsCustomerView);
+                                         : dataQuery.Where(d => d.IsCustomerView);
 
-                return Ok(resultQuery.OrderByDescending(s => s.EventDateTime).ToList());
+
+                    return Ok(resultQuery.OrderByDescending(s => s.EventDateTime).ToList());
+                }
+
+                return Ok(result);
             }
-
-            return Ok(result);
+            catch(Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpGet]
