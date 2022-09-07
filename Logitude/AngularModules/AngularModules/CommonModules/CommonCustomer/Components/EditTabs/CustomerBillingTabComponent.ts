@@ -26,6 +26,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
     public SatInterfaceSettingCode: string;
+    public Profact4Enabled: boolean = false;
 
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
@@ -48,6 +49,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
             this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
 
         this.Listen();

@@ -41,6 +41,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public Periods: PeriodDetails[] = [];
+    public Profact4Enabled: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -88,6 +89,7 @@ export class NewConsolidationComponent extends BaseComponent {
               this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
             }
 
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
             this.FillPeriodList();
           }
         });
