@@ -3,7 +3,7 @@
 	<Sql Version="1">
 	</Sql>
 
-  <Oracle Version="7">
+  <Oracle Version="8">
     <![CDATA[
 EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column PHYSICALCHECK';
 EXECUTE IMMEDIATE 'alter table DECLARATIONS rename column PHYSICALCHECK_temp to PHYSICALCHECK';
