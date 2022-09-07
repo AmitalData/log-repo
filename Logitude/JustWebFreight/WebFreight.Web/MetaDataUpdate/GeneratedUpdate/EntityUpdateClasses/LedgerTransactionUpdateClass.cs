@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "6d117a3f57a3eb46e2563aa3bd635235";
+		public const string HashString = "bed0ce6f0433486451d8b7abce2e517a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4555,6 +4555,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_GLAccount_LedgerTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount_LedgerTransaction", DefaultText = "Ledger Transaction",LocalDefaultText = @"Ledger Transaction", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"לא ניתן לבצע חיתוך של יותר מ 365 ימים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.LocalAmount", DefaultText = "Local Amount",LocalDefaultText = "סכום בש''ח", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ForeignAmount", DefaultText = "Foreign Amount",LocalDefaultText = "סכום במט''ז", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
