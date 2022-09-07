@@ -5,6 +5,10 @@ export enum ConditionOperators {
     NotContains = "NotContains",
     StartsWith = "StartsWith",
     EndsWith = "EndsWith",
+    GreaterThan = "GreaterThan",
+    LessThan = "LessThan",
+    GreaterThanOrEquals = "GreaterThanOrEquals",
+    LessThanOrEquals = "LessThanOrEquals",
     IsEmpty = "IsEmpty",
     Changed = "Changed",
 }

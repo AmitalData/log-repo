@@ -18,15 +18,13 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     @Output() ConditionsOperationChange = new EventEmitter<string>();
 
+    public DataContext: any = this;
     public IsValidConditions: boolean = true;
-
     public ConditionsCounter: number = 1;
 
-    public ConditionOperations: ListItem[] = new ConditionOperationsList().ConditionOperations;
+    public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
 
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
-
-    DataContext: any = this;
 
     constructor() {
         super();

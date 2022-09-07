@@ -53,7 +53,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "IsDisabled",
         "IsDisabledWithColor",
         "DisableRules",
-
+        "DataCy",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -85,6 +85,8 @@ export class LogDatePickerComponent
     public IsFreeValue: boolean = false;
     public ForceSubscribe: boolean = false;
     public DisableRules: boolean = false;
+
+    public DataCy: string;
 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
