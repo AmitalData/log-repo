@@ -33,6 +33,7 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
         padding: 10px 0px 0px 0px;
      }
     `],
+    selector:'custom-dashboard'
 })
 
 export class CustomDashboardComponent implements  AfterViewInit {
