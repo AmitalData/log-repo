@@ -296,12 +296,12 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string duration ;
+	  private decimal? duration ;
 	  	  
        
 	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Duration  
+       public decimal? Duration  
 	   {
 	    
 	     get
@@ -312,7 +312,7 @@ namespace Logitude.Workflow.BL.EntityPMs
 		 {
 		   if(duration != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=duration,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=duration,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   duration=value;
 		   }
