@@ -617,22 +617,6 @@
                                                                                 </div>
                                                                             </split-button>
                                                                         </td>
-                                                                         <td style="width:1px"></td>
-                                                                        <td style="width:200px">
-                                                                            <split-button *ngIf="DelayFormVisibility"
-                                                                                          (DefaultSplitButtonClicked)="SendDelayForm()"
-                                                                                          [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
-                                                                                          [ButtonText]=SelectedDECToDelayFormButtonText
-                                                                                          [AsRegularButton]="'true'"
-                                                                                          [MENUDivExtraTop]="24"
-                                                                                          [MENUDivExtraLeft]="110">
-                                                                                <div
-                                                                                     class="class-MENUSplitButton-content">
-                                                                                    <div></div>
-                                                                                </div>
-                                                                            </split-button>
-                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -994,7 +978,7 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
-                                                                        <td>
+                                                                        <td [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '150px' : '170px' }">
                                                                             <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
@@ -1023,6 +1007,27 @@
                                                                                     </div>
                                                                                 </split-button>
                                                                             </div>
+                                                                        </td>
+                                                                        
+                                                                        <td style="width: 150px; ">
+                                                                            
+                                                                                <split-button *ngIf="DelayFormVisibility"
+                                                                                (DefaultSplitButtonClicked)="SendDelayForm()"
+                                                                                [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                                && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
+                                                                                [ButtonText]=SelectedDECToDelayFormButtonText
+                                                                                [AsRegularButton]="'true'"
+                                                                                [MENUDivExtraTop]="24"
+                                                                                [MENUDivExtraLeft]="110">
+                                                                                <div
+                                                                                    class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                                </split-button>
+                                                                                
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
