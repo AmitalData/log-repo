@@ -39,12 +39,6 @@
 
 <table *ngIf="EntityPM">
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
-
     <tr class="first-split-row">
         <td>
             <div></div>
@@ -114,5 +108,3 @@
     </tr>
 
 </table>
-
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="BusyIndicatorWidth"></BusyIndicator>
