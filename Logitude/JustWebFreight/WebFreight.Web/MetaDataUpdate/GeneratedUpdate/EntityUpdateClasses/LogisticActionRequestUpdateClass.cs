@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "4e2c1a12d13ce0dead7c796fc2ad8e18";
+		public const string HashString = "bd962a5640bfc6dd521d91b10bd7453c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2351,6 +2351,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration", DefaultText = "Find Declaration",LocalDefaultText = @"אותרה הצהרה", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration2", DefaultText = "According to the file number, whether to make a link",LocalDefaultText = @"לפי מס' התיק , האם לבצע קישור", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOChangeTransportType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.ChangeTransportType", DefaultText = "Are you interested in changing the shipping type",LocalDefaultText = @"האם אתה מעוניין לשנות סוג שילוח", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

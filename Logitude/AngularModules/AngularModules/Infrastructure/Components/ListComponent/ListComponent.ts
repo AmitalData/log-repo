@@ -2314,7 +2314,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                 //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
                                                 let title: string = (myResponse.Result?.RequestCancelStatus || myResponse.Result?.OperationalStatus);
                                                 title = title ? ' - ' + title : '';
-                                                logWindow.Title = 'בקשת ביטול יצום' + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                                                logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.CancelExportRequest') + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                 logWindow.WindowArgs = windowArgs;
                                                 logWindow.ShowCloseButton = true;
                                                 //logWindow.IsHideHeader = true;
@@ -2692,13 +2692,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     private SetNewEntityLabel() {
         
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
+            this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.NewExportDeclaration');
         } else
             if (this.listArgs.NewButtonLabel != null) {
                 this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
             }
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
-                this.NewEntityButtonLabel = "בקשת ביטול יצום"
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
@@ -2956,7 +2956,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "פתיחת הצהרת יצום חדשה";
+        logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.OpenNewDeclarationExport');
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
@@ -3330,7 +3330,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 920;
         logWindow.Height = 750;
-        logWindow.Title = ("ביטול יצום חדש");
+        logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.NewCancelExport');
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));

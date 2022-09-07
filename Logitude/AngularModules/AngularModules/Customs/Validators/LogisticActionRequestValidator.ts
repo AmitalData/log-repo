@@ -43,7 +43,6 @@ export class LogisticActionRequestValidator {
             if (!mm.HasError) {
                 if (mm.Result) {
                     var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
-                    if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
                     this.ValidationErrorMessageCodes.push(errorMsg);
                 }
             }

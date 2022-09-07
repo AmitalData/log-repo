@@ -22,16 +22,11 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
-
-import { Validator } from 'Infrastructure/Validators/Validator';
 import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
-import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
-
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -51,7 +46,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     OKButtonEnabled: boolean = true;
     submit: boolean = false;
     exporterName: string = ''
-    // syncDeclaration$ = new Subject();
     subscriber: Subscription;
     ValidationErrorsList: any[] = [];
     declartionVal: DeclarationPM;
@@ -326,7 +320,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     async TransportModeClicked(value: string) {
         if (this.entityPM.TransportmodeId == value) return;
         if (this.entityPM.TransportmodeId) {
-            if (await this.openConfirmWindow(' האם אתה מעוניין לשנות סוג שילוח?'))
+            if (await this.openConfirmWindow(TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ChangeTransportType') + '?'))
                 this.clearField();
             else {
                 value = this.entityPM.TransportmodeId;
@@ -454,14 +448,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     async CheckIfLogisticActionRequestExist() {
         return new Promise(resolve => {
             this.LogisticActionRequestService.GetIfLogisticActionRequestExists(this.entityPM.Id, this.entityPM.CargoIdentifierKey1, this.entityPM.CargoIdentifierKey2, this.entityPM.CargoIdentifierKey3, this.entityPM.CargoIdentifierType).subscribe((Result: any) => {
-                var mm: ServiceResponse = Result;
-                if (!mm.HasError) {
-                    if (mm.Result) {
-                        var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
-                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
-                        resolve(errorMsg);
-                    }
-                }
+                const mm: ServiceResponse = Result;
+                if (!mm.HasError && mm.Result)
+                    resolve(TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist"));
                 resolve("");
             });
         });
