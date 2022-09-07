@@ -23,7 +23,6 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public HasCreditLimitFeature: boolean = false;
     public HasEditCreditAmountFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
-    public ShowRegimenFiscalField: boolean = false;
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
     public SatInterfaceSettingCode: string;
@@ -49,17 +48,9 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
             this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
-            this.SetShowRegimenFiscalField();
         }
 
         this.Listen();
-    }
-
-    private SetShowRegimenFiscalField() {
-        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.ShowRegimenFiscalField = true;
-        }
     }
 
     ngAfterViewInit(): void {

@@ -535,14 +535,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "RFF", 
-                Name = "Regimen Fiscal Field", 
-                SearchFields = "RFF,Regimen Fiscal Field", 
-                Description = "Show Regimen Fiscal Field", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Managing Destination Warehouse Leg", 
                 Description = "Managing Destination Warehouse Leg in Drop Shipments", 
                 SearchFields = "MDW,Managing Destination Warehouse Leg", 
@@ -571,14 +563,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Test Server Validations", 
                 SearchFields = "TSV,Test Server Validations", 
                 Description = "Test Operational/ Accounting close rules validations in server side", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "PF4", 
-                Name = "Profact 4.0", 
-                SearchFields = "PF4,Profact 4.0", 
-                Description = "Add Profact Version 4.0 to SAT Interfaces", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -655,14 +639,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "CP4", 
-                Name = "SAT New Cancellation process", 
-                SearchFields = "CP4,SAT New Cancellation process", 
-                Description = "Activate SAT New Cancellation process", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Show Agents in Opportunities' Customers LOV", 
                 Description = "Show Agents in Opportunities' Customers LOV", 
                 Code = "SAC", 
@@ -685,7 +661,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "HTML Editor Style Fixed", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Code = "VIP", 
@@ -693,7 +668,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "VIP,Vizion - Pilot Customer", 
                 Description = "Vizion - Pilot Customer", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "SCD", 
@@ -701,7 +676,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SCD,Second context DB", 
                 Description = "to get the secondary database for the context ", 
 			});
-
 			
             return all;
        }
