@@ -184,7 +184,8 @@
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()">
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()"
+                        [attr.data-cy]="'AddConditionButton'">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                 </div>

@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 })
 
 export class FieldTemplateComponent {
+
     public Entity: any = null;
     public FieldName: string = null;
     public ObjectTableName: string = null;

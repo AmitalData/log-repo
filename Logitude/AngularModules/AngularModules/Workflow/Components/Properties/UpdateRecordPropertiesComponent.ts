@@ -8,10 +8,10 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 export class UpdateRecordPropertiesComponent extends BaseComponent {
 
-    public CurrentSession = SessionLocator.SelectedSession;
+    public DataContext: any = this;
+    public Data: any;
 
-    DataContext: any = this;
-    Data: any;
+    public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};

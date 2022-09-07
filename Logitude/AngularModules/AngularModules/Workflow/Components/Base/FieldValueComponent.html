@@ -1,4 +1,4 @@
-<div *ngIf="!ShowIntegerNumberInput">
+<div *ngIf="!IsIntegerNumberInput">
 
     <div *ngIf="isLookupObjectField() && LookupTable">
 
@@ -22,7 +22,7 @@
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
             [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()" [NoValidation]="true"
-            [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name">
+            [HideColumns]="true" [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 
     </div>
@@ -33,7 +33,7 @@
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
             [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()"
             [DigitsAfterPoint]="ObjectField.DigitsAfterPoint" [NoValidation]="true" [HideColumns]="true"
-            (ValueChanged)="updateValue($event)" [DataCy]="Name">
+            [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 
     </div>
@@ -41,7 +41,7 @@
 
     <div *ngIf="isBooleanObjectField()">
 
-        <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
+        <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
             (SelectedItemChanged)="updateValue($event.Code)" [ListType]="''" [CyData]="Name">
         </ComboBox>
 
@@ -61,12 +61,12 @@
 
 
 
-<div *ngIf="ShowIntegerNumberInput">
+<div *ngIf="IsIntegerNumberInput">
 
     <div>
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="true" [HideColumns]="true"
+            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
             (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 

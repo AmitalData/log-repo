@@ -10,10 +10,19 @@ export class ListItem {
     }
 
     private getItemNameFromCode(itemCode: string) {
-        if (itemCode === DateTimeValueExpressions.PlusMinusToday) {
-            return "Today +/-";
+        let customItemNameFromCode = this.getCustomItemNameFromCode(itemCode);
+        if (customItemNameFromCode) {
+            return customItemNameFromCode;
         }
-
         return (itemCode ? itemCode.split(/(?=[A-Z])/).join(" ") : null);
+    }
+
+    private getCustomItemNameFromCode(itemCode: string) {
+        switch (itemCode) {
+            case DateTimeValueExpressions.PlusMinusToday:
+                return "Today +/-";
+            default:
+                return null;
+        }
     }
 }

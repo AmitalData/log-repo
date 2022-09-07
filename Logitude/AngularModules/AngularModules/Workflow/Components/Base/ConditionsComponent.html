@@ -23,8 +23,9 @@
 
     <div class="entity-conditions-operation-container">
 
-        <ComboBox [ItemsSource]="ConditionOperations" [Binding]="'Name'" [SelectedItem]="ListItem(ConditionsOperation)"
-            (SelectedItemChanged)="updateConditionsOperation($event)" [ListType]="''" [CyData]="'ConditionsOperation'">
+        <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
+            [SelectedItem]="ListItem(ConditionsOperation)" (SelectedItemChanged)="updateConditionsOperation($event)"
+            [ListType]="''" [CyData]="'ConditionsOperation'">
         </ComboBox>
 
     </div>
