@@ -397,6 +397,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
     OnAllBtnClicked() {
 
+        this.containerizationExtendedListService.countConnect=0;
         this.containerizationExtendedListService.IsError=false;
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
@@ -409,7 +410,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.containerizationExtendedListService.SelectedDeclarations = false;
         }
         this.LoadConnectedItems();
-
+      
     }
 
     filterAgrs: ApiQueryFilters;
@@ -418,6 +419,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     OnNoneBtnClicked() {
+        this.containerizationExtendedListService.countConnect=0;
         this.containerizationExtendedListService.IsError=false;
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
@@ -428,6 +430,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     itemClicked(itemValue: string) {
+        this.containerizationExtendedListService.countConnect=0;
         if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
         }
@@ -618,7 +621,8 @@ export class NewContainerizationComponent extends BaseComponent {
         return params
     }
     private timerToken: any;
-    TextChanged(searchtext: any) {       
+    TextChanged(searchtext: any) {    
+        this.containerizationExtendedListService.countConnect=0;   
         if (searchtext != null || searchtext != undefined) {
 
             this.timerToken = setTimeout(() => {
@@ -632,6 +636,7 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
     OnValueChange(searchValue: any) {
+        this.containerizationExtendedListService.countConnect=0;
         if (searchValue == null) {
             this.OnNoneBtnClicked()
         }

@@ -31,7 +31,7 @@ export class CustomsContainerizationListTemplate {
     
     IsConnectedDeclarationChecked: boolean = true;
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
-    entityPM: ContainerizationPM;
+    entityPM: ContainerizationPM;   
     constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {        
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as ContainerizationPM;
@@ -50,7 +50,7 @@ export class CustomsContainerizationListTemplate {
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
         if(this.rowData.IsSubmitDeclaration){
-           if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
+         if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
                this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
            }
            if (!this._containerizationExtendedListService.ConnectedDeclarations) {
@@ -69,7 +69,7 @@ export class CustomsContainerizationListTemplate {
            }
            if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
                this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
-           }
+           }               
            let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
            if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
                let ConnectedDeclarations = sConnectedDeclarations.split(',')
@@ -81,13 +81,21 @@ export class CustomsContainerizationListTemplate {
            }
               
         }
-         this.countDeclarationUi = this._containerizationExtendedListService?.ConnectedDeclarations?.split(',').length-1;
+        if(this.IsConnectedDeclarationChecked){
+            if(this._containerizationExtendedListService.Id!=this.rowData.Id){
+                this._containerizationExtendedListService.countConnect+=1;
+            }
+             
+            this._containerizationExtendedListService.Id=this.rowData.Id
+          
+        }
+
          if(this._containerizationExtendedListService.connectedSelectAll){
             this.ShowError();
          } 
     }
     ShowError(){
-        debugger
+       
         this._containerizationExtendedListService.IsError=false;
         this._containerizationExtendedListService.SelectedDeclarations = true;
         if(AppTool.IsNullOrEmpty(this._containerizationExtendedListService.AllDeclarations)){
@@ -116,6 +124,7 @@ export class CustomsContainerizationListTemplate {
        
            this._containerizationExtendedListService.disconnectedSelectAll = false;
            if ($event) {
+            this._containerizationExtendedListService.countConnect+=1;
                if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                    this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
                    this.AddUniqueConsignmentToRequestParams(this.rowData.CargoTypeCode, this.rowData.ManifestNumber, this.rowData.SecondCargoID, this.rowData.ThirdCargoID, this.rowData.Id)
@@ -126,6 +135,7 @@ export class CustomsContainerizationListTemplate {
                }
            }
            else {
+            this._containerizationExtendedListService.countConnect-=1;
                if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                    this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
                    this._containerizationExtendedListService.connectedSelectAll = false;                  
@@ -136,7 +146,8 @@ export class CustomsContainerizationListTemplate {
                    this._containerizationExtendedListService.IsDirectCharging = this._containerizationExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
                }
            }       
-            if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations) || (this._containerizationExtendedListService.ConnectedDeclarations.split(',').length - 1 - this.countDeclarationUi == 0)) {
+
+            if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations) || (this._containerizationExtendedListService.countConnect  == 0)) {
            
                this._containerizationExtendedListService.SelectedDeclarations = false;
            } else {
