@@ -535,14 +535,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "RFF", 
-                Name = "Regimen Fiscal Field", 
-                SearchFields = "RFF,Regimen Fiscal Field", 
-                Description = "Show Regimen Fiscal Field", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Managing Destination Warehouse Leg", 
                 Description = "Managing Destination Warehouse Leg in Drop Shipments", 
                 SearchFields = "MDW,Managing Destination Warehouse Leg", 
@@ -571,14 +563,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Test Server Validations", 
                 SearchFields = "TSV,Test Server Validations", 
                 Description = "Test Operational/ Accounting close rules validations in server side", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "PF4", 
-                Name = "Profact 4.0", 
-                SearchFields = "PF4,Profact 4.0", 
-                Description = "Add Profact Version 4.0 to SAT Interfaces", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -651,14 +635,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Shipment BI Report Scheduler", 
                 SearchFields = "BSH,Shipment BI Report Scheduler", 
                 Description = "Shipment BI Report Scheduler", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "CP4", 
-                Name = "SAT New Cancellation process", 
-                SearchFields = "CP4,SAT New Cancellation process", 
-                Description = "Activate SAT New Cancellation process", 
 			});
 			 
             all.Add(new ToggleDetails()
