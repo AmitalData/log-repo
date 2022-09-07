@@ -19,6 +19,8 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -32,6 +34,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
 
     }

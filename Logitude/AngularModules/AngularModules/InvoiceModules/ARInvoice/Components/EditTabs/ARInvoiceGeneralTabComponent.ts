@@ -20,6 +20,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     public DisplaySATSettings: boolean = false;
     public DisplayQBOSettings: boolean = false;
     public Periods: PeriodDetails[] = [];
+    public Profact4Enabled: boolean = false;
 
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
@@ -28,6 +29,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
             this.FillPeriodList();
         }
 

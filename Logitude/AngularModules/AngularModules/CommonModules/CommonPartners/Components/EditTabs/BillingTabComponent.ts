@@ -15,6 +15,8 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -23,6 +25,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
     }
 
