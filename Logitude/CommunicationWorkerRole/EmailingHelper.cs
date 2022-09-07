@@ -70,12 +70,11 @@ namespace CommunicationWorkerRole
             myMessage.Subject = subject;
             myMessage.BodyEncoding = System.Text.Encoding.UTF8;
 
-            if (!string.IsNullOrWhiteSpace(provider.UserName) && parameters.SwitchFromWithUserNameIfValid && Regex.IsMatch(provider.UserName, strRegex))
+            if (!string.IsNullOrEmpty(provider.UserName) && !string.IsNullOrWhiteSpace(provider.UserName) && parameters.SwitchFromWithUserNameIfValid && Regex.IsMatch(provider.UserName, strRegex))
             {
                 myMessage.From = new MailAddress(provider.UserName);
             }
-            else
-            if (string.IsNullOrEmpty(parameters.SentByUser))
+            else if (string.IsNullOrEmpty(parameters.SentByUser) || string.IsNullOrWhiteSpace(parameters.SentByUser))
             {
                 if (parameters.From == "no-reply@")
                 {
@@ -98,14 +97,14 @@ namespace CommunicationWorkerRole
             //myMessage.
             string[] emailList = new string[] { };
 
-            if (parameters.To != null)
+            if (!string.IsNullOrEmpty(parameters.To) && !string.IsNullOrWhiteSpace(parameters.To))
             {
                 emailList = parameters.To.Split(';');
             }
 
             for (int i = 0; i < emailList.Length; i++)
             {
-                if (!string.IsNullOrEmpty(emailList[i]))
+                if (!string.IsNullOrEmpty(emailList[i]) && !string.IsNullOrWhiteSpace(emailList[i]))
                 {
                     emailList[i] = emailList[i].Trim();
                     Regex re = new Regex(strRegex);
@@ -117,12 +116,12 @@ namespace CommunicationWorkerRole
                 }
             }
 
-            if (!string.IsNullOrEmpty(parameters.Cc))
+            if (!string.IsNullOrEmpty(parameters.Cc) && !string.IsNullOrWhiteSpace(parameters.Cc))
             {
                 string[] ccList = parameters.Cc.Split(';');
                 for (int i = 0; i < ccList.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(ccList[i]))
+                    if (!string.IsNullOrEmpty(ccList[i]) && !string.IsNullOrWhiteSpace(ccList[i]))
                     {
                         Regex re = new Regex(strRegex);
                         if (re.IsMatch(ccList[i]))
@@ -130,19 +129,17 @@ namespace CommunicationWorkerRole
                             MailAddress mailaddress = new MailAddress(ccList[i]);
                             myMessage.CC.Add(mailaddress);
                         }
-
                     }
                 }
-
             }
 
             //Bcc
-            if (!string.IsNullOrEmpty(parameters.Bcc))
+            if (!string.IsNullOrEmpty(parameters.Bcc) && !string.IsNullOrWhiteSpace(parameters.Bcc))
             {
                 string[] bccList = parameters.Bcc.Split(';');//to be fixed to Bcc when field is ready!
                 for (int i = 0; i < bccList.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(bccList[i]))
+                    if (!string.IsNullOrEmpty(bccList[i]) && !string.IsNullOrWhiteSpace(bccList[i]))
                     {
                         Regex re = new Regex(strRegex);
                         if (re.IsMatch(bccList[i]))
@@ -151,10 +148,8 @@ namespace CommunicationWorkerRole
                             myMessage.Bcc.Add(mailaddress);
 
                         }
-
                     }
                 }
-
             }
 
 

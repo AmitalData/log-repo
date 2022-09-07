@@ -94,6 +94,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
                     entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
 
+                    entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
+
                     if (entity.Id == entity.InvoiceNumber)
                     {
                         entity.InvoiceNumber = item.DraftNumber + " (Draft)";
