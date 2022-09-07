@@ -130,6 +130,7 @@
     <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
     <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
+    <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -168,6 +169,7 @@
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />
     <None Include="DBScripts\Pre\20220425_COMMLOG_DBIDCOUNTERS_SEQ.sxml" />
+    <None Include="DBScripts\Pre\20220905_UpdateDeclarationPhysicalCheck.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />

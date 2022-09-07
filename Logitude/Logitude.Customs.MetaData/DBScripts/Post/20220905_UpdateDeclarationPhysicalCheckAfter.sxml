@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+	</Sql>
+
+  <Oracle Version="7">
+    <![CDATA[
+EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column PHYSICALCHECK';
+EXECUTE IMMEDIATE 'alter table DECLARATIONS rename column PHYSICALCHECK_temp to PHYSICALCHECK';
+
+
+    ]]>
+	</Oracle>
+</Script>
