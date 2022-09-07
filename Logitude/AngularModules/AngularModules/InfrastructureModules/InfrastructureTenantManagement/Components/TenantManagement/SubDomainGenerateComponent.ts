@@ -39,15 +39,6 @@ export class SubDomainGenerateComponent extends BaseComponent  {
         }
     }
 
-    get CustomerURL() {
-        return this.EntityPM.CustomerURL;
-    }
-    set CustomerURL(value: string) {
-        if (this.EntityPM.CustomerURL != value) {
-            this.EntityPM.CustomerURL = value;
-        }
-    }
-
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -58,7 +49,7 @@ export class SubDomainGenerateComponent extends BaseComponent  {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
-                this.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
+                this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }

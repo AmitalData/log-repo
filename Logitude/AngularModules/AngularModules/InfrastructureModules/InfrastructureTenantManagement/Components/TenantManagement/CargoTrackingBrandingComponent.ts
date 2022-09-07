@@ -66,6 +66,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CustomerURL = this.EntityPM.CustomerURL;
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
@@ -73,6 +74,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CustomerURL = this.EntityPM.CustomerURL;
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
