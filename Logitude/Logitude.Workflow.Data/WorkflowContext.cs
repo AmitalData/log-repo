@@ -76,6 +76,8 @@ namespace Logitude.Workflow.Data
 	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
 				
+				
+			modelBuilder.Entity<WorkFlowInstance>().Property(x => x.Duration).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
