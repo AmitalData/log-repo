@@ -581,7 +581,7 @@ namespace CommunicationWorkerRole
                 //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
             }
-            string dbConnectionInfo = currentDb.DBConnection;
+            string dbConnectionInfo = !string.IsNullOrEmpty(currentDb.SecondaryAzureDBConnection) ? currentDb.SecondaryAzureDBConnection: currentDb.DBConnection;
 
             // Specify the provider name, server and database.
             string providerName = "System.Data.SqlClient";
