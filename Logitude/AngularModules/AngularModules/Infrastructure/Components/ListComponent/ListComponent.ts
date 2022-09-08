@@ -1,7 +1,7 @@
 
 declare var System: any;
 declare var window: any;
-import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -54,6 +54,7 @@ import { VariableAst } from '@angular/compiler';
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
     //pipes: [TextCodeTranslationPipe],
     providers: [ListComponentArgs, EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
