@@ -151,8 +151,8 @@ export class NewContainerizationComponent extends BaseComponent {
 
     }
 
-    itemMouseOver(itemValue: string) {     
-        if (this.SelectedValue != itemValue) {
+    itemMouseOver(itemValue: string) {        
+        if (this.SelectedValue != itemValue) {           
             var img_A = document.getElementById(this.TransportFilter_A);
             var img_O = document.getElementById(this.TransportFilter_O);
             var img_I = document.getElementById(this.TransportFilter_I);
@@ -430,9 +430,10 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     itemClicked(itemValue: string) {
-        this.containerizationExtendedListService.countConnect=0;
+        this.containerizationExtendedListService.countConnect=0;          
         if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
+            this.OnNoneBtnClicked(); 
         }
 
 
@@ -623,6 +624,7 @@ export class NewContainerizationComponent extends BaseComponent {
     private timerToken: any;
     TextChanged(searchtext: any) {    
         this.containerizationExtendedListService.countConnect=0;   
+        this.OnNoneBtnClicked(); 
         if (searchtext != null || searchtext != undefined) {
 
             this.timerToken = setTimeout(() => {
@@ -635,11 +637,11 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
-    OnValueChange(searchValue: any) {
+    OnValueChange(searchValue: any) {        
         this.containerizationExtendedListService.countConnect=0;
-        if (searchValue == null) {
+
             this.OnNoneBtnClicked()
-        }
+
 
     }
 
