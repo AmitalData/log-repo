@@ -18561,7 +18561,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "1", Name = "בדיקה פיזית פתוחה", SearchFields = "בדיקה פיזית פתוחה,1" }, physicalCheckCodeRepository);
             AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "2", Name = "בדיקה פיזית סגורה", SearchFields = "בדיקה פיזית סגורה,2" }, physicalCheckCodeRepository);
-            AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
+          //  AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
 
             physicalCheckCodeRepository.SubmitChanges();
 

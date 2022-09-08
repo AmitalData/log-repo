@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;קוד בדיקה פיזית&quot;"
   DefaultText="&quot;Physical Check Code&quot;"
-  Code="&quot;2c48&quot;"
+  Code="&quot;0e79&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -337,10 +337,6 @@
       Code="&quot;2&quot;"
       Name="&quot;בדיקה פיזית סגורה&quot;"
       SearchFields="&quot;2,בדיקה פיזית סגורה&quot;" />
-    <Record
-      Name="&quot;ללא בדיקה&quot;"
-      SearchFields="&quot;ללא בדיקה&quot;"
-      Code="&quot;N&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
