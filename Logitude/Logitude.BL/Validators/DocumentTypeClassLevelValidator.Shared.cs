@@ -102,7 +102,9 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "Occasion"
                     && documentType.ObjectTableName != "InterestReport"
                     && documentType.ObjectTableName != "ShipmentOrder"
-                    && documentType.ObjectTableName != "Container")
+                    && documentType.ObjectTableName != "Container"
+                    && documentType.ObjectTableName != "BIReport"
+                    )
 
                 {
 

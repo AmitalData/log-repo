@@ -72,6 +72,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public string MainCustomerFieldName { get; set; }
         [DataMember]
         public DWObjectFieldsDetails DWQueryFilterData { get; set; }
+        [DataMember]
+        public string DocumentTypeTemplateId { get; set; }
     }
 
     [DataContract(Namespace = "")]

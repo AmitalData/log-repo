@@ -343,7 +343,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(string documentTypeId,string editorToolCode, int tenant)
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(string documentTypeId,string editorToolCode, int tenant)
         {
 
 

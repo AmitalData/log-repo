@@ -114,11 +114,11 @@ export class DocumentTypeTemplatePMExtendedService {
     }
   
     //string documentTypeId, int tenant
-    getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeId: string, editorToolCode:string ,tenant: number) {
+    getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeId: string, editorToolCode:string ,tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidforautomations/?' + 'documentTypeId=' + documentTypeId + '&editorToolCode=' + editorToolCode+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidandeditortoolcode/?' + 'documentTypeId=' + documentTypeId + '&editorToolCode=' + editorToolCode+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
        
             var result :any = response;
             var entity: DocumentTypeTemplatePM;
