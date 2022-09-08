@@ -107,12 +107,13 @@
                                     </ng-template>
                                 </log-column>
                                 <log-column [header]="'Customs.DeclarationPending.F.Approval' | TextCodeTranslationPipe"
-                                    [binding]="'Approval'" [width]="'40'" [Editable]="true" [Alignment]="'right'"
+                                    [binding]="'Approval'" [width]="'40'" [Editable]="true" [Alignment]="'Center'"
                                     [visibility]="HasRequiresApprovalFeature?'collapsed':'hidden'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right"
+                                            <div class="TextTrimming" style="text-align:center; padding-right:15px;padding-top:2px"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
+                                                <div style="width:20px"></div>
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
                                                     [IsEnabled]="!item.WasApproved"
@@ -120,7 +121,7 @@
                                                 <span
                                                     *ngIf="!item.CourierPendingRequireApr"></span>
                                             </div>
-                                            <div class="TextTrimming" style="text-align:right"
+                                            <div class="TextTrimming" style="text-align:center; padding-right:17px;padding-top:1px"
                                                 *ngIf="logcelltemplate.IsEditMode">
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
