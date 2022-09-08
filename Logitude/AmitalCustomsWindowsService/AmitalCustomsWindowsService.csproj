@@ -240,6 +240,7 @@
     <Compile Include="Tester\ReqSheet\FormRepushQ.Designer.cs">
       <DependentUpon>FormRepushQ.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tester\Sql2Oracle.cs" />
     <Compile Include="Tester\SU\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>

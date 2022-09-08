@@ -316,6 +316,9 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Sql2Oracle sql2Oracle = new Sql2Oracle();
+            sql2Oracle.GetReNameLongColumns(root:@"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
+            return;
 
 
             Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
