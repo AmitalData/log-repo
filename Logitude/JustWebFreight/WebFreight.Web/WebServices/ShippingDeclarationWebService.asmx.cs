@@ -2604,20 +2604,27 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
                 #endregion
 
+                #region ShipperNotExporter
+                Address shipperNotExporterAddress = null;
+                if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
+                {
+                    shipperNotExporterAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
+                    if (shipperNotExporterAddress != null)
+                    {
+                        myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(shipperNotExporterAddress, true);
+                    }
+                }
+                #endregion
+
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
 
                 if (myPickup == null)
                 {
-                    if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
+                    if (shipperNotExporterAddress != null)
                     {
-                        Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            myDataProvider.PickUpAddress = myAddress.City != null ? myAddress.City : "";
-                            myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(myAddress, true);
-                        }
+                        myDataProvider.PickUpAddress = shipperNotExporterAddress.City != null ? shipperNotExporterAddress.City : "";
                     }
 
                     else if (preForwardingFromPort != null)
