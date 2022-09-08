@@ -719,7 +719,7 @@ namespace Logitude.Customs.Data.Repsitories
                                            select a.DeclarationId);
 
                 declarations = (from a in context.Declarations
-                                where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true && !a.IsCancelled
                                 select a);
             }
             else
@@ -728,7 +728,7 @@ namespace Logitude.Customs.Data.Repsitories
 
                                 where /*!courierDeclarations.Contains(a.Id) */
                                 !context.CourierDeclarations.Any(cd => cd.DeclarationId == a.Id)
-                                && a.IsCourierDeclaration == true
+                                && a.IsCourierDeclaration == true && !a.IsCancelled
                                 select a
                  );
 
