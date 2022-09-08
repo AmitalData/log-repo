@@ -266,20 +266,23 @@ namespace Logitude.Accounting.BL.Utils
 
                                         currencies.ForEach(curr => 
                                         {
-                                            GLAccountPM glac_incurr = GetGLAccount(aRInvoicePM, tenant, curr);
-                                            if (curr == aRInvoicePM.InvoiceCurrencyId)
+                                            string glaccid_thiscurr = myGLAccountId;
+                                            GLAccountCurrencyPM glaccurPM = gLAccountCurrencies.Where(gc => gc.CurrencyId == curr).FirstOrDefault();
+                                            if (glaccurPM == null || String.IsNullOrEmpty(glaccurPM.GLAccountId))
                                             {
-                                                if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
-                                                else
-                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                                glaccid_thiscurr = myGLAccountId;
                                             }
                                             else
                                             {
-                                                if (glac_incurr != null)
-                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glac_incurr.Id, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, null, curr);
-                                                else
-                                                    CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, myGLAccountId, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, null, curr);
+                                                glaccid_thiscurr = glaccurPM.GLAccountId;
+                                            }
+                                            if (curr == aRInvoicePM.InvoiceCurrencyId)
+                                            {
+                                                CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glaccid_thiscurr, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
+                                            }
+                                            else
+                                            {
+                                                CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glaccid_thiscurr, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                             }
                                         });
 
@@ -423,54 +426,54 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        private GLAccountPM GetGLAccount(ARInvoicePM invoice, int tenant, string currencyId)
-        {
-            GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
-            if (invoice.BillToGLAccountId == null)
-            {
-                GLAccountPM debitGLAccount = getDebitGLAccount(invoice.BillToId, invoice.Tenant, glAccountQuery);
-                GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAccount.Id, invoice.Tenant, currencyId);
-                if (splittedAccount != null)
-                    return splittedAccount;
-                else
-                    return debitGLAccount;
-            }
-            else
-            {
-                return glAccountQuery.GetSinglePM(invoice.BillToGLAccountId, invoice.Tenant);
-            }
-        }
+        //private GLAccountPM GetGLAccount(ARInvoicePM invoice, int tenant, string currencyId)
+        //{
+        //    GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
+        //    if (invoice.BillToGLAccountId == null)
+        //    {
+        //        GLAccountPM debitGLAccount = getDebitGLAccount(invoice.BillToId, invoice.Tenant, glAccountQuery);
+        //        GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAccount.Id, invoice.Tenant, currencyId);
+        //        if (splittedAccount != null)
+        //            return splittedAccount;
+        //        else
+        //            return debitGLAccount;
+        //    }
+        //    else
+        //    {
+        //        return glAccountQuery.GetSinglePM(invoice.BillToGLAccountId, invoice.Tenant);
+        //    }
+        //}
 
 
-        private GLAccountPM getDebitGLAccount(string billToId, int tenant, GLAccountQueryService glAccountQuery, string billToGLAccountId = null)
-        {
-            GLAccountPM glaAccount = null;
-            if (billToGLAccountId != null)
-            {
-                var billToGLAccount = glAccountQuery.GetSinglePM(billToGLAccountId, tenant);
-                if (billToGLAccount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode)
-                {
-                    return billToGLAccount;
-                }
-            }
-            CardRepository cardRep = new CardRepository(tenant);
-            Card card = cardRep.GetSingleCard(billToId, tenant);
-            if (card != null)
-            {
-                CheckTheCardGLAccount(card);
-                glaAccount = glAccountQuery.GetSinglePM(card.GLAccountId, tenant);
-            }
+        //private GLAccountPM getDebitGLAccount(string billToId, int tenant, GLAccountQueryService glAccountQuery, string billToGLAccountId = null)
+        //{
+        //    GLAccountPM glaAccount = null;
+        //    if (billToGLAccountId != null)
+        //    {
+        //        var billToGLAccount = glAccountQuery.GetSinglePM(billToGLAccountId, tenant);
+        //        if (billToGLAccount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode)
+        //        {
+        //            return billToGLAccount;
+        //        }
+        //    }
+        //    CardRepository cardRep = new CardRepository(tenant);
+        //    Card card = cardRep.GetSingleCard(billToId, tenant);
+        //    if (card != null)
+        //    {
+        //        CheckTheCardGLAccount(card);
+        //        glaAccount = glAccountQuery.GetSinglePM(card.GLAccountId, tenant);
+        //    }
 
-            return glaAccount;
-        }
+        //    return glaAccount;
+        //}
 
-        private void CheckTheCardGLAccount(Card card)
-        {
-            if (card.GLAccountId == null)
-            {
-                throw new Exception("The Bill To Card " + card.Code + " is not connected to a GLAccount ");
-            }
-        }
+        //private void CheckTheCardGLAccount(Card card)
+        //{
+        //    if (card.GLAccountId == null)
+        //    {
+        //        throw new Exception("The Bill To Card " + card.Code + " is not connected to a GLAccount ");
+        //    }
+        //}
 
 
 
