@@ -91,7 +91,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (this.entityArgs.EditComponent) {
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((event: string) => {
                 if (event) {
-                    if (event == "PayablesGenerated") {
+                    if (event == "PayablesGenerated" || event == "ExpensePayableAdded") {
                         this.BuildItemsSource();
                         this.ComputeShipmentFields();
                     }
