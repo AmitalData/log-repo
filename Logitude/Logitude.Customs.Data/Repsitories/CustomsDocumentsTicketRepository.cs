@@ -176,9 +176,19 @@ FROM ( SELECT DISTINCT
             return tickets;
 
         }
+        public List<string> GetIsConnectDec(string documentsfilingid ,string entityId)
+        {
+            var query = (from a in context.CustomsDocumentsTickets
+                         where a.DocumentsFilingId == documentsfilingid
+                         select a.Id).ToList();
 
+            var query1 = (from a in context.CustomsDocumentPointers
+                          where query.Contains(a.CustomsDocumentsTicketId) && entityId != a.ParentEntityId
+                          select a.ParentEntityId).ToList();
+            return query1;
+        }
 
-public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
+        public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
 {
 (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
@@ -215,6 +225,6 @@ public string Child1EntityId { get; set; }
 public string Child2EntityId { get; set; }
 public string Child3EntityId { get; set; }
 }
-
+  
 }
    

@@ -320,5 +320,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
         
             return ticketPMs;
         }
+        public List<string> GetIsConnectDec(string documentsfilingid, string entityId)
+        {
+          return  repository.GetIsConnectDec(documentsfilingid, entityId);
+        }
     }
 }
