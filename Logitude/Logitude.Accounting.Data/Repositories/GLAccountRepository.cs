@@ -1090,7 +1090,7 @@ namespace Logitude.Accounting.Data.Repositories
                         
                            && (crm.PartnerTypeId == "CS" || crm.PartnerTypeId == "PO")
                         join a in context.GLAccounts
-                        .Where(r => r.AccountTypeCode == "2" && r.Tenant == tenant)
+                        .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
                         on crm.ReceivablesAccountingCard equals a.DisplayNumber
 
                         select new CardDTO()
