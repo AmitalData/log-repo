@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.Utils
                             }
                             if (aRInvoicePM != null)
                             {
-                                bool split_inv = aRInvoicePM.SplitJournalByCurrency;
+                                bool split_inv = aRInvoicePM.IsMultiCurrency;
                                 if (split_inv)
                                 {
                                     GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(tenant);
