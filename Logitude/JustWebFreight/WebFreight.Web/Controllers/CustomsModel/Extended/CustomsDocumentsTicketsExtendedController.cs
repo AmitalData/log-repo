@@ -90,5 +90,45 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+        public HttpResponseMessage GetIsConnectDec(string documentsfilingid,string entityId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                   
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
+                    
+
+                        List<string> decConnect= queryService.GetIsConnectDec(documentsfilingid, entityId);
+                       var conDec = new ConnectedDeclarations();
+                        conDec.decConnect = decConnect;
+                      
+                        return Request.CreateResponse(HttpStatusCode.OK, conDec);
+                   
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+        public class ConnectedDeclarations
+        {
+            public List<string> decConnect { get; set; }
+        }
     }
 }
