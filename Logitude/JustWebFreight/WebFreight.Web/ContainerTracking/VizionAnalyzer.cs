@@ -45,9 +45,10 @@ namespace WebFreight.Web.ContainerTracking
             MapArrivedField();
             MapDepartureField();
             MapEmptyPickup();
-            MapOriginLocation();
             MapPOL(); 
             MapPOD();
+            MapPreCarriage();
+            MapOnCarriage();
 
             MapGate();
             //MapLIFLocation();
@@ -107,15 +108,44 @@ namespace WebFreight.Web.ContainerTracking
 
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.EstimatedPODDischarge, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.ActualPODDischarge);
+        }
+        private void MapPreCarriage()
+        {
 
-            
+            if (!IsDeferuntPort(visionContainerStatus?.payload?.inland_origin, visionContainerStatus?.payload?.origin_port))
+                return;
+            containerUpdatedFields.VisionPreCarriage = visionContainerStatus?.payload?.inland_origin;
+        }
+        private void MapOnCarriage()
+        {
+            if(
+                !string.IsNullOrEmpty(visionContainerStatus?.payload?.inland_destination?.unlocode) && 
+                !string.IsNullOrEmpty(visionContainerStatus?.payload?.destination_port?.unlocode) &&
+                visionContainerStatus?.payload?.inland_destination?.unlocode != visionContainerStatus?.payload?.destination_port?.unlocode
+              )
+            {
+                containerUpdatedFields.VisionOnCarriage = visionContainerStatus?.payload?.inland_destination;
+                return;
+            }
 
-
+            if (!IsDeferuntPort(visionContainerStatus?.payload?.inland_destination, visionContainerStatus?.payload?.destination_port))
+                return;
+            containerUpdatedFields.VisionOnCarriage = visionContainerStatus?.payload?.inland_destination;
         }
 
-        private void MapOriginLocation()
+        private bool IsDeferuntPort(Location location, Location mainLocation)
         {
-            containerUpdatedFields.POLLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.POLLocation;
+            if (mainLocation == null)
+                return false;
+            if (location == null)
+                return false;
+            if (location.name == mainLocation.name &&
+                location.country == mainLocation.country && 
+                location.city == mainLocation.city && 
+                location.state == mainLocation.state)
+                return false;
+
+            return true;
         }
 
         private void MapEmptyPickup()
@@ -129,6 +159,8 @@ namespace WebFreight.Web.ContainerTracking
 
         private void MapPOL()
         {
+            containerUpdatedFields.POLLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.POLLocation;
+
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLArrival, ref containerUpdatedFields.EstimatedPOLArrival, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLArrival, ref containerUpdatedFields.ActualPOLArrival);
 
