@@ -94,6 +94,7 @@
     <None Include="DBScripts\202103020855SetToggleForChildPickupDeliveryFeature.sxml" />
     <None Include="DBScripts\20211117_DeleteBQFTogglesCodes.sxml" />
     <None Include="DBScripts\20220208_DeleteBAFTogglesCodes.sxml" />
+    <None Include="DBScripts\20220906_DeleteProfactV4TogglesCodes.sxml" />
     <None Include="DBScripts\20220728_DeleteSCGTogglesCodes.sxml" />
     <None Include="DBScripts\20220619_DeletePLETogglesCodes.sxml" />
     <None Include="DBScripts\20220208_DeleteBCFTogglesCodes.sxml" />

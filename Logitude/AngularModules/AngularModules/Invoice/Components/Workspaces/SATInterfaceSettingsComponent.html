@@ -20,17 +20,13 @@
                         </td>
 
                         <td style="width:230px; ">
-                            <!--<LogLov [ObjectFieldName]="'SATInterfaceCode'"
-            [ObjectTableName]="ObjectTableName"
-            [DataContext]="EntityPM"
-            [SelectedValue]="EntityPM.SATInterfaceCode"
-            [LookUpTableName]="'SATInterface'"
-            [HideColumns]="true">
-    </LogLov>-->
-                            <ComboBox (SelectedItemChanged)="SelectedSATInterface = $event"
-                                      [SelectedItem]="SelectedSATInterface" [ItemsSource]="SATInterfaces"
-                                      [Binding]="'Name'"
-                                      [attr.data-cy]="'SAT Interface Value'" ></ComboBox>
+                            <LogLov [ObjectFieldName]="'SATInterfaceCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="EntityPM"
+                                    [SelectedValue]="EntityPM.SATInterfaceCode"
+                                    [LookUpTableName]="'SATInterface'"
+                                    [HideColumns]="true">
+                            </LogLov>
                         </td>
 
                         <td>
@@ -119,7 +115,7 @@
 
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="(EntityPM.SATInterfaceCode === 'PROF33' && HaveRegimenFiscalField) || EntityPM.SATInterfaceCode === 'PROF40'">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF40'">
 
                         <td style="width:128px; ">
                             <LogLabel [ObjectFieldName]="'SATCompanyName'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
