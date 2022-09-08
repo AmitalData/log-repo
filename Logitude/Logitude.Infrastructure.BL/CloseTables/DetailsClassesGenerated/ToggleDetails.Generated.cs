@@ -676,6 +676,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SCD,Second context DB", 
                 Description = "to get the secondary database for the context ", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EHA", 
+                Name = "House Entity Automation Test", 
+                SearchFields = "EHA,House Entity Automation Test", 
+                Description = "House Entity Automation Test", 
+			});
 			
             return all;
        }

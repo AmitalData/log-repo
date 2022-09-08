@@ -664,11 +664,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void ExecuteAutomationThatDependencyOnLastEntityUpdate(ShipmentQuery shipmentQuery, MainEntityChangeService mainEntityChangeService)
         {
             if (!mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()) return;
-            var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
+            var shipmentPM = GetShipmentPMForDependencyAutomation(shipmentQuery, mainEntityChangeService);
             List<TraceEventPM> shipmentTraceEventPMs = shipmentPM.EventList;
             shipmentQuery.MapEventsListForAPI(shipmentPM);
             mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM, shipmentPM.ShipmentNumber);
             shipmentPM.EventList = shipmentTraceEventPMs;
+        }
+
+        private ShipmentPM GetShipmentPMForDependencyAutomation(ShipmentQuery shipmentQuery, MainEntityChangeService mainEntityChangeService)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("EHA", entityPM.Tenant))
+            {
+                return !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
+            }
+
+            if (!mainEntityChangeService.IsChild)
+            {
+                return entityPM;
+            }
+
+            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+            ShipmentMapping.MapMasterDetailsForShipment(entityPM, shipmentPM);
+
+            return shipmentPM;
+        }
+
+        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(queueName);
+        }
+
+        private void AddKafkaQueueMessage(string queueName)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue(queueName, 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ShipmentId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
 
         private void UpdatePayablesLinesVatAmounts()
