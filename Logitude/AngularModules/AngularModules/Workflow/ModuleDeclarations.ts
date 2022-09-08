@@ -9,7 +9,8 @@ import { UpdateRecordPropertiesComponent } from './Components/Properties/UpdateR
 import { GetRecordPropertiesComponent } from './Components/Properties/GetRecordPropertiesComponent';
 import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailPropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
-import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/CreateEditWorkflowComponent";
+import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
+import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
@@ -27,7 +28,8 @@ export const Components = [
     GetRecordPropertiesComponent,
     SendEmailPropertiesComponent,
     FieldTemplateComponent,
-    CreateEditWorkflowComponent,
+    CreateWorkflowComponent,
+    EditWorkflowComponent,
     ConditionsComponent,
     ConditionGroupsComponent,
     FieldValueComponent,
@@ -49,7 +51,8 @@ export class ModuleDeclarations {
             case "GetRecordPropertiesComponent": { result = GetRecordPropertiesComponent; break; }
             case "SendEmailPropertiesComponent": { result = SendEmailPropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
-            case "CreateEditWorkflowComponent": { result = CreateEditWorkflowComponent; break; }
+            case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
+            case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
             case "ConditionsComponent": { result = ConditionsComponent; break; }
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }

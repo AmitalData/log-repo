@@ -13,20 +13,16 @@ import { Condition } from "Workflow/Models/Condition";
 
 export class StartPropertiesComponent extends BaseComponent {
 
+    public DataContext: any = this;
+    public Data: any;
     public EntityId: string = null;
     public Trigger: string = null;
-
     public Conditions: Condition[];
     public ConditionsOperation: string;
-
     public CreateTrigger: string = "create";
-
     public ValidationErrorsList: string[];
 
     public CurrentSession = SessionLocator.SelectedSession;
-
-    DataContext: any = this;
-    Data: any;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};

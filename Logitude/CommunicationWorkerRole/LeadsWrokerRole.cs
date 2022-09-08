@@ -1067,7 +1067,7 @@ namespace CommunicationWorkerRole
                 ActivityUpdateService service = new ActivityUpdateService(crmContext, new Dictionary<string, IContext>(), tenant);
                 activityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
-                List<Contact> contacts = contactRepository.GetActiveContacts(tenant).ToList();
+                var contacts = contactRepository.GetActiveContacts(tenant);
 
                 if (!string.IsNullOrEmpty(toEmail))
                 {

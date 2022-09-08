@@ -156,7 +156,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var genericFilter = new GenericFilter();
 
                 shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
-               
+
                 var myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, authToken.Tenant);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
@@ -264,7 +264,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
                 var entityStatusQuery = new EntityStatusQuery(tenant);
                 var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY",StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                 if (deliveryStatus != null)
                     deliveryStatus.DisplayName = "Out for Delivery";
 
@@ -327,6 +327,5 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
-
     }
 }

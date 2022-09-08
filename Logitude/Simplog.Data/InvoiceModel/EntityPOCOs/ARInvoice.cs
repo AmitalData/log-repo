@@ -218,7 +218,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public double? RegionalTaxPercentage { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
-
+        public string PaidStatus { get; set; }
         public DateTime? PaidDate { get; set; }
         public string PartnerId { get; set; }
         [ForeignKey("PartnerId")]

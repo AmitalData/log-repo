@@ -1046,16 +1046,11 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         [Query(HasSideEffects = true)]
         public IQueryable<ShipmentList> GetShipmentFilters(byte[] xmlFilters, int tenant)
         {
-            //using (TransactionScope scope = TransactionFactory.GetTransaction())
-            //{
-            //var user = HttpContext.Current.User;
-            //var threadUser = Thread.CurrentPrincipal;
+         
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
-
-            //TenantQuery tenantQuery = new TenantQuery(tenant);
-            //TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+            shipmentRepository.SetSecondDBforContext(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -1227,6 +1222,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
 
             shipmentRepository = new ShipmentRepository(tenant);
+            shipmentRepository.SetSecondDBforContext(tenant);
+
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);

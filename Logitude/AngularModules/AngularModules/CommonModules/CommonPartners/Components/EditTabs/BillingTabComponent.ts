@@ -15,7 +15,8 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
-    public ShowRegimenFiscalField: boolean = false;
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -24,14 +25,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
-            this.SetShowRegimenFiscalField();
-        }
-    }
-
-    private SetShowRegimenFiscalField() {
-        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.ShowRegimenFiscalField = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
     }
 

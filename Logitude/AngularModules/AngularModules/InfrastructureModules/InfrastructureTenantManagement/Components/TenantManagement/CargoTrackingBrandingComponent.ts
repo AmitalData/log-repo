@@ -18,10 +18,11 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { UIProperty, UIProperties } from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
 
 @Component({
     selector: 'CargoTrackingBrandingComponent',
@@ -45,11 +46,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public IsLogitudeEnvironment: boolean = false;
     isGenerateClicked = false;
     isGenerateEnabled = true;
+    private iGlobalDomainService: GlobalDomainService;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
+        this.iGlobalDomainService = new GlobalDomainService();
         this.InitializeImageIds();
         this.SetColorsFromEntity();
         this.SetBrandingTabName();
@@ -62,13 +65,17 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CustomerURL = this.EntityPM.CustomerURL;
+                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                   
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CustomerURL = this.EntityPM.CustomerURL;
+                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
         }

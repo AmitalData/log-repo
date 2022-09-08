@@ -3,9 +3,8 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../.../../../../Base/cypress/assists/Assists";
 import { StartNodeDetails } from "../../models/StartNodeDetails";
 import { WorkflowDetails } from "../../models/WorkflowDetails";
+import { ConditionDetails } from "../../models/ConditionDetails";
 
-let startNodeDetails: StartNodeDetails;
-let workflowDetails: WorkflowDetails;
 
 Given("the user logged in and navigates to automation workspace", () => {
     cy.Login(true)
@@ -17,7 +16,7 @@ Given("open workflows", () => {
 });
 
 Given("a flow with following details", (dataTable) => {
-    workflowDetails = Assists.CreateInstance<WorkflowDetails>(dataTable, true);
+    let workflowDetails = Assists.CreateInstance<WorkflowDetails>(dataTable, true);
     Actions.FillWorkflowDetails(workflowDetails);
 });
 
@@ -30,18 +29,28 @@ Then("the flow should create successfully", () => {
 })
 
 Given("edit start configration with following details", (dataTable) => {
-    startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
+    let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
     Actions.FillEditFlowStartNodeDetails(startNodeDetails)
 });
 
+Given("add condition with following details", (dataTable) => {
+    let conditionDetails = Assists.CreateInstance<ConditionDetails>(dataTable, true);
+    Actions.FillConditionDetails(conditionDetails);
+});
+
+Given("add condition group met with {string} with the following details", (GroupOperation,dataTable) => {
+    let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
+    Actions.FillGroupConditionDetails(GroupOperation, groupConditionDetailsList);
+});
+
 Given("click Ok", () => {
-    Actions.CloseEditStartNodeWindow()
+    Actions.CloseEditStartNodeWindow();
 });
 
 When("click save", () => {
-    Actions.SaveWorkflow()
+    Actions.SaveWorkflow();
 });
 
 Then("the flow should save successfully", () => {
-    Actions.AssertSaveWorkflow()
+    Actions.AssertSaveWorkflow();
 });

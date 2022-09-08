@@ -13289,7 +13289,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public IQueryable<DigitalShipmentList> GetDigitalIQueryableShipmentList(IQueryable<DigitalShipmentsDataView> shipments, int tenant)
         {
             var tenantQuery = new TenantQuery(tenant);
-            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+            TenantPM currentTenant = tenantQuery.GetDigitalSingleTenantId(tenant);
+
+            if (currentTenant is null) 
+            {
+                throw new Exception($"Invalid tenant id recevied id => {tenant}");
+            }
+
             var myResult = from f in shipments
                            select new DigitalShipmentList()
                            {
