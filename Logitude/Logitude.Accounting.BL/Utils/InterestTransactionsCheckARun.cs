@@ -412,7 +412,12 @@ namespace Logitude.Accounting.BL.Utils
         {
             decimal inv_group_total = 0m;
             if (invline_list != null && invline_list.Count > 0)
-                inv_group_total = invline_list.Where(il => il.ForiegnCurrencyId == currencyId).Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+            {
+                if (String.IsNullOrEmpty(currencyId))
+                    inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+                else
+                    inv_group_total = invline_list.Where(il => il.ForiegnCurrencyId == currencyId).Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+            }
 
             decimal vat_group_total = 0m;
             if (vatline_list != null && vatline_list.Count > 0)
