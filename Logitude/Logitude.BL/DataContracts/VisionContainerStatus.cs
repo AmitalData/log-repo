@@ -17,15 +17,7 @@ namespace Logitude.BL.DataContracts
         public DateTime updated_at { get; set; }
         public string parent_reference_id { get; set; }
     }
-    public class DestinationPort
-    {
-        public string name { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public string unlocode { get; set; }
-        public Geolocation geolocation { get; set; }
-    }
+
 
     public class Geolocation
     {
@@ -33,23 +25,9 @@ namespace Logitude.BL.DataContracts
         public double longitude { get; set; }
     }
 
-    public class InlandDestination
-    {
-        public string name { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public Geolocation geolocation { get; set; }
-    }
+    
 
-    public class InlandOrigin
-    {
-        public string name { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public Geolocation geolocation { get; set; }
-    }
+    
 
     public class Location
     {
@@ -76,15 +54,6 @@ namespace Logitude.BL.DataContracts
         public string source { get; set; }
     }
 
-    public class OriginPort
-    {
-        public string name { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public string unlocode { get; set; }
-        public Geolocation geolocation { get; set; }
-    }
 
     public class Payload
     {
@@ -92,10 +61,10 @@ namespace Logitude.BL.DataContracts
         public string container_id { get; set; }
         public string container_iso { get; set; }
         public object bill_of_lading { get; set; }
-        public InlandOrigin inland_origin { get; set; }
-        public OriginPort origin_port { get; set; }
-        public DestinationPort destination_port { get; set; }
-        public InlandDestination inland_destination { get; set; }
+        public Location inland_origin { get; set; }
+        public Location origin_port { get; set; }
+        public Location destination_port { get; set; }
+        public Location inland_destination { get; set; }
         public List<VisionMilestone> milestones { get; set; }
         public string reference_id { get; set; }
     }

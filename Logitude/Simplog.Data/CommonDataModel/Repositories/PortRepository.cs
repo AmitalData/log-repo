@@ -517,6 +517,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           select a).FirstOrDefault();
             return entity;
         }
+        public Port GetOceanPortByNames(string name1, string name2, int tenant)
+        {
+            var name1HasValue = !string.IsNullOrEmpty(name1);
+            var name2HasValue = !string.IsNullOrEmpty(name2);
+            var entity = context.Ports.Where(a =>
+                ( (a.EnglishName == name1 && name1HasValue) || (a.EnglishName == name2 && name2HasValue) )
+                && a.Tenant == tenant
+                && a.IsOcean
+            ).FirstOrDefault();
+            return entity;
+        }
 
         public IQueryable<Port> GetAirlinePortsByName(string name, int tenant)
         {
