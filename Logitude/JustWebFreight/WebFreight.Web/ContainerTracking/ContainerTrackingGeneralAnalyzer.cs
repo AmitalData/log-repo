@@ -542,5 +542,8 @@ namespace WebFreight.Web.ContainerTracking
         public string ShipmentPackageId;
         public DateTime? EventDate;
         public string TrackingSource;
+
+        public Location VisionPreCarriage { get; set; }
+        public Location VisionOnCarriage { get; set; }
     }
 }

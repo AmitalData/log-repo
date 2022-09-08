@@ -620,17 +620,52 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public PortList GetPortCopyToCurrentTenant(string zeroPortId, int tenant)
         {
+            Port newPort;
+            Country country;
+            GetPortCopy(zeroPortId, tenant, out newPort, out country);
+
+            PortList portList = new PortList()
+            {
+                Code = newPort.Code,
+                EnglishName = newPort.EnglishName,
+                Id = newPort.Id,
+                Tenant = newPort.Tenant,
+                CountryCode = newPort.CountryCode,
+                CountryName = newPort.CountryName,
+                CountryEC = country.EC,
+                IsAir = newPort.IsAir,
+                IsOcean = newPort.IsOcean,
+                IsInland = newPort.IsInland,
+                AddedManually = newPort.AddedManually,
+                SearchFields = newPort.SearchFields,
+                Notes = newPort.Notes,
+                InActive = newPort.InActive,
+                TransportModeId = (newPort.IsAir ? "A" : "") + (newPort.IsInland ? "I" : "") + (newPort.IsOcean ? "O" : ""),
+                CombinedCode = newPort.CombinedCode,
+                StateName = newPort.StateName,
+                StateCode = newPort.StateCode,
+            };
+
+            return portList;
+        }
+        public Port GetPortCopyToCurrentTenantPoco(string zeroPortId, int tenant)
+        {
+            Port newPort;
+            Country country;
+            GetPortCopy(zeroPortId, tenant, out newPort, out country);
+            return newPort;
+        }
+
+        private static void GetPortCopy(string zeroPortId, int tenant, out Port newPort, out Country country)
+        {
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             PortRepository portRepository = new PortRepository(objectContext);
             CountryRepository countryRepository = new CountryRepository(objectContext);
             GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(objectContext);
-
-            Port newPort;
             Port port = portRepository.GetSinglePort(0, zeroPortId);
             newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
-            Country country = null;
-
+            country = null;
             if (newPort == null)
             {
                 country = countryRepository.GetSingleCountryByCode(port.Country.Code, tenant, true);
@@ -711,30 +746,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 country = countryRepository.GetSingleCountryByCode(port.Country.Code, tenant, true);
             }
-
-            PortList portList = new PortList()
-            {
-                Code = newPort.Code,
-                EnglishName = newPort.EnglishName,
-                Id = newPort.Id,
-                Tenant = newPort.Tenant,
-                CountryCode = newPort.CountryCode,
-                CountryName = newPort.CountryName,
-                CountryEC = country.EC,
-                IsAir = newPort.IsAir,
-                IsOcean = newPort.IsOcean,
-                IsInland = newPort.IsInland,
-                AddedManually = newPort.AddedManually,
-                SearchFields = newPort.SearchFields,
-                Notes = newPort.Notes,
-                InActive = newPort.InActive,
-                TransportModeId = (newPort.IsAir ? "A" : "") + (newPort.IsInland ? "I" : "") + (newPort.IsOcean ? "O" : ""),
-                CombinedCode = newPort.CombinedCode,
-                StateName = newPort.StateName,
-                StateCode = newPort.StateCode,
-            };
-
-            return portList;
         }
 
         public PortPM GetSinglePortPMByCodeCountryCode(string Code, string CountryCode, int tenant)
