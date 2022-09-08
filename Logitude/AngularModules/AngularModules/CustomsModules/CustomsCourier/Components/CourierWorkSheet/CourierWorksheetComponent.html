@@ -1052,8 +1052,8 @@
                                                                             <div *ngIf="HasRequiresApprovalFeature"
                                                                                 style="width: 130px;">
                                                                                 <split-button
-                                                                                    (DefaultSplitButtonClicked)="ApproveAllPendingMethod()"
-                                                                                    [IsDisabled]="IsDisplayOnly"
+                                                                                    (DefaultSplitButtonClicked)="ApproveAllPendingMethod()" 
+                                                                                    [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
                                                                                     [ButtonText]="'אישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
