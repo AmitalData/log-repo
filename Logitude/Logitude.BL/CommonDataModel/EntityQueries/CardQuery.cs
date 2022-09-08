@@ -1920,7 +1920,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         airlineRepository.Add(newAirline);
                         airlineRepository.SubmitChanges();
 
-                        List<MAWBStackPM> stacks = mawbStackQuery.GetMAWBStackPMsByAirlineId(oldAirline.Id, oldAirline.Tenant).ToList();
+                        var stacks = mawbStackQuery.GetMAWBStackPMsByAirlineId(oldAirline.Id, oldAirline.Tenant).ToList();
 
                         foreach (MAWBStackPM stack in stacks)
                         {
