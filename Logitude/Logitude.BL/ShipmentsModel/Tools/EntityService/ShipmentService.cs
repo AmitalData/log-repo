@@ -683,7 +683,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 return entityPM;
             }
 
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+            ShipmentPM shipmentPM = mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM;
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentPM.Id, shipmentPM.Tenant);
             ShipmentMapping.MapMasterDetailsForShipment(entityPM, shipmentPM);
 
             return shipmentPM;
