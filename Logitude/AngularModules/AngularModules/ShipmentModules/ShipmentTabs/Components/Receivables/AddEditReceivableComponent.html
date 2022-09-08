@@ -294,8 +294,7 @@
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter1Value]="MeasurementDependencyProperty1"
                                                             [DependencyFilter2Value]="false"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters"
-                                                            >
+                                                            [QueryFilterItems]="MeasurementsQueryFilters">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -311,8 +310,24 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PrepaidCollect'"
-                                                            [DependencyFilter1Value]="true"
-                                                            >
+                                                            [DependencyFilter1Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- PayableVendorId -->
+                                            <tr class="FormFieldRow" *ngIf="DataContext.IsPayableVendorVisible">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'PayableVendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'PayableVendorId'"
+                                                            [SelectedValue]="DataContext.PayableVendorId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>

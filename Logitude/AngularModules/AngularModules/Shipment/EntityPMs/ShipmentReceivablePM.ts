@@ -347,6 +347,11 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     public set ChangeSet(newValue: string) { if (this.changeSet != newValue) { this.changeSet = newValue; this.MarkAsDirty("ChangeSet"); } }
        
 	 
+    private payableVendorId: string;
+    public get PayableVendorId() { return this.payableVendorId; }
+    public set PayableVendorId(newValue: string) { if (this.payableVendorId != newValue) { this.payableVendorId = newValue; this.MarkAsDirty("PayableVendorId"); } }
+       
+	 
 
     public OldEntityPM: ShipmentReceivablePM;
 	    

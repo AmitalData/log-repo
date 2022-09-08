@@ -1,5 +1,5 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
@@ -8,6 +8,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { CommonTool } from '../../../../Common/Tools';
+import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
 
 @Component({
     
@@ -179,12 +180,49 @@ export class AddEditReceivableComponent {
                 }
 
                 this.DataContext.fatherComponent.ComputeShipmentFields();
+                this.AddExpensePayable();
             }
 
             this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
             this.DataContext.IsNewEntity = false;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+    }
+    private AddExpensePayable() {
+        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX") {
+            var expensePayable: ShipmentPayablePM = new ShipmentPayablePM(this.DataContext.ShipmentPM);
+            expensePayable.ChargesTypeId = this.DataContext.ChargesTypeId;
+            expensePayable.IsExpenseCharge = this.DataContext.EntityPM.IsExpenseCharge;
+            expensePayable.CurrencyId = this.DataContext.CurrencyId;
+            expensePayable.CurrencyCode = this.DataContext.CurrencyCode;
+            expensePayable.Rate = this.DataContext.Rate;
+            expensePayable.MeasurementId = this.DataContext.MeasurementId;
+            expensePayable.MeasurementCode = this.DataContext.MeasurementCode;
+            expensePayable.VendorId = this.DataContext.PayableVendorId;
+            expensePayable.ChargesTypeCode = this.DataContext.EntityPM.ChargesTypeCode;
+            expensePayable.ChargesTypeName = this.DataContext.ChargesTypeName;
+            expensePayable.ChargesGroupCode = this.DataContext.ChargesGroupCode;
+            expensePayable.DueTypeCode = this.DataContext.EntityPM.DueTypeCode;
+            expensePayable.DueTypeName = this.DataContext.EntityPM.DueTypeName;
+            expensePayable.VatTypeId = this.DataContext.VatTypeId;
+            expensePayable.IATACodeId = this.DataContext.EntityPM.IATACodeId;
+            expensePayable.Tenant = SessionLocator.Tenant;
+            expensePayable.ShipmentId = this.EntityPM.Id;
+            expensePayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+            expensePayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+            expensePayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+            expensePayable.CreatedByUserId = SessionLocator.LoggedUserId;
+            expensePayable.UpdateByUserId = SessionLocator.LoggedUserId;
+            expensePayable.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+            expensePayable.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
+            expensePayable.ShipmentPayableLineStatusCode = "EMPT";
+            expensePayable.ShipmentPayableAmountTypeCode = "ACCU";
+            expensePayable.ShipmentPayableAmountTypeName = "Accrual";
+            expensePayable.ProfitCurrencyExchangeRate = this.DataContext.ProfitCurrencyExchangeRate;
+            expensePayable.PrepaidCollectId = this.DataContext.PrepaidCollectId;
+            this.DataContext.ShipmentPM.AddPayable(expensePayable);
+            this.CurrentSession.FireEvent("ExpensePayableAdded");
         }
     }
 

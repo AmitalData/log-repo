@@ -1485,6 +1485,8 @@ export class ShipmentReceivableItem extends BaseComponent {
     public ByContainersItemsSource: ShipmentReceivablePM[] = [];
     public InsideItemsSource: InsideReceivableViewModel[] = [];
     public IsNewEntity: boolean = false;
+    public IsPayableVendorVisible: boolean = false;
+    public IsPayableCharge: boolean = false;
     constructor(entity: ShipmentReceivablePM, public fatherComponent: ReceivablesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1509,7 +1511,7 @@ export class ShipmentReceivableItem extends BaseComponent {
     public IsLineAttachted: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
+        this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;        
 
         var isLineAttachted = false;
         var isEditingEnabled = this.fatherComponent.IsEditingEnabled;
@@ -1592,6 +1594,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, isExchangeRateFixedEnabled);
         this.SetUIProperties_AmountProfit();
+        this.SetUIProperties_PayableVendor();
     }
     SetUIProperties_AmountProfit() {
         var isFieldVisible = false;
@@ -1605,6 +1608,18 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.IsProfitAmountVisible = isFieldVisible;
         this.UIProperties.SetEnabled("AmountInProfitCurrency", this.ObjectTableName, false);
         this.UIProperties.SetVisibility("AmountInProfitCurrency", this.ObjectTableName, isFieldVisible);
+    }
+    SetUIProperties_PayableVendor() {
+        var isFieldVisible = false;
+
+        if (!AppTool.IsNullOrEmpty(this.ChargesTypeId)) {
+            if (this.EntityPM.IsExpense && SessionLocator.TenantPM.CountryCode == "MX") {
+                isFieldVisible = true;
+            }
+        }
+
+        this.UIProperties.SetVisibility("PayableVendorId", this.ObjectTableName, isFieldVisible);
+        this.IsPayableVendorVisible = isFieldVisible
     }
 
     // Line Cells
@@ -1718,6 +1733,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             this.EntityPM.IATACodeId = list.IATACodeId;
             //this.EntityPM.IsBackToBack = list.IsBackToBack;
             this.EntityPM.IsExpense = list.IsExpense;
+            this.IsPayableCharge = list.IsPayable;
             this.SetPrepaidCollectId();
 
             if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
@@ -1754,7 +1770,11 @@ export class ShipmentReceivableItem extends BaseComponent {
             this.VatTypeId = null;
             this.EntityPM.IATACodeId = null;
             //this.EntityPM.IsBackToBack = false;
+            this.EntityPM.IsExpense = false;
+            this.IsPayableCharge = false;
         }
+
+        this.SetUIProperties_PayableVendor();
     }
 
     get VatTypeId() { return this.EntityPM.VatTypeId; }
@@ -2167,6 +2187,13 @@ export class ShipmentReceivableItem extends BaseComponent {
     set UpdatedByUserName(newVaule: string) {
         if (this.EntityPM.UpdateByUserName != newVaule) {
             this.EntityPM.UpdateByUserName = newVaule;
+        }
+    }
+
+    get PayableVendorId() { return this.EntityPM.PayableVendorId; }
+    set PayableVendorId(newVaule: string) {
+        if (this.EntityPM.PayableVendorId != newVaule) {
+            this.EntityPM.PayableVendorId = newVaule;
         }
     }
 

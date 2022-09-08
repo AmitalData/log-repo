@@ -51,7 +51,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentReceivableParentId { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public double? VatAmountLocal { get; set; }
-        public double? VatAmountProfit { get; set; }
+        public double? VatAmountProfit { get; set; }        
+        public string PayableVendorId { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
@@ -95,5 +96,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public ShipmentReceivable ShipmentReceivableParent { get; set; }
         public List<ShipmentReceivable> ChildShipmentReceivables { get; set; }
 
+        [ForeignKey("PayableVendorId")]
+        public virtual Card PayableVendor { get; set; }
     }
 }
