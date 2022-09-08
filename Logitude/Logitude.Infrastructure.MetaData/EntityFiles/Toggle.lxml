@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;e6df&quot;"
+  Code="&quot;517d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -806,6 +806,11 @@
       Name="&quot;Second context DB&quot;"
       SearchFields="&quot;SCD,Second context DB&quot;"
       Description="&quot;to get the secondary database for the context &quot;" />
+    <Record
+      Code="&quot;EHA&quot;"
+      Name="&quot;House Entity Automation Test&quot;"
+      SearchFields="&quot;EHA,House Entity Automation Test&quot;"
+      Description="&quot;House Entity Automation Test&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
