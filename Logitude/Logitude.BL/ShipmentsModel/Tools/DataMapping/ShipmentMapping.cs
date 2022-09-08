@@ -3166,5 +3166,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             return shipmentPM;
 
         }
+
+        public static ShipmentPM MapMasterDetailsForShipment(ShipmentPM masterShipment, ShipmentPM shipmentPM)
+        {
+            if (masterShipment == null) return shipmentPM;
+
+            shipmentPM.MainCarriageCarrierId = masterShipment.MainCarriageCarrierId;
+            shipmentPM.MainCarriageETA = masterShipment.MainCarriageETA;
+            shipmentPM.MainCarriageETD = masterShipment.MainCarriageETD;
+            shipmentPM.MainCarriageATD = masterShipment.MainCarriageATD;
+            shipmentPM.MainCarriageATA = masterShipment.MainCarriageATA;
+            shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
+            shipmentPM.StatusId = masterShipment.StatusId;
+            shipmentPM.CutoffDate = masterShipment.CutoffDate;
+            shipmentPM.MasterShipmentDataId = masterShipment.Id;
+
+            return shipmentPM;
+        }
     }
 }
