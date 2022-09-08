@@ -8,6 +8,7 @@ import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { WidgetFilterItem } from './Filter/WidgetFilterItem';
+import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -47,30 +48,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
         if (!filters) return;
-        this.RootFilter = this.BuildRootFilter(filters);
+        this.RootFilter = new WidgetFilterItem(filters, true);
     }
-
-    private BuildRootFilter(oldValue: WidgetFilterItem) {
-        let parentItem = new WidgetFilterItem();
-        parentItem.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
-        return parentItem;
-    }
-
-    private BuildGroupFilter(oldFilter: WidgetFilterItem) {
-        let groupTreeFilter = new WidgetFilterItem();
-        groupTreeFilter.IsGroup = true;
-        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
-        oldFilter.QueryFilterItems?.forEach((oldField) => {
-            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
-        });
-        return groupTreeFilter;
-    }
-
-    private BuildFilter(oldField: WidgetFilterItem) {
-        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
-        return this.BuildGroupFilter(oldField);
-    }
-
 
     private ComputeChartImageSrc() {
         switch (this.EntityPM.TypeCode) {
@@ -250,6 +229,8 @@ export class WidgetMeasureItem extends BaseComponent {
     public DataContext: WidgetMeasureItem = this;
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
+    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
@@ -258,10 +239,7 @@ export class WidgetMeasureItem extends BaseComponent {
     }
 
     public CheckMeasureDeleteVisiblity() {
-        var isVisible: boolean = false;
-
         var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
-
         this.IsDeleteMeasureVisible = (index == 1);
     }
 
@@ -279,12 +257,31 @@ export class WidgetMeasureItem extends BaseComponent {
         }
     }
 
+    public selectedField: AnalyticsFactsFieldsMetaDataList = null;
+    get SelectedField() { return this.selectedField; }
+    set SelectedField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedField != value) {
+            this.selectedField = value;
+            this.ResetDateFields();
+        }
+    }
+
+    get DateGroupCode() { return this.EntityPM.DateGroupCode; }
+    set DateGroupCode(value: string) {
+        if (this.EntityPM.DateGroupCode != value) {
+            this.EntityPM.DateGroupCode = value;
+        }
+    }
+
+    ResetDateFields() {
+        this.EntityPM.DateGroupCode = null;
+    }
+
     DeleteMeasureClicked() {
         var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
         if (index != -1) {
             this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
-
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

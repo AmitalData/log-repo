@@ -5,6 +5,7 @@ import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver'
 
 
 export class WidgetFilterItem {
+
     public UIProperties: UIProperties;
     public FieldName: string;
     public FieldId: string;
@@ -26,9 +27,29 @@ export class WidgetFilterItem {
     public FieldValue: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
 
-    constructor(field: WidgetFilterItem = null) {
+    constructor(field: WidgetFilterItem = null, buildRootFilter : boolean = false) {
         this.UIProperties = new UIProperties;
-        if (field) this.BuildFieldData(field);
+        if (!buildRootFilter && field) this.BuildFieldData(field);
+        else if(buildRootFilter) this.BuildRootFitler(field);
+    }
+
+    BuildRootFitler(oldValue: WidgetFilterItem) {
+        this.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
+    }
+
+    private BuildGroupFilter(oldFilter: WidgetFilterItem) {
+        let groupTreeFilter = new WidgetFilterItem();
+        groupTreeFilter.IsGroup = true;
+        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
+        oldFilter.QueryFilterItems?.forEach((oldField) => {
+            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
+        });
+        return groupTreeFilter;
+    }
+
+    private BuildFilter(oldField: WidgetFilterItem) {
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        return this.BuildGroupFilter(oldField);
     }
 
     BuildFieldData(field: WidgetFilterItem) {

@@ -75,7 +75,7 @@
                         <span class="LinkBtn" (click)="AddEmptyFilter()"> Add Filter</span>
                     </td>
 
-                    <td *ngIf="FilterItems && FilterItems.length > 0">
+                    <td *ngIf="FilterItems && FilterItems.length > 0" style="vertical-align: top;">
                         <div style="display: flex; width: 0px;" *ngFor="let item of FilterItems; let i=index;">
                             <div *ngIf="IsRoot || FilterItems.length != 1" class="ImgHolder">
                                 <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;"
