@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 
 @Component({
     selector: 'list-template',
+    changeDetection: ChangeDetectionStrategy.OnPush ,
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
                <span>
