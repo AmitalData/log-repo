@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.Utils
                                     }
                                     else
                                     {
-                                        var il_groups = aRInvoicePM.InvoiceLines.GroupBy(il => il.ForiegnCurrencyId ).ToList();
+                                        var il_groups = aRInvoicePM.InvoiceLines.GroupBy(il => il.ForiegnCurrencyId).ToList();
                                         List<String> currencies = new List<string>();
                                         il_groups.ForEach(il =>
                                         {
@@ -263,8 +263,8 @@ namespace Logitude.Accounting.BL.Utils
 
                                         if (!currencies.Contains(aRInvoicePM.InvoiceCurrencyId))
                                             currencies.Add(aRInvoicePM.InvoiceCurrencyId);
-
-                                        currencies.ForEach(curr => 
+                                        bool was_local_curr = false;
+                                        currencies.ForEach(curr =>
                                         {
                                             string glaccid_thiscurr = myGLAccountId;
                                             GLAccountCurrencyPM glaccurPM = gLAccountCurrencies.Where(gc => gc.CurrencyId == curr).FirstOrDefault();
@@ -276,8 +276,9 @@ namespace Logitude.Accounting.BL.Utils
                                             {
                                                 glaccid_thiscurr = glaccurPM.GLAccountId;
                                             }
-                                            if (curr == aRInvoicePM.InvoiceCurrencyId)
+                                            if (curr == aRInvoicePM.LocalCurrencyId)
                                             {
+                                                was_local_curr = true;
                                                 CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glaccid_thiscurr, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, curr);
                                             }
                                             else
@@ -285,7 +286,20 @@ namespace Logitude.Accounting.BL.Utils
                                                 CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glaccid_thiscurr, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, null, curr);
                                             }
                                         });
-
+                                        if (was_local_curr == false && aRInvoicePM.TotalVATs != null && aRInvoicePM.TotalVATs.Count > 0)
+                                        {
+                                            string glaccid_localcurr = myGLAccountId;
+                                            GLAccountCurrencyPM glaccurPM_loc = gLAccountCurrencies.Where(gc => gc.CurrencyId == aRInvoicePM.LocalCurrencyId).FirstOrDefault();
+                                            if (glaccurPM_loc == null || String.IsNullOrEmpty(glaccurPM_loc.GLAccountId))
+                                            {
+                                                glaccid_localcurr = myGLAccountId;
+                                            }
+                                            else
+                                            {
+                                                glaccid_localcurr = glaccurPM_loc.GLAccountId;
+                                            }
+                                            CheckOneRefInv(interestTransactionQueryService, TranslateToInterestEntity(accountingEntityCode), aRInvoicePM.Id, glaccid_localcurr, journalId, journalNum, tenant, aRInvoicePM.InvoiceLines, aRInvoicePM.TotalVATs, aRInvoicePM.LocalCurrencyId);
+                                        }
                                     }
                                 }
                                 else
@@ -398,7 +412,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             decimal inv_group_total = 0m;
             if (invline_list != null && invline_list.Count > 0)
-                inv_group_total = invline_list.Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
+                inv_group_total = invline_list.Where(il => il.ForiegnCurrencyId == currencyId).Sum(il => il.LocalCurrencyAmount.HasValue ? (decimal)il.LocalCurrencyAmount.Value : 0.0m);
 
             decimal vat_group_total = 0m;
             if (vatline_list != null && vatline_list.Count > 0)
