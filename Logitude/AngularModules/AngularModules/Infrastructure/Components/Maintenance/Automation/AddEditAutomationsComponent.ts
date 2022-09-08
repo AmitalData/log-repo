@@ -591,7 +591,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
     LoadDocumentTypeHTMLTemplate(documentTypeList: DocumentTypeList, documentTemplateId: string = null) {
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "R", SessionLocator.Tenant).subscribe((res: any) => {
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeList.Id, "R", SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.DocumentTypeTemplateLists = [];
@@ -662,7 +662,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     LoadDocumentTypeTemplates(documentTypeList: DocumentTypeList, reportTemplateId: string = null) {
         this.DocumentTypeReportTemplateBinding = "Description";
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, "S", SessionLocator.Tenant).subscribe((res: any) => {
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeList.Id, "S", SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 

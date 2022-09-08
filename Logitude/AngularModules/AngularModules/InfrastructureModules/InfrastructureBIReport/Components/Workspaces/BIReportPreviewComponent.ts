@@ -29,6 +29,12 @@ import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/E
 import { isNullOrUndefined } from 'util';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
+import { DocumentTypeTemplateViewModel } from '../../../InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
+import { DocumentTypeList } from '../../../../Common/EntityLists/DocumentTypeList';
+import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
+declare var window: any;
 @Component({
 
     templateUrl: 'BIReportPreviewComponent.html',
@@ -83,7 +89,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public OriginalDWQueryFilterData: any;
     public SavedFilterItemsData: any;
     public ParentComponent: any;
-
+    DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
+    private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
+    public get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
+    public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
+        if (this.documentTypeTemplateSelected != value) {
+            this.documentTypeTemplateSelected = value;
+        }
+    }
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -117,9 +130,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     }
                 }
             });
+            
             this.LoadBIReportData();
+      
+            
         }
     }
+
     checkFixedFilter() { 
         this.hasFixedFilter = false; 
         this.ShowStaticFilters = false;
@@ -154,8 +171,35 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
+        if(this.IsScheduler){
+            this.LoadDocuemntType(args['DocumentTypeTemplateId']);
+        }
+
         this.SetSavedFilterItemsData(args);
     }
+
+    LoadDocuemntType(docuemntTypeTemplateId:string) {
+
+            this.DocumentTypeTemplateLists = [];
+            let documentTypeCode = "BIRSC";
+            var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+            apiQueryFilters.GetAll = true;
+            apiQueryFilters.Tenant = SessionLocator.Tenant;
+            new DocumentTypeListService().getAllFromCache(apiQueryFilters).subscribe((res: any) => {
+                var pmResponse: ServiceResponse = res;
+                if (!pmResponse.HasError) {
+                    let documentType = pmResponse.Result.filter(d => d.Code == documentTypeCode)[0];
+                    if (!documentType) {
+                        alert("Please add document type");
+                        return;
+                    }
+                    this.LoadDocumentTypeHTMLTemplate(documentType.Id, docuemntTypeTemplateId);
+                }
+            });
+    }
+
+
+
 
     SetSavedFilterItemsData(args) {
         this.SavedFilterItemsData = args['SavedFilterItemsData'];
@@ -1018,6 +1062,44 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    LoadDocumentTypeHTMLTemplate(id: string, documentTemplateId: string = null) {
+        let documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
+        documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(id, "R", SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.DocumentTypeTemplateLists = [];
+
+            if (pmResponse.HasError || !pmResponse.Result) return;
+
+            var myResult = pmResponse.Result;
+            //myResult = myResult.filter(d => d.AutomationId == this.CurrentEntityPM.Id || !d.AutomationId);
+            myResult.forEach((item) => {
+                this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
+            });
+            this.SetDocumentTypeTemplateSelected(documentTemplateId);
+        });
+    }
+
+    SetDocumentTypeTemplateSelected(documentTemplateId: string) {
+        if (!AppTool.IsNullOrEmpty(documentTemplateId)) {
+            this.DocumentTypeTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTemplateId)[0];
+        }
+        if (!this.DocumentTypeTemplateSelected) {
+            this.DocumentTypeTemplateSelected = this.DocumentTypeTemplateLists[0];
+        }
+    }
+
+        EditDocumentTemplate(documentTemplate: any) {
+        }
+    
+
+        AddDocumentTypeTemplate() {
+        }
+            
+    
+
+
     //#endregion
 }
 
