@@ -1,5 +1,6 @@
 import { DocumentTypeTemplatePMExtendedService } from "../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService";
 import { DocumentTypeListService } from "../../Common/Services/StandardLists/DocumentTypeListService";
+import { MessageWindow } from "../../Controls/Windows/MessageWindow";
 import { ApiQueryFilters } from "../../Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceResponse } from "../../Infrastructure/DataContracts/ServiceResponse";
 import { AppTool } from "../../Infrastructure/Tools";
@@ -25,14 +26,20 @@ export class BIReportDocumentTypeTemplateService {
 
     Load() {
 
-        let apiQueryFilters = this.GetDocumentTypeApiQueryFilters();
-        new DocumentTypeListService().getAllFromCache(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse.HasError || !serviceResponse.Result) return;
-            this.documentType = serviceResponse.Result.filter(d => d.Code == this.documentTypeCode)[0];
-            if (!this.documentType) {
-                alert("Please add document type");
+        new DocumentTypeListService().getAllFromCache(this.GetDocumentTypeApiQueryFilters()).subscribe((serviceResponse: ServiceResponse) => {
+
+            if (serviceResponse.HasError || !serviceResponse.Result) {
+                this.ShowMessage((serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) ?  serviceResponse.ErrorsArray[0]: "", "Logitude Message");
                 return;
             }
+
+            this.documentType = serviceResponse.Result.filter(d => d.Code == this.documentTypeCode)[0];
+            if (!this.documentType) {
+                this.ShowMessage("Please add document type");
+                return;
+            }
+
+
             this.LoadDocumentTypeHTMLTemplate();
         });
     }
@@ -44,23 +51,24 @@ export class BIReportDocumentTypeTemplateService {
         apiQueryFilters.Tenant = SessionLocator.Tenant;
         return apiQueryFilters;
     }
-
  
     LoadDocumentTypeHTMLTemplate() {
-        let documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
-        documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(this.documentType.Id, "R", SessionLocator.Tenant).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse.HasError || !serviceResponse.Result) return;
-            var documentTypeTemplates = serviceResponse.Result;
-
-            //myResult = myResult.filter(d => d.AutomationId == this.CurrentEntityPM.Id || !d.AutomationId);
-            this.FillDocumentTypeList(documentTypeTemplates);
+        new DocumentTypeTemplatePMExtendedService().getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(this.documentType.Id, "R", SessionLocator.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+            if (serviceResponse.HasError || !serviceResponse.Result) {
+                this.ShowMessage((serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) ? serviceResponse.ErrorsArray[0] : "", "Logitude Message");
+                return;
+            }
+            this.FillDocumentTypeList(serviceResponse.Result);
         });
     }
 
     FillDocumentTypeList(documentTypeTemplates: any) {
+
         documentTypeTemplates.forEach((item) => {
             this.bIReportPreviewComponent.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
         });
+
+
         this.SetDocumentTypeTemplateSelected();
     }
 
@@ -78,4 +86,20 @@ export class BIReportDocumentTypeTemplateService {
         }
 
     }
+
+
+    public ShowMessage(message: string, title: string = "") {
+        if (!message) return;
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+        if (title) {
+            messageWindow.Title = title;
+        }
+    }
+
+
+
+
+
 }
