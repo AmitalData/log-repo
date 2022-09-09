@@ -4786,6 +4786,7 @@
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
+    <TypeScriptCompile Include="Report\Services\BIReportDocumentTypeTemplateService.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
