@@ -59,7 +59,7 @@ namespace CommunicationWorkerRole.Services
             this.currentTask = task;
             reportSchedulerTaskService = new ReportSchedulerTaskService(task);
         }
-        
+   
         public void RunTask(TasksSchedulerPM reportTask)
         {
             try
@@ -156,7 +156,7 @@ namespace CommunicationWorkerRole.Services
 
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
-            SendHtmlDocument(documentId, reportRecepients, reportTask);
+            SendHtmlDocument(documentId, schedulerDetails, reportTask);
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
         }
 
@@ -170,15 +170,26 @@ namespace CommunicationWorkerRole.Services
             return schedulerDetails;
         }
 
-        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
+        private void SendHtmlDocument(string documentId, SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)
         {
+            ReportSchedulerRecepients recepients = schedulerDetails.ReportDetails.Recepients;
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-            Byte[] htmlData = enc.GetBytes("");
             string reportTableId = GetBIReportTableId(reportTask.Tenant);
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            byte[] emailBody = GetEmailBody(schedulerDetails.ReportDetails.DocumentTypeTemplateId, reportTask.Tenant);
+            htmlEditorHelper.SendHtmlDocument(emailBody, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
+        }
+
+        public  byte[] GetEmailBody(string documentTypeTemplateId,  int tenant)
+        {
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+            if (string.IsNullOrEmpty(documentTypeTemplateId) || string.IsNullOrWhiteSpace(documentTypeTemplateId))
+            {
+                return utf8Encoding.GetBytes("");
+            }
+            var messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documentTypeTemplateId, null , tenant);
+            return utf8Encoding.GetBytes(messageArgs.HtmlTemplate);  
         }
 
         private string GetBIReportTableId(int tenant)
