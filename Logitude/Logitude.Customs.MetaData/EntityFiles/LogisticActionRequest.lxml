@@ -1538,7 +1538,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;LogisticActionResponseRequestS&quot;"
+    LookUpTableName="&quot;Customs.LogisticActionResponseReqS&quot;"
     MinLength="0"
     MaxLength="2"
     IsRequired="false"
