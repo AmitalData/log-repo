@@ -433,7 +433,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CargoTypeCode  { get; set; }
        [DataMember]
-       public string PnysicalCheckName  { get; set; }
+       public string PhysicalCheckName  { get; set; }
    }
 
 }

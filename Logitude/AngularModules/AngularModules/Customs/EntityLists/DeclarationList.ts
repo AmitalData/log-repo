@@ -217,7 +217,7 @@ export class DeclarationList {
 	DeclarationTypeName: string;
 	IsExportDeclarationAmendments: boolean;
 	CargoTypeCode: string;
-	PnysicalCheckName: string;
+	PhysicalCheckName: string;
 	
 }
  

@@ -1419,9 +1419,9 @@ export class DeclarationPM {
     public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
        
 	 
-    private pnysicalCheckName: string;
-    public get PnysicalCheckName() { return this.pnysicalCheckName; }
-    public set PnysicalCheckName(newValue: string) { if (this.pnysicalCheckName != newValue) { this.pnysicalCheckName = newValue; this.MarkAsDirty("PnysicalCheckName"); } }
+    private physicalCheckName: string;
+    public get PhysicalCheckName() { return this.physicalCheckName; }
+    public set PhysicalCheckName(newValue: string) { if (this.physicalCheckName != newValue) { this.physicalCheckName = newValue; this.MarkAsDirty("PhysicalCheckName"); } }
        
 	 
 

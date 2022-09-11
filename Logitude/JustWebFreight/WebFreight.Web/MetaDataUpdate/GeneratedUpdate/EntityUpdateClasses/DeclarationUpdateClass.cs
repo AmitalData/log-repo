@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "a4345e07ed225c30fc078768cc8c9885";
+		public const string HashString = "6680f5a733d95b60e6acc9b7c0246078";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16194,7 +16194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PnysicalCheckName",
+					 						FieldName =  "PhysicalCheckName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -16212,8 +16212,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PnysicalCheckName",
-					  						ListPropertyPath =  "PnysicalCheckName",
+					  						PMPropertyPath =  "PhysicalCheckName",
+					  						ListPropertyPath =  "PhysicalCheckName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -16230,11 +16231,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PnysicalCheckName",
-					  						DefaultText =  "Pnysical Check Name",
+					  						FullFieldLable =  "PhysicalCheckName",
+					  						DefaultText =  "Physical Check Name",
 					  						FullLocalDefaultText =  "בדיקה פיזית",
-					  						ListFieldLable =  "PnysicalCheckNameListLable",
-					  						ListLableDefaultText =  "Pnysical Check Name",
+					  						ListFieldLable =  "PhysicalCheckNameListLable",
+					  						ListLableDefaultText =  "Physical Check Name",
 					  						ListLocalDefaultText =  "בדיקה פיזית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -16244,6 +16245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
