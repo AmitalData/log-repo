@@ -286,9 +286,6 @@ export class ImporterDetailsComponent extends BaseComponent {
      public IsImporterEnabled: boolean = true;
 
      SetWindowArgs(args: any) {
-        var service = new DeclarationWebService();
-        service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
-        });
          if (!AppTool.IsNullOrEmpty(args)) {
              this.EntityPM = args.EntityPM;
              this.OriginalEntityPM = args.EntityPM;
@@ -296,6 +293,10 @@ export class ImporterDetailsComponent extends BaseComponent {
              this.type = args.Type;
              this.IsDisplayOnly = args.IsDisplayOnly;
 
+             var service = new DeclarationWebService();
+             service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
+             });
+             
              switch (this.type) {
                  case "Importer": {
                      this.ImporterVisibility = true;
