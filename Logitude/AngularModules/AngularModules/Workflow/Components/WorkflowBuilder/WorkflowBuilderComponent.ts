@@ -203,17 +203,33 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     editWorkflowClicked() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: "WorkFlow", BackButtonLabel: 'WorkFlows' });
-                    cmpRef.instance.BackCompleted.subscribe(_result => {
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: "WorkFlow", BackButtonLabel: 'WorkFlows' });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (!isEditComponentSaved) {
+                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                            if (!serviceResponse.HasError) {
+                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
+                                this.EntityPM = serviceResponse.Result
+                            }
+                        });
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
                         this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
                             if (!serviceResponse.HasError) {
                                 this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
                             }
                         });
-                    });
+                    }
                 });
+            });
     }
 
     handleEditWindowClosed(entityPM: WorkFlowPM) {
