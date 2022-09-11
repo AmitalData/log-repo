@@ -17,8 +17,14 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<ClientsTapag> GetMulti(EntityKeyFields entityKeys)
         {
+
+            ClientKeys clientKeys = entityKeys as ClientKeys;
+
+            return (from a in context.ClientsTapags
+                    where a.ClientId == clientKeys.Id
+                    select a).ToList();
+
             
-			throw new NotImplementedException();
         }
 
    }

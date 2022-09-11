@@ -1,4 +1,4 @@
-import {Component, ViewChildren, QueryList}  from '@angular/core';
+import {Component, ViewChildren, QueryList, ChangeDetectorRef}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -15,6 +15,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { TextCodeTranslator } from      '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
+import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 
 @Component({
@@ -40,9 +42,18 @@ export class ClientEditComponent extends BaseComponent{
    responseData: INF_MSG_GenericResponseData;
    clientMessageService: ClientMessagesService = new ClientMessagesService();
    public ValidationErrorsList: string[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
-   constructor(public entityArgs: EntityArgs) {
+   private CurrentSession = SessionLocator.SelectedSession;
+
+   ClientsTapagList: ClientsTapag[] = [];
+    tapagNumberName = '';
+
+   constructor(
+    public entityArgs: EntityArgs,
+    ) {
        super();
+       this.entityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response: any) => {
+        this.tapagNumberName = 'TapagNumber';
+       });
 
        this.entityArgs.EntityArgEventEmitter.subscribe(
            theMessage => {
@@ -85,6 +96,11 @@ export class ClientEditComponent extends BaseComponent{
     public set FacilitationTypeCode(newValue: string) { this.CurrentEntity.FacilitationTypeCode = newValue; }
 
 
+    addTapagEnabled: boolean;
+    public get AddTapagEnabled() { return this.CurrentEntity ? this.addTapagEnabled : null; }
+    public set AddTapagEnabled(newValue: boolean) {
+        this.addTapagEnabled = newValue;
+    }
 
     BuildTabs() {
         this.TabsItemsSource = [];
@@ -96,6 +112,7 @@ export class ClientEditComponent extends BaseComponent{
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.O.RequestSheets"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Client.TH.MoreData"));
         this.TabsItemsSource.push(new TabItem("CLIENTPOA", "General.O.ClientPoas"));
+        this.BuildClientsTapagList();
 
         this.selectedTabCode = "GENERAL";
     }
@@ -259,6 +276,7 @@ export class ClientEditComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
+        debugger
         
         if (this.isNewClient) {
             this.clientPMService.insert(this.CurrentEntity).subscribe((response:any) => {
@@ -450,6 +468,58 @@ export class ClientEditComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindow();
     }
 
+
+    AddTapagNumberButtonClicked() {
+        
+        
+        if (this.AddTapagEnabled && !this.IsDisplayOnly) {
+
+            var item: ClientsTapagPM = new ClientsTapagPM(this.CurrentEntity);
+            item.Tenant = this.CurrentEntity.Tenant;
+            item.ClientId = this.CurrentEntity.Id;
+
+            if (!this.CurrentEntity.ClientsTapags.includes(item)) {
+                this.CurrentEntity.AddClientsTapag(item);
+            }
+
+            this.AddTapagEnabled = false;
+            this.BuildClientsTapagList();
+        }
+
+    }
+
+    BuildClientsTapagList() {
+
+        this.ClientsTapagList = [];
+
+        this.AddTapagEnabled = true;
+        for (var i = 0; i < this.CurrentEntity.ClientsTapags.length; i++) {
+            var viewModel: ClientsTapag = new ClientsTapag(this.CurrentEntity.ClientsTapags[i], this);
+           viewModel.ClientsTapagNumber = i + 1;
+            if (viewModel.TapagNumber == null) {
+                this.AddTapagEnabled = false;
+            }
+            this.ClientsTapagList.push(viewModel);
+
+
+        }
+
+        if (this.ClientsTapagList.length == 0) {
+            var item = new ClientsTapagPM(this.EntityPM);
+            item.Tenant = this.CurrentEntity.Tenant;
+            item.ClientId = this.CurrentEntity.Id;
+            var viewModel: ClientsTapag = new ClientsTapag(item, this);
+            viewModel.ClientsTapagNumber
+            this.ClientsTapagList.push(viewModel);
+            this.CurrentEntity.AddClientsTapag(item);
+
+
+            this.AddTapagEnabled = false;
+        }
+
+
+    }
+
 }
 
 
@@ -463,3 +533,90 @@ class TabItem {
         this.textCode = TextCode;
     }
 }
+
+
+
+
+export class ClientsTapag extends BaseComponent {
+    public EntityPM: ClientsTapagPM;
+    private Parent: ClientEditComponent;
+    ObjectTableName: string = "Customs.ClientsTapag";
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(item: ClientsTapagPM, parent: ClientEditComponent) {
+        super();
+        this.EntityPM = item;
+        this.Parent = parent;
+        //this.UIProperties.SetEnabled("TapagNumber", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+
+    }
+
+    //#region Properties
+    deleteTapagNumberVisible: boolean = false;
+    public get DeleteTapagNumberVisible() { return this.deleteTapagNumberVisible; }
+    public set DeleteTapagNumberVisible(newValue: boolean) { this.deleteTapagNumberVisible = newValue; }
+
+    clientsTapagNumber: number = 1;
+    public get ClientsTapagNumber() { return this.clientsTapagNumber; }
+    public set ClientsTapagNumber(newValue: number) { this.clientsTapagNumber = newValue; }
+
+    public get TapagNumber() { return this.EntityPM.TapagNumber; }
+    public set TapagNumber(newValue: string) {
+        
+        this.EntityPM.TapagNumber = newValue;
+        if (newValue != null) {
+            if (this.Parent.ClientsTapagList.length == 1) {
+                this.Parent.CurrentEntity.AddClientsTapag(this.EntityPM);
+            }
+            this.Parent.AddTapagEnabled = true;
+        }
+        else {
+            this.Parent.AddTapagEnabled = false;
+        }
+
+    }
+    //#endregion
+
+    OnMouseOver() {
+        debugger
+        if (this.ClientsTapagNumber > 1) {
+            this.DeleteTapagNumberVisible = true;
+        }
+    } 
+
+    OnMouseLeave() {
+        if (!this.overCloseButton) {
+            this.DeleteTapagNumberVisible = false;
+        }
+    }
+
+    // close button
+    overCloseButton: boolean = false;
+    OnIconButtonMouseOver() {
+        this.overCloseButton = true;
+    }
+
+    OnIconButtonMouseLeave() {
+        this.overCloseButton = false;
+    }
+ 
+
+    DeleteTapagNumberButtonClicked() {
+
+        var msg = TextCodeTranslator.Translate("Customs.ClientsTapag.O.DeleteTapagNumber");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 150;
+        confirmWindow.Show(msg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+
+            if (confirmWindow.Yes) { // YES
+                this.Parent.CurrentEntity.RemoveClientsTapag(this.EntityPM);
+                this.Parent.BuildClientsTapagList();
+            }
+        });
+    }
+}
+
+
+
+
