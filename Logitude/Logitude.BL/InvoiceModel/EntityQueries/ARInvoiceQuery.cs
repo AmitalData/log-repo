@@ -1211,48 +1211,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
         {
-            List<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
-                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
-                                             select new ARInvoicePM()
-                                             {
-                                                 AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
-                                                 AmountDueInProfitCurrency = a.AmountDueInProfitCurrency,
-                                                 BillToId = a.BillToId,
-                                                 Id = a.Id,
-                                                 Tenant = a.Tenant,
-                                                 InvoiceCurrencyExchangeRate = a.InvoiceCurrencyExchangeRate,
-                                                 DueDate = a.DueDate,
-                                                 StatusCode = a.StatusCode,
-                                                 ARInvoiceTypeCode = a.ARInvoiceTypeCode,
-                                                 BranchId = a.BranchId,
-                                             }).ToList();
+            IQueryable<ARInvoice> invoiceList = (from a in repository.context.ARInvoices.Include("BillTo")
+                                                 where a.Tenant == tenant && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
+                                                 select a);
 
-            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoicePM>(new QueryOperations(), invoiceList.AsQueryable<ARInvoicePM>(), tenant).ToList();
-
-            foreach (ARInvoicePM invoice in invoiceList)
-            {
-                Card billto = CardRepository.GetSingleCard(invoice.BillToId, invoice.Tenant, true);
-                invoice.BillToName = billto.EnglishName;
-                invoice.BillToLocalName = billto.LocalName;
-                invoice.BillToType = billto.PartnerTypeId;
-            }
+            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), invoiceList, tenant);
 
             List<DebtorsClass> datalist = (from a in invoiceList
                                            where a.Tenant == tenant
                                            group a by new
                                            {
-                                               a.BillToName,
+                                               a.BillTo.EnglishName,
                                                a.BillToId,
-                                               a.BillToType,
+                                               a.BillTo.PartnerTypeId,
                                            } into gr
-                                           orderby gr.Key.BillToName
+                                           orderby gr.Key.EnglishName
                                            select new DebtorsClass()
                                            {
                                                Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
-                                               DebtorName = gr.Key.BillToName,
+                                               DebtorName = gr.Key.EnglishName,
                                                DebtorId = gr.Key.BillToId,
                                                Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
-                                               DebtorType = gr.Key.BillToType,
+                                               DebtorType = gr.Key.PartnerTypeId,
                                            }).ToList();
 
             datalist = datalist.OrderByDescending(d => d.Outstanding).Take(10).ToList();

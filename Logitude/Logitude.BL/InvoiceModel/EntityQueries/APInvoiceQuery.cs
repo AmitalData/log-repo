@@ -944,47 +944,29 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<CreditorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
         {
-            List<APInvoicePM> invoiceList = (from a in repository.context.APInvoices
-                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA" && a.IsClosed == false)
-                                             select new APInvoicePM()
-                                             {
-                                                 AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
-                                                 AmountDueInProfitCurrency = a.AmountDueInProfitCurrency,
-                                                 VendorId = a.VendorId,
-                                                 Id = a.Id,
-                                                 Tenant = a.Tenant,
-                                                 InvoiceCurrencyExchangeRate = a.InvoiceCurrencyExchangeRate,
-                                                 DueDate = a.DueDate,
-                                                 BranchId = a.BranchId,
-                                             }).ToList();
+            IQueryable<APInvoice> invoiceList = (from a in repository.context.APInvoices.Include("VendorCard")
+                                                 where a.Tenant == tenant 
+                                                 && a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA" 
+                                                 && !a.IsClosed select a);                                                   
 
-            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoicePM>(new QueryOperations(), invoiceList.AsQueryable<APInvoicePM>(), tenant).ToList();
-
-
-            foreach (APInvoicePM invoice in invoiceList)
-            {
-                Card vendor = CardRepository.GetSingleCard(invoice.VendorId, invoice.Tenant, true);
-                invoice.VendorName = vendor.EnglishName;
-                invoice.VendorType = vendor.PartnerTypeId;
-            }
+            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), invoiceList, tenant);
 
             List<CreditorsClass> datalist = (from a in invoiceList
                                              where a.Tenant == tenant
                                              group a by new
                                              {
-                                                 a.VendorName,
+                                                 a.VendorCard.EnglishName,
                                                  a.VendorId,
-                                                 a.VendorType,
-
+                                                 a.VendorCard.PartnerTypeId,
                                              } into gr
-                                             orderby gr.Key.VendorName
+                                             orderby gr.Key.EnglishName
                                              select new CreditorsClass()
                                              {
                                                  Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
-                                                 CreditorName = gr.Key.VendorName,
+                                                 CreditorName = gr.Key.EnglishName,
                                                  Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                  CreditorId = gr.Key.VendorId,
-                                                 CreditorType = gr.Key.VendorType,
+                                                 CreditorType = gr.Key.PartnerTypeId,
                                              }).ToList();
 
             datalist = datalist.OrderByDescending(d => d.Outstanding).Take(10).ToList();
