@@ -1626,6 +1626,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientsTapagUpdateService.Generated.cs" />
