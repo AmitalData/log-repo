@@ -29,6 +29,7 @@ using Simplog.Data.InvoiceModel;
 using Logitude.Extensions;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -58,6 +59,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var documentOutQuery = new DocumentOutQuery(tenant);
                 var documentTypeQuery = new DocumentTypeQuery(tenant);
                 var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
                 foreach (var item in invoices.Where(d => d.IsPrinted))
                 {
@@ -81,6 +83,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         IsCancelled = item.IsCancelled,
                         InvoiceDate = item.InvoiceDate,
                         StatusName = item.PaidStatus,
+                        IsDigitalDueDateColorRed = (item.DueDate == null || item.PaidStatus == "Paid") ? false : (item.DueDate.Value < todayDate ? true : false),
                     };
 
                     entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
@@ -94,8 +97,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
                     entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
 
-                    entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
-
                     if (entity.Id == entity.InvoiceNumber)
                     {
                         entity.InvoiceNumber = item.DraftNumber + " (Draft)";
@@ -108,7 +109,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var myId = 0;
                 resultClass.ARInvoices = arInvoices;
-                resultClass.ARCharges = lines.GroupBy(d => new {
+                resultClass.ARCharges = lines.GroupBy(d => new
+                {
                     d.Description,
                     d.InvoiceCurrencyCode,
                     d.InvoiceLocalCurrencyCode

@@ -100,6 +100,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string AccountingExternalCode { get; set; }
         public bool ReadyForTransfer { get; set; }
         public bool IsDueDateColorRed { get; set; }
+        public bool IsDigitalDueDateColorRed { get; set; }
         public bool IsExpectedPaymentDateColorRed { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
