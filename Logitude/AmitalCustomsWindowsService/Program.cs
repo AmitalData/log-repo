@@ -49,8 +49,8 @@ namespace AmitalCustomsWindowsService
         {
 
 
-            (new Sql2Oracle())
-                .GetReNameLongColumns(root: @"C:\log2004\Logitude\");
+            //(new Sql2Oracle())
+            //    .GetReNameLongColumns(root: @"C:\log2004\Logitude\");
                 //.ChangeToBit();
             
             //ThreadPool.SetMinThreads(400, 400);
