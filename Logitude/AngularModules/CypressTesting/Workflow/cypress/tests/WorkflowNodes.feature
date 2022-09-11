@@ -18,9 +18,11 @@ Feature: Workflow node
             | Operation | Equals                  |
             | Value     | TestAgentExport Contact |
         And add condition group met with 'And' with the following details
-            | Field         | Operation  | Value                   |
+            | field         | operation  | value                   |
             | Custom Lookup | Not Equals | TestAgentExport Contact |
-            | Agent Contact | Equals     | TestAgentExport Contact |
+            | Custom text   | contains   | 33                      |
+            | Custom Bool   | Equals     | False                   |
+            | Custom NText  | Changed    | False                   |
         And click Ok
         When click save
         Then the flow should save successfully

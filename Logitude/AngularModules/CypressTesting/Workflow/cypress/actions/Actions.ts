@@ -94,10 +94,23 @@ export function FillGroupConditionDetails(groupCondition: string, conditionDetai
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
     for (let i = ConditionCounter; i <= (conditionDetailsList.length + 1); i++) {
         cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[i - conditionDetailsList.length].Field);
-        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[i - conditionDetailsList.length].Operation, 0);
+        FillConditionValue(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[i - conditionDetailsList.length].Operation, conditionDetailsList[i - conditionDetailsList.length].Field);
         cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[i - conditionDetailsList.length].Value);
         ConditionCounter++;
         if (i < (conditionDetailsList.length + 1))
             cy.Click(WorkflowSelectors.WorkflowAddConditionButton(i), null);
     }
+}
+
+function FillConditionValue(selector: string, value: string, condition: string) {
+    switch (condition) {
+        case "Custom Lookup":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+        case "Custom text":
+        case "Custom Ntext":
+            return cy.FillLogTextBox(selector, value);
+        case "Custom Bool":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+    }
+
 }
