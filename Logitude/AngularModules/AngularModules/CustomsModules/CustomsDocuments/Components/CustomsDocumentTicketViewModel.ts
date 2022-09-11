@@ -757,8 +757,8 @@ export class CustomsDocumentTicketViewModel {
 
             } 
             else { 
-                const isConnect: boolean = await this.GetIsConnectDec(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
-                if (isConnect) {// יש סימוכין ולא מקושר כבר להצהרה אחרת
+                const isNotConnect: boolean = await this.GetIsConnectDec(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
+                if (isNotConnect) {// יש סימוכין ולא מקושר כבר להצהרה או טיקט אחרת
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
                 
@@ -769,7 +769,7 @@ export class CustomsDocumentTicketViewModel {
                     this.connectDocument(relatedDocumentViewModel);
                 }
                 
-              } else //יש סימוכין ומקושר להצהרה
+              } else // יש סימוכין ומקושר  להצהרה או טיקט
                 this.cnotConnectDiffrentTypeDocumentMessage();  
             }      
         }
