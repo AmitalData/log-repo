@@ -1542,6 +1542,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterEntityId= entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                             IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
                              UpdateDate = entity.UpdateDate,
                              UpdatedByUserId = entity.UpdatedByUserId,
@@ -1728,11 +1729,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARInvoicePM entityPM = null;
             ARInvoicePM securedEntityPM = null;
-
+          
             if (entityPOCO != null)
             {
                 int tenant = entityPOCO.Tenant;
                 string entityId = entityPOCO.Id;
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
                 entityPM = new ARInvoicePM()
                 {
@@ -1851,7 +1853,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
                     PaymentReferences = entityPOCO.PaymentReferences,
                     SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
-                    BillToGLAccountId = entityPOCO.BillToGLAccountId
+                    BillToGLAccountId = entityPOCO.BillToGLAccountId,
+                    IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

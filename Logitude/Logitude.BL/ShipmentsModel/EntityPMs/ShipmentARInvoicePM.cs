@@ -29,5 +29,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ConsolidationInvoiceId { get; set; }
         public string ConsolidationInvoiceNumber { get; set; }
         public string ReportUrl { get; set; }
+        public bool IsDigitalDueDateColorRed { get; set; }
     }
 }
