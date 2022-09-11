@@ -106,6 +106,8 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             Display: "Start Time",
             IsCustomTemplate: true,
             Styles: { width: '400px' },
+            HtmlListComponentName: 'FieldTemplateComponent',
+            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             ServerSideSortable: true
         });
         this.columns.push({
