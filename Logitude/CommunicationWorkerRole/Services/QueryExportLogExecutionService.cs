@@ -5,10 +5,12 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -40,8 +42,10 @@ namespace CommunicationWorkerRole.Services
                 var loggedUserEmail = queueResponse.MessageValues["LoggedUserEmail"].ToString();
                 AuthenticationUtil.AuthenticatedUserEmail = loggedUserEmail;
 
-                //var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-                //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(loggedContact?.Email), new string[0]);
+                if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                {
+                    DatabaseInitializer.RunOnSeconderyDB = true;
+                }
 
                 queryExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
                 executionLog = queryExecutionLogRepository.GetSingle(logId, tenant);
@@ -53,7 +57,7 @@ namespace CommunicationWorkerRole.Services
                     var queryArgs = new ExportQueryToExcelArgs()
                     {
                         QueryFilters = queryFilters,
-                        IsWorkerRoleCall = true, 
+                        IsWorkerRoleCall = true,
                         OutputFileName = fileName,
                         LoggedUserEmail = loggedUserEmail,
                     };
