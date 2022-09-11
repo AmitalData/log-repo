@@ -5699,6 +5699,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string pnysicalCheckName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PnysicalCheckName  
+	   {
+	    
+	     get
+		{
+		   return pnysicalCheckName;
+		 }
+		 set
+		 {
+		   if(pnysicalCheckName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PnysicalCheckName",OldValue=pnysicalCheckName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   pnysicalCheckName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckCodeUpdateClass
    {  		
-		public const string HashString = "d2f63e318d17a27aff9ffcb0474f07b2";
+		public const string HashString = "ed1d4559a884fa39d5e1086a8b6b72ab";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קוד בדיקה פיזית",
 			      				    DefaultText =  "Physical Check Code",
-			      				    Code =  "2c48",
+			      				    Code =  "0a28",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
