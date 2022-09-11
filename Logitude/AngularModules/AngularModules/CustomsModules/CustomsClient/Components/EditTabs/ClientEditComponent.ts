@@ -276,7 +276,6 @@ export class ClientEditComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-        debugger
         
         if (this.isNewClient) {
             this.clientPMService.insert(this.CurrentEntity).subscribe((response:any) => {
@@ -577,7 +576,6 @@ export class ClientsTapag extends BaseComponent {
     //#endregion
 
     OnMouseOver() {
-        debugger
         if (this.ClientsTapagNumber > 1) {
             this.DeleteTapagNumberVisible = true;
         }
