@@ -500,7 +500,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
                                                      PhysicalCheck = a.PhysicalCheck,
-                                                     PnysicalCheckName = a.PhysicalCheck != null ? a.PhysicalCheckCode.Name : "ללא בדיקה",
+                                                     PhysicalCheckName = a.PhysicalCheck != null ? a.PhysicalCheckCode.Name : "ללא בדיקה",
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,                                                     

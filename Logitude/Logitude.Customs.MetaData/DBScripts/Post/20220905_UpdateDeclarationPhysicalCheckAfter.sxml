@@ -3,10 +3,10 @@
 	<Sql Version="1">
 	</Sql>
 
-  <Oracle Version="13">
+  <Oracle Version="14">
     <![CDATA[
-  //update DECLARATIONS set PHYSICALCHECK_temp='N' where PHYSICALCHECK_temp is null;
-  //commit;
+  -- update DECLARATIONS set PHYSICALCHECK_temp='N' where PHYSICALCHECK_temp is null;
+  -- commit;
   EXECUTE IMMEDIATE 'update DECLARATIONS set PHYSICALCHECK = PHYSICALCHECK_temp';
   EXECUTE IMMEDIATE 'commit';
   EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column PHYSICALCHECK_temp';
