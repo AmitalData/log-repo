@@ -54,6 +54,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             poco.AttachedExternalDocumentsIds = entityPM.AttachedExternalDocumentsIds;
             poco.IsSystem = entityPM.IsSystem;
+            poco.EntityId = entityPM.EntityId;
+            poco.ObjectTableId = entityPM.ObjectTableId;
 
             if (entityPM.IsDefultAttachmentsXMLChanged)
             {
