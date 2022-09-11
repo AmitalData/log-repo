@@ -5722,25 +5722,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string pnysicalCheckName ;
+	  private string physicalCheckName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PnysicalCheckName  
+       public string PhysicalCheckName  
 	   {
 	    
 	     get
 		{
-		   return pnysicalCheckName;
+		   return physicalCheckName;
 		 }
 		 set
 		 {
-		   if(pnysicalCheckName != value)
+		   if(physicalCheckName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PnysicalCheckName",OldValue=pnysicalCheckName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheckName",OldValue=physicalCheckName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   pnysicalCheckName=value;
+		   physicalCheckName=value;
 		   }
 			
 		 }

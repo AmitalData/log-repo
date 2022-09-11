@@ -218,7 +218,7 @@ export class DeclarationList {
 	CargoTypeCode: string;
 	LoadingPortName: string;
 	ExportLoadingPortCode: string;
-	PnysicalCheckName: string;
+	PhysicalCheckName: string;
 	
 }
  
