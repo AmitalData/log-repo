@@ -1445,6 +1445,19 @@
     HtmlComponentName="&quot;EditWorkflowComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Run History&quot;"
+    TabLocalName="&quot;Run History&quot;"
+    ObjectTableName="&quot;WorkFlow&quot;"
+    Code="&quot;WFRH&quot;"
+    ControlPath="&quot;./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent&quot;"
+    TextCode="&quot;WorkFlow.TH.RunHistory&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    HtmlComponentURL="&quot;./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent&quot;"
+    HtmlComponentName="&quot;RunHistoryWorkflowComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

@@ -11,6 +11,14 @@
     .published-status {
         color: #54aa41 !important;
     }
+
+    .completed-instanceStatus {
+        color: #54aa41 !important;
+    }
+
+    .failed-instanceStatus {
+        color: #db2121 !important;
+    }
 </style>
 
 <table *ngIf="Entity">
@@ -26,6 +34,23 @@
                                 <div *ngIf="FieldName == 'StatusName'">
                                     <div
                                         [ngClass]="'status' + (Entity[FieldName] ? (' ' + Entity[FieldName].toLowerCase() + '-status') : '')">
+                                        {{Entity[FieldName]}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table *ngIf="ObjectTableName != 'WorkFlow'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'StatusName'">
+                                    <div
+                                        [ngClass]="'instanceStatus' + (Entity[FieldName] ? (' ' + Entity[FieldName].toLowerCase() + '-instanceStatus') : '')">
                                         {{Entity[FieldName]}}
                                     </div>
                                 </div>

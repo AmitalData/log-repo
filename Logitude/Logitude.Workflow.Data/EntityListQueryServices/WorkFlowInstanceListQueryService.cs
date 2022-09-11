@@ -40,14 +40,18 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					                          SearchFields = a.SearchFields,
 					
 					                          WorkflowId = a.WorkflowId,
-					
-		                    	            });
+											  StartTime = a.StartTime ,
+											  BusinessKey = a.BusinessKey,
+											  StatusCode = a.StatusCode,
+											  StatusName = a.Status != null ? a.Status.Name : null,
+											  Duration = a.Duration,
+											});
             return query;
 		}
 
 		private IQueryable<WorkFlowInstance> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<WorkFlowInstance> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<WorkFlowInstance> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<WorkFlowInstance> iQueryable, int tenant)
         {

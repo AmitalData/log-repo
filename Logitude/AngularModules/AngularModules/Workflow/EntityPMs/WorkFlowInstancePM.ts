@@ -89,6 +89,11 @@ export class WorkFlowInstancePM {
     public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
        
 	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		

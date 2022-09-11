@@ -11,6 +11,7 @@ import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailP
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
+import { RunHistoryWorkflowComponent } from "./Components/CreateEditWorkflow/RunHistoryWorkflowComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
@@ -30,6 +31,7 @@ export const Components = [
     FieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
+    RunHistoryWorkflowComponent,
     ConditionsComponent,
     ConditionGroupsComponent,
     FieldValueComponent,
@@ -53,6 +55,7 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
+            case "RunHistoryWorkflowComponent": { result = RunHistoryWorkflowComponent; break; }
             case "ConditionsComponent": { result = ConditionsComponent; break; }
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }
