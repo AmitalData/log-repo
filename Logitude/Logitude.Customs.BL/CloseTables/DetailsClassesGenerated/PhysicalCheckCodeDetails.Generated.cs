@@ -37,9 +37,9 @@ namespace Logitude.Customs.BL
 			 
             all.Add(new PhysicalCheckCodeDetails()
             {    
+                Code = "N", 
                 Name = "ללא בדיקה", 
                 SearchFields = "ללא בדיקה", 
-                Code = "N", 
 			});
 			
             return all;

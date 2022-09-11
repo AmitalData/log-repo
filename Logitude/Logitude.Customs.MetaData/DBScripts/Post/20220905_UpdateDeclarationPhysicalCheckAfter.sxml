@@ -3,12 +3,13 @@
 	<Sql Version="1">
 	</Sql>
 
-  <Oracle Version="8">
+  <Oracle Version="13">
     <![CDATA[
-EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column PHYSICALCHECK';
-EXECUTE IMMEDIATE 'alter table DECLARATIONS rename column PHYSICALCHECK_temp to PHYSICALCHECK';
-
-
+  //update DECLARATIONS set PHYSICALCHECK_temp='N' where PHYSICALCHECK_temp is null;
+  //commit;
+  EXECUTE IMMEDIATE 'update DECLARATIONS set PHYSICALCHECK = PHYSICALCHECK_temp';
+  EXECUTE IMMEDIATE 'commit';
+  EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column PHYSICALCHECK_temp';
     ]]>
 	</Oracle>
 </Script>

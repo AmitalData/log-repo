@@ -500,7 +500,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
                                                      PhysicalCheck = a.PhysicalCheck,
-
+                                                     PnysicalCheckName = a.PhysicalCheck != null ? a.PhysicalCheckCode.Name : "ללא בדיקה",
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,                                                     
@@ -542,6 +542,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                               where  a.ExportContainerizationID == null
                               select a);
                 iQueryable = iQueryable.Where(x => query1.Any(c=>c.DeclarationId==x.Id) );
+            }
+            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck") != null)
+            {
+                var qPhCh = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck");
+                string physicalCheck;
+                switch (qPhCh.FieldValue.ToString())
+                {
+                    case null:
+                        physicalCheck = "N";
+                        break;
+                    case "":
+                        physicalCheck = "N";
+                        break;
+                    default:
+                        physicalCheck = qPhCh.FieldValue.ToString();
+                        break;
+                }
+                iQueryable = iQueryable.Where(x => x.PhysicalCheck == physicalCheck);
             }
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
 
