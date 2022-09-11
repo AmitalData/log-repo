@@ -1,5 +1,6 @@
 export enum FieldTypes {
     LookUp = "LookUp",
+    PickList = "PickList",
     NText = "nText",
     Text = "Text",
     Boolean = "Boolean",
@@ -11,5 +12,5 @@ export enum FieldTypes {
     Integer = "Integer",
     SigDouble = "SigDouble",
     UnsDecimal = "UnsDecimal",
-    UnsInteger = "UnsInteger",
+    UnsInteger = "UnsInteger"
 }

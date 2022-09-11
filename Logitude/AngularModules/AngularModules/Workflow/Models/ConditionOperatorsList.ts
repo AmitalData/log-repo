@@ -29,6 +29,7 @@ export class ConditionOperatorsList {
                 ];
                 break;
             case FieldTypes.LookUp:
+            case FieldTypes.PickList:
                 this.Items = [
                     new ListItem(ConditionOperators.Equals),
                     new ListItem(ConditionOperators.NotEquals),

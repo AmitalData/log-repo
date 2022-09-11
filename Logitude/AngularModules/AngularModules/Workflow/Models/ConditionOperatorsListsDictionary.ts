@@ -14,6 +14,7 @@ export class ConditionOperatorsListsDictionary {
     private setConditionOperatorsLists() {
         this.ItemsDictionary = {
             [FieldTypes.LookUp]: this.getConditionOperators(FieldTypes.LookUp),
+            [FieldTypes.PickList]: this.getConditionOperators(FieldTypes.PickList),
             [FieldTypes.NText]: this.getConditionOperators(FieldTypes.NText),
             [FieldTypes.Text]: this.getConditionOperators(FieldTypes.Text),
             [FieldTypes.Boolean]: this.getConditionOperators(FieldTypes.Boolean),
