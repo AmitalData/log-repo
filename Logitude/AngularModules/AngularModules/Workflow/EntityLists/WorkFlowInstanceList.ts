@@ -21,6 +21,7 @@ export class WorkFlowInstanceList {
 	EndTime: Date;
 	BusinessKey: string;
 	Duration: number;
+	StatusName: string;
 	
 }
  

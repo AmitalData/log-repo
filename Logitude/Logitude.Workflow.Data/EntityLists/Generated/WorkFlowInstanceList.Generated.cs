@@ -40,6 +40,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public string BusinessKey  { get; set; }
        [DataMember]
        public decimal? Duration  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
    }
 
 }
