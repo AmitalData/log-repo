@@ -182,10 +182,10 @@ FROM ( SELECT DISTINCT
                          where a.DocumentsFilingId == documentsfilingid
                          select a.Id).ToList();
 
-            var query1 = (from a in context.CustomsDocumentPointers
-                          where query.Contains(a.CustomsDocumentsTicketId) && entityId != a.ParentEntityId
-                          select a.ParentEntityId).ToList();
-            return query1;
+            //var query1 = (from a in context.CustomsDocumentPointers
+            //              where query.Contains(a.CustomsDocumentsTicketId) && entityId != a.ParentEntityId
+            //              select a.ParentEntityId).ToList();
+            return query;
         }
 
         public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
