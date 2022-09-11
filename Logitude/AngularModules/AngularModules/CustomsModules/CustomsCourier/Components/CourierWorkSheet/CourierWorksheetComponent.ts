@@ -99,6 +99,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
     //_SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
     //_SelectedHOLDValue: string = 'A'; //All/Pending Codes List
+    _SelectedDelivered: string = '';
 
     //Selected tabs
     _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
@@ -164,7 +165,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
 
         this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
-        
+
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -274,7 +275,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     {
                         this._SelectedTabFilter = this._TabFilterList[0];
                         this._SelectedCustomStatusValue = 'S';
-                        this._SelectedStatusValue ='O';
+                        this._SelectedStatusValue = 'O';
                         this.SelectedStatusValueClick('O');
                         this.SelectedCustomStatusValueClick('S');
                         break;
@@ -283,6 +284,19 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     {
                         this._SelectedTabFilter = this._TabFilterList[2];
                         //this.TabFilterClick(this._TabFilterList[2]);
+                        break;
+                    }
+                case "NoOfCourierHawbWithoutDelivery":
+                    {
+                        this._SelectedFinalReleaseValue = 'Y';
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this._SelectedDelivered = 'A';
+                        break;
+                    }
+                case "NoOfCourierHawbwWithoutHatara":
+                    {
+                        this._SelectedFinalReleaseValue = 'N';
+                        this._SelectedTabFilter = this._TabFilterList[0];
                         break;
                     }
             }
@@ -1298,7 +1312,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.columns.push({
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
-            Display:  TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -1706,6 +1720,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         if (this._SelectedFinalReleaseValue !== 'A')
             filters.addAdditionalFilter("FinalRelease", 'is not change what write', null, null, this._SelectedFinalReleaseValue === 'Y' ? 'Equal' : 'NotEqual', false, false, false, "string");
+        if (this._SelectedDelivered == 'A') {
+            filters.addAdditionalFilter("Delivered", false, null, null, "Equals", false, false, false, "Boolean");
+        }
     }
 
     ViewInitCompleted($event) {
@@ -2011,7 +2028,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                 if (objectTableName == "Customs.Declaration") {
-                    
+
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
                     SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
@@ -2187,8 +2204,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         confirm.ShowNoButton = true;
         confirm.Show(questionText);
         confirm.WindowClosed.subscribe((event: any) => {
-            if (confirm.Yes)
-            {
+            if (confirm.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicator("");
                 var currRequestParams = new SendALLDelayFormParams();
                 currRequestParams.LoggingEnabled = true;
@@ -2212,7 +2228,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             confirm.Close();
         });
-        
+
     }
 
     private GetIsSendDocumentsFromQueueButton() {
@@ -2275,9 +2291,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
- 
+
     ClosePendingMethod() {
-         if (this.IsDisplayOnly) {
+        if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -2323,10 +2339,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         });
                     });
 
-
-            }
+         
+    }
         });
- 
+
     }
     ApproveAllPendingMethod() {
         debugger;
@@ -2631,7 +2647,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
 
 
-     }
+    }
 
 
     openBulkFeedPending() {
@@ -2640,12 +2656,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "עדכון גורף";
-        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
+        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
     }
- 
+
 }
 
 
