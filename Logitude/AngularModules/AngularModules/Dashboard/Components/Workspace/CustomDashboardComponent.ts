@@ -7,7 +7,7 @@ import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
@@ -17,6 +17,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     template:
@@ -37,6 +38,8 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
 })
 
 export class CustomDashboardComponent implements  AfterViewInit {
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     private CurrentSession = SessionLocator.SelectedSession;    
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
     private dashboardPMService: DashboardPMService;
@@ -49,9 +52,22 @@ export class CustomDashboardComponent implements  AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.renderNewDashboard();
+        this.GetEntityResources().subscribe(e=>{
+            this.renderNewDashboard();
+        });
     }
+    GetEntityResources() {
+        var allObservable = [
+            this._entityResourceService.getEntityResourceByTableName("Dashboard"),
+            this._entityResourceService.getEntityResourceByTableName("Widget"),
+            this._entityResourceService.getEntityResourceByTableName("WidgetMeasure"),
+            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData"),
+            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData")
+        ];
+        
 
+        return forkJoin(allObservable);
+    }
     public InitComponent() {
         this.GetDashboards();
     }
@@ -263,3 +279,5 @@ export class CustomDashboardComponent implements  AfterViewInit {
         });
     }
 }
+
+
