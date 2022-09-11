@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "117a5d4877baecfa4556bb6ca5bd149c";
+		public const string HashString = "5624b23781afc970aed9469b20880a0f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1238,7 +1238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ResponseStatusCode",
 					  						ObjectTableName =  "Customs.LogisticActionRequest",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "LogisticActionResponseReqS",
+					  						LookUpTableName =  "Customs.LogisticActionResponseReqS",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
