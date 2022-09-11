@@ -139,7 +139,7 @@ namespace WebFreight.Web.Helpers
                         globalContext.ContactPasswords.Add(contactPassword);
                         globalContext.SaveChanges();
 
-                        if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && !tenantCompany.IsMobileActivated)
+                        if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsDigitalPortalAccessActivated) && !tenantCompany.IsMobileActivated)
                         {
                             string password = newPassword + "  (you will need to change the password on your first login)";
 
@@ -147,7 +147,7 @@ namespace WebFreight.Web.Helpers
                             ActivityDescription = "Web Access Activated";
                         }
 
-                        else if ((!tenantCompany.IsWebAccessActivated || !tenantCompany.IsCargoTrackWebAccessActivated) && tenantCompany.IsMobileActivated)
+                        else if ((!tenantCompany.IsWebAccessActivated || !tenantCompany.IsCargoTrackWebAccessActivated || !tenantCompany.IsDigitalPortalAccessActivated) && tenantCompany.IsMobileActivated)
                         {
 
                             if (LogitudeSettings.WorkEnvironment == "cloud")
@@ -163,7 +163,7 @@ namespace WebFreight.Web.Helpers
                             ActivityDescription = "Mobile Activated";
                         }
 
-                        else if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && tenantCompany.IsMobileActivated)
+                        else if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsDigitalPortalAccessActivated) && tenantCompany.IsMobileActivated)
                         {
                             ActivityDescription = "Mobile And Shared Logistics Activated";
                             if (LogitudeSettings.WorkEnvironment == "cloud")
@@ -217,7 +217,7 @@ namespace WebFreight.Web.Helpers
                         }
 
 
-                        if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && !tenantCompany.IsMobileActivated)
+                        if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsDigitalPortalAccessActivated) && !tenantCompany.IsMobileActivated)
                         {
 
                             emailMessage = emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact);
@@ -225,7 +225,7 @@ namespace WebFreight.Web.Helpers
                         }
 
 
-                        else if ((!tenantCompany.IsWebAccessActivated || !tenantCompany.IsCargoTrackWebAccessActivated) && tenantCompany.IsMobileActivated)
+                        else if ((!tenantCompany.IsWebAccessActivated || !tenantCompany.IsCargoTrackWebAccessActivated || !tenantCompany.IsDigitalPortalAccessActivated) && tenantCompany.IsMobileActivated)
                         {
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
@@ -241,7 +241,7 @@ namespace WebFreight.Web.Helpers
                             ActivityDescription = "Mobile Activated";
                         }
 
-                        else if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && tenantCompany.IsMobileActivated)
+                        else if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsDigitalPortalAccessActivated) && tenantCompany.IsMobileActivated)
                         {
 
                             if (LogitudeSettings.WorkEnvironment == "cloud")
@@ -282,7 +282,7 @@ namespace WebFreight.Web.Helpers
                     scope.Complete();
                 }
 
-                if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
+                if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated || tenantCompany.IsDigitalPortalAccessActivated)
                 {
                     string from = GetEmailFrom(sharedLogisticsContact.Tenant);
                     string subject = GetInvitationSubject(tenantCompany, sharedLogisticsContact);
@@ -349,6 +349,11 @@ namespace WebFreight.Web.Helpers
 
         private string GetInvitationSubject(Tenant tenantCompany, SharedLogisticContactPM sharedLogisticsContact)
         {
+            if (tenantCompany.IsDigitalPortalAccessActivated)
+            {
+                return tenantCompany.Company + " Digital Portal Invitation";
+            }
+
             if (sharedLogisticsContact.IsCargoTrackingInvitation)
             {
                 return tenantCompany.Company + " Cargo Tracking Invitation";

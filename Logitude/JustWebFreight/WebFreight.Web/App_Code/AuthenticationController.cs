@@ -808,7 +808,7 @@ namespace WebFreight.Web
                                 }
                                 else
                                 {
-                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated;
+                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated || currentTenant.IsDigitalPortalAccessActivated;
                                 }
                                 if (enableLogin)
                                 {
@@ -892,7 +892,7 @@ namespace WebFreight.Web
                                 }
                                 else
                                 {
-                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated;
+                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated || currentTenant.IsDigitalPortalAccessActivated;
                                 }
                                 if (enableLogin)
                                 {
