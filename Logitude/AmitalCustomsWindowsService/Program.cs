@@ -1,4 +1,5 @@
-﻿using AmitalCustomsWindowsService.Utils;
+﻿using AmitalCustomsWindowsService.Tester;
+using AmitalCustomsWindowsService.Utils;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Customs.BL.EntityQueryServiceExt;
@@ -48,6 +49,9 @@ namespace AmitalCustomsWindowsService
         {
 
 
+            (new Sql2Oracle())
+                //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
+                .ChangeToBit();
             
             //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;

@@ -319,6 +319,11 @@ namespace Logitude.DBMigrations.Models
 
         protected DXMLGeneratedScript GenerateScriptsFromDXMLTable(DXMLTable dxmlTable)
         {
+
+            if (dxmlTable.DXMLFileName.Contains("GlobalContact"))
+            {
+
+            }
             DXMLGeneratedScript dxmlGeneratedScript = CreateNewDXMLGeneratedScript();
 
             DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
@@ -1824,6 +1829,12 @@ namespace Logitude.DBMigrations.Models
 
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
+
+            return new ExecuteSxmlFileResult
+            {
+                ShouldExecute = false,
+                Action = null
+            };
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
