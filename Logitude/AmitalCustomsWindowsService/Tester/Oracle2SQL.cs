@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AmitalCustomsWindowsService.Tester
 {
-    internal class Sql2Oracle
+    public partial class Oracle2SQL
     {
         List<MyTable> myTables = new List<MyTable>();
         public void GetReNameLongColumns(string root)
