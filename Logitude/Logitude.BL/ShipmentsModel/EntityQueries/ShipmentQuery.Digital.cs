@@ -726,7 +726,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             // Main Info InlandDomestic
             ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
             {
-                Title = "Main route info.",
+                Title = "Main route information",
                 LegHeader = "MainRouteInlandDomestic",
                 FromPort = GetFromAddressForInlandDomestic(shipment),
                 ToPort = GetToAddressForInlandDomestic(shipment),
@@ -898,7 +898,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             // Main Info
             ShipmentRoutingLeg mainRouteInformation = new MainRouteInformation()
             {
-                Title = "Main route info.",
+                Title = "Main route information",
                 LegHeader = "MainRoute",
                 Master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master,
                 MasterLabel = GetMasterTextCode(shipment),
@@ -1015,7 +1015,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg preCarriageLeg = new ShipmentRoutingLeg()
             {
-                Title = "Pre carriage info.",
+                Title = "Pre carriage information",
                 LegHeader = "PreCarriage",
                 FromPort = shipment.PreCarriageFromPortName + ", " + shipment.PreCarriageFromPortCountryCode,
                 ToPort = shipment.PreCarriageToPortName + ", " + shipment.PreCarriageToPortCountryCode,
@@ -1034,7 +1034,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg mainCarriageLeg = new ShipmentRoutingLeg()
             {
-                Title = "Main carriage info.",
+                Title = "Main carriage information",
                 LegHeader = "MainCarriage",
                 FromPort = shipment.MainCarriageFromPortName + ", " + shipment.MainCarriageFromPortCountryCode,
                 ToPort = shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode,
@@ -1053,7 +1053,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg transshipment1 = new ShipmentRoutingLeg()
             {
-                Title = "Transshipment 1 info.",
+                Title = "Transshipment 1 information",
                 LegHeader = "Transshipment1",
                 FromPort = shipment.Transshipment1FromPortName + ", " + shipment.Transshipment1FromPortCountryCode,
                 ToPort = shipment.Transshipment1ToPortName + ", " + shipment.Transshipment1ToPortCountryCode,
@@ -1073,7 +1073,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg transshipment2 = new ShipmentRoutingLeg()
             {
-                Title = "Transshipment 2 info.",
+                Title = "Transshipment 2 information",
                 LegHeader = "Transshipment2",
                 FromPort = shipment.Transshipment2FromPortName + ", " + shipment.Transshipment2FromPortCountryCode,
                 ToPort = shipment.Transshipment2ToPortName + ", " + shipment.Transshipment2ToPortCountryCode,
@@ -1093,7 +1093,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg transshipment3 = new ShipmentRoutingLeg()
             {
-                Title = "Transshipment 3 info.",
+                Title = "Transshipment 3 information",
                 LegHeader = "Transshipment3",
                 FromPort = shipment.Transshipment3FromPortName + ", " + shipment.Transshipment3FromPortCountryCode,
                 ToPort = shipment.Transshipment3ToPortName + ", " + shipment.Transshipment3ToPortCountryCode,
@@ -1113,7 +1113,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ShipmentRoutingLeg onCarriageLeg = new ShipmentRoutingLeg()
             {
-                Title = "On carriage info.",
+                Title = "On carriage information",
                 LegHeader = "OnCarriage",
                 FromPort = shipment.OnCarriageFromPortName + ", " + shipment.OnCarriageFromPortCountryCode,
                 ToPort = shipment.OnCarriageToPortName + ", " + shipment.OnCarriageToPortCountryCode,
