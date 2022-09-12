@@ -228,8 +228,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
 
-            CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, authToken.Tenant);
-
             return Ok(entityPM);
         }
 
@@ -263,9 +261,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
 
-                if (!string.IsNullOrWhiteSpace(newFilters.CardId))
+                var cardFilterValues= newFilters.CardId;
+                if (!string.IsNullOrWhiteSpace(cardFilterValues))
                 {
-                    queryOperations.SetFilter("BillToId", newFilters.CardId, false, "InList", null, false);
+                    var cardBillToId = GetCardBillToId(newFilters.CardId, authToken.Tenant);
+                    if (!string.IsNullOrWhiteSpace(cardBillToId))
+                    {
+                        cardFilterValues = cardFilterValues + "," + cardBillToId;
+                        queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                    }
+
+                    queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
                 }
 
                 var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
@@ -387,6 +393,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
+        }
+
+        private string GetCardBillToId(string cardId, int tenant)
+        {
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToId;
         }
 
         #region private 

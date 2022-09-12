@@ -257,10 +257,11 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                             select a.ARInvoice);
            
             iQuery = FilterInvoicesStatuses(iQuery);
-
+            var cardBillToId = GetCardBillToId(cardId, tenant);
             List<ARInvoice> list = iQuery.Where(d => cardId == null 
                                                      || cardId.Trim() == string.Empty 
-                                                     || d.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                                                     || d.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)
+                                                     || d.BillToId.Equals(cardBillToId, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
             return list;
         }
@@ -273,12 +274,20 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                     && a.EntityId == shipmentId
                                     && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
                                     select a.ARInvoice);
-
+             
             iQuery = FilterInvoicesStatuses(iQuery);
-
-            var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            var cardBillToId = GetCardBillToId(cardId, tenant);
+            var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)
+                                         || a.BillToId.Equals(cardBillToId, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
             return list;
+        }
+
+        private string GetCardBillToId(string cardId, int tenant)
+        {
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId =  cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToId;
         }
 
         #endregion Digital Portal Methods
