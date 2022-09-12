@@ -256,7 +256,7 @@ namespace CommunicationWorkerRole
                                                         ForwarderDocumentId = DocumentFilingPM.ForwarderDocumentId,
                                                         EntityId = ImporterShipment.ForwarderShipmentNumber,
                                                         DontAddToQueue = true,
-                                                        DocumentTypeCode = DocumentFilingPM.DocumentTypeCode,
+                                                        DocumentTypeCode = GetDocumentTypeCode(isShipmentOrder, DocumentFilingPM.DocumentTypeCode),
                                                         DirectionCode = DocumentFilingPM.DirectionCode,
                                                         CreatedByUserId = User.Id,
                                                         UpdatedByUserId = User.Id,
@@ -432,7 +432,7 @@ namespace CommunicationWorkerRole
                                                         ForwarderDocumentId = DocumentFilingPM.ForwarderDocumentId,
                                                         EntityId = ImporterShipment.ForwarderShipmentNumber,
                                                         DontAddToQueue = true,
-                                                        DocumentTypeCode = DocumentFilingPM.DocumentTypeCode,
+                                                        DocumentTypeCode = GetDocumentTypeCode(isShipmentOrder, DocumentFilingPM.DocumentTypeCode),
                                                         DirectionCode = DocumentFilingPM.DirectionCode,
                                                         CreatedByUserId = User.Id,
                                                         UpdatedByUserId = User.Id,
@@ -688,6 +688,12 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private string GetDocumentTypeCode(bool isShipmentOrder, string documentTypeCode)
+        {
+            const string shipmentOrderCodePrefix = "SO";
+            return isShipmentOrder && !documentTypeCode.StartsWith(shipmentOrderCodePrefix) ? shipmentOrderCodePrefix + documentTypeCode : documentTypeCode;
         }
 
         private ObjectTable GetEntityObjectTable(DocumentsFilingPM DocumentFilingPM, int tenant, bool isShipmentOrder)
