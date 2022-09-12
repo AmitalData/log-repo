@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelContainers()
         {
-            if (this.ShouldUpdateContainers() || this.initializer.EntityPM.IsDocsKPIsUpdatedFromWR)
+            if (this.ShouldUpdateContainers())
             {
                 this.HandelShipmentMasterDataFieldsChanges();
                 this.HandelShipmentPackagesChangeSets();
@@ -299,16 +299,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
+            if (!initializer.EntityPM.IsDocsKPIsUpdatedFromWR && !initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
                 return false;
 
-            if (initializer.EntityPM.ShipmentLevelCode == "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "mygo")
+            if(initializer.EntityPM.ShipmentLevelCode == "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "mygo")
                 return false;
 
-            if (initializer.EntityPM.ShipmentLevelCode != "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
+            if(initializer.EntityPM.ShipmentLevelCode != "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
                 return false;
 
             return true;
