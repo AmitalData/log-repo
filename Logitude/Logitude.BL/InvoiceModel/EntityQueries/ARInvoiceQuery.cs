@@ -17,6 +17,7 @@ using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -1223,7 +1224,42 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return datalist;
         }
 
-        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
+        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
+                return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
+            else
+                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);            
+        }
+        private List<DebtorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            List<string> allowedBranchesIds = new List<string>();
+            if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
+
+            return (from a in repository.context.ARInvoices.Include("BillTo")
+                    where a.Tenant == tenant
+                    && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL"
+                    && !a.IsAutoCredit
+                    && !a.IsCancelled
+                    && !a.IsClosed
+                    && (!isBranchRestricted || allowedBranchesIds.Contains(a.BranchId))
+                    group a by new
+                    {
+                        a.BillTo.EnglishName,
+                        a.BillToId,
+                        a.BillTo.PartnerTypeId,
+                    } into gr
+                    orderby gr.Key.EnglishName
+                    select new DebtorsClass()
+                    {
+                        Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                        DebtorName = gr.Key.EnglishName,
+                        DebtorId = gr.Key.BillToId,
+                        Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                        DebtorType = gr.Key.PartnerTypeId,
+                    }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
+        }
+        private List<DebtorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
         {
             List<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
                                              where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
@@ -1262,10 +1298,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                            orderby gr.Key.BillToName
                                            select new DebtorsClass()
                                            {
-                                               Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                                               Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
                                                DebtorName = gr.Key.BillToName,
                                                DebtorId = gr.Key.BillToId,
-                                               Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                                               Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                DebtorType = gr.Key.BillToType,
                                            }).ToList();
 

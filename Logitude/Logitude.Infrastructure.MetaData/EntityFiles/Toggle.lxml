@@ -811,6 +811,11 @@
       Name="&quot;House Entity Automation Test&quot;"
       SearchFields="&quot;EHA,House Entity Automation Test&quot;"
       Description="&quot;House Entity Automation Test&quot;" />
+    <Record
+     Code="&quot;QPI&quot;"
+     Name="&quot;Query Performance Inhancement&quot;"
+     SearchFields="&quot;QPI,Query Performance Inhancement&quot;"
+     Description="&quot;Query Performance Inhancement&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

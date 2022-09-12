@@ -685,6 +685,16 @@ namespace Logitude.Infrastructure.BL
                 Description = "House Entity Automation Test", 
 			});
 			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QPI", 
+                Name = "Query Performance Inhancement", 
+                SearchFields = "QPI,Query Performance Inhancement", 
+                Description = "Query Performance Inhancement", 
+			});
+			
+			
             return all;
        }
 
