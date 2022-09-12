@@ -131,6 +131,8 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
                 newTemplatePM.AutomationId = !this.DataContext.AutomationId ? null : this.DataContext.AutomationId;
+                newTemplatePM.EntityId = !this.DataContext.EntityId ? null : this.DataContext.EntityId;
+                newTemplatePM.ObjectTableId = !this.DataContext.ObjectTableId ? null : this.DataContext.ObjectTableId;
                 this.MapDefultAttachmentsDocumentFields(newTemplatePM);
                  
                 if (this.DataContext) {

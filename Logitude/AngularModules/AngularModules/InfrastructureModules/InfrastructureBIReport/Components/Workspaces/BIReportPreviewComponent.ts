@@ -35,6 +35,9 @@ import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Servic
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
 import { BIReportDocumentTypeTemplateService } from '../../../../Report/Services/BIReportDocumentTypeTemplateService';
+import { ObjectTableList } from '../../../../Infrastructure/EntityLists/ObjectTableList';
+import { ObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/ObjectTableListService';
+import { Observable } from 'rxjs';
 declare var window: any;
 @Component({
 
@@ -90,14 +93,21 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public OriginalDWQueryFilterData: any;
     public SavedFilterItemsData: any;
     public ParentComponent: any;
-    DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
+    public DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
     private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
     public get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
     public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
         if (this.documentTypeTemplateSelected != value) {
             this.documentTypeTemplateSelected = value;
+            this.IsEnableAddTemplate = true;
+            this.IsEnableEditTemplate = true;
         }
     }
+    private bIReportDocumentTypeTemplateService: BIReportDocumentTypeTemplateService;
+    public IsEnableEditTemplate: boolean = false;
+    public IsEnableAddTemplate: boolean = false;
+    public ObjectTableId: string;
+
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -172,8 +182,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
-        if(this.IsScheduler){
-            new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this).Load();
+        if (this.IsScheduler) {
+            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this, "BIReport", this.ObjectTableId);
+            this.bIReportDocumentTypeTemplateService.Load();
         }
 
         this.SetSavedFilterItemsData(args);
@@ -1046,12 +1057,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     
 
-        EditDocumentTemplate(documentTemplate: any) {
-        }
+    EditDocumentTemplate(documentTemplate: any) {
+        this.bIReportDocumentTypeTemplateService.EditDocumentTemplate(documentTemplate);
+    }
     
 
-        AddDocumentTypeTemplate() {
-        }
+    AddDocumentTypeTemplate() {
+        this.bIReportDocumentTypeTemplateService.AddDocumentTypeTemplate();
+    }
             
     
 
