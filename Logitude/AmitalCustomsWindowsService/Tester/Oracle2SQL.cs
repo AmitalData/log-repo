@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AmitalCustomsWindowsService.Tester
 {
-    internal class Sql2Oracle
+    public partial class Oracle2SQL
     {
         List<MyTable> myTables = new List<MyTable>();
         public void GetReNameLongColumns(string root)
@@ -146,6 +146,57 @@ namespace AmitalCustomsWindowsService.Tester
             return line;
         }
 
+        public void ChangeToBitVer2()
+        {
+            string sc =
+            @"
+-- Drop Default Value For Column ISBRANCHRESTRICTED
+EXEC('IF (OBJECT_ID(''[dbo].[DF__USERS__ISBRANCHR__3CB5AB0A]'', ''D'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Users] DROP CONSTRAINT [DF__USERS__ISBRANCHR__3CB5AB0A] END');
+-- Change Type From  To bit For Column ISBRANCHRESTRICTED
+ALTER TABLE [dbo].[Users] ALTER COLUMN [ISBRANCHRESTRICTED] BIT NOT NULL;
+-- Add Default Value For Column ISBRANCHRESTRICTED
+ALTER TABLE [dbo].[Users] ADD DEFAULT ((0)) FOR [ISBRANCHRESTRICTED];
+";
+
+
+            string currentConstarint =
+@"
+
+SELECT 
+CONCAT('ALTER TABLE [dbo].[',Q1.TABLE_NAME ,'] DROP CONSTRAINT [' ,Q3.DefaultConstraintName  ,'];'),
+--CONCAT('ALTER TABLE [dbo].[',Q1.TABLE_NAME ,'] DROP COLUMN [' ,Q1.ColumnName,'] ;')
+CONCAT('ALTER TABLE [dbo].[',Q1.TABLE_NAME ,'] ALTER COLUMN [' ,Q1.ColumnName,'] BIT NOT NULL;'),
+CONCAT('ALTER TABLE [dbo].[',Q1.TABLE_NAME ,'] ADD DEFAULT ((0)) FOR [',q1.ColumnName,'];')
+
+
+,Q1.*, Q2.ConstraintType, Q2.ConstraintName, Q3.DefaultValue, Q3.DefaultConstraintName 
+FROM ( 
+SELECT COL.TABLE_NAME ,COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, 
+COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale 
+FROM INFORMATION_SCHEMA.COLUMNS AS COL 
+WHERE ---COL.TABLE_NAME = 'ANALYZEQUEUES' AND 
+--COL.COLUMN_NAME LIKE '%_ORA' AND
+COL.IS_NULLABLE='NO' AND COL.DATA_TYPE ='NUMERIC' AND COL.NUMERIC_PRECISION=1 AND COL.NUMERIC_SCALE =0
+) AS Q1 
+LEFT JOIN ( 
+SELECT TCON.TABLE_NAME  , CON.COLUMN_NAME AS ColumnName, TCON.CONSTRAINT_TYPE AS ConstraintType, TCON.CONSTRAINT_NAME AS ConstraintName 
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON 
+INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME 
+--WHERE TCON.TABLE_NAME = 'ANALYZEQUEUES' 
+) AS Q2 ON Q2.ColumnName = Q1.ColumnName  AND Q1.TABLE_NAME = Q2.TABLE_NAME
+LEFT JOIN (
+SELECT t.name AS TABLENAME  , COL.name AS ColumnName, DEFCON.definition AS DefaultValue, DEFCON.name AS DefaultConstraintName 
+FROM SYS.DEFAULT_CONSTRAINTS DEFCON 
+LEFT OUTER JOIN SYS.OBJECTS TAB ON DEFCON.parent_object_id = TAB.object_id 
+LEFT OUTER JOIN SYS.ALL_COLUMNS COL 
+ON DEFCON.parent_column_id = COL.column_id AND DEFCON.parent_object_id = COL.object_id  
+LEFT JOIN SYS.TABLES T ON COL.object_id = T.object_id
+--WHERE COL.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = 'Users') 
+AND DEFCON.definition ='((0))'
+) AS Q3 ON Q3.ColumnName = Q1.ColumnName AND Q3.TABLENAME = Q1.TABLE_NAME --AND Q3.TABLENAME = Q2.TABLE_NAME
+"; 
+
+        }
 
 
         public void ChangeToBit()
