@@ -1990,6 +1990,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                      Id = d.Id,
                                                                      Tenant = d.Tenant,
                                                                      ConsolidationInvoiceId = d.ConsolidationInvoiceId,
+                                                                     InvoiceNumber = d.InvoiceNumber,
+                                                                     CustomerRef = d.CustomerRef,
+                                                                     MasterNumber = d.MasterNumber,
+                                                                     HouseNumber = d.HouseNumber,
+                                                                     MainEntityReference = d.MainEntityReference
+
                                                                  }).ToList();
                     }
                 }

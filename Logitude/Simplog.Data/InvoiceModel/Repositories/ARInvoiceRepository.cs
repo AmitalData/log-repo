@@ -593,7 +593,26 @@ namespace Simplog.Data.InvoiceModel.Repositories
                 "VD",
                 "DR",
                 "LL",
-                "AR"
+                "AR",
+                "NT"
+            };
+
+            var filteredInvoices = invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
+
+            return filteredInvoices;
+        }
+
+
+        public IQueryable<ARInvoice> FilterInvoicesStatusesForList(IQueryable<ARInvoice> invoices)
+        {
+            var blockedStatusCode = new List<string>
+            {
+                "VD",
+                "DR",
+                "LL",
+                "AR",
+                "NT",
+                "CN"
             };
 
             var filteredInvoices = invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
