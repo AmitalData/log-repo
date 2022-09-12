@@ -67,7 +67,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public bool DontApplyVirtualization { get; set; }
         
         public bool GetAll { get; set; }
-        public object ParentEntity { get; set; }
+        public string ParentEntity { get; set; }
 
     }
 }
