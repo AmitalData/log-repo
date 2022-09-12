@@ -130,6 +130,7 @@ export class QueryFilterViewItem extends FilterItem  {
         this.FieldValue = fieldValueAndObjectTableName.length == 1 ? fieldValueAndObjectTableName[0] : fieldValueAndObjectTableName[1];
         this.SecondaryEntityName = this.FieldValue ? fieldValueAndObjectTableName.length == 1 ? this.MyParentClass.objectTableName : this.MyParentClass.ParentObjectTableName : this.BaseTreeFilter?.SecondaryEntityName;
         if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') {
+            this.ValueChanged(window.ObjectFields.filter(f => this.FieldValue == f.FieldName && this.SecondaryEntityName == f.ObjectTableName)[0], false);
             this.FieldValue = FieldValueResolver.ConvertToDate(this.FieldValue,"TreeFilter");
         }
         else {
@@ -388,13 +389,14 @@ export class QueryFilterViewItem extends FilterItem  {
         this.SecondaryEntityChanged("");
     }
 
-    ValueChanged(objectFieldPM: ObjectFieldPM) {
+    ValueChanged(objectFieldPM: ObjectFieldPM, changeValue = true) {
         if (!objectFieldPM) {
-            this.FieldValue = "";
+            this.FieldValue = changeValue ? "" : this.FieldValue;
             this.ObjectValueFieldCode = "";
             return;
         }
         this.ObjectValueFieldCode = objectFieldPM.FieldCode;
+        if (!changeValue) return;
         if (this.MyParentClass && this.MyParentClass.ParentObjectTableName == this.SecondaryEntityName) {
             this.FieldValue = this.SecondaryEntityName + '.' + objectFieldPM.FieldName;
         }

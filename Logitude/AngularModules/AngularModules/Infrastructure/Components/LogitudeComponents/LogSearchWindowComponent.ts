@@ -452,8 +452,53 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        filters.ParentEntity = this.GetParentEntity();
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
         return filters;
+    }
+
+    GetParentEntity() {
+        let entityPM = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityPM;
+        if (!entityPM) return null;
+
+        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        let objectFieldAdditionalTreeFilters = objectField ? objectField.DefaultAdditionalTreeFilters : this.ObjectField?.DefaultAdditionalTreeFilters;
+        if (!objectFieldAdditionalTreeFilters) return null;
+
+        var parentEntity = {};
+        return this.RestoreFilters(objectFieldAdditionalTreeFilters, parentEntity, entityPM);
+    }
+
+    RestoreFilters(BaseFilter: any, parentEntity: any, entityPM: any) {
+        BaseFilter.QueryFilterItems?.forEach((field) => {
+            this.RestoreQueryFilterViewItem(field, parentEntity, entityPM);
+        });
+
+        return JSON.stringify(parentEntity);
+    }
+
+    private RestoreQueryFilterViewItem(field: any, parentEntity: any, entityPM: any) {
+        if (!field) return;
+
+        if (field.FieldName?.indexOf('.') > -1) {
+            let fieldName = field.FieldName.split('.')[1];
+            parentEntity[fieldName] = entityPM[fieldName];
+        }
+
+        if (field.Operator?.indexOf('Field') > -1 && field.FieldValue?.indexOf('.') > -1) {
+            let fieldName = field.FieldValue.split('.')[1];
+            parentEntity[fieldName] = entityPM[fieldName];
+        }
+
+        if (!field.QueryFilterItems) {
+            return;
+        }
+
+        if (field.QueryFilterItems.length == 0) {
+            return;
+        }
+
+        this.RestoreFilters(field, parentEntity, entityPM);
     }
 
     //#endregion

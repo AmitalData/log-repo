@@ -1,5 +1,7 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery.Iterator;
+using Logitude.Server.Tools.TreeFilterQuery.Services;
+using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -38,7 +40,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private object GetParentEntity()
         {
-            if (queryTreeFilterContext.ParentEntity != null) return queryTreeFilterContext.ParentEntity;
+            object parentEntity = GetContextParentEntity();
+            if (parentEntity != null) return parentEntity;
             if (string.IsNullOrEmpty(queryTreeFilterContext.ParentObjectTableName) || string.IsNullOrEmpty(queryTreeFilterContext.ParentEntityId)) return null;
             try
             {
@@ -51,6 +54,18 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         }
 
+        private object GetContextParentEntity()
+        {
+            try
+            {
+                if (queryTreeFilterContext.ParentEntity != null) return JsonConvert.DeserializeObject(queryTreeFilterContext.ParentEntity.ToString());
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return queryTreeFilterContext.ParentEntity;
+            }
+        }
 
         private void Handel(QueryFilterItem queryFilterItem)
         {
@@ -212,27 +227,14 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
 
 
-       
+
         private string GetEntityFieldValue(QueryFilterItem queryFilterItem)
         {
             if (queryTreeFilterContext.ParentEntity == null) return "";
-            Object value = null;
-            ObjectField objectField = new ObjectField() { DataTypeCode = queryFilterItem.FieldDataType , FieldName =GetFieldName( queryFilterItem.FieldName)};
-            PropertyInfo propertyInfo = GetProperty(queryTreeFilterContext.ParentEntity, objectField.FieldName);
-            if (propertyInfo == null) return "";
-            value = propertyInfo.GetValue(queryTreeFilterContext.ParentEntity, null);
-            if(value == null ) return "";
-            if (value.GetType() == typeof(CustomFieldClass))
-            {
-                value = customFilterClass.SetFieldDataType(queryFilterItem.FieldDataType, (value as CustomFieldClass).Value);
-            }
-            return ConvertFieldValueToString(queryFilterItem.FieldDataType, value, queryFilterItem.IsCustomField);
-        }
+            
+            object value = QueryTreeFilterFieldValueResolver.Get(queryTreeFilterContext.ParentEntity, GetFieldName(queryFilterItem.FieldName), queryFilterItem.FieldDataType);
 
-        private PropertyInfo GetProperty(object entity, string FieldName)
-        {
-            Type type = entity.GetType();
-            return type.GetProperty(FieldName);
+            return ConvertFieldValueToString(queryFilterItem.FieldDataType, value, queryFilterItem.IsCustomField);
         }
     }
 }

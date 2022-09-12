@@ -414,6 +414,7 @@
     <Compile Include="TreeFilterQuery\Expression\WhereExpression.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\CustomFieldExpression.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\IQueryTreeFilterExpression.cs" />
+    <Compile Include="TreeFilterQuery\Services\QueryTreeFilterFieldValueResolver.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterInterpreter.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
     <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
