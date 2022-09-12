@@ -229,7 +229,10 @@ export class DocumentTypeTemplatePM {
     public get AutomationId() { return this.automationId; }
     public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
        
-	 
+    private entityId: string;
+    public get EntityId() { return this.entityId; }
+    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
+    
     private isSystem: boolean;
     public get IsSystem() { return this.isSystem; }
     public set IsSystem(newValue: boolean) { if (this.isSystem != newValue) { this.isSystem = newValue; this.MarkAsDirty("IsSystem"); } }

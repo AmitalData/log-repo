@@ -110,24 +110,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
             queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
-            ConnectDocumentTypeTemplate();
         }
-        private void ConnectDocumentTypeTemplate()
-        {
-            if (this.entityPM.DocumentTypeTemplateIds != null && this.entityPM.DocumentTypeTemplateIds.Count > 0)
-            {
-                DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPM.Tenant);
-                List<DocumentTypeTemplate> documentTypeTemplates = documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPM.DocumentTypeTemplateIds, this.entityPM.Tenant).ToList();
-                foreach (DocumentTypeTemplate documentTypeTemplate in documentTypeTemplates)
-                {
-                    documentTypeTemplate.EntityId = this.entityPM.Id;
-                    documentTypeTemplateRepository.Update(documentTypeTemplate);
-                }
-
-                documentTypeTemplateRepository.SubmitChanges();
-            }
-
-        }
+        
 
         private void FillNextRunDateFields()
         {

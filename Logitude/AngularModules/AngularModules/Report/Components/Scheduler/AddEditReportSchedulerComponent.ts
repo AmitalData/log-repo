@@ -402,7 +402,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: null,
             DWQueryId: null,
             DWQueryFilterData: null,
-            DocumentTypeTemplateId: this.GetDocumentTemplateMessageId(),
+            DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -447,7 +447,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
             DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.GetOriginalSelectedFilters(),
-            DocumentTypeTemplateId: this.GetDocumentTemplateMessageId(),
+            DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
