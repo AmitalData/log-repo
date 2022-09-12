@@ -315,7 +315,7 @@
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
                                                                     dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו ({{this._NotApproved}})</span>  
+                                                                    ({{item.Total}}) {{item.Header}}/לם םושרו ({{this._NotApproved}})</span>  
                                                             </div>
                                                         </td>
 
@@ -1021,7 +1021,9 @@
                                                                             </div>
                                                                         </td>
                                                                         
+
                                                                         <td style="width: 130px;">
+
                                                                             
                                                                                 <split-button *ngIf="DelayFormVisibility"
                                                                                 (DefaultSplitButtonClicked)="SendDelayForm()"
@@ -1044,7 +1046,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()" 
                                                                                     [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
-                                                                                    [ButtonText]="'אישור PENDING'"
+                                                                                    [ButtonText]="'םישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
