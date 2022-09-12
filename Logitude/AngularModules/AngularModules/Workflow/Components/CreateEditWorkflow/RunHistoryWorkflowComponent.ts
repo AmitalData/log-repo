@@ -57,7 +57,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     DataSource = {
         pageSize: 30,
         rowCount: null,
-        sortingCol: "BusinessKey",
+        sortingCol: "StartTime",
         sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
