@@ -4393,7 +4393,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     ShipmentMasterData masterData = repository.context
                                                               .ShipmentMasterDatas
-                                                              .FirstOrDefault( a => a.Id == shipment.MasterShipmentDataId);
+                                                              .FirstOrDefault(a => a.Id == shipment.MasterShipmentDataId);
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
@@ -11085,7 +11085,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (hasETDFeature)
             {
-                myResult.OperationalOpenCount_ETD = GetOperationalOpenCount_ETD(tenant, iQueryable_Shipments,shipmentsContext);
+                myResult.OperationalOpenCount_ETD = GetOperationalOpenCount_ETD(tenant, iQueryable_Shipments, shipmentsContext);
             }
 
             if (hasExpDepNotTransmittedFeature)
@@ -11130,7 +11130,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
 
                 myResult.AllFollowUpsCount = GetAllFollowUpsCount(tenant, allFollowups);
-                myResult.MyFollowUpsCount = GetMyFollowUpsCount(tenant,loggedContactId, allFollowups); 
+                myResult.MyFollowUpsCount = GetMyFollowUpsCount(tenant, loggedContactId, allFollowups);
             }
 
             return myResult;
@@ -11279,7 +11279,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return count;
         }
-        
+
         //-----------------------
         private int GetOperationalOpenCount_ETD(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
         {
@@ -11429,13 +11429,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return count;
         }
 
-       
+
 
         private int GetCreditLimitBlockedCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
         {
             int count = 0;
             var CreditLimitBlockedCount = "CreditLimitBlockedCount" + tenant;
-       
+
             var iQueryableData = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001);
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(CreditLimitBlockedCount) != null)
@@ -13291,7 +13291,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetDigitalSingleTenantId(tenant);
 
-            if (currentTenant is null) 
+            if (currentTenant is null)
             {
                 throw new Exception($"Invalid tenant id recevied id => {tenant}");
             }
@@ -15208,6 +15208,36 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return new List<ShipmentAdditionalFields>();
         }
 
+        public ShipmentAdditionalFields GetSingleShipmentsAdditionalFields(string shipmentId, int tenant)
+        {
+            if (!string.IsNullOrEmpty(shipmentId))
+            {
+                var targetedShipmentsQuery = from shipment in repository.context.Shipments
+                                             where shipment.Id == shipmentId && shipment.Tenant == tenant
+                                             select shipment;
+
+                var shipmentsPickUpDeliveryFields = GetShipmentsPickUpDeliveryFields(targetedShipmentsQuery);
+
+                var shipmentsOrderPackageFields = GetShipmentsOrderPackageFields(targetedShipmentsQuery);
+
+                var shipmentsMasterDataFields = GetShipmentMasterDataFields(targetedShipmentsQuery);
+
+                var shipmentAdditionalFields = new ShipmentAdditionalFields() { ShipmentId = shipmentId };
+
+                var shipmentPickUpDeliveryFields = shipmentsPickUpDeliveryFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
+                MapShipmentPickUpDeliveryFields(shipmentAdditionalFields, shipmentPickUpDeliveryFields);
+
+                var shipmentOrderPackageFields = shipmentsOrderPackageFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
+                MapShipmentOrderPackageFields(shipmentAdditionalFields, shipmentOrderPackageFields);
+
+                var shipmentMasterDataFields = shipmentsMasterDataFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
+                MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
+
+                return shipmentAdditionalFields;
+            }
+            return new ShipmentAdditionalFields();
+        }
+
         private List<ShipmentAdditionalFields> GetShipmentsPickUpDeliveryFields(IQueryable<Shipment> targetedShipmentsQuery)
         {
             var shipmentsPickUpDeliveryFieldsQuery = (from shipment in targetedShipmentsQuery
@@ -15255,7 +15285,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                 Quantity = shipmentPackage.Quantity,
                                                                                 PackageTypeId = shipmentPackage.PackageTypeId,
                                                                                 PackageTypeCode = shipmentPackage.PackageType == null ? null : shipmentPackage.PackageType.Code,
-                                                                                PackageTypeName = shipmentPackage.PackageType == null ? null : shipmentPackage.PackageType.EnglishName
+                                                                                PackageTypeName = shipmentPackage.PackageType == null ? null : shipmentPackage.PackageType.EnglishName,
+                                                                                ContainerNumber = shipmentPackage.ContainerNumber,
+                                                                                ShipperSeal = shipmentPackage.ShipperSeal,
+                                                                                Volume = shipmentPackage.Volume,
+                                                                                Weight = shipmentPackage.Weight,
                                                                             }).ToList(),
 
                                                         ShipmentOrderPackages = (from shipmentOrderPackage in shipmentOrderPackages

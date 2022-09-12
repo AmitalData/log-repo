@@ -896,6 +896,31 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        public HttpResponseMessage GetShipmentPMByShipmentNumberWithoutComposition(string number)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant, false);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetShipmentsAdditionalFields(string shipmentIds)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -907,6 +932,21 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             var shipmentsAdditionalFields = shipmentQuery.GetShipmentsAdditionalFields(shipmentIds, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, shipmentsAdditionalFields);
+        }
+
+        public HttpResponseMessage GetSingleShipmentsAdditionalFields(string shipmentId)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            var shipmentsAdditionalFields = shipmentQuery.GetSingleShipmentsAdditionalFields(shipmentId, tenant);
 
             return Request.CreateResponse(HttpStatusCode.OK, shipmentsAdditionalFields);
         }
