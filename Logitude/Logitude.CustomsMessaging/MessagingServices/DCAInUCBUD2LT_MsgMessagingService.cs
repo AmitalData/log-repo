@@ -329,11 +329,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class CreateUD2LTService : ICreateUD2LTService
     {
         private DocumentsFilingPM _DocumentsFilingPM;
-        
+        DateTime stopLogAt = DateTime.MinValue;
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+             stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
@@ -454,6 +454,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                         if (CheckIsSendByDocType(logData))
                         {
+                            LogitudeSettings.HandleLogMe("if (CheckIsSendByDocType(logData)) " + logData, false, "CreateUD2LTService", stopLogAt);
                             shouldCreateDCAComm = true;
                         }
                         else
@@ -537,6 +538,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
         private bool CheckIsSendByDocType(string logData)
         {
+
+            LogitudeSettings.HandleLogMe("arrived Function " + logData, false, "CheckIsSendByDocType", stopLogAt);
             bool IsSendByDocType = false;
             string CustomsDocumentUpload = "";
             try
@@ -546,14 +549,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                 {
+                    LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " +documentTypeCustomsDataPM?.CustomsDoucumentTypeCode+ logData, false, "CheckIsSendByDocType", stopLogAt);
                     CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                     CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
 
                     if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                     {
+                        LogitudeSettings.HandleLogMe("customDocumentTypePM != null "+ customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CheckIsSendByDocType", stopLogAt);
                         CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
                         if (customDocumentTypePM.CustomsDocumentUpload == "C")
                         {
+                            LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C" + logData, false, "CheckIsSendByDocType", stopLogAt);
                             IsSendByDocType = true;
                         }
                     }
@@ -562,11 +568,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception ee)
             {
                 logData += $"CheckIsSendByDocType:error:{ee.Message}";
+                LogitudeSettings.HandleLogMe("Exception" +  logData, false, "CheckIsSendByDocType", stopLogAt);
             }
             finally
             {
                 logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
             }
+            LogitudeSettings.HandleLogMe("IsSendByDocType"+ IsSendByDocType + logData, false, "CheckIsSendByDocType", stopLogAt);
             return IsSendByDocType;
         }
         private void FixDocumentTypeCodeEmpty(string logData)
