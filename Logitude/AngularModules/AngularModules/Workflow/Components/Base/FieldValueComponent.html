@@ -17,6 +17,20 @@
 
     </div>
 
+    <div *ngIf="isPickListObjectField() && PickListTable">
+        <PickList
+            [ObjectFieldName]="ObjectField.FieldName" 
+            [ObjectTableName]="PickListTable.Name"
+            [SelectedValue]="CurrentValue" 
+            [DataContext]="DataContext"
+            [IsFreeText]="true"
+            [NoValidation]="true"
+            [HideLastColumn]="true"
+            [HideColumns]="true"
+            [PlaceHolder]="'Value'"
+            (SelectedItemChanged)="updateValue($event?.Id)">
+        </PickList>
+    </div>
 
     <div *ngIf="isTextObjectField()">
 

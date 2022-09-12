@@ -23,6 +23,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     public DataContext: any = this;
     public LookupTable: ObjectTablePM;
+    public PickListTable: ObjectTablePM;
     public DateTimeCurrentValue: Date;
 
     public ObjectTablePMService = new ObjectTablePMService();
@@ -42,6 +43,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     initialize() {
         if (!this.IsIntegerNumberInput) {
             this.initializeLookupTable();
+            this.initializePickListTable();
             this.initializeDateTimeCurrentValue();
         }
     }
@@ -49,6 +51,12 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     initializeLookupTable() {
         if (this.isLookupObjectField()) {
             this.setLookupTable();
+        }
+    }
+
+    initializePickListTable() {
+        if (this.isPickListObjectField()) {
+            this.setPickListTable();
         }
     }
 
@@ -65,9 +73,22 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
         }
     }
 
+    setPickListTable() {
+        this.PickListTable = (window as any).ObjectTables.filter((o: any) => o.Id === this.ObjectField.ObjectTableId)[0];
+        if (!this.PickListTable) {
+            this.ObjectTablePMService.get(this.ObjectField.ObjectTableId).subscribe((response: any) => { this.handleGetPickListTableResponse(response); });
+        }
+    }
+
     handleGetLookupTableResponse(response: any) {
         if (!response.HasError) {
             this.LookupTable = response.Result;
+        }
+    }
+
+    handleGetPickListTableResponse(response: any) {
+        if (!response.HasError) {
+            this.PickListTable = response.Result;
         }
     }
 
@@ -102,6 +123,10 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     isLookupObjectField() {
         return this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.LookUp;
+    }
+
+    isPickListObjectField() {
+        return this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.PickList;
     }
 
     isTextObjectField() {
