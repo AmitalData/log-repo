@@ -5,11 +5,11 @@ import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver'
 
 
 export class WidgetFilterItem {
-
     public UIProperties: UIProperties;
     public FieldName: string;
     public FieldId: string;
     public IsGroup: boolean = false;
+    public IsAnalyticsMetadatas: boolean = true;
 
 
     public FilterType: string = 'And'
@@ -26,11 +26,12 @@ export class WidgetFilterItem {
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
+    public DateGroupCode: string;
 
-    constructor(field: WidgetFilterItem = null, buildRootFilter : boolean = false) {
+    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false) {
         this.UIProperties = new UIProperties;
         if (!buildRootFilter && field) this.BuildFieldData(field);
-        else if(buildRootFilter) this.BuildRootFitler(field);
+        else if (buildRootFilter) this.BuildRootFitler(field);
     }
 
     BuildRootFitler(oldValue: WidgetFilterItem) {
@@ -56,9 +57,10 @@ export class WidgetFilterItem {
         this.DontRefreshFieldData = true;
         this.FieldId = field.FieldId;
         this.FieldName = field.FieldName;
+        this.DateGroupCode = field.DateGroupCode;
+        this.FieldDataType = field.FieldDataType;
         this.FillFieldValue(field);
         this.Operator = field.Operator;
-        this.FieldDataType = field.FieldDataType;
         this.FilterType = field.FilterType;
         this.QueryFilterItems = field.QueryFilterItems;
         this.FillOperators(this.FieldDataType);
@@ -66,7 +68,10 @@ export class WidgetFilterItem {
     }
 
     FillFieldValue(field: WidgetFilterItem) {
-        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') return;
+        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') {
+            this.FieldValue = FieldValueResolver.ConvertToDate(field.FieldValue, "TreeFilter");
+            return;
+        }
         if (this.FieldDataType == 'Boolean') {
             this.BooleanListValueChanged(field.FieldValue?.toString() == 'true');
             return;
@@ -165,12 +170,17 @@ export class WidgetFilterItem {
     }
 
     DatePickerCondationValueChange(newValue) {
-        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue) : "";
+        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue, "TreeFilter") : "";
     }
 
     public AndOrOpsChanged(value) {
         this.AndOr = value;
         this.FilterType = value;
+    }
+
+    public DateGroupCodeChange(DateGroupCode: string) {
+        this.DateGroupCode = DateGroupCode;
+        this.FieldValue = "";
     }
 
 }
