@@ -154,7 +154,7 @@ export class AccountReceivablesComponent implements OnInit {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetDebrotExposureForGridControl(this.SelectedCurrencyIndex_ARGrid).subscribe((myResult: ServiceResponse) => {
+        this.invoiceDomainService.GetDebrotExposureForGridControl(this.SelectedCurrencyIndex_ARGrid, SessionLocator.LoggedUserPM.IsBranchRestricted).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
 
                 if (!myResult.HasError) {

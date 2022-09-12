@@ -151,7 +151,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public pieChartData: number[] = [];
     private CurrentTop10DebtorsChart: any;
     LoadPieQueries() {
-        this.dashboarddomainservice.GetDebrotExposure(this.TenantPM.Id, parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetDebrotExposure(parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
             this.PieData = myResult;
             this.FillPie();
         });

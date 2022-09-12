@@ -98,5 +98,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public List<string> GetUserPermittedBranchesIdsByUserId(string userId, int tenant)
+        {
+            return (from record in context.UserPermittedBranches where record.UserId == userId && record.Tenant == tenant select record.BranchId).ToList();
+        }
     }
 }
