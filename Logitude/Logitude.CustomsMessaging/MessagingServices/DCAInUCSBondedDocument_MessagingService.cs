@@ -419,7 +419,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                     {
                         CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
-                        if (customDocumentTypePM.CustomsDocumentUpload == "C" || customDocumentTypePM.CustomsDocumentUpload == "U")
+                        if (customDocumentTypePM.CustomsDocumentUpload == "U" || customDocumentTypePM.CustomsDocumentUpload == "C")
                         {
                             IsSendByDocType = true;
                         }

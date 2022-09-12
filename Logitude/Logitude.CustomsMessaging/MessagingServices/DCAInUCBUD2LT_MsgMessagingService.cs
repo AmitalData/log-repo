@@ -451,6 +451,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     else
                     {
                         LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
+
+                        if (CheckIsSendByDocType(logData))
+                        {
+                            shouldCreateDCAComm = true;
+                        }
+                        else
+                        {
+                            LogitudeSettings.HandleLogMe("Not Connect To Ticket " + logData, false, "CreateUD2LTService", stopLogAt);
+                        }
+
                     }
 
                 }
@@ -525,7 +535,40 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
+        private bool CheckIsSendByDocType(string logData)
+        {
+            bool IsSendByDocType = false;
+            string CustomsDocumentUpload = "";
+            try
+            {
+                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
 
+                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                {
+                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+
+                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    {
+                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+                        if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                        {
+                            IsSendByDocType = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                logData += $"CheckIsSendByDocType:error:{ee.Message}";
+            }
+            finally
+            {
+                logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+            }
+            return IsSendByDocType;
+        }
         private void FixDocumentTypeCodeEmpty(string logData)
         {
             var codeStart = _DocumentsFilingPM.DocumentTypeCode;
