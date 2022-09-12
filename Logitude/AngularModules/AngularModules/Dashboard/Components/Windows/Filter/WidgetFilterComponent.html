@@ -164,7 +164,7 @@
                                             </td>
 
                                            <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="ShowDatePickerByType(item, 'Day')">
+                                                *ngIf="ShowDayPicker(item)">
                                                 <LogDatePicker 
                                                     [InputType]="'date'" 
                                                     [HideColumns]="true"
@@ -177,25 +177,14 @@
                                             </td>
                                             
                                            <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="ShowDatePickerByType(item, 'Month')">
-                                                <monthpicker [SelectedDate]="item.FieldValue" (OnChange)="item.FieldValue = $event"></monthpicker>
+                                                *ngIf="!ShowDayPicker(item)">
+                                                <monthpicker [SelectedDate]="item.FieldValue" 
+                                                            (OnChange)="item.DatePickerCondationValueChange($event.date, $event.quarter)" 
+                                                            [PickerType]="item.DateGroupCode" 
+                                                            [SelectedQuarter]="item.Quarter">
+                                                </monthpicker>
                                             </td>
-
-
-                                           <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="ShowDatePickerByType(item, 'Year')">
-                                                <ComboBox [ItemsSource]="Years"
-                                                    [SelectedItem]="item.FieldValue"
-                                                    (SelectedItemChanged)="item.FieldValue = $event"></ComboBox>
-                                            </td>
-                                            
-                                            
-                                           <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="ShowDatePickerByType(item, 'Quarter')">
-                                                <ComboBox [ItemsSource]="Quarters"
-                                                    [SelectedItem]="item.FieldValue"
-                                                    (SelectedItemChanged)="item.FieldValue = $event"></ComboBox>
-                                            </td>                                            
+                                                             
                                                  <!--    <td style="width:170px;max-width:170px;min-width:87px;"
                                                 *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"

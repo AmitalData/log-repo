@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import * as moment from 'moment';
+import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver';
 
 @Component({
     selector: 'monthpicker',
@@ -13,12 +14,28 @@ export class MonthpickerComponent implements OnInit {
     DropDownId: string;
     DatePickerInputId: string;
     model: MonthPickerModel;
-    Date: string;
+    DateText: string;
+    HideCalendar: boolean;
+    Quarters: string[] = ['Q1', 'Q2', 'Q3', 'Q4'];
+    IsQuarterCalendar: boolean;
 
     @Output() OnChange = new EventEmitter();
-    @Input() SelectedDate: string;
+    @Input() SelectedDate: Date;
+    @Input() SelectedQuarter: string;
 
-    constructor(private cd: ChangeDetectorRef) {
+    pickerType: string;
+    get PickerType(): string {
+        return this.pickerType;
+    }
+    @Input() set PickerType(value: string) {
+        if (value == this.pickerType) return;
+        this.pickerType = value;     
+        this.ManagePickerType();
+        this.DateText = null;
+        this.model = new MonthPickerModel();
+    }
+
+    constructor(private eRef: ElementRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         if (ObjectsLocator.GlobalSetting) this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
         this.DatePickerInputId = this.MakeRandomid();
@@ -28,22 +45,51 @@ export class MonthpickerComponent implements OnInit {
     ngOnInit(): void {
         moment.locale('en');
         this.SetDefaultDate();
+        this.ManagePickerType();
+    }
 
+    @HostListener('document:click', ['$event'])
+    clickout(event) {
+        if (this.eRef.nativeElement != event.target && !this.eRef.nativeElement.contains(event.target)) {
+            this.IsDateDropDownOpen = false;
+        }
+    }
+
+    ManagePickerType() {
+        if (!this.PickerType) this.PickerType = "Month";
+        if (this.PickerType == "Month") this.ManageMonthPickerType();
+        else if (this.PickerType == "Year") this.ManageYearPickerType();
+        else if (this.PickerType == "Quarter") this.ManageQuarterPickerType();
+    }
+
+    ManageMonthPickerType() {
+        this.HideCalendar = false;
+        this.IsQuarterCalendar = false;
+    }
+
+    ManageQuarterPickerType() {
+        this.HideCalendar = true;
+        this.IsQuarterCalendar = true;
+    }
+
+    ManageYearPickerType() {
+        this.HideCalendar = true;
+        this.IsQuarterCalendar = false;
     }
 
 
     private SetDefaultDate() {
         this.model = new MonthPickerModel();
         if (!this.SelectedDate) {
-            this.SubmitChanges();
+            if (this.PickerType == "Quarter" && !this.SelectedQuarter) this.SelectedQuarter = "Q1";
             return;
         }
-
-        this.model.selectedYearMoment = moment(this.SelectedDate, 'MM/YYYY');
-        this.model.selectedMonthMoment = moment(this.SelectedDate, 'MM/YYYY');
+        this.model.selectedYearMoment = moment(this.SelectedDate);
+        this.model.selectedMonthMoment = moment(this.SelectedDate);
         this.model.selectedMonthIndex = this.model.selectedMonthMoment.month();
         this.model.selectedMonthYear = this.model.selectedYearMoment.year();
-        this.SubmitChanges();
+        this.model.UpdateYearText();
+        this.SetDateText();
     }
 
     ToggleCalendar() {
@@ -72,9 +118,18 @@ export class MonthpickerComponent implements OnInit {
         this.model.IncrementYear();
     }
 
+    SelectQuarter(quarter: string) {
+        this.SelectedQuarter = quarter;
+        this.SubmitChanges();
+    }
 
     SelectMonth(index: number) {
         this.model.SelectMonth(index);
+        this.SubmitChanges();
+    }
+
+    Selectyear() {
+        if (this.PickerType != "Year") return;
         this.SubmitChanges();
     }
 
@@ -85,8 +140,31 @@ export class MonthpickerComponent implements OnInit {
 
     SubmitChanges() {
         this.IsDateDropDownOpen = false;
-        this.Date = (("0" + (this.model.selectedMonthIndex + 1)).slice(-2)) + "/" + this.model.selectedMonthYear;
-        this.OnChange.emit(this.Date);
+        var dateString = this.SetDateText();
+        const [day, month, year] = dateString.split('/');
+        var date = FieldValueResolver.GetDate(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
+        this.OnChange.emit({ date: date, quarter: this.SelectedQuarter });
+    }
+
+    private SetDateText() {
+        var dateString = "";
+        switch (this.PickerType) {
+            case "Month":
+                this.DateText = (("0" + (this.model.selectedMonthIndex + 1)).slice(-2)) + "/" + this.model.selectedYearText;
+                dateString = "01/" + this.DateText;
+                break;
+            case "Year":
+                this.DateText = this.model.selectedYearText;
+                dateString = "01/01/" + this.model.selectedYearText;
+                break;
+            case "Quarter":
+                this.DateText = this.SelectedQuarter + " - " + this.model.selectedYearText;
+                dateString = "01/01/" + this.model.selectedYearText;
+                break;
+            default:
+                break;
+        }
+        return dateString;
     }
 }
 

@@ -27,6 +27,7 @@ export class WidgetFilterItem {
     public FieldValue: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
     public DateGroupCode: string;
+    public Quarter: string;
 
     constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false) {
         this.UIProperties = new UIProperties;
@@ -59,6 +60,7 @@ export class WidgetFilterItem {
         this.FieldName = field.FieldName;
         this.DateGroupCode = field.DateGroupCode;
         this.FieldDataType = field.FieldDataType;
+        this.Quarter = field.Quarter;
         this.FillFieldValue(field);
         this.Operator = field.Operator;
         this.FilterType = field.FilterType;
@@ -169,8 +171,9 @@ export class WidgetFilterItem {
         this.FieldValue = this.IsChecked ? "true" : "false";
     }
 
-    DatePickerCondationValueChange(newValue) {
-        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue, "TreeFilter") : "";
+    DatePickerCondationValueChange(date, quarter) {
+        this.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        this.Quarter = this.DateGroupCode == "Quarter" ? quarter : null;
     }
 
     public AndOrOpsChanged(value) {
@@ -181,6 +184,7 @@ export class WidgetFilterItem {
     public DateGroupCodeChange(DateGroupCode: string) {
         this.DateGroupCode = DateGroupCode;
         this.FieldValue = "";
+        this.Quarter = null;
     }
 
 }

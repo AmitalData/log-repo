@@ -256,6 +256,25 @@
         font-weight: 700;
     }
 
+    .calender-header-text-Click {
+        text-decoration: none;
+        color: #454545;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .calender-header-text-Click:hover {
+        background: -moz-linear-gradient(50% 100% 90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+        background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0, rgba(28, 131, 185, 1)), color-stop(0.1369, rgba(32, 133, 187, 1)), color-stop(0.2814, rgba(45, 141, 191, 1)), color-stop(0.4294, rgba(66, 153, 198, 1)), color-stop(0.5799, rgba(96, 170, 209, 1)), color-stop(0.7322, rgba(134, 192, 222, 1)), color-stop(0.884, rgba(180, 219, 239, 1)), color-stop(1, rgba(220, 242, 253, 1)));
+        background: -o-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+        background: linear-gradient(0deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
     .CalendarHeader>div:first-child {
         float: left;
         display: block;
@@ -323,6 +342,13 @@
         grid-gap: 3px;
         margin: 2px;
     }
+    .db-grid-container-quarter {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 3px;
+        margin: 2px;
+    }
 </style>
 
 <div class="DatePicker">
@@ -335,7 +361,8 @@
                     <div style="height: 100%;width: calc(100% - 24px);" float-start>
                         <input [attr.data-cy]="DataCy" [id]="DatePickerInputId"
                             style="background: transparent;padding-top: 2px;box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
-                            [(ngModel)]="Date" class="DatePickerInput" autocomplete="off" ondrop="return false" disabled="true"/>
+                            [(ngModel)]="DateText" class="DatePickerInput" autocomplete="off" ondrop="return false"
+                            disabled="true" />
                     </div>
                     <!-- Toggle Button -->
                     <div style="height: 100%;width: 20px;" [style.float]="isRTL ? 'left' : 'right'">
@@ -358,7 +385,9 @@
                                         <button tabindex="-1" (click)="Previous()" class="CustomButton"></button>
                                     </div>
 
-                                    <div tabindex="-1" class="calender-header-text">
+                                    <div tabindex="-1" class="calender-header-text"
+                                        [ngClass]="{'calender-header-text-Click': PickerType == 'Year'}"
+                                        (click)="Selectyear()">
                                         {{model.selectedYearText}}
                                     </div>
 
@@ -368,13 +397,13 @@
                                 </div>
 
                                 <!-- Calendar -->
-                                <div>
+                                <div *ngIf="!HideCalendar">
                                     <div class="db-grid-container">
                                         <div *ngFor="let month of model.months; let i = index">
                                             <a class="DayCell" [class.Selected]="isSelectedMonth(i)" href="#"
-                                            (click)="SelectMonth(i)">
-                                            {{month}}
-                                        </a>
+                                                (click)="SelectMonth(i)">
+                                                {{month}}
+                                            </a>
                                         </div>
                                     </div>
 
@@ -385,11 +414,24 @@
                                         </div>
 
                                         <div class="CenterCenter" style="height: 22px; width: 65px; padding-top: 2px;">
-                                            <button class="Button" (click)="ThisMonthButtonClicked()">This Month</button>
+                                            <button class="Button" (click)="ThisMonthButtonClicked()">This
+                                                Month</button>
                                         </div>
                                     </div>
                                 </div>
 
+
+                                <!-- Quarters -->
+                                <div *ngIf="IsQuarterCalendar">
+                                    <div class="db-grid-container-quarter">
+                                        <div *ngFor="let item of Quarters; let i = index">
+                                            <a class="DayCell" [class.Selected]="SelectedQuarter == item" href="#"
+                                                (click)="SelectQuarter(item)">
+                                                {{item}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
