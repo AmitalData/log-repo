@@ -213,7 +213,7 @@ export class AccountPayablesComponent {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetCreditorExposure(this.SelectedCurrencyIndex_APGrid).subscribe((myResult: ServiceResponse) => {
+        this.invoiceDomainService.GetCreditorExposure(this.SelectedCurrencyIndex_APGrid, SessionLocator.LoggedUserPM.IsBranchRestricted).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
 
                 if (!myResult.HasError) {

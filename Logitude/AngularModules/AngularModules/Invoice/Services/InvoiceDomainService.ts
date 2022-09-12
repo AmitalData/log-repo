@@ -101,10 +101,10 @@ export class InvoiceDomainService {
             }));
         });
     }
-    GetDebrotExposure(tenant: number, currency: number) {
+    GetDebrotExposure(currencyIndex: number) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposure?currencyIndex=' + currencyIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 return allLists;
@@ -113,10 +113,10 @@ export class InvoiceDomainService {
 
 
     }
-    GetDebrotExposureForGridControl(index: number) {
+    GetDebrotExposureForGridControl(currencyIndex: number, isBranchRestricted: boolean) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
 
@@ -129,10 +129,10 @@ export class InvoiceDomainService {
         });
 
     }
-    GetCreditorExposure(index: number) {
+    GetCreditorExposure(currencyIndex: number, isBranchRestricted: boolean) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCreditorExposure?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetCreditorExposure?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
 

@@ -942,37 +942,89 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
-        public List<CreditorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
+        public List<CreditorsClass> GetDebtorsExposureForGridControl(int tenant, int currencyIndex, bool isBranchRestricted)
         {
-            IQueryable<APInvoice> invoiceList = (from a in repository.context.APInvoices.Include("VendorCard")
-                                                 where a.Tenant == tenant 
-                                                 && a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA" 
-                                                 && !a.IsClosed select a);                                                   
+            if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
+                return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
+            else
+                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);            
+        }
+        private List<CreditorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            List<string> allowedBranchesIds = new List<string>();
+            if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
 
-            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), invoiceList, tenant);
+            return (from a in repository.context.APInvoices.Include("VendorCard")
+                    where a.Tenant == tenant
+                    && a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA"
+                    && !a.IsClosed
+                    && (!isBranchRestricted || allowedBranchesIds.Contains(a.BranchId))
+                    group a by new
+                    {
+                        a.VendorCard.EnglishName,
+                        a.VendorId,
+                        a.VendorCard.PartnerTypeId,
+                    } into gr
+                    orderby gr.Key.EnglishName
+                    select new CreditorsClass()
+                    {
+                        Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                        CreditorName = gr.Key.EnglishName,
+                        Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                        CreditorId = gr.Key.VendorId,
+                        CreditorType = gr.Key.PartnerTypeId,
+                    }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
+        }
+        private List<CreditorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
+        {
+            List<APInvoicePM> invoiceList = (from a in repository.context.APInvoices
+                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA" && a.IsClosed == false)
+                                             select new APInvoicePM()
+                                             {
+                                                 AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
+                                                 AmountDueInProfitCurrency = a.AmountDueInProfitCurrency,
+                                                 VendorId = a.VendorId,
+                                                 Id = a.Id,
+                                                 Tenant = a.Tenant,
+                                                 InvoiceCurrencyExchangeRate = a.InvoiceCurrencyExchangeRate,
+                                                 DueDate = a.DueDate,
+                                                 BranchId = a.BranchId,
+                                             }).ToList();
+
+            invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoicePM>(new QueryOperations(), invoiceList.AsQueryable<APInvoicePM>(), tenant).ToList();
+
+
+            foreach (APInvoicePM invoice in invoiceList)
+            {
+                Card vendor = CardRepository.GetSingleCard(invoice.VendorId, invoice.Tenant, true);
+                invoice.VendorName = vendor.EnglishName;
+                invoice.VendorType = vendor.PartnerTypeId;
+            }
 
             List<CreditorsClass> datalist = (from a in invoiceList
                                              where a.Tenant == tenant
                                              group a by new
                                              {
-                                                 a.VendorCard.EnglishName,
+                                                 a.VendorName,
                                                  a.VendorId,
-                                                 a.VendorCard.PartnerTypeId,
+                                                 a.VendorType,
+
                                              } into gr
-                                             orderby gr.Key.EnglishName
+                                             orderby gr.Key.VendorName
                                              select new CreditorsClass()
                                              {
-                                                 Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
-                                                 CreditorName = gr.Key.EnglishName,
-                                                 Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                                                 Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                                                 CreditorName = gr.Key.VendorName,
+                                                 Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                  CreditorId = gr.Key.VendorId,
-                                                 CreditorType = gr.Key.PartnerTypeId,
+                                                 CreditorType = gr.Key.VendorType,
                                              }).ToList();
 
             datalist = datalist.OrderByDescending(d => d.Outstanding).Take(10).ToList();
 
             return datalist;
         }
+
 
         public IQueryable<APInvoiceList> GetIQueryableEntityList(IQueryable<APInvoice> iQueryable)
         {

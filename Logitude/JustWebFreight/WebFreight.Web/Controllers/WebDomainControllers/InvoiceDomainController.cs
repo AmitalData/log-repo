@@ -176,18 +176,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetDebrotExposure(int tenant, int currency)
+        public HttpResponseMessage GetDebrotExposure(int currencyIndex)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-
+                int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
-                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorExposure(tenant, currency);
+                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorExposure(tenant, currencyIndex);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -218,7 +217,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetDebrotExposureForGridControl(int index)
+        public HttpResponseMessage GetDebrotExposureForGridControl(int currencyIndex, bool isBranchRestricted)
         {
             try
             {
@@ -230,7 +229,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
-                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
+                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, currencyIndex, isBranchRestricted);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -267,19 +266,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCreditorExposure(int index)
+        public HttpResponseMessage GetCreditorExposure(int currencyIndex, bool isBranchRestricted)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 APInvoiceQuery apInvoiceQuery = new APInvoiceQuery(tenant);
-                List<CreditorsClass> myResult = apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
+                List<CreditorsClass> myResult = apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, currencyIndex, isBranchRestricted);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
