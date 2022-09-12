@@ -3709,7 +3709,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private string CalculateStatusByAmountue()
         {
-            var payments = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete);
+            var payments = invoicePaymentsChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete);
             if (payments == null || payments?.Count() == 0)
             {
                 return "Unpaid";

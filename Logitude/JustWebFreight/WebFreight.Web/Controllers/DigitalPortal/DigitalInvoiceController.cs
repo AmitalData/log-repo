@@ -84,7 +84,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         InvoiceDate = item.InvoiceDate,
                         StatusName = item.PaidStatus,
                         IsDigitalDueDateColorRed = (item.DueDate == null || item.PaidStatus == "Paid") ? false : (item.DueDate.Value < todayDate ? true : false),
+                        ConsolidationInvoiceId = item.ConsolidationInvoiceId,
                     };
+
+                    if (!string.IsNullOrEmpty(entity.ConsolidationInvoiceId))
+                    {
+                        entity.ConsolidationInvoiceNumber = arInvoiceReps.GetInvoiceNumber(entity.ConsolidationInvoiceId, tenant);
+                    }
 
                     entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
 
@@ -316,7 +322,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
 
-                entityPocos = aRInvoiceRepository.FilterInvoicesStatuses(entityPocos);
+                entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
 
                 var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
