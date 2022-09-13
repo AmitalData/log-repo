@@ -332,14 +332,26 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         }
     }
     SetVisiablity() {
-        if (this.RequsetPageName == "Signature" || this.RequsetPageName == "BIReport") {
+        let objectTableName = this.GetObejctTableName();
+
+        if (this.RequsetPageName == "Signature" || this.RequsetPageName == "BIReport" || objectTableName == "BIReport") {
             this.HideEntityDataFields = true;
             this.IsShowAreaDataField = false;
             this.IsShowAttachmentLinks = false;
         }
+
+
+        if (this.RequsetPageName == "BIReport" && !this.template.EntityId) {
+            this.IsShowSaveAsButtonOnly = true;
+        }
     }
 
+    GetObejctTableName() {
+        if (AppTool.IsNullOrEmpty(this.ObjectTableId)) return null;
+        let objectTable = window.ObjectTables.filter(f => f.Name == this.ObjectTableId)[0];
+        return objectTable ? objectTable.Name : null;
 
+    }
 
     LoadReportTemplateDate() {
 
@@ -406,14 +418,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 } 
 
             }
-
-
-            if (this.RequsetPageName == "BIReport" && !this.template.EntityId) {
-                this.IsShowSaveAsButtonOnly = true;
-          
-            }
-            
-
 
             if (this.template.TemplateType == "M") {
                 if (this.PageType == "Send" || this.PageType == "ManageTemplate" || this.PageType =="Maintenance") {
