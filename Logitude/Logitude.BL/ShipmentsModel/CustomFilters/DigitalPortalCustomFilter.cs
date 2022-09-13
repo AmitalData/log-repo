@@ -41,6 +41,17 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         isAllShipments = true;
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
                     }
+
+                    if (item.FieldName == "TransportModeShipmentTypeFilters")
+                    {
+                        var transportModesString = item.FieldValue as string;
+                        var shipmentTypesString = item.FieldValue2 as string;
+
+                        List<string> transportModes = transportModesString.Split(',').ToList();
+                        List<string> shipmentTypes = shipmentTypesString.Split(',').ToList();
+
+                        queryableData = queryableData.Where(d => shipmentTypes.Contains(d.ShipmentTypeId) || transportModes.Contains(d.TransportModeId));
+                    }
                 }
             }
 
