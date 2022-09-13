@@ -34,7 +34,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableName, 
 	         JoinedTableKey, 
 	         JoinedTableDisplayField, 
-	         SearchFields,
+	         SearchFields, 
+	         JoinedTableDBName,
 	      }
 
 
@@ -53,7 +54,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableName, 
 	         JoinedTableKey, 
 	         JoinedTableDisplayField, 
-	         SearchFields,
+	         SearchFields, 
+	         JoinedTableDBName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -120,6 +122,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDBName))
+            {
+				entityPOCO.JoinedTableDBName = entityPM.JoinedTableDBName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -193,6 +200,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JoinedTableDBName))
+            {
+					entityPM.JoinedTableDBName = entityPOCO.JoinedTableDBName;
+            }
+
 		}
 
 		public void PMToOldPM(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaDataPM oldEntityPM)
@@ -257,6 +269,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDBName))
+            {
+                oldEntityPM.JoinedTableDBName = entityPM.JoinedTableDBName;
             }
 			
 		}

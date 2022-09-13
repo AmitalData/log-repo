@@ -26,7 +26,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             this.ButtonsVisibility = isNew ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "SqlVariant" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "SqlVariant", "LookUp" }; } }
 
 
         public Visibility buttonsVisibility;

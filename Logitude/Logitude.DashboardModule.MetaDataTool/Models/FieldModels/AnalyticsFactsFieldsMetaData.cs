@@ -88,6 +88,16 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private string joinedTableDBName;
+        public string JoinedTableDBName
+        {
+            get { return joinedTableDBName; }
+            set
+            {
+                joinedTableDBName = value; FirePropertyChanged("JoinedTableDBName");
+            }
+        }
+
 
         private string joinedTableKey;
         public string JoinedTableKey

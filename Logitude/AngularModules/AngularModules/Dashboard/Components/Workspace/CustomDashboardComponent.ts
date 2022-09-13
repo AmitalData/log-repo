@@ -18,6 +18,7 @@ import { DashboardPMExtendedService } from '../../../DashboardModule/Services/Ex
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
 @Component({
     template:
@@ -133,8 +134,12 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             openAddEditDashboard: this.OpenDashboardWindow.bind(this),
             onChangeDashboard: this.OnChangeDashboard.bind(this),
             onSaveDashboard: this.OnSaveDashboard.bind(this),
+            onSelectDataPoint:this.onSelectDataPoint.bind(this),
         }),
             this.reactDashboradContainer.nativeElement);
+    }
+    private onSelectDataPoint(dataPointSelection: DataPointSelection){
+
     }
     private OpenDashboardWindow(dashboard: ReactDashboardPM) {
         var logitudeWindow = new LogitudeWindow();
@@ -172,6 +177,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.Tenant = SessionInfo.LoggedUserTenant;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
+            myWidget.DateGroupCode = widget.DateGroupCode;
         }
 
         var logitudeWindow = new LogitudeWindow();
@@ -226,6 +232,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
             myWidget.WidgetMeasures = [];
             myWidget.Filters = widget.Filters;
+            myWidget.DateGroupCode = widget.DateGroupCode;
 
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));

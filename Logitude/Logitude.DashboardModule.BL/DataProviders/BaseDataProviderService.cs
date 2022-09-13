@@ -37,6 +37,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var measure in _Widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
+                seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
@@ -60,13 +61,36 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return resultQueryables.ToList();
         }
 
-        private static string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
         {
+            var groupByQuery = $"{groupBy.FieldCode}";
+            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
+            {
+                groupByQuery = ConverDateByDateGroupCode( groupBy);
+            }
             return $@"select 
-                            data.{groupBy.FieldCode} as Label,
+                            {groupByQuery} as Label,
+                            {groupByQuery} as GroupById,
                             CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            group by {groupBy.FieldCode}";
+                            group by {groupByQuery}";
+        }
+
+        private string ConverDateByDateGroupCode( AnalyticsFactsFieldsMetaData groupBy)
+        {
+            switch (_Widget.DateGroupCode)
+            {
+                case "Day":
+                    return $"CAST(DAY(Data.{groupBy.FieldCode}) as varchar(10))";
+                case "Month":
+                    return $"CAST(MONTH(Data.{groupBy.FieldCode}) as varchar(10))";
+                case "Year":
+                    return $"CAST(YEAR(Data.{groupBy.FieldCode}) as varchar(10))";
+                case "Quarter":
+                    return $"CAST(MONTH(data.{groupBy.FieldCode})/4+1 as varchar(10))";
+                default:
+                    return $"convert(varchar, Data.{groupBy.FieldCode}, 105)";
+            }
         }
 
         private void FillEntityFields()

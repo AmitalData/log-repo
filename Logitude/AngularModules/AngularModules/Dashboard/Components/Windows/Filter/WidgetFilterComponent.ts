@@ -63,8 +63,4 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
         item.QueryFilterItems.push(newGroupTreeFilter);
     }
 
-    ShowDayPicker(item: WidgetFilterItem) {
-        return item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') && "Day" == item.DateGroupCode;
-    }
-
 }
