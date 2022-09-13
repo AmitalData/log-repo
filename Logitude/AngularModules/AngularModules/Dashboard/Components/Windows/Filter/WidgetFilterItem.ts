@@ -124,6 +124,8 @@ export class WidgetFilterItem {
         this.FillOperators(field.DataTypeCode);
         this.Operator = null;
         this.SelectedOperator = null;
+        this.Quarter = null;
+        this.DateGroupCode = null;
     }
 
 
@@ -160,6 +162,8 @@ export class WidgetFilterItem {
         this.SelectedOperator = operator;
         this.Operator = operator ? operator.Code : null;
         this.FieldValue = "";
+        this.Quarter = null;
+        this.DateGroupCode = null;
     }
 
     TextBoxCondationValueChange(newValue) {
