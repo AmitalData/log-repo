@@ -15,6 +15,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
     {
         public string Label { get; set; }
         public decimal Value { get; set; }
-        public decimal GroupById { get; set; }
+        public string GroupById { get; set; }
     }
 }
