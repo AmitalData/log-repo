@@ -131,6 +131,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+        public DocumentTypePM GetDocumentTypeCodeById(string Id, int Tenant)
+        {
+            try
+            {                
+                return query.GetSinglePM(Id, Tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
     }
 }

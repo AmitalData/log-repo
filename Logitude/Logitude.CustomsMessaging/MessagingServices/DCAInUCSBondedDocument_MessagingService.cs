@@ -418,28 +418,34 @@ namespace Logitude.CustomsMessaging.MessagingServices
             string CustomsDocumentUpload = "";
             try
             {
-                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
+                DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode + logData, false, "CheckIsSendByDocType", stopLogAt);
+                    DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
-                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
-
-                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
-                        LogitudeSettings.HandleLogMe("customDocumentTypePM != null " + customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CheckIsSendByDocType", stopLogAt);
+                        LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode + logData, false, "CheckIsSendByDocType", stopLogAt);
 
-                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+                        CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
 
-                        if (customDocumentTypePM.CustomsDocumentUpload == "U" || customDocumentTypePM.CustomsDocumentUpload == "C")
-
+                        if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
-                            LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C||U" + logData, false, "CheckIsSendByDocType", stopLogAt);
+                            LogitudeSettings.HandleLogMe("customDocumentTypePM != null " + customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CheckIsSendByDocType", stopLogAt);
 
-                            IsSendByDocType = true;
+                            CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+
+                            if (customDocumentTypePM.CustomsDocumentUpload == "U" || customDocumentTypePM.CustomsDocumentUpload == "C")
+
+                            {
+                                LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C||U" + logData, false, "CheckIsSendByDocType", stopLogAt);
+
+                                IsSendByDocType = true;
+                            }
                         }
                     }
                 }
