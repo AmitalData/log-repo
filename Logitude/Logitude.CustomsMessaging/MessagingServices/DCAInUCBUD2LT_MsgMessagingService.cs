@@ -572,7 +572,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode + logData, false, "CreateUD2LTService", stopLogAt);
                         CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
 
                         if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
