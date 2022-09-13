@@ -1917,8 +1917,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                     if (!string.IsNullOrEmpty(objectField.DefaultAdditionalFilters))
                     {
-                        QueryFilterItem defaultAdditionalTreeFilters = new QueryFilterItem();
-                        objectField.DefaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(objectField.DefaultAdditionalFilters);
+                        objectField.DefaultAdditionalTreeFilters = GetDefaultAdditionalTreeFilters(objectField.DefaultAdditionalFilters);
                     }
                 }
 
@@ -1926,6 +1925,24 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return objectfields;
+        }
+
+        private static QueryFilterItem GetDefaultAdditionalTreeFilters(string defaultAdditionalFilters)
+        {
+            QueryFilterItem defaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
+            HandleObjectFieldValue(defaultAdditionalTreeFilters);
+
+            return defaultAdditionalTreeFilters;
+        }
+
+        private static void HandleObjectFieldValue(QueryFilterItem queryFilterItem)
+        {
+            queryFilterItem.FieldValue = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : queryFilterItem.FieldValue;
+            if (queryFilterItem.QueryFilterItems == null) return;
+
+            queryFilterItem.QueryFilterItems.ForEach(queryFilter => {
+                HandleObjectFieldValue(queryFilter);
+            });
         }
 
         public List<ObjectFieldPM> GetObjectFieldsByTenantAndObjectTable(int tenant, string objecttableName)
