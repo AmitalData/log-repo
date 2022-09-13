@@ -82,48 +82,13 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     set SelectedPageItem(newValue: string) {
         if (this.selectedPageItem != newValue) {
             this.selectedPageItem = newValue;
-            this.SelectionPageChanged();
+            
         }
     }
+
 
     private Page_CUSTOM: any = null;
-    SelectionPageChanged() {
-        if (this.SelectedPageItem != null) {
-
-            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedPageItem)[0];
-            if (myLocation != null) {
-
-                switch (this.SelectedPageItem) {
-                    case "CLASIC": {
-
-                        break;
-                    }
-
-                    case "CUSTOM": {
-                        if (this.Page_CUSTOM == null) {
-                            this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
-                                this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
-                                        this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
-                                            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
-                                                SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
-                                                    .then(cmpRef => {
-                                                        this.Page_CUSTOM = cmpRef.instance;
-                                                        this.Page_CUSTOM.InitComponent();
-                                                    });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        }
-
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    
 
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {

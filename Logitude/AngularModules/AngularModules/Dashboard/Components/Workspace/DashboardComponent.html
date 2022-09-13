@@ -552,7 +552,7 @@
             </div>
 
             <div class="CellContent" [hidden]="SelectedPageItem != 'CUSTOM'">
-                <div LocationDirective Code="CUSTOM"></div>
+                <custom-dashboard [show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
             </div>
         </td>
     </tr>

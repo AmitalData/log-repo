@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, OnInit,Input } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
@@ -7,7 +7,7 @@ import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
@@ -17,6 +17,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     template:
@@ -33,9 +34,24 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
         padding: 10px 0px 0px 0px;
      }
     `],
+    selector:'custom-dashboard',
+    encapsulation:ViewEncapsulation.ShadowDom
 })
 
-export class CustomDashboardComponent implements  AfterViewInit {
+export class CustomDashboardComponent implements OnInit,  AfterViewInit {
+    _show:boolean = false;
+    @Input('show') set show(value){
+        if(value){
+            this.ShowDashboard();
+        }
+        this._show = value;
+        
+    } 
+    get show(){
+        return this._show;
+    }
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     private CurrentSession = SessionLocator.SelectedSession;    
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
     private dashboardPMService: DashboardPMService;
@@ -46,13 +62,25 @@ export class CustomDashboardComponent implements  AfterViewInit {
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.myDashboardPM = new DashboardPM();
     }
-
-    ngAfterViewInit(): void {
-        this.renderNewDashboard();
+    ngOnInit(): void {
+        this.GetDashboards();
     }
 
-    public InitComponent() {
-        this.GetDashboards();
+    ngAfterViewInit(): void {
+        
+    }
+    ShowDashboard(){
+        this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
+                this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
+                            this.renderNewDashboard();
+                        });
+                    });
+                });
+            });
+        });
     }
 
     private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
@@ -262,3 +290,6 @@ export class CustomDashboardComponent implements  AfterViewInit {
         });
     }
 }
+
+
+
