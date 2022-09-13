@@ -54,6 +54,9 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             queryFilterItem.IsCustomField = objectField.IsCustom;
             queryFilterItem.FieldDataType = objectField.DataTypeCode;
             if (queryFilterItem.IsCustomField || (!string.IsNullOrEmpty(queryFilterItem.Operator) &&  queryFilterItem.Operator.Contains("Field"))) return;
+            if (queryFilterItem.FieldValue != null && string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString())) queryFilterItem.FieldValue = null;
+            if (queryFilterItem.FieldValue2 != null && string.IsNullOrEmpty(queryFilterItem.FieldValue2.ToString())) queryFilterItem.FieldValue2 = null;
+
             queryFilterItem.FieldValue = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode , queryFilterItem.FieldValue));
             queryFilterItem.FieldValue2 = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode, queryFilterItem.FieldValue2));
  
