@@ -37,7 +37,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var measure in _Widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
-                seriesMeasure.MeasureId = measure.Id;
+                seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
