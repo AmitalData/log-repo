@@ -177,6 +177,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.Tenant = SessionInfo.LoggedUserTenant;
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
+            myWidget.DateGroupCode = widget.DateGroupCode;
         }
 
         var logitudeWindow = new LogitudeWindow();
@@ -231,6 +232,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
             myWidget.WidgetMeasures = [];
             myWidget.Filters = widget.Filters;
+            myWidget.DateGroupCode = widget.DateGroupCode;
 
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
