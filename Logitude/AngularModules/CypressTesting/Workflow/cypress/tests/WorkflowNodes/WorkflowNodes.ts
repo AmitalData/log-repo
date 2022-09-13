@@ -39,6 +39,7 @@ Given("add condition with following details", (dataTable) => {
 });
 
 Given("add condition group met with {string} with the following details", (GroupOperation,dataTable) => {
+    debugger
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
     Actions.FillGroupConditionDetails(GroupOperation, groupConditionDetailsList);
 });
