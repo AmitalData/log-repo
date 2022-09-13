@@ -17,7 +17,7 @@
     left Join InterestTransactions ints on arp.Id = ints.EntityId AND ints.Tenant = jl.Tenant AND ints.GLAccountId = jl.CreditAccountId AND ints.LocalAmount = (jl.LocalAmount * -1)
     AND ints.ForeignAmount = (jl.ForeignAmount * -1)  AND ints.InterestEntityTypeCode = '2' AND ints.CurrencyId = jl.CurrencyId
     where j.AccountingEntityCode = '3' AND j.OriginalJournalId is not null
-    AND arp.StatusCode = 'VD' AND jl.ActionCode = '1' 
+    AND arp.StatusCode = 'VD' AND jl.ActionCode = '1' AND j.StatusCode = '2'
     AND ints.Id is null
      ]]>
  </Sql>
