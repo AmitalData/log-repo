@@ -248,6 +248,13 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.Transshipment1TrailerNumber = shipmentpm.Transshipment1TrailerNumber;
                 prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
                 prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment3TrailerNumber;
+                prealertDataProvider.ValueOfGoods = shipmentpm.ValueOfGoods;
+
+                if (!string.IsNullOrEmpty(shipmentpm.ValueOfGoodsCurrencyId))
+                {
+                    Currency currency = commonContext.Currencies.Where(d => d.Id == shipmentpm.ValueOfGoodsCurrencyId).FirstOrDefault();
+                    prealertDataProvider.ValueOfGoodsCurrecny = currency?.Code;
+                }
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {
@@ -745,6 +752,8 @@ namespace WebFreight.Web.ReportsWebServices
                     masterpackage.DescriptionOfGoods = package.Description;
                     masterpackage.NumberOfInsidePackages = package.NumberOfInsidePackages;
                     masterpackage.ContainerNumber = package.ContainerNumber;
+                    masterpackage.Seal1 = package.ShipperSeal;
+                    masterpackage.Seal2 = package.CarrierSeal;                    
 
                     if (package.IsDangerous)
                     {
@@ -789,6 +798,9 @@ namespace WebFreight.Web.ReportsWebServices
                             string itemText = package.Quantity.ToString() + " x " + num + "'" + alpha;
                             myTotalContainers = string.IsNullOrEmpty(myTotalContainers) ? itemText : myTotalContainers + ", " + itemText;
                         }
+
+                        masterpackage.PackageTypeCode = myPackageType.Code;
+                        masterpackage.PackagesTypesAndNumbers = package.Quantity + " " + myPackageType.EnglishName;
                     }
 
                     masterpackage.InsidePackagesLines = new List<InsidePackageLine>();
@@ -1471,13 +1483,15 @@ namespace WebFreight.Web.ReportsWebServices
                     string str = "";
                     foreach (ARInvoice item in invoices)
                     {
+                        string printedNumber = item.StatusCode == "DR" ? item.DraftNumber : item.InvoiceNumber;
+
                         if (string.IsNullOrEmpty(str))
                         {
-                            str = item.InvoiceNumber;
+                            str = printedNumber;
                         }
                         else
                         {
-                            str = str + ", " + item.InvoiceNumber;
+                            str = str + ", " + printedNumber;
                         }
                     }
 
