@@ -329,11 +329,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class CreateUD2LTService : ICreateUD2LTService
     {
         private DocumentsFilingPM _DocumentsFilingPM;
-        DateTime stopLogAt = DateTime.MinValue;
+       
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-             stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+           DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
@@ -538,7 +538,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
         private bool CheckIsSendByDocType(string logData)
         {
-
+            DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
             LogitudeSettings.HandleLogMe("arrived Function " + logData, false, "CheckIsSendByDocType", stopLogAt);
             bool IsSendByDocType = false;
             string CustomsDocumentUpload = "";
