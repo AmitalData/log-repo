@@ -7,6 +7,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -20,15 +21,30 @@ export class AddEditDashboardComponent extends BaseComponent {
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Dashboard";
+    public SessionIndex: number;
+    public PermissionLevelsList: CodeNameClass[] = [];
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+        this.BuildPermissionLevelsList();
     }
 
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs['EntityPM'];
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
+    }
+
+    private BuildPermissionLevelsList() {
+        this.PermissionLevelsList = [];
+
+        this.PermissionLevelsList.push(new CodeNameClass("ONM", "Only Me"));
+        this.PermissionLevelsList.push(new CodeNameClass("ALL", "All Users"));
+        this.PermissionLevelsList.push(new CodeNameClass("SPF", "Specific Users"));
+
+        if (this.isNew)
+            this.PermissionLevelCode = "ONM";
     }
 
     get Name() { return this.EntityPM.Name }
@@ -42,6 +58,13 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Description(value: string) {
         if (this.EntityPM.Description != value) {
             this.EntityPM.Description = value;
+        }
+    }
+
+    get PermissionLevelCode() { return this.EntityPM.PermissionLevelCode; }
+    set PermissionLevelCode(value: string) {
+        if (this.EntityPM.PermissionLevelCode != value) {
+            this.EntityPM.PermissionLevelCode = value;
         }
     }
 

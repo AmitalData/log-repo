@@ -262,6 +262,64 @@ namespace Logitude.DashboardModule.BL.EntityPMs
               }
              set {  deletedWidgets = value; }
 	    }
+	  	  private string permissionLevelCode ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PermissionLevelCode  
+	   {
+	    
+	     get
+		{
+		   return permissionLevelCode;
+		 }
+		 set
+		 {
+		   if(permissionLevelCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PermissionLevelCode",OldValue=permissionLevelCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   permissionLevelCode=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<DashboardSharedUserPM> dashboardSharedUsers;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DashboardSharedUsers", "Id","DashboardId")]
+	   [DataMember]
+	   public virtual List<DashboardSharedUserPM> DashboardSharedUsers  
+	   {
+	        get
+             {
+                 if (dashboardSharedUsers == null)
+                 {
+                     dashboardSharedUsers = new List<DashboardSharedUserPM>();
+                 }
+                 return dashboardSharedUsers;
+              }
+             set { dashboardSharedUsers = value; }
+	    }
+		   
+	   private List<DashboardSharedUserPM>  deletedDashboardSharedUsers;
+	   public virtual List<DashboardSharedUserPM> DeletedDashboardSharedUsers  
+	   {
+	        get
+             {
+                 if ( deletedDashboardSharedUsers == null)
+                 {
+                      deletedDashboardSharedUsers = new List<DashboardSharedUserPM>();
+                 }
+                 return  deletedDashboardSharedUsers;
+              }
+             set {  deletedDashboardSharedUsers = value; }
+	    }
 	     }
    
 }

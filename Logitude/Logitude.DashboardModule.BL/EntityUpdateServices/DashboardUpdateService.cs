@@ -52,6 +52,9 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
         {
             WidgetUpdateService widgetUpdateService = new WidgetUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             widgetUpdateService.UpdateMulti(entityPM.Widgets, entityPM.DeletedWidgets, entityPM, false);
+
+            DashboardSharedUserUpdateService dashboardSharedUserUpdateService = new DashboardSharedUserUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            dashboardSharedUserUpdateService.UpdateMulti(entityPM.DashboardSharedUsers, entityPM.DeletedDashboardSharedUsers, entityPM, false);
         }
     }
 }

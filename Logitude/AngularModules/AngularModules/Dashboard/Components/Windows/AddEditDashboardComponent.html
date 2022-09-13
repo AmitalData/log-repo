@@ -36,6 +36,22 @@
                     </td>
                 </tr>
 
+                <tr class="FormFieldRow" style="height:80px;">
+                    <td colspan="3">
+                        <div style="margin: 10px;">
+                            <div style="font-size: 13px; color: #6E7172;">Access</div>
+                            <div style="margin-top: 5px; margin-left:5px;">
+                                <div class="RadioButton" *ngFor="let item of PermissionLevelsList" [attr.id]="'PermissionRadio_Div_' + SessionIndex + item.Code" style="height:22px;">
+                                    <input [attr.id]="'PermissionRadio_' + SessionIndex + item.Code" [attr.name]="'PermissionsRadio' + SessionIndex" type="radio" [checked]="PermissionLevelCode == item.Code" (click)="PermissionLevelCode = item.Code" />
+                                    <label [attr.for]="'PermissionRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: PermissionLevelCode == item.Code ? '#287828':'#282E30'}">                                        
+                                        {{item.Name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
                 <tr>
                     <td><div></div></td>
                 </tr>
