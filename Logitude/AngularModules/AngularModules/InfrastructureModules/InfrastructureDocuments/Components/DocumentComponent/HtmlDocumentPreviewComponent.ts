@@ -332,7 +332,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         }
     }
     SetVisiablity() {
-        let objectTableName = this.GetObejctTableName();
+        let objectTableName = this.GetObjectTableName();
 
         if (this.RequsetPageName == "Signature" || this.RequsetPageName == "BIReport" || objectTableName == "BIReport") {
             this.HideEntityDataFields = true;
@@ -346,9 +346,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         }
     }
 
-    GetObejctTableName() {
+    GetObjectTableName() {
         if (AppTool.IsNullOrEmpty(this.ObjectTableId)) return null;
-        let objectTable = window.ObjectTables.filter(f => f.Name == this.ObjectTableId)[0];
+        let objectTable = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0];
         return objectTable ? objectTable.Name : null;
 
     }
