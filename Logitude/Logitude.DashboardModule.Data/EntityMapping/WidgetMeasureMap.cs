@@ -32,8 +32,6 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.MeasureCode).HasColumnName("MeasureCode").IsRequired().HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.MeasureFieldId).HasColumnName("MeasureFieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.DateGroupCode).HasColumnName("DateGroupCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }

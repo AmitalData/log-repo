@@ -191,6 +191,9 @@ export class WidgetFilterItem {
         this.Quarter = null;
     }
 
+    LogLovCondationValueChange(newValue) {
+        this.FieldValue = newValue ? !AppTool.IsNullOrEmpty(newValue.Id) ? newValue.Id : newValue.Code : "";
+    }
 }
 
 export class Operator {

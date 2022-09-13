@@ -186,13 +186,13 @@
                                             </td>
                                                              
                                             <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
+                                                *ngIf="item.SelectedField && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
                                                     [ObjectFieldName]="'FieldValue'"
-                                                    [ObjectTableName]="item.ObjectTableName" [DataContext]="item"
+                                                    [ObjectTableName]="item.SelectedField.JoinedTableName" [DataContext]="item"
                                                     [IsFreeText]="true" [NoValidation]="true" [HideColumns]="true"
                                                     [HideLastColumn]="true" [SelectedValue]="item.FieldValue"
-                                                    [LookUpTableName]="item.ObjectFieldLookUpTableName"
+                                                    [LookUpTableName]="item.SelectedField.JoinedTableName"
                                                     [PlaceHolder]="'Value'" [SelectedItemObject]="item.FieldValue">
                                                 </LogLov>
                                             </td>

@@ -26,7 +26,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public WidgetMeasuresList: WidgetMeasureItem[];
     public RootFilter: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
-
+    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -149,6 +150,22 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get DateGroupCode() { return this.EntityPM.DateGroupCode; }
+    set DateGroupCode(value: string) {
+        if (this.EntityPM.DateGroupCode != value) {
+            this.EntityPM.DateGroupCode = value;
+        }
+    }
+
+    public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
+    get SelectedGroupField() { return this.selectedGroupField; }
+    set SelectedGroupField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedGroupField != value) {
+            this.selectedGroupField = value;
+            this.EntityPM.DateGroupCode = null;
+        }
+    }
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -229,7 +246,6 @@ export class WidgetMeasureItem extends BaseComponent {
     public DataContext: WidgetMeasureItem = this;
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
-    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
@@ -255,26 +271,6 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.EntityPM.MeasureCode != value) {
             this.EntityPM.MeasureCode = value;
         }
-    }
-
-    public selectedField: AnalyticsFactsFieldsMetaDataList = null;
-    get SelectedField() { return this.selectedField; }
-    set SelectedField(value: AnalyticsFactsFieldsMetaDataList) {
-        if (this.selectedField != value) {
-            this.selectedField = value;
-            this.ResetDateFields();
-        }
-    }
-
-    get DateGroupCode() { return this.EntityPM.DateGroupCode; }
-    set DateGroupCode(value: string) {
-        if (this.EntityPM.DateGroupCode != value) {
-            this.EntityPM.DateGroupCode = value;
-        }
-    }
-
-    ResetDateFields() {
-        this.EntityPM.DateGroupCode = null;
     }
 
     DeleteMeasureClicked() {

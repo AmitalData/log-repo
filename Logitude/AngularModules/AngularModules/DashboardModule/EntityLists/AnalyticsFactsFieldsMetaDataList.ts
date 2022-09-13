@@ -21,6 +21,7 @@ export class AnalyticsFactsFieldsMetaDataList {
 	JoinedTableKey: string;
 	JoinedTableDisplayField: string;
 	SearchFields: string;
+	JoinedTableDBName: string;
 	
 }
  

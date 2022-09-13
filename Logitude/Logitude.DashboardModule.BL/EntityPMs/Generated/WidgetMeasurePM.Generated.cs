@@ -135,29 +135,6 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string dateGroupCode ;
-	  	  
-       
-	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DateGroupCode  
-	   {
-	    
-	     get
-		{
-		   return dateGroupCode;
-		 }
-		 set
-		 {
-		   if(dateGroupCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateGroupCode",OldValue=dateGroupCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   dateGroupCode=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

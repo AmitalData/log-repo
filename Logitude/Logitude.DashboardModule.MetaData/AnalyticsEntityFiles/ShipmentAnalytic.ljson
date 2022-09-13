@@ -1,5 +1,5 @@
 {
-  "HashString": "95bf9948ac374d8da809f5b00ed91988",
+  "HashString": "12c5a84d4bdf4d8f98d2c6079c026fe5",
   "Name": "Shipment Analytics",
   "TableName": "ShipmentAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -12,6 +12,7 @@
       "DisplayName": "Quote Number",
       "DisplayNamePlural": "Quotes Numbers",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -24,6 +25,7 @@
       "DisplayName": "Customer",
       "DisplayNamePlural": "Customers",
       "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -36,6 +38,7 @@
       "DisplayName": "OpenReceivablesInLocalCurrency",
       "DisplayNamePlural": "OpenReceivablesInLocalCurrency",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -47,7 +50,8 @@
       "FieldCode": "ShipmentTypeId",
       "DisplayName": "Shipment Type ",
       "DisplayNamePlural": "Shipment Types",
-      "JoinedTableName": "ShipmentTypes",
+      "JoinedTableName": "ShipmentType",
+      "JoinedTableDBName": "ShipmentTypes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
     },
@@ -59,21 +63,10 @@
       "FieldCode": "TransportModeId",
       "DisplayName": "Transport Mode",
       "DisplayNamePlural": "Transport Modes",
-      "JoinedTableName": "TransportModes",
+      "JoinedTableName": "TransportMode",
+      "JoinedTableDBName": "TransportModes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
-    },
-    {
-      "HashString": "c69a5f86b8a2454dbd3f28a49c9eedfc",
-      "DataTypeCode": "Integer",
-      "CanMeasure": true,
-      "CanGroup": true,
-      "FieldCode": "NumberOfContainers",
-      "DisplayName": "Number Of Containers",
-      "DisplayNamePlural": "Number Of Containers",
-      "JoinedTableName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -84,6 +77,7 @@
       "DisplayName": "Operational Date",
       "DisplayNamePlural": "Operational Date",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -96,6 +90,7 @@
       "DisplayName": "Create Date",
       "DisplayNamePlural": "Create Date ",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -108,6 +103,7 @@
       "DisplayName": "TEU",
       "DisplayNamePlural": "TEU",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -120,6 +116,7 @@
       "DisplayName": "Gross WeightIn KG",
       "DisplayNamePlural": "Gross WeightIn KG",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -132,6 +129,7 @@
       "DisplayName": "Chargeable WeightIn KG",
       "DisplayNamePlural": "Chargeable WeightIn KG",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -144,6 +142,7 @@
       "DisplayName": "Shipment Number",
       "DisplayNamePlural": "Shipment Number",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -155,7 +154,8 @@
       "FieldCode": "BranchId",
       "DisplayName": "Branch",
       "DisplayNamePlural": "Branch",
-      "JoinedTableName": "Branchs",
+      "JoinedTableName": "Branch",
+      "JoinedTableDBName": "Branchs",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -167,7 +167,8 @@
       "FieldCode": "IncotermId",
       "DisplayName": "Incoterm",
       "DisplayNamePlural": "Incoterm",
-      "JoinedTableName": "Incoterms",
+      "JoinedTableName": "Incoterm",
+      "JoinedTableDBName": "Incoterms",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
     },
@@ -179,7 +180,8 @@
       "FieldCode": "SalesmanUserId",
       "DisplayName": "Salesman User",
       "DisplayNamePlural": "Salesman User",
-      "JoinedTableName": "Contacts",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -191,7 +193,8 @@
       "FieldCode": "AccountManagerUserId",
       "DisplayName": "Account Manager User",
       "DisplayNamePlural": "Account Manager User",
-      "JoinedTableName": "Contacts",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -203,7 +206,8 @@
       "FieldCode": "DirectionId",
       "DisplayName": "Direction",
       "DisplayNamePlural": "Direction",
-      "JoinedTableName": "Directions",
+      "JoinedTableName": "Direction",
+      "JoinedTableDBName": "Directions",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
     },
@@ -215,7 +219,8 @@
       "FieldCode": "ShipmentLevelCode",
       "DisplayName": "Shipment Level",
       "DisplayNamePlural": "Shipment Level",
-      "JoinedTableName": "ShipmentLevels",
+      "JoinedTableName": "ShipmentLevel",
+      "JoinedTableDBName": "ShipmentLevels",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name"
     },
@@ -227,7 +232,8 @@
       "FieldCode": "ShipperId",
       "DisplayName": "Shipper",
       "DisplayNamePlural": "Shipper",
-      "JoinedTableName": "Cards",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -239,7 +245,8 @@
       "FieldCode": "ConsigneeId",
       "DisplayName": "Consignee",
       "DisplayNamePlural": "Consignee",
-      "JoinedTableName": "Cards",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -251,7 +258,8 @@
       "FieldCode": "AgentId",
       "DisplayName": "Agent",
       "DisplayNamePlural": "Agent",
-      "JoinedTableName": "Cards",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -264,6 +272,7 @@
       "DisplayName": "Operational Closed",
       "DisplayNamePlural": "Operational Closed",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -276,6 +285,7 @@
       "DisplayName": "Accounting Closed",
       "DisplayNamePlural": "Accounting Closed",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -288,6 +298,7 @@
       "DisplayName": "Volume In CBM",
       "DisplayNamePlural": "Volume In CBM",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -300,6 +311,7 @@
       "DisplayName": "Packages Quantity",
       "DisplayNamePlural": "Packages Quantity",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -312,6 +324,7 @@
       "DisplayName": "Status",
       "DisplayNamePlural": "Status",
       "JoinedTableName": "EntityStatus",
+      "JoinedTableDBName": "EntityStatus",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
     },
@@ -324,6 +337,7 @@
       "DisplayName": "Cancelled",
       "DisplayNamePlural": "Cancelled",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -336,6 +350,7 @@
       "DisplayName": "Accounted Receivables (Local Currency)",
       "DisplayNamePlural": "Accounted Receivables (Local Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -348,6 +363,7 @@
       "DisplayName": "Profit (Local Currency)",
       "DisplayNamePlural": "Profit (Local Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -360,6 +376,7 @@
       "DisplayName": "Profit (Profit Currency)",
       "DisplayNamePlural": "Profit (Profit Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -372,6 +389,7 @@
       "DisplayName": "Open Receivables (Profit Currency)",
       "DisplayNamePlural": "Open Receivables (Profit Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -384,6 +402,7 @@
       "DisplayName": "Accounted Receivables (Profit Currency)",
       "DisplayNamePlural": "Accounted Receivables (Profit Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -395,7 +414,8 @@
       "FieldCode": "MainCarriageFromPortId",
       "DisplayName": "Main Carriage From Port",
       "DisplayNamePlural": "Main Carriage From Port",
-      "JoinedTableName": "Ports",
+      "JoinedTableName": "Port",
+      "JoinedTableDBName": "Ports",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -407,7 +427,8 @@
       "FieldCode": "MainCarriageToPortId",
       "DisplayName": "Main Carriage To Port",
       "DisplayNamePlural": "Main Carriage To Port",
-      "JoinedTableName": "Ports",
+      "JoinedTableName": "Port",
+      "JoinedTableDBName": "Ports",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -420,6 +441,7 @@
       "DisplayName": "Open Payables (Local Currency)",
       "DisplayNamePlural": "Open Payables (Local Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -432,6 +454,7 @@
       "DisplayName": "Accounted Payables (Local Currency)",
       "DisplayNamePlural": "Accounted Payables (Local Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -444,6 +467,7 @@
       "DisplayName": "Open Payables (Profit Currency)",
       "DisplayNamePlural": "Open Payables (Profit Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -456,6 +480,7 @@
       "DisplayName": "Accounted Payables (Profit Currency)",
       "DisplayNamePlural": "Accounted Payables (Profit Currency)",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -468,6 +493,7 @@
       "DisplayName": "A/R invoice issued",
       "DisplayNamePlural": "A/R invoice issued",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -479,7 +505,8 @@
       "FieldCode": "ShipmentSubTypeId",
       "DisplayName": "Sub Type",
       "DisplayNamePlural": "Sub Type",
-      "JoinedTableName": "ShipmentSubTypes",
+      "JoinedTableName": "ShipmentSubType",
+      "JoinedTableDBName": "ShipmentSubTypes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name"
     },
@@ -491,7 +518,8 @@
       "FieldCode": "MainCarriageCarrierId",
       "DisplayName": "Main Carriage Carrier",
       "DisplayNamePlural": "Main Carriage Carrier",
-      "JoinedTableName": "Cards",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -504,6 +532,7 @@
       "DisplayName": "Packages",
       "DisplayNamePlural": "Packages",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -516,6 +545,7 @@
       "DisplayName": "Containers",
       "DisplayNamePlural": "Containers",
       "JoinedTableName": null,
+      "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null
     },
@@ -527,7 +557,8 @@
       "FieldCode": "FromCountryId",
       "DisplayName": "From Country",
       "DisplayNamePlural": "From Country",
-      "JoinedTableName": "Countries",
+      "JoinedTableName": "Country",
+      "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -539,7 +570,8 @@
       "FieldCode": "ToCountryId",
       "DisplayName": "To Country",
       "DisplayNamePlural": "To Country",
-      "JoinedTableName": "Countries",
+      "JoinedTableName": "Country",
+      "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     }
