@@ -28,7 +28,7 @@ export class WorkflowSelectors {
     }
 
     public static WorkflowConditionValue(index: number): string {
-        return "input[data-cy^='ConditionValue_"+ index.toString()+ "']";
+        return "[data-cy^='ConditionValue_"+ index.toString()+ "']";
     }
 
     public static readonly WorkflowRootGroupCondition = "span[data-cy^='AddRootGroupButton']";

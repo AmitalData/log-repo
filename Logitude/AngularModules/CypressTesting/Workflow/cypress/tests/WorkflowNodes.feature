@@ -18,9 +18,9 @@ Feature: Workflow node
             | Operation | Equals                  |
             | Value     | TestAgentExport Contact |
         And add condition group met with 'And' with the following details
-            | field         | operation  | value                   |
+            | Field         | Operation  | Value                   |
             | Custom Lookup | Not Equals | TestAgentExport Contact |
-            | Custom text   | contains   | 33                      |
+            | Custom text   | Contains   | 33                      |
             | Custom Bool   | Equals     | False                   |
             | Custom NText  | Changed    | False                   |
         And click Ok

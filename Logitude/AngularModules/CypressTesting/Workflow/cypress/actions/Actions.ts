@@ -10,7 +10,7 @@ import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { ConditionDetails } from "../models/ConditionDetails";
 
 let ConditionCounter = 1;
-
+let ConditionGroupButton = 1;
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
 }
@@ -78,39 +78,47 @@ export function AssertSaveWorkflow() {
 export function AssertCreateWorkflow() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostWorkflowFlowBuilder, 200)
 }
+
 export function FillConditionDetails(conditionDetails: ConditionDetails) {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.Click(WorkflowSelectors.WorkflowAddCondition, 'Add Condition', null).then(() => {
         BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(1), conditionDetails.Field)
-        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(1), conditionDetails.Operation, 0)
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionValue(1), conditionDetails.Value)
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(1), conditionDetails.Field);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(1), conditionDetails.Operation, 0);
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionValue(1), conditionDetails.Value);
         ConditionCounter++;
     })
 }
 
 export function FillGroupConditionDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
     cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-    for (let i = ConditionCounter; i <= (conditionDetailsList.length + 1); i++) {
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[i - conditionDetailsList.length].Field);
-        FillConditionValue(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[i - conditionDetailsList.length].Operation, conditionDetailsList[i - conditionDetailsList.length].Field);
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[i - conditionDetailsList.length].Value);
+    ConditionGroupButton = ConditionCounter;
+    FillConditionsGroup(conditionDetailsList);
+}
+
+function FillConditionsGroup(conditionDetailsList: ConditionDetails[]) {
+    for (let i = ConditionCounter, ListCounter =0 ; i <= (conditionDetailsList.length + 1); i++, ListCounter++) {
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[ListCounter].Field);
+        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[ListCounter].Operation, 0);
+        FillConditionValue(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[ListCounter].Value, conditionDetailsList[ListCounter].Field);
         ConditionCounter++;
         if (i < (conditionDetailsList.length + 1))
-            cy.Click(WorkflowSelectors.WorkflowAddConditionButton(i), null);
+            cy.Click(WorkflowSelectors.WorkflowAddConditionButton(ConditionGroupButton), null);
     }
 }
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
         case "Custom Lookup":
-            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+            return cy.SelectDropDownListItem2(selector, value);
         case "Custom text":
+            return cy.FillLogTextBox(selector, value);
         case "Custom Ntext":
             return cy.FillLogTextBox(selector, value);
         case "Custom Bool":
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
     }
-
 }
