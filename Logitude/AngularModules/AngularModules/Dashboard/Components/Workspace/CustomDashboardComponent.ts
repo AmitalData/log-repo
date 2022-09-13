@@ -18,6 +18,7 @@ import { DashboardPMExtendedService } from '../../../DashboardModule/Services/Ex
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
 @Component({
     template:
@@ -133,8 +134,12 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             openAddEditDashboard: this.OpenDashboardWindow.bind(this),
             onChangeDashboard: this.OnChangeDashboard.bind(this),
             onSaveDashboard: this.OnSaveDashboard.bind(this),
+            onSelectDataPoint:this.onSelectDataPoint.bind(this),
         }),
             this.reactDashboradContainer.nativeElement);
+    }
+    private onSelectDataPoint(dataPointSelection: DataPointSelection){
+
     }
     private OpenDashboardWindow(dashboard: ReactDashboardPM) {
         var logitudeWindow = new LogitudeWindow();
