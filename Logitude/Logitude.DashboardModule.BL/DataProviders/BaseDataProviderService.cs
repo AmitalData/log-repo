@@ -37,6 +37,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var measure in _Widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
+                seriesMeasure.MeasureId = measure.Id;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
@@ -64,6 +65,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             return $@"select 
                             data.{groupBy.FieldCode} as Label,
+                            data.{groupBy.FieldCode} as GroupById,
                             CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             group by {groupBy.FieldCode}";

@@ -8,11 +8,13 @@ namespace Logitude.DashboardModule.BL.DataProviders
 {
     public class SeriesMeasure
     {
+        public string MeasureId { get; set; }
         public List<SeriesMeasureVulue> SeriesMeasureVulues = new List<SeriesMeasureVulue>();
     }
     public class SeriesMeasureVulue
     {
         public string Label { get; set; }
         public decimal Value { get; set; }
+        public decimal GroupById { get; set; }
     }
 }
