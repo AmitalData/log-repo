@@ -66,7 +66,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ShowAddDocument: boolean = false;
     public ChangePageButton: string = "Next";
     public IsCustomsActivated: boolean = false;
-    public AllowCreateShipmentsWithoutDocuments: boolean = false;
+    public AllowCreateAirShipmentsWithoutDocuments: boolean = false;
+    public AllowCreateOceanShipmentsWithoutDocuments: boolean = false;
     public Order: string = "Reference";
     public RequestedDateLabel: string = "Requested Flight Date";
     public FromTextCode: string;
@@ -264,7 +265,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
-        this.AllowCreateShipmentsWithoutDocuments = SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
+        this.AllowCreateAirShipmentsWithoutDocuments = SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
+        this.AllowCreateOceanShipmentsWithoutDocuments = SessionLocator.PrivateLableSettings.CreateOShipmentsWithoutDocs;
     }
 
     private SetDirections(args: any) {
@@ -847,7 +849,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
 
 
-        if (!this.IsDSVTenant && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0)) {
+        if (this.ValidateOceanShipmentDocuments()) {
             this.ValidationErrorsList.push("You should have at least one document shared with agent");
         }
 
@@ -856,6 +858,12 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.ValidateFCLDShipmentType();
  
     }
+
+    private ValidateOceanShipmentDocuments() {
+        let AllowCreateOceanExportShipmentsWithoutDocuments = this.AllowCreateOceanShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "O";
+        return !this.IsDSVTenant && !AllowCreateOceanExportShipmentsWithoutDocuments && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0);
+    }
+
     ValidateFCLDShipmentType() {
 
         if (!(this.ShipmentTypeId == 'FCLD' && this.TransportModeId == 'O')) {
@@ -966,13 +974,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Destination");
         }
 
-        if (this.ValidateDocuments()) {
+        if (this.ValidateAirShipmentDocuments()) {
             this.ValidationErrorsList.push("You should have at least one document shared with agent");
         }
     }
 
-    private ValidateDocuments() {
-        let AllowCreateAirExportShipmentsWithoutDocuments = this.AllowCreateShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "A";
+    private ValidateAirShipmentDocuments() {
+        let AllowCreateAirExportShipmentsWithoutDocuments = this.AllowCreateAirShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "A";
         return !this.IsDSVTenant && !AllowCreateAirExportShipmentsWithoutDocuments && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0);
     }
 

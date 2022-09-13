@@ -32,5 +32,6 @@ export class TenantManagmentPrivateLabelsList {
 		IsExportActivated: boolean;
 		QueryFiltersHighlightColor: string;
 		CreateShipmentsWithoutDocs: boolean;
+		CreateOShipmentsWithoutDocs: boolean;
 	
-}
+}
