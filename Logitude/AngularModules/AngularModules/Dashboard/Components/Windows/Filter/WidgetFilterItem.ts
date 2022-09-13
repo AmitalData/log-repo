@@ -9,6 +9,7 @@ export class WidgetFilterItem {
     public FieldName: string;
     public FieldId: string;
     public IsGroup: boolean = false;
+    public IsAnalyticsMetadatas: boolean = true;
 
 
     public FilterType: string = 'And'
@@ -25,19 +26,43 @@ export class WidgetFilterItem {
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
+    public DateGroupCode: string;
+    public Quarter: string;
 
-    constructor(field: WidgetFilterItem = null) {
+    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false) {
         this.UIProperties = new UIProperties;
-        if (field) this.BuildFieldData(field);
+        if (!buildRootFilter && field) this.BuildFieldData(field);
+        else if (buildRootFilter) this.BuildRootFitler(field);
+    }
+
+    BuildRootFitler(oldValue: WidgetFilterItem) {
+        this.QueryFilterItems.push(this.BuildGroupFilter(oldValue));
+    }
+
+    private BuildGroupFilter(oldFilter: WidgetFilterItem) {
+        let groupTreeFilter = new WidgetFilterItem();
+        groupTreeFilter.IsGroup = true;
+        groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
+        oldFilter.QueryFilterItems?.forEach((oldField) => {
+            groupTreeFilter.QueryFilterItems.push(this.BuildFilter(oldField));
+        });
+        return groupTreeFilter;
+    }
+
+    private BuildFilter(oldField: WidgetFilterItem) {
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        return this.BuildGroupFilter(oldField);
     }
 
     BuildFieldData(field: WidgetFilterItem) {
         this.DontRefreshFieldData = true;
         this.FieldId = field.FieldId;
         this.FieldName = field.FieldName;
+        this.DateGroupCode = field.DateGroupCode;
+        this.FieldDataType = field.FieldDataType;
+        this.Quarter = field.Quarter;
         this.FillFieldValue(field);
         this.Operator = field.Operator;
-        this.FieldDataType = field.FieldDataType;
         this.FilterType = field.FilterType;
         this.QueryFilterItems = field.QueryFilterItems;
         this.FillOperators(this.FieldDataType);
@@ -45,7 +70,10 @@ export class WidgetFilterItem {
     }
 
     FillFieldValue(field: WidgetFilterItem) {
-        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') return;
+        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') {
+            this.FieldValue = FieldValueResolver.ConvertToDate(field.FieldValue, "TreeFilter");
+            return;
+        }
         if (this.FieldDataType == 'Boolean') {
             this.BooleanListValueChanged(field.FieldValue?.toString() == 'true');
             return;
@@ -143,13 +171,20 @@ export class WidgetFilterItem {
         this.FieldValue = this.IsChecked ? "true" : "false";
     }
 
-    DatePickerCondationValueChange(newValue) {
-        this.FieldValue = newValue ? FieldValueResolver.ConvertUTCDateToString(newValue) : "";
+    DatePickerCondationValueChange(date, quarter) {
+        this.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        this.Quarter = this.DateGroupCode == "Quarter" ? quarter : null;
     }
 
     public AndOrOpsChanged(value) {
         this.AndOr = value;
         this.FilterType = value;
+    }
+
+    public DateGroupCodeChange(DateGroupCode: string) {
+        this.DateGroupCode = DateGroupCode;
+        this.FieldValue = "";
+        this.Quarter = null;
     }
 
 }

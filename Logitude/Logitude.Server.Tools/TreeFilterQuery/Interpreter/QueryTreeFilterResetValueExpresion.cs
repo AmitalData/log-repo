@@ -41,8 +41,16 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
 
         private void Handel(QueryFilterItem queryFilterItem)
         {
-            var objectField = GetObjectField(queryFilterItem);
+            ObjectField objectField = GetObjectField(queryFilterItem);
+            if (queryFilterItem.IsAnalyticsMetadatas)
+            {
+                objectField = new ObjectField
+                {
+                    DataTypeCode = queryFilterItem.FieldDataType
+                };
+            };
             if (objectField == null) return;
+
             queryFilterItem.IsCustomField = objectField.IsCustom;
             queryFilterItem.FieldDataType = objectField.DataTypeCode;
             if (queryFilterItem.IsCustomField || (!string.IsNullOrEmpty(queryFilterItem.Operator) &&  queryFilterItem.Operator.Contains("Field"))) return;

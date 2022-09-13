@@ -38,6 +38,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string MeasureFieldId { get; set; }
 	      
         public virtual AnalyticsFactsFieldsMetaData MeasureField { get; set; }
+        [Column("DateGroupCode")]
+	    public string DateGroupCode { get; set; }
     }
 }
 	 
