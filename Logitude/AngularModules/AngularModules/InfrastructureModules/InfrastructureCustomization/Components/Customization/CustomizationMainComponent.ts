@@ -99,7 +99,7 @@ export class CustomizationMainComponent {
 
         myTablesItems.forEach(field => {
             var table: ObjectTablePM = tablesList.filter(d => d.Id == field.ObjectTableID)[0];
-            if (table != null && this.HasEntityPermessions(table.Name) && this.HaveObjectTableAccess(table)) {
+            if (table != null && this.HasEntityPermessions(table) && this.HaveObjectTableAccess(table)) {
                 myData.push(field);
             }
         });
@@ -113,8 +113,8 @@ export class CustomizationMainComponent {
         this.IsReady = true;
     }
 
-    HasEntityPermessions(objectTableName: string) {
-        return FeatureLocator.HasEntityPermessions(objectTableName, "READ", false);
+    HasEntityPermessions(objectTable) {
+        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false) || objectTable.IsComposition;
 
     }
 
