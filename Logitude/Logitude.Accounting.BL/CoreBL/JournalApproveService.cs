@@ -59,7 +59,8 @@ namespace Logitude.Accounting.BL.CoreBL
         const string BankTransferARPaymentAccountingMethod = "BT";
         const string ARPaymentApprovedStatusCode = "AD";
         const string ARPaymentVoidedStatusCode = "VD";
-
+        const string ReturnedToCustomer = "5";
+        private const string CreditLineNotes = "החזרת שיק ללקוח";
         private string _QMessageId;
         private string _SelectedQueue;
         int _Tenant;
@@ -209,11 +210,25 @@ namespace Logitude.Accounting.BL.CoreBL
             FullAccountingARPaymentApproveService fullAccountingARPaymentApproveService = new FullAccountingARPaymentApproveService(aRPaymentPM, journalPM.Tenant, false, false);
 
             List<ARPaymentChequePM> arPaymentCheques = aRPaymentChequeQuery.GetListByPaymentId(aRPaymentPM.Id, journalPM.Tenant);
-            foreach (var cheque in arPaymentCheques)
+
+            if (journalPM.JournalLines.Any(x => x.Notes == CreditLineNotes))
             {
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);              
-                if (!CheckIfInterestTransactionCreated(interestTranasction) )
+                var chequeNumber = journalPM.JournalLines.FirstOrDefault()?.Reference1;
+                var returnedCheque = arPaymentCheques.FirstOrDefault(x => x.ChequeNumber == chequeNumber);
+                int returnedChequeLineNumber = arPaymentCheques.Max(x => x.LineNumber) + returnedCheque.LineNumber;
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM);
+                interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
+                if (!CheckIfInterestTransactionCreated(interestTranasction))
                     interestTransactionUpdateService.Update(interestTranasction, true);
+            }
+            else
+            {
+                foreach (var cheque in arPaymentCheques)
+                {
+                    var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);
+                    if (!CheckIfInterestTransactionCreated(interestTranasction))
+                        interestTransactionUpdateService.Update(interestTranasction, true);
+                }
             }
         }
 
