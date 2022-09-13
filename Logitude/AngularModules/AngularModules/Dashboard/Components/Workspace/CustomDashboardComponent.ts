@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, OnInit,Input } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
@@ -34,10 +34,22 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
         padding: 10px 0px 0px 0px;
      }
     `],
-    selector:'custom-dashboard'
+    selector:'custom-dashboard',
+    encapsulation:ViewEncapsulation.ShadowDom
 })
 
-export class CustomDashboardComponent implements  AfterViewInit {
+export class CustomDashboardComponent implements OnInit,  AfterViewInit {
+    _show:boolean = false;
+    @Input('show') set show(value){
+        if(value){
+            this.ShowDashboard();
+        }
+        this._show = value;
+        
+    } 
+    get show(){
+        return this._show;
+    }
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     private CurrentSession = SessionLocator.SelectedSession;    
@@ -50,26 +62,25 @@ export class CustomDashboardComponent implements  AfterViewInit {
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.myDashboardPM = new DashboardPM();
     }
+    ngOnInit(): void {
+        this.GetDashboards();
+    }
 
     ngAfterViewInit(): void {
-        this.GetEntityResources().subscribe(e=>{
-            this.renderNewDashboard();
-        });
-    }
-    GetEntityResources() {
-        var allObservable = [
-            this._entityResourceService.getEntityResourceByTableName("Dashboard"),
-            this._entityResourceService.getEntityResourceByTableName("Widget"),
-            this._entityResourceService.getEntityResourceByTableName("WidgetMeasure"),
-            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData"),
-            this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData")
-        ];
         
-
-        return forkJoin(allObservable);
     }
-    public InitComponent() {
-        this.GetDashboards();
+    ShowDashboard(){
+        this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
+                this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
+                            this.renderNewDashboard();
+                        });
+                    });
+                });
+            });
+        });
     }
 
     private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
@@ -279,5 +290,6 @@ export class CustomDashboardComponent implements  AfterViewInit {
         });
     }
 }
+
 
 
