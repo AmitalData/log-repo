@@ -547,7 +547,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                                     CultureInfo.InvariantCulture,
                                                     DateTimeStyles.None);
             }
-            LogitudeSettings.HandleLogMe("arrived Function " + logData, false, "CheckIsSendByDocType", stopLogAt);
+            if (_DocumentsFilingPM != null)
+            {
+                LogitudeSettings.HandleLogMe("_DocumentsFilingPM != null " + _DocumentsFilingPM.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
+            }
+            LogitudeSettings.HandleLogMe("arrived Function " + _DocumentsFilingPM?.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
+         
+
             bool IsSendByDocType = false;
             string CustomsDocumentUpload = "";
             try
@@ -557,17 +563,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                 {
-                    LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " +documentTypeCustomsDataPM?.CustomsDoucumentTypeCode+ logData, false, "CheckIsSendByDocType", stopLogAt);
+                    LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " +documentTypeCustomsDataPM?.CustomsDoucumentTypeCode+ logData, false, "CreateUD2LTService", stopLogAt);
                     CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                     CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
 
                     if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                     {
-                        LogitudeSettings.HandleLogMe("customDocumentTypePM != null "+ customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CheckIsSendByDocType", stopLogAt);
+                        LogitudeSettings.HandleLogMe("customDocumentTypePM != null "+ customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CreateUD2LTService", stopLogAt);
                         CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
                         if (customDocumentTypePM.CustomsDocumentUpload == "C")
                         {
-                            LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C" + logData, false, "CheckIsSendByDocType", stopLogAt);
+                            LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C" + logData, false, "CreateUD2LTService", stopLogAt);
                             IsSendByDocType = true;
                         }
                     }
@@ -576,13 +582,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception ee)
             {
                 logData += $"CheckIsSendByDocType:error:{ee.Message}";
-                LogitudeSettings.HandleLogMe("Exception" +  logData, false, "CheckIsSendByDocType", stopLogAt);
+                LogitudeSettings.HandleLogMe("Exception" +  logData, false, "CreateUD2LTService", stopLogAt);
             }
             finally
             {
                 logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
             }
-            LogitudeSettings.HandleLogMe("IsSendByDocType"+ IsSendByDocType + logData, false, "CheckIsSendByDocType", stopLogAt);
+            LogitudeSettings.HandleLogMe("IsSendByDocType"+ IsSendByDocType + logData, false, "CreateUD2LTService", stopLogAt);
             return IsSendByDocType;
         }
         private void FixDocumentTypeCodeEmpty(string logData)
