@@ -314,6 +314,8 @@
     <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
+    <Content Include="Images\Buttons\minus.over.png" />
+    <Content Include="Images\Buttons\minus.png" />
     <Content Include="Images\Charts\BarChart.png" />
     <Content Include="Images\Charts\DonutChart.png" />
     <Content Include="Images\Charts\LineChart.png" />

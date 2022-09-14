@@ -9,6 +9,8 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
+import { AppTool } from 'Infrastructure/Tools';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -20,14 +22,17 @@ export class AddEditWidgetComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
+    private FirstTime: boolean = true;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
+    public WidgetMeasuresClone: WidgetMeasurePM[];
     public RootFilter: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
-    
+    public GroupByQueryFilters: ApiQueryFilters;
+
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -43,6 +48,12 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.CheckMeasureAddVisiblity();
         this.Clone();
         this.GetFilters();
+        this.BuildQueryFilters();
+    }
+
+    BuildQueryFilters() {
+        this.GroupByQueryFilters = new ApiQueryFilters();
+        this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
     }
 
     GetFilters() {
@@ -86,6 +97,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
             newItem.Tenant = SessionInfo.LoggedUserTenant;
             newItem.WidgetId = this.EntityPM.Id;
+            newItem.MeasureCode = "Sum";
             this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
         }
 
@@ -126,6 +138,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set TypeCode(value: string) {
         if (this.EntityPM.TypeCode != value) {
             this.EntityPM.TypeCode = value;
+            this.ComputeChartImageSrc();
         }
     }
 
@@ -160,10 +173,17 @@ export class AddEditWidgetComponent extends BaseComponent {
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
     set SelectedGroupField(value: AnalyticsFactsFieldsMetaDataList) {
-        if (this.selectedGroupField != value) {
-            this.selectedGroupField = value;
-            this.EntityPM.DateGroupCode = null;
+        if (this.selectedGroupField == value) {
+            this.FirstTime = false;
+            return;
         }
+        this.selectedGroupField = value;
+        if (this.FirstTime) {
+            this.FirstTime = false;
+            return;
+        }
+        this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
+        this.FirstTime = false;
     }
 
     CancelButtonClicked() {
@@ -178,7 +198,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
         });
-
+        this.ValidateInputs(errors);
         this.ValidationErrorsList = errors;
         if (errors.length != 0) return;
 
@@ -195,6 +215,17 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.DashboardPM.AddWidget(this.EntityPM);
         }
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+
+    ValidateInputs(errors: string[]) {
+        this.ValidateMeasures(errors);
+    }
+
+    ValidateMeasures(errors: string[]) {
+        this.WidgetMeasuresList.forEach(measure => {
+            if (!AppTool.IsNullOrEmpty(measure.MeasureCode) && measure.MeasureCode != "Count" && AppTool.IsNullOrEmpty(measure.MeasureFieldId))
+                errors.push("Measure Field is Required");
+        });
     }
 
     private myCloner: Cloner;
@@ -219,18 +250,31 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
 
+        this.myCloner.AddField('EntityId');
+        this.myCloner.AddField('DateGroupCodes');
+        this.myCloner.AddField('EndPosition');
+
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
+
+        
+        this.EntityPM.WidgetMeasures.forEach(item => {
+            if(!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
+            this.WidgetMeasuresClone.push(Object.assign(new WidgetMeasurePM(null), item));
+        });
+
     }
+
     private RejectChanges() {
         this.myCloner.RejectChanges();
+        this.EntityPM.WidgetMeasures = this.WidgetMeasuresClone;
     }
 
     AddNewMeasureClicked() {
         var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
         newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
-
+        newItem.MeasureCode = "Sum";
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
@@ -246,12 +290,14 @@ export class WidgetMeasureItem extends BaseComponent {
     public DataContext: WidgetMeasureItem = this;
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
+    public FieldQueryFilters: ApiQueryFilters;
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.FilterMeasureFields();
     }
 
     public CheckMeasureDeleteVisiblity() {
@@ -268,8 +314,29 @@ export class WidgetMeasureItem extends BaseComponent {
 
     get MeasureCode() { return this.EntityPM.MeasureCode; }
     set MeasureCode(value: string) {
-        if (this.EntityPM.MeasureCode != value) {
-            this.EntityPM.MeasureCode = value;
+        if (this.EntityPM.MeasureCode == value) return;
+
+        this.EntityPM.MeasureCode = value;
+        this.MeasureFieldId = null;
+        this.FilterMeasureFields();
+    }
+
+    FilterMeasureFields() {
+        this.FieldQueryFilters = new ApiQueryFilters();
+
+        switch (this.EntityPM.MeasureCode) {
+            case "Avg":
+            case "Sum":
+                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
+                break;
+
+            case "Min":
+            case "Max":
+                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
+                break;
+
+            default:
+                break;
         }
     }
 
