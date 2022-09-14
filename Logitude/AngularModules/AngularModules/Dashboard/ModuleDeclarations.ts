@@ -6,6 +6,7 @@ import { AddEditWidgetComponent } from '../Dashboard/Components/Windows/AddEditW
 import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/CustomDashboardComponent';
 import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilterComponent';
 import { ChooseUsersComponent } from './Components/Windows/ChooseUsersComponent';
+import { ChooseUserCheckBoxComponent } from './Components/Windows/ChooseUserCheckBoxComponent';
 
 export const Components =
     [
@@ -17,6 +18,7 @@ export const Components =
         CustomDashboardComponent,
         WidgetFilterComponent,
         ChooseUsersComponent,
+        ChooseUserCheckBoxComponent,
     ];
 
 export class ModuleDeclarations {
@@ -33,6 +35,7 @@ export class ModuleDeclarations {
             case "CustomDashboardComponent": { myResult = CustomDashboardComponent; break; }
             case "WidgetFilterComponent": { myResult = WidgetFilterComponent; break; }
             case "ChooseUsersComponent": { myResult = ChooseUsersComponent; break; }
+            case "ChooseUserCheckBoxComponent": { myResult = ChooseUserCheckBoxComponent; break; }
         }
 
         return myResult;

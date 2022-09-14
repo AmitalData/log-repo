@@ -9,6 +9,7 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -35,6 +36,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.EntityPM = windowArgs['EntityPM'];
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
+        this.Clone();
     }
 
     private BuildPermissionLevelsList() {
@@ -78,7 +80,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         logWindow.Title = "Choose Users";
         logWindow.Width = 725;
         logWindow.Height = 520;
-        //logWindow.WindowArgs = args;
+        logWindow.WindowArgs = this.EntityPM;
         logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             //this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
@@ -86,8 +88,22 @@ export class AddEditDashboardComponent extends BaseComponent {
         });
     }
 
-    CancelButtonClicked() {        
+    CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('Name');
+        this.myCloner.AddField('Description');
+        this.myCloner.AddField('PermissionLevelCode');
+
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 
     OkButtonClicked() {
