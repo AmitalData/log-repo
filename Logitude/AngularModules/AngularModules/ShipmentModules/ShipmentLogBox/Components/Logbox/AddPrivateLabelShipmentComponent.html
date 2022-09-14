@@ -1047,8 +1047,8 @@
 
 
 
-												<table *ngIf="DirectionId == 'C' || ShowAddDocument">
-													<tr *ngIf="DirectionId == 'C'" style="height:30%">
+												<table *ngIf="DirectionId == 'C' || ShowAddDocument"  style="height:30%">
+													<tr *ngIf="DirectionId == 'C'">
 														<td>
 															<table *ngIf="DirectionId == 'C'">
 																<tr style="height: 10px;">
@@ -1145,6 +1145,24 @@
 
 																				</td>
 																			</tr>
+
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Quantity
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+
 																			<tr>
 																				<td></td>
 																			</tr>
@@ -1205,11 +1223,204 @@
 																					<LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"></LogTextBox>
 																				</td>
 																			</tr>
+
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td>
+																					<table>
+																						<tr>
+																							<td style="height: 22px;width:50px;">
+																								<LogTextBox [ObjectFieldName]="'PackagesQuantity'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
+																							</td>
+																							<td style="height: 22px;width:64px;">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Weight
+																								</label>
+																							</td>
+																							<td style="height: 22px;width:46px;">
+																								<LogTextBox [ObjectFieldName]="'GrossWeight'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
+																							</td>
+																							<td style="height: 22px;">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Kg
+																								</label>
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+
 																		</table>
 																	</td>
 																	<td style="width:3px;"><div></div></td>
 																</tr>
+															</table>
+														</td>
+														<td *ngIf="DirectionId == 'C'">
+															<table>
+																<tr style="height: 10px;">
+																	<td style="height: 10px;">
+																		<div></div>
+																	</td>
+																	<td style="height: 10px;">
+																		<div></div>
+																	</td>
+																</tr>
 
+																<tr>
+																	<td style="width:112px;">
+																		<table>
+																			<tr style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<label *ngIf="TransportModeId == 'O' || TransportModeId == 'I'" style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Container #
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																								<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+																							</td>
+
+																							<td style="height: 22px;width:100px;">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Package Type
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td></td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td style="width:20px;"><div></div></td>
+																	<td *ngIf="!IsDSVTenant" style="width:200px;float:left;">
+																		<table>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;width:164px;">
+																					<div></div>
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<div></div>
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<LogTextBox *ngIf="TransportModeId == 'O' || TransportModeId == 'I'" [ObjectFieldName]="'ContainerNumber'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<div></div>
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<div></div>
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
+																					<table>
+																						<tr>
+																							<td style="height: 22px;">
+																								<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
+																									<li style="width:50px;" (click)="PackageTypeClicked('FCL')" (mouseover)="itemMouseOver('FCL')" (mouseleave)="itemMouseLeave('FCL')" [class.SelectedFilter]="PackageType === 'FCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																										FCL
+																									</li>
+																									<li style="width:50px;" (click)="PackageTypeClicked('LCL')" (mouseover)="itemMouseOver('LCL')" (mouseleave)="itemMouseLeave('LCL')" [class.SelectedFilter]="PackageType === 'LCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																										LCL
+																									</li>
+																									<li style="width:50px;" (click)="PackageTypeClicked('OTHER')" (mouseover)="itemMouseOver('OTHER')" (mouseleave)="itemMouseLeave('OTHER')" [class.SelectedFilter]="(PackageType != 'LCL' && PackageType != 'FCL') || SelectedTransportationTypes.TransporationType == 'A'">
+																										Other
+																									</li>
+																								</ul>
+																							</td>
+																							<td>
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td style="width:3px;"><div></div></td>
+																</tr>
 															</table>
 														</td>
 													</tr>
@@ -1421,8 +1632,8 @@
 															</table>
 														</td>
 													</tr>
-
-
+													</table>
+												<table *ngIf="DirectionId == 'C' || ShowAddDocument" style="height:55%">
 													<tr style="height:33px;" *ngIf="!IsDSVTenant || ShowAddDocument">
 
 														<td>
@@ -1455,41 +1666,7 @@
 
 																	<td style="width:300px"></td>
 																	<td *ngIf="ShowAddDocument && DirectionId == 'E'" style="width:360px"></td>
-																	<td *ngIf="TransportModeId === 'O' &&DirectionId == 'C'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
-																		<table>
-																			<tr>
-
-																				<td style="width:7px;">
-																					<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-
-																				</td>
-
-																				<td style="height: 22px;width:100px;">
-																					<label style="padding-left:5px;color: rgb(110, 113, 114);">
-																						Package Type
-																					</label>
-																				</td>
-																				<td style="height: 22px;">
-																					<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
-																						<li style="width:50px;" (click)="PackageTypeClicked('FCL')" (mouseover)="itemMouseOver('FCL')" (mouseleave)="itemMouseLeave('FCL')" [class.SelectedFilter]="PackageType === 'FCL' && SelectedTransportationTypes.TransporationType != 'A'">
-																							FCL
-																						</li>
-																						<li style="width:50px;" (click)="PackageTypeClicked('LCL')" (mouseover)="itemMouseOver('LCL')" (mouseleave)="itemMouseLeave('LCL')" [class.SelectedFilter]="PackageType === 'LCL' && SelectedTransportationTypes.TransporationType != 'A'">
-																							LCL
-																						</li>
-																						<li style="width:50px;" (click)="PackageTypeClicked('OTHER')" (mouseover)="itemMouseOver('OTHER')" (mouseleave)="itemMouseLeave('OTHER')" [class.SelectedFilter]="(PackageType != 'LCL' && PackageType != 'FCL') || SelectedTransportationTypes.TransporationType == 'A'">
-																							Other
-																						</li>
-																					</ul>
-																				</td>
-																				<td>
-																					<div></div>
-																				</td>
-																			</tr>
-																		</table>
-																	</td>
-
-
+																	
 																</tr>
 															</table>
 
