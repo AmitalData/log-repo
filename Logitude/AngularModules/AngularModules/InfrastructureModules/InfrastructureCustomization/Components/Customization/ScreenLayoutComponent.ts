@@ -466,6 +466,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                 rows.ScreenFieldPMs.splice(position, 0, screenField);
                 rows.ObjectFieldPMs.splice(position, 0, myitem);
 
+                this.ReorderAllScreenFields(rows);
             }
         }
         else {
@@ -483,6 +484,12 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
+
+    private ReorderAllScreenFields(rows: any) {
+        rows.ScreenFieldPMs.forEach(screenfield => {
+            screenfield.Row = rows.ScreenFieldPMs.indexOf(screenfield);
+        });
+    }
 
     private GetObjectField(myitem: ObjectFieldPM) {
         let objectField = window.ObjectFields.filter(a => a.Id == myitem.Id)[0];
