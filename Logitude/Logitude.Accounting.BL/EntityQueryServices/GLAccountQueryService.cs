@@ -294,12 +294,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
-        {
-            List<string> allIdAccounts = repository.GetGLAccountIdByTypeControl(tenant, accountTypeCode, isControlAccount);
+        //public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
+        //{
+        //    List<string> allIdAccounts = repository.GetGLAccountIdByTypeControl(tenant, accountTypeCode, isControlAccount);
 
-            return allIdAccounts;
-        }
+        //    return allIdAccounts;
+        //}
 
 
         public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
