@@ -51,13 +51,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         MapConcurrencyFields_VZN(entityPM, entityPoco, entityMasterData);
                     }
 
-                    if (entityPM.IsDocsKPIsUpdatedFromWR)
-                    {
-                        MapConcurrencyFields_DocsIn(entityPM, entityPoco, entityMasterData);
-                    }
-
                     else
                     {
+                        if (entityPM.IsDocsKPIsUpdatedFromWR)
+                        {
+                            MapConcurrencyFields_DocsIn(entityPM, entityPoco, entityMasterData);
+                        }
+
                         MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
                         MapConcurrencyFields_Client(entityPM, entityPoco, entityMasterData);
 
