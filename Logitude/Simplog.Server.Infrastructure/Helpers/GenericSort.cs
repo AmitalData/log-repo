@@ -22,8 +22,10 @@ namespace Simplog.Server.Infrastructure.Helpers
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;
             sortParams.FirstSortExpression= GetSortExpression<T, N>(queryOperations.SortByColumnName);
-            if (!String.IsNullOrWhiteSpace(keyName) && LogitudeSettings.DatabaseManagementSystem == "oracle" &&
-                typeof(T).GetProperty(keyName).PropertyType == typeof(Guid))
+            if (!String.IsNullOrWhiteSpace(keyName) && //LogitudeSettings.DatabaseManagementSystem == "oracle" &&
+                typeof(T).GetProperty(keyName).PropertyType == typeof(Guid)
+                && LogitudeSettings.IsCostomsDeploy // crush on sql server on branch amital - fast respone 
+                )
             {
                 return GetSortedQuery<T, N>(sortParams);
             }

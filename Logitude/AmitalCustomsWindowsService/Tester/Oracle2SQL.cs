@@ -10,6 +10,28 @@ namespace AmitalCustomsWindowsService.Tester
 {
     public partial class Oracle2SQL
     {
+
+        /*
+
+        sp_rename 'dbo.SHAREDLOGINVITATIONSTATUS', 'SharedLogisticsInvitationStatus';
+        ALTER TABLE CUSTOMS.SupplierInvoiceItemS ALTER COLUMN OcrHeight  DECIMAL(5,0)
+
+        ALTER TABLE [Customs].[SUPPLIERINVOICEITEMS] ADD  DEFAULT ((0)) FOR [OCRHEIGHT]
+
+        ALTER TABLE [Customs].[SUPPLIERINVOICEITEMS] DROP CONSTRAINT [DF__SUPPLIERI__OCRTO__476843A7]
+        ALTER TABLE CUSTOMS.SupplierInvoiceItemS ALTER COLUMN OcrTop DECIMAL(5,0)
+        ALTER TABLE [Customs].[SUPPLIERINVOICEITEMS] ADD  DEFAULT ((0)) FOR [OcrTop ]
+
+        ALTER TABLE [Customs].[SUPPLIERINVOICEITEMS] DROP CONSTRAINT [DF__SUPPLIERI__OCRPA__485C67E0]
+        ALTER TABLE CUSTOMS.SupplierInvoiceItemS ALTER COLUMN OcrPageNumber DECIMAL(3,0)
+        ALTER TABLE [Customs].[SUPPLIERINVOICEITEMS] ADD  DEFAULT ((0)) FOR OcrPageNumber 
+
+        No coercion operator is defined between types 'System.Guid' and 'System.String'.
+
+
+        */
+
+
         List<MyTable> myTables = new List<MyTable>();
         public void GetReNameLongColumns(string root)
         {

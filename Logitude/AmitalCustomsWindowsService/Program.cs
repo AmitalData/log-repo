@@ -48,11 +48,15 @@ namespace AmitalCustomsWindowsService
         static void Main()
         {
 
+            bool test = false;
+            if (test)
+            {
+                (new Oracle2SQL())
+                    .SCHEMA();
+                //    .GetReNameLongColumns(root: @"C:\log2004\Logitude\");
+                //.ChangeToBit();
 
-            (new Oracle2SQL())
-                .SCHEMA();
-            //    .GetReNameLongColumns(root: @"C:\log2004\Logitude\");
-            //.ChangeToBit();
+            }
 
             //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
