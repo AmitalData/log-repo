@@ -3689,17 +3689,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 return "Unpaid";
             }
 
+            if (entityPM.IsConstituentInvoice)
+            {
+                return CalculateConstituentInvoiceStatus();
+            }
+
             if (entityPM.StatusCode.Equals("AC", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return CalculateStatusByAmountue();
-            }
-
-            if (entityPM.StatusCode.Equals("CN", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return CalculateStatusByAmountue();
-            }
-
-            if (entityPM.StatusCode.Equals("NT", StringComparison.InvariantCultureIgnoreCase))
             {
                 return CalculateStatusByAmountue();
             }
@@ -3707,6 +3702,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return null;
         }
 
+        private string CalculateConstituentInvoiceStatus()
+        {
+            ARInvoicePaymentQuery arInvoicePaymentQuery = new ARInvoicePaymentQuery(this.entityPM.Tenant);
+            var consolidationInvoice = invoiceRepository.GetSingleInvoice(this.entityPM.ConsolidationInvoiceId);
+            if (consolidationInvoice == null)
+            {
+                return null;
+            }
+
+            var payments = arInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(consolidationInvoice.Id, tenant);
+            if (payments == null || payments?.Count() == 0)
+            {
+                return "Unpaid";
+            }
+
+            if (entityPM.AmountDue == null || entityPM.AmountDue == 0)
+            {
+                return "Paid";
+            }
+
+            if (entityPM.AmountDue > 0)
+            {
+                return "Partially Paid";
+            }
+
+            return null;
+        }
         private string CalculateStatusByAmountue()
         {
             var payments = invoicePaymentsChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete);

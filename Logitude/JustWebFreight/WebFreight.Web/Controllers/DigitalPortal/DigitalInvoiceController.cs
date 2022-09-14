@@ -63,6 +63,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 foreach (var item in invoices.Where(d => d.IsPrinted))
                 {
+                    if(item.IsConstituentInvoice && string.IsNullOrEmpty(item.ConsolidationInvoiceId))
+                    {
+                        continue;
+                    }
+
                     var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
                     lines.AddRange(itemLines);
                     var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
@@ -85,6 +90,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         StatusName = item.PaidStatus,
                         IsDigitalDueDateColorRed = (item.DueDate == null || item.PaidStatus == "Paid") ? false : (item.DueDate.Value < todayDate ? true : false),
                         ConsolidationInvoiceId = item.ConsolidationInvoiceId,
+                        IsConstituentInvoice = item.IsConstituentInvoice,
                     };
 
                     if (!string.IsNullOrEmpty(entity.ConsolidationInvoiceId))
@@ -93,7 +99,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
 
                     entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
-
                     var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                     if (currency != null)
                     {
@@ -102,7 +107,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
                     entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
-
                     if (entity.Id == entity.InvoiceNumber)
                     {
                         entity.InvoiceNumber = item.DraftNumber + " (Draft)";
