@@ -30,6 +30,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using System.Net;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.WebPages
 {
@@ -381,6 +382,17 @@ namespace WebFreight.Web.WebPages
                             }
                             documentExtension = "html";
                         }
+                        if (documentExtension == "json")
+                        {
+                            var result = Encoding.Default.GetString(_DatainByte);
+                            result = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(result), Newtonsoft.Json.Formatting.Indented);
+                            Response.Clear();
+                            Response.Write(result);
+                            HttpContext.Current.Response.ContentType = "application/json";
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", "inline" + "; filename*=UTF-8''" + filename + "\"");
+
+                            return;
+                        }
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + (!string.IsNullOrEmpty(documentExtension) ? ".":"") + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", ""); 
@@ -456,7 +468,7 @@ namespace WebFreight.Web.WebPages
                                 HttpContext.Current.Response.ContentType = "application/xml";
                                 ShowType = "inline";
                                 break;
-
+                            
                             case "html":
                                 //HttpContext.Current.Response.AddHeader("Content-Disposition", "inline;filename=" + documentName);
                                 HttpContext.Current.Response.ContentType = "application/html";
