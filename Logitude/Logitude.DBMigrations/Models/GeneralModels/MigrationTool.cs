@@ -1830,11 +1830,7 @@ namespace Logitude.DBMigrations.Models
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
 
-            return new ExecuteSxmlFileResult
-            {
-                ShouldExecute = false,
-                Action = null
-            };
+            
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
@@ -1853,6 +1849,18 @@ namespace Logitude.DBMigrations.Models
 
                 if (executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion <= executedSxmlFileVersion)
                 {
+                    bool oracle2Sql = false;
+                    if (oracle2Sql)
+                    {
+
+                        System.Diagnostics.Debug.WriteLine($" update [Global].[dbo].[DBSCRIPTSHISTORY] set [HASHVALUE]='{sxmlFileHashValue}' where [SXMLFILENAME]='{sxmlFileName}'  ");
+                        return new ExecuteSxmlFileResult
+                        {
+                            ShouldExecute = false,
+                            Action = null
+                        };
+                    }
+                    
                     ExitTool("Error: The Script Inside " + sxmlFileName + " File Has Been Changed, If You Are Sure You Want To Continue Executing The Script, You Should Change The Script Version");
                 }
 

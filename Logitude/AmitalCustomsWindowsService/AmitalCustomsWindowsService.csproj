@@ -237,13 +237,14 @@
     </Compile>
     <Compile Include="Tester\LoadTest\LoadTestWorkerService.cs" />
     <Compile Include="Tester\MyTraceListener.cs" />
+    <Compile Include="Tester\Oracle2Sql.p.cs" />
     <Compile Include="Tester\ReqSheet\FormRepushQ.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tester\ReqSheet\FormRepushQ.Designer.cs">
       <DependentUpon>FormRepushQ.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tester\Sql2Oracle.cs" />
+    <Compile Include="Tester\Oracle2SQL.cs" />
     <Compile Include="Tester\SU\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
