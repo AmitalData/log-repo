@@ -345,10 +345,22 @@ namespace Logitude.Server.Tools.Counters
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
+                            SqlParameter lastNumberPar = null;
+                            SqlParameter tableNamePar = null;
 
 
-                            SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
-                            SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
+                            if (LogitudeSettings.IsCostomsDeploy)
+                            {
+                                lastNumberPar = new SqlParameter("@v_pLastNumber", SqlDbType.VarChar, 100);
+                                tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
+
+                            }
+                            else
+                            {
+                                lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
+                                tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
+
+                            }
 
                             lastNumberPar.Direction = ParameterDirection.Output;
                             tableNamePar.Direction = ParameterDirection.Input;
@@ -364,7 +376,17 @@ namespace Logitude.Server.Tools.Counters
                             cn.Open();
                             cmd.ExecuteNonQuery();
                             cn.Close();
-                            number = (string)cmd.Parameters["@pLastNumber"].Value;
+                            if (LogitudeSettings.IsCostomsDeploy)
+                            {
+                                number = (string)cmd.Parameters["@v_pLastNumber"].Value;
+
+                            }
+                            else
+                            {
+                                number = (string)cmd.Parameters["@pLastNumber"].Value;
+
+                            }
+                            
 
                         }
 

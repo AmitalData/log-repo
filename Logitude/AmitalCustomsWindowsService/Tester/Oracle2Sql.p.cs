@@ -404,15 +404,25 @@ namespace AmitalCustomsWindowsService.Tester
 
             var lines=d.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             Debug.WriteLine("CREATE SCHEMA Customs;  ");
-            foreach (var line in lines)
-            {
+			foreach (var line in lines)
+			{
+
 				//this.ToTable(""AcceptanceStatuses"
 				int pos = line.IndexOf("this.ToTable(");
-				string table = line.Substring(pos+"this.ToTable(".Length + 1);
+				string table = line.Substring(pos + "this.ToTable(".Length + 1);
 				pos = table.IndexOf('"');
-				table= table.Substring(0, pos);
-				Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table/*.ToUpper()*/};  ");
-				///Debug.WriteLine($"ALTER SCHEMA dbo TRANSFER OBJECT::dbo.{table/*.ToUpper()*/};  ");
+				table = table.Substring(0, pos);
+				if (line.Contains(@", ""Customs"""))
+				{
+					//Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table/*.ToUpper()*/};  ");
+
+				}
+				else
+				{
+					Debug.WriteLine($"ALTER SCHEMA dbo TRANSFER OBJECT::Customs.{table/*.ToUpper()*/}; ");
+				}
+
+
 			}
         }
     }
