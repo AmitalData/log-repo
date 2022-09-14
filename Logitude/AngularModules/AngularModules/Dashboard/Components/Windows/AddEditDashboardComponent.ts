@@ -8,6 +8,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -66,6 +67,23 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (this.EntityPM.PermissionLevelCode != value) {
             this.EntityPM.PermissionLevelCode = value;
         }
+    }
+
+    ChooseUsersClicked() {
+        //var args = new ChooseUserArgs();
+        //args.MyQuery = this.EntityPM;
+        //args.AllUsers = this.myUsersList;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Choose Users";
+        logWindow.Width = 725;
+        logWindow.Height = 520;
+        //logWindow.WindowArgs = args;
+        logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            //this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+            //this.FillSharedWithUsersItemsSource();
+        });
     }
 
     CancelButtonClicked() {        

@@ -312,6 +312,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditDashboardComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
+    <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
     <Content Include="Images\Charts\BarChart.png" />
@@ -1813,6 +1814,7 @@
     <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\DashboardPMService.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Windows\ChooseUsersComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterItem.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
