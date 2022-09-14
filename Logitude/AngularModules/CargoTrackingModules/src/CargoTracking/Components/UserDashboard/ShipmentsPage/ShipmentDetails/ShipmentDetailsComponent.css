@@ -662,17 +662,20 @@ h1 {
         margin-right:20px;
     }
 }
-@media screen and (min-width: 1000px){
+ @media screen and (max-width: 1000px){
     .connected-orders-table{
-        width: 50%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
-}
-@media screen and (max-width: 1000px){
-    .connected-orders-table{
-        width: 100%;
+    .connected-orders-table th{
+        padding-right:15px;
     }
-}
+ }
 
+.connected-orders-table{
+    width: 100%;
+}
 @media screen and (max-width: 479px) and (orientation: portrait),
 (max-height: 479px) and (orientation: landscape) {
     .mobile-font-12{

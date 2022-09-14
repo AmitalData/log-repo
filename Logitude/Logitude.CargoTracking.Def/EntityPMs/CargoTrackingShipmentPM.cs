@@ -195,5 +195,9 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string OrderNumber { get; set; }
         public string PONumber { get; set; }
         public DateTime? SupplyDateTime { get; set; }
+        public DateTime? PODate { get; set; }
+        public DateTime? PickupActualDateTime { get; set; }
+        public string BookingConfirmationNumber { get; set; }
+        public string CasualSupplierName { get; set; }
     }
 }
