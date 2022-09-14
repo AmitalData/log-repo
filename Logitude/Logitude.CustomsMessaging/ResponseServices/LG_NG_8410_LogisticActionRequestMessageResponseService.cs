@@ -31,13 +31,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var logisticActionRequestPM = logisticActionRequestQueryService.GetSingle(requestParams.LogisticActionRequestId, false, false);
             if (customResponse.ResponseContentHeader.Exception != null)
             {
-                logisticActionRequestPM.OperationalStatus = "3";
-                logisticActionRequestPM.ResponseStatusCode = "3";
+                logisticActionRequestPM.OperationalStatus = "2";
+                logisticActionRequestPM.ResponseStatusCode = "2";
             }
             else
             {
-                logisticActionRequestPM.OperationalStatus = "2";
-                logisticActionRequestPM.ResponseStatusCode = "2";
+                logisticActionRequestPM.OperationalStatus = "3";
+                logisticActionRequestPM.ResponseStatusCode = "3";
             }
 
 
