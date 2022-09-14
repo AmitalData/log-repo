@@ -65,21 +65,14 @@
         <td>
             <table>
                 <tr>
-
-                    <td style="width: 130px;height:45px;" *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)">
-                        <label style="padding-left:20%;color: #C9C9C9;">
-                            No Filters Added.
-                        </label>
-                    </td>
-                    <td *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)">
-                        <span class="LinkBtn" (click)="AddEmptyFilter()"> Add Filter</span>
+                    <td *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)" style="height: 0;">
+                        <span class="LinkBtn" (click)="AddEmptyFilter()"> Add Filters</span>
                     </td>
 
                     <td *ngIf="FilterItems && FilterItems.length > 0" style="vertical-align: top;">
                         <div style="display: flex; width: 0px;" *ngFor="let item of FilterItems; let i=index;">
                             <div *ngIf="IsRoot || FilterItems.length != 1" class="ImgHolder">
-                                <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;"
-                                    (click)="onDeleteFilterClick(item)" />
+                                <IconButton [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="onDeleteFilterClick(item)"></IconButton>
                             </div>
                             <div *ngIf="!item.IsGroup" style="width:650px;">
                                 <div>
