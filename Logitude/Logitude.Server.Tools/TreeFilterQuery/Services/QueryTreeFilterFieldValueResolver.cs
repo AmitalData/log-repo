@@ -29,12 +29,14 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Services
         {
             dynamic dynamicParentEntity = parentEntity;
             object value = dynamicParentEntity[fieldName];
-            if (value == null) return "";
+            if (value == null) return null;
 
             if (value.GetType().Name == "JObject")
             {
                 return GetCustomFieldValue(value, fieldDataType);
             }
+
+            if (string.IsNullOrEmpty(value.ToString())) return null;
 
             return FieldValueResolver.GetFieldDataValue(new ObjectField { DataTypeCode = fieldDataType }, value.ToString());
         }

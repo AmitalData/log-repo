@@ -197,7 +197,19 @@ export class BIReportDocumentTypeTemplateService {
             if ($event && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
+            if ($event) {
+                this.SeTemplateSelected($event);
+            }
+
         });
+    }
+
+    SeTemplateSelected(templateId: string) {
+        if (!templateId) return;
+        if (!this.bIReportPreviewComponent.DocumentTypeTemplateLists) return;
+        let newTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == templateId)[0];
+        if (!newTemplate) return;
+        this.bIReportPreviewComponent.DocumentTypeTemplateSelected = newTemplate;
     }
 
 
