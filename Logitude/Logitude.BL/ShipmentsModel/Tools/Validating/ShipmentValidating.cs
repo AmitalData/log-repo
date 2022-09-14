@@ -1872,6 +1872,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private string ValidateHousePackages()
         {
+            if (shipmentPM.ShipmentTypeId.ToUpper().Contains("MYG"))
+                return null;
+
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
             IQueryable<PackageType> packageTypes = packageTypeRepository.GetPackageTypes(tenant);
             List<ShipmentPackagePM> houseShipmentsPackaes = shipmentQuery.GetShipmentConsolidationPackages(shipmentPM.Id, tenant);
@@ -1962,6 +1965,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
 
+            List<ShipmentPackagePM> masterPackages = shipmentPM.ShipmentPackages;
             foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
             {
                 PackageType packageType = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
@@ -1970,6 +1974,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     LineData line = new LineData();
                     line.ShipmentNumber = houseItem.ShipmentNumber;
                     line.LineLabel = packageType.EnglishName;
+                    line.HouseStringValue = string.IsNullOrEmpty(houseItem.ContainerNumber) ? "- - -" : houseItem.ContainerNumber;
 
                     if (string.IsNullOrEmpty(line.ShipmentNumber))
                     {
@@ -1980,7 +1985,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         }
                     }
 
-                    ShipmentPackagePM masterItem = shipmentPM.ShipmentPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
+                    ShipmentPackagePM masterItem = masterPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
                     if (masterItem != null)
                     {
                         List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();
@@ -1989,7 +1994,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             if (p != masterItem)
                                 temp.Add(p);
                         }
-                        shipmentPM.ShipmentPackages = temp;
+                        masterPackages = temp;
                         line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
                         line.IsEquals = (line.HouseStringValue == line.MasterStringValue);
                     }
@@ -2006,7 +2011,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
 
-            foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages)
+            foreach (ShipmentPackagePM item in masterPackages)
             {
                 PackageType packageType = packageTypes.Where(d => d.Id == item.PackageTypeId).FirstOrDefault();
                 if (packageType != null)
