@@ -23,7 +23,7 @@
     Type="nvarchar"
     Size="300">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="GroupById"

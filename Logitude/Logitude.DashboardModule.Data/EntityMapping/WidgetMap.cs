@@ -27,7 +27,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Title).HasColumnName("Title").HasMaxLength(300).IsUnicode(true);
+            this.Property(t => t.Title).HasColumnName("Title").IsRequired().HasMaxLength(300).IsUnicode(true);
 
             this.Property(t => t.GroupById).HasColumnName("GroupById").IsRequired().HasMaxLength(15).IsUnicode(false);
 
