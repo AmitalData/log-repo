@@ -85,6 +85,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         StatusName = item.PaidStatus,
                         IsDigitalDueDateColorRed = (item.DueDate == null || item.PaidStatus == "Paid") ? false : (item.DueDate.Value < todayDate ? true : false),
                         ConsolidationInvoiceId = item.ConsolidationInvoiceId,
+                        IsConstituentInvoice = item.IsConstituentInvoice,
                     };
 
                     if (!string.IsNullOrEmpty(entity.ConsolidationInvoiceId))
