@@ -270,6 +270,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 };
 
                 queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+                queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
 
                 var cardFilterValues= newFilters.CardId;
                 if (!string.IsNullOrWhiteSpace(cardFilterValues))

@@ -1,5 +1,5 @@
 {
-  "HashString": "12c5a84d4bdf4d8f98d2c6079c026fe5",
+  "HashString": "9546cdb0b1bc402e9250c73dc4af0ba6",
   "Name": "Shipment Analytics",
   "TableName": "ShipmentAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -19,7 +19,7 @@
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "CustomerId",
       "DisplayName": "Customer",
@@ -33,7 +33,7 @@
       "HashString": "74779349ef83419da24456f63023ff1f",
       "DataTypeCode": "Decimal",
       "CanMeasure": true,
-      "CanGroup": false,
+      "CanGroup": true,
       "FieldCode": "OpenReceivablesInLocalCurrency",
       "DisplayName": "OpenReceivablesInLocalCurrency",
       "DisplayNamePlural": "OpenReceivablesInLocalCurrency",
@@ -45,7 +45,7 @@
     {
       "HashString": "3c51ccc1039c4309858dde98670075a8",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ShipmentTypeId",
       "DisplayName": "Shipment Type ",
@@ -58,7 +58,7 @@
     {
       "HashString": "eca85f5129814bf8a1f7cb3e520be59e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "TransportModeId",
       "DisplayName": "Transport Mode",
@@ -136,7 +136,7 @@
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ShipmentNumber",
       "DisplayName": "Shipment Number",
@@ -149,7 +149,7 @@
     {
       "HashString": "ca7a20c245fd421fbf3eb5ba68faf228",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "BranchId",
       "DisplayName": "Branch",
@@ -162,7 +162,7 @@
     {
       "HashString": "8fb00f3d1352439b8ee934d7f603038d",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "IncotermId",
       "DisplayName": "Incoterm",
@@ -175,7 +175,7 @@
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "SalesmanUserId",
       "DisplayName": "Salesman User",
@@ -188,7 +188,7 @@
     {
       "HashString": "9c6234223cc14d0691e395e801e55cd8",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "AccountManagerUserId",
       "DisplayName": "Account Manager User",
@@ -201,7 +201,7 @@
     {
       "HashString": "7865678afa484196ac3768b497469f3f",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "DirectionId",
       "DisplayName": "Direction",
@@ -214,7 +214,7 @@
     {
       "HashString": "a434bea8d8cb4af6bfdee16976a03e83",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ShipmentLevelCode",
       "DisplayName": "Shipment Level",
@@ -227,7 +227,7 @@
     {
       "HashString": "49c34741b8294e74938472c657e3fd4d",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ShipperId",
       "DisplayName": "Shipper",
@@ -240,7 +240,7 @@
     {
       "HashString": "6a987a87e5f0429bad52dc39becd90ed",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ConsigneeId",
       "DisplayName": "Consignee",
@@ -253,7 +253,7 @@
     {
       "HashString": "d81eb24286b04f2181e87b376988b010",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "AgentId",
       "DisplayName": "Agent",
@@ -266,7 +266,7 @@
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
       "DataTypeCode": "Boolean",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "IsOperationalClosed",
       "DisplayName": "Operational Closed",
@@ -279,7 +279,7 @@
     {
       "HashString": "c2978500773d4f6c8f01b82156e1f834",
       "DataTypeCode": "Boolean",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "IsAccountingClosed",
       "DisplayName": "Accounting Closed",
@@ -318,7 +318,7 @@
     {
       "HashString": "6844bb7d308a41aea4c7fe080b137089",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "StatusId",
       "DisplayName": "Status",
@@ -331,7 +331,7 @@
     {
       "HashString": "3f3df6d66d694068a82fe35f8629f927",
       "DataTypeCode": "Boolean",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "IsCancelled",
       "DisplayName": "Cancelled",
@@ -409,7 +409,7 @@
     {
       "HashString": "3cdcd1f1d41d49d3a68febbabc032bcd",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "MainCarriageFromPortId",
       "DisplayName": "Main Carriage From Port",
@@ -422,7 +422,7 @@
     {
       "HashString": "e1bd1942695f40f9b9fd8d3bc9d72a75",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "MainCarriageToPortId",
       "DisplayName": "Main Carriage To Port",
@@ -487,7 +487,7 @@
     {
       "HashString": "3cb2c642553a4cf7b1980f6c2c803633",
       "DataTypeCode": "Boolean",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ARInvoiceIssued",
       "DisplayName": "A/R invoice issued",
@@ -500,7 +500,7 @@
     {
       "HashString": "5c68cf98429045408e9a6a239510d174",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ShipmentSubTypeId",
       "DisplayName": "Sub Type",
@@ -513,7 +513,7 @@
     {
       "HashString": "f2afb3db120548869aa46d43b45a8457",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "MainCarriageCarrierId",
       "DisplayName": "Main Carriage Carrier",
@@ -552,7 +552,7 @@
     {
       "HashString": "5301cbb870f04540a7d4edd1feafe29d",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "FromCountryId",
       "DisplayName": "From Country",
@@ -565,7 +565,7 @@
     {
       "HashString": "dbd0b2628fb444ddaaf52ad97141f2b2",
       "DataTypeCode": "LookUp",
-      "CanMeasure": true,
+      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ToCountryId",
       "DisplayName": "To Country",
