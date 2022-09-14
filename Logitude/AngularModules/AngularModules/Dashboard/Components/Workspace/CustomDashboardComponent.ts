@@ -42,7 +42,8 @@ import { DataPointSelection } from 'logitude-dashboard-library/dist/types/Series
 export class CustomDashboardComponent implements OnInit,  AfterViewInit {
     _show:boolean = false;
     @Input('show') set show(value){
-        if(value){
+        console.log('CustomDashboardComponent show= ',value);
+        if(value && !this._show){
             this.ShowDashboard();
         }
         this._show = value;
@@ -76,7 +77,9 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
                 this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
                     this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
-                            this.renderNewDashboard();
+                            setTimeout(e=>{
+                                this.renderNewDashboard();
+                            },70);
                         });
                     });
                 });
