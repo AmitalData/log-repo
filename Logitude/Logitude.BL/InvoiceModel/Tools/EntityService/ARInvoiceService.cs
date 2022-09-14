@@ -3717,12 +3717,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 return "Unpaid";
             }
 
-            if (entityPM.AmountDue == null || entityPM.AmountDue == 0)
+            if (consolidationInvoice.AmountDue == null || consolidationInvoice.AmountDue == 0)
             {
                 return "Paid";
             }
 
-            if (entityPM.AmountDue > 0)
+            if (consolidationInvoice.AmountDue > 0)
             {
                 return "Partially Paid";
             }
