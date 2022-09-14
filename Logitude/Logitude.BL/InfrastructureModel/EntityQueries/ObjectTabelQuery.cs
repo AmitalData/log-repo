@@ -777,7 +777,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 t.Name == "Customs.Consignment" ||
                 t.Name == "Customs.ConsignmentPackage" ||
                 t.Name == "Customs.SupplierInvoice" ||
-                   t.Name == "Customs.DeclarationExportRecipient"
+                t.Name == "Customs.SupplierInvoiceItem" ||
+                t.Name == "Customs.DeclarationExportRecipient"
                 ).ToList();
 
 
