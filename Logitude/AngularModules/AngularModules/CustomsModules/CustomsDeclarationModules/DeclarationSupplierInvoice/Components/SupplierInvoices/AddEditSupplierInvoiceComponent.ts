@@ -1337,9 +1337,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 this.LogMe("goToInsuranceInUNF");
                 SessionLocator.SelectedSession.StartBusyIndicator("Check Insurance ...");
                 var toPromise = true;
-                return setTimeout(() => {
-                       this.SendUnifaceRequestAndWaitPromise();
-                }, 200); 
+                return this.SendUnifaceRequestAndWaitPromise();
+                      
+              
 
             })
 
