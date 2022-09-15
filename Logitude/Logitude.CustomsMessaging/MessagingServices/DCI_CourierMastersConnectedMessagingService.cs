@@ -38,7 +38,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "CourierMastersConnected"; }
         }
 
-        public string CreateCRS(CourierMasterPM entityPM, List<string> ServerSplitDeclarationsList = null, bool connect = false)
+        public string CreateCRS(CourierMasterPM entityPM)
         {
             if (CheckHaveReqInQ("Customs.CourierMaster", entityPM.Tenant, entityPM.Id))
                 return "קיים מסר זהה בתהליך";
@@ -48,8 +48,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCBClosePendingWithResponseContentHeader = new DCI_CourierMastersConnectedResponseContentHeader()
             {
                 entityPM = entityPM,
-                ServerSplitDeclarationsList = ServerSplitDeclarationsList,
-                connect = connect,
                 ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now },
             };
 
