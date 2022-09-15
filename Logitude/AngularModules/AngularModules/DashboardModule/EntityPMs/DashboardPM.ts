@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {WidgetPM} from './WidgetPM';
+import {DashboardSharedUserPM} from './DashboardSharedUserPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -104,6 +105,45 @@ export class DashboardPM {
         }
     }
     //public Widgets: Array<WidgetPM>= [];
+     private permissionLevelCode: string;
+    public get PermissionLevelCode() { return this.permissionLevelCode; }
+    public set PermissionLevelCode(newValue: string) { if (this.permissionLevelCode != newValue) { this.permissionLevelCode = newValue; this.MarkAsDirty("PermissionLevelCode"); } }
+       
+	 
+     
+	private dashboardSharedUsers: DashboardSharedUserPM[];
+    get  DashboardSharedUsers() {
+        if (this.dashboardSharedUsers == null) {
+            this.dashboardSharedUsers = [];
+        }
+
+        return this.dashboardSharedUsers;
+    }
+    set  DashboardSharedUsers(newValue: DashboardSharedUserPM[]) {
+        if (this.dashboardSharedUsers != newValue) {
+            this.dashboardSharedUsers = newValue;
+        }
+    }
+    public AddDashboardSharedUser(item: DashboardSharedUserPM) {
+        if (item != null) {
+            var index = this. DashboardSharedUsers.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DashboardSharedUsers.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDashboardSharedUser(item: DashboardSharedUserPM) {
+        if (item != null) {
+            var index = this. DashboardSharedUsers.indexOf(item);
+            if (index > -1) {
+                this. DashboardSharedUsers.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DashboardSharedUsers: Array<DashboardSharedUserPM>= [];
  
     public OldEntityPM: DashboardPM;
 		

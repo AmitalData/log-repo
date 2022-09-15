@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\MeasureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PermissionLevelDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WidgetTypeDetails.Generated.cs" />
     <Compile Include="DataProviders\DataProviderFactory.cs" />
     <Compile Include="DataProviders\BaseDataProviderService.cs" />
@@ -63,21 +64,27 @@
     <Compile Include="EntityDataMappings\AnalyticsFactsFieldsMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\AnalyticsFactsMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\DashboardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardSharedUserDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyticsFactsFieldsMetaDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyticsFactsMetaDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DashboardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardSharedUserDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MeasureTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PermissionLevelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetMeasureDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\MeasureTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PermissionLevelDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetMeasureDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetTypeDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\AnalyticsFactsFieldsMetaDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AnalyticsFactsMetaDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DashboardPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardSharedUserPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MeasureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PermissionLevelPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetMeasurePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetTypePM.Generated.cs" />
@@ -86,16 +93,21 @@
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsFieldsMetaDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsMetaDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DashboardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardSharedUserQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MeasureTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PermissionLevelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetMeasureQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\WidgetQueryService.cs" />
+    <Compile Include="EntityUpdateServices\DashboardSharedUserUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DashboardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AnalyticsFactsFieldsMetaDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AnalyticsFactsMetaDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardSharedUserUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DashboardUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MeasureTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PermissionLevelUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetMeasureUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetUpdateService.Generated.cs" />

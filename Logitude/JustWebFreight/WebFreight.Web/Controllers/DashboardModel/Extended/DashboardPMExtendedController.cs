@@ -21,14 +21,15 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);                
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Dashboard", "READ", tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Dashboard", "READ", authToken.Tenant);
 
-                DashboardQueryService dashboardQueryService = new DashboardQueryService(tenant);
-                List<DashboardPM> myResult = dashboardQueryService.GetDashboardPMs(tenant);
+                string loggedContactId = this.GetLoggedContactId(authToken.Email, authToken.Tenant);
+
+                DashboardQueryService dashboardQueryService = new DashboardQueryService(authToken.Tenant);
+                IQueryable<DashboardPM> myResult = dashboardQueryService.GetDashboardPMs(authToken.Tenant, loggedContactId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -37,6 +38,17 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private string GetLoggedContactId(string email, int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            string loggedContactId = contactRepository.GetConactIdByemail(email, tenant);
+
+            if (string.IsNullOrEmpty(loggedContactId)) 
+                loggedContactId = contactRepository.GetConactIdByemail(email, 0);
+
+            return loggedContactId;
         }
     }
 }
