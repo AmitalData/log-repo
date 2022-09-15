@@ -822,8 +822,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     PartnersObslist: EntityPartner[];
     PrepareContactList() {
         if (!this.IsScheduler) return;
+        if (!this.SelectedFiltersDataSource) return;
         this.CleanPartnersObslist();
-        this.BIReportXMLData.DWQueryData.Filters?.FilterItems?.forEach(DWQueryDataFilter => {
+        this.SelectedFiltersDataSource[0]?.FilterItems?.forEach(DWQueryDataFilter => {
             this.FillPartnersObslist(DWQueryDataFilter);
         });
     }
