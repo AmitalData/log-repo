@@ -48,6 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //int count = connected ? UpdateAllConnected(cmPm) : UpdateAllNotConnected(cmPm);
             cmPm.ConnectedDeclarations = courierMasterPM.ConnectedDeclarations;
             cmPm.NotConnectedDeclarations = courierMasterPM.NotConnectedDeclarations;
+            cmPm.Id = courierMasterPM.Id;
 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
@@ -90,7 +91,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList() :
                 courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList();
 
-            decids.Take(300).ToList().ChunkBy(100).ForEach(list100 =>
+            decids.ToList().ChunkBy(100).ForEach(list100 =>
             {
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;
@@ -111,18 +112,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             int? maxSequenceNunmeric = new CourierDeclarationQueryService(entityPM.Tenant).GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
 
-            var decsC = declarationRepository.GetDeclarationsById(declarationIds);
-            foreach (var dec in decsC)
-            {
-                ++maxSequenceNunmeric;
-                CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPM.Id, Tenant = entityPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                courierDeclarationUpdateService.Update(courierDeclaration, false);
-                DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
-                if (decCourier != null && !decCourier.IsClosedForFollowUp)
-                    entityPM.OpenDeclarations += 1;
-            }
-
-            return decsC.Count;
+            courierDeclarationUpdateService.FastInsert(declarationIds, entityPM.Tenant, entityPM.Id, maxSequenceNunmeric);
+            return declarationIds.Count;
         }
 
         private int DisconnectedDeclaration(List<string> declarationIds, CourierMasterPM entityPM)
