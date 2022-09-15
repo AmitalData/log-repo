@@ -49,7 +49,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 entityPM = entityPM,
                 ServerSplitDeclarationsList = ServerSplitDeclarationsList,
-                connect = connect
+                connect = connect,
+                ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now },
             };
 
             string body = XmlGenericUtil<DCI_CourierMastersConnectedResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
@@ -73,7 +74,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityId = entityPM.Id,
                 LoggingEntityReference = entityPM.HAWB,
                 LoggingUserId = null,
-                RequestName = $" קישור הצהרות ל " + entityPM.HAWB+ " "
+                RequestName = $" קישור הצהרות ל " + entityPM.HAWB + " ",
             };
 
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
@@ -168,6 +169,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public DefaultResponseContentHeader ResponseContentHeader { get; set; }
         public CourierMasterPM entityPM { get; set; }
         public bool connect { get; set; }
+        public string LoggingUserId { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }
