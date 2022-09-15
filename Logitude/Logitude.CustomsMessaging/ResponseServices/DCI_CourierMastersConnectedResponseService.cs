@@ -8,6 +8,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
@@ -33,13 +34,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CourierDeclarationStatus");
             MyResponseData.ApplicationID = customResponse.entityPM.Id;
 
-            string msg = Update(courierMasterPM, customResponse);
+            string msg = Update(courierMasterPM, customResponse, requestParams);
 
             MyResponseData.UserMessage = msg;
             MyResponseData.Succeeded = true;
         }
 
-        private string Update(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse)
+        private string Update(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
 
@@ -51,7 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse?.ServerSplitDeclarationsList != null && customResponse?.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
-                
+
                 int counter = customResponse.connect ?
                     ConnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm) :
                     DisconnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm);
@@ -62,7 +63,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");
-                mess.AppendLine($"נעשו {CreateChunkMessages(cmPm)} פיצולים");
+                mess.AppendLine($"נעשו {CreateChunkMessages(cmPm, customResponse, requestParams)} פיצולים");
             }
 
             return mess.ToString();
@@ -76,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return cmPm;
         }
 
-        private int CreateChunkMessages(CourierMasterPM courierMasterPM)
+        private int CreateChunkMessages(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int count = 0;
             DeclarationRepository declarationRepository;
@@ -84,22 +85,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationCourierStatusRepository rep;
             InitServices(courierMasterPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
 
-            if (courierMasterPM.ConnectedDeclarations == "ALL")
+            bool connect = courierMasterPM.ConnectedDeclarations == "ALL";
+            var decids = connect ?
+                declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList() :
+                courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList();
+
+            decids.ChunkBy(100).ForEach(list100 =>
             {
-                declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList().ChunkBy(100).ForEach(list100 =>
-                {
-                    count++;
-                    new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM, list100, true);
-                });
-            }
-            else if (courierMasterPM.NotConnectedDeclarations == "ALL")
-            {
-                courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList().ChunkBy(100).ForEach(list100 =>
-                {
-                    count++;
-                    new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM, list100, false);
-                });
-            }
+                count++;
+                customResponse.ServerSplitDeclarationsList = list100;
+                customResponse.LoggingUserId = requestParams.LoggingUserId;
+                customResponse.connect = connect;
+                new CRSUtil().CreateCRS_DCAIn<DCI_CourierMastersConnectedResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+            });
 
             return count;
         }
@@ -115,7 +113,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var decsC = declarationRepository.GetDeclarationsById(declarationIds);
             foreach (var dec in decsC)
-            {                
+            {
                 ++maxSequenceNunmeric;
                 CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPM.Id, Tenant = entityPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
                 courierDeclarationUpdateService.Update(courierDeclaration, false);
@@ -144,9 +142,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 courierDeclarationUpdateService.Update(courierDeclaration, true);
                 DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
                 if (decCourier != null && !decCourier.IsClosedForFollowUp)
-                        entityPM.OpenDeclarations -= 1;
+                    entityPM.OpenDeclarations -= 1;
             }
-
 
             return decs.Count();
         }
