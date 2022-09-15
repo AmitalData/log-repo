@@ -1,16 +1,16 @@
 declare var window: any;
-import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { ChildDirective } from '../../Directives/ChildDirective';
-
 @Component({
 
   templateUrl: "./ObjectFieldTemplate.html",
   selector: 'ObjectFieldTemplate',
+  changeDetection: ChangeDetectionStrategy.OnPush,
     inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData', 'RowIndex', 'Direction'],
 })
 
@@ -72,14 +72,13 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   }
 
     ngAfterViewInit() {
-  
-    if (this.HasTemplate) {
-      this.LoadTemplate();
-    }
+        if (this.HasTemplate) {
+            this.LoadTemplate();
+        }
 
-    else if (this.IsSpotLightTemplate) {
-      this.LoadSpotLightTemplate();
-    }
+        else if (this.IsSpotLightTemplate) {
+            this.LoadSpotLightTemplate();
+        }
     }
 
     private LoadData() {

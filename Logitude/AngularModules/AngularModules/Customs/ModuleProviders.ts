@@ -443,6 +443,7 @@ import { ExternalFieldMappingListService } from './Services/StandardLists/Extern
 import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFieldMappingPMService';
 import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
+import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
 
 
 export class ModuleProviders {
@@ -744,6 +745,7 @@ export class ModuleProviders {
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
+            case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
 
                 
              //#endregion                

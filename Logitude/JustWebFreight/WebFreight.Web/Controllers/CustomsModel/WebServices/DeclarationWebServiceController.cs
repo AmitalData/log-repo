@@ -48,6 +48,7 @@ using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.AmitalMessaging.Utils;
 using Newtonsoft.Json;
+using Logitude.Customs.BL.BL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -2228,6 +2229,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
 
                 DeclarationUpdateService.SetCLSHWB(DeclerationID, UserID, a_Tenent, a_mode == 1 ? UnifreightEventMode.@new : UnifreightEventMode.del);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+        [HttpGet]
+        public HttpResponseMessage SendPRIVEventPrivacyProtection(int tenant, string declarationId, string customFileNo)
+        {
+            try
+            {
+                var privacyProtection = new PrivacyProtection();
+                privacyProtection.SendPRIVEventPrivacyProtectionMethod(tenant,declarationId, customFileNo);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
 

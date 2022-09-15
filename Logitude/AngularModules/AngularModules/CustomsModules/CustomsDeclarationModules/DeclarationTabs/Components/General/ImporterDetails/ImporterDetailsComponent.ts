@@ -8,6 +8,8 @@ import {DeclarationPMService} from '../../../../../../Customs/Services/StandardP
 import {ClientList} from '../../../../../../Customs/EntityLists/ClientList';
 import {CustomerIdentifyTypePM} from '../../../../../../Customs/EntityPMs/CustomerIdentifyTypePM';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -28,7 +30,6 @@ export class ImporterDetailsComponent extends BaseComponent {
 
     constructor() {
         super();
-
       
     }
 
@@ -292,6 +293,10 @@ export class ImporterDetailsComponent extends BaseComponent {
              this.type = args.Type;
              this.IsDisplayOnly = args.IsDisplayOnly;
 
+             var service = new DeclarationWebService();
+             service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
+             });
+             
              switch (this.type) {
                  case "Importer": {
                      this.ImporterVisibility = true;

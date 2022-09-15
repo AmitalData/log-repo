@@ -273,6 +273,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string swissportSuspendedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SwissportSuspendedCode  
+	   {
+	    
+	     get
+		{
+		   return swissportSuspendedCode;
+		 }
+		 set
+		 {
+		   if(swissportSuspendedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SwissportSuspendedCode",OldValue=swissportSuspendedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   swissportSuspendedCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool? requiresApproval ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? RequiresApproval  
+	   {
+	    
+	     get
+		{
+		   return requiresApproval;
+		 }
+		 set
+		 {
+		   if(requiresApproval != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequiresApproval",OldValue=requiresApproval,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   requiresApproval=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

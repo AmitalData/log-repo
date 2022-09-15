@@ -54,10 +54,10 @@ namespace Logitude.Customs.BL.BL
         DateTime GetStopLogAt()
         {
 
-            DateTime stopLogAt = new DateTime(2022, 10, 01);
+            DateTime stopLogAt = new DateTime(2022, 12, 01);
             try
             {
-                
+
 
                 string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220711T164013.LogUntilDateyyyyMMdd"];
                 if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
@@ -67,20 +67,20 @@ namespace Logitude.Customs.BL.BL
                                                         CultureInfo.InvariantCulture,
                                                         style: DateTimeStyles.None);
                 }
-                
+
 
             }
             catch (Exception)
             {
 
-                
+
             }
             return stopLogAt;
 
         }
         private bool Send2715ImmediateDueArrivalDateB4Today(string declarationId, int tenant)
         {
-            
+
             bool sendImmediate = false;
             try
             {
@@ -104,13 +104,13 @@ namespace Logitude.Customs.BL.BL
                         }
                     }
                 }
-            
+
 
             }
             finally
             {
-                
-                
+
+
 
             }
 
@@ -132,6 +132,12 @@ namespace Logitude.Customs.BL.BL
                 return false;
             }
 
+            return IsTimeRange(defValue, DateTime.Now, _stringBuilder);
+
+        }
+
+        public static bool IsTimeRange(string defValue, DateTime @now, StringBuilder _stringBuilder)
+        {
             var fromTo = defValue.Split('-');
             if (fromTo.Length != 2)
             {
@@ -152,20 +158,36 @@ namespace Logitude.Customs.BL.BL
                 return false;
 
             }
-            if (dateTimeStart < DateTime.Now && DateTime.Now < dateTimeEnd)
+            if (dateTimeStart < dateTimeEnd)// 0700-1700
             {
-                _stringBuilder.Append("|").Append($" שליחה מידית בטווח שעות    {dateTimeStart} < now:{DateTime.Now} < {dateTimeEnd} ");
+                if (dateTimeStart < @now && @now < dateTimeEnd)
+                {
+                    _stringBuilder.Append("|").Append($" שליחה מידית בטווח שעות    {dateTimeStart} < now:{@now} < {dateTimeEnd} ");
+                    return true;
+                }
+                else
+                {
+
+                    _stringBuilder.Append("|").Append($"  NOT-IsTimeRange  !!!  {dateTimeStart} < now:{@now} < {dateTimeEnd} ");
+                    return false;
+                }
+            }
+            else //if (dateTimeStart > dateTimeEnd)// 1700-0700
+            {
+
+                if (dateTimeEnd /*0700*/  < @now && @now < dateTimeStart  /*1700*/)
+                {
+                    _stringBuilder.Append("|").Append($"00:00----{dateTimeEnd}| now={@now} |{dateTimeStart}------00:00 ")
+                        .Append("  NOT-IsTimeRange  !!! ");
+                    return false;
+                }
+                _stringBuilder.Append("|")
+                    .Append($" now={@now}     00:00----{dateTimeEnd}|  not InTimeRange   |{dateTimeStart}------00:00  ")
+                    .Append($" שליחה מידית בטווח שעות ");
                 return true;
-            }
-            else
-            {
-                
-                return false;
-            }
 
-
+            }
 
         }
-
     }
 }

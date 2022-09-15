@@ -36,6 +36,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ErrorPlaceName  { get; set; }
        [DataMember]
        public string MamanSuspendedCode  { get; set; }
+       [DataMember]
+       public string SwissportSuspendedCode  { get; set; }
+       [DataMember]
+       public bool? RequiresApproval  { get; set; }
    }
 
 }

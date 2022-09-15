@@ -741,7 +741,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
 
-    async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {    
+    async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {   
         if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
 
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
@@ -751,11 +751,14 @@ export class CustomsDocumentTicketViewModel {
             this.connectDocument(relatedDocumentViewModel);
 
         else {
-            if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {
+            if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {//אין סימוכין
                 relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
                 this.connectDocument(relatedDocumentViewModel);
 
-            } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
+            } 
+            else { 
+                const isNotConnect: boolean = await this.GetIsConnectDec(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
+                if (isNotConnect) {// יש סימוכין ולא מקושר כבר להצהרה או טיקט אחרת
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
                 
@@ -766,11 +769,30 @@ export class CustomsDocumentTicketViewModel {
                     this.connectDocument(relatedDocumentViewModel);
                 }
                 
-            } else 
-                this.cnotConnectDiffrentTypeDocumentMessage();        
+              } else // יש סימוכין ומקושר  להצהרה או טיקט
+                this.cnotConnectDiffrentTypeDocumentMessage();  
+            }      
         }
     }
+    private async GetIsConnectDec(DocumentsFilingId): Promise<boolean>{
+        var customsDocumentsTicketPMService: CustomsDocumentsTicketsExtendedService = new CustomsDocumentsTicketsExtendedService();
+        const res = await new Promise<boolean>((resolve, reject) => {        
+              customsDocumentsTicketPMService.GetIsConnectDec(DocumentsFilingId,this.EntityPM.id).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    if(response.Result.decConnect.length>0){
 
+                        resolve(false);
+                    }
+                    else {
+                      resolve(true);
+                    }
+                }
+                
+            });
+        })
+
+        return res;
+    }
     private async checkFileBiggerFrom200MB(relatedDocumentViewModel: RelatedDocumentViewModel) {
         var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
         if (fileSizeInMB > 200) { //if (fileSizeInMB > 30) {

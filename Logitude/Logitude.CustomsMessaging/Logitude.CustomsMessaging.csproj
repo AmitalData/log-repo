@@ -104,6 +104,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.2.2\lib\net461\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -115,6 +116,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -149,10 +151,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.54\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -206,10 +208,12 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="MessagingServices\DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="MessagingServices\DCAInUCAApprovAllPending_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
@@ -399,6 +403,7 @@
     <Compile Include="RequestServices\VP_NG_2690_VehicleInRequestService.cs" />
     <Compile Include="ResponseServices\CBC_NG_8362_MSG01_CustomsBookOutResponseService.cs" />
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
+    <Compile Include="ResponseServices\CC_MSG1_EntryExitToFromCustomsStorageSitesMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
@@ -421,6 +426,7 @@
     <Compile Include="ResponseServices\CreateSupplierInvoiceFromFileBatchUCB_MsgResponseService.cs" />
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchApproveAllPending_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchUpdateDeclarationCourierStatusMasterChanged_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />
@@ -656,6 +662,11 @@
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
+    </ProjectReference>
+
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>

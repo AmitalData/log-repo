@@ -132,9 +132,10 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string HelpTextCodeCode { get; set; }
         public string ListTextCodeCode { get; set; }
         public string AdditionalQuerySections { get; set; }
+        public bool DisplayInRequiredFields { get; set; }
 
 
-        
+
 
     }
 }

@@ -148,8 +148,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ListTextCodeCode).HasColumnName("ListTextCodeCode");
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
             this.Property(t => t.AdditionalQuerySections).HasColumnName("AdditionalQuerySections");
+            this.Property(t => t.DisplayInRequiredFields).HasColumnName("DisplayInRequiredFields");
 
-            
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

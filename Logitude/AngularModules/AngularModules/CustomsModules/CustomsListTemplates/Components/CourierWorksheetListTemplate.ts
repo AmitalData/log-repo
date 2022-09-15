@@ -102,7 +102,8 @@ export class CourierWorksheetListTemplate {
     private currentSession = SessionLocator.SelectedSession;
     IsNotConnectedDeclarationChecked: boolean;
     IsConnectedDeclarationChecked: boolean;
-
+    Isdisabled:boolean=false;
+    CertificateDelay:string="הפקת תעודת עיכוב";
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
     }
@@ -665,6 +666,16 @@ export class CourierWorksheetListTemplate {
                                         this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
                                         if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
                                             this.IsReceivingDelayCertificate = true;
+                                           
+                                            this.Isdisabled=false;
+                                        }
+                                        else if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "2") {
+                                            this.CertificateDelay="שידור תעודת עיכוב";
+                                            this.Isdisabled=false;
+                                        }
+                                        else if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == null) {
+                                            this.Isdisabled=true;
+                                            this.CertificateDelay="הפקת תעודת עיכוב";
                                         }
                                         break;
                                     }
@@ -689,7 +700,7 @@ export class CourierWorksheetListTemplate {
                                         }
                                         break;
                                     }
-                                }
+                                }                               
                             });
 
                         }
@@ -748,7 +759,8 @@ export class CourierWorksheetListTemplate {
                     windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
                         //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
-                    logitudeWindow.Width = 470;
+
+                    logitudeWindow.Width = 500;
                     logitudeWindow.Height = 300;
                     logitudeWindow.IsShowCloseButton = true;
                     logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
@@ -909,7 +921,7 @@ export class CourierWorksheetListTemplate {
             if (confirm.Yes) {
                 this._IsDropdownMenuFilterReady = false;
                 SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-                if (actionCode == "U") {
+                if (actionCode == "U") {                   
                     if (declarationMamanSpecialActionPM == null) {
                         declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
                         declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
@@ -926,6 +938,7 @@ export class CourierWorksheetListTemplate {
                         });
                     }
                     else {
+                        this.Isdisabled=true;
                         declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = null;
                         declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = null;
                         this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe((res: any) => {
