@@ -87,7 +87,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
             var customsItems = customsItemQueryService.GetAllCustomsItemByClassificationCode(classificationCode);
-            customsItems = customsItems.FindAll(x => x.CustomsItemCategoryID == 2 || x.CustomsItemCategoryID == 3);
+            customsItems = customsItems.FindAll(x => x.CustomsItemCategoryID == 1);
 
             customsItems = isExport ?
                 customsItems.FindAll(x => x.CustomsBookTypeID == 2 || x.CustomsBookTypeID == 3) :
