@@ -1394,8 +1394,8 @@
 																				</td>
 																			</tr>
 																			<tr style="height: 33px;">
-																				<td [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
-																					<table>
+																				<td>
+																					<table *ngIf="TransportModeId != 'A'">
 																						<tr>
 																							<td style="height: 22px;">
 																								<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
