@@ -44,6 +44,12 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.Filters).HasColumnName("Filters").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DateGroupCode).HasColumnName("DateGroupCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.MaximumGrouping).HasColumnName("MaximumGrouping");
+
+            this.Property(t => t.SortBy).HasColumnName("SortBy");
+
+            this.Property(t => t.SortDirection).HasColumnName("SortDirection").HasMaxLength(4).IsUnicode(false);
         }
     }
 }

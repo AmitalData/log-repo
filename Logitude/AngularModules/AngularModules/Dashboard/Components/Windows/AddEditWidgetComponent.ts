@@ -31,6 +31,9 @@ export class AddEditWidgetComponent extends BaseComponent {
     public RootFilter: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
+    public DefaultSort = this.SortByCodes[0];
+    public SortByDirections = ['asc', 'desc'];
     public GroupByQueryFilters: ApiQueryFilters;
 
     constructor() {
@@ -86,6 +89,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             }
         }
     }
+
     public BuildMeasures() {
         this.WidgetMeasuresList = [];
 
@@ -105,11 +109,13 @@ export class AddEditWidgetComponent extends BaseComponent {
             item.CheckMeasureDeleteVisiblity();
         });
     }
+
     public CheckMeasureAddVisiblity() {
         var isAddVisible: boolean = true;
 
         if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
             isAddVisible = false;
+            if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList.splice(1, 1);
         }
 
         else if (this.WidgetMeasuresList.length != 1) {
@@ -139,6 +145,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.TypeCode != value) {
             this.EntityPM.TypeCode = value;
             this.ComputeChartImageSrc();
+            this.CheckMeasureAddVisiblity();
         }
     }
 
@@ -170,6 +177,27 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get SortBy() { return this.EntityPM.SortBy; }
+    set SortBy(value: number) {
+        if (this.EntityPM.SortBy != value) {
+            this.EntityPM.SortBy = value;
+        }
+    }
+
+    get SortDirection() {
+        if (!this.EntityPM?.SortDirection) this.EntityPM.SortDirection = "asc";
+        return this.EntityPM.SortDirection;
+    }
+    set SortDirection(value: string) {
+        if (this.EntityPM.SortDirection != value) {
+            this.EntityPM.SortDirection = value;
+        }
+    }
+
+    public GetSelectedSort() {
+        return this.SortByCodes.find(x => x.Code == this.SortBy);
+    }
+
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
     set SelectedGroupField(value: AnalyticsFactsFieldsMetaDataList) {
@@ -198,6 +226,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
         });
+
         this.ValidateInputs(errors);
         this.ValidationErrorsList = errors;
         if (errors.length != 0) return;
@@ -219,6 +248,11 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     ValidateInputs(errors: string[]) {
         this.ValidateMeasures(errors);
+        this.ValidateSort(errors);
+    }
+
+    ValidateSort(errors: string[]) {
+        if (this.WidgetMeasuresList.length <= 1 && this.SortBy == 2) errors.push("Invalid Sort On Measure 2");
     }
 
     ValidateMeasures(errors: string[]) {
@@ -249,17 +283,17 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('GroupBy');
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
-
         this.myCloner.AddField('EntityId');
         this.myCloner.AddField('DateGroupCodes');
-        this.myCloner.AddField('EndPosition');
+        this.myCloner.AddField('SortDirection');
+        this.myCloner.AddField('SortBy');
 
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
-        
+
         this.EntityPM.WidgetMeasures.forEach(item => {
-            if(!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
+            if (!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
             this.WidgetMeasuresClone.push(Object.assign(new WidgetMeasurePM(null), item));
         });
 

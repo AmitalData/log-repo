@@ -181,6 +181,8 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.StartPotistion = widget.StartPotistion;
             myWidget.EndPosition = widget.EndPosition;
             myWidget.DateGroupCode = widget.DateGroupCode;
+            myWidget.SortDirection = widget.SortDirection;
+            myWidget.SortBy = widget.SortBy;
         }
 
         var logitudeWindow = new LogitudeWindow();
