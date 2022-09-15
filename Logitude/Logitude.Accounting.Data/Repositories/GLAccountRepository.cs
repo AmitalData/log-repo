@@ -721,9 +721,9 @@ namespace Logitude.Accounting.Data.Repositories
         public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
         {
             var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
-                (String.IsNullOrWhiteSpace(lastMadeGLAccountId) || String.Compare(record.Id, lastMadeGLAccountId) > 0) && 
+                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) && 
                 (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
-                (String.IsNullOrWhiteSpace(accountTypeCode) || record.AccountTypeCode == accountTypeCode) &&
+                (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
                 record.ActiveForInterest).Take(maxGLAccountsPerQuery);
             
             return q.Select(record => record.Id).ToList();
