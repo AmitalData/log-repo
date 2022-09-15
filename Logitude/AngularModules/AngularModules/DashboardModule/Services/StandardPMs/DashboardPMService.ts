@@ -24,6 +24,7 @@ import {DashboardPM} from '../../EntityPMs/DashboardPM';
 import {WidgetPM} from '../../EntityPMs/WidgetPM';
 
 import {WidgetMeasurePM} from '../../EntityPMs/WidgetMeasurePM';
+import {DashboardSharedUserPM} from '../../EntityPMs/DashboardSharedUserPM';
 
 @Injectable()
 
@@ -186,6 +187,7 @@ export class DashboardPMService {
             }
 			
                this.MapWidgets(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapDashboardSharedUsers(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -206,6 +208,15 @@ export class DashboardPMService {
 					                 }
 							 
             entityPM.OldEntityPM.Widgets.push(newWidgetPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.DashboardSharedUsers = [];
+            for (var item in entityPM.DashboardSharedUsers) {
+            var myDashboardSharedUserPM = entityPM.DashboardSharedUsers[item];
+            var newDashboardSharedUserPM: DashboardSharedUserPM = this.clone(myDashboardSharedUserPM);
+						
+							 
+            entityPM.OldEntityPM.DashboardSharedUsers.push(newDashboardSharedUserPM);
             }
 			   
 		}
@@ -423,6 +434,98 @@ export class DashboardPMService {
         }
     }
  
+    MapDashboardSharedUsers(entityPM: DashboardPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDashboardSharedUsers: DashboardSharedUserPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDashboardSharedUsers = entityPM.OldEntityPM.DashboardSharedUsers;
+        }
+
+        entityPM.DashboardSharedUsers = new Array<DashboardSharedUserPM>();
+        for (var item in jsonPM.DashboardSharedUsers) {
+            var jItem = jsonPM.DashboardSharedUsers[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDashboardSharedUserPM: DashboardSharedUserPM;
+	  
+            if (mapParent) {
+                newDashboardSharedUserPM = new DashboardSharedUserPM(entityPM);
+            }
+            else
+            {
+                newDashboardSharedUserPM = new DashboardSharedUserPM(null);
+            }
+ 			newDashboardSharedUserPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newDashboardSharedUserPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDashboardSharedUserPM.UniqueKey = Guid.newGuid();
+                newDashboardSharedUserPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDashboardSharedUserPM.OldEntityPM = this.clone(newDashboardSharedUserPM);
+
+				
+            }
+            else {
+                if (newDashboardSharedUserPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDashboardSharedUserPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDashboardSharedUserPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDashboardSharedUserPM.OldEntityPM = null;
+                newDashboardSharedUserPM.EntityParentPM = null;
+            }
+			 newDashboardSharedUserPM.DisableMarkAsDirty = false;
+			 newDashboardSharedUserPM.IsDirty = false;
+            entityPM.DashboardSharedUsers.push(newDashboardSharedUserPM);
+        }
+        if (oldDashboardSharedUsers) {
+            
+            for (var itemKey in oldDashboardSharedUsers) {
+                if (entityPM.DashboardSharedUsers.filter(p=> p.UniqueKey === oldDashboardSharedUsers[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDashboardSharedUsers[itemKey]) {
+                        //oldDashboardSharedUsers[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DashboardSharedUsers.push(oldDashboardSharedUsers[itemKey]);
+						var oldItemJson = oldDashboardSharedUsers[itemKey];
+                        var deletedPM: DashboardSharedUserPM = new DashboardSharedUserPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DashboardSharedUsers.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

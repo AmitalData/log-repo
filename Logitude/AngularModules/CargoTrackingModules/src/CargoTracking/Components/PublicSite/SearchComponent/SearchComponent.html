@@ -390,7 +390,7 @@
                                     {{GetShipmentStatus(shipment)}}
                                 </div>
 
-                                <div class="subtitle">Last Updated</div>
+                                <div class="subtitle">Last Status Date</div>
                                 <div class="more-text mobile-only" style="font-size:12px;float:right;padding-top: 20px;">More Info</div>
                                 <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:mm' |  dateTimeFormat}}</div>
 

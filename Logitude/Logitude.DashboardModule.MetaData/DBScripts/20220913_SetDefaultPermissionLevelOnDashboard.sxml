@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Dashboard">
+  <Sql Version="1">
+    <![CDATA[
+     
+      update Dashboards set PermissionLevelCode = 'ONM'
+
+    ]]>       
+  </Sql>
+</Script>

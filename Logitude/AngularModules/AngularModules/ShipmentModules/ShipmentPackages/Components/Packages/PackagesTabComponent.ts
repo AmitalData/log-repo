@@ -1655,12 +1655,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         var myPath: string;
         if (this.TransportModeId == "A") {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditAirPackageComponent";
-            logWindow.Height = 550;
+            logWindow.Width = 800;
+            logWindow.Height = 580;
         }
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
-            logWindow.Width = 940;
-            logWindow.Height = 610;
+            logWindow.Width = 990;
+            logWindow.Height = 660;
         }
 
         var itemComponent = new ShipmentPackageItem(itemPM, this, true);

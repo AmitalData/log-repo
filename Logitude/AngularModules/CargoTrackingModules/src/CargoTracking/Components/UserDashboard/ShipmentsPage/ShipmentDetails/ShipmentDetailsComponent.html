@@ -1161,11 +1161,19 @@
                                 <th>SHO Number</th>
                                 <th>PO Number</th>
                                 <th>Supply Date</th>
+                                <th>PO Date</th>
+                                <th>Pickup Date</th>
+                                <th>Booking Confirmation #</th>
+                                <th>Supplier</th>
                             </tr>
                             <tr *ngFor="let item of cargoTrackingShipmentPM.ConnectedOrders">
                                 <td>{{item.OrderNumber}}</td>
                                 <td>{{item.PONumber}}</td>
                                 <td>{{item.SupplyDateTime | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.PODate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.PickupActualDateTime | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.BookingConfirmationNumber}}</td>
+                                <td>{{item.CasualSupplierName}}</td>
                             </tr>
 
                         </table>

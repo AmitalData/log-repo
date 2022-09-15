@@ -122,7 +122,7 @@ export class CommunicationsTabComponent implements OnDestroy {
                     this.ItemsSource = this.allCommunicationLogs;
                 }
                 else {
-                    this.ItemsSource = this.allCommunicationLogs.filter(d => d.WasAnalyzed);
+                    this.ItemsSource = this.allCommunicationLogs.filter(d => d.WasAnalyzed || d.InOut == 'Out');
                 }
             }
 

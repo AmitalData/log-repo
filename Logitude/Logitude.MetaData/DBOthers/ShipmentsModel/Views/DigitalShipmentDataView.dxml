@@ -9,6 +9,7 @@
 	Shipment.CarrierLastStatusDate,
 	Shipment.MasterShipmentDataId, 
 	Shipment.IsOperationalClosed, 
+	shipment.IsAccountingClosed,
     Shipment.ShipmentNumber,
 	Shipment.CustomerId,
     Shipment.CustomerReference1,

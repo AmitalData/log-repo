@@ -91,13 +91,17 @@ export class BIReportDocumentTypeTemplateService {
     }
 
     private SetDocumentTypeTemplateSelected() {
+        var selectedTemplate: any;
         if (!AppTool.IsNullOrEmpty(this.docuemntTypeTemplateId)) {
-            this.bIReportPreviewComponent.DocumentTypeTemplateSelected = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.docuemntTypeTemplateId)[0];
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.docuemntTypeTemplateId)[0];
         }
-
-        if (!this.bIReportPreviewComponent.DocumentTypeTemplateSelected) {
-            this.bIReportPreviewComponent.DocumentTypeTemplateSelected = this.bIReportPreviewComponent.DocumentTypeTemplateLists[0];
+        if (!selectedTemplate) {
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.DocumentTypeSelected.DocumentTypeDefaultHTMLTemplateId)[0];
         }
+        if (!selectedTemplate) {
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists[0];
+        }
+        this.bIReportPreviewComponent.DocumentTypeTemplateSelected = selectedTemplate;
 
     }
 
@@ -193,7 +197,19 @@ export class BIReportDocumentTypeTemplateService {
             if ($event && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
+            if ($event) {
+                this.SeTemplateSelected($event);
+            }
+
         });
+    }
+
+    SeTemplateSelected(templateId: string) {
+        if (!templateId) return;
+        if (!this.bIReportPreviewComponent.DocumentTypeTemplateLists) return;
+        let newTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == templateId)[0];
+        if (!newTemplate) return;
+        this.bIReportPreviewComponent.DocumentTypeTemplateSelected = newTemplate;
     }
 
 
