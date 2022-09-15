@@ -38,7 +38,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "CourierMastersConnected"; }
         }
 
-        public string CreateCRS(CourierMasterPM entityPM)
+        public string CreateCRS(CourierMasterPM entityPM, List<string> ServerSplitDeclarationsList = null, bool connect = false)
         {
             if (CheckHaveReqInQ("Customs.CourierMaster", entityPM.Tenant, entityPM.Id))
                 return "קיים מסר זהה בתהליך";
@@ -47,7 +47,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCBClosePendingWithResponseContentHeader = new DCI_CourierMastersConnectedResponseContentHeader()
             {
-                entityPM = entityPM
+                entityPM = entityPM,
+                ServerSplitDeclarationsList = ServerSplitDeclarationsList,
+                connect = connect
             };
 
             string body = XmlGenericUtil<DCI_CourierMastersConnectedResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
@@ -165,6 +167,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public List<string> ServerSplitDeclarationsList { get; set; }
         public DefaultResponseContentHeader ResponseContentHeader { get; set; }
         public CourierMasterPM entityPM { get; set; }
+        public bool connect { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

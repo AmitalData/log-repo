@@ -12,6 +12,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -30,23 +31,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             //MyRequestSheetParam.CustomFileNo = customResponse.CustomFileNo;
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CourierDeclarationStatus");
-            MyResponseData.Succeeded = true;
             MyResponseData.ApplicationID = customResponse.entityPM.Id;
 
-            int count = Update(courierMasterPM);
+            string msg = Update(courierMasterPM, customResponse);
 
-            MyResponseData.UserMessage = "עודכנו " + count + " הצהרות";
+            MyResponseData.UserMessage = msg;
+            MyResponseData.Succeeded = true;
         }
 
-        private int Update(CourierMasterPM courierMasterPM)
+        private string Update(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse)
         {
+            var mess = new StringBuilder();
+
             CourierMasterPM cmPm = GetCourierMasterPM(courierMasterPM.Id, courierMasterPM.Tenant);
             //int count = connected ? UpdateAllConnected(cmPm) : UpdateAllNotConnected(cmPm);
             cmPm.ConnectedDeclarations = courierMasterPM.ConnectedDeclarations;
             cmPm.NotConnectedDeclarations = courierMasterPM.NotConnectedDeclarations;
-            int count = OldUpdate(cmPm);
 
-            return count;
+            if (customResponse?.ServerSplitDeclarationsList != null)
+            {
+                mess.AppendLine($"מפוצל כבר !!!");
+                
+                int counter = customResponse.connect ?
+                    ConnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm) :
+                    DisconnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm);
+
+                mess.AppendLine($"{(customResponse.connect ? "קושרו" : "נותקו")} {counter} הצהרות");
+            }
+            else
+            {
+                mess.AppendLine($"ראשי - מפצל");
+                mess.AppendLine($"כל ההצהרות יפוצלו.....");
+                mess.AppendLine($"נעשו {CreateChunkMessages(cmPm)} פיצולים");
+            }
+
+            return mess.ToString();
         }
 
         private static CourierMasterPM GetCourierMasterPM(string courierMasterId, int tenant)
@@ -57,124 +76,79 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return cmPm;
         }
 
-        private int OldUpdate(CourierMasterPM entityPM)
+        private int CreateChunkMessages(CourierMasterPM courierMasterPM)
         {
-            int counter = 0;
+            int count = 0;
+            DeclarationRepository declarationRepository;
+            CourierDeclarationUpdateService courierDeclarationUpdateService;
+            DeclarationCourierStatusRepository rep;
+            InitServices(courierMasterPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+
+            if (courierMasterPM.ConnectedDeclarations == "ALL")
+            {
+                declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList().ChunkBy(100).ForEach(list100 =>
+                {
+                    count++;
+                    new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM, list100, true);
+                });
+            }
+            else if (courierMasterPM.NotConnectedDeclarations == "ALL")
+            {
+                courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList().ChunkBy(100).ForEach(list100 =>
+                {
+                    count++;
+                    new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM, list100, false);
+                });
+            }
+
+            return count;
+        }
+
+        private int ConnectedDeclaration(List<string> declarationIds, CourierMasterPM entityPM)
+        {
             DeclarationRepository declarationRepository;
             CourierDeclarationUpdateService courierDeclarationUpdateService;
             DeclarationCourierStatusRepository rep;
             InitServices(entityPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
 
-            if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
-            {
-                CourierDeclarationQueryService service = new CourierDeclarationQueryService(entityPM.Tenant);
-                int? maxSequenceNunmeric = 0;
-                maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
-                if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
-                entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
-                if (entityPM.ConnectedDeclarations == "ALL")
-                {
+            int? maxSequenceNunmeric = new CourierDeclarationQueryService(entityPM.Tenant).GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
 
-                    var decsC = declarationRepository.GetNotConnectedDeclarations(entityPM.Tenant);
-                    foreach (var dec in decsC)
-                    {
-                        ++maxSequenceNunmeric;
-                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPM.Id, Tenant = entityPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                        courierDeclarationUpdateService.Update(courierDeclaration, false);
-                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
-                        if (decCourier != null)
-                        {
-                            if (!decCourier.IsClosedForFollowUp)
-                            {
-                                entityPM.OpenDeclarations += 1;
-                            }
-                        }
-                    }
-
-                    counter += decsC.Count();
-                }
-                else
-                {
-                    //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
-                    entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
-                    string[] items = entityPM.ConnectedDeclarations.Split(',');
-                    //DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
-                    // entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
-                    foreach (string item in items)
-                    {
-                        ++maxSequenceNunmeric;
-                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPM.Id, Tenant = entityPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                        courierDeclarationUpdateService.Update(courierDeclaration, false);
-                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPM.Tenant);
-                        if (decCourier != null)
-                        {
-                            if (!decCourier.IsClosedForFollowUp)
-                            {
-                                entityPM.OpenDeclarations += 1;
-                            }
-                        }
-                    }
-
-                    counter += items.Count();
-                }
+            var decsC = declarationRepository.GetDeclarationsById(declarationIds);
+            foreach (var dec in decsC)
+            {                
+                ++maxSequenceNunmeric;
+                CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPM.Id, Tenant = entityPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
+                courierDeclarationUpdateService.Update(courierDeclaration, false);
+                DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
+                if (decCourier != null && !decCourier.IsClosedForFollowUp)
+                    entityPM.OpenDeclarations += 1;
             }
 
-            if (entityPM.NotConnectedDeclarations != null && entityPM.NotConnectedDeclarations.Length > 0)
+            return decsC.Count;
+        }
+
+        private int DisconnectedDeclaration(List<string> declarationIds, CourierMasterPM entityPM)
+        {
+            DeclarationRepository declarationRepository;
+            CourierDeclarationUpdateService courierDeclarationUpdateService;
+            DeclarationCourierStatusRepository rep;
+            InitServices(entityPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+
+            var decs = declarationRepository.GetDeclarationsById(declarationIds);
+            foreach (var item in decs)
             {
-                //entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(1, entityPM.NotConnectedDeclarations.Length - 1);
-
-                entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
-                if (entityPM.NotConnectedDeclarations == "ALL")
-                {
-                    var decsCN = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
-                    foreach (var item in decsCN)
-                    {
-                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                        CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                        courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPM.Id, false, true);
-                        courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                        courierDeclarationUpdateService.Update(courierDeclaration, true);
-                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
-                        if (decCourier != null)
-                        {
-                            if (!decCourier.IsClosedForFollowUp)
-                            {
-                                entityPM.OpenDeclarations -= 1;
-                            }
-                        }
-                    }
-
-                    counter += decsCN.Count();
-                }
-                else
-                {
-                    entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
-                    string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
-                    if (NotConnecteditems != null && NotConnecteditems.Length > 0)
-                    {
-                        foreach (string item in NotConnecteditems)
-                        {
-                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                            CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                            courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPM.Id, false, true);
-                            courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                            courierDeclarationUpdateService.Update(courierDeclaration, true);
-                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPM.Tenant);
-                            if (decCourier != null)
-                            {
-                                if (!decCourier.IsClosedForFollowUp)
-                                {
-                                    entityPM.OpenDeclarations -= 1;
-                                }
-                            }
-                        }
-
-                        counter += NotConnecteditems.Count();
-                    }
-                }
+                CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
+                CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPM.Id, false, true);
+                courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                courierDeclarationUpdateService.Update(courierDeclaration, true);
+                DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
+                if (decCourier != null && !decCourier.IsClosedForFollowUp)
+                        entityPM.OpenDeclarations -= 1;
             }
 
-            return counter;
+
+            return decs.Count();
         }
 
         private static void InitServices(int tenant, out DeclarationRepository declarationRepository, out CourierDeclarationUpdateService courierDeclarationUpdateService, out DeclarationCourierStatusRepository rep)
