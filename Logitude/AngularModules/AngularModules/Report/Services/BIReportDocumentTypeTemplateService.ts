@@ -23,7 +23,7 @@ export class BIReportDocumentTypeTemplateService {
     private ObjectTableId: any;
     private RequsetPageName: string;
 
-    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string, objectTableId: string) {
+    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string) {
 
         this.bIReportPreviewComponent = bIReportPreviewComponent;
         this.bIReportPreviewComponent.DocumentTypeTemplateLists = [];
@@ -91,13 +91,17 @@ export class BIReportDocumentTypeTemplateService {
     }
 
     private SetDocumentTypeTemplateSelected() {
+        var selectedTemplate: any;
         if (!AppTool.IsNullOrEmpty(this.docuemntTypeTemplateId)) {
-            this.bIReportPreviewComponent.DocumentTypeTemplateSelected = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.docuemntTypeTemplateId)[0];
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.docuemntTypeTemplateId)[0];
         }
-
-        if (!this.bIReportPreviewComponent.DocumentTypeTemplateSelected) {
-            this.bIReportPreviewComponent.DocumentTypeTemplateSelected = this.bIReportPreviewComponent.DocumentTypeTemplateLists[0];
+        if (!selectedTemplate) {
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.DocumentTypeSelected.DocumentTypeDefaultHTMLTemplateId)[0];
         }
+        if (!selectedTemplate) {
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists[0];
+        }
+        this.bIReportPreviewComponent.DocumentTypeTemplateSelected = selectedTemplate;
 
     }
 
@@ -175,6 +179,7 @@ export class BIReportDocumentTypeTemplateService {
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event) {
                     this.LoadDocumentTypeHTMLTemplate();
+                    this.docuemntTypeTemplateId = $event;
                 }
             });
         }
@@ -193,11 +198,12 @@ export class BIReportDocumentTypeTemplateService {
             if ($event && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
+            if ($event) {
+                this.docuemntTypeTemplateId = $event;
+                this.SetDocumentTypeTemplateSelected();
+            }
+
         });
     }
-
-
-
-
 
 }

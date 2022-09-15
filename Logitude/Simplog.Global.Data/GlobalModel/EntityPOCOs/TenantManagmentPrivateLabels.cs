@@ -40,6 +40,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsCustomsActivated { get; set; }
         public string QueryFiltersHighlightColor { get; set; }
         public bool CreateShipmentsWithoutDocs { get; set; }
+        public bool CreateOShipmentsWithoutDocs { get; set; }
 
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }

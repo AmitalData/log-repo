@@ -12,14 +12,21 @@ export class ClassicScreenLayoutService implements IScreenLayoutService {
 
     public GenerateScreen(screen: any) {
         this.screenComponent.ScreenRows = [];
-
-        for (var i = 0; i < screen.NumberOfColumns; i++) {
+        let numberOfScreenColumns = this.GetNumberOfScreenColumns(screen);
+        
+        for (var i = 0; i < numberOfScreenColumns; i++) {
             var screenRowDetails = this.screenComponent.BuildScreenRowDetails(i);
             this.screenComponent.ScreenRows.push(screenRowDetails);
         }
     }
 
+    private GetNumberOfScreenColumns(screen: any) {
+        let additionalFieldsShipmentPackageScreenCode = 'ShipmentPackage.AdditionalFields';
+        return screen.ScreenCode == additionalFieldsShipmentPackageScreenCode ? 1 : screen.NumberOfColumns;
+    }
+
     public GetScreenRows(sectionNumber: number) {
+
         return this.screenComponent.ScreenRows;
 
     }

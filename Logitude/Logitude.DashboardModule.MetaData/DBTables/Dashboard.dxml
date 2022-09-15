@@ -65,6 +65,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PermissionLevelCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -74,5 +81,10 @@
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PermissionLevelCode"
+    ReferencedTable="PermissionLevels"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

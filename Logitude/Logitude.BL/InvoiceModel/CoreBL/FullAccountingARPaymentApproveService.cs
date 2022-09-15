@@ -43,6 +43,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
     public class FullAccountingARPaymentApproveService
     {
         const string PartnerTypeId_Customer = "CS";
+        const string ReturnedToCustomer = "5";
         GLAccountPM paymentGLAccount = null;
         CashBookPM PaymentCashbook = null;
         ARPaymentPM paymentPM = null;
@@ -175,9 +176,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 EntityId = payment.Id,
                 AccountingEntityCode = AccountingEntityValues.ARPayment,
                 OriginalEntityLineNumber = cheque.LineNumber,
-                LocalAmount = cheque.LocalAmount * -1,
-                ForeignAmount = cheque.ForeignAmount * -1,
-
+                LocalAmount = cheque.StatusCode == ReturnedToCustomer ? cheque.LocalAmount : cheque.LocalAmount * -1,
+                ForeignAmount = cheque.StatusCode == ReturnedToCustomer ? cheque.ForeignAmount : cheque.ForeignAmount * -1,
                 InterestValueDate = (DateTime)cheque.ValueDate,
                 Tenant = paymentPM.Tenant,
                 GLAccountId = account != null ? account.Id : null,

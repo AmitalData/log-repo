@@ -5,7 +5,7 @@ import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
+import { ReactDashboardPM, ReactDashboardSharedUserPM } from 'logitude-dashboard-library/dist/types/Dashboard';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
@@ -19,6 +19,7 @@ import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasur
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
+import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
@@ -152,6 +153,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
             dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+            dashboardPM.PermissionLevelCode = "ONM";
         }
 
         logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
@@ -206,10 +208,16 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myDashboard.CreatedByUserId = dashboard.CreatedByUserId;
             myDashboard.UpdateDate = dashboard.UpdateDate;
             myDashboard.UpdatedByUserId = dashboard.UpdatedByUserId;
+            myDashboard.PermissionLevelCode = dashboard.PermissionLevelCode;
             myDashboard.Widgets = [];
+            myDashboard.DashboardSharedUsers = [];
 
             dashboard.Widgets.forEach(item => {
                 myDashboard.Widgets.push(this.GetReactWidget(item));
+            });
+
+            dashboard.DashboardSharedUsers.forEach(item => {
+                myDashboard.DashboardSharedUsers.push(this.GetReactSharedUser(item));
             });
         }
 
@@ -238,6 +246,19 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
         }
 
         return myWidget;
+    }
+    GetReactSharedUser(user: DashboardSharedUserPM): ReactDashboardSharedUserPM {
+        var myUser: ReactDashboardSharedUserPM = {} as ReactDashboardSharedUserPM;
+
+        if (user) {
+            myUser.Id = user.Id;
+            myUser.Tenant = user.Tenant;
+            myUser.UserId = user.UserId;
+            myUser.UserName = user.UserName;
+            myUser.DashboardId = user.DashboardId;
+        }
+
+        return myUser;
     }
     GetReactWidgetMeasure(widgetMeasure: WidgetMeasurePM): ReactWidgetMeasurePM {
         var myWidgetMeasuer: ReactWidgetMeasurePM = {} as ReactWidgetMeasurePM;

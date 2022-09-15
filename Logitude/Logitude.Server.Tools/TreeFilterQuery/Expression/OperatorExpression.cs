@@ -161,9 +161,9 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
     {
         public override System.Linq.Expressions.Expression  Build()
         {
-            var isEmptyExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
-            var isNullExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
-            return System.Linq.Expressions.Expression.Or(isNullExpression, isEmptyExpression);
+            //var isEmptyExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
+            //var isNullExpression = System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
+            return System.Linq.Expressions.Expression.Equal(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
 
         }
     }
@@ -172,9 +172,9 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
     {
         public override System.Linq.Expressions.Expression  Build()
         {
-            var isEmptyExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
-            var isNullExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
-            return System.Linq.Expressions.Expression.And(isNullExpression, isEmptyExpression);
+            //var isEmptyExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType("", LeftExpression.Type));
+            //var isNullExpression = System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
+            return System.Linq.Expressions.Expression.NotEqual(LeftExpression, WhereExpression.ToStaticParameterExpressionOfType(null, LeftExpression.Type));
         }
     }
 

@@ -184,6 +184,13 @@
   </Column>
   <Column
     Name="CreateShipmentsWithoutDocs"
+    OldNames="CreateWithoutDocument"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateOShipmentsWithoutDocs"
     Type="bit">
     <Constraints
       Nullable="false" />

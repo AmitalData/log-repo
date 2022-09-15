@@ -1190,7 +1190,7 @@ if(hasApiHelper)
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "<#= tableName #>",
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -1519,7 +1519,7 @@ else
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "<#= tableName #>",
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
