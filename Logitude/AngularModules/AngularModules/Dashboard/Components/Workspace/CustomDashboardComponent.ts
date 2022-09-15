@@ -21,20 +21,9 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
 @Component({
-    template:
-        `
-        <div class="new-dashboard" #reactDashboradContainer>
-        </div>
-    `,
+    templateUrl:'CustomDashboardComponent.html',
 
-    styles:
-        [`
-    .new-dashboard{
-        width: 100%;
-        height: 100%;
-        padding: 10px 0px 0px 0px;
-     }
-    `],
+    styleUrls:['CustomDashboardComponent.css'],
     selector:'custom-dashboard',
     encapsulation:ViewEncapsulation.ShadowDom
 })
