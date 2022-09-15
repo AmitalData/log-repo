@@ -3204,6 +3204,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+            
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "CourierMastersConnected",
+                InOut = InOutEnum.I.ToString(),
+                Description = "קישור הצהרות לטיסה",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_CourierMastersConnected_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+            });
 
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();

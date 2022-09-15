@@ -39,7 +39,8 @@ export class EditComponent implements OnDestroy {
     public EditComponentCellId: string;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() SaveStart: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() SaveCompleted: EventEmitter<any> = new EventEmitter<any>();
     @Output() TabSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() TabChanged: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveAndCloseCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -1439,6 +1440,9 @@ export class EditComponent implements OnDestroy {
             else {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
+
+            this.SaveStart.emit(this.EntityPM)
+
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
                 || this.ObjectTableName == "BankDeposit"|| this.ObjectTableName == "UserDefinedReport"  || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
