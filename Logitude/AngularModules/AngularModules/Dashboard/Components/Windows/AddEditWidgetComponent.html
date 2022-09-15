@@ -16,6 +16,26 @@
                                 <td style="width:400px; vertical-align:top;">
                                     <table style="display: table-cell;" cellspacing="0">
                                         <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'TypeCode'"
+                                                        [SelectedValue]="TypeCode"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'WidgetType'"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'Name'"
+                                                        [IgnoreFeatureCheck]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
                                             <td style="width:120px;">
                                                 <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -61,7 +81,8 @@
                                                         [DependencyFilter3Value]="EntityId"
                                                         [HideColumns]="true"
                                                         [DisplayMemberPath]="'DisplayName'"
-                                                        (SelectedItemChanged)="SelectedGroupField = $event">
+                                                        (SelectedItemChanged)="SelectedGroupField = $event"
+                                                        [QueryFilterItems]="GroupByQueryFilters">
                                                 </LogLov>
                                             </td>
                                             <td>
@@ -104,7 +125,7 @@
                                                         <td style="width: 2px;">
                                                             <div></div>
                                                         </td>
-                                                        <td>
+                                                        <td *ngIf="item.MeasureCode && item.MeasureCode != 'Count'">
                                                             <LogLov [ObjectFieldName]="'MeasureFieldId'"
                                                                     [SelectedValue]="item.MeasureFieldId"
                                                                     [ObjectTableName]="item.ObjectTableName"
@@ -112,7 +133,8 @@
                                                                     [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                                                     [DependencyFilter1Value]="true"
                                                                     [HideColumns]="true"
-                                                                    [DisplayMemberPath]="'DisplayName'">
+                                                                    [DisplayMemberPath]="'DisplayName'"
+                                                                    [QueryFilterItems]="item.FieldQueryFilters">
                                                             </LogLov>
                                                         </td>
                                                     </tr>
@@ -122,7 +144,7 @@
                                             <td>
                                                 <div>
                                                     <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
-                                                    <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
+                                                    <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                                 </div>
                                             </td>
                                         </tr>

@@ -49,35 +49,34 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         List<string> transportModes = transportModesString.Split(',').ToList();
                         List<string> shipmentTypes = shipmentTypesString.Split(',').ToList();
-                        var orderedOccen = new List<string>();
-                        var orderedInlnad = new List<string>();
-                        
+
+                        var values = new List<string>();
+
                         foreach (var tm in transportModes)
                         {
                             if (tm.Equals("a", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                queryableData = queryableData.Where(a => tm.Equals(a.TransportModeId, StringComparison.InvariantCultureIgnoreCase));
+                                values.Add($"A:Air");
                             }
                             else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                var occenQ = new List<string> { "fcl", "lcl" };
-                                orderedOccen = shipmentTypes.Where(a => occenQ.Contains(a, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                                var oceanCodes = new List<string> { "FCLD", "LCLD", "MyGO" };
+                                var orderedOccen = shipmentTypes.Where(a => oceanCodes
+                                                                            .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                .ToList();
+                                orderedOccen.ForEach(a => values.Add($"O:{a}"));
                             }
                             else if (tm.Equals("i", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                var inlandQ = new List<string> { "ftl", "ltl" };
-                                orderedInlnad = shipmentTypes.Where(a => inlandQ.Contains(a, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                                var inlandCodes = new List<string> { "FTL", "LTL", "MyGI" };
+                                var orderedInlnad = shipmentTypes.Where(a => inlandCodes
+                                                                             .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                 .ToList();
+                                orderedInlnad.ForEach(a => values.Add($"I:{a}"));
                             }
                         }
 
-                        queryableData = queryableData.Where(a => (transportModes.Any(t => t.Equals("a", StringComparison.InvariantCultureIgnoreCase)) 
-                                                                   && "a".Equals(a.TransportModeId, StringComparison.InvariantCultureIgnoreCase))
-                                                                 || (transportModes.Any(t => t.Equals("a", StringComparison.InvariantCultureIgnoreCase))
-                                                                      && "o".Equals(a.TransportModeId, StringComparison.InvariantCultureIgnoreCase) 
-                                                                       && (!orderedOccen.Any() || orderedOccen.Contains(a.ShipmentTypeId)))
-                                                                 || (transportModes.Any(t => t.Equals("a", StringComparison.InvariantCultureIgnoreCase))
-                                                                    && "i".Equals(a.TransportModeId, StringComparison.InvariantCultureIgnoreCase)
-                                                                       && (!orderedInlnad.Any() || orderedInlnad.Contains(a.ShipmentTypeId))));
+                        queryableData = queryableData.Where(a => values.Contains(a.TransportModeId + ":" + a.ShipmentTypeId));
                     }
                 }
             }

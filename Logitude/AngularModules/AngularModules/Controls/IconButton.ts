@@ -102,7 +102,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 })
 
 export class IconButton implements OnInit {
-    @Input() public Name: string | 'settings' | 'actions' | 'payments' | 'refresh' | 'add' | 'edit' | 'editorange' | 'additional' | 'delete' | 'connect' | 'disconnect' | 'help' | 'signout' | 'call' | 'task' | 'appoint' | 'email' | 'excel' | 'watch' | 'disabledwatch' | 'bell' | 'deletefollowup' | 'donefollowup' | 'search' | 'copy' | 'arrow-up' | 'arrow-down' ;
+    @Input() public Name: string | 'settings' | 'actions' | 'payments' | 'refresh' | 'add' | 'edit' | 'editorange' | 'additional' | 'delete' | 'connect' | 'disconnect' | 'help' | 'signout' | 'call' | 'task' | 'appoint' | 'email' | 'excel' | 'watch' | 'disabledwatch' | 'bell' | 'deletefollowup' | 'donefollowup' | 'search' | 'copy' | 'arrow-up' | 'arrow-down' | 'minus' ;
     public Width: number;
     public Height: number;
     public Left: number = 0;
@@ -288,6 +288,11 @@ export class IconButton implements OnInit {
                 }
                 case "return": {
                     this.mySource = "./Images/return.png";
+                    break;
+                }
+                case "minus": {
+                    this.mySource = "./Images/Buttons/minus.png";
+                    this.mySourceOver = "./Images/Buttons/minus.over.png";
                     break;
                 }
 
