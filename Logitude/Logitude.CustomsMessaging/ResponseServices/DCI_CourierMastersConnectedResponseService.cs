@@ -48,7 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             cmPm.ConnectedDeclarations = courierMasterPM.ConnectedDeclarations;
             cmPm.NotConnectedDeclarations = courierMasterPM.NotConnectedDeclarations;
 
-            if (customResponse?.ServerSplitDeclarationsList != null)
+            if (customResponse?.ServerSplitDeclarationsList != null && customResponse?.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
                 
