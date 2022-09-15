@@ -48,6 +48,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
     private myDashboardPM: DashboardPM;
+    public SelectedDashboardName: string;
     constructor() {
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
@@ -108,6 +109,8 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             if (!myResponse.HasError) {
                 this.myDashboardPM = myResponse.Result;
                 if (this.myDashboardPM) {
+                    this.SelectedDashboardName = this.myDashboardPM.Name;
+
                     var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(this.myDashboardPM)
                     this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
                     this.selectedDashboard = myReactDashboard;
