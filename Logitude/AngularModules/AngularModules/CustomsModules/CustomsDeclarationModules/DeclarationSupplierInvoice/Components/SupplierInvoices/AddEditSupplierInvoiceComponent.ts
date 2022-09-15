@@ -1110,7 +1110,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
 
-  async  SavingPromise(isChromeMode: boolean): Promise<boolean> {
+    SavingPromise(isChromeMode: boolean): Promise<boolean> {
 
         
         return new Promise((resolve) => {
@@ -1247,7 +1247,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     _LastUnifreightMessageM: UnifreightMessageM;
     _FinishPromiseDoWhatPlannedDone: boolean;
-    async SaveChangesSync() {
+    SaveChangesSync() {
 
         //this.supplierInvoiceExtendedPMService.PutSupplierInvoicePercentage(this.EntityPM).subscribe((myResult:any) => {
 
@@ -1273,7 +1273,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             if (this.EntityPM.IsDirty || this.ForceSave) {
-                return await this.SavingPromise(true);
+                return  this.SavingPromise(true);
             }
             else {
                 this.FinishPromiseDoWhatPlanned(true);
@@ -1281,11 +1281,11 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
         Promise.resolve("lets go")
-            .then(async (res) => {
+            .then( (res) => {
                 ///Just Saving  .....
                 this.LogMe("this.SavingPromise();")
                 if (this.EntityPM.IsDirty || this.ForceSave) {
-                    return await this.SavingPromise(false);
+                    return this.SavingPromise(false);
                 }
                 else {
                     this.FinishPromiseDoWhatPlanned(true);
@@ -1337,7 +1337,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 this.LogMe("goToInsuranceInUNF");
                 SessionLocator.SelectedSession.StartBusyIndicator("Check Insurance ...");
                 var toPromise = true;
-                return this.SendUnifaceRequestAndWaitPromise();
+                return setTimeout(() => {
+                       this.SendUnifaceRequestAndWaitPromise();
+                }, 2000); 
 
             })
 
