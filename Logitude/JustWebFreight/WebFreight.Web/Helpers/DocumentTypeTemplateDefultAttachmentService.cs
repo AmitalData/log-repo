@@ -155,7 +155,7 @@ namespace WebFreight.Web.Helpers
 
         private bool IsNotChildObjectTable()
         {
-            return defultAttachmentArgs.ObjectTableName == "ARInvoice" || defultAttachmentArgs.ObjectTableName == "ARPayment";
+            return defultAttachmentArgs.ObjectTableName == "ARInvoice" || defultAttachmentArgs.ObjectTableName == "ARPayment" || defultAttachmentArgs.ObjectTableName == "APInvoice" || defultAttachmentArgs.ObjectTableName == "APPayment";
         }
 
         private void BuildDocInAttachmentList (List<DocumentDefultAttachment> defultAttachmentList)
