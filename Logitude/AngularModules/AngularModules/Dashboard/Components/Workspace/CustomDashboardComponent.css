@@ -3,3 +3,54 @@
     height: 100%;
     padding: 10px 0px 0px 0px;
  }
+
+.DashboardSectionHeader label {
+    margin-left: 10px;
+    font-size: 13px;
+}
+
+.DashboardSectionHeader td, .DashboardSectionHeader label {
+    color: #45494A;
+}
+
+.ll-full-hight {
+    height: 100%;
+}
+
+.ll-full-width{
+    width: 100%;
+}
+
+.ll-dashboard-body {    
+    height: 100%;
+    padding: 2px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border-radius: 8px;
+}
+
+.Dashboard-table-row {
+    height:30px;
+    width: 100%;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center
+}
+
+.Dashboard-table-row-cell {
+    width: 10px;
+}
+
+.Dashboard-back-button-cell {
+    vertical-align: top;
+}
+
+.Dashboard-TextTrimming {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

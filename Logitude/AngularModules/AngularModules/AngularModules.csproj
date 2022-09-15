@@ -1824,6 +1824,7 @@
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterItem.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardLayoutComponent.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
