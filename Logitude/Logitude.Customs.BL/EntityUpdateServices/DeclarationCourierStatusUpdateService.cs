@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     
                 }
-                if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierSuspentionCode==null )
+                if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierCustomStatusCode== null )
                 {
                     CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
                                       
