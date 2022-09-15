@@ -177,8 +177,21 @@ namespace WebFreight.Web.Helpers
         private IQueryable<DocumentsFiling> GetDocumentsFiligns(List<string> documentTypeIds)
         {
             IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings.Include("Document").Include("DocumentType")
-                                                            where a.Tenant == defultAttachmentArgs.Tenant && (a.ObjectTableId == defultAttachmentArgs.ObjectTableId || a.ObjectTableId == shipmentObjectId) && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I" && a.EntityId == defultAttachmentArgs.EntityId && a.IsDeleted == false && (a.Document != null && a.Document.HasFile)
+                                                            where a.Tenant == defultAttachmentArgs.Tenant
+                                                             && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I"
+                                                            && a.IsDeleted == false && (a.Document != null && a.Document.HasFile)
                                                             select a);
+
+            if (!defultAttachmentArgs.IsAutomation || !IsNotChildObjectTable())
+            {
+                documentsFilings = documentsFilings.Where(a => a.EntityId == defultAttachmentArgs.EntityId && a.ObjectTableId == defultAttachmentArgs.ObjectTableId);
+            }
+            else
+            {
+                documentsFilings = documentsFilings.Where(a => a.ChildEntityId == defultAttachmentArgs.EntityId && (a.ObjectTable.Name == "Master" || a.ObjectTable.Name == "Shipment"));
+            }
+
+
             if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
             {
                 documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
