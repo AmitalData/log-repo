@@ -1,2 +1,49 @@
-<div class="new-dashboard" #reactDashboradContainer>
+
+<div class='ll-full-hight'>
+    <div style="height:10px;">
+    </div>
+
+    <div class="Dashboard-table-row">
+        <table>
+            <tr>
+                <td class="Dashboard-table-row-cell">
+                </td>
+
+                <td class="Dashboard-back-button-cell">
+                    <BackButton [Text]="BackButtonLable" (click)="BackButtonClicked()"></BackButton>
+                </td>
+
+                <td class="Dashboard-table-row-cell">
+                </td>
+
+                <td class="Dashboard-TextTrimming" style="font-size: 16px; color: #1B90CB;">
+                    {{SelectedDashboardName}}
+                </td>
+
+                <td>
+                    <IconButton *ngIf="IsEditLayout" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
+                    <IconButton *ngIf="IsEditDashboard" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
+                </td>
+
+                <td>
+                    <div></div>
+                </td>
+
+                <td style="width:200px; height:22px;">
+                    <LogLov [NoObjectField]="true"
+                            [SelectedValue]="SelectedDashboardId"
+                            [DataContext]="DataContext"
+                            [LookUpTableName]="'Dashboard'"
+                            [HideColumns]="true"
+                            [DisplayMemberPath]="'Name'">
+                    </LogLov>
+                </td>
+            </tr>
+        </table>       
+    </div>
+
+    <div class="ll-dashboard-body">
+        <Custom-Layout></Custom-Layout>
+    </div>
 </div>
+

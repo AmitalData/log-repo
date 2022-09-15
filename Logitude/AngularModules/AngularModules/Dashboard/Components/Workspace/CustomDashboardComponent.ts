@@ -20,16 +20,16 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
-
     styleUrls:['CustomDashboardComponent.css'],
     selector:'custom-dashboard',
     encapsulation:ViewEncapsulation.ShadowDom
 })
 
-export class CustomDashboardComponent implements OnInit,  AfterViewInit {
+export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
     _show:boolean = false;
     @Input('show') set show(value){
         console.log('CustomDashboardComponent show= ',value);
@@ -49,7 +49,10 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
     private myDashboardPM: DashboardPM;
+    public SelectedDashboardName: string;
+    public DataContext = this;
     constructor() {
+        super();
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.myDashboardPM = new DashboardPM();
@@ -109,6 +112,8 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             if (!myResponse.HasError) {
                 this.myDashboardPM = myResponse.Result;
                 if (this.myDashboardPM) {
+                    this.SelectedDashboardName = this.myDashboardPM.Name;
+
                     var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(this.myDashboardPM)
                     this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
                     this.selectedDashboard = myReactDashboard;
@@ -317,6 +322,35 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
                 myWidgetPm.EndPosition = item.EndPosition;
                 myWidgetPm.StartPotistion = item.StartPotistion;
             }
+        });
+    }
+
+
+
+
+    //SelectedDashboardId
+    public BackButtonLable: string = "Back";
+    public IsEditLayout: boolean = true;
+    public IsEditDashboard: boolean = false;
+    EditLayoutClicked() {
+        this.IsEditLayout = false;
+        this.IsEditDashboard = true;
+    }
+    EditDashboardClicked() {
+        //this.IsEditLayout = true;
+        this.IsEditDashboard = false;
+    }
+    BackButtonClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Edit Dashboard";
+        logitudeWindow.WindowArgs = { EntityPM: this.myDashboardPM, };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    //this.GetDashboards();
+                }
+            });
         });
     }
 }
