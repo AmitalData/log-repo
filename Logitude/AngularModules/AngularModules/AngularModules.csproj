@@ -315,6 +315,8 @@
     <Content Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.css" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
