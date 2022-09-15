@@ -121,6 +121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   LastPrintedByUserId = a.LastPrintedByUserId,
                                                   LastPrintedByUserName = a.LastPrintedByUser != null ? (a.LastPrintedByUser.Contact != null ? a.LastPrintedByUser.Contact.EnglishName : null) : null,
                                                   CalculatedFileName = a.Document != null && !string.IsNullOrEmpty(a.Document.CalculatedFileName) ? a.Document.CalculatedFileName : a.DocumentOut.DocumentsFiling.DocumentType.Name != a.DocumentTypeCopy.Name ? a.DocumentOut.DocumentsFiling.DocumentType.Name + " - " + a.DocumentTypeCopy.Name : a.DocumentTypeCopy.Name,
+                                                  DocumentTypeId = a.DocumentOut != null && a.DocumentOut.DocumentsFiling != null ? a.DocumentOut.DocumentsFiling.DocumentType.Id : null,
                                               }).ToList();
             return copies;
         }
