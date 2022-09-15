@@ -1804,15 +1804,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 supplierInvoicePM.SupplierInvoiceItems.RemoveAll(rec => rec.IsParent != true);
             }
+
             foreach (var governmentAgencyGoodsItem in goodsShipment.GovernmentAgencyGoodsItem)
             {
                 var supplierInvoiceItemPM = supplierInvoicePM.SupplierInvoiceItems.FirstOrDefault(si => si.SequenceNumeric == governmentAgencyGoodsItem.SequenceNumeric);
                 //<--- Added by Yuval Chalup 26.05.2015 TASK-13473
+                LogMessagingUtil.Instance.AppendLine("My log");
                 LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM DeclarationId" + supplierInvoiceItemPM.DeclarationId);
                 LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM CounterKey" + supplierInvoiceItemPM.CounterKey
                     );
                 LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM SequenceNumeric" + supplierInvoiceItemPM.SequenceNumeric);
                 LogMessagingUtil.Instance.AppendLine("governmentAgencyGoodsItem.SequenceNumeric " + governmentAgencyGoodsItem.SequenceNumeric);
+               
                 if (supplierInvoiceItemPM == null)
                 {
                     if (governmentAgencyGoodsItem.Commodity != null)
