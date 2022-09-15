@@ -449,7 +449,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as ExceptionDate," +
                 "NULL as FromWarehouseEstimationDate," +
                 "NULL as ContainersNumbers," +
-                "NULL as IsOperationalClosed," +
+                "SHO.IsOperationalClosed as IsOperationalClosed," +
                 "SHO.OrderNumber as ShipmentNumber," +
 
                 "0 as CreateDone," +
