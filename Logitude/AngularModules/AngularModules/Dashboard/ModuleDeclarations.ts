@@ -7,7 +7,6 @@ import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/Cust
 import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilterComponent';
 import { ChooseUsersComponent } from './Components/Windows/ChooseUsersComponent';
 import { ChooseUserCheckBoxComponent } from './Components/Windows/ChooseUserCheckBoxComponent';
-import { DashboardListComponent } from './Components/Workspace/DashboardListComponent';
 
 export const Components =
     [
@@ -19,8 +18,7 @@ export const Components =
         CustomDashboardComponent,
         WidgetFilterComponent,
         ChooseUsersComponent,
-        ChooseUserCheckBoxComponent,
-        DashboardListComponent
+        ChooseUserCheckBoxComponent
     ];
 
 export class ModuleDeclarations {
@@ -38,7 +36,6 @@ export class ModuleDeclarations {
             case "WidgetFilterComponent": { myResult = WidgetFilterComponent; break; }
             case "ChooseUsersComponent": { myResult = ChooseUsersComponent; break; }
             case "ChooseUserCheckBoxComponent": { myResult = ChooseUserCheckBoxComponent; break; }
-            case "DashboardListComponent": { myResult = DashboardListComponent; break; }
         }
 
         return myResult;

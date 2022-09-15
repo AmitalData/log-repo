@@ -134,7 +134,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
     
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
         if(!dataPointSelection) return;
-        SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         .then((cmpRef : any) => {
             cmpRef.instance.ComponentRef = cmpRef;
             cmpRef.instance.Run(dataPointSelection);
