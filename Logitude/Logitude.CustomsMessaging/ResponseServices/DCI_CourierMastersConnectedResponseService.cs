@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             cmPm.ConnectedDeclarations = courierMasterPM.ConnectedDeclarations;
             cmPm.NotConnectedDeclarations = courierMasterPM.NotConnectedDeclarations;
 
-            if (customResponse?.ServerSplitDeclarationsList != null && customResponse?.ServerSplitDeclarationsList.Count > 0)
+            if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
 
@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList() :
                 courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList();
 
-            decids.ChunkBy(100).ForEach(list100 =>
+            decids.Take(300).ToList().ChunkBy(100).ForEach(list100 =>
             {
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;
