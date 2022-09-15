@@ -640,6 +640,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.TransportModeId = newValue;
         if (newValue == "A") {
             this.EntityPM.ShipmentTypeId = "Air";
+            this.ContainerNumber = "";
         }
         this.SetExportShipmentType(); 
         this.BuildShipmentTypes();
