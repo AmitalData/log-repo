@@ -934,5 +934,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+
+        [HttpPost]
+        public HttpResponseMessage SendConnectDeclaration([FromBody] CourierMasterPM courierMasterPM)
+        {
+            try
+            {
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

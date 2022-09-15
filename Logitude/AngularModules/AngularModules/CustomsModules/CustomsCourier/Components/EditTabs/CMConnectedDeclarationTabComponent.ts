@@ -11,6 +11,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
+import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 
 @Component({
     
@@ -101,27 +102,31 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
             SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-
+                
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     this.CourierMasterService.isNotDirty = true;
-                     if (this.CourierMasterService.disconnectedSelectAll) {
-                       //  this.CourierMasterService.connectedSelectAll = true;
+                    if (this.CourierMasterService.disconnectedSelectAll) {
+                        //  this.CourierMasterService.connectedSelectAll = true;
                         this.IsSelected = true;
                         this.CourierMasterService.disconnectedSelectAll = false;
                     }
-
-                  else if (this.CourierMasterService.connectedSelectAll) {
+                    
+                    else if (this.CourierMasterService.connectedSelectAll) {
                         this.CourierMasterService.disconnectedSelectAll = false;
-                   //     this.CourierMasterService.connectedSelectAll = false;
+                        //     this.CourierMasterService.connectedSelectAll = false;
                     }
                     this.CourierMasterService.connectedSelectAll = true;
-
+                    
                     this.LoadConnectedDeclarationGrid();
                     this.LoadNotConnectedDeclarationGrid();
                 }
             });
-
+            
+            SessionLocator.SelectedSession.CurrentEditComponent.SaveStart.subscribe((entityPM: any) => {
+                this.sendConnectDeclaration();
+            });
+            
             SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
@@ -138,6 +143,15 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 }
             });
         }
+    }
+
+    private async sendConnectDeclaration() {
+        if (this.entityPM.ConnectedDeclarations !== "ALL" && this.entityPM.NotConnectedDeclarations !== "ALL")
+            return;
+                
+        await this.CourierMasterService.sendConnectDeclaration(this.entityPM);
+
+        CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', ()=>{});
     }
 
     OnAllBtnClicked(isFirst: boolean) {

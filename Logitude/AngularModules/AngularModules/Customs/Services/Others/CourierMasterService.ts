@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { defer, Observable, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -16,6 +16,7 @@ import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestP
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
 import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 
 
 @Injectable()
@@ -735,5 +736,15 @@ export class CourierMasterService {
             ;
 
         });
+    }
+
+    sendConnectDeclaration(courierMasterPM: CourierMasterPM) {
+        const ajax: Observable<any> = this._http.post(
+            this._apiUrl + "/sendConnectDeclaration",
+            courierMasterPM,
+            { headers: ServiceHelper.GetHttpHeaders().headers }
+        );
+
+        return LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
     }
 }
