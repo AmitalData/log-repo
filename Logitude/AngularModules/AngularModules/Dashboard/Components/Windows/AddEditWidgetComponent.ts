@@ -31,6 +31,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public RootFilter: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public MaximumGroupings = [5, 10, 25, 30, 50];
     public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
     public DefaultSort = this.SortByCodes[0];
     public SortByDirections = ['asc', 'desc'];
@@ -184,6 +185,16 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get MaximumGrouping() {
+        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 25;
+        return this.EntityPM.MaximumGrouping;
+    }
+    set MaximumGrouping(value: number) {
+        if (this.EntityPM.MaximumGrouping != value) {
+            this.EntityPM.MaximumGrouping = value;
+        }
+    }
+
     get SortDirection() {
         if (!this.EntityPM?.SortDirection) this.EntityPM.SortDirection = "asc";
         return this.EntityPM.SortDirection;
@@ -287,6 +298,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('DateGroupCodes');
         this.myCloner.AddField('SortDirection');
         this.myCloner.AddField('SortBy');
+        this.myCloner.AddField('MaximumGrouping');
 
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);

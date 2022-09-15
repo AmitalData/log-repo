@@ -183,6 +183,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.DateGroupCode = widget.DateGroupCode;
             myWidget.SortDirection = widget.SortDirection;
             myWidget.SortBy = widget.SortBy;
+            myWidget.MaximumGrouping = widget.MaximumGrouping;
         }
 
         var logitudeWindow = new LogitudeWindow();

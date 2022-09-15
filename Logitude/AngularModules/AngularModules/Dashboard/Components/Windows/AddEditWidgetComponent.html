@@ -137,6 +137,20 @@
                                             </td>
                                         </tr>
                                         
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox  (SelectedItemChanged)="MaximumGrouping = $event"
+                                                            [ItemsSource]="MaximumGroupings" 
+                                                            [SelectedItem]="MaximumGrouping">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
 
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
