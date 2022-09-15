@@ -59,12 +59,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCI_CourierMastersConnectedResponseContentHeader customsResponse)
         {
             var tableName = "Customs.CourierMaster";
-
-            var myGenericRequestParams = new GenericRequestParams()
+            var entityPM = customsResponse.entityPM;
+            var genericRequestParams = new GenericRequestParams()
             {
+                Tenant = entityPM.Tenant,
+                AppicationId = entityPM.Id,
+                LoggingEnabled = true,
+                InterfaceTypeCode = MainInterfaceCode,
+                MainInterfaceCode = MainInterfaceCode,
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
+                LoggingEntityId = entityPM.Id,
+                LoggingEntityReference = entityPM.HAWB,
+                LoggingUserId = null,
+                RequestName = $" קישור הצהרות ל " + entityPM.HAWB+ " "
             };
-            return myGenericRequestParams;
+
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+            }
+
+            return genericRequestParams;
         }
 
 
@@ -141,6 +162,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return ResponseContentHeader;
         }
 
+        public List<string> ServerSplitDeclarationsList { get; set; }
         public DefaultResponseContentHeader ResponseContentHeader { get; set; }
         public CourierMasterPM entityPM { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;

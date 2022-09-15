@@ -149,9 +149,9 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         if (this.entityPM.ConnectedDeclarations !== "ALL" && this.entityPM.NotConnectedDeclarations !== "ALL")
             return;
                 
-        await this.CourierMasterService.sendConnectDeclaration(this.entityPM);
-
-        CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', ()=>{});
+        this.CourierMasterService.sendConnectDeclaration(this.entityPM)
+        .then(()=> CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', ()=>{}))
+        .catch(()=> CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', ()=>{}));
     }
 
     OnAllBtnClicked(isFirst: boolean) {
