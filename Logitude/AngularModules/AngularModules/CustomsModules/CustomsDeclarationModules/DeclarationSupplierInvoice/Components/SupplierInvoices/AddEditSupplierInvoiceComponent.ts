@@ -1110,7 +1110,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
 
-    SavingPromise(isChromeMode: boolean): Promise<boolean> {
+  async  SavingPromise(isChromeMode: boolean): Promise<boolean> {
 
         
         return new Promise((resolve) => {
