@@ -26,7 +26,10 @@ namespace Logitude.DashboardModule.Data.Repositories
             return (from a in context.DashboardSharedUsers where a.Tenant == tenant && a.DashboardId == dashboardId select a).ToList();
         }
 
+        public IQueryable<DashboardSharedUser> GetDashboardSharedUsersByDashboardsIds(IQueryable<string> dashboardsIds, int tenant)
+        {
+            return (from a in context.DashboardSharedUsers where a.Tenant == tenant && dashboardsIds.Contains(a.DashboardId) select a);
+        }
     }
-
 }
    

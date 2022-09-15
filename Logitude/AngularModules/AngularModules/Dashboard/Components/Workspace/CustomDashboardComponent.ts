@@ -124,6 +124,7 @@ export class CustomDashboardComponent implements  AfterViewInit {
             dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
             dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+            dashboardPM.PermissionLevelCode = "ONM";
         }
 
         logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
