@@ -207,7 +207,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                 {
                     AdditionalTreeFilter = filters.TreeFilters,
-                    ObjectTableName = "Card",
+                    ObjectTableName = "Customer",
                     ParentEntityId = filters.ParentEntityId,
                     ParentObjectTableName = filters.ParentObjectTableName,
                     Tenant = tenant,
