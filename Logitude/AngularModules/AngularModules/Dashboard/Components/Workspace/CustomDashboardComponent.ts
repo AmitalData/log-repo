@@ -131,9 +131,16 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
         }),
             this.reactDashboradContainer.nativeElement);
     }
+    
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
-
+        if(!dataPointSelection) return;
+        SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        .then((cmpRef : any) => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run(dataPointSelection);
+        });
     }
+
     private OpenDashboardWindow(dashboard: ReactDashboardPM) {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
