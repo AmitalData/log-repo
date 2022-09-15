@@ -1808,6 +1808,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var supplierInvoiceItemPM = supplierInvoicePM.SupplierInvoiceItems.FirstOrDefault(si => si.SequenceNumeric == governmentAgencyGoodsItem.SequenceNumeric);
                 //<--- Added by Yuval Chalup 26.05.2015 TASK-13473
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM DeclarationId" + supplierInvoiceItemPM.DeclarationId);
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM CounterKey" + supplierInvoiceItemPM.CounterKey
+                    );
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM SequenceNumeric" + supplierInvoiceItemPM.SequenceNumeric);
+                LogMessagingUtil.Instance.AppendLine("governmentAgencyGoodsItem.SequenceNumeric " + governmentAgencyGoodsItem.SequenceNumeric);
                 if (supplierInvoiceItemPM == null)
                 {
                     if (governmentAgencyGoodsItem.Commodity != null)
@@ -1818,6 +1823,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (governmentAgencyGoodsItem.Commodity.Classification[0] != null)
                                 {
+                                   
+
                                     throw new System.Exception(
                                        "unable to find the supplierInvoiceItemPM from governmentAgencyGoodsItem.Commodity.Classification " + governmentAgencyGoodsItem.Commodity.Classification[0].ID.Value);
                                 }
