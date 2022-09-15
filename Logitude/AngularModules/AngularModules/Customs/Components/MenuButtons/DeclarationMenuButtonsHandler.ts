@@ -1374,6 +1374,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     }
     private CloseDeclarationMethod() {
+       
+        //var isExportDeclarationAmendments = true;
+
+        //if (isExportDeclarationAmendments) {
+        //    var msg = new MessageWindow();
+        //    msg.Width = 350;
+        //    msg.RTL = true;
+        //    msg.ShowWarningIcon = true;
+        //    msg.Show("קיים תיקון הצהרה בטיפול. לא ניתן לסגור הצהרה");
+        //    return;
+        //}
+        
+       
         var args: any = {
             EntityPM: this.EntityPM,
         };

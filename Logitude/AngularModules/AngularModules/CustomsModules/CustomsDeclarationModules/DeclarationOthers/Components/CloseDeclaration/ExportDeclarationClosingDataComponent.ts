@@ -20,10 +20,11 @@ import { ExportDeclarationClosingDatasExtendPMService } from 'Customs/Services/E
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { ExportDeclarationClosingWebService } from 'Customs/Services/WebServices/ExportDeclarationClosingWebService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
-    templateUrl: './ExportDeclarationClosingDataComponent.html',    
+    templateUrl: './ExportDeclarationClosingDataComponent.html',
 })
 
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
@@ -37,17 +38,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     DeclarationService: DeclarationWebService = new DeclarationWebService();;
     exportDeclarationClosingDataPMService: ExportDeclarationClosingDataPMService = new ExportDeclarationClosingDataPMService();
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
+    _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate :string = "תאריך הפלגה בפועל";
-    public ActualTakeOffDate :string = "תאריך המראה בפועל";
+    public ActualSailingDate: string = "תאריך הפלגה בפועל";
+    public ActualTakeOffDate: string = "תאריך המראה בפועל";
+
+    ManifestNumberPlaceholder: string = '';
 
 
     constructor(
-        private EntityResourceService: EntityResourceService, 
+        private EntityResourceService: EntityResourceService,
         private readonly cdr: ChangeDetectorRef, public entityArgs: EntityArgs,
-        ) {
+    ) {
         super();
     }
 
@@ -95,8 +99,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-
-                if(this.EntityPM)
+                
+                if (this.EntityPM)
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
                         this.IsNew = true;
@@ -104,13 +108,31 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         this.EntityPM.IsDirty = false;
                     }
 
-                    if(this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O'){
-                        this.FinalCargoTypeCode =this.FinalCargoTypeCode==null ? '37':this.FinalCargoTypeCode
-                        this.FinalManifestNumber =this.FinalManifestNumber==null? '':this.FinalManifestNumber; 
-                        this.FinalSecondCargoId =this.FinalSecondCargoId==null? '':this.FinalSecondCargoId;
-                        this.FinalThirdCargoId = this.FinalThirdCargoId==null?'':this.FinalThirdCargoId;
+                if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
+ 
+                    if (this.FinalCargoTypeCode == null) {
+                        this.FinalCargoTypeCode = '37';
+                       
+                        this._CargoIdentifireTypeListService.getSingleFromCache('37')
+                            .subscribe((Response: ServiceResponse) => {
+                                if (Response.Result != null) {
+                                    debugger
+                                    this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
+                                 
+                                    this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
+                                    this.FinalSecondCargoId = this.FinalSecondCargoId == null ? '' : this.FinalSecondCargoId;
+                                    this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
+                                   
+                                    this.setWarningValues();
+                                }
+                            });
                     }
-                
+
+                }
+                else {
+                    this.ManifestNumberPlaceholder = 'XXX-XXXXXXXX';
+                }
+
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB)) {
                     this.EntityPM.IsDirty = true;
                     this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
@@ -143,6 +165,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
 
+    setWarningValues() {
+        if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
+            this.UIProperties.SetWarning("FinalManifestNumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FinalManifestNumber));
+        }
+    }
+
     get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
 
@@ -150,17 +178,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
-        // if (value) {
-        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, false);
-
-
-        // }
-        // else {
-        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
-
-
-
-        // }
+     
     }
 
     get FinalShipCode() { return this.EntityPM ? this.EntityPM.FinalShipCode : null; }
@@ -290,7 +308,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         }
                     });
                 } else {
-                     this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                    this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
 
                         if (!response.HasError) {
                             this.SendAmendmentCloseDeclaration(event);
@@ -327,7 +345,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
-                
+
 
 
             }
@@ -335,13 +353,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
-               this.FillValidationErrors("Errors");
+                this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
-            
+
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage) && response.Result.HasException) {
-               //this.ValidationErrors.push(response.Result.UserMessage);
+                //this.ValidationErrors.push(response.Result.UserMessage);
                 //this.FillValidationErrors("Errors");
             }
 
@@ -366,7 +384,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 tab.IsDisabled = false;
             }
 
-           
+
             SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
@@ -415,11 +433,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     async initOceanExportData() {
-        if(this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
+        if (this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
 
         const exportData = await this.exportDeclarationClosingWebService.getUnifreightData(this.DecPM.ExportFile);
-        if(!exportData) return;
-        
+        if (!exportData) return;
+
         this.FlightDate = exportData.flightDate;
         this.ChargingSite = exportData.loadingSite;
         this.Smp = exportData.HAWB;
@@ -429,8 +447,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     isConnectedToUniFreight(): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) =>             
-            new CustomsSettingListService().getSingleFromCache(this.DecPM.Tenant.toString()).subscribe((response: ServiceResponse) => 
+        return new Promise<boolean>((resolve, reject) =>
+            new CustomsSettingListService().getSingleFromCache(this.DecPM.Tenant.toString()).subscribe((response: ServiceResponse) =>
                 resolve(response.Result.IsConnectedToUniFreight)))
     }
 }
