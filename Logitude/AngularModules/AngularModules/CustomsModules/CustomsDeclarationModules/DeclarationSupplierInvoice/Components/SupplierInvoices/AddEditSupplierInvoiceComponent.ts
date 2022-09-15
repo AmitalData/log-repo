@@ -1339,7 +1339,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 var toPromise = true;
                 return setTimeout(() => {
                        this.SendUnifaceRequestAndWaitPromise();
-                }, 2000); 
+                }, 200); 
 
             })
 
