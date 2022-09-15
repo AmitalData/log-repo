@@ -148,10 +148,12 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     private async sendConnectDeclaration() {
         if (this.entityPM.ConnectedDeclarations !== "ALL" && this.entityPM.NotConnectedDeclarations !== "ALL")
             return;
-                
+            
+        SessionLocator.SelectedSession.StartBusyIndicator('פותח מסר לקחשור הצהרות')
         this.CourierMasterService.sendConnectDeclaration(this.entityPM)
-        .then(()=> CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', ()=>{}))
-        .catch(()=> CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', ()=>{}));
+            .then(() => CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', () => { }))
+            .catch(() => CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', () => { }))
+            .finally(() => SessionLocator.SelectedSession.StopBusyIndicator());
     }
 
     OnAllBtnClicked(isFirst: boolean) {
