@@ -97,6 +97,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
     RequsetPageName: string;
     public AutomationId: string;
+    HideEntityDataFields: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
@@ -255,7 +256,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
-
+        this.SetVisiablity();
+       
 
         if (this.IsPreviewMode) {
             this.LoadHtmlTemplateData();
@@ -329,8 +331,27 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         }
     }
+    SetVisiablity() {
+        let objectTableName = this.GetObjectTableName();
+
+        if (this.RequsetPageName == "Signature" || this.RequsetPageName == "BIReport" || objectTableName == "BIReport") {
+            this.HideEntityDataFields = true;
+            this.IsShowAreaDataField = false;
+            this.IsShowAttachmentLinks = false;
+        }
 
 
+        if (this.RequsetPageName == "BIReport" && !this.template.EntityId) {
+            this.IsShowSaveAsButtonOnly = true;
+        }
+    }
+
+    GetObjectTableName() {
+        if (AppTool.IsNullOrEmpty(this.ObjectTableId)) return null;
+        let objectTable = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0];
+        return objectTable ? objectTable.Name : null;
+
+    }
 
     LoadReportTemplateDate() {
 
@@ -398,8 +419,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             }
 
-
-
             if (this.template.TemplateType == "M") {
                 if (this.PageType == "Send" || this.PageType == "ManageTemplate" || this.PageType =="Maintenance") {
                     this.IsShowAttachmentLinks = true;
@@ -434,7 +453,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             } else htmlBody = "";
 
             this.froalaEditorSetting.HtmlString = htmlBody;
-
+            this.SetVisiablity();
 
       
 
@@ -863,7 +882,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
     }
-    
+
 
     ViewDataField(type: string,  objectTypeField:string , tableId:string) {
 
@@ -873,7 +892,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         windowArgs.InSertDataFieldType = type;
         windowArgs.DocumentTypeCode = this.DocumentTypeCode;
         
-        if (this.PageType == "Signature") windowArgs.ObjectTableId = null;
+        if (this.HideEntityDataFields) windowArgs.ObjectTableId = null;
         this.InSertDataFieldType = type;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;

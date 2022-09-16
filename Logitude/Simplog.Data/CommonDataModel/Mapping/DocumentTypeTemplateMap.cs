@@ -102,6 +102,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .HasMaxLength(300)
                .IsUnicode(false);
 
+            this.Property(t => t.EntityId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+            this.Property(t => t.ObjectTableId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
@@ -207,7 +214,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 
 
             }
-
+            this.Property(t => t.EntityId).HasColumnName("EntityId");
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
 
             // Relationships
             this.HasRequired(t => t.DocumentType)

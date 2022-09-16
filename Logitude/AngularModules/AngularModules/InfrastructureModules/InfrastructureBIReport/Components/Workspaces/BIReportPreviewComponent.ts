@@ -29,6 +29,16 @@ import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/E
 import { isNullOrUndefined } from 'util';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
+import { DocumentTypeTemplateViewModel } from '../../../InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
+import { DocumentTypeList } from '../../../../Common/EntityLists/DocumentTypeList';
+import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
+import { BIReportDocumentTypeTemplateService } from '../../../../Report/Services/BIReportDocumentTypeTemplateService';
+import { ObjectTableList } from '../../../../Infrastructure/EntityLists/ObjectTableList';
+import { ObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/ObjectTableListService';
+import { Observable } from 'rxjs';
+declare var window: any;
 @Component({
 
     templateUrl: 'BIReportPreviewComponent.html',
@@ -83,6 +93,20 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public OriginalDWQueryFilterData: any;
     public SavedFilterItemsData: any;
     public ParentComponent: any;
+    public DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
+    private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
+    public get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
+    public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
+        if (this.documentTypeTemplateSelected != value) {
+            this.documentTypeTemplateSelected = value;
+            this.IsEnableAddTemplate = true;
+            this.IsEnableEditTemplate = true;
+        }
+    }
+    private bIReportDocumentTypeTemplateService: BIReportDocumentTypeTemplateService;
+    public IsEnableEditTemplate: boolean = false;
+    public IsEnableAddTemplate: boolean = false;
+    public ObjectTableId: string;
 
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
@@ -117,9 +141,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     }
                 }
             });
+            
             this.LoadBIReportData();
+      
+            
         }
     }
+
     checkFixedFilter() { 
         this.hasFixedFilter = false; 
         this.ShowStaticFilters = false;
@@ -154,8 +182,16 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
+        if (this.IsScheduler) {
+            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this, "BIReport");
+            this.bIReportDocumentTypeTemplateService.Load();
+        }
+
         this.SetSavedFilterItemsData(args);
     }
+
+
+
 
     SetSavedFilterItemsData(args) {
         this.SavedFilterItemsData = args['SavedFilterItemsData'];
@@ -1018,6 +1054,21 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    
+
+    EditDocumentTemplate(documentTemplate: any) {
+        this.bIReportDocumentTypeTemplateService.EditDocumentTemplate(documentTemplate);
+    }
+    
+
+    AddDocumentTypeTemplate() {
+        this.bIReportDocumentTypeTemplateService.AddDocumentTypeTemplate();
+    }
+            
+    
+
+
     //#endregion
 }
 

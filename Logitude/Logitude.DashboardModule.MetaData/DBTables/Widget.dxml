@@ -23,7 +23,7 @@
     Type="nvarchar"
     Size="300">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="GroupById"
@@ -72,6 +72,13 @@
     Name="Filters"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DateGroupCode"
+    Type="varchar"
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>

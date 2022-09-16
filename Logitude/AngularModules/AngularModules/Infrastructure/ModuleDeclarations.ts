@@ -206,6 +206,7 @@ import { PrintComponent } from './Components/MultiPrint/PrintComponent';
 import { MultiPrintErrorHandlerComponent } from './Components/MultiPrint/MultiPrintErrorHandlerComponent';
 import { MultiPrintCheckBoxComponent } from './Components/MultiPrint/MultiPrintCheckBoxComponent';
 import { MultiPrintCheckTemplate } from './Components/MultiPrint/MultiPrintCheckTemplate';
+import { MonthpickerComponent } from './Components/LogitudeComponents/MonthPickerComponent';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -329,7 +330,7 @@ export const ControlsComponents =
         WebHookAutomationDetailsComponent,
         EventCreationResultComponent,
         OnUpdateDocumentResultComponent,
-
+        MonthpickerComponent,
     ];
 export const Components =
     [

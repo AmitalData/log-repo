@@ -20,7 +20,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     public DisplaySATSettings: boolean = false;
     public DisplayQBOSettings: boolean = false;
     public Periods: PeriodDetails[] = [];
-    public HaveRegimenFiscalFieldFeatureToggle: boolean = false;
+    public Profact4Enabled: boolean = false;
 
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
@@ -29,7 +29,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
-            this.SetHaveRegimenFiscalFieldFeatureToggle();
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
             this.FillPeriodList();
         }
 
@@ -40,13 +40,6 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
         this.RunComponent();
         this.SetUIProperties();
         this.Listen();
-    }
-
-    private SetHaveRegimenFiscalFieldFeatureToggle() {
-        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.HaveRegimenFiscalFieldFeatureToggle = true;
-        }
     }
 
     FillPeriodList() {

@@ -23,16 +23,17 @@ namespace Simplog.Server.Infrastructure.DataContracts
         [DataMember]
         public bool IsCustomField { get; set; }
         [DataMember]
-
-  
         public string FieldDataType { get; set; }
         [DataMember]
         public string FilterType { get; set; }
-
+        [DataMember]
+        public string DateGroupCode { get; set; }
         [DataMember]
         public bool IsListFilter { get; set; }
+        [DataMember]
+        public bool IsAnalyticsMetadatas { get; set; }
 
-        
+
         [DataMember]
         public List<QueryFilterItem> QueryFilterItems { get; set; }
 

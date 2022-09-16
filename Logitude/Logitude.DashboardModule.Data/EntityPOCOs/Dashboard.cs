@@ -43,6 +43,11 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
+        [ForeignKey("PermissionLevel")]
+        [Column("PermissionLevelCode")]
+	    public string PermissionLevelCode { get; set; }
+	      
+        public virtual PermissionLevel PermissionLevel { get; set; }
     }
 }
 	 

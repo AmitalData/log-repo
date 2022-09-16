@@ -30,7 +30,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         SearchFields, 
 	         Name, 
-	         Description,
+	         Description, 
+	         PermissionLevelCode,
 	      }
 
 
@@ -45,7 +46,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         SearchFields, 
 	         Name, 
-	         Description,
+	         Description, 
+	         PermissionLevelCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
 				entityPOCO.Description = entityPM.Description;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionLevelCode))
+            {
+				entityPOCO.PermissionLevelCode = entityPM.PermissionLevelCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -145,6 +152,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Description = entityPOCO.Description;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PermissionLevelCode))
+            {
+					entityPM.PermissionLevelCode = entityPOCO.PermissionLevelCode;
+            }
+
 		}
 
 		public void PMToOldPM(DashboardPM entityPM, DashboardPM oldEntityPM)
@@ -189,6 +201,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
                 oldEntityPM.Description = entityPM.Description;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionLevelCode))
+            {
+                oldEntityPM.PermissionLevelCode = entityPM.PermissionLevelCode;
             }
 			
 		}

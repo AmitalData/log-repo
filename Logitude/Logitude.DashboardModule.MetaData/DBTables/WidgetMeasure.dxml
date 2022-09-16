@@ -37,18 +37,18 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="WidgetId"
     ReferencedTable="Widgets"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <!--<Relation
+  <Relation
     ForeignKeyColumn="MeasureCode"
     ReferencedTable="MeasureTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />-->
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="MeasureFieldId"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

@@ -13,6 +13,16 @@ Feature: Workflow node
         Given edit start configration with following details
             | Object           | Shipment            |
             | ConfigureTrigger | A record is updated |
+        And add condition with following details
+            | Field     | Custom Lookup           |
+            | Operation | Equals                  |
+            | Value     | TestAgentExport Contact |
+        And add condition group met with 'And' with the following details
+            | Field         | Operation  | Value                   |
+            | Custom Lookup | Not Equals | TestAgentExport Contact |
+            | Custom text   | Contains   | 33                      |
+            | Custom Bool   | Equals     | False                   |
+            | Custom NText  | Changed    | False                   |
         And click Ok
         When click save
         Then the flow should save successfully

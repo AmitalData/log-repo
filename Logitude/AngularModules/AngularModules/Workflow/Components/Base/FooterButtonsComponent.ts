@@ -9,7 +9,6 @@ export class FooterButtonsComponent {
 
     @Input() SaveButtonLabel: string = "Save";
     @Input() CancelButtonLabel: string = "Cancel";
-
     @Input() SaveButtonDataCy: string = "save-button";
     @Input() CancelButtonDataCy: string = "cancel-button";
 

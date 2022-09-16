@@ -1,34 +1,89 @@
-<div *ngIf="ObjectField && LookupTable && ObjectField.DataTypeCode === FieldTypes.LookUp">
+<div *ngIf="!IsIntegerNumberInput">
 
-    <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-        [LookUpTableName]="LookupTable.Name" [DependencyFilter1Value]="ObjectField.DependencyFilter1Value"
-        [DependencyFilter2Value]="ObjectField.DependencyFilter2Value"
-        [DependencyFilter3Value]="ObjectField.DependencyFilter3Value"
-        [DependencyFilter1IsList]="ObjectField.DependencyFilter1IsList"
-        [DependencyFilter2IsList]="ObjectField.DependencyFilter2IsList"
-        [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true"
-        [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
-        [SelectedValue]="CurrentValue" [HideColumns]="!LookupTable.AutoCompleteSearchWindow"
-        [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event?.Id)"
-        [DataCy]="Name">
-    </LogLov>
+    <div *ngIf="isLookupObjectField() && LookupTable">
+
+        <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+            [LookUpTableName]="LookupTable.Name" [DependencyFilter1Value]="ObjectField.DependencyFilter1Value"
+            [DependencyFilter2Value]="ObjectField.DependencyFilter2Value"
+            [DependencyFilter3Value]="ObjectField.DependencyFilter3Value"
+            [DependencyFilter1IsList]="ObjectField.DependencyFilter1IsList"
+            [DependencyFilter2IsList]="ObjectField.DependencyFilter2IsList"
+            [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true"
+            [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
+            [SelectedValue]="CurrentValue" [HideColumns]="!LookupTable.AutoCompleteSearchWindow"
+            [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event?.Id)"
+            [DataCy]="Name">
+        </LogLov>
+
+    </div>
+
+    <div *ngIf="isPickListObjectField() && PickListTable">
+        <PickList
+            [ObjectFieldName]="ObjectField.FieldName" 
+            [ObjectTableName]="PickListTable.Name"
+            [SelectedValue]="CurrentValue" 
+            [DataContext]="DataContext"
+            [IsFreeText]="true"
+            [NoValidation]="true"
+            [HideLastColumn]="true"
+            [HideColumns]="true"
+            [PlaceHolder]="'Value'"
+            (SelectedItemChanged)="updateValue($event?.Id)">
+        </PickList>
+    </div>
+
+    <div *ngIf="isTextObjectField()">
+
+        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+            [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()" [NoValidation]="true"
+            [HideColumns]="true" [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogTextBox>
+
+    </div>
+
+
+    <div *ngIf="isNumberObjectField()">
+
+        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+            [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()"
+            [DigitsAfterPoint]="ObjectField.DigitsAfterPoint" [NoValidation]="true" [HideColumns]="true"
+            [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogTextBox>
+
+    </div>
+
+
+    <div *ngIf="isBooleanObjectField()">
+
+        <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
+            (SelectedItemChanged)="updateValue($event.Code)" [ListType]="''" [CyData]="Name">
+        </ComboBox>
+
+    </div>
+
+
+    <div *ngIf="isDateTimeObjectField()">
+
+        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="Name" [DataContext]="DataContext"
+            [SelectedDateValue]="DateTimeCurrentValue" [InputType]="'date'" [IsFreeValue]="true" [NoValidation]="true"
+            [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogDatePicker>
+
+    </div>
 
 </div>
 
 
-<div
-    *ngIf="ObjectField && (ObjectField.DataTypeCode === FieldTypes.Text || ObjectField.DataTypeCode === FieldTypes.NText)">
 
-    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-        [Text]="CurrentValue" [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name"></LogTextBox>
+<div *ngIf="IsIntegerNumberInput">
 
-</div>
+    <div>
 
+        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
+            (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogTextBox>
 
-<div *ngIf="ObjectField && ObjectField.DataTypeCode === FieldTypes.Boolean">
-
-    <ComboBox [ItemsSource]="BooleanItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
-        (SelectedItemChanged)="updateValue($event.Code)" [CyData]="Name">
-    </ComboBox>
+    </div>
 
 </div>

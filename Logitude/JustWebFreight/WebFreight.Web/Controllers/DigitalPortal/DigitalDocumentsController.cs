@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string entityId = shipment.Id;
             string shipmentLevelCode = shipment.ShipmentLevelCode;
             ARInvoiceRepository arInvoiceReps = new ARInvoiceRepository(tenant);
-            List<ARInvoice> invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(entityId, shipment.CustomerId, tenant);
+            List<ARInvoice> invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(entityId, shipment.CustomerId, tenant);
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);

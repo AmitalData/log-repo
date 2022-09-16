@@ -60,6 +60,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardClassesGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
+    <None Include="EntityFiles\DashboardSharedUser.lxml" />
+    <None Include="EntityFiles\PermissionLevel.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +85,7 @@
   <ItemGroup>
     <None Include="AnalyticsEntityFiles\ShipmentAnalytic.ljson" />
     <None Include="app.config" />
+    <None Include="DBScripts\202209131020_UpdateShipmentAnalyticsName.sxml" />
     <None Include="DBScripts\202209010934_AddShipmentAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_DeleteShipmentAnalytics.sxml" />
     <None Include="DBScripts\202209010934_FillShipmentAnalytics.sxml" />

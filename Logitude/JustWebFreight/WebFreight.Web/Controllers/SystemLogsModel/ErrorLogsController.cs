@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entityPM.Tenant, authToken.Tenant);
+                   // SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entityPM.Tenant, authToken.Tenant);
                     //SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
 
                     ErrorLog errorLogs = new ErrorLog();

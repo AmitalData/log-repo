@@ -610,6 +610,8 @@ Line3
         defaultParam.LT_LinesMaximum = 50;
         defaultParam.MaxPageSize = 1000;
         defaultParam.SpecificJournalId = "";
+        defaultParam.LastMadeGLAccountId = "";
+        defaultParam.MaxGLAccountsPerQuery = 100;
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this._TextBoxParam = JSON.stringify(defaultParam);
             return;
@@ -623,18 +625,24 @@ Line3
         myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
         myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
         myUrl = myUrl + "&specificJournalId=" + objToCheck1.SpecificJournalId;
+        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
         this.CurrentSession.StartBusyIndicatorCreating();
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
             .subscribe(
                 r => {
+                    this.CurrentSession.StopBusyIndicator();
                     this._LabelLog = JSON.stringify(r);
                     let resObj = JSON.parse(this.JsonOut);
                     if (Array.isArray(resObj)) {
                         this.JsonList = resObj;
                     }
                 },
-                e => { this._LabelLog = JSON.stringify(e); },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }

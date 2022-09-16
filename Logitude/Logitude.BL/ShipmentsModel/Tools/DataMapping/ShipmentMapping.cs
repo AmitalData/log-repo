@@ -93,9 +93,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
                     {
                         entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
-                    }
-
-                    entityPM.ShipmentConvertedNewNumber = false;
+                    }                    
                 }
             }
 
@@ -173,6 +171,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MapTotalsFields(entityPM, entityPoco, isNewEntity);
             MapWeightsFields(entityPM, entityPoco, isNewEntity);
             MapXSDMessagesFields(entityPM, entityPoco, entityMasterData, isNewEntity);
+
+            entityPM.ShipmentConvertedNewNumber = false;
 
             if (entityPM.ShipmentLevelCode == "H")
             {
@@ -1761,6 +1761,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 if (entityMasterData != null)
                 {
+                    if (entityPM.ShipmentConvertedNewNumber)
+                    {
+                        entityMasterData.MasterShipmentNumber = entityPM.MasterShipmentNumber;
+                    }
+
                     entityMasterData.DocumentsClosingDate = entityPM.DocumentsClosingDate;
                     entityMasterData.OBLTypeCode = entityPM.OBLTypeCode;
                     entityMasterData.ImportManifest = entityPM.ImportManifest;
@@ -3160,6 +3165,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             return shipmentPM;
 
+        }
+
+        public static ShipmentPM MapMasterDetailsForShipment(ShipmentPM masterShipment, ShipmentPM shipmentPM)
+        {
+            if (masterShipment == null) return shipmentPM;
+
+            shipmentPM.MainCarriageCarrierId = masterShipment.MainCarriageCarrierId;
+            shipmentPM.MainCarriageETA = masterShipment.MainCarriageETA;
+            shipmentPM.MainCarriageETD = masterShipment.MainCarriageETD;
+            shipmentPM.MainCarriageATD = masterShipment.MainCarriageATD;
+            shipmentPM.MainCarriageATA = masterShipment.MainCarriageATA;
+            shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
+            shipmentPM.StatusId = masterShipment.StatusId;
+            shipmentPM.CutoffDate = masterShipment.CutoffDate;
+            shipmentPM.MasterShipmentDataId = masterShipment.Id;
+
+            return shipmentPM;
         }
     }
 }

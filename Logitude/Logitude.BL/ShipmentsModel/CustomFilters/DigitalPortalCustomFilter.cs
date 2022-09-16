@@ -26,11 +26,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "InTransit")
-                    {
-                        queryableData = ApplyInTransitFilter(item, queryableData, shipmentRepository);
-                    }
-
                     if (item.FieldName == "DigitalPortalSearchFields")
                     {
                         queryableData = ApplyDigitalPortalSearchFilter(item, queryableData);
@@ -45,6 +40,43 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         isAllShipments = true;
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
+                    }
+
+                    if (item.FieldName == "TransportModeShipmentTypeFilters")
+                    {
+                        var transportModesString = item.FieldValue as string;
+                        var shipmentTypesString = item.FieldValue2 as string;
+
+                        List<string> transportModes = transportModesString.Split(',').ToList();
+                        List<string> shipmentTypes = shipmentTypesString.Split(',').ToList();
+
+                        var values = new List<string>();
+
+                        foreach (var tm in transportModes)
+                        {
+                            if (tm.Equals("a", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                values.Add($"A:Air");
+                            }
+                            else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var oceanCodes = new List<string> { "FCLD", "LCLD", "MyGO" };
+                                var orderedOccen = shipmentTypes.Where(a => oceanCodes
+                                                                            .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                .ToList();
+                                orderedOccen.ForEach(a => values.Add($"O:{a}"));
+                            }
+                            else if (tm.Equals("i", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var inlandCodes = new List<string> { "FTL", "LTL", "MyGI" };
+                                var orderedInlnad = shipmentTypes.Where(a => inlandCodes
+                                                                             .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                 .ToList();
+                                orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+                            }
+                        }
+
+                        queryableData = queryableData.Where(a => values.Contains(a.TransportModeId + ":" + a.ShipmentTypeId));
                     }
                 }
             }
@@ -67,7 +99,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             
             if (values != null && values.Length > 0)
             {
-                queryableData = queryableData.Where(d => values.Contains(d.ShipperId) || values.Contains(d.ConsigneeId));
+                queryableData = queryableData.Where(d => values.Contains(d.ShipperId) 
+                                                         || values.Contains(d.ConsigneeId));
             }
 
             return queryableData;
@@ -77,37 +110,21 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
-            queryableData = queryableData.Where(d =>
-                 d.ShipperReference1.Contains(digitalPortalSearchFields)
-              || d.ShipperReference2.Contains(digitalPortalSearchFields)
-              || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
-              || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
-              || d.CustomerReference1.Contains(digitalPortalSearchFields)
-              || d.CustomerReference2.Contains(digitalPortalSearchFields)
-              || d.CustomerReference2.Contains(digitalPortalSearchFields)
-              || d.ShipmentNumber.Contains(digitalPortalSearchFields)
-              || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
-              || d.House.Contains(digitalPortalSearchFields)
-              || d.Master.Contains(digitalPortalSearchFields)
-              || d.CustomAgentImportName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.FromPortName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
-              || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
+            queryableData = queryableData.Where(d => d.ShipperReference1.Contains(digitalPortalSearchFields)
+                                                      || d.ShipperReference2.Contains(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference1.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
+                                                      || d.ShipmentNumber.Contains(digitalPortalSearchFields)
+                                                      || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
+                                                      || d.House.Contains(digitalPortalSearchFields)
+                                                      || d.Master.Contains(digitalPortalSearchFields)
+                                                      || d.FromPortName.StartsWith(digitalPortalSearchFields)
+                                                      || d.ToPortName.StartsWith(digitalPortalSearchFields)
+                                                      || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields)
            );
-
-            return queryableData;
-        }
-
-        public static IQueryable<DigitalShipmentsDataView> ApplyInTransitFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData, Simplog.Data.ShipmentsModel.Repositories.ShipmentRepository shipmentRepository)
-        {
-            queryableData = (from shipment in queryableData
-                                                      where (shipment.MainCarriageATD != null || shipment.Transshipment1ATD != null || shipment.Transshipment2ATD != null || shipment.Transshipment3ATD != null)
-                                                      && ((shipment.Transshipment3ToPortId != null && shipment.Transshipment3ATA == null)
-                                                      || (shipment.Transshipment2ToPortId != null && shipment.Transshipment2ATA == null)
-                                                      || (shipment.Transshipment1ToPortId != null && shipment.Transshipment1ATA == null)
-                                                      || (shipment.MainCarriageToPortId != null && shipment.MainCarriageATA == null))
-                                                      && !(shipmentRepository.context.ShipmentPickUpDeliveries.Any(delivery => delivery.ShipmentId == shipment.Id && delivery.PickUpDeliveryTypeCode == "DELV" && delivery.ATA != null))
-                                                      select shipment);
 
             return queryableData;
         }

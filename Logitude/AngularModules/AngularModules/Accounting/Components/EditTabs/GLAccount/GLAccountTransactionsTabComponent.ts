@@ -442,13 +442,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.columns.push({
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit"), // 'Local Amount',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.O.LocalAmount"), // 'Local Amount',
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount",'Text',TextCodeTranslator.Translate("LedgerTransaction.O.LocalAmount")));
 
         this.columns.push({
             FieldName: 'CumulativeLocalAmount',
@@ -472,13 +472,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.columns.push({
                 FieldName: 'ForeignAmountCredit',
                 DataTypeCode: 'String',
-                Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit"), // 'Foreign Amount',
+                Display: TextCodeTranslator.Translate("LedgerTransaction.O.ForeignAmount"), // 'Foreign Amount',
                 Styles: { width: '120px' },
                 HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
             });
-            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCreditWithSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit")));
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCreditWithSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.O.ForeignAmount")));
 
 
             if (this.EntityPM.IsMultiCurrency != true) {

@@ -2,14 +2,14 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ListItem } from "./ListItem";
 
 export class ConditionOperationsList {
-    public ConditionOperations: ListItem[] = [];
+    public Items: ListItem[] = [];
 
     constructor() {
         this.setConditionOperations();
     }
 
     private setConditionOperations() {
-        this.ConditionOperations = [
+        this.Items = [
             new ListItem(ConditionOperations.And),
             new ListItem(ConditionOperations.Or),
         ];

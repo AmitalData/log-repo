@@ -691,14 +691,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
 
-        public HttpResponseMessage GetDocumentTypeTemplatesByDocumentTypeIdForAutomations(string documentTypeId,string editorToolCode, int tenant)
+        public HttpResponseMessage GetDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(string documentTypeId,string editorToolCode, int tenant)
         {
             try
             {
                 Authentication();
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
-                List<DocumentTypeTemplatePM> result = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, editorToolCode, tenant);
+                List<DocumentTypeTemplatePM> result = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeId, editorToolCode, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }

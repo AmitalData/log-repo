@@ -319,6 +319,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string joinedTableDBName ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JoinedTableDBName  
+	   {
+	    
+	     get
+		{
+		   return joinedTableDBName;
+		 }
+		 set
+		 {
+		   if(joinedTableDBName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JoinedTableDBName",OldValue=joinedTableDBName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   joinedTableDBName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

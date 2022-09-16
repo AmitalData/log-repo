@@ -3,7 +3,7 @@ import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { ListItem } from "./ListItem";
 
 export class ConditionOperatorsList {
-    public ConditionOperators: ListItem[] = [];
+    public Items: ListItem[] = [];
     private ConditionFieldType: string;
     private ShowChangedOperator: boolean;
 
@@ -15,10 +15,9 @@ export class ConditionOperatorsList {
 
     private setConditionOperators() {
         switch (this.ConditionFieldType) {
-
             case FieldTypes.Text:
             case FieldTypes.NText:
-                this.ConditionOperators = [
+                this.Items = [
                     new ListItem(ConditionOperators.Equals),
                     new ListItem(ConditionOperators.NotEquals),
                     new ListItem(ConditionOperators.Contains),
@@ -29,34 +28,51 @@ export class ConditionOperatorsList {
                     new ListItem(ConditionOperators.Changed)
                 ];
                 break;
-
             case FieldTypes.LookUp:
-                this.ConditionOperators = [
+            case FieldTypes.PickList:
+                this.Items = [
                     new ListItem(ConditionOperators.Equals),
                     new ListItem(ConditionOperators.NotEquals),
                     new ListItem(ConditionOperators.IsEmpty),
                     new ListItem(ConditionOperators.Changed)
                 ];
                 break;
-
             case FieldTypes.Boolean:
-                this.ConditionOperators = [
+                this.Items = [
                     new ListItem(ConditionOperators.Equals),
                     new ListItem(ConditionOperators.NotEquals),
                     new ListItem(ConditionOperators.Changed)
                 ];
                 break;
-
+            case FieldTypes.DateTime:
+            case FieldTypes.Date:
+            case FieldTypes.BigInteger:
+            case FieldTypes.Decimal:
+            case FieldTypes.Double:
+            case FieldTypes.Integer:
+            case FieldTypes.SigDouble:
+            case FieldTypes.UnsDecimal:
+            case FieldTypes.UnsInteger:
+                this.Items = [
+                    new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.GreaterThan),
+                    new ListItem(ConditionOperators.LessThan),
+                    new ListItem(ConditionOperators.GreaterThanOrEquals),
+                    new ListItem(ConditionOperators.LessThanOrEquals),
+                    new ListItem(ConditionOperators.IsEmpty),
+                    new ListItem(ConditionOperators.Changed)
+                ];
+                break;
             default:
-                this.ConditionOperators = [
+                this.Items = [
                     new ListItem(ConditionOperators.Equals)
                 ];
                 break;
-
         }
 
         if (!this.ShowChangedOperator) {
-            this.ConditionOperators = this.ConditionOperators.filter(o => o.Code !== ConditionOperators.Changed);
+            this.Items = this.Items.filter(i => i.Code !== ConditionOperators.Changed);
         }
     }
 }

@@ -89,6 +89,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private joinedTableDBName: string;
+    public get JoinedTableDBName() { return this.joinedTableDBName; }
+    public set JoinedTableDBName(newValue: string) { if (this.joinedTableDBName != newValue) { this.joinedTableDBName = newValue; this.MarkAsDirty("JoinedTableDBName"); } }
+       
+	 
 
     public OldEntityPM: AnalyticsFactsFieldsMetaDataPM;
 		

@@ -8,6 +8,7 @@ import { WorkFlowPM } from "Workflow/EntityPMs/WorkFlowPM";
 import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMService";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -20,34 +21,20 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ComponentRef: ComponentRef<WorkflowBuilderComponent>;
 
     public ReactFlowInstance: any = null;
-
     public EntityPM: WorkFlowPM = null;
     public EntityId: string;
-
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
-
     public BackButtonLable: string = "Workflows";
-
     public WorkflowName: string;
-
     public ValidationErrorsList: string[] = [];
-
-    public EventKeyPostfix: string = (Date.now())?.toString();
-    public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + this.EventKeyPostfix;
+    public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
+    public HasChanges = false;
 
     public WorkFlowPMService: WorkFlowPMService;
 
-    // private hasChanges = false;
-    // get HasChanges() {
-    //     if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanges) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    public HasChanges = false;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -138,39 +125,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     getPropertiesComponentPath = (nodeType: string) => {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
-        let propertiesComponentName = "";
-        switch (nodeType) {
-            case "startNode":
-                propertiesComponentName = "StartPropertiesComponent";
-                break;
-            case "conditionNode":
-                propertiesComponentName = "ConditionPropertiesComponent";
-                break;
-            case "loopNode":
-                propertiesComponentName = "LoopPropertiesComponent";
-                break;
-            case "setValueNode":
-                propertiesComponentName = "SetValuePropertiesComponent";
-                break;
-            case "declareVariableNode":
-                propertiesComponentName = "DeclareVariablePropertiesComponent";
-                break;
-            case "createRecordNode":
-                propertiesComponentName = "CreateRecordPropertiesComponent";
-                break;
-            case "updateRecordNode":
-                propertiesComponentName = "UpdateRecordPropertiesComponent";
-                break;
-            case "getRecordNode":
-                propertiesComponentName = "GetRecordPropertiesComponent";
-                break;
-            case "sendEmailNode":
-                propertiesComponentName = "SendEmailPropertiesComponent";
-                break;
-            default:
-                propertiesComponentName = "";
-                break;
-        }
+        let propertiesComponentName = nodeType ? ((nodeType.charAt(0).toUpperCase() + nodeType.slice(1)).replace("Node", "") + "PropertiesComponent") : "";
         return (propertiesComponentPath + propertiesComponentName);
     }
 
@@ -247,9 +202,34 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     editWorkflowClicked() {
-        let editWindow = this.buildEditWindow();
-        editWindow.Show("./Workflow/Components/CreateEditWorkflow/CreateEditWorkflowComponent");
-        editWindow.WindowClosed.subscribe((entityPM: WorkFlowPM) => { this.handleEditWindowClosed(entityPM); });
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: "WorkFlow", BackButtonLabel: 'WorkFlows' });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (!isEditComponentSaved) {
+                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                            if (!serviceResponse.HasError) {
+                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
+                                this.EntityPM = serviceResponse.Result
+                            }
+                        });
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                            if (!serviceResponse.HasError) {
+                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
+                            }
+                        });
+                    }
+                });
+            });
     }
 
     handleEditWindowClosed(entityPM: WorkFlowPM) {
@@ -284,7 +264,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     handleSaveWorkflowResponse(workflowPM: WorkFlowPM) {
         this.EntityPM = workflowPM;
         this.EntityId = workflowPM.Id;
-        //this.hasChanges = false;
         this.HasChanges = false;
     }
 }

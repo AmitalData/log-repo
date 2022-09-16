@@ -263,11 +263,11 @@ export class DashboardDomainService {
         });
     }
 
-    GetDebrotExposure(tenant: number, currency: number) {
+    GetDebrotExposure(currencyIndex: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposure?currencyIndex=' + currencyIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 return allLists;

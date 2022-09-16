@@ -3705,13 +3705,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="Transshipments"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -4499,14 +4492,10 @@
     Columns="Tenant,ComputedStatusDate" />
   <Index
     Columns="Tenant,House" />
-  
   <Index
     Columns="Tenant,ShipmentReceivableStatusCode,ShipmentLevelCode" />
- 
-    <Index
+  <Index
     Columns="Tenant,ShipmentPayableStatusCode,IsAccountingClosed,IsCancelled,ShipmentLevelCode" />
-  
-  
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint

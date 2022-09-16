@@ -962,7 +962,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "<#= tableName #>",
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,

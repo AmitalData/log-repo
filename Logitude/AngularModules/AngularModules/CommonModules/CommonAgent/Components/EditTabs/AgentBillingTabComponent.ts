@@ -19,7 +19,8 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
-    public ShowRegimenFiscalField: boolean = false;
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -33,16 +34,9 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
-            this.SetShowRegimenFiscalField();
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
 
-    }
-
-    private SetShowRegimenFiscalField() {
-        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.ShowRegimenFiscalField = true;
-        }
     }
 
     ngOnInit() {

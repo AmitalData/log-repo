@@ -7,7 +7,10 @@ import { StartNodeDetails } from "../models/StartNodeDetails";
 import { WorkflowDetails } from "../models/WorkflowDetails";
 import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms';
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import { ConditionDetails } from "../models/ConditionDetails";
 
+let ConditionCounter = 1;
+let ConditionGroupButton = 1;
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
 }
@@ -30,20 +33,20 @@ export function AssertOpenFlowBuilder() {
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
     OpenEditStartNode();
-    cy.SelectComboDropDownListItem(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object, 0)
+    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object)
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger))
 }
 
 export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
     OpenNewWorkflow();
     let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
-    GenerateRandoms.GenerateRandomString(5, true) : null;
+        GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName)
 }
 
 export function OpenEditStartNode() {
     cy.get(WorkflowSelectors.WorkflowStartNode).then(() => {
-        cy.Click(WorkflowSelectors.WorkflowSpan, WorkflowSelectors.WorkflowEdit, null)
+        cy.Click(WorkflowSelectors.WorkflowStartEditButton, null)
     })
 }
 
@@ -55,23 +58,67 @@ export function OpenNewWorkflow() {
 
 export function CreateNewWorkflow() {
     cy.DefineRequestWait(RestAPI.POST, URLs.WorkflowRequest, RequestAliases.PostWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowButton, WorkflowSelectors.WorkflowCreate, null)
+    cy.Click(WorkflowSelectors.WorkflowCreateButton, null)
 }
 
 export function CloseEditStartNodeWindow() {
-    cy.Click(WorkflowSelectors.WorkflowOkButton, WorkflowSelectors.WorkflowOK, null )
+    cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true)
 }
 
 
 export function SaveWorkflow() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowSaveButton, WorkflowSelectors.WorkflowSave, true)
+    cy.Click(WorkflowSelectors.WorkflowSaveButton, null)
 }
 
 export function AssertSaveWorkflow() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutWorkflowFlowBuilder, 200)
 }
- 
+
 export function AssertCreateWorkflow() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostWorkflowFlowBuilder, 200)
+}
+
+export function FillConditionDetails(conditionDetails: ConditionDetails) {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.Click(WorkflowSelectors.WorkflowAddCondition, 'Add Condition', null).then(() => {
+        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(1), conditionDetails.Field);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(1), conditionDetails.Operation, 0);
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionValue(1), conditionDetails.Value);
+        ConditionCounter++;
+    })
+}
+
+export function FillGroupConditionDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+    cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
+    ConditionGroupButton = ConditionCounter;
+    FillConditionsGroup(conditionDetailsList);
+}
+
+function FillConditionsGroup(conditionDetailsList: ConditionDetails[]) {
+    for (let i = ConditionCounter, ListCounter =0 ; i <= (conditionDetailsList.length + 1); i++, ListCounter++) {
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[ListCounter].Field);
+        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[ListCounter].Operation, 0);
+        FillConditionValue(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[ListCounter].Value, conditionDetailsList[ListCounter].Field);
+        ConditionCounter++;
+        if (i < (conditionDetailsList.length + 1))
+            cy.Click(WorkflowSelectors.WorkflowAddConditionButton(ConditionGroupButton), null);
+    }
+}
+
+function FillConditionValue(selector: string, value: string, condition: string) {
+    switch (condition) {
+        case "Custom Lookup":
+            return cy.SelectDropDownListItem2(selector, value);
+        case "Custom text":
+            return cy.FillLogTextBox(selector, value);
+        case "Custom Ntext":
+            return cy.FillLogTextBox(selector, value);
+        case "Custom Bool":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+    }
 }

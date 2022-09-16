@@ -85,6 +85,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     ObjectTableId: string;
     IsLoadPage: boolean = false;
     AutomationId: string;
+    EntityId: string;
     SetWindowArgs(args: any) {
 
 
@@ -94,7 +95,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.DocumentTypeTemplateLists = [];
             this.DocumentTypeTemplatePMLists = [];
 
-            this.ObjectTableId = args.ObjectTableId;
+            this.ObjectTableId = !args.ObjectTableId ? null : args.ObjectTableId;
             this.DataViewModel = args.DataViewModel;
             this.PageType = args.PageType;
             this.DocumentType = args.CurrentEntityPM;
@@ -102,8 +103,9 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.FullDocumentTypeTemplateLists = args.DocumentTypeTemplateLists;
             this.RequestAreaName = args.RequestAreaName;
             this.AutomationId = !args.AutomationId ? null : args.AutomationId;
+            this.EntityId = !args.EntityId ? null : args.EntityId;
 
-            
+
             if (this.TypeTab == "Document") {
                 this.ValueEditorRadio = "StimulSoft";
                 if (this.RequestAreaName != "Automation") {
@@ -153,6 +155,9 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         template.IsEnabledForCustomers = true;
         template.IsCopiedAtSignup = true;
         template.AutomationId = this.AutomationId;
+        template.EntityId = this.EntityId;
+        template.ObjectTableId = this.ObjectTableId;
+
         if (this.TypeTab == "Document") {
             template.TemplateType = "P";
             template.EditorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";

@@ -31,7 +31,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         EndPosition, 
 	         TypeCode, 
 	         EntityId, 
-	         Filters,
+	         Filters, 
+	         DateGroupCode,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         EndPosition, 
 	         TypeCode, 
 	         EntityId, 
-	         Filters,
+	         Filters, 
+	         DateGroupCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +101,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Filters))
             {
 				entityPOCO.Filters = entityPM.Filters;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateGroupCode))
+            {
+				entityPOCO.DateGroupCode = entityPM.DateGroupCode;
 			}
 			}
 
@@ -155,6 +162,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Filters = entityPOCO.Filters;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateGroupCode))
+            {
+					entityPM.DateGroupCode = entityPOCO.DateGroupCode;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -204,6 +216,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Filters))
             {
                 oldEntityPM.Filters = entityPM.Filters;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateGroupCode))
+            {
+                oldEntityPM.DateGroupCode = entityPM.DateGroupCode;
             }
 			
 		}

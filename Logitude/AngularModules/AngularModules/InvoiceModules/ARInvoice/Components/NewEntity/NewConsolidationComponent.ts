@@ -41,7 +41,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public Periods: PeriodDetails[] = [];
-    public HaveRegimenFiscalFieldFeatureToggle: boolean = false;
+    public Profact4Enabled: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -89,17 +89,10 @@ export class NewConsolidationComponent extends BaseComponent {
               this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
             }
 
-            this.SetHaveRegimenFiscalFieldFeatureToggle();
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
             this.FillPeriodList();
           }
         });
-    }
-
-    private SetHaveRegimenFiscalFieldFeatureToggle() {
-        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.HaveRegimenFiscalFieldFeatureToggle = true;
-        }
     }
 
     FillPeriodList() {

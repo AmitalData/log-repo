@@ -227,6 +227,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                     IsScheduler: true,
                     IsNewScheduler: this.IsNew,
                     SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
+                    DocumentTypeTemplateId: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DocumentTypeTemplateId,
                     ParentComponent: this,
                 });
                 this.CurrentSession.StopBusyIndicator();
@@ -401,6 +402,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: null,
             DWQueryId: null,
             DWQueryFilterData: null,
+            DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -445,8 +447,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
             DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.GetOriginalSelectedFilters(),
+            DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
+    }
+
+    GetDocumentTemplateMessageId() {
+        if (!this.PageChild_PRREP) return "";
+        if (!this.PageChild_PRREP.DocumentTypeTemplateSelected) return "";
+       return this.PageChild_PRREP.DocumentTypeTemplateSelected.Id
     }
 
     GetOriginalSelectedFilters() {

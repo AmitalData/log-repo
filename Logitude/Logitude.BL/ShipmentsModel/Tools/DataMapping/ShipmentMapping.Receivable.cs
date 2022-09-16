@@ -63,6 +63,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.QuoteSaleMaxAmount = itemPM.QuoteSaleMaxAmount;
             itemPoco.VatAmountLocal = itemPM.VatAmountLocal;
             itemPoco.VatAmountProfit = itemPM.VatAmountProfit;
+            itemPoco.PayableVendorId = itemPM.PayableVendorId;
         }
     }
 }

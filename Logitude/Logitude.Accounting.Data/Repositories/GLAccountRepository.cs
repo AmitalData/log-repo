@@ -705,15 +705,27 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
-        {
-            var q = context.GLAccounts.Where(record => record.Tenant == tenant && 
-                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)));
-            if (!String.IsNullOrWhiteSpace(accountTypeCode))
-            {
-                q.Where(record => record.AccountTypeCode == accountTypeCode);
-            }
+        //public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
+        //{
+        //    var q = context.GLAccounts.Where(record => record.Tenant == tenant && 
+        //        (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)));
+        //    if (!String.IsNullOrWhiteSpace(accountTypeCode))
+        //    {
+        //        q.Where(record => record.AccountTypeCode == accountTypeCode);
+        //    }
 
+        //    return q.Select(record => record.Id).ToList();
+        //}
+
+
+        public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
+        {
+            var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
+                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) && 
+                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
+                (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
+                record.ActiveForInterest).Take(maxGLAccountsPerQuery);
+            
             return q.Select(record => record.Id).ToList();
         }
 
@@ -1090,7 +1102,7 @@ namespace Logitude.Accounting.Data.Repositories
                         
                            && (crm.PartnerTypeId == "CS" || crm.PartnerTypeId == "PO")
                         join a in context.GLAccounts
-                        .Where(r => r.AccountTypeCode == "2" && r.Tenant == tenant)
+                        .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
                         on crm.ReceivablesAccountingCard equals a.DisplayNumber
 
                         select new CardDTO()

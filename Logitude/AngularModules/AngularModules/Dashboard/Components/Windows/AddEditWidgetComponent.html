@@ -12,9 +12,29 @@
                 <div class="ScrollViewer">
                     <div class="ScrollContent">
                         <table>
-                            <tr>
-                                <td style="width:400px;">
-                                    <table>
+                            <tr style="height: 0;">
+                                <td style="width:400px; vertical-align:top;">
+                                    <table style="display: table-cell;" cellspacing="0">
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'TypeCode'"
+                                                        [SelectedValue]="TypeCode"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'WidgetType'"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'Name'"
+                                                        [IgnoreFeatureCheck]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
                                         <tr class="FormFieldRow">
                                             <td style="width:120px;">
                                                 <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -60,13 +80,31 @@
                                                         [DependencyFilter2Value]="true"
                                                         [DependencyFilter3Value]="EntityId"
                                                         [HideColumns]="true"
-                                                        [DisplayMemberPath]="'DisplayName'">
+                                                        [DisplayMemberPath]="'DisplayName'"
+                                                        (SelectedItemChanged)="SelectedGroupField = $event"
+                                                        [QueryFilterItems]="GroupByQueryFilters">
                                                 </LogLov>
                                             </td>
                                             <td>
                                                 <div></div>
                                             </td>
                                         </tr>
+
+                                        <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
+                                            <td>
+                                                <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox  (SelectedItemChanged)="DateGroupCode = $event"
+                                                            [ItemsSource]="DateGroupCodes" 
+                                                            [SelectedItem]="DateGroupCode">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
 
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
@@ -87,7 +125,7 @@
                                                         <td style="width: 2px;">
                                                             <div></div>
                                                         </td>
-                                                        <td>
+                                                        <td *ngIf="item.MeasureCode && item.MeasureCode != 'Count'">
                                                             <LogLov [ObjectFieldName]="'MeasureFieldId'"
                                                                     [SelectedValue]="item.MeasureFieldId"
                                                                     [ObjectTableName]="item.ObjectTableName"
@@ -95,7 +133,8 @@
                                                                     [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
                                                                     [DependencyFilter1Value]="true"
                                                                     [HideColumns]="true"
-                                                                    [DisplayMemberPath]="'DisplayName'">
+                                                                    [DisplayMemberPath]="'DisplayName'"
+                                                                    [QueryFilterItems]="item.FieldQueryFilters">
                                                             </LogLov>
                                                         </td>
                                                     </tr>
@@ -105,7 +144,7 @@
                                             <td>
                                                 <div>
                                                     <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
-                                                    <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
+                                                    <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                                 </div>
                                             </td>
                                         </tr>
@@ -122,8 +161,14 @@
                                     <img width="180" [attr.src]="ChartImageSrc" />
                                 </td>
                             </tr>
-
-                            <tr class="FormFieldRow" *ngIf="EntityId">
+                
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            
+                            <tr *ngIf="EntityId" style="height: 0;">
                                 <td colspan="2" style="height: 250px;">
                                     <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
                                         <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter"></WidgetFilter>

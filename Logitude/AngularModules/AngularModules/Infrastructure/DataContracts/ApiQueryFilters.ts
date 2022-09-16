@@ -14,6 +14,7 @@ export class ApiQueryFilters {
     public AdditionalFilters: FilterItem[] = [];
     public TreeFilters: string = '';
     public ParentEntityId: string = '';
+    public ParentEntity: string = '';
     public ParentObjectTableName: string = '';
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;

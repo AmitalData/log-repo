@@ -115,6 +115,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        VatAmountLocal = a.VatAmountLocal,
                                                        CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
                                                        UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
+                                                       PayableVendorId = a.PayableVendorId,
                                                    }).ToList();
             return myResult;
         }
@@ -178,6 +179,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        VatAmountLocal = a.VatAmountLocal,
                        CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
                        UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
+                       PayableVendorId = a.PayableVendorId,
                    }).FirstOrDefault();
 
             return myResult;

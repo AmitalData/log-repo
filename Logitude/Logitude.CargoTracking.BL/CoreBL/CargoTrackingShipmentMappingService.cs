@@ -132,7 +132,12 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     Id = x.Id,
                     OrderNumber = x.OrderNumber,
                     PONumber = x.PONumber,
-                    SupplyDateTime = x.SupplyDateTime
+                    SupplyDateTime = x.SupplyDateTime,
+                    PODate = x.PODate,
+                    PickupActualDateTime = x.PickupActualDateTime,
+                    BookingConfirmationNumber = x.BookingConfirmationNumber,
+                    CasualSupplierName = x.CasualSupplierName
+                   
                 }).ToList();
             }
         }

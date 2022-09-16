@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -52,8 +53,82 @@ namespace WebFreight.Web.ContainerTracking
         {
             MapContainerFields();
             MapConcurrencyFields();
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+            {
+                MapVizionPreCarriage();
+                MapVizionOnCarriage();
+            }
+            else
+            {
+                MapOnCarriage();
+                MapPreCarriage();
+
+            }
+
             SaveContainer();
         }
+
+        private void MapPreCarriage()
+        {
+            containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
+            containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
+        }
+
+        private void MapOnCarriage()
+        {
+            containerPM.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
+            containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
+        }
+
+        private void MapVizionPreCarriage()
+        {
+            if (containerUpdatedFields.VisionPreCarriage == null)
+                return;
+            var port = GetPortForVizion(containerUpdatedFields.VisionPreCarriage);
+            if (port == null)
+                return;
+            containerPM.PreCarriageLocationPortId = port.Id;
+            containerPM.PreCarriageLocation = port.CombinedCode;
+
+        }
+        private void MapVizionOnCarriage()
+        {
+            if (containerUpdatedFields.VisionOnCarriage == null)
+                return;
+            var port = GetPortForVizion(containerUpdatedFields.VisionOnCarriage);
+            if (port == null)
+                return;
+            containerPM.OnCarriageLocationPortId = port.Id;
+            containerPM.OnCarriageLocation = port.CombinedCode;
+        }
+
+        private Port GetPortForVizion(Location portLocation)
+        {
+            Port port = null;
+            if (!string.IsNullOrEmpty(portLocation.unlocode))
+                port = GetPort(portLocation.unlocode);
+            if(port != null)
+                return port;
+            var name1 = portLocation.name;
+            if (portLocation.name.Contains(','))
+                name1 = portLocation.name.Split(',').First();
+            var name2 = portLocation.city;
+            port = GetPortByNames(name1, name2);
+            return port;
+        }
+
+        private Port GetPortByNames(string name1, string name2)
+        {
+            var port = portRepository.GetOceanPortByNames(name1, name2,containerPM.Tenant);
+            if (port != null)
+                return port;
+            port = portRepository.GetOceanPortByNames(name1, name2, 0);
+            if(port == null)
+                return null;
+            var newPort = portQuery.GetPortCopyToCurrentTenantPoco(port.Id, tenant);
+            return newPort;
+        }
+
         public void SetContainer(ContainerPM containerPM)
         {
             this.containerPM = containerPM;
@@ -86,7 +161,6 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
             containerPM.HasContainerException = containerUpdatedFields.HasContainerException;
             containerPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
             containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
             containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
             containerPM.POLLocation = containerUpdatedFields.POLLocation;
@@ -154,7 +228,6 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.ActualPODDischarge = containerUpdatedFields.ActualPODDischarge;
             containerPM.EstimatedPODDeparture = containerUpdatedFields.EstimatedPODDeparture;
             containerPM.ActualPODDeparture = containerUpdatedFields.ActualPODDeparture;
-            containerPM.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
             containerPM.OnCarriageETD = containerUpdatedFields.EstimatedDelivery;
             containerPM.OnCarriageATD = containerUpdatedFields.ActualDelivery;
             containerPM.LIFLocation = containerUpdatedFields.LIFLocation;
@@ -172,10 +245,8 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.AvailablityDate = containerUpdatedFields.AvailablityDate;
             containerPM.AvailabilityLocation = containerUpdatedFields.AvailabilityLocation;
             containerPM.EmptyPickupLocationPortId = this.GetPortId(containerUpdatedFields.EmptyPickupLocation);
-            containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
             containerPM.EmptyReturnLocationPortId = this.GetPortId(containerUpdatedFields.EmptyReturnLocation);
             containerPM.AvailabilityLocationPortId = this.GetPortId(containerUpdatedFields.AvailabilityLocation);
-            containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
             containerPM.LIFLocationPortId = this.GetPortId(containerUpdatedFields.LIFLocation);
             containerPM.POLLocationPortId = this.GetPortId(containerUpdatedFields.POLLocation);
             containerPM.PODLocationPortId = this.GetPortId(containerUpdatedFields.PODLocation);
@@ -419,6 +490,19 @@ namespace WebFreight.Web.ContainerTracking
             }
             return portId;
         }
+        private Port GetPort(string portCode)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            if (port != null)
+            {
+                return port;
+            }
+            else
+            {
+                port = this.CopyPortCopyToCurrentTenantPoco(portCode);
+            }
+            return port;
+        }
         private string CopyPortCopyToCurrentTenant(string portCode)
         {
             string portId = null;            
@@ -430,6 +514,17 @@ namespace WebFreight.Web.ContainerTracking
             }
 
             return portId;
+        }
+        private Port CopyPortCopyToCurrentTenantPoco(string portCode)
+        {
+            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
+            if (portZero != null)
+            {
+                var newPort = portQuery.GetPortCopyToCurrentTenantPoco(portZero.Id, tenant);
+                return newPort;
+            }
+
+            return portZero;
         }
         private void FillFieldsNewValues(string propertyName, object newValue, object entity)
         {

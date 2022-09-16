@@ -44,6 +44,7 @@ using Simplog.Server.Infrastructure;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.ComponentModel;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -683,6 +684,10 @@ namespace WebFreight.Web.WcfApi
 
                     #region FreightForwarder
                     MapFreightForwarder(entityPM, cardsReporistory);
+                    #endregion
+
+                    #region ShipmentTotals
+                    ComputeHelper.ComputeTotals(entityPM);
                     #endregion
 
                     MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);

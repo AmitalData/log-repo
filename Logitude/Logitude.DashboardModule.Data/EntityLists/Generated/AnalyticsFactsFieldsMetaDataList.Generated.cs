@@ -40,6 +40,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string JoinedTableDisplayField  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string JoinedTableDBName  { get; set; }
    }
 
 }

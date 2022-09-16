@@ -17,6 +17,7 @@ using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -1223,7 +1224,42 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return datalist;
         }
 
-        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
+        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
+                return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
+            else
+                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);            
+        }
+        private List<DebtorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            List<string> allowedBranchesIds = new List<string>();
+            if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
+
+            return (from a in repository.context.ARInvoices.Include("BillTo")
+                    where a.Tenant == tenant
+                    && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL"
+                    && !a.IsAutoCredit
+                    && !a.IsCancelled
+                    && !a.IsClosed
+                    && (!isBranchRestricted || allowedBranchesIds.Contains(a.BranchId))
+                    group a by new
+                    {
+                        a.BillTo.EnglishName,
+                        a.BillToId,
+                        a.BillTo.PartnerTypeId,
+                    } into gr
+                    orderby gr.Key.EnglishName
+                    select new DebtorsClass()
+                    {
+                        Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                        DebtorName = gr.Key.EnglishName,
+                        DebtorId = gr.Key.BillToId,
+                        Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                        DebtorType = gr.Key.PartnerTypeId,
+                    }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
+        }
+        private List<DebtorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
         {
             List<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
                                              where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
@@ -1262,10 +1298,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                            orderby gr.Key.BillToName
                                            select new DebtorsClass()
                                            {
-                                               Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                                               Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
                                                DebtorName = gr.Key.BillToName,
                                                DebtorId = gr.Key.BillToId,
-                                               Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                                               Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                DebtorType = gr.Key.BillToType,
                                            }).ToList();
 
@@ -1434,6 +1470,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             RegionalTaxId = a.RegionalTaxId,
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
                             PaidDate  = a.PaidDate,
+                            PaidStatus = a.PaidStatus,
                             PartnerId = a.PartnerId,
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
                             PaymentReferences=a.PaymentReferences,
@@ -1541,6 +1578,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterEntityId= entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                             IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
                              UpdateDate = entity.UpdateDate,
                              UpdatedByUserId = entity.UpdatedByUserId,
@@ -1582,6 +1620,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
+                             PaidStatus = entity.PaidStatus,
                              IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
                              PartnerId = entity.PartnerId,
                              ShipmentsNumbers = entity.ShipmentsNumbers,
@@ -1708,6 +1747,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RegionalTaxId = a.RegionalTaxId,
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
                                               PaidDate = a.PaidDate,
+                                              PaidStatus = a.PaidStatus,
                                               PartnerId = a.PartnerId,
                                               ShipmentsNumbers = a.ShipmentsNumbers,
                                               MasterNumbers = a.MasterNumbers,
@@ -1725,11 +1765,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARInvoicePM entityPM = null;
             ARInvoicePM securedEntityPM = null;
-
+          
             if (entityPOCO != null)
             {
                 int tenant = entityPOCO.Tenant;
                 string entityId = entityPOCO.Id;
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
                 entityPM = new ARInvoicePM()
                 {
@@ -1839,6 +1880,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxId = entityPOCO.RegionalTaxId,
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
+                    PaidStatus = entityPOCO.PaidStatus,
                     PartnerId = entityPOCO.PartnerId,
                     ShipmentsNumbers = entityPOCO.ShipmentsNumbers,
                     MasterNumbers = entityPOCO.MasterNumbers,
@@ -1847,7 +1889,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
                     PaymentReferences = entityPOCO.PaymentReferences,
                     SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
-                    BillToGLAccountId = entityPOCO.BillToGLAccountId
+                    BillToGLAccountId = entityPOCO.BillToGLAccountId,
+                    IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1947,6 +1990,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                      Id = d.Id,
                                                                      Tenant = d.Tenant,
                                                                      ConsolidationInvoiceId = d.ConsolidationInvoiceId,
+                                                                     InvoiceNumber = d.InvoiceNumber,
+                                                                     CustomerRef = d.CustomerRef,
+                                                                     MasterNumber = d.MasterNumber,
+                                                                     HouseNumber = d.HouseNumber,
+                                                                     MainEntityReference = d.MainEntityReference
+
                                                                  }).ToList();
                     }
                 }
@@ -2218,6 +2267,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
+                             PaidStatus = entity.PaidStatus,
                              PartnerId = entity.PartnerId,
                              PartnerName = entity.Partner.EnglishName,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,

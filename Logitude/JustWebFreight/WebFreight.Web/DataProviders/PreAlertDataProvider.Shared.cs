@@ -302,6 +302,9 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment1TrailerNumber { get; set; }
         public string Transshipment2TrailerNumber { get; set; }
         public string Transshipment3TrailerNumber { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrecny { get; set; }
+        public string ARInvoices { get; set; }
     }
 
     public class Packages
@@ -326,6 +329,10 @@ namespace WebFreight.Web.DataProviders
         public string CommodityNumber { get; set; }
         public int? NumberOfInsidePackages { get; set; }
         public string ContainerNumber { get; set; }
+        public string Seal1 { get; set; }
+        public string Seal2 { get; set; }
+        public string PackageTypeCode { get; set; }
+        public string PackagesTypesAndNumbers { get; set; }
         public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 

@@ -163,8 +163,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
-
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
+            this.Property(t => t.IsAccountingClosed).HasColumnName("IsAccountingClosed");
             this.Property(t => t.AgentId).HasColumnName("AgentId");
             this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods");
             this.Property(t => t.DirectionId).HasColumnName("DirectionId");

@@ -123,9 +123,9 @@ namespace CommunicationWorkerRole
 
                             if (response != null && response.MessageId != null)
                             {
-                                string ShipmentId = response.MessageValues["ShipmentId"] != null ? response.MessageValues["ShipmentId"].ToString():"";
-                                string ShipmentOrderId = response.MessageValues["ShipmentOrderId"] != null ? response.MessageValues["ShipmentOrderId"].ToString() : "";
-                                string DocumentFilingId = response.MessageValues["DocumentFilingId"].ToString();
+                                string ShipmentId = response.MessageValues != null && response.MessageValues.Keys.Contains("ShipmentId") ? response.MessageValues["ShipmentId"].ToString() : "";
+                                string ShipmentOrderId = response.MessageValues != null && response.MessageValues.Keys.Contains("ShipmentOrderId") ? response.MessageValues["ShipmentOrderId"].ToString() : "";
+                                string DocumentFilingId = response.MessageValues != null && response.MessageValues.Keys.Contains("DocumentFilingId") ? response.MessageValues["DocumentFilingId"].ToString() : "";
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
                                 string CorrelationId = response.MessageId;
                                 ContactRepository contactRepository = new ContactRepository(tenant);
@@ -374,10 +374,7 @@ namespace CommunicationWorkerRole
                                                             ForwarderDocumentId = DocumentFilingPM.Id,
                                                             EntityNumber = EntityNumber,//ImporterShipment.Id,
                                                             DontAddToQueue = true,
-                                                            DocumentType = new CodeProperties()
-                                                            {
-                                                                Code = DocumentFilingPM.DocumentTypeCode
-                                                            },
+                                                            DocumentType = new CodeProperties() { Code = GetDocumentTypeCode(isShipmentOrder,DocumentFilingPM.DocumentTypeCode) },
                                                             DocumentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValueAM>(),//DocFilingMetaDataValues,
                                                             Description = DocumentFilingPM.Description,
                                                             FileSize = datainByte != null ? datainByte.Length : 0,
@@ -582,10 +579,7 @@ namespace CommunicationWorkerRole
                                                             EntityNumber = EntityNumber,//ImporterShipment.Id,
                                                             ForwarderDocumentId = DocumentFilingPM.Id,
                                                             DontAddToQueue = true,
-                                                            DocumentType = new CodeProperties()
-                                                            {
-                                                                Code = DocumentFilingPM.DocumentTypeCode
-                                                            },
+                                                            DocumentType = new CodeProperties() { Code = GetDocumentTypeCode(isShipmentOrder, DocumentFilingPM.DocumentTypeCode) },
                                                             DocumentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValueAM>(),//DocFilingMetaDataValues,
                                                             Description = DocumentFilingPM.Description,
                                                             FileSize = datainByte != null ? datainByte.Length : 0,
@@ -997,6 +991,12 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer Shipment Documents worker role start", null, null);
                 Thread.Sleep(10000);
             }
+        }
+
+        private string GetDocumentTypeCode(bool isShipmentOrder, string documentTypeCode)
+        {
+            const string shipmentOrderCodePrefix = "SO";
+            return isShipmentOrder && documentTypeCode.StartsWith(shipmentOrderCodePrefix) ? documentTypeCode.Replace(shipmentOrderCodePrefix, "") : documentTypeCode;
         }
 
         private bool IsShipmentsOrderAllowedForLogBox(ShipmentOrderPM forwarderShipmentOrder, TenantPM tenantPM, CustomerTenantAccessInfo customerTenantAccessInfo)

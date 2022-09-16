@@ -112,6 +112,11 @@ export class WidgetPM {
     public set Filters(newValue: string) { if (this.filters != newValue) { this.filters = newValue; this.MarkAsDirty("Filters"); } }
        
 	 
+    private dateGroupCode: string;
+    public get DateGroupCode() { return this.dateGroupCode; }
+    public set DateGroupCode(newValue: string) { if (this.dateGroupCode != newValue) { this.dateGroupCode = newValue; this.MarkAsDirty("DateGroupCode"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

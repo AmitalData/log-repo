@@ -107,8 +107,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         initializer.EntityPM.ShipmentNumber = TableCounter.GetNumber(initializer.Tenant, "SHIP", initializer.EntityPM.DirectionId, initializer.EntityPM.TransportModeId, counterAdditionalParameters);
                     }
                 }
+
+                if(initializer.EntityPM.ShipmentLevelCode != "H")
+                {
+                    initializer.EntityPM.MasterShipmentNumber = initializer.EntityPM.ShipmentNumber;
+                }
+            }
+
+            if (IsUpdatingHousesConnectedMasters())
+            {
+                
             }
         }
 
+        private bool IsUpdatingHousesConnectedMasters()
+        {
+            if(!initializer.EntityPM.ShipmentDirectionConverted)            
+                return false;            
+
+            else if(!initializer.EntityPM.ShipmentConvertedNewNumber)            
+                return false;
+
+            else if (initializer.EntityPM.ShipmentLevelCode != "C")
+                return false;
+
+            else if (initializer.EntityPM.ShipmentConsoleShipments.Count == 0)
+                return false;
+
+            return true;
+        }
     }
 }

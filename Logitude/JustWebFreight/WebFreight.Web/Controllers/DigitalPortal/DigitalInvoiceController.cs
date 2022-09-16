@@ -29,6 +29,7 @@ using Simplog.Data.InvoiceModel;
 using Logitude.Extensions;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -58,9 +59,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var documentOutQuery = new DocumentOutQuery(tenant);
                 var documentTypeQuery = new DocumentTypeQuery(tenant);
                 var aRInvoiceTypeRepository = new ARInvoiceTypeRepository(tenant);
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
                 foreach (var item in invoices.Where(d => d.IsPrinted))
                 {
+                    if(item.IsConstituentInvoice && string.IsNullOrEmpty(item.ConsolidationInvoiceId))
+                    {
+                        continue;
+                    }
+
                     var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
                     lines.AddRange(itemLines);
                     var invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
@@ -80,11 +87,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         IsAutoCredit = item.IsAutoCredit,
                         IsCancelled = item.IsCancelled,
                         InvoiceDate = item.InvoiceDate,
-                        StatusName = item.Status?.Name,
+                        StatusName = item.PaidStatus,
+                        IsDigitalDueDateColorRed = (item.DueDate == null || item.PaidStatus == "Paid") ? false : (item.DueDate.Value < todayDate ? true : false),
+                        ConsolidationInvoiceId = item.ConsolidationInvoiceId,
+                        IsConstituentInvoice = item.IsConstituentInvoice,
                     };
 
-                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
+                    if (!string.IsNullOrEmpty(entity.ConsolidationInvoiceId))
+                    {
+                        entity.ConsolidationInvoiceNumber = arInvoiceReps.GetInvoiceNumber(entity.ConsolidationInvoiceId, tenant);
+                    }
 
+                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
                     var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                     if (currency != null)
                     {
@@ -93,9 +107,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
                     entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
-
-                    entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
-
                     if (entity.Id == entity.InvoiceNumber)
                     {
                         entity.InvoiceNumber = item.DraftNumber + " (Draft)";
@@ -108,7 +119,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var myId = 0;
                 resultClass.ARInvoices = arInvoices;
-                resultClass.ARCharges = lines.GroupBy(d => new {
+                resultClass.ARCharges = lines.GroupBy(d => new
+                {
                     d.Description,
                     d.InvoiceCurrencyCode,
                     d.InvoiceLocalCurrencyCode
@@ -163,7 +175,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         OpenAmount = payment.OpenAmount,
                         ChequeOrPaymentRef = payment.ChequeOrPaymentRef,
                         CreateDate = payment.CreateDate,
-                        PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount 
+                        PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount
                     };
 
                     var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, authToken.Tenant);
@@ -210,7 +222,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
 
             var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, authToken.Tenant);
-            
+
             if (docsOutData != null)
             {
                 var docId = docsOutData.Id;
@@ -225,8 +237,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
-
-            CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, authToken.Tenant);
 
             return Ok(entityPM);
         }
@@ -260,10 +270,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 };
 
                 queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+                queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
 
-                if (!string.IsNullOrWhiteSpace(newFilters.CardId))
+                var cardFilterValues= newFilters.CardId;
+                if (!string.IsNullOrWhiteSpace(cardFilterValues))
                 {
-                    queryOperations.SetFilter("BillToId", newFilters.CardId, false, "InList", null, false);
+                    var cardBillToId = GetCardBillToId(newFilters.CardId, authToken.Tenant);
+                    if (!string.IsNullOrWhiteSpace(cardBillToId))
+                    {
+                        cardFilterValues = cardFilterValues + "," + cardBillToId;
+                        queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                    }
+
+                    queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
                 }
 
                 var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
@@ -308,7 +327,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
 
-                entityPocos = aRInvoiceRepository.FilterInvoicesStatuses(entityPocos);
+                entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
 
                 var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -320,7 +339,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
                 {
-                    ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault( a => a.FieldName == queryOperations.SortByColumnName);
+                    ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
 
                     if (objectField != null)
                     {
@@ -387,6 +406,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+        private string GetCardBillToId(string cardId, int tenant)
+        {
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToId;
+        }
+
         #region private 
 
         private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
@@ -400,7 +426,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return code;
         }
-        
+
         private bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant)
         {
             if (tenant != 0)
@@ -428,7 +454,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
-                
+
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
@@ -446,7 +472,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
             var sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
-            
+
             if (sharedLogisticsSetting != null)
             {
                 isShowAmountLocalCurrencyColumnInSharedLogistics = sharedLogisticsSetting.IsShowAmountLocalCurrency;
@@ -454,7 +480,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return isShowAmountLocalCurrencyColumnInSharedLogistics;
         }
-        
+
         private string GetDocumntURL(ARInvoice item, DocumentOutQuery documentOutQuery, DocumentTypeQuery documentTypeQuery)
         {
             string reportUrl = null;
@@ -480,7 +506,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return reportUrl;
         }
 
-        
         #endregion private
     }
 }

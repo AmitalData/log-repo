@@ -413,6 +413,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? RegionalTaxPercentage { get; set; }
 
+        public string PaidStatus { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? PaidDate { get; set; }
@@ -429,5 +430,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool BillToIsCustomer { get; set; }
         public bool ResendToSAT { get; set; }
         public string SATCancelReasonCode { get; set; }
+
+        public bool IsDigitalDueDateColorRed { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityKeys;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.Data.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -19,32 +21,35 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
 
             WidgetQueryService widgetQueryService = new WidgetQueryService(context);
             entityPM.Widgets = widgetQueryService.GetMulti(dashboardKeys, true);
+
+            DashboardSharedUserQueryService dashboardSharedUserQuery = new DashboardSharedUserQueryService(context);
+            entityPM.DashboardSharedUsers = dashboardSharedUserQuery.GetMulti(dashboardKeys, true);
         }
 
-        public List<DashboardPM> GetDashboardPMs(int tenant)
+        public IQueryable<DashboardPM> GetDashboardPMs(int tenant, string loggedContactId)
         {
-            WidgetQueryService widgetQueryService = new WidgetQueryService(tenant);
-            List<DashboardPM> query = (from a in context.Dashboards
-                                       where a.Tenant == tenant
-                                       select new DashboardPM()
-                                       {
-                                           Id = a.Id,
-                                           Tenant = a.Tenant,
-                                           CreateDate = a.CreateDate,
-                                           CreatedByUserId = a.CreatedByUserId,
-                                           UpdateDate = a.UpdateDate,
-                                           UpdatedByUserId = a.UpdatedByUserId,
-                                           SearchFields = a.SearchFields,
-                                           Name = a.Name,
-                                       }).ToList();
+            DashboardRepository dashboardRepository = new DashboardRepository(context);
+            DashboardSharedUserRepository dashboardSharedUserRepository = new DashboardSharedUserRepository(context);
+            IQueryable<Dashboard> dashboards = dashboardRepository.GetAll(tenant);
+            IQueryable<string> dashboardIds = dashboards.Select(s => s.Id);
+            IQueryable<DashboardSharedUser> users = dashboardSharedUserRepository.GetDashboardSharedUsersByDashboardsIds(dashboardIds, tenant);
 
-
-            //foreach (DashboardPM item in query)
-            //{
-            //    item.Widgets = widgetQueryService.GetWidgetsByDashboardId(item.Id, tenant);
-            //}
-
-            return query;
+            return (from d in dashboards
+                    where d.Tenant == tenant
+                    && ((d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
+                    || (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
+                    || (d.PermissionLevelCode == "ALL"))
+                    select new DashboardPM()
+                    {
+                        Id = d.Id,
+                        Tenant = d.Tenant,
+                        CreateDate = d.CreateDate,
+                        CreatedByUserId = d.CreatedByUserId,
+                        UpdateDate = d.UpdateDate,
+                        UpdatedByUserId = d.UpdatedByUserId,
+                        SearchFields = d.SearchFields,
+                        Name = d.Name,
+                    });
         }
     }
 }

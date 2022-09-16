@@ -139,6 +139,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="TemplateFooterHtml"
     Type="varbinary"
     Size="-1">
@@ -242,6 +249,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"

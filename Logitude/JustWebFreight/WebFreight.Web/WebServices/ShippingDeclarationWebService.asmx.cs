@@ -1141,7 +1141,6 @@ namespace WebFreight.Web.WebServices
 
                 string contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
 
-
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
                     Contact currentContact = contactRepository.GetSingleContactByEmailAndTenant(contactEmail, tenant);
@@ -1153,12 +1152,8 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
 
-                        myDataProvider.UserDepartment = (from user in commonContext.Users
-                                                         join department in commonContext.Departments
-                                                         on user.DepartmentId equals department.Id into userDepartments
-                                                         from userDepartment in userDepartments.DefaultIfEmpty()
-                                                         where user.Id == currentContact.Id
-                                                         select userDepartment.EnglishName).FirstOrDefault();
+                        string departmentId = commonContext.Users.Where(d => d.Id == currentContact.Id && d.Tenant == tenant).FirstOrDefault()?.DepartmentId;
+                        myDataProvider.UserDepartment = commonContext.Departments.Where(d => d.Id == departmentId && d.Tenant == tenant).FirstOrDefault()?.EnglishName;                               
                     }
 
                     myDataProvider.UserSignatureImage = this.GetUserSignatureImage(tenant, commonContext, contactEmail);
@@ -2604,20 +2599,27 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
                 #endregion
 
+                #region ShipperNotExporter
+                Address shipperNotExporterAddress = null;
+                if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
+                {
+                    shipperNotExporterAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
+                    if (shipperNotExporterAddress != null)
+                    {
+                        myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(shipperNotExporterAddress, true);
+                    }
+                }
+                #endregion
+
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
 
                 if (myPickup == null)
                 {
-                    if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
+                    if (shipperNotExporterAddress != null)
                     {
-                        Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            myDataProvider.PickUpAddress = myAddress.City != null ? myAddress.City : "";
-                            myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(myAddress, true);
-                        }
+                        myDataProvider.PickUpAddress = shipperNotExporterAddress.City != null ? shipperNotExporterAddress.City : "";
                     }
 
                     else if (preForwardingFromPort != null)
@@ -3020,7 +3022,7 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Packages Lines
-                List<ShipmentPackage> packages = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == shipment.Id && d.Tenant == tenant).ToList();
+                List<ShipmentPackage> packages = shipmentsContext.ShipmentPackages.Include("PackageType").Where(d => d.ShipmentId == shipment.Id && d.Tenant == tenant).ToList();
                 myDataProvider.PackagesLines = new List<PackageLine>();
                 myDataProvider.AttachmentList = new List<PackageLine>();
                 myDataProvider.DangerousPackages = new List<PackageLine>();
@@ -3401,15 +3403,18 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Attachment List
-                if (myDataProvider.HasAttachmentList == "True" && packages.Count > 0)
+                if (myDataProvider.HasAttachmentList == "True" && packages.Count > 0 && shipment.TransportModeId != "A")
                 {
                     var resultquery = from att in packages
-                                      join sm in commonContext.PackageTypes
-                                      on att.PackageTypeId equals sm.Id into packageTypeJoin
-                                      from m in packageTypeJoin.DefaultIfEmpty()
-                                      group new { att.Quantity, att.Weight, att.Volume } by m.EnglishName into newGroup
+                                      group new { att.Quantity, att.Weight, att.Volume } by att.PackageType.EnglishName into newGroup
                                       orderby newGroup.Sum(s => Convert.ToInt32(s.Quantity)) descending
-                                      select new { Type = newGroup.Key, Count = newGroup.Sum(s => Convert.ToInt32(s.Quantity != null ? s.Quantity.Value : 0)), Weight = newGroup.Sum(s => s.Weight != null ? s.Weight.Value : 0), Volume = newGroup.Sum(s => s.Volume != null ? s.Volume.Value : 0) };
+                                      select new 
+                                      { 
+                                          Type = newGroup.Key, 
+                                          Count = newGroup.Sum(s => Convert.ToInt32(s.Quantity != null ? s.Quantity.Value : 0)), 
+                                          Weight = newGroup.Sum(s => s.Weight != null ? s.Weight.Value : 0), 
+                                          Volume = newGroup.Sum(s => s.Volume != null ? s.Volume.Value : 0) 
+                                      };
 
                     StringBuilder packageNumberstrbuilder = new StringBuilder();
                     StringBuilder packageTypestrbuilder = new StringBuilder();

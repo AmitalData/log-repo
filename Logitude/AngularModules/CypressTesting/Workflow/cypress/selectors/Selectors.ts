@@ -7,19 +7,45 @@ export class WorkflowSelectors {
     public static readonly FlowBuilderEditButton = '#Edit';
     public static readonly WorkflowStartNode = "div[data-selector^='start-node-1']";
     public static readonly WorkflowEditNodeButton = "button[class^='edit-button']";
-    public static readonly WorkflowStartNodeObject = "#ComboBox_0_1";
+    public static readonly WorkflowStartNodeObject = "input[data-cy^='start-entity']";
     public static FlowTriggerRadioButton(trigger: string): string {
         return "input[id^='"+ trigger.replace(/\s/g, '') + "_TriggerRadio']";
     }
-    public static readonly WorkflowOkButton = "button[class^='RedButton']";
+    public static readonly WorkflowStartOkButton = "button[data-cy^='start-properties-save-button']";
     public static readonly WorkflowName = "#WorkFlow_Name";
     public static readonly NewWorkflow = "#NewButton_WorkFlow";
-    public static readonly WorkflowOK = "OK";
-    public static readonly WorkflowButton = "button";
+    public static readonly WorkflowCreateButton = "button[data-cy^='workflow-save-button'";
     public static readonly WorkflowSaveButton = "button[class^='EntityChangesButton']";
-    public static readonly WorkflowSave = "Save";
-    public static readonly WorkflowSpan = "Span";
-    public static readonly WorkflowEdit = "Edit";
-    public static readonly WorkflowCreate = "Create";
+    public static readonly WorkflowStartEditButton = ".edit-button";
+    public static readonly WorkflowAddCondition = ".link-button";
 
+    public static WorkflowConditionField(index: number): string {
+        return "input[data-cy^='ConditionField_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowConditionOperation(index: number): string {
+        return "div[data-cy^='ConditionOperator_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowConditionValue(index: number): string {
+        return "[data-cy^='ConditionValue_"+ index.toString()+ "']";
+    }
+
+    public static readonly WorkflowRootGroupCondition = "span[data-cy^='AddRootGroupButton']";
+
+    public static WorkflowAddGroupCondition(index: number): string {
+        return "div[data-cy^='ConditionValue_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowAddConditionButton(index: number): string {
+        return "span[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowGroupCondition(index: number): string {
+        return "span[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+    }
+
+    public static WorkflowGroupOperation(index: number): string {
+        return "div[data-cy^='ConditionOperation_"+ index.toString()+ "']";
+    }
 }

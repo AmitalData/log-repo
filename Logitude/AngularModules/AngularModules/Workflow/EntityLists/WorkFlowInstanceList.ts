@@ -20,7 +20,8 @@ export class WorkFlowInstanceList {
 	StartTime: Date;
 	EndTime: Date;
 	BusinessKey: string;
-	Duration: string;
+	Duration: number;
+	StatusName: string;
 	
 }
  

@@ -29,6 +29,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2FromPortId { get; set; }
         public string Transshipment1CarrierNumber { get; set; }
         public bool IsOperationalClosed { get; set; }
+        public bool IsAccountingClosed { get; set; }
         public string Transshipment2ToPortId { get; set; }
         public string Transshipment2CarrierNumber { get; set; }
         public DateTime? Transshipment2ATD { get; set; }

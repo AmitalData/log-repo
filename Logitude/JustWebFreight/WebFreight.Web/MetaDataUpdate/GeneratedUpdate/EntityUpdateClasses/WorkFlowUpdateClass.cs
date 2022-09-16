@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "da0659587779cb79cb42b4d9faa9dda4";
+		public const string HashString = "7737661b38ce86e46c293ecfb3798be1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,6 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "WorkFlows",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -117,21 +118,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    NewWizardControlName =  "./Workflow/Components/CreateEditWorkflow/CreateEditWorkflowComponent",
+			      				    NewWizardControlName =  "./Workflow/Components/CreateWorkflow/CreateWorkflowComponent",
 			      				    DefaultText =  "Workflow",
 			      				    Code =  "156a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Workflow",
 			      				    ServerModuleName =  "Workflow",
-			      				    NewWizardComponentPath =  "./Workflow/Components/CreateEditWorkflow/CreateEditWorkflowComponent",
+			      				    NewWizardComponentPath =  "./Workflow/Components/CreateWorkflow/CreateWorkflowComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -1229,6 +1230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Trigger",
 					  						ListPropertyPath =  "Trigger",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1331,7 +1333,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable WorkFlowObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlow" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode WorkFlowGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WorkFlow.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WorkFlowGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlow.Tab.General", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowFeatures.WFGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+ 
+                 
+			   TextCode WorkFlowRunHistoryTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WorkFlow.TH.RunHistory", DefaultText = "Run History",LocalDefaultText = "Run History", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WorkFlowRunHistoryFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlow.Tab.RunHistory", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowFeatures.WFRH", NameTextCodeDefaultText = "Run History", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WFGE",HtmlComponentName = "EditWorkflowComponent",HtmlComponentUrl = "./Workflow/Components/CreateEditWorkflow/EditWorkflowComponent", FeatureId = WorkFlowGeneralFeature_TH0.Id,FeatureUniqeCode = WorkFlowGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./Workflow/Components/CreateEditWorkflow/EditWorkflowComponent", ObjectTableId = WorkFlowObjectTable.Id, TabNameTextCodeId = WorkFlowGeneralTextCode_TH0.Id, TabNameTextCodeCode = WorkFlowGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WFRH",HtmlComponentName = "RunHistoryWorkflowComponent",HtmlComponentUrl = "./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent", FeatureId = WorkFlowRunHistoryFeature_TH1.Id,FeatureUniqeCode = WorkFlowRunHistoryFeature_TH1.FeatureUniqeCode, ControlPath = "./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent", ObjectTableId = WorkFlowObjectTable.Id, TabNameTextCodeId = WorkFlowRunHistoryTextCode_TH1.Id, TabNameTextCodeCode = WorkFlowRunHistoryTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

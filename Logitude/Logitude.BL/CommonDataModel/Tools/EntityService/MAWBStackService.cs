@@ -163,9 +163,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void CreateMAWBStacks(string airlineId, int startNumber, int endNumber, string assignedToId, string loggedUserId)
         {
-            MAWBStackQuery mawbStackQuery = new MAWBStackQuery(entityRepository);
-
-            List<MAWBStackPM> stacksList = mawbStackQuery.GetAllMAWBStackPMsByAirlineId(airlineId, tenant).ToList();
 
             DateTime insertionDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
@@ -185,7 +182,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     AssignedToId = assignedToId,
                 };
 
-                if (stacksList.Where(n => n.Number == newNumber).FirstOrDefault() == null)
+                if (!new MAWBStackQuery(entityRepository).CheckMAWBStackExistByAirlineIdAndNumber(airlineId, tenant, newNumber))
                 {
                     MAWBStack newEntity = new MAWBStack()
                     {

@@ -318,6 +318,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetPrintNotesForInterestInvoice(entityPM);
             entityAutomationService.RunAutomation();
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
+
+            entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
+
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -650,6 +653,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateInvoiceAmountDue();
                     this.UpdatePaidDate();
                 }
+
+                entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
 
                 this.BuildSearchFields();
                 entityAutomationService.RunAutomation();
@@ -3665,6 +3670,83 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             invoice.PaidDate = entityPM.PaidDate;
+        }
+
+        private string SetPaidStatus()
+        {
+            if (entityPM.StatusCode.Equals("PP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Partially Paid";
+            }
+
+            if (entityPM.StatusCode.Equals("PD", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Paid";
+            }
+
+            if (entityPM.StatusCode.Equals("AD", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Unpaid";
+            }
+
+            if (entityPM.IsConstituentInvoice)
+            {
+                return CalculateConstituentInvoiceStatus();
+            }
+
+            if (entityPM.StatusCode.Equals("AC", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return CalculateStatusByAmountue();
+            }
+
+            return null;
+        }
+
+        private string CalculateConstituentInvoiceStatus()
+        {
+            ARInvoicePaymentQuery arInvoicePaymentQuery = new ARInvoicePaymentQuery(this.entityPM.Tenant);
+            var consolidationInvoice = invoiceRepository.GetSingleInvoice(this.entityPM.ConsolidationInvoiceId);
+            if (consolidationInvoice == null)
+            {
+                return null;
+            }
+
+            var payments = arInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(consolidationInvoice.Id, tenant);
+            if (payments == null || payments?.Count() == 0)
+            {
+                return "Unpaid";
+            }
+
+            if (consolidationInvoice.AmountDue == null || consolidationInvoice.AmountDue == 0)
+            {
+                return "Paid";
+            }
+
+            if (consolidationInvoice.AmountDue > 0)
+            {
+                return "Partially Paid";
+            }
+
+            return null;
+        }
+        private string CalculateStatusByAmountue()
+        {
+            var payments = invoicePaymentsChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete);
+            if (payments == null || payments?.Count() == 0)
+            {
+                return "Unpaid";
+            }
+
+            if (entityPM.AmountDue == null || entityPM.AmountDue == 0)
+            {
+                return "Paid";
+            }
+
+            if (entityPM.AmountDue > 0)
+            {
+                return "Partially Paid";
+            }
+            return null;
         }
 
         private void ValidateIfSameRecordAdded(ARInvoicePaymentPM item)

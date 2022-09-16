@@ -37,6 +37,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             expressions.Add(new QueryTreeFilterValidateExpresion());
             expressions.Add(new QueryTreeFilterResetValueExpresion());
             expressions.Add(new CustomFieldExpression());
+            expressions.Add(new DateGroupFilterExpression());
             expressions.Add(new PartnerEntityResloveFieldValueExpression());
             expressions.Add(new PartnerEntityQueryFilterExpression());
             expressions.Add(new QueryTreeFilterValidateExpresion());
@@ -54,6 +55,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
                 ParentObjectTableName = treeFilterQueryArgs.ParentObjectTableName,
                 Tenant = treeFilterQueryArgs.Tenant,
                 Type = treeFilterQueryArgs.Type,
+                ParentEntity = treeFilterQueryArgs.ParentEntity,
 
             };
 

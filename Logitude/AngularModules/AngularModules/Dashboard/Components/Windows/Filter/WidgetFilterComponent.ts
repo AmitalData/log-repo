@@ -15,8 +15,23 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     @Input() public DataSource: WidgetFilterItem;
     @Input() public EntityId: string;
 
+
+    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public Quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+    public Years: number[];
+    
     ngOnInit() {
- 
+        this.Years = [];
+        this.BuidYears();
+    }
+
+    private BuidYears() {
+        for (let i = new Date().getFullYear() + 3; i > new Date().getFullYear(); i--) {
+            this.Years.push(i);
+        }
+        for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 30; i--) {
+            this.Years.push(i);
+        }
     }
 
     get FilterItems(): WidgetFilterItem[] {
