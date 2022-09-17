@@ -19,7 +19,7 @@
 
     <div *ngIf="isPickListObjectField() && PickListTable">
         <PickList
-            [ObjectFieldName]="ObjectField.FieldName" 
+            [ObjectFieldName]="Name" 
             [ObjectTableName]="PickListTable.Name"
             [SelectedValue]="CurrentValue" 
             [DataContext]="DataContext"
@@ -28,7 +28,8 @@
             [HideLastColumn]="true"
             [HideColumns]="true"
             [PlaceHolder]="'Value'"
-            (SelectedItemChanged)="updateValue($event?.Id)">
+            (SelectedItemChanged)="updateValue($event?.Id)"
+            [DataCy]="Name">
         </PickList>
     </div>
 
