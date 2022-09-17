@@ -54,7 +54,7 @@
                                     </div>
 
                                     <!-- Containers Views -->
-                                    <div *ngIf="IsContainersFeatureActivated" class="QueriesSection">
+                                    <div class="QueriesSection">
                                         <div>Containers Views</div>
                                         <div>
                                             <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Containers')" *ngIf="IsQueryVisible_Containers">{{'Container.Q.Containers' | TextCodeTranslationPipe}} ({{ContainersCount}})</p>
