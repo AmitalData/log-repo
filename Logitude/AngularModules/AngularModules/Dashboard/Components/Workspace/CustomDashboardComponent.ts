@@ -22,6 +22,7 @@ import { DataPointSelection } from 'logitude-dashboard-library/dist/types/Series
 import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
@@ -60,7 +61,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     ngAfterViewInit(): void {
-        
+       
     }
 
     @Input('Show') Show;
@@ -74,7 +75,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         };
 
     private GetDefaultDashboard() {
-
+        this.dashboardPMExtendedService.GetDefaultDashboardId().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var dashboardId = myResponse.Result;
+                this.GetSingleDashboardWithWidgets(dashboardId);
+            }
+        });
     }
 
     GetSingleDashboardWithWidgets(dashboardId: string) {
@@ -91,53 +97,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             }           
         });        
     }
-
-    //renderNewDashboard() {
-    //    ReactDOM.render(React.createElement(Dashboard, {
-    //        token: SessionInfo.Token,
-    //        tenant: SessionInfo.LoggedUserTenant,
-    //        userId: SessionInfo.LoggedUserId,
-    //        dataBinding: this.dashboardDataBinding,
-    //        openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
-    //        openAddEditDashboard: this.OpenDashboardWindow.bind(this),
-    //        onChangeDashboard: this.OnChangeDashboard.bind(this),
-    //        onSaveDashboard: this.OnSaveDashboard.bind(this),
-    //        onSelectDataPoint:this.onSelectDataPoint.bind(this),
-    //    }),
-    //        this.reactDashboradContainer.nativeElement);
-    //}
-    private onSelectDataPoint(dataPointSelection: DataPointSelection){
-
-    }
-    private OpenDashboardWindow(dashboard: ReactDashboardPM) {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = dashboard != null ? "Edit Dashboard" : "Add Dashboard";
-
-        var dashboardPM: DashboardPM = null;
-        if (dashboard != null) {
-            dashboardPM = this.myDashboardPM;
-        }
-
-        else {
-            dashboardPM = new DashboardPM();
-            dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
-            dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
-            dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
-            dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-            dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-            dashboardPM.PermissionLevelCode = "ONM";
-        }
-
-        logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
-        logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    //this.GetDashboards();
-                }
-            });
-        });
-    }    
+    
     private OpenDashboardWidgetWindow(widget: ReactWidgetPM) {
         var myWidget: WidgetPM = this.myDashboardPM.Widgets.filter(d => d.Id == widget.Id)[0];
         if (myWidget == null) {
@@ -246,25 +206,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         return myWidgetMeasuer;
     }
 
-    private OnChangeDashboard(dashboard: ReactDashboardPM) {
-        this.GetSingleDashboardWithWidgets(dashboard.Id);
-    }
-    private OnSaveDashboard(dashboard: ReactDashboardPM) {
-        this.CheckDeletedWidgets(dashboard);
-        this.MapWidgetsPositions(dashboard);
-
-        this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.myDashboardPM = myResponse.Result;
-                this.selectedDashboard = this.GetReactDashboard(this.myDashboardPM);
-                this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
-                this.dashboardDataBinding.onAddUpdateWidget.next(true);
-            }
-
-            this.CurrentSession.StopBusyIndicator();
-        });
-    }
-
     private CheckDeletedWidgets(dashboard: ReactDashboardPM) {
         var deletedWidgets: WidgetPM[] = [];
 
@@ -288,9 +229,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         });
     }
 
-
-
-
     private selectedDashboardId: string;
     get SelectedDashboardId() { return this.selectedDashboardId; }
     set SelectedDashboardId(value: string) {
@@ -304,10 +242,44 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public BackButtonLable: string = "Back";
     public IsEditLayout: boolean = true;
     public IsEditDashboard: boolean = false;
+    public IsBackButtonVisible: boolean = false;
+    public IsSaveButtonVisible: boolean = false;
+    public IsAddWidgetVisible: boolean = false;
+    public HasChanges: boolean = false;
+
     EditLayoutClicked() {
         this.IsEditLayout = false;
         this.IsEditDashboard = true;
+        this.IsBackButtonVisible = true;
+        this.IsSaveButtonVisible = true;
+        this.IsAddWidgetVisible = true;
+
+
     }
+
+    AdDashboardClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Add Dashboard";
+
+        var dashboardPM: DashboardPM = new DashboardPM();
+        dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
+        dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
+        dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
+        dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        dashboardPM.PermissionLevelCode = "ONM";
+
+        logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+
+                }
+            });
+        });
+    }
+
     EditDashboardClicked() {
         //this.IsEditLayout = true;
         this.IsEditDashboard = false;
@@ -320,13 +292,79 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    //this.GetDashboards();
+                    
                 }
             });
         });
     }
+
+    AddWidgetClicked() {
+        var myWidget: WidgetPM = new WidgetPM(this.myDashboardPM);
+        myWidget.Tenant = SessionInfo.LoggedUserTenant;
+        // myWidget.StartPotistion = widget.StartPotistion;
+        // myWidget.EndPosition = widget.EndPosition;        
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Add Widget";
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.myDashboardPM };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.selectedDashboard = this.GetReactDashboard(comp.DashboardPM);
+                    this.myDashboardPM = comp.DashboardPM;
+                    this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
+                    this.dashboardDataBinding.onAddUpdateWidget.next(true);
+                }
+            });
+        });
+    }
+
+    private isBackButtonClicked: boolean = false;
     BackButtonClicked() {
-        
+        this.isBackButtonClicked = true;
+
+        if (this.HasChanges) {
+            this.ConfirmSave();
+        }
+        else {
+            //this.GoBack();
+        }
+    }
+    private ConfirmSave() {
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm";
+        confirmWindow.Show("");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.SaveDashboard();
+            }
+        });
+    }
+
+
+    RefreshLayoutClicked() {
+
+    }
+    
+    SaveDashboard() {
+        //this.CheckDeletedWidgets(dashboard);
+        //this.MapWidgetsPositions(dashboard);
+
+        this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.myDashboardPM = myResponse.Result;
+                this.selectedDashboard = this.GetReactDashboard(this.myDashboardPM);
+                this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
+                this.dashboardDataBinding.onAddUpdateWidget.next(true);
+
+                if (this.isBackButtonClicked) {
+                    //this.GoBack();
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 }
 
