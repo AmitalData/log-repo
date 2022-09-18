@@ -48,10 +48,16 @@ export class SubDomainGenerateComponent extends BaseComponent  {
         this.CurrentSession.StartBusyIndicator("Generating ..");
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
-            if (myResult) {
+            if (!myResult.HasError) {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                
                 this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            else
+            {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResult.ErrorsArray; 
             }
         });
     }
