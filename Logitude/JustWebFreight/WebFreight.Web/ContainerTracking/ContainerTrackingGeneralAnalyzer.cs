@@ -179,11 +179,32 @@ namespace WebFreight.Web.ContainerTracking
                 return;
             var container = GetContanerPM(containerTrackingRequest);
             manager.SetContainer(container);
-            MapContainersExternalData(container);
+            try
+            {
+                MapContainersExternalData(container);
 
-            manager.SetShipment(GetShipmentPM(containerTrackingRequest));
+                manager.SetShipment(GetShipmentPM(containerTrackingRequest));
 
-            manager.Update();
+                manager.Update();
+            }
+            catch (Exception ex)
+            {
+                comunicationLog.WasAnalyzed = false;
+                comunicationLog.CommunicationStatusTypeCode = "F";
+                comunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
+                comunicationLog.LastStatusDateUTC = DateTime.UtcNow;
+                comunicationLog.ExceptionMessage = ex.Message;
+
+                if (ex.StackTrace != null)
+                {
+                    comunicationLog.ExceptionMessage = comunicationLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + ex.StackTrace;
+                }
+                var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
+                communicationLogRepository.Update(comunicationLog);
+                communicationLogRepository.SubmitChanges();
+                throw ex;
+            }
+            
 
         }
 

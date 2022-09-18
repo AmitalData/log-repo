@@ -110,7 +110,7 @@ namespace WebFreight.Web.ContainerTracking
             if(port != null)
                 return port;
             var name1 = portLocation.name;
-            if (portLocation.name.Contains(','))
+            if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
                 name1 = portLocation.name.Split(',').First();
             var name2 = portLocation.city;
             port = GetPortByNames(name1, name2);
