@@ -49,6 +49,8 @@ export class SubDomainGenerateComponent extends BaseComponent  {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                
                 this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
