@@ -149,7 +149,7 @@ namespace CommunicationWorkerRole
                                 if (!string.IsNullOrEmpty(entityChange.AutomationConditionFieldsXml))
                                 {
                                     automationConditionFields = LogitudeXmlSerializer.DeserializeObject<AutomationConditionFields>(entityChange.AutomationConditionFieldsXml);
-                                    AutomationConditionFieldLists = executedImmediately ? automationConditionFields.Fields: new DelayAutomationFieldValueService(entityChange.ObjectTableId, entityId, Tenant).Run(automationConditionFields.Fields);
+                                    AutomationConditionFieldLists = executedImmediately ? automationConditionFields.Fields: new DelayAutomationFieldValueService(entityChange.ObjectTableId, entityChange.EntityId, Tenant).Execute(automationConditionFields.Fields);
 
                                 }
 

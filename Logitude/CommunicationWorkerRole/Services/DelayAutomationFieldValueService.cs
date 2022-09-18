@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.EntityChanges;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -21,11 +23,10 @@ namespace CommunicationWorkerRole.Services
         private ObjectFieldRepository objectFieldRepository;
         private int tenant;
         private List<Entity> entities;
-        private AutomationWorkerRole automationWorkerRole;
         private List<ObjectField> objectFields;
         private string objectTableName;
         private string entityId;
-        
+        private HtmlEditorHelper htmlEditorHelper;
 
         public DelayAutomationFieldValueService(string objectTableId, string entityId , int tenant)
         {
@@ -33,7 +34,7 @@ namespace CommunicationWorkerRole.Services
             this.objectTableName = GetObjectTableName(ObjectTableRepository.GetNameById(objectTableId, tenant));
             this.entityId = entityId;
             this.entities = new List<Entity>();
-            automationWorkerRole = new AutomationWorkerRole(tenant.ToString());
+            htmlEditorHelper = new HtmlEditorHelper();
             resolverAutomationObjectFieldService = new ResolverAutomationObjectFieldService(null);
             objectFieldRepository = new ObjectFieldRepository(tenant);
             objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(this.objectTableName, tenant);
@@ -44,11 +45,11 @@ namespace CommunicationWorkerRole.Services
         {
             var entity = this.entities.Where(d => d.Name == objectTableName).FirstOrDefault();
             if (entity != null) return entity.Value;
-            entity = new Entity() { Value = automationWorkerRole.GetEntity(objectTableName, entityId, tenant), Name = objectTableName };
+            entity = new Entity() { Value = htmlEditorHelper.GetEntity(objectTableName, entityId, tenant), Name = objectTableName };
             this.entities.Add(entity) ;
             return entity.Value;
         }
-        public List<Field> Run(List<Field> fields)
+        public List<Field> Execute(List<Field> fields)
         {
             var entity = GetEntity(this.entityId , this.objectTableName); 
             if (entity == null) return fields;
@@ -66,20 +67,19 @@ namespace CommunicationWorkerRole.Services
             if (string.IsNullOrEmpty(field.FieldCode)) return;
             ObjectField objectField = GetObjectField(field.FieldCode); 
             if (objectField == null) return;
+            if (!string.IsNullOrEmpty(field.PartnerObjectFieldCode))
+            {
+                field.Value = GetPartnerFieldValue(field, objectField);
+                return;
+            }
 
-            if (string.IsNullOrEmpty(field.PartnerObjectFieldCode))
-            {
-                field.Value = GetFieldValue(objectField, this.objectTableName, this.entityId); 
-            }
-            else
-            {
-                field.Value = GetPartnerFieldValue(field , objectField);
-            }
+            field.Value = GetFieldValue(objectField, this.objectTableName, this.entityId);
+
         }
 
         private string GetFieldValue(ObjectField objectField, string objectTableName, string entityId)
         {
-            var entity = GetEntity(this.entityId, this.objectTableName);
+            var entity = GetEntity(entityId, objectTableName);
             if (entity == null) return null;
             return resolverAutomationObjectFieldService.GetValue(entity, objectField);
         }

@@ -362,7 +362,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
         if (this.CurrentEntityType != "OnCreate") {
-            if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
+            if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
                 this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
                 this.OperatorList.push(new Operator("Changed", "CHANGED"));
             }
@@ -372,7 +372,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" ) {
 
             if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-                if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
+                if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
                     this.OperatorList.push(new Operator("Changed", "CHANGED"));
                 }
             }
@@ -390,6 +390,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     }
 
+
+    IsDelayAutomationConditions() {
+        return this.DelayAutomationconditionsViewModel ? true : false;
+    }
+
+    
 
     CustomFieldValueChanged(item) {
         {
