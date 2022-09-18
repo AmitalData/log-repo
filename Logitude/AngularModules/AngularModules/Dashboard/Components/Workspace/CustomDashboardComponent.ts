@@ -236,6 +236,9 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             myWidget.WidgetMeasures = [];
             myWidget.Filters = widget.Filters;
             myWidget.DateGroupCode = widget.DateGroupCode;
+            myWidget.SortBy = widget.SortBy;
+            myWidget.SortDirection = widget.SortDirection;
+            myWidget.MaximumGrouping = widget.MaximumGrouping;
 
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
