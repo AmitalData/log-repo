@@ -194,7 +194,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-
+                    this.SelectedDashboard = comp.EntityPM;
+                    this.SelectedDashboardId = comp.EntityPM.Id;
+                    this.EditLayoutClicked();
                 }
             });
         });
@@ -275,12 +277,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     
     SaveDashboard() {
         //this.CheckDeletedWidgets(dashboard);
-        //this.MapWidgetsPositions(dashboard);
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
+                this.SelectedDashboardId = this.SelectedDashboard?.Id;
                 this.ResetFlags();
 
                 if (this.isBackButtonClicked) {
@@ -303,7 +305,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.myCloner.AddEntity(this.SelectedDashboard);
     }
     private RejectChanges() {
-        this.myCloner.RejectChanges();
+        //this.myCloner.RejectChanges();
     }
 }
 

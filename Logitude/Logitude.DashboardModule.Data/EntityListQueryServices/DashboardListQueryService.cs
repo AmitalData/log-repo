@@ -51,7 +51,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 					where
 					(d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
 					|| (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
-					|| (d.PermissionLevelCode == "ALL")
+					|| (d.PermissionLevelCode == "PUB")
 					select d);
 		}
 		private string GetLoggedContactId(int tenant)
