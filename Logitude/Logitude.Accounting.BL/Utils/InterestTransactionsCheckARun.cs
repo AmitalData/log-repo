@@ -95,14 +95,14 @@ namespace Logitude.Accounting.BL.Utils
                         UpToDueDate = DateTime.Today,
                     };
                     List<string> gLAccountIdList;
-                    if (String.IsNullOrEmpty(LastMadeGLAccountId))
-                    {                    
-                        gLAccountIdList = gLAccountQueryService.GetGLAccountIdByTypeControl(tenant, interestTransactionsCheckAArg.AccountTypeCode, false);
-                    }
-                    else
-                    {
+                    //if (String.IsNullOrEmpty(LastMadeGLAccountId))
+                    //{                    
+                    //   gLAccountIdList = gLAccountQueryService.GetGLAccountIdByTypeControl(tenant, interestTransactionsCheckAArg.AccountTypeCode, false);
+                    //}
+                    //else
+                    //{
                         gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControl(tenant, interestTransactionsCheckAArg.AccountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
-                    }
+                    //}
 
                     if (gLAccountIdList != null && gLAccountIdList.Count > 0)
                     {

@@ -135,19 +135,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                             var myScreenColumn = new ScreenColumn(c);
 
                             for (var r = 0; r < myScreen.NumberOfRows; r++) {
-                                var myScreenField = myScreenFields.filter((f: any) => f.Column == c && f.Row == r)[0];
-                                if (myScreenField != null) {
-                                    var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == myScreenField.ObjectFieldCode)[0];
-                                    if (myObjectField != null) {
-
-                                        if (this.ObjectTableName == "CommunicationLog") {
-                                            this.EntityPM.UIProperties.SetEnabled(myObjectField.FieldName, this.ObjectTableName, false);
-                                            this.EntityPM.UIProperties.SetRequired(myObjectField.FieldName, this.ObjectTableName, false);
-                                        }
-
-                                        myScreenColumn.ObjectFields.push(myObjectField);
-                                    }
-                                }
+                                var selectedScreenFields = myScreenFields.filter((f: any) => f.Column == c && f.Row == r);
+                                this.AddSelectedScreenFields(selectedScreenFields, myObjectFields, myScreenColumn);
                             }
 
                             myScreenColumns.push(myScreenColumn);
@@ -164,6 +153,22 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         }
     }
 
+    private AddSelectedScreenFields(selectedScreenFields: any, myObjectFields: any, myScreenColumn: ScreenColumn) {
+        if (selectedScreenFields == null) return;
+
+        selectedScreenFields.forEach(screenField => {
+            this.AddScreenField(myObjectFields, screenField, myScreenColumn);
+        });
+    }
+
+    private AddScreenField(myObjectFields: any, screenField: any, myScreenColumn: ScreenColumn) {
+        var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == screenField.ObjectFieldCode)[0];
+        if (myObjectField == null) return;
+
+        this.SetValidityForCommunicationLog(myObjectField);
+
+        myScreenColumn.ObjectFields.push(myObjectField);
+    }
 
     private BuildLighteningScreen(fireEmit: boolean = false) {
 

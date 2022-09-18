@@ -23,7 +23,7 @@ export class BIReportDocumentTypeTemplateService {
     private ObjectTableId: any;
     private RequsetPageName: string;
 
-    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string, objectTableId: string) {
+    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string) {
 
         this.bIReportPreviewComponent = bIReportPreviewComponent;
         this.bIReportPreviewComponent.DocumentTypeTemplateLists = [];
@@ -179,6 +179,7 @@ export class BIReportDocumentTypeTemplateService {
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event) {
                     this.LoadDocumentTypeHTMLTemplate();
+                    this.docuemntTypeTemplateId = $event;
                 }
             });
         }
@@ -198,22 +199,11 @@ export class BIReportDocumentTypeTemplateService {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
             if ($event) {
-                this.SeTemplateSelected($event);
+                this.docuemntTypeTemplateId = $event;
+                this.SetDocumentTypeTemplateSelected();
             }
 
         });
     }
-
-    SeTemplateSelected(templateId: string) {
-        if (!templateId) return;
-        if (!this.bIReportPreviewComponent.DocumentTypeTemplateLists) return;
-        let newTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == templateId)[0];
-        if (!newTemplate) return;
-        this.bIReportPreviewComponent.DocumentTypeTemplateSelected = newTemplate;
-    }
-
-
-
-
 
 }

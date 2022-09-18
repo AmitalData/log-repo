@@ -20,62 +20,50 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
-
     styleUrls:['CustomDashboardComponent.css'],
     selector:'custom-dashboard',
-    encapsulation:ViewEncapsulation.ShadowDom
 })
 
-export class CustomDashboardComponent implements OnInit,  AfterViewInit {
-    _show:boolean = false;
-    @Input('show') set show(value){
-        console.log('CustomDashboardComponent show= ',value);
-        if(value && !this._show){
-            this.ShowDashboard();
-        }
-        this._show = value;
-        
-    } 
-    get show(){
-        return this._show;
-    }
+export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit {   
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
     private CurrentSession = SessionLocator.SelectedSession;    
-    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
     private myDashboardPM: DashboardPM;
+    public SelectedDashboardName: string;
+    public DataContext = this;
     constructor() {
+        super();
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.myDashboardPM = new DashboardPM();
     }
     ngOnInit(): void {
-        this.GetDashboards();
-    }
-
-    ngAfterViewInit(): void {
-        
-    }
-    ShowDashboard(){
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
             this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
                 this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
                     this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
-                            setTimeout(e=>{
-                                this.renderNewDashboard();
-                            },70);
+                            setTimeout(e => {
+                                this.GetDefaultDashboard();
+                            }, 70);
                         });
                     });
                 });
             });
-        });
+        });       
     }
+
+    ngAfterViewInit(): void {
+        
+    }
+
+    @Input('Show') Show;
 
     private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
     private dashboardDataBinding: DashboardDataBinding =
@@ -85,30 +73,17 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
             onAddUpdateWidget: new BehaviorSubject<boolean>(false),
         };
 
-    public AllDashboards: DashboardPM[] = [];
-    private GetDashboards() {        
-        this.dashboardPMExtendedService.GetDashboardPMs().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllDashboards = myResponse.Result;
-            }
+    private GetDefaultDashboard() {
 
-            var reactDashboards: ReactDashboardPM[] = [];
-            this.AllDashboards.forEach(element => {
-                reactDashboards.push(this.GetReactDashboard(element));
-            });
-
-            this.dashboardDataBinding.onGetAllDashboards.next(reactDashboards);
-
-            if (this.AllDashboards) {
-                this.GetSingleDashboardWithWidgets(this.AllDashboards[0].Id);                
-            }
-        });
     }
+
     GetSingleDashboardWithWidgets(dashboardId: string) {
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.myDashboardPM = myResponse.Result;
                 if (this.myDashboardPM) {
+                    this.SelectedDashboardName = this.myDashboardPM.Name;
+
                     var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(this.myDashboardPM)
                     this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
                     this.selectedDashboard = myReactDashboard;
@@ -117,20 +92,20 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
         });        
     }
 
-    renderNewDashboard() {
-        ReactDOM.render(React.createElement(Dashboard, {
-            token: SessionInfo.Token,
-            tenant: SessionInfo.LoggedUserTenant,
-            userId: SessionInfo.LoggedUserId,
-            dataBinding: this.dashboardDataBinding,
-            openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
-            openAddEditDashboard: this.OpenDashboardWindow.bind(this),
-            onChangeDashboard: this.OnChangeDashboard.bind(this),
-            onSaveDashboard: this.OnSaveDashboard.bind(this),
-            onSelectDataPoint:this.onSelectDataPoint.bind(this),
-        }),
-            this.reactDashboradContainer.nativeElement);
-    }
+    //renderNewDashboard() {
+    //    ReactDOM.render(React.createElement(Dashboard, {
+    //        token: SessionInfo.Token,
+    //        tenant: SessionInfo.LoggedUserTenant,
+    //        userId: SessionInfo.LoggedUserId,
+    //        dataBinding: this.dashboardDataBinding,
+    //        openAddEditWidget: this.OpenDashboardWidgetWindow.bind(this),
+    //        openAddEditDashboard: this.OpenDashboardWindow.bind(this),
+    //        onChangeDashboard: this.OnChangeDashboard.bind(this),
+    //        onSaveDashboard: this.OnSaveDashboard.bind(this),
+    //        onSelectDataPoint:this.onSelectDataPoint.bind(this),
+    //    }),
+    //        this.reactDashboradContainer.nativeElement);
+    //}
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
 
     }
@@ -158,7 +133,7 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.GetDashboards();
+                    //this.GetDashboards();
                 }
             });
         });
@@ -314,6 +289,47 @@ export class CustomDashboardComponent implements OnInit,  AfterViewInit {
                 myWidgetPm.StartPotistion = item.StartPotistion;
             }
         });
+    }
+
+
+
+
+    private selectedDashboardId: string;
+    get SelectedDashboardId() { return this.selectedDashboardId; }
+    set SelectedDashboardId(value: string) {
+        if (this.selectedDashboardId != value) {
+            this.selectedDashboardId = value;
+
+            this.GetSingleDashboardWithWidgets(value);
+        }
+    }
+
+    public BackButtonLable: string = "Back";
+    public IsEditLayout: boolean = true;
+    public IsEditDashboard: boolean = false;
+    EditLayoutClicked() {
+        this.IsEditLayout = false;
+        this.IsEditDashboard = true;
+    }
+    EditDashboardClicked() {
+        //this.IsEditLayout = true;
+        this.IsEditDashboard = false;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Edit Dashboard";
+
+        logitudeWindow.WindowArgs = { EntityPM: this.myDashboardPM, };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    //this.GetDashboards();
+                }
+            });
+        });
+    }
+    BackButtonClicked() {
+        
     }
 }
 
