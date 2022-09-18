@@ -992,10 +992,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 //"PRVL"
                 entityQuantity = this.EntityPM.ValueOfGoods;
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostQuantity == null && f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleQuantity == null && f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
                 
@@ -1436,7 +1436,6 @@ export class QuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
                 case "PDCW":
@@ -1542,7 +1541,6 @@ export class QuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
                 case "PDCW":
