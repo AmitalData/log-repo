@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, Input } from '@angular/core';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
@@ -32,8 +32,25 @@ import { DataPointSelection } from 'logitude-dashboard-library/dist/types/Series
 export class CustomDashboardLayoutComponent implements AfterViewInit {
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
 
+    _show: boolean = false;
+    @Input('show') set show(value) {
+        console.log('CustomDashboardLayoutComponent show= ', value);
+        if (value && !this._show) {
+            this.ShowDashboard();
+        }
+        this._show = value;
+
+    }
+    get show() {
+        return this._show;
+    }
+
     constructor() {
 
+    }
+
+    ShowDashboard() {
+        this.renderNewDashboard();
     }
 
     ngAfterViewInit(): void {

@@ -1,26 +1,43 @@
 
-<div class='ll-full-hight'>
+<style>
+    .Table-cell10 {
+        width: 10px;
+    }
+
+    .Dashboard-body {
+        height: 100%;
+        padding: 2px;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        border-radius: 8px;
+    }
+</style>
+
+
+<div style="height: 100%;">
     <div style="height:10px;">
     </div>
 
-    <div class="Dashboard-table-row">
+    <div class="FormFieldRow">
         <table>
             <tr>
-                <td class="Dashboard-table-row-cell">
+                <td class="Table-cell10">
                 </td>
 
-                <td class="Dashboard-back-button-cell">
+                <td style="width:30px;">
                     <BackButton [Text]="BackButtonLable" (click)="BackButtonClicked()"></BackButton>
                 </td>
 
-                <td class="Dashboard-table-row-cell">
+                <td class="Table-cell10">
                 </td>
 
-                <td class="Dashboard-TextTrimming" style="font-size: 16px; color: #1B90CB;">
+                <td style="width: 1px; font-size: 16px; color: #1B90CB;">
                     {{SelectedDashboardName}}
                 </td>
 
-                <td>
+                <td style="width:20px;">
                     <IconButton *ngIf="IsEditLayout" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
                     <IconButton *ngIf="IsEditDashboard" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
                 </td>
@@ -30,7 +47,9 @@
                 </td>
 
                 <td style="width:200px; height:22px;">
-                    <LogLov [NoObjectField]="true"
+                    <LogLov [ObjectFieldName]="'SelectedDashboardId'"
+                            [ObjectTableName]="'Dashboard'"
+                            [NoObjectField]="true"
                             [SelectedValue]="SelectedDashboardId"
                             [DataContext]="DataContext"
                             [LookUpTableName]="'Dashboard'"
@@ -39,11 +58,11 @@
                     </LogLov>
                 </td>
             </tr>
-        </table>       
+        </table>
     </div>
 
-    <div class="ll-dashboard-body">
-        <Custom-Layout></Custom-Layout>
+    <div class="Dashboard-body">
+        <Custom-Layout [show]="Show"></Custom-Layout>
     </div>
 </div>
 
