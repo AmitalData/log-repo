@@ -8,5 +8,5 @@ export class ConnectedOrder
     PODate: Date;
     PickupActualDateTime: Date;
     BookingConfirmationNumber: string;
-    CasualSupplierName: string;
+    SupplierName: string;
 }

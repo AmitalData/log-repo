@@ -15,6 +15,8 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.ShipmentOrderModule.BL.EntityDataMappings;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -127,6 +129,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             }
             if (shipmentOrders.Any())
             {
+                CardQuery cardQuery = new CardQuery(cargoShipmentPM.Tenant);
+                var cardsList =  cardQuery.GetCardListsByListIds(shipmentOrders.Select(x=>x.ShipperId).ToList(), cargoShipmentPM.Tenant).ToList();
                 cargoShipmentPM.ConnectedOrders = shipmentOrders.Select(x => new ConnectedOrder
                 {
                     Id = x.Id,
@@ -136,11 +140,21 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     PODate = x.PODate,
                     PickupActualDateTime = x.PickupActualDateTime,
                     BookingConfirmationNumber = x.BookingConfirmationNumber,
-                    CasualSupplierName = x.CasualSupplierName
-                   
+                    SupplierName = GetShipperName(x, cardsList)
+
                 }).ToList();
             }
         }
+
+        private string GetShipperName(ShipmentOrderPM order, List<CardList> cardsList)
+        {
+            if (cardsList.Any() && order.DirectionId == "I")
+            {
+                return cardsList.FirstOrDefault(a => a.Id == order.ShipperId).EnglishName;
+            }
+            return null;
+        }
+
         private void BuildPartnerCards()
         {
             CargoTrackingShipmenPartnersCardsBuilder partnerCardsBuilder = new CargoTrackingShipmenPartnersCardsBuilder(shipmentOrderPM, shipmentPM, cargoShipmentPM);
