@@ -499,8 +499,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
-                                                   //  PhysicalCheck = a.PhysicalCheck,
-                                                     //PhysicalCheckName = a.PhysicalCheck != null ? a.PhysicalCheckCode.Name : "ללא בדיקה",
+                                                     PhysicalCheck = a.PhysicalCheck,
+                                                     PhysicalCheckName = a.PhysicalCheck == null ? "ללא בדיקה" : a.PhysicalCheckCode.Name,
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,                                                     
