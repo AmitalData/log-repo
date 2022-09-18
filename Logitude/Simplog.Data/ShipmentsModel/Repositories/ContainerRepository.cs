@@ -38,11 +38,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Container GetSingleContainer(string id, int tenant)
         {
-            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
-                    Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
+            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort")
+                    .Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress").Include("TruckerCard")
-                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("CustomerCard").Include("Handler").Include("Handler.Contact").Include("Shipment").Include("EntityStatus")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
+                    .Include("TruckerCard").Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("CustomerCard").Include("Handler").Include("Handler.Contact")
+                    .Include("Shipment").Include("EntityStatus").Include("ContainerType")
                     where container.Id == id && container.Tenant == tenant
                     select container).FirstOrDefault();
         }
