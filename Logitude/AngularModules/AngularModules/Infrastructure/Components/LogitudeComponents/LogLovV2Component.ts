@@ -48,7 +48,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy","ForceDisabled"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -117,7 +117,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public UseCompactSearch: boolean;
     public ForceDisabled: boolean;
     public IsDecendingSort: boolean = false;
-
+    public ObjectFieldCode: string;
     public get IsVisible() {
         if (!this.uiProperty) {
             this.InitializeUiProperty();
@@ -2222,6 +2222,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
         args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
         args.EntityPM = this.DataContext;
+        args.ObjectFieldCode = this.ObjectFieldCode;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -3363,6 +3364,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     FillTreeFilterDetails(filters) {
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        if (!objectField) objectField =  window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntity = this.GetParentEntity();
         filters.ParentEntityId = this.GetParentEntityId();
@@ -3381,6 +3383,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (!entityPM) return null;
 
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
         let objectFieldAdditionalTreeFilters = objectField ? objectField.DefaultAdditionalTreeFilters : this.ObjectField?.DefaultAdditionalTreeFilters;
         if (!objectFieldAdditionalTreeFilters) return null;
 

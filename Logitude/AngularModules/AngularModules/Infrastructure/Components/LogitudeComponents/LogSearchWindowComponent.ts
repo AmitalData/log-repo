@@ -105,7 +105,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     LanguageFilterValue: string;
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
-
+    ObjectFieldCode: string;
     public get ShowLanguageFilter(): boolean
     {
         return  SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
@@ -166,7 +166,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.IsAddDisabled = args.IsAddDisabled;
         this.IsEditDisabled = args.IsEditDisabled;
         this.SourceEntityPM = args.EntityPM;
+        this.ObjectFieldCode = args.ObjectFieldCode;
 
+        
         if (this.IsUseCardSearchMechanism()) {
             this.DontApplyVirtualization = true;
         }
@@ -452,6 +454,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     FillTreeFilterDetails(filters) {
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
+
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntityId = this.GetParentEntityId();
         filters.ParentEntity = this.GetParentEntity();
@@ -470,6 +474,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         if (!entityPM) return null;
 
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
+        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
+
         let objectFieldAdditionalTreeFilters = objectField ? objectField.DefaultAdditionalTreeFilters : this.ObjectField?.DefaultAdditionalTreeFilters;
         if (!objectFieldAdditionalTreeFilters) return null;
 
@@ -991,7 +997,7 @@ export class CustomEntityArgs {
     public ForceShowLanguageFilterOnSearchWindow: boolean;
     public ForceShowLocalAndEnglishColumns: boolean;
     public EntityPM: any = null;
-
+    public ObjectFieldCode: string = null;
 
 }
 export class AddEntityArgs {
