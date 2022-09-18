@@ -82,6 +82,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     ObjectTable: ObjectTablePM;
     public ParentTableName: string;
     public QueryFilterItems: ApiQueryFilters;
+    public SourceEntityPM: any;
 
     public IsDataReady = true;
     HideAdd: boolean;
@@ -164,6 +165,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.HideAdd = args.HideAdd;
         this.IsAddDisabled = args.IsAddDisabled;
         this.IsEditDisabled = args.IsEditDisabled;
+        this.SourceEntityPM = args.EntityPM;
 
         if (this.IsUseCardSearchMechanism()) {
             this.DontApplyVirtualization = true;
@@ -451,14 +453,20 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     FillTreeFilterDetails(filters) {
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
-        filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        filters.ParentEntityId = this.GetParentEntityId();
         filters.ParentEntity = this.GetParentEntity();
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
         return filters;
     }
 
+    GetParentEntityId() {
+        let parentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        return parentEntityId ? parentEntityId : null;
+    }
+
     GetParentEntity() {
         let entityPM = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityPM;
+        if (!entityPM) entityPM = this.SourceEntityPM;
         if (!entityPM) return null;
 
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
@@ -982,6 +990,7 @@ export class CustomEntityArgs {
     public ShowLanguageFilter: boolean;
     public ForceShowLanguageFilterOnSearchWindow: boolean;
     public ForceShowLocalAndEnglishColumns: boolean;
+    public EntityPM: any = null;
 
 
 }
