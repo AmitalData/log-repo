@@ -836,6 +836,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public void Return()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                throw new Exception("Queue_ReturnMessage not in use  in CostomsDeploy"); 
+            }
+    
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
