@@ -22,7 +22,7 @@ namespace WebFreight.Web.Helpers
         private List<AttachmentsList> attachmentsLists;
         private DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs;
         string shipmentObjectId = null;
-        public List<DocumentDefultAttachment> EmptyDocuments = new List<DocumentDefultAttachment>();
+        public List<DocumentDefultAttachment> EmptyDefaultDocuments = new List<DocumentDefultAttachment>();
         public List<AttachmentsList> GetDefultAttachmentList(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
         {
             this.defultAttachmentArgs = defultAttachmentArgs;
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Helpers
                 BuildDocInAttachmentList(defultAttachmentList);
 
             }
-            this.EmptyDocuments = defultAttachmentList.Where(d => !d.IsExist).ToList();
+            this.EmptyDefaultDocuments = defultAttachmentList.Where(d => !d.IsExist).ToList();
         }
 
         private string GetMasterShipmentObjectTableId(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
@@ -135,7 +135,10 @@ namespace WebFreight.Web.Helpers
         private static void MarkDocsOutAttachmentAsExist(List<DocumentDefultAttachment> defultAttachmentList, DocumentOutCopyPM copy)
         {
             var documentDefultAttachment = defultAttachmentList.Where(d => d.DocumentTypeId == copy.DocumentTypeId && d.DocumentTypeCopyId == copy.DocumentTypeCopyId).FirstOrDefault();
-            documentDefultAttachment.IsExist = true;
+            if(documentDefultAttachment != null)
+            {
+                documentDefultAttachment.IsExist = true;
+            }
         }
 
         private List<string> GetDocumentFilinfIds(List<string> documentTypeIds)
@@ -178,13 +181,13 @@ namespace WebFreight.Web.Helpers
 
                 if (attachments.Count > 0)
                 {
-                    FillDocumentsNotHaveFile(defultAttachmentList, attachments);
+                    MarkDocsInAttachmentAsExist(defultAttachmentList, attachments);
                     attachmentsLists = attachmentsLists.Concat(attachments).ToList();
                 }
             }
         }
 
-        private static void FillDocumentsNotHaveFile(List<DocumentDefultAttachment> defultAttachments, List<AttachmentsList> attachments)
+        private static void MarkDocsInAttachmentAsExist(List<DocumentDefultAttachment> defultAttachments, List<AttachmentsList> attachments)
         {
             foreach (DocumentDefultAttachment defultAttachment in defultAttachments.Where(d => d.Type == "DocIn"))
             {

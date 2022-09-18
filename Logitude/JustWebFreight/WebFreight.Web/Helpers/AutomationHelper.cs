@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
                 List<string> notifyBackPartners = new List<string>();
                 string Emails = "";
                 string NotifyBackEmails = "";
-                List <DocumentDefultAttachment>emptyDocuments = new List<DocumentDefultAttachment>();
+                List <DocumentDefultAttachment> emptyDefaultDocuments = new List<DocumentDefultAttachment>();
                 if (allActiveUsers)
                 {
                     UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
@@ -154,7 +154,7 @@ namespace WebFreight.Web.Helpers
 
                     string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, automationDocumentResult);
                     comunicationLogId = communicationLog;
-                    emptyDocuments = automationDocumentResult.EmptyDocuments;
+                    emptyDefaultDocuments = automationDocumentResult.EmptyDefaultDocuments;
                  
                 }
 
@@ -164,9 +164,9 @@ namespace WebFreight.Web.Helpers
                     Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
                 }
 
-                if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDocuments != null && emptyDocuments.Count() > 0)
+                if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
                 {
-                    new AttachmentDocumentNotifyService(emptyDocuments, automation.Tenant).Execute(NotifyBackEmails);
+                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails);
                 }
 
             }
@@ -327,7 +327,7 @@ namespace WebFreight.Web.Helpers
 
                 }
             }
-            automationDocumentResult.EmptyDocuments = documentTypeTemplateDefultAttachmentService.EmptyDocuments;
+            automationDocumentResult.EmptyDefaultDocuments = documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments;
 
             AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
 

@@ -160,7 +160,7 @@ namespace WebFreight.Web.Helpers
         public string ObjectTableId { get; set; }
         public string ObjectTableName { get; set; }
         public string ToEmail { get; set; }
-        public List<DocumentDefultAttachment> EmptyDocuments { get; set; }
+        public List<DocumentDefultAttachment> EmptyDefaultDocuments { get; set; }
 
     }
 }

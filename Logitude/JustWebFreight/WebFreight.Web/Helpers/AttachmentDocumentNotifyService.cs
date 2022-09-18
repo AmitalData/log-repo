@@ -15,35 +15,34 @@ namespace WebFreight.Web.Helpers
     {
         private List<DocumentDefultAttachment> documentDefultAttachment;
         private int tenant;
-        public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment , int tenant)
+        private string automationName;
+        public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment , int tenant, string automationName)
         {
             this.documentDefultAttachment = documentDefultAttachment;
             this.tenant = tenant;
-
+            this.automationName = automationName;
         }
 
         public void Execute(string notifyBackEmails)
         {
-            var emailParams = BuildNotifyBackEmailCommunications(notifyBackEmails);
+            var emailParams = BuildEmailCommunicationParams(notifyBackEmails);
             Communications.AddEmailCommunicationLogQueue(emailParams,tenant);
 
         }
 
 
-        private EmailCommunicationParams BuildNotifyBackEmailCommunications(string notifyBackEmails)
+        private EmailCommunicationParams BuildEmailCommunicationParams(string notifyBackEmails)
         {
-            string emailBody = GetEmailBody();
-            StringBuilder HtmlTemplate = BuildHtmlTemplateWithBody(emailBody);
+            string emailbody = GetEmailTemplate().ToString();
             string fromEmail = GetFromEmail();
-
-            string emailbody = HtmlTemplate.ToString();
+            string emailSubject = GetEmailSubject();
             EmailCommunicationParams emailParams = new EmailCommunicationParams()
             {
                 From = fromEmail,
                 To = notifyBackEmails,
                 CC = "",
                 BCC = "",
-                Subject = "Test",
+                Subject = emailSubject,
                 EmailBody = emailbody,
                 Tenant = tenant,
             };
@@ -63,17 +62,33 @@ namespace WebFreight.Web.Helpers
             return fromEmail;
         }
 
-        private string GetEmailBody()
+        private string GetEmailSubject()
         {
-            return "test";
+            return "Automation " + this.automationName + " :" + " Not Sent Documents";
         }
-        private StringBuilder BuildHtmlTemplateWithBody(string emailBody)
+        private string GetEmailBody()
+     {
+            string emailString = "";
+            bool isMoreThanOneDocument = documentDefultAttachment.Count > 1;
+            emailString += "Automation " + this.automationName + " failed to send the following ";
+            emailString += "document" + (isMoreThanOneDocument ? "s :" : " :");
+            emailString += "<div>";
+            if (!isMoreThanOneDocument) return (emailString + "</div>");
+            foreach (DocumentDefultAttachment document in this.documentDefultAttachment)
+            {
+                emailString += "- " + document.DocumentTypeName + "<br>";
+            }
+
+            emailString += "</div>";
+            return emailString;
+        }
+        private StringBuilder GetEmailTemplate()
         {
             StringBuilder HtmlTemplate = new StringBuilder();
 
             HtmlTemplate.Append("<div style='text-align:left;'>");
             HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(emailBody);
+            HtmlTemplate.Append(GetEmailBody());
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("<br /><br />");
             return HtmlTemplate;
