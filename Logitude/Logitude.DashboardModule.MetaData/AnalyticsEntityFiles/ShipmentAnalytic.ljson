@@ -1,5 +1,5 @@
 {
-  "HashString": "9546cdb0b1bc402e9250c73dc4af0ba6",
+  "HashString": "d3f59c01615a468c8d893988682ac5df",
   "Name": "Shipment Analytics",
   "TableName": "ShipmentAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -155,7 +155,7 @@
       "DisplayName": "Branch",
       "DisplayNamePlural": "Branch",
       "JoinedTableName": "Branch",
-      "JoinedTableDBName": "Branchs",
+      "JoinedTableDBName": "Branches",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
