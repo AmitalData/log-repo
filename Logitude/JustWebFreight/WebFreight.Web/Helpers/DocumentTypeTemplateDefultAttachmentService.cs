@@ -22,7 +22,7 @@ namespace WebFreight.Web.Helpers
         private List<AttachmentsList> attachmentsLists;
         private DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs;
         string shipmentObjectId = null;
-
+        public List<DocumentDefultAttachment> EmptyDefaultDocuments = new List<DocumentDefultAttachment>();
         public List<AttachmentsList> GetDefultAttachmentList(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
         {
             this.defultAttachmentArgs = defultAttachmentArgs;
@@ -93,6 +93,7 @@ namespace WebFreight.Web.Helpers
                 BuildDocInAttachmentList(defultAttachmentList);
 
             }
+            this.EmptyDefaultDocuments = defultAttachmentList.Where(d => !d.IsExist).ToList();
         }
 
         private string GetMasterShipmentObjectTableId(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
@@ -122,11 +123,22 @@ namespace WebFreight.Web.Helpers
                     var documentOutCopys = documentOutCopyQuery.GeDocumentOutCopiesPMListsBydocumentTypeCopyIdsAndDocumentOutIds(documentTypeCopyIds, documentsFilingIds, defultAttachmentArgs.Tenant);
                     foreach (DocumentOutCopyPM copy in documentOutCopys)
                     {
+                        MarkDocsOutAttachmentAsExist(defultAttachmentList, copy);
+
                         attachmentsLists.Add(new AttachmentsList() { Id = copy.DocumentId, DocumentFilingId = copy.DocumentOutId, DocumentTypeCopyNameWithDocumentTypeName = copy.DocumentTypeCopyNameWithDocumentTypeName, FileSize = copy.FileSize, FileExtension = copy.FileExtension, Tenant = copy.Tenant });
                     }
                 }
             }
 
+        }
+
+        private static void MarkDocsOutAttachmentAsExist(List<DocumentDefultAttachment> defultAttachmentList, DocumentOutCopyPM copy)
+        {
+            var documentDefultAttachment = defultAttachmentList.Where(d => d.DocumentTypeId == copy.DocumentTypeId && d.DocumentTypeCopyId == copy.DocumentTypeCopyId).FirstOrDefault();
+            if(documentDefultAttachment != null)
+            {
+                documentDefultAttachment.IsExist = true;
+            }
         }
 
         private List<string> GetDocumentFilinfIds(List<string> documentTypeIds)
@@ -169,8 +181,17 @@ namespace WebFreight.Web.Helpers
 
                 if (attachments.Count > 0)
                 {
+                    MarkDocsInAttachmentAsExist(defultAttachmentList, attachments);
                     attachmentsLists = attachmentsLists.Concat(attachments).ToList();
                 }
+            }
+        }
+
+        private static void MarkDocsInAttachmentAsExist(List<DocumentDefultAttachment> defultAttachments, List<AttachmentsList> attachments)
+        {
+            foreach (DocumentDefultAttachment defultAttachment in defultAttachments.Where(d => d.Type == "DocIn"))
+            {
+                defultAttachment.IsExist = attachments.Where(d => d.DocumentTypeId == defultAttachment.DocumentTypeId).Any();
             }
         }
 
@@ -211,6 +232,7 @@ namespace WebFreight.Web.Helpers
                 FileSize = d.Document != null ? d.Document.FileSize : null,
                 Tenant = d.Document != null ? d.Document.Tenant : d.Tenant,
                 DocumentTypeCopyNameWithDocumentTypeName = d.DocumentType != null ? d.DocumentType.Name : "",
+                DocumentTypeId = d.DocumentType != null ? d.DocumentType.Id: "",
             };
         }
     }
@@ -222,8 +244,7 @@ namespace WebFreight.Web.Helpers
         public string DocumentFilingId { get; set; }
         public string FileExtension { get; set; }
         public string DocumentTypeCopyNameWithDocumentTypeName { get; set; }
-
-
+        public string DocumentTypeId { get; set; }
     }
 
     public class DocumentTypeTemplateDefultAttachmentArgs

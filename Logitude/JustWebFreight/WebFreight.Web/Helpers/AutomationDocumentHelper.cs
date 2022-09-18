@@ -8,6 +8,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace WebFreight.Web.Helpers
@@ -159,5 +160,7 @@ namespace WebFreight.Web.Helpers
         public string ObjectTableId { get; set; }
         public string ObjectTableName { get; set; }
         public string ToEmail { get; set; }
+        public List<DocumentDefultAttachment> EmptyDefaultDocuments { get; set; }
+
     }
 }
