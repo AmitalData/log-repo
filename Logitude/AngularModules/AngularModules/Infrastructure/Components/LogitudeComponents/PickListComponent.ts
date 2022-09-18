@@ -39,6 +39,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() FromNewView: boolean = false;
     @Input() IsFreeText: boolean = false;
     @Input() IgnoreCustomFieldCheck: boolean = false;
+    @Input() DataCy: string;
     //-------------------------------------------------------
 
     @Output() OnBlurEvent: EventEmitter<any> = new EventEmitter();
