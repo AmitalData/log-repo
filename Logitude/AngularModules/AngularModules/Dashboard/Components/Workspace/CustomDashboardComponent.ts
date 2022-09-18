@@ -27,7 +27,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private CurrentSession = SessionLocator.SelectedSession;    
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
-    private SelectedDashboard: DashboardPM;
+    public SelectedDashboard: DashboardPM;
     public SelectedDashboardName: string;
     public DataContext = this;
     @Input('Show') Show;

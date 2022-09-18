@@ -310,6 +310,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditDashboardComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.html" />
@@ -1788,6 +1789,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
+    <TypeScriptCompile Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsFieldsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\DashboardList.ts" />
@@ -8794,6 +8796,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
+    <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
