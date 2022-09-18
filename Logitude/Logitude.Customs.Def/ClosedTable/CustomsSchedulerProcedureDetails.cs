@@ -42,6 +42,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "CustomsExchangeRatesQuery,CustomsExchangeRatesQuery",
                 Description = "Exchange Rates Query",
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsSendReportExel",
+                Name = "CustomsSendReportExel",
+                SearchFields = "CustomsSendReportExel,CustomsSendReportExel",
+                Description = "Send ReportExel",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)
