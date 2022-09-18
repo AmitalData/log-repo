@@ -418,7 +418,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
-
+    IsHaveDocumentDefultAttachments: boolean = false;
     private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
     get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
     set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
@@ -430,6 +430,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.CurrentEntityPM.TemplateId = templateId;
                 this.IsChangeAutomation = true;
             }
+          this.IsHaveDocumentDefultAttachments = this.documentTypeTemplateSelected.DocumentDefultAttachments && this.documentTypeTemplateSelected.DocumentDefultAttachments.length > 0 ? true : false;
+          
         }
     }
 

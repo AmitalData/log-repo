@@ -52,7 +52,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     ObjectTableName: string;
     DisplayName: string;
     IsMultiUpdateComponent: boolean;
-
+    FieldName: string;
     constructor(entityPM: AutomationSetValue, addEditAutomationsViewModel: any) {
         super();
         this.CurrentEntityPM = entityPM;
@@ -84,6 +84,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
 
         if (objectField) {
 
+            this.FieldName = objectField.FieldName;
 
             this.ObjectFieldCode = objectField.FieldCode;
             this.SelectedCustomField = objectField;
@@ -260,6 +261,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
                 this.CurrentEntityPM.Value = "";
                 this.CustomObjectFieldCode = "";
                 this.AddEditAutomationsViewModel.IsChangeSetValue = true;
+                this.FieldName = item.FieldName;
 
 
                 if (item.DataTypeCode == "Boolean") this.IsChecked = false;

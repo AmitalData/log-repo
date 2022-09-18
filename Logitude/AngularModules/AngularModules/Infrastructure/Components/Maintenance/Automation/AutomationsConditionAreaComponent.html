@@ -90,7 +90,7 @@
 
                                                                                     <LogLov [DataCy]="(CondationListType +'AutomationObjectFieldLov'+itemIndex)"
                                                                                             *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
-                                                                                            [ObjectFieldName]="'ObjectFieldCode'"
+                                                                                            [ObjectFieldName]="item.FieldName"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
                                                                                             [DataContext]="item"
@@ -105,7 +105,7 @@
 
                                                                                     <LogLov [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                             *ngIf="!item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
-                                                                                            [ObjectFieldName]="'ObjectFieldCode'"
+                                                                                            [ObjectFieldName]="item.FieldName"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
                                                                                             [DataContext]="item"
@@ -168,7 +168,7 @@
                                                                                             <div style="width:202px;" *ngIf="item.IsCustomCombox">
                                                                                                 <LogLov  [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                         *ngIf="!item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
-                                                                                                        [ObjectFieldName]="'CustomObjectFieldCode'"
+                                                                                                        [ObjectFieldName]="item.FieldName"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
                                                                                                         [DataContext]="item"
@@ -183,7 +183,7 @@
 
                                                                                                 <LogLov [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                         *ngIf="item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
-                                                                                                        [ObjectFieldName]="'CustomObjectFieldCode'"
+                                                                                                        [ObjectFieldName]="item.FieldName"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
                                                                                                         [DataContext]="item"
@@ -227,7 +227,7 @@
                                                                                                             </div>
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
-                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
+                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="item.FieldName"
                                                                                                                         [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"
@@ -282,7 +282,7 @@
                                                                                                             </div>
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
-                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
+                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="item.FieldName"
                                                                                                                         [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"

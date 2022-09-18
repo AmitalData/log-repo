@@ -55,6 +55,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
    //IsSystemVariables: boolean = false;
     CustomObjectFieldCode: string = "";
     AutomationHelper: AutomationHelper;
+    FieldName: string;
     constructor(entityPM: AutomationCondition, addEditAutomationsViewModel: any, delayAutomationconditionsViewModel = null) {
         super();
         this.CurrentEntityPM = entityPM;
@@ -85,7 +86,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (this.ObjectFieldPM) {
             this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldCode = this.ObjectFieldPM.FieldCode;
- 
+            this.FieldName = this.ObjectFieldPM.FieldName;
+
+
 
             this.SelectedCustomField = this.ObjectFieldPM;
 
@@ -407,7 +410,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
                     this.IsHideGeneralControl = false;
                     this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
-
+                    this.FieldName = item.FieldName;
 
                     if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
                         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
