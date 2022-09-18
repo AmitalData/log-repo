@@ -1,7 +1,8 @@
+import { DashboardListComponent } from './Components/Workspace/DashboardLists/DashboardListComponent';
 
 export const Components =
     [
-        
+        DashboardListComponent,
     ];
 
 export class ModuleDeclarations {
@@ -10,7 +11,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
-            
+            case "DashboardListComponent": { myResult = DashboardListComponent; break; }
         }
 
         return myResult;

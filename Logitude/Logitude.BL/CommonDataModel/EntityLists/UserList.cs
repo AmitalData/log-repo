@@ -68,6 +68,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
             set { groupId = value; }
         }
         public string SignatureImageId { get; set; }
+        public bool HideDashboardToolTip { get; set; }
     }
      
 }

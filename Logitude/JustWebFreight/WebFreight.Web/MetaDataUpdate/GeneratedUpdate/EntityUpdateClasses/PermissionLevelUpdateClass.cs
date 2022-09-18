@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PermissionLevelUpdateClass
    {  		
-		public const string HashString = "64a8c97b44a481aa3bd2d3aed6b60107";
+		public const string HashString = "02d475a3010c13888f0e81495148c9bd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Permission Level",
-			      				    Code =  "3e7a",
+			      				    Code =  "f882",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -174,6 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -297,6 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -340,7 +342,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable PermissionLevelObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PermissionLevel" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> PermissionLevelObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PermissionLevel").ToList();
+		       
+	      
+
+	         Screen PermissionLevelPermissionLevelHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PermissionLevel.HeaderScreen", Name = "PermissionLevelHeaderScreen", ObjectTableId = PermissionLevelObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    PermissionLevelObjectTable.HeaderScreenId = PermissionLevelPermissionLevelHeaderScreenScreen0.Id;
+		    PermissionLevelObjectTable.HeaderScreenCode = PermissionLevelPermissionLevelHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

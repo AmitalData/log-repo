@@ -315,6 +315,8 @@
     <Content Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.css" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
@@ -1822,6 +1824,7 @@
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterItem.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardLayoutComponent.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />

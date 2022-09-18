@@ -41,6 +41,13 @@ namespace Logitude.DashboardModule.BL
                 Name = "Specific Users", 
                 SearchFields = "SPF,Specific Users", 
 			});
+			 
+            all.Add(new PermissionLevelDetails()
+            {    
+                Code = "PUB", 
+                Name = "Public", 
+                SearchFields = "PUB,Public", 
+			});
 			
             return all;
        }

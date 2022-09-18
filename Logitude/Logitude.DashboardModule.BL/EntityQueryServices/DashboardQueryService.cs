@@ -26,7 +26,7 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
             entityPM.DashboardSharedUsers = dashboardSharedUserQuery.GetMulti(dashboardKeys, true);
         }
 
-        public IQueryable<DashboardPM> GetDashboardPMs(int tenant, string loggedContactId)
+        public string GetDefaultDashboardId(int tenant, string loggedContactId)
         {
             DashboardRepository dashboardRepository = new DashboardRepository(context);
             DashboardSharedUserRepository dashboardSharedUserRepository = new DashboardSharedUserRepository(context);
@@ -34,7 +34,7 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
             IQueryable<string> dashboardIds = dashboards.Select(s => s.Id);
             IQueryable<DashboardSharedUser> users = dashboardSharedUserRepository.GetDashboardSharedUsersByDashboardsIds(dashboardIds, tenant);
 
-            return (from d in dashboards
+            DashboardPM dashboard = (from d in dashboards
                     where d.Tenant == tenant
                     && ((d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
                     || (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
@@ -49,7 +49,10 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
                         UpdatedByUserId = d.UpdatedByUserId,
                         SearchFields = d.SearchFields,
                         Name = d.Name,
-                    });
+                    }).FirstOrDefault();
+
+            if (dashboard != null) return dashboard.Id;
+            else return null;
         }
     }
 }
