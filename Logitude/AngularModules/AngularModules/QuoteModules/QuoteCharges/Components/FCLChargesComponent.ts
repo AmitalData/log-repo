@@ -1705,7 +1705,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
                 case "PDCW":
@@ -1825,7 +1824,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
                 case "PDCW":
