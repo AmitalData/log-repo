@@ -4,26 +4,25 @@ import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 //import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
-//import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
+import { BehaviorSubject, forkJoin, Subject } from 'rxjs';
+import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
+import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
 @Component({
     template:
         `
-        <div class="new-dashboard" #reactDashboradContainer>
-        </div>
-    `,
+        <div class="new-dashboard" #reactDashboradContainer></div>`,
 
     styles:
         [`
-    .new-dashboard{
-        width: 100%;
-        height: 100%;
-        padding: 10px 0px 0px 0px;
-     }
-    `],
+        .new-dashboard {
+            width: 100%;
+            height: 100%;
+            padding: 10px 0px 0px 0px;
+        }`],
     selector: 'Custom-Layout',
     styleUrls: ['CustomDashboardComponent.css'],
     encapsulation: ViewEncapsulation.ShadowDom
@@ -45,6 +44,11 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         return this._show;
     }
 
+    DashboardDataBinding: DashboardDataBinding = {
+        isOnEditLayout: new Subject(),
+        onGetLayouts: new BehaviorSubject({ lg: [] }),
+        widgetUpdated: new Subject()
+    }
     constructor() {
 
     }
@@ -56,14 +60,26 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.renderNewDashboard();
     }
+    onChangeLayouts(layouts: {lg: ReactWidgetPM[];}){
 
+    }
+    openEditWidget(Widget: ReactWidgetPM){
+
+    }
+    onSelectDataPoint(dataPointSelection: DataPointSelection){
+
+    }
     renderNewDashboard() {
+
         ReactDOM.render(React.createElement(Dashboard, {
             token: SessionInfo.Token,
             tenant: SessionInfo.LoggedUserTenant,
             userId: SessionInfo.LoggedUserId,
-            //dataBinding: this.dashboardDataBinding,            
+            dataBinding: this.DashboardDataBinding,
+            onChangeLayouts: this.onChangeLayouts.bind(this),
+            openEditWidget: this.openEditWidget.bind(this),
+            onSelectDataPoint: this.onSelectDataPoint.bind(this)
         }),
             this.reactDashboradContainer.nativeElement);
-    }    
+    }
 }
