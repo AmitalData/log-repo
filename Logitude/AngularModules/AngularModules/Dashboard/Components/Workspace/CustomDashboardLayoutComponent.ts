@@ -8,6 +8,10 @@ import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/Dash
 import { BehaviorSubject, forkJoin, Subject } from 'rxjs';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
+import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
+import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -25,14 +29,15 @@ import { DataPointSelection } from 'logitude-dashboard-library/dist/types/Series
         }`],
     selector: 'Custom-Layout',
     styleUrls: ['CustomDashboardComponent.css'],
+    inputs: ['IsEditLayout', 'SelectedDashboard'],
     encapsulation: ViewEncapsulation.ShadowDom
 })
 
-export class CustomDashboardLayoutComponent implements AfterViewInit {
+export class CustomDashboardLayoutComponent implements AfterViewInit {   
     @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
 
     _show: boolean = false;
-    @Input('show') set show(value) {
+    @Input('Show') set Show(value) {
         console.log('CustomDashboardLayoutComponent show= ', value);
         if (value && !this._show) {
             this.ShowDashboard();
@@ -40,7 +45,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         this._show = value;
 
     }
-    get show() {
+    get Show() {
         return this._show;
     }
 
@@ -51,6 +56,75 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
     constructor() {
 
+    }
+
+    private isEditLayout: boolean;
+    get IsEditLayout() { return this.isEditLayout; }
+    set IsEditLayout(value: boolean) {
+        if (this.isEditLayout != value) {
+            this.isEditLayout = value;
+
+            this.DashboardDataBinding.isOnEditLayout.next(value);
+        }
+    }
+
+    private selectedDashboard: DashboardPM;
+    get SelectedDashboard() { return this.selectedDashboard; }
+    set SelectedDashboard(value: DashboardPM) {
+        if (this.selectedDashboard != value) {
+            this.selectedDashboard = value;
+
+            this.BindReactWidgets(value.Widgets);            
+        }
+    }
+    private BindReactWidgets(widgets: WidgetPM[]) {
+        var reactWidgets: ReactWidgetPM[] = [];
+
+        widgets.forEach(item => {
+            reactWidgets.push(this.GetReactWidget(item));
+        });
+
+        this.DashboardDataBinding.onGetLayouts.next({ lg: reactWidgets});
+    }
+    private GetReactWidget(widget: WidgetPM): ReactWidgetPM {
+        var myWidget: ReactWidgetPM = {} as ReactWidgetPM;
+
+        if (widget) {
+            myWidget.Id = widget.Id;
+            myWidget.Tenant = widget.Tenant;
+            myWidget.Title = widget.Title;
+            myWidget.GroupById = widget.GroupById;
+            myWidget.DashboardId = widget.DashboardId;
+            myWidget.StartPotistion = widget.StartPotistion;
+            myWidget.EndPosition = widget.EndPosition;
+            myWidget.EntityId = widget.EntityId;
+            myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
+            myWidget.WidgetMeasures = [];
+            myWidget.Filters = widget.Filters;
+            myWidget.DateGroupCode = widget.DateGroupCode;
+            myWidget.SortBy = widget.SortBy;
+            myWidget.SortDirection = widget.SortDirection;
+            myWidget.MaximumGrouping = widget.MaximumGrouping;
+
+            widget.WidgetMeasures.forEach(item => {
+                myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
+            });
+        }
+
+        return myWidget;
+    }
+    private GetReactWidgetMeasure(widgetMeasure: WidgetMeasurePM): ReactWidgetMeasurePM {
+        var myWidgetMeasuer: ReactWidgetMeasurePM = {} as ReactWidgetMeasurePM;
+
+        if (widgetMeasure) {
+            myWidgetMeasuer.Id = widgetMeasure.Id;
+            myWidgetMeasuer.Tenant = widgetMeasure.Tenant;
+            myWidgetMeasuer.WidgetId = widgetMeasure.WidgetId;
+            myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
+            myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
+        }
+
+        return myWidgetMeasuer;
     }
 
     ShowDashboard() {
@@ -70,7 +144,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
 
     }
     renderNewDashboard() {
-
         ReactDOM.render(React.createElement(Dashboard, {
             token: SessionInfo.Token,
             tenant: SessionInfo.LoggedUserTenant,

@@ -27,14 +27,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private CurrentSession = SessionLocator.SelectedSession;    
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
-    private myDashboardPM: DashboardPM;
+    private SelectedDashboard: DashboardPM;
     public SelectedDashboardName: string;
     public DataContext = this;
     constructor() {
         super();
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
-        this.myDashboardPM = new DashboardPM();
+        this.SelectedDashboard = new DashboardPM();
     }
     ngOnInit(): void {
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
@@ -58,14 +58,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
 
     @Input('Show') Show;
 
-    //private selectedDashboard: ReactDashboardPM = {} as ReactDashboardPM;
-    //private dashboardDataBinding: DashboardDataBinding =
-    //    {
-    //        onGetAllDashboards: new BehaviorSubject<ReactDashboardPM[]>([]),
-    //        onGetDashboard: new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM),
-    //        onAddUpdateWidget: new BehaviorSubject<boolean>(false),
-    //    };
-
     private GetDefaultDashboard() {
         this.dashboardPMExtendedService.GetDefaultDashboardId().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -78,9 +70,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     GetSingleDashboardWithWidgets(dashboardId: string) {
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.myDashboardPM = myResponse.Result;
-                if (this.myDashboardPM) {
-                    this.SelectedDashboardName = this.myDashboardPM.Name;
+                this.SelectedDashboard = myResponse.Result;
+                if (this.SelectedDashboard) {
+                    this.SelectedDashboardName = this.SelectedDashboard.Name;
 
                     //var myReactDashboard: ReactDashboardPM = this.GetReactDashboard(this.myDashboardPM)
                     //this.dashboardDataBinding.onGetDashboard.next(myReactDashboard);
@@ -148,34 +140,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     //    }
 
     //    return myDashboard;
-    //}
-    //GetReactWidget(widget: WidgetPM): ReactWidgetPM {
-    //    var myWidget: ReactWidgetPM = {} as ReactWidgetPM;
-
-    //    if (widget) {
-    //        myWidget.Id = widget.Id;
-    //        myWidget.Tenant = widget.Tenant;
-    //        myWidget.Title = widget.Title;
-    //        myWidget.GroupById = widget.GroupById;
-    //        myWidget.DashboardId = widget.DashboardId;
-    //        myWidget.StartPotistion = widget.StartPotistion;
-    //        myWidget.EndPosition = widget.EndPosition;
-    //        myWidget.EntityId = widget.EntityId;
-    //        myWidget.TypeCode = widget.TypeCode as "line" | "area" | "bar" | "histogram" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "treemap" | "boxPlot" | "candlestick" | "radar" | "polarArea" | "rangeBar";
-    //        myWidget.WidgetMeasures = [];
-    //        myWidget.Filters = widget.Filters;
-    //        myWidget.DateGroupCode = widget.DateGroupCode;
-    //        myWidget.SortBy = widget.SortBy;
-    //        myWidget.SortDirection = widget.SortDirection;
-    //        myWidget.MaximumGrouping = widget.MaximumGrouping;
-
-    //        widget.WidgetMeasures.forEach(item => {
-    //            myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
-    //        });
-    //    }
-
-    //    return myWidget;
-    //}
+    //}    
     //GetReactSharedUser(user: DashboardSharedUserPM): ReactDashboardSharedUserPM {
     //    var myUser: ReactDashboardSharedUserPM = {} as ReactDashboardSharedUserPM;
 
@@ -188,20 +153,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     //    }
 
     //    return myUser;
-    //}
-    //GetReactWidgetMeasure(widgetMeasure: WidgetMeasurePM): ReactWidgetMeasurePM {
-    //    var myWidgetMeasuer: ReactWidgetMeasurePM = {} as ReactWidgetMeasurePM;
-
-    //    if (widgetMeasure) {
-    //        myWidgetMeasuer.Id = widgetMeasure.Id;
-    //        myWidgetMeasuer.Tenant = widgetMeasure.Tenant;
-    //        myWidgetMeasuer.WidgetId = widgetMeasure.WidgetId;
-    //        myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
-    //        myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
-    //    }
-
-    //    return myWidgetMeasuer;
-    //}
+    //}  
 
     //private CheckDeletedWidgets(dashboard: ReactDashboardPM) {
     //    var deletedWidgets: WidgetPM[] = [];
@@ -237,27 +189,20 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     public BackButtonLable: string = "Back";
-    public IsEditLayout: boolean = true;
-    public IsEditDashboard: boolean = false;
-    public IsBackButtonVisible: boolean = false;
-    public IsSaveButtonVisible: boolean = false;
-    public IsAddWidgetVisible: boolean = false;
+    public IsEditLayoutButtonVisible: boolean = true;
+    public IsEditDashboardButtonVisible: boolean = false;
+    public IsEditLayoutModeActive: boolean = false;
     public HasChanges: boolean = false;
     private ResetFlags() {
-        this.IsEditLayout = true;
-        this.IsEditDashboard = false;
-        this.IsBackButtonVisible = false;
-        this.IsSaveButtonVisible = false;
-        this.IsAddWidgetVisible = false;
+        this.IsEditLayoutButtonVisible = true;
+        this.IsEditDashboardButtonVisible = false;
+        this.IsEditLayoutModeActive = false;
     }
 
     EditLayoutClicked() {
-        this.IsEditLayout = false;
-        this.IsEditDashboard = true;
-        this.IsBackButtonVisible = true;
-        this.IsSaveButtonVisible = true;
-        this.IsAddWidgetVisible = true;
-
+        this.IsEditLayoutButtonVisible = false;
+        this.IsEditDashboardButtonVisible = true;
+        this.IsEditLayoutModeActive = true;
 
     }
 
@@ -285,13 +230,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     EditDashboardClicked() {
-        //this.IsEditLayout = true;
-        this.IsEditDashboard = false;
+        //this.IsEditLayoutButtonVisible = true;
+        this.IsEditDashboardButtonVisible = false;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Dashboard";
 
-        logitudeWindow.WindowArgs = { EntityPM: this.myDashboardPM, };
+        logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
@@ -303,14 +248,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     AddWidgetClicked() {
-        var myWidget: WidgetPM = new WidgetPM(this.myDashboardPM);
+        var myWidget: WidgetPM = new WidgetPM(this.SelectedDashboard);
         myWidget.Tenant = SessionInfo.LoggedUserTenant;
         // myWidget.StartPotistion = widget.StartPotistion;
         // myWidget.EndPosition = widget.EndPosition;        
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add Widget";
-        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.myDashboardPM };
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.SelectedDashboard };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
@@ -362,9 +307,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         //this.CheckDeletedWidgets(dashboard);
         //this.MapWidgetsPositions(dashboard);
 
-        this.dashboardPMService.update(this.myDashboardPM).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.myDashboardPM = myResponse.Result;
+                this.SelectedDashboard = myResponse.Result;
                 //this.selectedDashboard = this.GetReactDashboard(this.myDashboardPM);
                 //this.dashboardDataBinding.onGetDashboard.next(this.selectedDashboard);
                 //this.dashboardDataBinding.onAddUpdateWidget.next(true);
@@ -380,12 +325,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
 
     private myCloner: Cloner;
     private Clone() {
-        this.myCloner = new Cloner(this.myDashboardPM);
+        this.myCloner = new Cloner(this.SelectedDashboard);
         this.myCloner.AddField('Name');
         this.myCloner.AddField('Description');
         this.myCloner.AddField('PermissionLevelCode');
 
-        this.myCloner.AddEntity(this.myDashboardPM);
+        this.myCloner.AddEntity(this.SelectedDashboard);
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();

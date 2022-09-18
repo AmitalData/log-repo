@@ -27,7 +27,7 @@
                     <div></div>
                 </td>
 
-                <td style="width:30px;" *ngIf="IsBackButtonVisible">
+                <td style="width:30px;" *ngIf="IsEditLayoutModeActive">
                     <BackButton [Text]="BackButtonLable" (click)="BackButtonClicked()"></BackButton>
                 </td>
 
@@ -40,15 +40,15 @@
                 </td>
 
                 <td style="width:20px;">
-                    <IconButton *ngIf="IsEditLayout" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
-                    <IconButton *ngIf="IsEditDashboard" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
+                    <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
+                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
                 </td>
 
                 <td>
                     <div></div>
                 </td>
 
-                <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveButtonVisible">
+                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
                     <button *ngIf="!HasChanges" class="Button">
                         <img src="./Images/Buttons/Save.png" class="LeftCenter" style="margin-left:2px;" />
                         <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
@@ -64,7 +64,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 55px; min-width: 55px;" *ngIf="IsAddWidgetVisible">
+                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
                     <button class="Button" (click)="AddWidgetClicked()">Add Widget</button>
                 </td>
 
@@ -72,7 +72,7 @@
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;" *ngIf="!IsEditDashboard">
+                <td style="width:200px; height:22px;" *ngIf="!IsEditLayoutModeActive">
                     <LogLov [ObjectFieldName]="'SelectedDashboardId'"
                             [ObjectTableName]="'Dashboard'"
                             [NoObjectField]="true"
@@ -84,11 +84,11 @@
                     </LogLov>
                 </td>
 
-                <td style="width:20px;" *ngIf="!IsEditDashboard">
+                <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AdDashboardClicked()"></IconButton>
                 </td>
 
-                <td style="width:20px;" *ngIf="!IsEditDashboard">
+                <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
                 </td>
             </tr>
@@ -96,7 +96,7 @@
     </div>
 
     <div class="Dashboard-body">
-        <Custom-Layout [show]="Show"></Custom-Layout>
+        <Custom-Layout [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [SelectedDashboard]="SelectedDashboard"></Custom-Layout>
     </div>
 </div>
 
