@@ -165,7 +165,7 @@ namespace WebFreight.Web.ContainerTracking
 
         private void HandelUpdateManager(ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest)
         {
-            string containerNumber = visionContainerStatus.payload.container_id;
+            string containerNumber = this.GetContainerNumber(visionContainerStatus.payload.container_id);
             Container myRequestContainer = this.GetContainer(containerTrackingRequest, containerNumber);
 
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
@@ -207,7 +207,22 @@ namespace WebFreight.Web.ContainerTracking
             
 
         }
+        private string GetContainerNumber(string container_id)
+        {
+            string containerNumber = container_id;
 
+            if (container_id.Contains("-"))
+            {
+                var dash_index = container_id.LastIndexOf('-');
+                var value_after_dash = container_id.ElementAt(dash_index + 1);
+                if(value_after_dash != null && value_after_dash.ToString().Length == 1)
+                {
+                    containerNumber = container_id.Remove(dash_index, 1);
+                }
+            }
+
+            return containerNumber;
+        }
         private void MapContainersExternalData(ContainerPM container )
         {
             if(container == null)
