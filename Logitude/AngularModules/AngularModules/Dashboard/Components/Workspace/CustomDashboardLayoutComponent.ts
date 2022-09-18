@@ -3,11 +3,11 @@ import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
-import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
+//import { ReactDashboardPM } from 'logitude-dashboard-library/dist/types/Dashboard';
+//import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
-import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
+//import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
+//import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
 @Component({
     template:
@@ -62,20 +62,8 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             token: SessionInfo.Token,
             tenant: SessionInfo.LoggedUserTenant,
             userId: SessionInfo.LoggedUserId,
-            dataBinding: this.dashboardDataBinding,
-            openAddEditWidget: (widget: ReactWidgetPM | undefined) => { },
-            openAddEditDashboard: (dashboard: ReactDashboardPM | undefined) => { },
-            onChangeDashboard: (dashboard: ReactDashboardPM | undefined) => { },
-            onSaveDashboard: (dashboard: ReactDashboardPM | undefined) => { },
-            onSelectDataPoint: (dataPointSelection: DataPointSelection) => { },
+            //dataBinding: this.dashboardDataBinding,            
         }),
             this.reactDashboradContainer.nativeElement);
-    }
-
-    private dashboardDataBinding: DashboardDataBinding =
-        {
-            onGetAllDashboards: new BehaviorSubject<ReactDashboardPM[]>([]),
-            onGetDashboard: new BehaviorSubject<ReactDashboardPM>({} as ReactDashboardPM),
-            onAddUpdateWidget: new BehaviorSubject<boolean>(false),
-        };
+    }    
 }

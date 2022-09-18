@@ -50,13 +50,13 @@
 
                 <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveButtonVisible">
                     <button *ngIf="!HasChanges" class="Button">
-                        <img src="./Images/Buttons/Save.png" class="LeftCenter" />
-                        <span style=" line-height: 19px; vertical-align: middle; margin-right: 2px;">Save</span>
+                        <img src="./Images/Buttons/Save.png" class="LeftCenter" style="margin-left:2px;" />
+                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
 
                     <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard()">
-                        <img src="./Images/Buttons/Save.Red.png" class="LeftCenter" />
-                        <span style=" line-height: 19px; vertical-align: middle; margin-right: 2px;">Save</span>
+                        <img src="./Images/Buttons/Save.png" class="LeftCenter" style="margin-left:2px;" />
+                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
                 </td>
 
@@ -72,7 +72,7 @@
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;">
+                <td style="width:200px; height:22px;" *ngIf="!IsEditDashboard">
                     <LogLov [ObjectFieldName]="'SelectedDashboardId'"
                             [ObjectTableName]="'Dashboard'"
                             [NoObjectField]="true"
@@ -84,11 +84,11 @@
                     </LogLov>
                 </td>
 
-                <td style="width:20px;">
+                <td style="width:20px;" *ngIf="!IsEditDashboard">
                     <IconButton [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AdDashboardClicked()"></IconButton>
                 </td>
 
-                <td style="width:20px;">
+                <td style="width:20px;" *ngIf="!IsEditDashboard">
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
                 </td>
             </tr>

@@ -20,6 +20,7 @@ import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
@@ -58,6 +59,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsMenuVisible: boolean = false;
+    public IsCustomDashboardFeatureOn: boolean = false;
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -67,6 +69,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.MoneyInDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
+        this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
     }
     
     ngOnInit() {
@@ -85,10 +88,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
             
         }
     }
-
-
-    private Page_CUSTOM: any = null;
-    
 
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
