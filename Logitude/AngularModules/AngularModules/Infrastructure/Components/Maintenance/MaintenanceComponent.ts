@@ -181,7 +181,7 @@ export class MaintenanceComponent {
     }
 
     private PushEntityStatusMenu(item: MenusTablePM) {
-        if (SessionLocator.LoggedUserPM.IsCustomerCare && this.EntityStatusToggle) {
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor) && this.EntityStatusToggle) {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
     }
