@@ -15,7 +15,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public context = { componentParent: this };
     public columns: any[] = [];
-
+    public rowData: any;
     ngOnInit(): void {
 
     }
