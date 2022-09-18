@@ -64,7 +64,7 @@ export class DocumentTypeTemplateViewModel {
     public TemplateFooterHeight: number;
     public TemplateTechnologyCode: string;
     public IsSystem: boolean;
-
+    public DocumentDefultAttachments: any[];
 
 
 
@@ -150,7 +150,10 @@ export class DocumentTypeTemplateViewModel {
                 this.CC = documentTypeTemplate.CC;
                 this.To = documentTypeTemplate.To;
                 this.IsSystem = documentTypeTemplate.IsSystem;
+                this.DocumentDefultAttachments = documentTypeTemplate.DocumentDefultAttachments ? documentTypeTemplate.DocumentDefultAttachments : [];
 
+
+        
                 if (documentTypeTemplate.InActive) {
                     this.LableSetactive = "Mark as active";
                 }
