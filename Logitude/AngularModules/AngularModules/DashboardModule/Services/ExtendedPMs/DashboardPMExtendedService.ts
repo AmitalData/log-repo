@@ -16,20 +16,14 @@ export class DashboardPMExtendedService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DashboardPMExtended';
     }
 
-    GetDashboardPMs() {
-        var url = this._apiUrl + '/GetDashboardPMs';
+    GetDefaultDashboardId() {
+        var url = this._apiUrl + '/GetDefaultDashboardId';
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
-                var listMapped: Array<DashboardPM> = [];
-                for (var itemJeson in listJason) {
-                    var itemMapped: DashboardPM = this.MapDashboardPM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
-
-                var myResponse = new ServiceResponse();
-                myResponse.Result = listMapped;
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
                 return myResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });

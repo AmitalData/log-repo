@@ -43,7 +43,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.PermissionLevelsList = [];
 
         this.PermissionLevelsList.push(new CodeNameClass("ONM", "Only Me"));
-        this.PermissionLevelsList.push(new CodeNameClass("ALL", "All Users"));
+        this.PermissionLevelsList.push(new CodeNameClass("PUB", "Public"));
         this.PermissionLevelsList.push(new CodeNameClass("SPF", "Specific Users"));
 
         if (this.isNew)
