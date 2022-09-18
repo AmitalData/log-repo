@@ -190,12 +190,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IBookingContext MyContext = BookingContext.GetContext(tenant);
 				BookingStatusListQueryService bookingStatusQuery = new BookingStatusListQueryService(MyContext);
 
-                List<BookingStatusList> entityLists = bookingStatusQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "BookingStatus",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<BookingStatusList> entityLists = bookingStatusQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bookingStatusQuery.GetListCount(queryOperations);
+                    int count = bookingStatusQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

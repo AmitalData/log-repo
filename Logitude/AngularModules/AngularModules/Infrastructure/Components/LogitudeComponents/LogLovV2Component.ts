@@ -2221,6 +2221,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.LanguageFilterValue = this.LanguageFilterValue;
         args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
         args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
+        args.EntityPM = this.DataContext;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -3364,13 +3365,19 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntity = this.GetParentEntity();
-        filters.ParentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        filters.ParentEntityId = this.GetParentEntityId();
         filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
         return filters;
     }
 
+    GetParentEntityId() {
+        let parentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
+        return parentEntityId ? parentEntityId : null;
+    }
+
     GetParentEntity() {
         let entityPM = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityPM;
+        if (!entityPM) entityPM = this.DataContext;
         if (!entityPM) return null;
 
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
