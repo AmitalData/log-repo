@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit,Input } from '@angular/core';
+import { Component, AfterViewInit, OnInit,Input, OnDestroy } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -22,7 +22,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
     selector:'custom-dashboard',
 })
 
-export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit {   
+export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;    
     private dashboardPMService: DashboardPMService;
@@ -30,12 +30,15 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private SelectedDashboard: DashboardPM;
     public SelectedDashboardName: string;
     public DataContext = this;
+    @Input('Show') Show;
     constructor() {
         super();
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.SelectedDashboard = new DashboardPM();
+        this.Listen();
     }
+
     ngOnInit(): void {
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
             this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
@@ -56,7 +59,18 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
        
     }
 
-    @Input('Show') Show;
+    private SessionEvent: any = null;
+    private Listen() {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "WidgetEdited") {
+                this.HasChanges = true;
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
+    }
 
     private GetDefaultDashboard() {
         this.dashboardPMExtendedService.GetDefaultDashboardId().subscribe((myResponse: ServiceResponse) => {
@@ -133,15 +147,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     //        this.myDashboardPM.RemoveWidget(item);
     //    });
     //}
-    //private MapWidgetsPositions(dashboard: ReactDashboardPM) {
-    //    dashboard.Widgets.forEach(item => {
-    //        var myWidgetPm: WidgetPM = this.myDashboardPM.Widgets.filter(d => d.Id == item.Id)[0];
-    //        if (myWidgetPm) {
-    //            myWidgetPm.EndPosition = item.EndPosition;
-    //            myWidgetPm.StartPotistion = item.StartPotistion;
-    //        }
-    //    });
-    //}
+   
 
     private selectedDashboardId: string;
     get SelectedDashboardId() { return this.selectedDashboardId; }

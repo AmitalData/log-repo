@@ -14,6 +14,7 @@ import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasur
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -36,7 +37,11 @@ import { AppTool } from '../../../Infrastructure/Tools';
 })
 
 export class CustomDashboardLayoutComponent implements AfterViewInit {   
-    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
+    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;    
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor() {
+
+    }
 
     _show: boolean = false;
     @Input('Show') set Show(value) {
@@ -55,9 +60,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         isOnEditLayout: new Subject(),
         onGetLayouts: new BehaviorSubject({ lg: [] }),
         widgetUpdated: new Subject()
-    }
-    constructor() {
-
     }
 
     private isEditLayout: boolean;
@@ -138,23 +140,20 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         this.renderNewDashboard();
     }
 
-    onChangeLayouts(layouts: {lg: ReactWidgetPM[];}){
+    onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
+        layouts.lg.forEach(item => {
+            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == item.Id)[0];
+            if (myWidget) {
+                myWidget.EndPosition = item.EndPosition;
+                myWidget.StartPotistion = item.StartPotistion;
+            }
+        });
 
+        this.CurrentSession.FireEvent("WidgetEdited");
     }
+
     openEditWidget(widget: ReactWidgetPM){
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
-        //if (myWidget == null) {
-        //    myWidget = new WidgetPM(this.SelectedDashboard);
-        //    myWidget.TypeCode = widget.TypeCode;
-        //    myWidget.Tenant = SessionInfo.LoggedUserTenant;
-        //    myWidget.StartPotistion = widget.StartPotistion;
-        //    myWidget.EndPosition = widget.EndPosition;
-        //    myWidget.DateGroupCode = widget.DateGroupCode;
-        //    myWidget.SortDirection = widget.SortDirection;
-        //    myWidget.SortBy = widget.SortBy;
-        //    myWidget.MaximumGrouping = widget.MaximumGrouping;
-        //}
-
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
@@ -162,7 +161,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    
+                    this.CurrentSession.FireEvent("WidgetEdited");
                 }
             });
         });
