@@ -12,6 +12,8 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -77,6 +79,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             this.BindReactWidgets(value.Widgets);            
         }
     }
+
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];
 
@@ -134,15 +137,40 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.renderNewDashboard();
     }
+
     onChangeLayouts(layouts: {lg: ReactWidgetPM[];}){
 
     }
-    openEditWidget(Widget: ReactWidgetPM){
+    openEditWidget(widget: ReactWidgetPM){
+        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
+        //if (myWidget == null) {
+        //    myWidget = new WidgetPM(this.SelectedDashboard);
+        //    myWidget.TypeCode = widget.TypeCode;
+        //    myWidget.Tenant = SessionInfo.LoggedUserTenant;
+        //    myWidget.StartPotistion = widget.StartPotistion;
+        //    myWidget.EndPosition = widget.EndPosition;
+        //    myWidget.DateGroupCode = widget.DateGroupCode;
+        //    myWidget.SortDirection = widget.SortDirection;
+        //    myWidget.SortBy = widget.SortBy;
+        //    myWidget.MaximumGrouping = widget.MaximumGrouping;
+        //}
 
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Edit Widget";
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    
+                }
+            });
+        });
     }
     onSelectDataPoint(dataPointSelection: DataPointSelection){
 
     }
+
     renderNewDashboard() {
         ReactDOM.render(React.createElement(Dashboard, {
             token: SessionInfo.Token,
