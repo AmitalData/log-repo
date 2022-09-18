@@ -196,6 +196,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     var result: BIReportXMLData = myResult.Result;
                     this.ReportXML = result;
                     this.BIReportXMLData = result;
+                    this.SetAndOrMainOpertaion();
                     this.OriginalDWQueryFilterData = this.IsScheduler ? this.BIReportXMLData.DWQueryData.Filters : this.OriginalDWQueryFilterData;
                     this.EntityPM = result.BIReportPM;
                     this.CanScheduler = this.EntityPM != null ? this.EntityPM.AvailableForScheduling && !this.IsScheduler : false;
@@ -213,6 +214,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 }
             });
         }
+    }
+
+    private SetAndOrMainOpertaion() {
+        if (!this.IsScheduler) return;
+        if (!this.BIReportXMLData) return;
+        if (!this.BIReportXMLData.DWQueryData) return;
+        if (!this.BIReportXMLData.DWQueryData.Filters) return;
+
+        this.BIReportXMLData.DWQueryData.Filters.AndOr = this.SavedFilterItemsData?.AndOr;
     }
 
     public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
