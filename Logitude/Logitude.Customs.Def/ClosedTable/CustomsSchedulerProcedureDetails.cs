@@ -35,6 +35,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields= "CustomsSendDeclarationStatus,CustomsSendDeclarationStatus",
                 Description="Send DeclarationStatus",
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsSendReportExel",
+                Name = "CustomsSendReportExel",
+                SearchFields = "CustomsSendReportExel,CustomsSendReportExel",
+                Description = "Send ReportExel",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)

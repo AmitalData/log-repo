@@ -2234,7 +2234,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
         }
 
-        
+        public List<Declaration> GetDeclaration100(int tenant)
+        {
+            return this.repository.GetDeclaration100(tenant);
+        }
+
 
     }
 }
