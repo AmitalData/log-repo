@@ -827,6 +827,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             }
         }
 
+        public HttpResponseMessage GetMarkShowDashboardToolTip(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                UserRepository userRepository = new UserRepository(tenant);
+                var user = userRepository.GetSingleUserById(userId);
+                user.HideDashboardToolTip = true;
+                userRepository.Update(user);
+                userRepository.SubmitChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, userId);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetCheckUserReleaseNotesToolTip(string userId)
         {
             try
