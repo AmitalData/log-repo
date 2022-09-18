@@ -20,6 +20,8 @@ import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
+import { UserExtendedPMService } from 'Common/Services/ExtendedPMs/UserExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
@@ -60,6 +62,8 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsMenuVisible: boolean = false;
     public IsCustomDashboardFeatureOn: boolean = false;
+    public ShowDashboardToolTip: boolean;
+
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -70,6 +74,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
         this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
+        this.ShowDashboardToolTip = !SessionLocator.LoggedUserPM.HideDashboardToolTip;
     }
     
     ngOnInit() {
@@ -85,8 +90,19 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     set SelectedPageItem(newValue: string) {
         if (this.selectedPageItem != newValue) {
             this.selectedPageItem = newValue;
-            
+            if (newValue == "CUSTOM" && this.ShowDashboardToolTip)  this.CloseToolTip();                
         }
+    }
+
+    CloseDashboardToolTipClick(){
+        this.CloseToolTip();
+    }
+
+    CloseToolTip() {
+        this.ShowDashboardToolTip = false;
+        SessionLocator.LoggedUserPM.HideDashboardToolTip = true;
+        new UserExtendedPMService().MarkShowDashboardToolTip(SessionLocator.LoggedUserId).subscribe(() => {
+        });
     }
 
     ngOnDestroy() {

@@ -35,11 +35,24 @@
         <td>
             <ul class="PagesMenu">
                 <li [class.SelectedPageMenu]="SelectedPageItem == 'CLASIC'" (click)="SelectedPageItem = 'CLASIC'">Classic Dashboard</li>
-                <li [class.SelectedPageMenu]="SelectedPageItem == 'CUSTOM'" (click)="SelectedPageItem = 'CUSTOM'">Custom Dashboards</li>
+                <li [class.SelectedPageMenu]="SelectedPageItem == 'CUSTOM'" (click)="SelectedPageItem = 'CUSTOM'">
+                    Custom Dashboards
+                </li>
             </ul>
         </td>
     </tr>
 
+    <tr *ngIf="ShowDashboardToolTip && IsCustomDashboardFeatureOn">
+        <td>
+            <div class="tooltip">
+                <div class="tooltip__arrow"></div>
+                <div class="tooltip-container">
+                    <div style="padding: 5px;"> Explore new dashboards and build your own</div>
+                    <div class="tooltop-btn-container"><button class="tooltip-button" (click)="CloseDashboardToolTipClick()">Close</button></div>
+                </div>
+            </div> 
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="FillContent" [hidden]="SelectedPageItem != 'CLASIC'">

@@ -75,6 +75,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
 
         public string SignatureImageId { get; set; }
+        public bool HideDashboardToolTip { get; set; }
 
     }
 }

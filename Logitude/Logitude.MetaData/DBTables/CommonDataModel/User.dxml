@@ -229,6 +229,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HideDashboardToolTip"
+    OldNames="ShowDashboardToolTip"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Contacts"
