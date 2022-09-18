@@ -104,5 +104,30 @@ namespace CustomsWorkerRole.Test
 
             }
         }
+
+        public static void CheckCustomsContext()
+        {
+            var customContext =CustomContext.GetContext(6) as ICustomContext;
+            customContext.DecisionTypes.FirstOrDefault();
+            var properties = customContext.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                if (prop.PropertyType.AssemblyQualifiedName.Contains("DbSet"))
+                {
+                     dynamic d =prop.GetValue(customContext);
+                    try
+                    {
+                        d.FirstOrDefault();
+                    }
+                    catch (Exception)
+                    {
+
+
+                    }
+                }
+            }
+
+
+        }
     }
 }

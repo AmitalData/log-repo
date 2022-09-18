@@ -356,6 +356,7 @@
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\ConcurrentQueueService.cs" />
     <Compile Include="QueueService\CustomDbQueueService.cs" />
+    <Compile Include="QueueService\DbQueueService.Customs.CS" />
     <Compile Include="QueueService\IQueueService.cs" />
     <Compile Include="QueueService\DbQueueService.cs" />
     <Compile Include="QueueService\LogQueueMessage.cs" />

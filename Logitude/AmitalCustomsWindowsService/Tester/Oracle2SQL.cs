@@ -29,6 +29,24 @@ namespace AmitalCustomsWindowsService.Tester
         No coercion operator is defined between types 'System.Guid' and 'System.String'.
 
 
+        ----
+
+        An error occurred while reading from the store provider's data reader. See the inner exception for details.\r\nSnapshot isolation transaction failed accessing database 'main' because snapshot isolation is not allowed in this database. Use ALTER DATABASE to allow snapshot isolation.
+        SELECT   *  --name, is_read_committed_snapshot_on
+FROM sys.databases
+WHERE name = DB_NAME();
+ALTER DATABASE main SET ALLOW_SNAPSHOT_ISOLATION on
+
+        System.ArgumentException: 'The transaction specified for TransactionScope has a different IsolationLevel than the value requested for the scope.
+Parameter name: transactionOptions.IsolationLevel'
+
+ALTER DATABASE main SET READ_COMMITTED_SNAPSHOT ON
+
+
+        ] System.ArgumentException: The transaction specified for TransactionScope has a different IsolationLevel than the value requested for the scope.
+Parameter name: transactionOptions.IsolationLevel
+   at System.Transactions.TransactionScope..ctor(TransactionScopeOption scopeOption, TransactionOptions transactionOptions, TransactionScopeAsyncFlowOption asyncFlowOption)
+
         */
 
 
@@ -53,7 +71,7 @@ namespace AmitalCustomsWindowsService.Tester
                     int pos = -1;
                     if (line.Contains("oracle"))
                     {
-                        if (file.Contains("ShipmentReceivable"))
+                        if (file.Contains("TenantMap.cs"))
                         {
 
                         }
@@ -333,7 +351,24 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
             Debug.WriteLine(string.Join(Environment.NewLine, restScript));
         }
 
+        public void CheckCustomsContext()
+        {
+            string[] lines = 
+            File.ReadAllLines(@"C:\log2004\Logitude\Logitude.Customs.Data\ICustomContext.cs");
+            foreach (var line in lines)
+            {
+                if (line.Contains("IDbSet")){
 
+                    int pos=line.IndexOf(">");
+                    string table1=line.Substring(pos + 1);
+                    var ary=table1.Split( new string[] {" "} , StringSplitOptions.RemoveEmptyEntries);
+                    string table = ary[0];
+                    Debug.WriteLine($"customContext.{table}.FirstOrDefault();");
+                }
+            }
+
+            //CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
+        }
         public void ChangeToINT()
         {
             //The 'NumberOfRetries' property on 'ContactPassword' could not be set to a 'System.Decimal' value. You must set this property to a non-null value of type 'System.Int32'. 

@@ -79,6 +79,12 @@ namespace Logitude.Server.Tools.QueueService
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
             ,QueueSendModel queueSendModel= null)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return SendReturnIdCustoms(messageValues,
+            tenant, delayTime, CustomerId, BatchNumber, NextRunDate
+            , queueSendModel);
+            }
 
             int tenantPriority = queueSendModel?.TenantPriority ?? 89;
             if (tenantPriority < 1)
@@ -390,6 +396,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
+
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
+            }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;
@@ -566,6 +577,10 @@ namespace Logitude.Server.Tools.QueueService
         }
         public QueueResponse Receive(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(nextRunDelayInSec);
+            }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 
@@ -574,7 +589,7 @@ namespace Logitude.Server.Tools.QueueService
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 DataTable tblQueue = new DataTable();
-
+                
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -730,6 +745,12 @@ namespace Logitude.Server.Tools.QueueService
 
         public void Delay(TimeSpan delayTime)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                DelayCustoms(delayTime);
+                return ;
+            }
+
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -884,6 +905,11 @@ namespace Logitude.Server.Tools.QueueService
         /// </summary>
         public void Complete()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                CompleteCustoms(false);
+                return;
+            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -966,6 +992,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public void CompleteAsFailed()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                CompleteCustoms(true);
+                return;
+            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
