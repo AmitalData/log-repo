@@ -63,17 +63,38 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
         {
-            var groupByQuery = $"{groupBy.FieldCode}";
+            var groupByField = $"{groupBy.FieldCode}";
             if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
             {
-                groupByQuery = ConverDateByDateGroupCode( groupBy);
+                groupByField = ConverDateByDateGroupCode( groupBy);
             }
-            return $@"select 
-                            {groupByQuery} as Label,
-                            {groupByQuery} as GroupById,
-                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
+            var Label = groupByField;
+            var join = "";
+            if (groupBy.DataTypeCode == "LookUp")
+            {
+                join = $" left join {groupBy.JoinedTableDBName} as JoinedTable on JoinedTable.{groupBy.JoinedTableKey} = {groupByField} ";
+                Label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
+            }
+            var sortBy = CreateSortBy();
+            var top = "";
+            if (_Widget.MaximumGrouping.HasValue)
+                top = $"top({ _Widget.MaximumGrouping})";
+            return $@"select  {top}
+                            {Label} as Label,
+                            {groupByField} as GroupById,
+                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            group by {groupByQuery}";
+                            {join}
+                            group by {Label},{groupByField} {sortBy}";
+        }
+
+        private object CreateSortBy()
+        {
+            if(_Widget.SortBy == null)
+            {
+                return $" order by Label {_Widget.SortDirection}";
+            }
+            return $" order by Value {_Widget.SortDirection}";
         }
 
         private string ConverDateByDateGroupCode( AnalyticsFactsFieldsMetaData groupBy)
@@ -81,13 +102,13 @@ namespace Logitude.DashboardModule.BL.DataProviders
             switch (_Widget.DateGroupCode)
             {
                 case "Day":
-                    return $"CAST(DAY(Data.{groupBy.FieldCode}) as varchar(10))";
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ),'/' ,CAST(DAY(Data.{groupBy.FieldCode}) as varchar(3) ))";
                 case "Month":
-                    return $"CAST(MONTH(Data.{groupBy.FieldCode}) as varchar(10))";
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ))";
                 case "Year":
-                    return $"CAST(YEAR(Data.{groupBy.FieldCode}) as varchar(10))";
+                    return $"CAST(YEAR(Data.{groupBy.FieldCode}) as varchar(20))";
                 case "Quarter":
-                    return $"CAST(MONTH(data.{groupBy.FieldCode})/4+1 as varchar(10))";
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/Q',MONTH(data.{groupBy.FieldCode})/4+1)";
                 default:
                     return $"convert(varchar, Data.{groupBy.FieldCode}, 105)";
             }

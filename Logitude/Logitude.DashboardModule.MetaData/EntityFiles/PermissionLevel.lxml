@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Permission Level&quot;"
-  Code="&quot;3e7a&quot;"
+  Code="&quot;f882&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -95,6 +95,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Code&quot;"
     ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -240,6 +241,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -284,6 +286,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;PermissionLevelHeaderScreen&quot;"
+    ObjectTableName="&quot;PermissionLevel&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -325,6 +336,10 @@
       Code="&quot;SPF&quot;"
       Name="&quot;Specific Users&quot;"
       SearchFields="&quot;SPF,Specific Users&quot;" />
+    <Record
+      Code="&quot;PUB&quot;"
+      Name="&quot;Public&quot;"
+      SearchFields="&quot;PUB,Public&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

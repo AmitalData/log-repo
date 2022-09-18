@@ -16,7 +16,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
 {
     public class DashboardPMExtendedController : ApiController
     {
-        public HttpResponseMessage GetDashboardPMs()
+        public HttpResponseMessage GetDefaultDashboardId()
         {
             try
             {
@@ -29,9 +29,9 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 string loggedContactId = this.GetLoggedContactId(authToken.Email, authToken.Tenant);
 
                 DashboardQueryService dashboardQueryService = new DashboardQueryService(authToken.Tenant);
-                IQueryable<DashboardPM> myResult = dashboardQueryService.GetDashboardPMs(authToken.Tenant, loggedContactId);
+                string dashboardId = dashboardQueryService.GetDefaultDashboardId(authToken.Tenant, loggedContactId);
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardId);
             }
 
             catch (Exception ex)

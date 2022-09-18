@@ -31,7 +31,7 @@
 </style>
 
 <table *ngIf="IsMenuVisible">
-    <tr style="height:21px;">
+    <tr style="height:21px;" *ngIf="IsCustomDashboardFeatureOn">
         <td>
             <ul class="PagesMenu">
                 <li [class.SelectedPageMenu]="SelectedPageItem == 'CLASIC'" (click)="SelectedPageItem = 'CLASIC'">Classic Dashboard</li>
@@ -565,7 +565,7 @@
             </div>
 
             <div class="CellContent" [hidden]="SelectedPageItem != 'CUSTOM'">
-                <custom-dashboard [show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
+                <custom-dashboard [Show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
             </div>
         </td>
     </tr>
