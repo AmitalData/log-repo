@@ -138,7 +138,7 @@ namespace Logitude.Server.Tools.EntityChanges
             return value;
         }
 
-        private string GetValue(object currentEntity, ObjectField objectField)
+        public string GetValue(object currentEntity, ObjectField objectField)
         {
             Object value = null;
 

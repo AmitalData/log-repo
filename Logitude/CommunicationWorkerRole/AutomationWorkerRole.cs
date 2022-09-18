@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityAMs;
+﻿using CommunicationWorkerRole.Services;
+using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -148,7 +149,8 @@ namespace CommunicationWorkerRole
                                 if (!string.IsNullOrEmpty(entityChange.AutomationConditionFieldsXml))
                                 {
                                     automationConditionFields = LogitudeXmlSerializer.DeserializeObject<AutomationConditionFields>(entityChange.AutomationConditionFieldsXml);
-                                    AutomationConditionFieldLists = automationConditionFields.Fields;
+                                    AutomationConditionFieldLists = executedImmediately ? automationConditionFields.Fields: new DelayAutomationFieldValueService(entityChange.ObjectTableId, entityChange.EntityId, Tenant).Execute(automationConditionFields.Fields);
+
                                 }
 
                                 AutomationRepository automationRepository = new AutomationRepository(Tenant);
