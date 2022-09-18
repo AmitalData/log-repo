@@ -414,12 +414,12 @@ namespace AmitalCustomsWindowsService.Tester
 				table = table.Substring(0, pos);
 				if (line.Contains(@", ""Customs"""))
 				{
-					//Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table/*.ToUpper()*/};  ");
+					Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table/*.ToUpper()*/};  ");
 
 				}
 				else
 				{
-					Debug.WriteLine($"ALTER SCHEMA dbo TRANSFER OBJECT::Customs.{table/*.ToUpper()*/}; ");
+					//Debug.WriteLine($"ALTER SCHEMA dbo TRANSFER OBJECT::Customs.{table/*.ToUpper()*/}; ");
 				}
 
 

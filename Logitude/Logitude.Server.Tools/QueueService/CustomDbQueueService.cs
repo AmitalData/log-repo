@@ -50,6 +50,8 @@ namespace Logitude.Server.Tools.QueueService
 
         new public CustomDBQueueMessage Receive(int? nextRunDelayInSec = null)
         {
+
+            
             //var r= new DualRepository()
             if (CurrentCustomQueueResponse != null && !String.IsNullOrWhiteSpace(CurrentCustomQueueResponse.MessageId) && CurrentCustomQueueResponse.QueueStatus == QueueStatusEnum.Received)
             {
