@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="QuoteCharges">
+  <Sql Version="1">
+    <![CDATA[
+            update QuoteCharges set 
+			MarkUpCurrencyId = SaleCurrencyId, 
+			ContainerType1MarkUpCurrencyId = SaleCurrencyId,
+			ContainerType2MarkUpCurrencyId = SaleCurrencyId,
+			ContainerType3MarkUpCurrencyId = SaleCurrencyId,
+			ContainerType4MarkUpCurrencyId = SaleCurrencyId,
+			ContainerType5MarkUpCurrencyId = SaleCurrencyId
+			where $LastCounterWhere$
+    ]]>
+  </Sql>
+</Script>

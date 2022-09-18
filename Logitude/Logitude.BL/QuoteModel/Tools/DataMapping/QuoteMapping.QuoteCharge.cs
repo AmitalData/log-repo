@@ -64,6 +64,12 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleTotalAmount = itemPM.SaleTotalAmount;
             itemPoco.SaleTotalAmountLocal = itemPM.SaleTotalAmountLocal;
 
+            itemPoco.ContainerType1MarkUpCurrencyId = itemPM.ContainerType1MarkUpCurrencyId;
+            itemPoco.ContainerType2MarkUpCurrencyId = itemPM.ContainerType2MarkUpCurrencyId;
+            itemPoco.ContainerType3MarkUpCurrencyId = itemPM.ContainerType3MarkUpCurrencyId;
+            itemPoco.ContainerType4MarkUpCurrencyId = itemPM.ContainerType4MarkUpCurrencyId;
+            itemPoco.ContainerType5MarkUpCurrencyId = itemPM.ContainerType5MarkUpCurrencyId;
+            itemPoco.MarkUpCurrencyId = itemPM.MarkUpCurrencyId;
             itemPoco.MarkUpValue = itemPM.MarkUpValue;
             itemPoco.MarkUpTypeCode = itemPM.MarkUpTypeCode;
             itemPoco.ContainerType1MarkUpValue = itemPM.ContainerType1MarkUpValue;

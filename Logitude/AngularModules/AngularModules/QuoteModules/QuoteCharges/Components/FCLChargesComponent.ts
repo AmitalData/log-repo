@@ -731,6 +731,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+                chargePM.ContainerType1MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType2MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType3MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType4MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType5MarkUpCurrencyId = item.CurrencyId;
+                chargePM.MarkUpCurrencyId = item.CurrencyId;
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
@@ -775,6 +781,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+                chargePM.ContainerType1MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType2MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType3MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType4MarkUpCurrencyId = item.CurrencyId;
+                chargePM.ContainerType5MarkUpCurrencyId = item.CurrencyId;
+                chargePM.MarkUpCurrencyId = item.CurrencyId;
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
@@ -3203,6 +3215,49 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.ComputeSaleAmounts();
         }
     }
+
+    get MarkUpCurrencyId() { return this.EntityPM.MarkUpCurrencyId; }
+    set MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.MarkUpCurrencyId != newValue) {
+            this.EntityPM.MarkUpCurrencyId = newValue;
+        }
+    }
+
+    get ContainerType1MarkUpCurrencyId() { return this.EntityPM.ContainerType1MarkUpCurrencyId; }
+    set ContainerType1MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.ContainerType1MarkUpCurrencyId != newValue) {
+            this.EntityPM.ContainerType1MarkUpCurrencyId = newValue;
+        }
+    }
+
+    get ContainerType2MarkUpCurrencyId() { return this.EntityPM.ContainerType2MarkUpCurrencyId; }
+    set ContainerType2MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.ContainerType2MarkUpCurrencyId != newValue) {
+            this.EntityPM.ContainerType2MarkUpCurrencyId = newValue;
+        }
+    }
+
+    get ContainerType3MarkUpCurrencyId() { return this.EntityPM.ContainerType3MarkUpCurrencyId; }
+    set ContainerType3MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.ContainerType3MarkUpCurrencyId != newValue) {
+            this.EntityPM.ContainerType3MarkUpCurrencyId = newValue;
+        }
+    }
+
+    get ContainerType4MarkUpCurrencyId() { return this.EntityPM.ContainerType4MarkUpCurrencyId; }
+    set ContainerType4MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.ContainerType4MarkUpCurrencyId != newValue) {
+            this.EntityPM.ContainerType4MarkUpCurrencyId = newValue;
+        }
+    }
+
+    get ContainerType5MarkUpCurrencyId() { return this.EntityPM.ContainerType5MarkUpCurrencyId; }
+    set ContainerType5MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.ContainerType5MarkUpCurrencyId != newValue) {
+            this.EntityPM.ContainerType5MarkUpCurrencyId = newValue;
+        }
+    }
+
 
     SetSaleQuantity() {
         var myResult = null;

@@ -113,6 +113,7 @@
     <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
+    <None Include="DBScripts\QuoteModel\202218091107_FillMarkupCurrenciesOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.soxml" />
     <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />
     <None Include="DBScripts\CommonModel\202206020830_FillHorsesGenderCode.sxml" />

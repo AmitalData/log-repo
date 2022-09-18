@@ -340,6 +340,12 @@ export class QuoteUtilities {
             newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
             newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
             newChargePM.MarkUpTypeCode = "F";
+            newChargePM.ContainerType1MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.ContainerType2MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.ContainerType3MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.ContainerType4MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.ContainerType5MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.MarkUpCurrencyId = item.SaleCurrencyId;
             newChargePM.ContainerType1MarkUpTypeCode = "F";
             newChargePM.ContainerType2MarkUpTypeCode = "F";
             newChargePM.ContainerType3MarkUpTypeCode = "F";

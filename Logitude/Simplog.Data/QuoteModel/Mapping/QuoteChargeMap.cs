@@ -32,6 +32,14 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.SaleTariffId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SaleTariffNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SaleTariffLineId).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.ContainerType1MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ContainerType2MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ContainerType3MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ContainerType4MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ContainerType5MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MarkUpCurrencyId).HasMaxLength(15).IsUnicode(false);
+
+
             // Table & Column Mappings
             this.ToTable("QuoteCharges");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -73,6 +81,13 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ContainerType5MarkUpValue).HasColumnName("ContainerType5MarkUpValue");
             this.Property(t => t.MarkUpTypeCode).HasColumnName("MarkUpTypeCode");
             this.Property(t => t.MarkUpValue).HasColumnName("MarkUpValue");
+            this.Property(t => t.ContainerType1MarkUpCurrencyId).HasColumnName("ContainerType1MarkUpCurrencyId");
+            this.Property(t => t.ContainerType2MarkUpCurrencyId).HasColumnName("ContainerType2MarkUpCurrencyId");
+            this.Property(t => t.ContainerType3MarkUpCurrencyId).HasColumnName("ContainerType3MarkUpCurrencyId");
+            this.Property(t => t.ContainerType4MarkUpCurrencyId).HasColumnName("ContainerType4MarkUpCurrencyId");
+            this.Property(t => t.ContainerType5MarkUpCurrencyId).HasColumnName("ContainerType5MarkUpCurrencyId");
+            this.Property(t => t.MarkUpCurrencyId).HasColumnName("MarkUpCurrencyId");
+
             this.Property(t => t.IsAllIN).HasColumnName("IsAllIN");
             this.Property(t => t.VendorId).HasColumnName("VendorId");
             this.Property(t => t.CostQuantity).HasColumnName("CostQuantity");
@@ -129,6 +144,12 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasRequired(t => t.Quote).WithMany().HasForeignKey(d => d.QuoteId).WillCascadeOnDelete(false);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
+            this.HasOptional(t => t.ContainerType1MarkUpCurrency).WithMany().HasForeignKey(d => d.ContainerType1MarkUpCurrencyId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.ContainerType2MarkUpCurrency).WithMany().HasForeignKey(d => d.ContainerType2MarkUpCurrencyId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.ContainerType3MarkUpCurrency).WithMany().HasForeignKey(d => d.ContainerType3MarkUpCurrencyId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.ContainerType4MarkUpCurrency).WithMany().HasForeignKey(d => d.ContainerType4MarkUpCurrencyId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.ContainerType5MarkUpCurrency).WithMany().HasForeignKey(d => d.ContainerType5MarkUpCurrencyId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.MarkUpCurrency).WithMany().HasForeignKey(d => d.MarkUpCurrencyId).WillCascadeOnDelete(false);
         }
     }
 }

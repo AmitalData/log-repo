@@ -139,6 +139,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                           SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                           SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                          MarkUpCurrencyId = a.MarkUpCurrencyId,
+                                          ContainerType1MarkUpCurrencyId = a.ContainerType1MarkUpCurrencyId,
+                                          ContainerType2MarkUpCurrencyId = a.ContainerType2MarkUpCurrencyId,
+                                          ContainerType3MarkUpCurrencyId = a.ContainerType3MarkUpCurrencyId,
+                                          ContainerType4MarkUpCurrencyId = a.ContainerType4MarkUpCurrencyId,
+                                          ContainerType5MarkUpCurrencyId = a.ContainerType5MarkUpCurrencyId,
                                       }).FirstOrDefault();
 
             return myResult;
@@ -255,6 +261,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                                 SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                                 SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId,
+                                                ContainerType1MarkUpCurrencyId = a.ContainerType1MarkUpCurrencyId,
+                                                ContainerType2MarkUpCurrencyId = a.ContainerType2MarkUpCurrencyId,
+                                                ContainerType3MarkUpCurrencyId = a.ContainerType3MarkUpCurrencyId,
+                                                ContainerType4MarkUpCurrencyId = a.ContainerType4MarkUpCurrencyId,
+                                                ContainerType5MarkUpCurrencyId = a.ContainerType5MarkUpCurrencyId,
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
@@ -447,6 +459,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                                 SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                                 SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId,
+                                                ContainerType1MarkUpCurrencyId = a.ContainerType1MarkUpCurrencyId,
+                                                ContainerType2MarkUpCurrencyId = a.ContainerType2MarkUpCurrencyId,
+                                                ContainerType3MarkUpCurrencyId = a.ContainerType3MarkUpCurrencyId,
+                                                ContainerType4MarkUpCurrencyId = a.ContainerType4MarkUpCurrencyId,
+                                                ContainerType5MarkUpCurrencyId = a.ContainerType5MarkUpCurrencyId,
                                             }).ToList();
 
             return output.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
