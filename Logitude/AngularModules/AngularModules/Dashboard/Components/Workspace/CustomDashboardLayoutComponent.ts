@@ -78,7 +78,9 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         if (this.selectedDashboard != value) {
             this.selectedDashboard = value;
 
-            this.BindReactWidgets(value.Widgets);            
+            if (value) {
+                this.BindReactWidgets(value.Widgets);
+            }
         }
     }
 
@@ -161,6 +163,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
+                    this.DashboardDataBinding.widgetUpdated.next(this.GetReactWidget(myWidget));
                     this.CurrentSession.FireEvent("WidgetEdited");
                 }
             });

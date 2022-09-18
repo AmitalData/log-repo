@@ -38,7 +38,7 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
                     where d.Tenant == tenant
                     && ((d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
                     || (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
-                    || (d.PermissionLevelCode == "ALL"))
+                    || (d.PermissionLevelCode == "PUB"))
                     select new DashboardPM()
                     {
                         Id = d.Id,
