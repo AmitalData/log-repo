@@ -221,8 +221,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         if (!this.BIReportXMLData) return;
         if (!this.BIReportXMLData.DWQueryData) return;
         if (!this.BIReportXMLData.DWQueryData.Filters) return;
+        if (!this.SavedFilterItemsData) return;
 
-        this.BIReportXMLData.DWQueryData.Filters.AndOr = this.SavedFilterItemsData?.AndOr;
+        this.BIReportXMLData.DWQueryData.Filters.AndOr = this.SavedFilterItemsData.AndOr;
     }
 
     public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
@@ -871,6 +872,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     RunReportButtonClicked() {
         this.IsFilterValueChanged = false;
+        this.BIReportXMLData.DWQueryData
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
 
 
