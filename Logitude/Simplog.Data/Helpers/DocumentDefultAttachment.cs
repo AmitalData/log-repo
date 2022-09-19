@@ -24,8 +24,9 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string Type { get; set; }
         public bool IsExist { get; set; }
+        public string DocumentId { get; set; }
 
-
+        
     }
 
 
