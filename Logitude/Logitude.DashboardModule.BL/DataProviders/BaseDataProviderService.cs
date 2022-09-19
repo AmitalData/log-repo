@@ -145,8 +145,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return analyticData;
         }
 
-
-        public static IEnumerable<dynamic> DynamicListFromSql(string Sql)
+        private static IEnumerable<dynamic> DynamicListFromSql(string Sql)
         {
             var context = DashboardContext.GetContext(0);
             var db = context.GetActiveDbContext().Database;
@@ -170,7 +169,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
             }
         }
 
-
         private List<AnalyticsFactsFieldsMetaData> BuildColumns(List<string> analyticTableFields, WidgetArguments widgetPartArguments)
         {
             var columns = new List<AnalyticsFactsFieldsMetaData>();
@@ -191,21 +189,37 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
-
-            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue);
-            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns)}
-                     From ({resultQueryable.ToQueryStringWithParameter()}) as data
-                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue}";
+            var groupByField = _EntityFields[_Widget.GroupById];
+            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue, groupByField);
+            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, groupByField)}
+                     From ({resultQueryable.ToQueryStringWithParameter()}) as data 
+                     {BuildQueryJoins(groupByField)}
+                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue} ";
         }
 
-        private string GetGroupByValue(string groupByValue)
+        private string BuildQueryJoins(AnalyticsFactsFieldsMetaData groupByField)
         {
+
+            return $@"left join {groupByField.JoinedTableDBName} as jt on jt.{groupByField.JoinedTableKey} =  {groupByField.FieldCode}";
+        }
+
+        private string GetGroupByValue(string groupByValue, AnalyticsFactsFieldsMetaData groupByField)
+        {
+
+            if (groupByField.DataTypeCode != "Date" && groupByField.DataTypeCode != "DateTime")
+            {
+                return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+            }
+            // format date and add date group type to it
             return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+
         }
 
-        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields)
+        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, AnalyticsFactsFieldsMetaData groupByField)
         {
-            return string.Join(",", analyticTableFields.Select(x => x.FieldCode).ToList());
+            var query = string.Join(",", analyticTableFields.Select(x => x.FieldCode).Where(x => x != groupByField.FieldCode).ToList());
+            query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
+            return query;
         }
     }
 
