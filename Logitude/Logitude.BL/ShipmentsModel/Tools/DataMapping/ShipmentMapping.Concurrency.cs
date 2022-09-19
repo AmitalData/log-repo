@@ -217,13 +217,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapConcurrencyFields_Client(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
-            if (isMappingEntityPM)
+            if (!entityPM.IsDocsKPIsUpdatedFromWR)
             {
-                entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                if (isMappingEntityPM)
+                {
+                    entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                }
+
+                entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             }
-
-            entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-
 
             entityPoco.LastSentByUserId = entityPM.LastSentByUserId;
             entityPoco.LastFSRStatusRequestDate = entityPM.LastFSRStatusRequestDate;
