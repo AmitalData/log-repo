@@ -872,7 +872,6 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     RunReportButtonClicked() {
         this.IsFilterValueChanged = false;
-        this.BIReportXMLData.DWQueryData
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
 
 
