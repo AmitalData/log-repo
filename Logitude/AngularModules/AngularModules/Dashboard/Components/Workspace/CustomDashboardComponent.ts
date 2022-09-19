@@ -119,7 +119,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             reactWidgets.push(DashboardMapping.GetReactWidget(item));
         });
         this.reactWidgetsLayout = {lg:reactWidgets};
-        this.DashboardDataBinding.onGetLayouts.next(this.reactWidgetsLayout);
+        
+        this.DashboardDataBinding.onGetLayouts.next(this.deepClone(this.reactWidgetsLayout));
     }
     
     //GetReactDashboard(dashboard: DashboardPM): ReactDashboardPM {
@@ -263,7 +264,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.HasChanges = true;
-                    this.AddWidgetToReactLayout(myWidget);
+                    this.AddWidgetToReactLayout(comp.EntityPM);
                 }
             });
         });
@@ -272,7 +273,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         myWidget.UniqueKey = Guid.newGuid();
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
-
+        this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
     
 
@@ -367,6 +368,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
     private RejectChanges() {
         //this.myCloner.RejectChanges();
+    }
+
+    deepClone(obj){
+        var clone = JSON.parse(JSON.stringify(obj));
+        return clone;
     }
 }
 
