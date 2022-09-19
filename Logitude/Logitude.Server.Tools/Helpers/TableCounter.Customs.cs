@@ -23,6 +23,7 @@ namespace Logitude.Server.Tools.Helpers
 {
     public partial class TableCounter
     {
+#if false
         private static string ExecuteNextTableNumberValueProcedureCustoms(int tenant, Counter counter, string prefix, int startNumber, string strConnString)
         {
             if (!LogitudeSettings.IsCostomsDeploy)
@@ -115,5 +116,8 @@ namespace Logitude.Server.Tools.Helpers
 
             return counterLastNumberValue;
         }
+
+
+#endif
     }
 }

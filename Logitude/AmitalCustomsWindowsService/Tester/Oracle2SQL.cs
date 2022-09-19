@@ -351,7 +351,8 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
             Debug.WriteLine(string.Join(Environment.NewLine, restScript));
         }
 
-        public void CheckCustomsContext()
+       
+        public void CreateCustomsContext()
         {
             string[] lines = 
             File.ReadAllLines(@"C:\log2004\Logitude\Logitude.Customs.Data\ICustomContext.cs");
