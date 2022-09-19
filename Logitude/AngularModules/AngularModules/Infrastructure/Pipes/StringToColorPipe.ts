@@ -5,7 +5,7 @@ import {AppTool, FormatTool, FontTool, DateTool} from '../Tools';
 
 export class StringToColorPipe {
 
-    transform(input: any, Parameter: string = null): string {
+    transform(input: any, Parameter: string = null, Direction:string=null): string {
 
         var myResult: string = "#282E30";
 
@@ -13,7 +13,7 @@ export class StringToColorPipe {
 
             var value = input + "";
              if (!AppTool.IsNullOrEmpty(Parameter)) {
-                myResult = this.ApplyParameterPipe(value, Parameter);                
+                myResult = this.ApplyParameterPipe(value, Parameter,Direction);                
             }
 
             else {
@@ -199,7 +199,7 @@ export class StringToColorPipe {
 
         return color;
     }
-    private ApplyParameterPipe(value: string, Parameter: string) {
+    private ApplyParameterPipe(value: string, Parameter: string ,Direction: string) {
         var myResult: string = "#282E30";
          if (Parameter == "CustomerStatusCode") {
             myResult = this.ApplyCustomerStatusCodePipe(value);
@@ -250,7 +250,7 @@ export class StringToColorPipe {
             
         else if (Parameter == "DeclarationAmendmentStatus")
         {
-            myResult = this.ApplyDeclarationAmendmentStatusPipe(value);
+            myResult = this.ApplyDeclarationAmendmentStatusPipe(value,Direction);
             
         }
 
@@ -318,32 +318,65 @@ export class StringToColorPipe {
 
         return myResult;
     }
-    private ApplyDeclarationAmendmentStatusPipe(value: string) {
+    private ApplyDeclarationAmendmentStatusPipe(value: string,direction:string) {
         var myResult: string = "";
 
-        switch (value) {
-            case "3":
-            case "6":
+        if(direction != "E")
+        {
 
-                {
-                    myResult = "#009161"; // green
+            switch (value) {
+                case "3":
+                case "6":
 
-                    break;
-                }
-            case "1":
-            case "2":
-                {
-                    myResult = "#F37021"; // orange
-                    break;
-                }
-            case "4":
-            case "5":
+                    {
+                        myResult = "#009161"; // green
 
-                {
-                    myResult = "#E53030"; // red
-                    break;
-                }
+                        break;
+                    }
+                case "1":
+                case "2":
+                    {
+                        myResult = "#F37021"; // orange
+                        break;
+                    }
+                case "4":
+                case "5":
 
+                    {
+                        myResult = "#E53030"; // red
+                        break;
+                    }
+
+            }
+        }
+        else{
+            switch (value) {
+                case "1":
+                case "2":
+                case "11":    
+
+                    {
+                        myResult = "#009161"; // green
+
+                        break;
+                    }
+                case "6":
+                case "7":
+                case "8":
+                case "10":
+                    {
+                        myResult = "#F37021"; // orange
+                        break;
+                    }
+                case "4":
+                case "5":
+
+                    {
+                        myResult = "#E53030"; // red
+                        break;
+                    }
+
+            }
         }
 
         return myResult;
@@ -366,10 +399,31 @@ export class StringToColorPipe {
             case "4":
             case "5":
             case "6":
-            case "10":
             case "11":
             case "15":
             case "21":
+            case "22":
+            case "23":
+            case "24":
+            case "25":
+            case "26":
+            case "27":
+            case "28":
+            case "29":
+            case "30":
+            case "31":
+            case "32":
+            case "33":
+            case "34":
+            case "35":
+            case "40":
+            case "41":
+            case "42":
+            case "45":
+            case "47":
+            case "48":
+            case "49":
+            case "50":    
             {
                 myResult = "#F37021"; // orange
                 break;
