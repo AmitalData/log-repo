@@ -304,6 +304,8 @@ export class QuoteChargesBehaviours {
         newItem.CostIsFixedRate = false;
         newItem.SaleIsFixedRate = false;
         newItem.IsChargeBySteps = false;
+
+        newItem.MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
         return newItem;
     }
     DeleteCharge(itemPM: QuoteChargePM) {

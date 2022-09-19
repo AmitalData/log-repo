@@ -87,6 +87,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ContainerType4MarkUpTypeCode { get; set; }
         public string ContainerType5MarkUpTypeCode { get; set; }
 
+        public string MarkUpCurrencyId { get; set; }
+
+        [ForeignKey("MarkUpCurrencyId")]
+        public virtual Currency MarkUpCurrency { get; set; }
+
         [ForeignKey("QuoteId")]
         public virtual Quote Quote { get; set; }
 

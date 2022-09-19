@@ -218,6 +218,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     quoteChargePM.SaleExchangeRate = entityPM.ExchangeRate;
                                 }
 
+                                quoteChargePM.MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
+                                
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (quoteChargePM.CostMeasurementCode)
@@ -424,6 +426,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     itemPM.SaleExchangeRate = entityPM.ExchangeRate;
                                 }
 
+                                itemPM.MarkUpCurrencyId = itemPM.SaleCurrencyId;
+
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (itemPM.CostMeasurementCode)
@@ -492,6 +496,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             }
                             #endregion
                         }
+                  
+                    
+                    
                     }
                 }
             }

@@ -190,6 +190,11 @@ export class QuoteSaleChargePM {
     public set ContainerType5MarkUpValue(newValue: number) { if (this.containerType5MarkUpValue != newValue) { this.containerType5MarkUpValue = newValue; this.MarkAsDirty("ContainerType5MarkUpValue"); } }
        
 	 
+    private markUpCurrencyId: string;
+    public get MarkUpCurrencyId() { return this.markUpCurrencyId; }
+    public set MarkUpCurrencyId(newValue: string) { if (this.markUpCurrencyId != newValue) { this.markUpCurrencyId = newValue; this.MarkAsDirty("MarkUpCurrencyId"); } }
+       
+	 
     private saleMeasurementId: string;
     public get SaleMeasurementId() { return this.saleMeasurementId; }
     public set SaleMeasurementId(newValue: string) { if (this.saleMeasurementId != newValue) { this.saleMeasurementId = newValue; this.MarkAsDirty("SaleMeasurementId"); } }
