@@ -1,10 +1,157 @@
 <style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
     .table-row {
         height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .select-entity-label {
+        padding-bottom: 4px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .select-entity-label,
+    .set-conditions-label,
+    .select-trigger-label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+
+    .start-conditions-container {
+        overflow: auto;
+        width: 936px;
+        height: 370px;
+    }
+
+    .min-start-conditions-container {
+        height: 285px;
     }
 </style>
 
 <table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Title'" [ObjectFieldName]="'ConditionTitle'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                    [Text]="ConditionTitle" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'ConditionTitle'"
+                    (ValueChanged)="updateConditionTitle($event)" [DataCy]="condition-title">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-trigger-label">Route Details</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'DecisionLabel'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                    [Text]="DecisionLabel" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'DecisionLabel'"
+                    (ValueChanged)="updateDecisionLabel($event)" [DataCy]="decision-label">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="set-conditions-label">Condition Requirments</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td>
+            <div class="table-row-cell-block start-conditions-container"
+                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="this.WorkflowEntityTable.Id"
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true" (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions">
+                </Conditions>
+            </div>
+        </td>
+    </tr>
 
     <tr>
         <td>
@@ -14,11 +161,9 @@
 
     <tr class="table-row">
         <td>
-
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'condition-properties-save-button'"
                 [CancelButtonDataCy]="'condition-properties-cancel-button'"></FooterButtons>
-
         </td>
     </tr>
 

@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { AppTool } from "Infrastructure/Tools";
+import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
+import { Condition } from "Workflow/Models/Condition";
+import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
+import { ObjectTablePMService } from "Infrastructure/Services/StandardPMs/ObjectTablePMService";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -10,11 +15,80 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public WorkflowEntity: string;
 
+    public ConditionTitle: string = null;
+    public DecisionLabel:  string = null;
+    public Conditions: Condition[];
+    public ConditionsOperation: string;
+    public IsValidConditions: boolean = true;
+    public ValidationErrorsList: string[];
+    public WorkflowEntityTable: ObjectTablePM;
+    
     public CurrentSession = SessionLocator.SelectedSession;
+    
+    public ObjectTablePMService = new ObjectTablePMService();
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+        this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
+
+        this.initialize();
+    }
+
+    initialize() {
+        if (this.WorkflowEntity) {
+            this.setWorkflowEntityTable();
+
+            this.ConditionTitle = this.Data["ConditionTitle"] || null;
+            this.DecisionLabel = this.Data["DecisionLabel"] || null;
+    
+            this.Conditions = this.Data["conditions"] || [];
+            this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
+    
+            if (this.Conditions.length == 0) {
+                this.IsValidConditions = false;
+                let condition = new Condition();
+                this.Conditions.push(condition);
+            }
+    
+            this.setUIProperties();
+        }
+        else {
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push("No woekflow entity selected in start event");
+        }
+    }
+
+    setWorkflowEntityTable() {
+        this.WorkflowEntityTable = (window as any).ObjectTables.filter((o: any) => o.Name === this.WorkflowEntity)[0];
+        if (!this.WorkflowEntityTable) {
+            this.WorkflowEntity = null;
+            this.ValidationErrorsList.push("No woekflow entity selected in start event");
+        }
+    }
+
+    updateConditionTitle(conditionTitle: any) {
+        this.Data["ConditionTitle"] = conditionTitle;
+        this.ConditionTitle = conditionTitle;
+
+        this.setUIProperties();
+    }
+
+    updateDecisionLabel(decisionLabel: any) {
+        this.Data["DecisionLabel"] = decisionLabel;
+        this.DecisionLabel = decisionLabel;
+
+        this.setUIProperties();
+    }
+
+    UpdateIsValidConditions(isValidConditions: boolean) {
+        this.IsValidConditions = isValidConditions;
+    }
+
+    setUIProperties() {
+        this.UIProperties.SetRequired("ConditionTitle", null, AppTool.IsNullOrEmpty(this.ConditionTitle));
+        this.UIProperties.SetRequired("DecisionLabel", null, AppTool.IsNullOrEmpty(this.DecisionLabel));
     }
 
     cancelButtonClicked() {
@@ -22,6 +96,25 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     saveButtonClicked() {
-        this.CurrentSession.CurrentWindow.Close(this.Data);
+        if (this.WorkflowEntity) {
+            this.ValidationErrorsList = [];
+            let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
+            if (notValidUIProperties.length === 0 && this.IsValidConditions) {
+                this.setConditionsData();
+    
+                this.CurrentSession.CurrentWindow.Close(this.Data);
+            } else {
+                let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
+                this.ValidationErrorsList = validationErrors;
+    
+                if (!this.IsValidConditions) 
+                    this.ValidationErrorsList.push("Invalid Conditions");
+            }
+        }
+    }
+
+    setConditionsData() {
+        this.Data["conditions"] = this.Conditions;
+        this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
     }
 }

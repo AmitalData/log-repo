@@ -26,6 +26,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() IsRootConditions: boolean = true;
     @Input() IsValidConditions: boolean = true;
     @Input() ConditionsCounter: number = 1;
+    @Input() AtLeastOneCondition: boolean;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
 
