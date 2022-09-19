@@ -1,10 +1,12 @@
-﻿using Logitude.DashboardModule.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.APIDataContract;
+using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
     {
         internal WidgetPM _Widget;
         internal AnalyticsFactsMetaData _Entity;
-        internal Dictionary<string,AnalyticsFactsFieldsMetaData> _EntityFields;
+        internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
@@ -29,10 +31,11 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
 
         public abstract List<SeriesMeasure> GetWidgetData();
+        public abstract AnalyticData GetWidgetDataPart(WidgetArguments widgetPartArguments);
 
         public List<SeriesMeasure> GetData<T>(IQueryable<T> query)
         {
-            
+
             var seriesMeasures = new List<SeriesMeasure>();
             foreach (var measure in _Widget.WidgetMeasures)
             {
@@ -66,7 +69,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var groupByField = $"{groupBy.FieldCode}";
             if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
             {
-                groupByField = ConverDateByDateGroupCode( groupBy);
+                groupByField = ConverDateByDateGroupCode(groupBy);
             }
             var Label = groupByField;
             var join = "";
@@ -90,14 +93,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private object CreateSortBy()
         {
-            if(_Widget.SortBy == null)
+            if (_Widget.SortBy == null)
             {
                 return $" order by Label {_Widget.SortDirection}";
             }
             return $" order by Value {_Widget.SortDirection}";
         }
 
-        private string ConverDateByDateGroupCode( AnalyticsFactsFieldsMetaData groupBy)
+        private string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy)
         {
             switch (_Widget.DateGroupCode)
             {
@@ -117,11 +120,67 @@ namespace Logitude.DashboardModule.BL.DataProviders
         private void FillEntityFields()
         {
             var analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
-            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e=>e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
+            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
             _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
 
-        
+
+        internal AnalyticData GetDataPart<T>(IQueryable<T> query, List<string> analyticTableFields, WidgetArguments widgetPartArguments)
+        {
+            TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
+            query = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
+
+            var columns = BuildColumns(analyticTableFields, widgetPartArguments);
+            var queryString = CreateQuery(query, columns, widgetPartArguments);
+            var conterxt = DashboardContext.GetContext(0);
+            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<object>(queryString, new object[0]).AsQueryable();
+
+
+            AnalyticData analyticData = new AnalyticData();
+            analyticData.DataResult = resultQueryables.ToList();
+            analyticData.Fields = columns;
+            return analyticData;
+        }
+
+        private List<AnalyticsFactsFieldsMetaData> BuildColumns(List<string> analyticTableFields, WidgetArguments widgetPartArguments)
+        {
+            var columns = new List<AnalyticsFactsFieldsMetaData>();
+
+            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+            columns.Add(groupBy);
+
+            var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
+            columns.Add(measure);
+
+            foreach (var item in analyticTableFields)
+            {
+                var field = _EntityFields.ContainsKey(item) ? _EntityFields[item] : throw new Exception($"Meta Data Field '{item}' not found");
+                columns.Add(field);
+            }
+
+            return columns.GroupBy(x => x.FieldCode).Select(x => x.FirstOrDefault()).ToList();
+        }
+
+        private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
+        {
+
+            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, widgetPartArguments)}
+                     ({resultQueryable.ToQueryStringWithParameter()}) as data
+                     and {_EntityFields[_Widget.GroupById].FieldCode} = {widgetPartArguments.GroupByValue}";
+        }
+
+        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, WidgetArguments widgetPartArguments)
+        {
+            var selectQuery = (analyticTableFields == null || analyticTableFields.Count == 0) ? "" : string.Join(",", analyticTableFields.Select(x => x.FieldCode).ToList()) + " and ";
+
+            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+            selectQuery = $@"{selectQuery} {groupBy.FieldCode} as {groupBy.FieldCode}";
+
+            var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
+            selectQuery = $@"{selectQuery} {measure.FieldCode} as {measure.FieldCode}";
+
+            return selectQuery;
+        }
     }
 
 

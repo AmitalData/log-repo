@@ -2,6 +2,9 @@ import { Component, OnInit, ComponentRef, ViewChild } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 import { AgGridNg2 } from 'ag-grid-angular';
+import { DashboardAnalyticsService } from 'DashboardModule/Services/DashboardAnalyticsService';
+import { WidgetPartArguments } from 'DashboardModule/DataContracts/WidgetPartArguments';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -14,15 +17,28 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     public DataPointSelection: DataPointSelection;
     public ValidationErrorsList: string[] = [];
     public context = { componentParent: this };
-    public columns: any[] = [];
-
+    public columns: any[] = []; 
+    private DashboardAnalyticsService = new DashboardAnalyticsService();
     ngOnInit(): void {
-
+        this.DashboardAnalyticsService = new DashboardAnalyticsService();
     }
 
 
     Run(dataPointSelection: DataPointSelection) {
         this.DataPointSelection = dataPointSelection;
+        this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(dataPointSelection))
+        .subscribe((res:any) => {
+            var response: ServiceResponse = res;
+            if(!response || response.HasError) return;
+        });
+    }
+
+     MapDataPointSelectionToWidgetPartArguments(dataPointSelection: DataPointSelection): WidgetPartArguments {
+        var widgetPartArguments = new WidgetPartArguments();
+        widgetPartArguments.GroupByValue = dataPointSelection.GroupById;
+        widgetPartArguments.MeasureFieldId = dataPointSelection.MeasureFieldId;
+        widgetPartArguments.Widget = JSON.parse(JSON.stringify(dataPointSelection.Widget));
+        return widgetPartArguments;
     }
 
     BackButtonClicked() {
