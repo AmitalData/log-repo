@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "76948eabd97274d502dbc20347878e1f";
+		public const string HashString = "f6e1f1a1d5ee1f43cc62aba0e13052fe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -872,7 +872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierNumber",
-					  						DefaultText =  "Main Carriage Carrier No.",
+					  						DefaultText =  "Voyage Number",
 					  						ListFieldLable =  "MainCarriageCarrierNumberListLable",
 					  						ListLableDefaultText =  "Main Carriage Carrier No.",
 					  						IsForeignKey =  false,
@@ -935,7 +935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Master",
-					  						DefaultText =  "Master",
+					  						DefaultText =  "OBL",
 					  						ListFieldLable =  "MasterListLable",
 					  						ListLableDefaultText =  "Master",
 					  						IsForeignKey =  false,
@@ -2901,7 +2901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
@@ -2964,7 +2964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
@@ -9135,7 +9135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
@@ -14390,7 +14390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentDeliveryTruckerName",
-					  						DefaultText =  "Shipment Delivery Trucker Name ",
+					  						DefaultText =  "Shipment Deliv Truckr Name ",
 					  						ListFieldLable =  "ShipmentDeliveryTruckerNameListLable",
 					  						ListLableDefaultText =  "Shipment Delivery Trucker Name",
 					  						IsForeignKey =  false,
