@@ -80,26 +80,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 int? maxSequenceNunmeric = 0;
                 maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
                 if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
-               DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                 entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
                 if (entityPM.ConnectedDeclarations == "ALL")
                 {
-
-                    //var decsC = declarationRepository1.GetNotConnectedDeclarations(entityPM.Tenant);
-                    //foreach (var dec in decsC)
-                    //{
-                    //    ++maxSequenceNunmeric;
-                    //    CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                    //    courierDeclarationUpdateService.Update(courierDeclaration, false);
-                    //    DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
-                    //    if(decCourier!= null)
-                    //    {
-                    //        if (!decCourier.IsClosedForFollowUp)
-                    //        {
-                    //            entityPM.OpenDeclarations += 1;
-                    //        }
-                    //    }
-                    //}
+                    //out  to DCI_CourierMastersConnectedMessagingService
                 }
                 else
                 {
@@ -107,7 +92,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
                     string[] items = entityPM.ConnectedDeclarations.Split(',');
                     //DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
-                   // entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
+                    // entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
                     foreach (string item in items)
                     {
                         ++maxSequenceNunmeric;
@@ -133,23 +118,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
                 if (entityPM.NotConnectedDeclarations == "ALL")
                 {
-                    //var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id, entityPM.Tenant);
-                    //foreach (var item in decsCN)
-                    //{
-                    //    CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                    //    CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                    //    courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
-                    //    courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                    //    courierDeclarationUpdateService.Update(courierDeclaration, true);
-                    //    DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
-                    //    if (decCourier != null)
-                    //    {
-                    //        if (!decCourier.IsClosedForFollowUp)
-                    //        {
-                    //            entityPM.OpenDeclarations -= 1;
-                    //        }
-                    //    }
-                    //}
+                    //out  to DCI_CourierMastersConnectedMessagingService
                 }
                 else
                 {
@@ -180,10 +149,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
             //            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
             //            {
-            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId || 
-                entityPM.IsCancelled != entityPOCO.IsCancelled || entityPM.IsReadyForInvoice != entityPOCO.IsReadyForInvoice || 
-                ((entityPM.EstimatedArrivalDateOnly.HasValue && (!entityPOCO.EstimatedArrivalDate.HasValue || entityPOCO.EstimatedArrivalDate.Value.Date != entityPM.EstimatedArrivalDateOnly)) || 
-                (!entityPM.EstimatedArrivalDateOnly.HasValue && entityPOCO.EstimatedArrivalDate.HasValue)) || 
+            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId ||
+                entityPM.IsCancelled != entityPOCO.IsCancelled || entityPM.IsReadyForInvoice != entityPOCO.IsReadyForInvoice ||
+                ((entityPM.EstimatedArrivalDateOnly.HasValue && (!entityPOCO.EstimatedArrivalDate.HasValue || entityPOCO.EstimatedArrivalDate.Value.Date != entityPM.EstimatedArrivalDateOnly)) ||
+                (!entityPM.EstimatedArrivalDateOnly.HasValue && entityPOCO.EstimatedArrivalDate.HasValue)) ||
                 entityPM.GatewayPortCode != entityPOCO.GatewayPortCode)
             {
                 if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
@@ -362,15 +331,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DEBUG = "F",
                         DONEOPERATION = "A",
                         QUEUEMANAGEMENT = true,
-                          GGGQCPMs = new List<GGGQCPM>() {
-                               new GGGQCPM(){ 
+                        GGGQCPMs = new List<GGGQCPM>() {
+                               new GGGQCPM(){
                                     ChangeSetOp= ChangeSetOperation.Insert,
                                      FIELDID= "TASK_PARAM",
                                       FIELDVAL= "PROC=A1468"+(char)27+"PRIMARY_NUM="+entityPM.Id
                                }
                           }
-                        
-                             
+
+
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
