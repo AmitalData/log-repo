@@ -27,6 +27,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClientId { get; set; }
         [Column("TapagNumber")]
 	    public string TapagNumber { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

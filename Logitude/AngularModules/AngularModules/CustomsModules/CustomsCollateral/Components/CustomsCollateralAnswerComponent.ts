@@ -22,6 +22,9 @@ import { SendCollateralRequestParams } from '../../../Customs/DataContract/Reque
 import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { CustomsCollateralWebService } from 'Customs/Services/WebServices/CustomsCollateralWebService';
+import { ClientsTapagPM } from '../../../Customs/EntityPMs/ClientsTapagPM'; 
+import { ClientsTapag } from 'CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent';
+ 
 
 @Component({    
     templateUrl: './CustomsCollateralAnswerComponent.html',
@@ -47,12 +50,18 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     collateralToNotSendlist: string[];
     selectAll: boolean;
     public ValidationErrorsList: string[] = [];
+    isInclude: boolean = false;
+    taxExemptCodeTypesFilter: ApiQueryFilters;
+
 
     constructor(private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService, private _declarationExtendedListService: DeclarationExtendedListService) {
         super();
     }
 
     ngOnInit(): void {
+        this.taxExemptCodeTypesFilter = this.initTaxExemptCodeTypesFilter();
+
+       
     }
 
     AnswerForCollateralStatusVisibility: boolean;
@@ -87,7 +96,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
             this.AnswerSentTextVisibility = true;
             this.DisplayOnlyMessageVisibility = true;
-            this.RequestNumberLabelVisibility = false;
+            this.RequestNumberLabelVisibility = false; 
             this.TapagFileLabelVisibility = false;
 
             if (this.EntityPM.AnswerForCollateralStatusCode) {
@@ -136,6 +145,8 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
 
         }
+
+
 
 
     }
@@ -431,8 +442,40 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     }
 
+    CustomsItemClicked(clientsTapag: ClientsTapagPM) {
+        if (clientsTapag) {
+            this.CustomsTapgFile = clientsTapag.TapagNumber;
+        }
+
+    }
+
+
+
+
+    CustomsItemLostFocus(text: string) {
+        
+
+        if(text.includes("/")){
+            var tapagNumberArr = text.split("/");
+   
+                this.CustomsNumeral = tapagNumberArr.pop();
+                var toStr= tapagNumberArr.toString();
+                this.CustomsTapgFile = toStr.replace(',','/');
+                this.isInclude = true;
+          
+        }
+        else{
+            this.CustomsTapgFile = text;
+            this.isInclude? this.CustomsNumeral= "": this.CustomsNumeral;
+            this.isInclude = false;
+        }
+        
+    }
+
+
 
     //#region properties
+    
 
     public get IsGuaranteeDefaultList() { return this.isGuaranteeDefaultList; }
     public set IsGuaranteeDefaultList(newValue: boolean) { this.isGuaranteeDefaultList = newValue; }
@@ -733,9 +776,28 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         this.collateralPM.DeclarationId = args.DeclarationId;
         this.BuildAccountingCustomFilesList();
 
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response:any) => {
+        
+
+        });
+
+
+    }
+ 
+    initTaxExemptCodeTypesFilter(): ApiQueryFilters { 
+        debugger
+        const taxExemptCodeTypesFilter = new ApiQueryFilters();
+        taxExemptCodeTypesFilter.GetAll = true; 
+        //taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")        
+        //taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", '2', '3', null, 'Contains', false, false, false, "string")
+        taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.customerId, null, null, "Equals", true, false, false, "string");
+
+        
+
+        return taxExemptCodeTypesFilter;
     }
 
-
+ 
     CancelButtonClicked() {
 
 

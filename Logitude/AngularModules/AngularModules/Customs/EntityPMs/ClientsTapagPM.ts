@@ -47,6 +47,11 @@ export class ClientsTapagPM {
     public set TapagNumber(newValue: string) { if (this.tapagNumber != newValue) { this.tapagNumber = newValue; this.MarkAsDirty("TapagNumber"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: ClientsTapagPM;
 	

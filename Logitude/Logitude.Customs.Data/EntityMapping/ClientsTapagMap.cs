@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ClientId).HasColumnName("ClientId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.TapagNumber).HasColumnName("TapagNumber").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

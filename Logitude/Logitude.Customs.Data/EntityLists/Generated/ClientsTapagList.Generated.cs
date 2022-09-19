@@ -22,6 +22,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ClientId  { get; set; }
        [DataMember]
        public string TapagNumber  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }
