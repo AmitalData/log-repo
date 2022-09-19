@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "c92fc7ff632f4d0cf1d1d4f3832faad1";
+		public const string HashString = "a25f2b565b5786d45454441c7316ca60";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,7 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
-			      				    HasFiltersMenu =  false,
+			      				    HasFiltersMenu =  true,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
