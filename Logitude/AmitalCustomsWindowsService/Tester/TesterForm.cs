@@ -316,6 +316,7 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             Oracle2SQL sql2Oracle = new Oracle2SQL();
             sql2Oracle.GetReNameLongColumns(root:@"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
             return;
@@ -324,9 +325,18 @@ namespace AmitalCustomsWindowsService.Tester
             return;
 
             Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+
+            //Oracle2SQL sql2Oracle = new Oracle2SQL();
+            //sql2Oracle.GetReNameLongColumns(root:@"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
+            //return;
+
+
+            //Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            //return;
+
+            clsTester.TestSP();
+
             return;
-
-
             ///clsTester.RequeByID(GetTenant(), _TBID.Text);
             int maxTry = int.Parse(_CBInterfaceID.Text);
             clsTester.ReAnalyze2470_CustomsWithheld(GetTenant(), maxTry);

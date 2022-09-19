@@ -52,10 +52,11 @@ namespace AmitalCustomsWindowsService
             if (test)
             {
                 (new Oracle2SQL())
-                .SCHEMA();
+                .CreateCustomsContext();
                 //.CheckCustomsContext();
-                  //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
+                //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
                 //.ChangeToBit();
+                (new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();
 
             }
 

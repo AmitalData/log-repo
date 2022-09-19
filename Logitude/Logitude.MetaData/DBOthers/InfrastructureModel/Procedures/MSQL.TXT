@@ -296,3 +296,171 @@ AS
 
    END
    ----------------------------------------------
+USE [main]
+GO
+
+/****** Object:  StoredProcedure [dbo].[USP_GETNEXTTABLENUMBERVALUE]    Script Date: 18/09/2022 16:10:57 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[USP_GETNEXTTABLENUMBERVALUE]  
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_PLASTVALUE /*drop procedure [dbo].[usp_GetNextTableNumberValue]*/float(53)  OUTPUT,
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_PTENANT float(53),
+   @V_PCOUNTERID nvarchar(max),
+   @V_PPREFIX nvarchar(max),
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_PSTARTNUMBER float(53)
+AS 
+   BEGIN
+
+      SET @V_PLASTVALUE = NULL
+
+      DECLARE
+         @V_COUNTER numeric(10, 0), 
+         @V_CURRENT numeric(10, 0)
+
+      SET @V_COUNTER = @V_PSTARTNUMBER
+
+      IF @V_PPREFIX IS NOT NULL
+         BEGIN
+
+            DECLARE
+               @V_TEMP numeric(1, 0) = 0
+
+            BEGIN
+
+               BEGIN TRY
+                  SELECT @V_TEMP = 1
+                  WHERE NOT EXISTS 
+                     (
+                        SELECT COUNTERSTATS.COUNTERID
+                        FROM dbo.COUNTERSTATS
+                        WHERE 
+                           COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND 
+                           COUNTERSTATS.PREFIX = @V_PPREFIX AND 
+                           COUNTERSTATS.TENANT = @V_PTENANT
+                     )
+               END TRY
+
+               BEGIN CATCH
+                  BEGIN
+                     DECLARE
+                        @db_null_statement int
+                  END
+               END CATCH
+
+            END
+
+            IF @V_TEMP = 1
+               BEGIN
+
+                  SET @V_COUNTER = @V_PSTARTNUMBER
+
+                  INSERT dbo.COUNTERSTATS(TENANT, COUNTERID, PREFIX, LASTVALUE)
+                     VALUES (@V_PTENANT, @V_PCOUNTERID, @V_PPREFIX, @V_PSTARTNUMBER)
+
+                  SET @V_CURRENT = @V_PSTARTNUMBER
+
+               END
+            ELSE 
+               BEGIN
+
+                  SELECT @V_CURRENT = COUNTERSTATS.LASTVALUE
+                  FROM dbo.COUNTERSTATS
+                  WHERE 
+                     COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND 
+                     COUNTERSTATS.PREFIX = @V_PPREFIX AND 
+                     COUNTERSTATS.TENANT = @V_PTENANT
+
+                  SET @V_CURRENT = @V_CURRENT + 1
+
+                  UPDATE dbo.COUNTERSTATS
+                     SET 
+                        LASTVALUE = @V_CURRENT
+                  WHERE 
+                     COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND 
+                     COUNTERSTATS.PREFIX = @V_PPREFIX AND 
+                     COUNTERSTATS.TENANT = @V_PTENANT
+
+               END
+
+         END
+      ELSE 
+         BEGIN
+
+            DECLARE
+               @V_TEMP$2 numeric(1, 0) = 0
+
+            BEGIN
+
+               BEGIN TRY
+                  SELECT @V_TEMP$2 = 1
+                  WHERE NOT EXISTS 
+                     (
+                        SELECT COUNTERSTATS.COUNTERID
+                        FROM dbo.COUNTERSTATS
+                        WHERE COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND COUNTERSTATS.TENANT = @V_PTENANT
+                     )
+               END TRY
+
+               BEGIN CATCH
+                  BEGIN
+                     DECLARE
+                        @db_null_statement$2 int
+                  END
+               END CATCH
+
+            END
+
+            IF @V_TEMP$2 = 1
+               BEGIN
+
+                  SET @V_COUNTER = @V_PSTARTNUMBER
+
+                  INSERT dbo.COUNTERSTATS(TENANT, COUNTERID, PREFIX, LASTVALUE)
+                     VALUES (@V_PTENANT, @V_PCOUNTERID, @V_PPREFIX, @V_PSTARTNUMBER)
+
+                  SET @V_CURRENT = @V_PSTARTNUMBER
+
+               END
+            ELSE 
+               BEGIN
+
+                  SELECT @V_CURRENT = COUNTERSTATS.LASTVALUE
+                  FROM dbo.COUNTERSTATS
+                  WHERE COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND COUNTERSTATS.TENANT = @V_PTENANT
+
+                  SET @V_CURRENT = @V_CURRENT + 1
+
+                  UPDATE dbo.COUNTERSTATS
+                     SET 
+                        LASTVALUE = @V_CURRENT
+                  WHERE COUNTERSTATS.COUNTERID = @V_PCOUNTERID AND COUNTERSTATS.TENANT = @V_PTENANT
+
+               END
+
+         END
+
+      SET @V_PLASTVALUE = @V_CURRENT
+
+   END
+GO
+
+

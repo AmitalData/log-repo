@@ -346,6 +346,7 @@
     <Content Include="CreateWinService.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tester\MSSQL.sql" />
     <None Include="WorkerRoleName.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
