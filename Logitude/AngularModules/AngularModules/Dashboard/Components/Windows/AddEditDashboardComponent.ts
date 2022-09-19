@@ -110,6 +110,10 @@ export class AddEditDashboardComponent extends BaseComponent {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
+        if (this.PermissionLevelCode == "SPF" && this.EntityPM.DashboardSharedUsers.length == 0) {
+            errors.push("You have to select at least on user");
+        }
+
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();

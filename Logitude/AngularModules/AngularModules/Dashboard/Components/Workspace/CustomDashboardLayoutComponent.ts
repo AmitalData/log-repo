@@ -12,6 +12,9 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/ReactWidgetMeasurePM';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -34,7 +37,11 @@ import { ReactWidgetMeasurePM } from 'logitude-dashboard-library/dist/types/Reac
 })
 
 export class CustomDashboardLayoutComponent implements AfterViewInit {   
-    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
+    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;    
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor() {
+
+    }
 
     _show: boolean = false;
     @Input('Show') set Show(value) {
@@ -54,9 +61,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         onGetLayouts: new BehaviorSubject({ lg: [] }),
         widgetUpdated: new Subject()
     }
-    constructor() {
-
-    }
 
     private isEditLayout: boolean;
     get IsEditLayout() { return this.isEditLayout; }
@@ -74,9 +78,12 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         if (this.selectedDashboard != value) {
             this.selectedDashboard = value;
 
-            this.BindReactWidgets(value.Widgets);            
+            if (value) {
+                this.BindReactWidgets(value.Widgets);
+            }
         }
     }
+
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];
 
@@ -134,15 +141,38 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.renderNewDashboard();
     }
-    onChangeLayouts(layouts: {lg: ReactWidgetPM[];}){
 
+    onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
+        layouts.lg.forEach(item => {
+            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == item.Id)[0];
+            if (myWidget) {
+                myWidget.EndPosition = item.EndPosition;
+                myWidget.StartPotistion = item.StartPotistion;
+            }
+        });
+
+        this.CurrentSession.FireEvent("WidgetEdited");
     }
-    openEditWidget(Widget: ReactWidgetPM){
 
+    openEditWidget(widget: ReactWidgetPM){
+        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Edit Widget";
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.DashboardDataBinding.widgetUpdated.next(this.GetReactWidget(myWidget));
+                    this.CurrentSession.FireEvent("WidgetEdited");
+                }
+            });
+        });
     }
     onSelectDataPoint(dataPointSelection: DataPointSelection){
 
     }
+
     renderNewDashboard() {
         ReactDOM.render(React.createElement(Dashboard, {
             token: SessionInfo.Token,

@@ -391,6 +391,12 @@ export class WidgetMeasureItem extends BaseComponent {
         if (index != -1) {
             this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
+
+        index = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
+        if (index != -1) {
+            this.Widget.RemoveWidgetMeasure(this.EntityPM);
+        }
+
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }
