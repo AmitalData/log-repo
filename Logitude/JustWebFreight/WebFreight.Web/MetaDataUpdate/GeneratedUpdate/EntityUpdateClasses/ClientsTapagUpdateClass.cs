@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientsTapagUpdateClass
    {  		
-
 		public const string HashString = "7a885dca3e6fe59546a741385f06265b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -128,7 +127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Clients Tapag",
-
 			      				    Code =  "325a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -541,7 +539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ClientsTapagObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientsTapag" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ClientsTapagTextCode_CustomsClientsTapagODeleteTapagNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientsTapag.O.DeleteTapagNumber", DefaultText = "Delete this tapag number",LocalDefaultText = "למחוק םת מס' תיק תפ''ג ?", ObjectTableId = ClientsTapagObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientsTapagTextCode_CustomsClientsTapagODeleteTapagNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientsTapag.O.DeleteTapagNumber", DefaultText = "Delete this tapag number",LocalDefaultText = "למחוק את מס' תיק תפ''ג ?", ObjectTableId = ClientsTapagObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
