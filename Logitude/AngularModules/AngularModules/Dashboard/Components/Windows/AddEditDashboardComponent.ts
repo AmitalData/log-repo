@@ -10,6 +10,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -54,6 +55,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard name change" });
         }
     }
 
@@ -61,6 +63,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Description(value: string) {
         if (this.EntityPM.Description != value) {
             this.EntityPM.Description = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard description change" });
         }
     }
 
@@ -68,6 +71,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set PermissionLevelCode(value: string) {
         if (this.EntityPM.PermissionLevelCode != value) {
             this.EntityPM.PermissionLevelCode = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard permission change" });
         }
     }
 
@@ -107,6 +111,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
+
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
@@ -118,10 +123,12 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
             if (this.isNew) {
+                MixPanelLocator.PostDashboardAction({ ActionName: "New Dashboard save click" });
                 this.CreateDashboard();                
             }
 
             else {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Edit Dashboard save click" });
                 this.UpdateDashboard();
             }
         }

@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { WidgetFilterItem } from './WidgetFilterItem';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public Quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
     public Years: number[];
-    
+
     ngOnInit() {
         this.Years = [];
         this.BuidYears();
@@ -43,14 +44,17 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
         groupFilter.IsGroup = true;
         groupFilter.QueryFilterItems.push(new WidgetFilterItem());
         this.DataSource.QueryFilterItems.push(groupFilter);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Add Empty Filter Click" });
     }
 
     onDeleteFilterClick(filterItem: WidgetFilterItem) {
         this.DataSource.QueryFilterItems = this.FilterItems.filter(item => item !== filterItem);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Delete Filter Click" });
     }
 
     AddFilterToGroup(item: WidgetFilterItem) {
         item.QueryFilterItems.push(new WidgetFilterItem());
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Add Filter Click" });
     }
 
     AddGroup(item: WidgetFilterItem) {
@@ -61,6 +65,7 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
         newGroupTreeFilter.QueryFilterItems.push(newGroupField);
 
         item.QueryFilterItems.push(newGroupTreeFilter);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Filter Click" });
     }
 
 }

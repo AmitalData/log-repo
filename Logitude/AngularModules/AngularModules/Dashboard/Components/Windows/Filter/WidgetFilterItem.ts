@@ -2,6 +2,7 @@ import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIPro
 import { AppTool } from 'Infrastructure/Tools';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 export class WidgetFilterItem {
@@ -101,6 +102,7 @@ export class WidgetFilterItem {
             this.ResetField();
             return;
         }
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Field Change", Message: "Changed To " + field.DisplayName });
         if (this.SelectedField && this.SelectedField.Id == field.Id) return;
         this.FieldSelectedChanged(field);
     }
@@ -164,35 +166,42 @@ export class WidgetFilterItem {
         this.FieldValue = "";
         this.Quarter = null;
         this.DateGroupCode = null;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Operator Change", Message: "Changed To " + operator.Code });
     }
 
     TextBoxCondationValueChange(newValue) {
         this.FieldValue = newValue;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + newValue });
     }
 
     BooleanListValueChanged(newValue: boolean) {
         this.IsChecked = newValue;
         this.FieldValue = this.IsChecked ? "true" : "false";
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + newValue });
     }
 
     DatePickerCondationValueChange(date, quarter) {
         this.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
         this.Quarter = this.DateGroupCode == "Quarter" ? quarter : null;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + this.FieldValue });
     }
 
     public AndOrOpsChanged(value) {
         this.AndOr = value;
         this.FilterType = value;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter AndOr Operator Change", Message: "Changed To " + value });
     }
 
     public DateGroupCodeChange(DateGroupCode: string) {
         this.DateGroupCode = DateGroupCode;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Date Group Change", Message: "Changed To " + DateGroupCode });
         this.FieldValue = "";
         this.Quarter = null;
     }
 
     LogLovCondationValueChange(newValue) {
         this.FieldValue = newValue ? !AppTool.IsNullOrEmpty(newValue.Id) ? newValue.Id : newValue.Code : "";
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Operator Change", Message: "Changed To " + this.FieldValue });
     }
 }
 

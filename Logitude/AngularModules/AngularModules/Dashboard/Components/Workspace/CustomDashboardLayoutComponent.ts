@@ -16,6 +16,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -105,6 +106,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
 
     openEditWidget(widget: ReactWidgetPM){
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page" });
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";
