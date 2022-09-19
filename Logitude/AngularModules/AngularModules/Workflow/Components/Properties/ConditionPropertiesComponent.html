@@ -97,7 +97,7 @@
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
                     [Text]="ConditionTitle" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'ConditionTitle'"
-                    (ValueChanged)="updateConditionTitle($event)" [DataCy]="condition-title">
+                    (ValueChanged)="updateConditionTitle($event)" [DataCy]="'condition-title'">
                 </LogTextBox>
             </div>
         </td>
@@ -126,7 +126,7 @@
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
                     [Text]="DecisionLabel" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'DecisionLabel'"
-                    (ValueChanged)="updateDecisionLabel($event)" [DataCy]="decision-label">
+                    (ValueChanged)="updateDecisionLabel($event)" [DataCy]="'decision-label'">
                 </LogTextBox>
             </div>
         </td>
