@@ -38,6 +38,7 @@ using WebFreight.Web.WebServices;
 using Microsoft.Azure.Management.ResourceManager;
 using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -446,6 +447,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                customerURL = JsonConvert.DeserializeObject<string>(customerURL);
                 await RunAddingDNSRecordAsync(customerURL);
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }

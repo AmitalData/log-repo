@@ -1,6 +1,10 @@
 <table>
 
-    <tr style="height: 10px;"> <td> </td> </tr>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
 
     <tr>
         <td>
