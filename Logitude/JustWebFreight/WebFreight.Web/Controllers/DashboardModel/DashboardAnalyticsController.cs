@@ -39,7 +39,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var dataProvicer = new DataProviderFactory().GetDataProviderService(widgetPartArguments.Widget);
-                var result = dataProvicer.GetWidgetData();
+                var result = dataProvicer.GetWidgetDataPart(widgetPartArguments);
                 return Request.CreateResponse(result);
             }
             catch (Exception ex)

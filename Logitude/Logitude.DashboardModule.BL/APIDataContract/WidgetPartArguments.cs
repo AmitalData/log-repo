@@ -4,10 +4,14 @@ using System.Collections.Generic;
 
 namespace Logitude.DashboardModule.BL.APIDataContract
 {
-    public class WidgetPartArguments
+    public class WidgetPartArguments : WidgetArguments
     {
         public WidgetPM Widget { get; set; }
+    }
+
+    public class WidgetArguments
+    {
         public string MeasureFieldId { get; set; }
-        public string GroupById { get; set; }
+        public string GroupByValue { get; set; }
     }
 }

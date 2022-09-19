@@ -119,8 +119,14 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             });
         });
     }
-    onSelectDataPoint(dataPointSelection: DataPointSelection){
 
+    private onSelectDataPoint(dataPointSelection: DataPointSelection){
+        if(!dataPointSelection) return;
+        SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        .then((cmpRef : any) => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run(dataPointSelection);
+        });
     }
 
     renderNewDashboard() {
@@ -131,7 +137,8 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             dataBinding: this.DashboardDataBinding,
             onChangeLayouts: this.onChangeLayouts.bind(this),
             openEditWidget: this.openEditWidget.bind(this),
-            onSelectDataPoint: this.onSelectDataPoint.bind(this)
+            onSelectDataPoint: this.onSelectDataPoint.bind(this),
+
         }),
             this.reactDashboradContainer.nativeElement);
     }
