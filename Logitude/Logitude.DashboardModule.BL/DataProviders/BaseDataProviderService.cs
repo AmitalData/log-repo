@@ -10,7 +10,11 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +26,13 @@ namespace Logitude.DashboardModule.BL.DataProviders
         internal WidgetPM _Widget;
         internal AnalyticsFactsMetaData _Entity;
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
+        private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
             this._Widget = widget;
             this._Entity = entity;
+            analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
             FillEntityFields();
         }
 
@@ -119,7 +125,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private void FillEntityFields()
         {
-            var analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
             var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
             _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
@@ -132,15 +137,39 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
             var columns = BuildColumns(analyticTableFields, widgetPartArguments);
             var queryString = CreateQuery(query, columns, widgetPartArguments);
-            var conterxt = DashboardContext.GetContext(0);
-            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<object>(queryString, new object[0]).AsQueryable();
 
 
             AnalyticData analyticData = new AnalyticData();
-            analyticData.DataResult = resultQueryables.ToList();
+            analyticData.DataResult = DynamicListFromSql(queryString).ToList();
             analyticData.Fields = columns;
             return analyticData;
         }
+
+
+        public static IEnumerable<dynamic> DynamicListFromSql(string Sql)
+        {
+            var context = DashboardContext.GetContext(0);
+            var db = context.GetActiveDbContext().Database;
+            using (var cmd = db.Connection.CreateCommand())
+            {
+                cmd.CommandText = Sql;
+                if (cmd.Connection.State != ConnectionState.Open) { cmd.Connection.Open(); }
+
+                using (var dataReader = cmd.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        var row = new ExpandoObject() as IDictionary<string, object>;
+                        for (var fieldCount = 0; fieldCount < dataReader.FieldCount; fieldCount++)
+                        {
+                            row.Add(dataReader.GetName(fieldCount), dataReader[fieldCount]);
+                        }
+                        yield return row;
+                    }
+                }
+            }
+        }
+
 
         private List<AnalyticsFactsFieldsMetaData> BuildColumns(List<string> analyticTableFields, WidgetArguments widgetPartArguments)
         {
@@ -152,36 +181,34 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
             columns.Add(measure);
 
-            foreach (var item in analyticTableFields)
+            if (analyticTableFields != null && analyticTableFields.Count != 0)
             {
-                var field = _EntityFields.ContainsKey(item) ? _EntityFields[item] : throw new Exception($"Meta Data Field '{item}' not found");
-                columns.Add(field);
-            }
+                columns.AddRange(analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id && analyticTableFields.Contains(e.FieldCode)).ToList());
 
+            }
             return columns.GroupBy(x => x.FieldCode).Select(x => x.FirstOrDefault()).ToList();
         }
 
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
 
-            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, widgetPartArguments)}
-                     ({resultQueryable.ToQueryStringWithParameter()}) as data
-                     and {_EntityFields[_Widget.GroupById].FieldCode} = {widgetPartArguments.GroupByValue}";
+            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue);
+            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns)}
+                     From ({resultQueryable.ToQueryStringWithParameter()}) as data
+                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue}";
         }
 
-        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, WidgetArguments widgetPartArguments)
+        private string GetGroupByValue(string groupByValue)
         {
-            var selectQuery = (analyticTableFields == null || analyticTableFields.Count == 0) ? "" : string.Join(",", analyticTableFields.Select(x => x.FieldCode).ToList()) + " and ";
+            return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+        }
 
-            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
-            selectQuery = $@"{selectQuery} {groupBy.FieldCode} as {groupBy.FieldCode}";
-
-            var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
-            selectQuery = $@"{selectQuery} {measure.FieldCode} as {measure.FieldCode}";
-
-            return selectQuery;
+        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields)
+        {
+            return string.Join(",", analyticTableFields.Select(x => x.FieldCode).ToList());
         }
     }
+
 
 
 }

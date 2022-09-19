@@ -13,7 +13,7 @@ export class DashboardAnalyticsService {
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DashboardPMExtended';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DashboardAnalytics';
     }
 
     GetDataAnalyticPart(widgetPartArguments : WidgetPartArguments) {

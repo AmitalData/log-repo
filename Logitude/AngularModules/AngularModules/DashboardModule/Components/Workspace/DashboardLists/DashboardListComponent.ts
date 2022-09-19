@@ -5,6 +5,10 @@ import { AgGridNg2 } from 'ag-grid-angular';
 import { DashboardAnalyticsService } from 'DashboardModule/Services/DashboardAnalyticsService';
 import { WidgetPartArguments } from 'DashboardModule/DataContracts/WidgetPartArguments';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
+import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
+import { EditShipmentLinkRendererComponent } from 'InfrastructureModules/InfrastructureBIReport/Components/TemplateRenderer/EditShipmentLinkRendererComponent';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -17,23 +21,60 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     public DataPointSelection: DataPointSelection;
     public ValidationErrorsList: string[] = [];
     public context = { componentParent: this };
-    public columns: any[] = []; 
+    public columns: any[] = [];
+    public rowData: any;
     private DashboardAnalyticsService = new DashboardAnalyticsService();
+    private CurrentSession = SessionLocator.SelectedSession;
+    public _ShipmentPMService: ShipmentPMService;
+
     ngOnInit(): void {
         this.DashboardAnalyticsService = new DashboardAnalyticsService();
+        this._ShipmentPMService = new ShipmentPMService();
     }
 
 
     Run(dataPointSelection: DataPointSelection) {
+        this.StartBusyIndicator();
         this.DataPointSelection = dataPointSelection;
         this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(dataPointSelection))
-        .subscribe((res:any) => {
-            var response: ServiceResponse = res;
-            if(!response || response.HasError) return;
+            .subscribe((res: any) => {
+                this.StopBusyIndicator();
+                var response: ServiceResponse = res;
+                if (!response || response.HasError) return;
+                this.BuildGrid(response.Result);
+            });
+    }
+
+    private BuildGrid(result: any) {
+        this.rowData = result.DataResult;
+        var fields = result.Fields as AnalyticsFactsFieldsMetaDataPM[];
+        this.columns = [];
+        fields.forEach(metaDataField => {
+            this.columns.push(this.BuildColumn(metaDataField));
         });
     }
 
-     MapDataPointSelectionToWidgetPartArguments(dataPointSelection: DataPointSelection): WidgetPartArguments {
+    private BuildColumn(metaDataField: AnalyticsFactsFieldsMetaDataPM) {
+        var column = {};
+        column["field"] = metaDataField.FieldCode;
+        column["headerName"] = metaDataField.DisplayName;
+        column["sortable"] = true;
+        if (metaDataField.FieldCode == "ShipmentNumber") {
+            column["cellRendererFramework"] = EditShipmentLinkRendererComponent;
+        }
+        return column;
+    }
+
+    public StartBusyIndicator(message: string = "Generating...", width: number = 200) {
+        this.CurrentSession.StartBusyIndicator(message);
+
+    }
+    public StopBusyIndicator() {
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+
+    MapDataPointSelectionToWidgetPartArguments(dataPointSelection: DataPointSelection): WidgetPartArguments {
         var widgetPartArguments = new WidgetPartArguments();
         widgetPartArguments.GroupByValue = dataPointSelection.GroupById;
         widgetPartArguments.MeasureFieldId = dataPointSelection.MeasureFieldId;
@@ -46,7 +87,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     }
 
     RefreshBtnClick() {
-
+        this.Run(this.DataPointSelection);
     }
 
     onGridReady(event: any) {
@@ -58,8 +99,19 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     onColumnMoved(event: any) {
     }
 
-    BuildColumns(){
-        this.columns = [];
-        this.agGrid.api.setColumnDefs(this.columns);
+    public methodFromParent(cell) {
+        this.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
+            if (!myResult.HasError) {
+                var Id = myResult.Result;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "Dashboard" });
+                    });
+            }
+
+            this.StopBusyIndicator();
+        });
     }
 }
