@@ -78,10 +78,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             bool connect = customResponse.ConnectedDeclarations == "ALL";
             var decids = connect ?
-                declarationRepository.GetNotConnectedDeclarations(customResponse.tenant).Select(r => r.Id).ToList() :
-                declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant).Select(r => r.Id).ToList();                
+                declarationRepository.GetNotConnectedDeclarations(customResponse.tenant) :
+                declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant);
 
-            decids.ToList().Take(2000).ToList().ChunkBy(100).ForEach(list100 =>
+            decids.Select(r => r.Id).ToList().ChunkBy(100).ForEach(list100 =>
             {
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;

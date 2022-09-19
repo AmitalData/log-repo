@@ -85,22 +85,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.ConnectedDeclarations == "ALL")
                 {
                     //out  to DCI_CourierMastersConnectedMessagingService
-
-                    //var decsC = declarationRepository1.GetNotConnectedDeclarations(entityPM.Tenant);
-                    //foreach (var dec in decsC)
-                    //{
-                    //    ++maxSequenceNunmeric;
-                    //    CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                    //    courierDeclarationUpdateService.Update(courierDeclaration, false);
-                    //    DeclarationCourierStatus decCourier = rep.GetDeclarationsById(dec.Id, dec.Tenant);
-                    //    if(decCourier!= null)
-                    //    {
-                    //        if (!decCourier.IsClosedForFollowUp)
-                    //        {
-                    //            entityPM.OpenDeclarations += 1;
-                    //        }
-                    //    }
-                    //}
                 }
                 else
                 {
@@ -135,24 +119,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.NotConnectedDeclarations == "ALL")
                 {
                     //out  to DCI_CourierMastersConnectedMessagingService
-
-                    //var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id, entityPM.Tenant);
-                    //foreach (var item in decsCN)
-                    //{
-                    //    CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                    //    CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                    //    courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
-                    //    courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
-                    //    courierDeclarationUpdateService.Update(courierDeclaration, true);
-                    //    DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
-                    //    if (decCourier != null)
-                    //    {
-                    //        if (!decCourier.IsClosedForFollowUp)
-                    //        {
-                    //            entityPM.OpenDeclarations -= 1;
-                    //        }
-                    //    }
-                    //}
                 }
                 else
                 {
