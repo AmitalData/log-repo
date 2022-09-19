@@ -191,7 +191,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 comunicationLog.WasAnalyzed = false;
                 comunicationLog.CommunicationStatusTypeCode = "F";
-                comunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
+                comunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(comunicationLog.Tenant);
                 comunicationLog.LastStatusDateUTC = DateTime.UtcNow;
                 comunicationLog.ExceptionMessage = ex.Message;
 
