@@ -1670,7 +1670,7 @@ namespace WebFreight.Web.ReportsWebServices
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
                 List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == arInvoice.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
-                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id) && (l.IsExpense == true)).ToList();
+                List<ARInvoiceLine> myInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, arInvoice, invoicesRecored);
 
                 Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();
@@ -1791,12 +1791,12 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.SubTotalInLocalCurrency = arInvoice.SubTotalInLocalCurrency;
                 invoicesRecored.VATInLocalCurrency = myTotalVats.Sum(d => d.LocalVATAmount);
                 invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotalInLocalCurrency + invoicesRecored.VATInLocalCurrency;
-                invoicesRecored.ExpenseChargesInLocalCurrency = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                invoicesRecored.ExpenseChargesInLocalCurrency = myInvoiceLines.Where(l =>l.IsExpense).Sum(s => s.LocalCurrencyAmount);
                 invoicesRecored.BillToCode = arInvoice.BillToCode;
                 invoicesRecored.AmountDueInInvoiceCurrency = arInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
-
                 invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
+
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
                 {
                     Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
@@ -1816,7 +1816,10 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.SubTotallocal = arInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
-                    invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                    invoicesRecored.ExpenseCharges = myInvoiceLines.Where(l => l.IsExpense).Sum(s => s.LocalCurrencyAmount);
+                    invoicesRecored.VatableAmountLocalCurrency = myInvoiceLines.Where(d => d.VatPercentage > 0).Sum(s => s.LocalCurrencyAmount);
+                    invoicesRecored.NonVatableAmountLocalCurrency = myInvoiceLines.Where(d => d.VatPercentage == 0).Sum(s => s.LocalCurrencyAmount);
+                    invoicesRecored.RegionalTaxAmountLocalCurrency = myTotalVats.Where(d => d.IsRegionalTax).Sum(s => s.LocalVATAmount);
                 }
 
                 else
@@ -1825,11 +1828,13 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.SubTotallocal = arInvoice.SubTotalInInvoiceCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
-
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.subInLocal = arInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.LocalCurrency = arInvoice.LocalCurrencyCode;
-                    invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
+                    invoicesRecored.ExpenseCharges = myInvoiceLines.Where(l => l.IsExpense).Sum(s => s.InvoiceCurrencyAmount);
+                    invoicesRecored.VatableAmountInvoiceCurrency = myInvoiceLines.Where(d => d.VatPercentage > 0).Sum(s => s.InvoiceCurrencyAmount);
+                    invoicesRecored.NonVatableAmountInvoiceCurrency = myInvoiceLines.Where(d => d.VatPercentage == 0).Sum(s => s.InvoiceCurrencyAmount);
+                    invoicesRecored.RegionalTaxAmountInvoiceCurrency = myTotalVats.Where(d => d.IsRegionalTax).Sum(s => s.InvoiceCurrencyVATAmount);
                 }
 
                 if (arInvoice.SATXML != null)
