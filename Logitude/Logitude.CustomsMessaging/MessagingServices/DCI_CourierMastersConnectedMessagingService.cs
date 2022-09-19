@@ -47,7 +47,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCBClosePendingWithResponseContentHeader = new DCI_CourierMastersConnectedResponseContentHeader()
             {
-                entityPM = entityPM,
+                courierMasterId = entityPM.Id,
+                MAWB = entityPM.MAWB,
+                tenant = entityPM.Tenant,
+                ConnectedDeclarations = entityPM.ConnectedDeclarations,
                 ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now },
             };
 
@@ -60,19 +63,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCI_CourierMastersConnectedResponseContentHeader customsResponse)
         {
             var tableName = "Customs.CourierMaster";
-            var entityPM = customsResponse.entityPM;
             var genericRequestParams = new GenericRequestParams()
             {
-                Tenant = entityPM.Tenant,
-                AppicationId = entityPM.Id,
+                Tenant = customsResponse.tenant,
+                AppicationId = customsResponse.courierMasterId,
                 LoggingEnabled = true,
                 InterfaceTypeCode = MainInterfaceCode,
                 MainInterfaceCode = MainInterfaceCode,
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
-                LoggingEntityId = entityPM.Id,
-                LoggingEntityReference = entityPM.HAWB,
+                LoggingEntityId = customsResponse.courierMasterId,
+                LoggingEntityReference = customsResponse.MAWB,
                 LoggingUserId = null,
-                RequestName = $" קישור הצהרות ל " + entityPM.HAWB + " ",
+                RequestName = $" קישור הצהרות ל " + customsResponse.MAWB + " ",
             };
 
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
@@ -164,8 +166,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
         public List<string> ServerSplitDeclarationsList { get; set; }
+        public string ConnectedDeclarations { get; set; }
         public DefaultResponseContentHeader ResponseContentHeader { get; set; }
-        public CourierMasterPM entityPM { get; set; }
+        public string courierMasterId { get; set; }
+        public int tenant { get; set; }
+        public string MAWB { get; set; }
         public bool connect { get; set; }
         public string LoggingUserId { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
