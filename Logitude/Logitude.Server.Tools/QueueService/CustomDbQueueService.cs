@@ -117,7 +117,8 @@ namespace Logitude.Server.Tools.QueueService
             {
                 if (CurrentCustomQueueResponse.MessageCreatedServerTime.HasValue)
                 {
-                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) > TimeSpan.FromHours(12))
+                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) 
+                        > TimeSpan.FromHours(12))
                     {
                         this.SafeComplete();
                         safcomplete = true;

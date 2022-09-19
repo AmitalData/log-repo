@@ -40,7 +40,7 @@ using Newtonsoft.Json;
 
 namespace CustomsWorkerRole
 {
-    public class CustomsCommandBase : CustomsWorkerEntryPoint
+    public partial class CustomsCommandBase : CustomsWorkerEntryPoint
     {
         public CustomsCommandBase()
         {
@@ -490,25 +490,29 @@ namespace CustomsWorkerRole
                         LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
                         using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                         {
-                            try
+                            using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                             {
 
-                                LogMessagingUtilWR.Instance.AppendLine("QRecive");
 
-                                response = _CustomDbQueueService.Receive();
-                                LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+                                try
+                                {
+
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive");
+
+                                    response = _CustomDbQueueService.Receive(20*60);
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+                                    scopeRecive.Complete();
 
 
 
+                                    // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                }
+                                catch (Exception)
+                                {
 
-                                // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                    throw;
+                                }
                             }
-                            catch (Exception)
-                            {
-
-                                throw;
-                            }
-
 
                             if (response == null || (response != null && response.MessageId == null))
                             {
