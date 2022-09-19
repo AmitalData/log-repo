@@ -917,6 +917,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 myComponentPath = (myObjectTableName == "LogisticActionRequest") ? myComponentPath += "/CustomsLogisticActionRequest" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "PhysicalCheck") ? myComponentPath += "/CustomsPhysicalCheck" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "Declaration") ? myComponentPath += "/CustomsDeclarationModules/DeclarationOthers" : myComponentPath;
+                                myComponentPath = (myObjectTableName == "Containerization") ? myComponentPath += "/CustomsContainerization/" : myComponentPath;                                
                                 myComponentPath += "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
 

@@ -1,4 +1,5 @@
 import { ContainerizationGeneralComponent } from './Components/EditTabs/ContainerizationGeneralComponent';
+import { ContainerizationFiltersMenuComponent } from './Components/FiltersMenu/ContainerizationFiltersMenuComponent';
 import { NewContainerizationComponent } from './Components/NewEntity/NewContainerizationComponent';
 import { AgentStatementContainerization } from './Components/Other/AgentStatementContainerization';
 import { SendContainerization } from './Components/SendContainerization/SendContainerization';
@@ -11,6 +12,7 @@ export const Components =
         NewContainerizationComponent,
         AgentStatementContainerization,
         SendContainerization,
+        ContainerizationFiltersMenuComponent
     ];
 
 export class ModuleDeclarations {
@@ -23,6 +25,8 @@ export class ModuleDeclarations {
             case "NewContainerizationComponent": { myResult = NewContainerizationComponent; break; }
             case "AgentStatementContainerization": { myResult = AgentStatementContainerization; break; }
             case "SendContainerization": { myResult = SendContainerization; break; }
+            case "ContainerizationFiltersMenuComponent": { myResult = ContainerizationFiltersMenuComponent; break; }
+
         }
 
         return myResult;
