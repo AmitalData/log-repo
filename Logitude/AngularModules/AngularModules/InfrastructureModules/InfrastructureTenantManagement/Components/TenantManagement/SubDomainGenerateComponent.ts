@@ -18,6 +18,7 @@ export class SubDomainGenerateComponent extends BaseComponent  {
     public EntityPM: TenantManagementPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public Domain: string;
+    public ValidationErrorsList: string[] = [];
 
     constructor() {
         super();
@@ -49,16 +50,16 @@ export class SubDomainGenerateComponent extends BaseComponent  {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                
+                this.ValidationErrorsList = [];
                 this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
-                this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
             else
             {
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResult.ErrorsArray; 
+                this.ValidationErrorsList = myResult.ErrorsArray;
             }
+
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
