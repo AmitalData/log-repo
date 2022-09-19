@@ -160,31 +160,6 @@ export class QuoteCostChargePM {
     public set ContainerType5MarkUpValue(newValue: number) { if (this.containerType5MarkUpValue != newValue) { this.containerType5MarkUpValue = newValue; this.MarkAsDirty("ContainerType5MarkUpValue"); } }
        
 	 
-    private containerType1MarkUpCurrencyId: string;
-    public get ContainerType1MarkUpCurrencyId() { return this.containerType1MarkUpCurrencyId; }
-    public set ContainerType1MarkUpCurrencyId(newValue: string) { if (this.containerType1MarkUpCurrencyId != newValue) { this.containerType1MarkUpCurrencyId = newValue; this.MarkAsDirty("ContainerType1MarkUpCurrencyId"); } }
-       
-	 
-    private containerType2MarkUpCurrencyId: string;
-    public get ContainerType2MarkUpCurrencyId() { return this.containerType2MarkUpCurrencyId; }
-    public set ContainerType2MarkUpCurrencyId(newValue: string) { if (this.containerType2MarkUpCurrencyId != newValue) { this.containerType2MarkUpCurrencyId = newValue; this.MarkAsDirty("ContainerType2MarkUpCurrencyId"); } }
-       
-	 
-    private containerType3MarkUpCurrencyId: string;
-    public get ContainerType3MarkUpCurrencyId() { return this.containerType3MarkUpCurrencyId; }
-    public set ContainerType3MarkUpCurrencyId(newValue: string) { if (this.containerType3MarkUpCurrencyId != newValue) { this.containerType3MarkUpCurrencyId = newValue; this.MarkAsDirty("ContainerType3MarkUpCurrencyId"); } }
-       
-	 
-    private containerType4MarkUpCurrencyId: string;
-    public get ContainerType4MarkUpCurrencyId() { return this.containerType4MarkUpCurrencyId; }
-    public set ContainerType4MarkUpCurrencyId(newValue: string) { if (this.containerType4MarkUpCurrencyId != newValue) { this.containerType4MarkUpCurrencyId = newValue; this.MarkAsDirty("ContainerType4MarkUpCurrencyId"); } }
-       
-	 
-    private containerType5MarkUpCurrencyId: string;
-    public get ContainerType5MarkUpCurrencyId() { return this.containerType5MarkUpCurrencyId; }
-    public set ContainerType5MarkUpCurrencyId(newValue: string) { if (this.containerType5MarkUpCurrencyId != newValue) { this.containerType5MarkUpCurrencyId = newValue; this.MarkAsDirty("ContainerType5MarkUpCurrencyId"); } }
-       
-	 
     private markUpCurrencyId: string;
     public get MarkUpCurrencyId() { return this.markUpCurrencyId; }
     public set MarkUpCurrencyId(newValue: string) { if (this.markUpCurrencyId != newValue) { this.markUpCurrencyId = newValue; this.MarkAsDirty("MarkUpCurrencyId"); } }

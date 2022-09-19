@@ -443,11 +443,6 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.myCloner.AddField('SaleCurrencyId');
         this.myCloner.AddField('SaleExchangeRate');
         this.myCloner.AddField('SaleIsFixedRate');
-        this.myCloner.AddField('ContainerType1MarkUpCurrencyId');
-        this.myCloner.AddField('ContainerType2MarkUpCurrencyId');
-        this.myCloner.AddField('ContainerType3MarkUpCurrencyId');
-        this.myCloner.AddField('ContainerType4MarkUpCurrencyId');
-        this.myCloner.AddField('ContainerType5MarkUpCurrencyId');
         this.myCloner.AddField('MarkUpCurrencyId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);

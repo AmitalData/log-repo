@@ -507,41 +507,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ContainerType1MarkUpCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ContainerType2MarkUpCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ContainerType3MarkUpCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ContainerType4MarkUpCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ContainerType5MarkUpCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="MarkUpCurrencyId"
     Type="varchar"
     Size="15">
@@ -623,32 +588,6 @@
     ReferencedTable="VatTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ContainerType1MarkUpCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ContainerType2MarkUpCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ContainerType3MarkUpCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ContainerType4MarkUpCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ContainerType5MarkUpCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo"
-    Ignore="true" />
   <Relation
     ForeignKeyColumn="MarkUpCurrencyId"
     ReferencedTable="Currencies"

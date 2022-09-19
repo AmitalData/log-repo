@@ -304,11 +304,7 @@ export class QuoteChargesBehaviours {
         newItem.CostIsFixedRate = false;
         newItem.SaleIsFixedRate = false;
         newItem.IsChargeBySteps = false;
-        newItem.ContainerType1MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
-        newItem.ContainerType2MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
-        newItem.ContainerType3MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
-        newItem.ContainerType4MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
-        newItem.ContainerType5MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
+
         newItem.MarkUpCurrencyId = this.EntityPM.SaleCurrencyId;
         return newItem;
     }

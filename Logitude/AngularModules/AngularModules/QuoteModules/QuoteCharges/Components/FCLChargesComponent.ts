@@ -26,6 +26,7 @@ import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TariffDomainService, SalesLocalCharges } from '../../../TariffModule/Services/TariffDomainService';
+import { MarkupCurrency } from '../../../Quote/Components/Shared/MarkupCurrency';
 
 @Component({
     selector: 'FCLChargesComponent',    
@@ -731,11 +732,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
-                chargePM.ContainerType1MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType2MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType3MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType4MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType5MarkUpCurrencyId = item.CurrencyId;
                 chargePM.MarkUpCurrencyId = item.CurrencyId;
 
                 var measurementCode = item.UnitOfMesurmentCode;
@@ -781,11 +777,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
-                chargePM.ContainerType1MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType2MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType3MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType4MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType5MarkUpCurrencyId = item.CurrencyId;
                 chargePM.MarkUpCurrencyId = item.CurrencyId;
 
                 var measurementCode = item.UnitOfMesurmentCode;
@@ -1562,7 +1553,43 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.ComputeMarkUp3String();
         this.ComputeMarkUp4String();
         this.ComputeMarkUp5String();
+        this.FillMarkupCurrencyList();
     }
+
+    private markUpCurrencySelectedItem: MarkupCurrency;
+    get MarkUpCurrencySelectedItem() { return this.markUpCurrencySelectedItem; }
+    set MarkUpCurrencySelectedItem(value: MarkupCurrency) {
+        if (this.markUpCurrencySelectedItem != value) {
+            this.markUpCurrencySelectedItem = value;
+            this.MarkUpCurrencyId = this.markUpCurrencySelectedItem.CurrencyId;
+            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+        }
+    }
+
+    public MarkupCurrencyList: MarkupCurrency[];
+    public MarkUpCurrencyCode: string = null;
+    private FillMarkupCurrencyList() {
+        this.MarkupCurrencyList = [];
+        var costCurrency = new MarkupCurrency();
+        costCurrency.CurrencyCode = this.CostCurrencyCode;
+        costCurrency.CurrencyId = this.CostCurrencyId;
+        costCurrency.Type = "Cost";
+
+        var saleCurrency = new MarkupCurrency();
+        saleCurrency.CurrencyId = this.SaleCurrencyId;
+        saleCurrency.CurrencyCode = this.SaleCurrencyCode;
+        saleCurrency.Type = "Sale";
+
+        this.MarkupCurrencyList.push(costCurrency);
+        this.MarkupCurrencyList.push(saleCurrency);
+
+        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
+
+        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+            this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
+            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+        }
+    } 
 
     // SetUIProperties
     public IsEditingEnabled: boolean = false;
@@ -1813,12 +1840,15 @@ export class FCLQuoteChargeItem extends BaseComponent {
     public IsEnabled_SaleUnitPrice: boolean = false;
     public IsEnabled_SaleMinAmount: boolean = false;
     public IsEnabled_SaleUnitPriceFCL: boolean = false;
+    public IsMarkupCurrencyValid: boolean = false;
+
     SetUIProperties_SaleFields() {
         var isEnabled_SaleQuantity = false;
         var isEnabled_SaleUnitPrice = false;
         var isEnabled_SaleMinAmount = false;
         var isEnabled_SaleMeasurement = false;
         var isEnabled_SaleUnitPriceFCL = false;
+        var isMarkupCurrencyValid = false;
 
         if (this.IsEditingEnabled) {
             isEnabled_SaleQuantity = true;
@@ -1883,12 +1913,15 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.SaleMeasurementCode == "BCNT") {
                 isEnabled_SaleMinAmount = false;
             }
+
+            isMarkupCurrencyValid = (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
         this.IsEnabled_SaleUnitPrice = isEnabled_SaleUnitPrice;
         this.IsEnabled_SaleMinAmount = isEnabled_SaleMinAmount;
         this.IsEnabled_SaleUnitPriceFCL = isEnabled_SaleUnitPriceFCL;
+        this.IsMarkupCurrencyValid = isMarkupCurrencyValid;
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
@@ -2547,6 +2580,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.QuotePM.IsSaleCurrencySameAsCost) {
                 this.SaleCurrencyId = value;
             }
+
+            this.FillMarkupCurrencyList();
         }
     }
 
@@ -3080,6 +3115,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.SaleExchangeRate = this.fatherComponent.Behaviours.GetCurrencyRate(value);
             this.SetUIProperties_AllIn_CostCurrency();
             this.SetUIProperties_AllIn_SaleCurrency();
+            this.FillMarkupCurrencyList();
         }
     }
 
@@ -3223,42 +3259,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
-    get ContainerType1MarkUpCurrencyId() { return this.EntityPM.ContainerType1MarkUpCurrencyId; }
-    set ContainerType1MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType1MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType1MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType2MarkUpCurrencyId() { return this.EntityPM.ContainerType2MarkUpCurrencyId; }
-    set ContainerType2MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType2MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType2MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType3MarkUpCurrencyId() { return this.EntityPM.ContainerType3MarkUpCurrencyId; }
-    set ContainerType3MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType3MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType3MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType4MarkUpCurrencyId() { return this.EntityPM.ContainerType4MarkUpCurrencyId; }
-    set ContainerType4MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType4MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType4MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType5MarkUpCurrencyId() { return this.EntityPM.ContainerType5MarkUpCurrencyId; }
-    set ContainerType5MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType5MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType5MarkUpCurrencyId = newValue;
-        }
-    }
-
-
     SetSaleQuantity() {
         var myResult = null;
 
@@ -3390,7 +3390,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         else {
             var myResult = this.SaleUnitPrice;
-            var markup = this.MarkUpValue == null ? 0 : this.MarkUpValue;
+            var markup = this.GetMarkUpValueByCurrency();
 
             if (this.MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPriceInSaleCurrency + (this.CostUnitPriceInSaleCurrency * (markup / 100));
@@ -3407,6 +3407,19 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.SaleUnitPrice = myResult;
         }
     }
+
+    GetMarkUpValueByCurrency() {
+        var markUpValue = (this.MarkUpValue == null ? 0 : this.MarkUpValue);
+        if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+            return markUpValue;
+        }
+
+        var markUpLocalValue = markUpValue * this.CostExchangeRate;
+        markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
+        return markUpValue;
+    }
+
     ComputeSalePrice1() {
         if (AppTool.IsNullOrEmpty(this.CostUnitPrice1InSaleCurrency)) {
             this.SaleContainerType1UnitPrice = null;

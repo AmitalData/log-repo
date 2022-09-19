@@ -2287,11 +2287,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                         ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                         MarkUpCurrencyId = item.MarkUpCurrencyId,
-                        ContainerType1MarkUpCurrencyId = item.ContainerType1MarkUpCurrencyId,
-                        ContainerType2MarkUpCurrencyId = item.ContainerType2MarkUpCurrencyId,
-                        ContainerType3MarkUpCurrencyId = item.ContainerType3MarkUpCurrencyId,
-                        ContainerType4MarkUpCurrencyId = item.ContainerType4MarkUpCurrencyId,
-                        ContainerType5MarkUpCurrencyId = item.ContainerType5MarkUpCurrencyId,
                     };
 
                     entityPM.QuoteCostCharges.Add(costChargePM);
@@ -2864,11 +2859,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 SaleTotalAmountIncludingVAT = item.SaleTotalAmountIncludingVAT,
                 SaleTotalAmountLocalIncludingVAT = item.SaleTotalAmountLocalIncludingVAT,
                 MarkUpCurrencyId = item.MarkUpCurrencyId,
-                ContainerType1MarkUpCurrencyId = item.ContainerType1MarkUpCurrencyId,
-                ContainerType2MarkUpCurrencyId = item.ContainerType2MarkUpCurrencyId,
-                ContainerType3MarkUpCurrencyId = item.ContainerType3MarkUpCurrencyId,
-                ContainerType4MarkUpCurrencyId = item.ContainerType4MarkUpCurrencyId,
-                ContainerType5MarkUpCurrencyId = item.ContainerType5MarkUpCurrencyId,
+
             };
             return saleChargePM;
         }

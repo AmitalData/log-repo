@@ -90,15 +90,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SaleTotalAmountLocal { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerType1MarkUpCurrencyId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerType2MarkUpCurrencyId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerType3MarkUpCurrencyId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerType4MarkUpCurrencyId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerType5MarkUpCurrencyId { get; set; }
         public string MarkUpCurrencyId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

@@ -25,6 +25,7 @@ import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TariffDomainService, SalesLocalCharges } from '../../../TariffModule/Services/TariffDomainService';
+import { MarkupCurrency } from '../../../Quote/Components/Shared/MarkupCurrency';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -49,6 +50,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public ComponentRef: any;
     public IsAllowingMultipleFreightCharges: boolean = false;
     private TariffList_Quote: QuoteChargePM[];
+    public IsMarkUpCurrencyHasFeatureToggle: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -80,7 +82,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.CheckUpdateQuantities();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.CheckMarkUpCurrencyFeatureToggle();
         this.Listen();
+    }
+
+    private CheckMarkUpCurrencyFeatureToggle() {
+        this.IsMarkUpCurrencyHasFeatureToggle = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MUC")[0];
+        if (featureToggle) {
+            this.IsMarkUpCurrencyHasFeatureToggle = true;
+        }
     }
 
     private IsAllowingMultipleFreightChargesMethod() {
@@ -460,11 +471,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
-                chargePM.ContainerType1MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType2MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType3MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType4MarkUpCurrencyId = item.CurrencyId;
-                chargePM.ContainerType5MarkUpCurrencyId = item.CurrencyId;
                 chargePM.MarkUpCurrencyId = item.CurrencyId;
 
                 var measurementCode = item.UnitOfMesurmentCode;
@@ -1523,12 +1529,14 @@ export class QuoteChargeItem extends BaseComponent {
     public IsEnabled_SaleMinAmount: boolean = false;
     public IsEnabled_SaleTotalAmount: boolean = false;
     public IsEnabled_SaleTotalAmountLocal: boolean = false;
+    public IsMarkupCurrencyValid: boolean = false;
     SetUIProperties_SaleFields() {
         var isEnabled_SaleQuantity = false;
         var isEnabled_SaleUnitPrice = false;
         var isEnabled_SaleMinAmount = false;
         var isEnabled_SaleTotalAmount = false;
         var isEnabled_SaleTotalAmountLocal = false;
+        var isMarkupCurrencyValid = false;
         var isEnabled_SaleMeasurement = false;
 
         if (this.IsEditingEnabled) {
@@ -1576,6 +1584,8 @@ export class QuoteChargeItem extends BaseComponent {
                 isEnabled_SaleMinAmount = false;
                 //isEnabled_SaleMeasurement = false;
             }
+
+            isMarkupCurrencyValid = (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -1586,6 +1596,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.IsMarkupCurrencyValid = isMarkupCurrencyValid; 
     }
 
     public CostMinMaxIconTitle: string = "";
@@ -2597,51 +2608,18 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
-    get ContainerType1MarkUpCurrencyId() { return this.EntityPM.ContainerType1MarkUpCurrencyId; }
-    set ContainerType1MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType1MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType1MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType2MarkUpCurrencyId() { return this.EntityPM.ContainerType2MarkUpCurrencyId; }
-    set ContainerType2MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType2MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType2MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType3MarkUpCurrencyId() { return this.EntityPM.ContainerType3MarkUpCurrencyId; }
-    set ContainerType3MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType3MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType3MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType4MarkUpCurrencyId() { return this.EntityPM.ContainerType4MarkUpCurrencyId; }
-    set ContainerType4MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType4MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType4MarkUpCurrencyId = newValue;
-        }
-    }
-
-    get ContainerType5MarkUpCurrencyId() { return this.EntityPM.ContainerType5MarkUpCurrencyId; }
-    set ContainerType5MarkUpCurrencyId(newValue: string) {
-        if (this.EntityPM.ContainerType5MarkUpCurrencyId != newValue) {
-            this.EntityPM.ContainerType5MarkUpCurrencyId = newValue;
-        }
-    }
-
-    private markUpCurrencyelectedItem: MarkupCurrency;
-    get MarkUpCurrencyelectedItem() { return this.markUpCurrencyelectedItem; }
-    set MarkUpCurrencyelectedItem(value: MarkupCurrency) {
-        if (this.markUpCurrencyelectedItem != value) {
-            this.markUpCurrencyelectedItem = value;
-            this.MarkUpCurrencyId = this.markUpCurrencyelectedItem.CurrencyId;
+    private markUpCurrencySelectedItem: MarkupCurrency;
+    get MarkUpCurrencySelectedItem() { return this.markUpCurrencySelectedItem; }
+    set MarkUpCurrencySelectedItem(value: MarkupCurrency) {
+        if (this.markUpCurrencySelectedItem != value) {
+            this.markUpCurrencySelectedItem = value;
+            this.MarkUpCurrencyId = this.markUpCurrencySelectedItem.CurrencyId;
+            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
         }
     }
 
     public MarkupCurrencyList: MarkupCurrency[];
+    public MarkUpCurrencyCode: string = null;
     private FillMarkupCurrencyList() {
         this.MarkupCurrencyList = [];
         var costCurrency = new MarkupCurrency();
@@ -2656,7 +2634,13 @@ export class QuoteChargeItem extends BaseComponent {
 
         this.MarkupCurrencyList.push(costCurrency);
         this.MarkupCurrencyList.push(saleCurrency);
-        this.markUpCurrencyelectedItem = this.MarkupCurrencyList[0];
+
+        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
+
+        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+            this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
+            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+        }
     }
 
     SetSaleQuantity(ChargesGroupCode: string = "FRT") {
@@ -2761,8 +2745,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         else {
             var myResult = this.SaleUnitPrice;
-            var markup = this.MarkUpValue == null ? 0 : this.MarkUpValue;
-
+            var markup = this.GetMarkUpValueByCurrency(this.MarkUpValue); 
             if (this.MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPriceInSaleCurrency + (this.CostUnitPriceInSaleCurrency * (markup / 100));
             }
@@ -2777,6 +2760,18 @@ export class QuoteChargeItem extends BaseComponent {
 
             this.SaleUnitPrice = myResult;
         }
+    }
+
+    GetMarkUpValueByCurrency(value) {
+        var markUpValue = (value == null ? 0 : this.MarkUpValue);
+        if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+            return markUpValue;
+        }
+
+        var markUpLocalValue = markUpValue * this.CostExchangeRate;
+        markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
+        return markUpValue;
     }
 
     private mySaleUnitPriceString: string = null;
@@ -2809,6 +2804,8 @@ export class QuoteChargeItem extends BaseComponent {
                         else {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
+
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3184,10 +3181,4 @@ export class QuoteChargeItem extends BaseComponent {
 
         this.SetUIProperties_AllIn();
     }
-}
-
-export class MarkupCurrency {
-    public CurrencyId: string;
-    public CurrencyCode: string;
-    public Type: string;
 }

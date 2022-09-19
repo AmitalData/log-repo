@@ -1544,12 +1544,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
-
-                chargePM.ContainerType1MarkUpCurrencyId = chargePM.SaleCurrencyId ;
-                chargePM.ContainerType2MarkUpCurrencyId = chargePM.SaleCurrencyId ;
-                chargePM.ContainerType3MarkUpCurrencyId = chargePM.SaleCurrencyId ;
-                chargePM.ContainerType4MarkUpCurrencyId = chargePM.SaleCurrencyId ;
-                chargePM.ContainerType5MarkUpCurrencyId = chargePM.SaleCurrencyId ;
                 chargePM.MarkUpCurrencyId = chargePM.SaleCurrencyId ;
 
                 var measurementCode = item.UnitOfMesurmentCode;

@@ -219,12 +219,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 }
 
                                 quoteChargePM.MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                quoteChargePM.ContainerType1MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                quoteChargePM.ContainerType2MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                quoteChargePM.ContainerType3MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                quoteChargePM.ContainerType4MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                quoteChargePM.ContainerType5MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-
+                                
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (quoteChargePM.CostMeasurementCode)
@@ -432,11 +427,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 }
 
                                 itemPM.MarkUpCurrencyId = itemPM.SaleCurrencyId;
-                                itemPM.ContainerType1MarkUpCurrencyId = itemPM.SaleCurrencyId;
-                                itemPM.ContainerType2MarkUpCurrencyId = itemPM.SaleCurrencyId;
-                                itemPM.ContainerType3MarkUpCurrencyId = itemPM.SaleCurrencyId;
-                                itemPM.ContainerType4MarkUpCurrencyId = itemPM.SaleCurrencyId;
-                                itemPM.ContainerType5MarkUpCurrencyId = itemPM.SaleCurrencyId;
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
