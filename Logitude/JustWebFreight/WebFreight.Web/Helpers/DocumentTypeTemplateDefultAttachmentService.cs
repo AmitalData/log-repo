@@ -93,7 +93,11 @@ namespace WebFreight.Web.Helpers
                 BuildDocInAttachmentList(defultAttachmentList);
 
             }
-            this.EmptyDefaultDocuments = defultAttachmentList.Where(d => !d.IsExist).ToList();
+
+            if (defultAttachmentList != null)
+            {
+                this.EmptyDefaultDocuments = defultAttachmentList.Where(d => !d.IsExist).ToList();
+            }
         }
 
         private string GetMasterShipmentObjectTableId(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)

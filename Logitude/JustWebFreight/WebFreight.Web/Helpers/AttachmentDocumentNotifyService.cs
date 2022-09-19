@@ -18,13 +18,15 @@ namespace WebFreight.Web.Helpers
         private string automationName;
         public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment , int tenant, string automationName)
         {
-            this.documentDefultAttachment = documentDefultAttachment;
+            this.documentDefultAttachment = documentDefultAttachment.Where(d => !string.IsNullOrEmpty(d.DocumentTypeName)).ToList();
+        
             this.tenant = tenant;
             this.automationName = automationName;
         }
 
         public void Execute(string notifyBackEmails)
         {
+            if (documentDefultAttachment.Count() == 0) return;
             var emailParams = BuildEmailCommunicationParams(notifyBackEmails);
             Communications.AddEmailCommunicationLogQueue(emailParams,tenant);
 
@@ -68,12 +70,10 @@ namespace WebFreight.Web.Helpers
         }
         private string GetEmailBody()
      {
-            string emailString = "";
             bool isMoreThanOneDocument = documentDefultAttachment.Count > 1;
-            emailString += "Automation " + this.automationName + " failed to send the following ";
+            string emailString = "Automation " + this.automationName + " failed to send the following ";
             emailString += "document" + (isMoreThanOneDocument ? "s :" : " :");
             emailString += "<div>";
-            if (!isMoreThanOneDocument) return (emailString + "</div>");
             foreach (DocumentDefultAttachment document in this.documentDefultAttachment)
             {
                 emailString += "- " + document.DocumentTypeName + "<br>";
