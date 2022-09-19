@@ -38,8 +38,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                           journal.AccountingEntityCode,
                           journal.Tenant
                       }
-                   join jl in context.JournalLines on new { journalId = journal.Id, localAmount  = interestTransaction.LocalAmount, tenant = journal.Tenant } 
-                    equals new { journalId= jl.JournalId, localAmount = jl.LocalAmount, tenant = jl.Tenant}
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -76,7 +74,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceId = journal.AccountingEntityId,
                        AccountingEntityCode = interestTransaction.AccountingEntityCode
                    }).Union(interestTransactionsForAdustmentsAndRevaluationJournals);
-            //var result = query.Distinct();
             return query;
         }
 
