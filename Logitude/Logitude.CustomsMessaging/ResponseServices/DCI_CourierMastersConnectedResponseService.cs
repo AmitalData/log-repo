@@ -26,37 +26,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            CourierMasterPM courierMasterPM = customResponse.entityPM;
             MyResponseData = new INF_MSG_GenericResponseData();
             MyRequestSheetParam = MyRequestSheetParam ?? new RequestSheetParam();
             MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             //MyRequestSheetParam.CustomFileNo = customResponse.CustomFileNo;
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CourierDeclarationStatus");
-            MyResponseData.ApplicationID = customResponse.entityPM.Id;
+            MyResponseData.ApplicationID = customResponse.courierMasterId;
 
-            string msg = Update(courierMasterPM, customResponse, requestParams);
+            string msg = UpdateDb(customResponse, requestParams);
 
             MyResponseData.UserMessage = msg;
             MyResponseData.Succeeded = true;
         }
 
-        private string Update(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
+        private string UpdateDb(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
 
-            CourierMasterPM cmPm = GetCourierMasterPM(courierMasterPM.Id, courierMasterPM.Tenant);
             //int count = connected ? UpdateAllConnected(cmPm) : UpdateAllNotConnected(cmPm);
-            cmPm.ConnectedDeclarations = courierMasterPM.ConnectedDeclarations;
-            cmPm.NotConnectedDeclarations = courierMasterPM.NotConnectedDeclarations;
-            cmPm.Id = courierMasterPM.Id;
 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
 
                 int counter = customResponse.connect ?
-                    ConnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm) :
-                    DisconnectedDeclaration(customResponse.ServerSplitDeclarationsList, cmPm);
+                    ConnectedDeclaration(customResponse.ServerSplitDeclarationsList, customResponse.courierMasterId, customResponse.tenant) :
+                    DisconnectedDeclaration(customResponse.ServerSplitDeclarationsList, customResponse.courierMasterId, customResponse.tenant);
 
                 mess.AppendLine($"{(customResponse.connect ? "קושרו" : "נותקו")} {counter} הצהרות");
             }
@@ -64,34 +59,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");
-                mess.AppendLine($"נעשו {CreateChunkMessages(cmPm, customResponse, requestParams)} פיצולים");
+                mess.AppendLine($"נעשו {CreateChunkMessages(customResponse, requestParams)} פיצולים");
             }
 
             return mess.ToString();
         }
 
-        private static CourierMasterPM GetCourierMasterPM(string courierMasterId, int tenant)
-        {
-            var cmPm = new CourierMasterPM();
-            var cmPoco = new CourierMasterRepository(tenant).GetSingle(courierMasterId, tenant);
-            new CourierMasterDataMapping().CustomPOCOToPM(cmPm, cmPoco);
-            return cmPm;
-        }
+        private static CourierMasterPM GetCourierMasterPM(string courierMasterId, int tenant) =>
+            new CourierMasterQueryService(tenant).GetSingle(courierMasterId, true, true);
 
-        private int CreateChunkMessages(CourierMasterPM courierMasterPM, DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
+        private int CreateChunkMessages(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int count = 0;
             DeclarationRepository declarationRepository;
             CourierDeclarationUpdateService courierDeclarationUpdateService;
             DeclarationCourierStatusRepository rep;
-            InitServices(courierMasterPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+            InitServices(customResponse.tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
 
-            bool connect = courierMasterPM.ConnectedDeclarations == "ALL";
+            bool connect = customResponse.ConnectedDeclarations == "ALL";
             var decids = connect ?
-                declarationRepository.GetNotConnectedDeclarations(courierMasterPM.Tenant).Select(r => r.Id).ToList() :
-                courierMasterPM.ConnectedDeclarations.Substring(0, courierMasterPM.ConnectedDeclarations.Length - 1).Split(',').ToList();
+                declarationRepository.GetNotConnectedDeclarations(customResponse.tenant).Select(r => r.Id).ToList() :
+                customResponse.ConnectedDeclarations.Substring(0, customResponse.ConnectedDeclarations.Length - 1).Split(',').ToList();
 
-            decids.ToList().ChunkBy(100).ForEach(list100 =>
+            decids.ToList().Take(2000).ToList().ChunkBy(100).ForEach(list100 =>
             {
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;
@@ -103,32 +93,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return count;
         }
 
-        private int ConnectedDeclaration(List<string> declarationIds, CourierMasterPM entityPM)
+        private int ConnectedDeclaration(List<string> declarationIds, string courierMasterId, int tenant)
         {
             DeclarationRepository declarationRepository;
             CourierDeclarationUpdateService courierDeclarationUpdateService;
             DeclarationCourierStatusRepository rep;
-            InitServices(entityPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+            InitServices(tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
 
-            int? maxSequenceNunmeric = new CourierDeclarationQueryService(entityPM.Tenant).GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
+            int? maxSequenceNunmeric = new CourierDeclarationQueryService(tenant).GetCourierMasterMaxSequenceNumeric(courierMasterId, tenant);
 
-            courierDeclarationUpdateService.FastInsert(declarationIds, entityPM.Tenant, entityPM.Id, maxSequenceNunmeric);
+            courierDeclarationUpdateService.FastInsert(declarationIds, tenant, courierMasterId, maxSequenceNunmeric);
             return declarationIds.Count;
         }
 
-        private int DisconnectedDeclaration(List<string> declarationIds, CourierMasterPM entityPM)
+        private int DisconnectedDeclaration(List<string> declarationIds, string courierMasterId, int tenant)
         {
             DeclarationRepository declarationRepository;
             CourierDeclarationUpdateService courierDeclarationUpdateService;
             DeclarationCourierStatusRepository rep;
-            InitServices(entityPM.Tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+            InitServices(tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+            CourierMasterPM entityPM = GetCourierMasterPM(courierMasterId, tenant);
 
             var decs = declarationRepository.GetDeclarationsById(declarationIds);
             foreach (var item in decs)
             {
                 CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
-                CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
-                courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPM.Id, false, true);
+                CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(tenant);
+                courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, courierMasterId, false, true);
                 courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                 courierDeclarationUpdateService.Update(courierDeclaration, true);
                 DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
