@@ -19,6 +19,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DCI_CourierMastersConnectedResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCI_CourierMastersConnectedResponseContentHeader, GenericRequestParams>
     {
+        DeclarationRepository declarationRepository;
+        CourierDeclarationUpdateService courierDeclarationUpdateService;
+        DeclarationCourierStatusRepository rep;
+
         public override INF_MSG_GenericResponseData GetResponse(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return MyResponseData;
@@ -42,6 +46,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private string UpdateDb(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
+            InitServices(customResponse.tenant);
 
             //int count = connected ? UpdateAllConnected(cmPm) : UpdateAllNotConnected(cmPm);
 
@@ -65,23 +70,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return mess.ToString();
         }
 
-        private static CourierMasterPM GetCourierMasterPM(string courierMasterId, int tenant) =>
+        private CourierMasterPM GetCourierMasterPM(string courierMasterId, int tenant) =>
             new CourierMasterQueryService(tenant).GetSingle(courierMasterId, true, true);
 
         private int CreateChunkMessages(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int count = 0;
-            DeclarationRepository declarationRepository;
-            CourierDeclarationUpdateService courierDeclarationUpdateService;
-            DeclarationCourierStatusRepository rep;
-            InitServices(customResponse.tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+            
+            var decsIds = new List<string>();
 
-            bool connect = customResponse.ConnectedDeclarations == "ALL";
-            var decids = connect ?
-                declarationRepository.GetNotConnectedDeclarations(customResponse.tenant) :
-                declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant);
+            if (!string.IsNullOrEmpty(customResponse.ConnectedDeclarations))
+            {
+                if (customResponse.ConnectedDeclarations == "ALL")
+                    decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant).Select(r => r.Id).ToList();
+                else if (customResponse.ConnectedDeclarations?.Split(',') != null)
+                    decsIds = customResponse.ConnectedDeclarations?.Split(',').ToList();
+                
+                count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
+            }
 
-            decids.Select(r => r.Id).ToList().ChunkBy(100).ForEach(list100 =>
+            if (!string.IsNullOrEmpty(customResponse.NotConnectedDeclarations))
+            {
+                if (customResponse.NotConnectedDeclarations == "ALL")
+                    decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant).Select(r => r.Id).ToList();
+                else if (customResponse.NotConnectedDeclarations?.Split(',') != null)
+                    decsIds = customResponse.NotConnectedDeclarations?.Split(',').ToList();
+            
+                count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
+            }
+
+            return count;
+        }
+
+        private int CreateChunkMessages(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams, bool connect, List<string> decsIds)
+        {
+            int count = 0;
+            decsIds.ChunkBy(100).ForEach(list100 =>
             {
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;
@@ -89,17 +113,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.connect = connect;
                 new CRSUtil().CreateCRS_DCAIn<DCI_CourierMastersConnectedResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
             });
-
             return count;
         }
 
         private int ConnectedDeclaration(List<string> declarationIds, string courierMasterId, int tenant)
-        {
-            DeclarationRepository declarationRepository;
-            CourierDeclarationUpdateService courierDeclarationUpdateService;
-            DeclarationCourierStatusRepository rep;
-            InitServices(tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
-
+        {        
             int? maxSequenceNunmeric = new CourierDeclarationQueryService(tenant).GetCourierMasterMaxSequenceNumeric(courierMasterId, tenant);
 
             courierDeclarationUpdateService.FastInsert(declarationIds, tenant, courierMasterId, maxSequenceNunmeric);
@@ -107,11 +125,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         private int DisconnectedDeclaration(List<string> declarationIds, string courierMasterId, int tenant)
-        {
-            DeclarationRepository declarationRepository;
-            CourierDeclarationUpdateService courierDeclarationUpdateService;
-            DeclarationCourierStatusRepository rep;
-            InitServices(tenant, out declarationRepository, out courierDeclarationUpdateService, out rep);
+        {            
             CourierMasterPM entityPM = GetCourierMasterPM(courierMasterId, tenant);
 
             var decs = declarationRepository.GetDeclarationsById(declarationIds);
@@ -130,7 +144,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return decs.Count();
         }
 
-        private static void InitServices(int tenant, out DeclarationRepository declarationRepository, out CourierDeclarationUpdateService courierDeclarationUpdateService, out DeclarationCourierStatusRepository rep)
+        private void InitServices(int tenant)
         {
             ICustomContext context = CustomContext.GetContext(tenant);
             declarationRepository = new DeclarationRepository(context);

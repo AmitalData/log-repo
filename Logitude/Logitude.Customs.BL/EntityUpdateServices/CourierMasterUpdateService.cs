@@ -93,17 +93,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     string[] items = entityPM.ConnectedDeclarations.Split(',');
                     //DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                     // entityPM.OpenDeclarations = rep.CountOpenDeclarations(entityPM.Id, entityPM.Tenant);
-                    foreach (string item in items)
+                    if (items != null && items.Length < 100)
                     {
-                        ++maxSequenceNunmeric;
-                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
-                        courierDeclarationUpdateService.Update(courierDeclaration, false);
-                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
-                        if (decCourier != null)
+                        foreach (string item in items)
                         {
-                            if (!decCourier.IsClosedForFollowUp)
+                            ++maxSequenceNunmeric;
+                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
+                            courierDeclarationUpdateService.Update(courierDeclaration, false);
+                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            if (decCourier != null)
                             {
-                                entityPM.OpenDeclarations += 1;
+                                if (!decCourier.IsClosedForFollowUp)
+                                {
+                                    entityPM.OpenDeclarations += 1;
+                                }
                             }
                         }
                     }
@@ -124,7 +127,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
                     string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
-                    if (NotConnecteditems != null && NotConnecteditems.Length > 0)
+                    if (NotConnecteditems != null && NotConnecteditems.Length > 0 && NotConnecteditems.Length < 100)
                     {
                         foreach (string item in NotConnecteditems)
                         {
