@@ -1585,7 +1585,7 @@ export class QuoteChargeItem extends BaseComponent {
                 //isEnabled_SaleMeasurement = false;
             }
 
-            isMarkupCurrencyValid = (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) && (this.SaleCurrencyId != this.CostCurrencyId);
+            isMarkupCurrencyValid = (!this.QuotePM.IsSaleCurrencySameAsCost) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -3116,6 +3116,7 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.OnChargeCurrencyChanged();
+        this.FillMarkupCurrencyList();
     }
     OnQuoteSaleCurrencyDataChanged() {
 
