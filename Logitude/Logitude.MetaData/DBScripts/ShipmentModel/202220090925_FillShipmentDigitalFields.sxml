@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+	<Sql Version="1">
+		<![CDATA[
+	-- no data
+	
+        ]]>
+	</Sql>
+</Script>
+
+

@@ -213,6 +213,7 @@
     <None Include="DBScripts\ShipmentModel\202207200042_FillShipmentNumberOfTransshipments.soxml" />
     <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
     <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
+    <None Include="DBScripts\ShipmentModel\202220090925_FillShipmentDigitalFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
@@ -232,6 +233,7 @@
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
@@ -1750,6 +1752,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProvider.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentDigitalField.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">

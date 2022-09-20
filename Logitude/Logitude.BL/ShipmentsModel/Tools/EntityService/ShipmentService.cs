@@ -108,6 +108,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
+        public ShipmentDigitalField shipmentDigitalFields;
         private ShipmentServiceInitializer initializer;
         string UpdateByEmail;
         private ComputingPartnerRepository computingPartnerRepository;
@@ -330,7 +331,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
-
+                shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, shipmentDigitalFields, isNewEntity);
+                shipmentBehaviourFacade.HandleShipmentDigitalFields();
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
@@ -529,6 +531,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
+
+                    shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, shipmentDigitalFields, isNewEntity);
+                    shipmentBehaviourFacade.HandleShipmentDigitalFields();
 
                     if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                     {

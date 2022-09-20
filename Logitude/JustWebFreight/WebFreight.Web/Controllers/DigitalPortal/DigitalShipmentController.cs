@@ -327,5 +327,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
+
+        [HttpPut]
+        [Route("DigitalShipment/PutShipmentDigitalField")]
+        public IHttpActionResult PutShipmentDigitalField(ShipmentDigitalArchivedArgs archivedrgs)
+        {
+            try
+            {
+                var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(archivedrgs.CardId, archivedrgs.ShipmentId);
+                var shipmentId = shipmentIdAndTenant.Item1;
+                var tenant = shipmentIdAndTenant.Item2;
+                ShipmentDigitalFieldRepository shipmentDigitalFieldRepository = new ShipmentDigitalFieldRepository(tenant);
+                var shipmentDigitalField = shipmentDigitalFieldRepository.GetSingleShipmentDigitalFields(shipmentId, tenant);
+                shipmentDigitalField.IsCustomerArchived = archivedrgs.IsCustomerArchived;
+                shipmentDigitalFieldRepository.Update(shipmentDigitalField);
+                shipmentDigitalFieldRepository.SubmitChanges();
+                return Ok(shipmentDigitalField);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
     }
 }

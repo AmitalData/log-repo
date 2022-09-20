@@ -306,6 +306,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ManifestStatusMap());
             modelBuilder.Configurations.Add(new AWBAdditionalHandlingInfoMap());
             modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
+            modelBuilder.Configurations.Add(new ShipmentDigitalFieldMap());
             modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
             modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
@@ -394,6 +395,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
         public IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; set; }
         public IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; set; }
+        public IDbSet<ShipmentDigitalField> ShipmentDigitalFields { get; set; }
         public IDbSet<ContainersExternalData> ContainersExternalDatas { get; set; }
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
