@@ -66,6 +66,7 @@ export  class ServiceHelper{
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
+        CargoTrackingBrandingData.EnableExportToExcel = brandingData.EnableExportToExcel;
         CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
         CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
 

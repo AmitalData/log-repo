@@ -47,6 +47,7 @@ namespace WebFreight.Web.Helpers
             brandingData.InvertedLogoId = tenantManagementPM.InvertedLogoId;
             brandingData.CustomerURL = tenantManagementPM.CustomerURL;
             brandingData.ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite;
+            brandingData.EnableExportToExcel = tenantManagementPM.EnableExportToExcel;
             brandingData.Email = tenantManagementPM.ContactEmail;
             SetBrandingImagesBytes(brandingData);
             return brandingData;

@@ -25,5 +25,6 @@ export class CargoTrackingBrandingData {
     public static ShipmentHeaderBytes:any;
     public static ForceHttps:boolean;
     public static ActivatePrivateSite: boolean;
+    public static EnableExportToExcel: boolean;
     public static ContactEmail: string;
 }
