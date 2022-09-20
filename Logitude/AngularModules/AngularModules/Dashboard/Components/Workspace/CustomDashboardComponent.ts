@@ -53,8 +53,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         isOnEditLayout: new Subject(),
         onGetLayouts: new BehaviorSubject({ lg: [] }),
         widgetUpdated: new Subject(),
-        //onAddWidget: new Subject(),
-        //onEditWidget: new Subject(),
+        onAddWidget: new Subject(),
+        onEditWidget: new Subject(),
     }
 
     ngOnInit(): void {
