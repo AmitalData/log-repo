@@ -226,6 +226,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PendingAirlines { get; set; }
 
         public bool EnableBranding { get; set; }
+        public bool EnableExportToExcel { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public string DeclarationMessage { get; set; }
         public string CustomerURL { get; set; }

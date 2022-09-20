@@ -995,6 +995,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="EnableExportToExcel"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

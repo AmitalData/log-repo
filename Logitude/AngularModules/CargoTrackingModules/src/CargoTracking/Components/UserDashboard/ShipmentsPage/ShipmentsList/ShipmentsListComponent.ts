@@ -85,6 +85,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
+    get enableExportToExcel() {
+        return CargoTrackingBrandingData.EnableExportToExcel;
+    }
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
