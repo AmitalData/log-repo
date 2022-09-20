@@ -15,7 +15,7 @@ namespace WebFreight.Web.Helpers.MixPanel.events
             this.tenant = tenant;
         }
 
-        public string ProjectToken { get { return ""; } }
+        public string ProjectToken { get { return "55727552404267ef137b8a1579079bc1"; } }
 
         public bool IsValid => true;
 
@@ -23,9 +23,9 @@ namespace WebFreight.Web.Helpers.MixPanel.events
         {
             MixPanelEvent mixPanelEvent = new MixPanelEvent();
             mixPanelEvent.Name = mixPanelActionsEvent.ActionName;
-            mixPanelEvent.AddProperty("email", mixPanelActionsEvent.Email);
-            mixPanelEvent.AddProperty("is_public", "False");
-            mixPanelEvent.AddProperty("tenant", tenant.ToString());
+            mixPanelEvent.AddProperty("Email", mixPanelActionsEvent.Email);
+            mixPanelEvent.AddProperty("Message", mixPanelActionsEvent.Message);
+            mixPanelEvent.AddProperty("DashboardId", mixPanelActionsEvent.DashboardId);
             return mixPanelEvent;
         }
     }

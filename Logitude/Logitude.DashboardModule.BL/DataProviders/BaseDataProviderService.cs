@@ -1,14 +1,20 @@
-﻿using Logitude.DashboardModule.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.APIDataContract;
+using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,20 +25,23 @@ namespace Logitude.DashboardModule.BL.DataProviders
     {
         internal WidgetPM _Widget;
         internal AnalyticsFactsMetaData _Entity;
-        internal Dictionary<string,AnalyticsFactsFieldsMetaData> _EntityFields;
+        internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
+        private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
             this._Widget = widget;
             this._Entity = entity;
+            analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
             FillEntityFields();
         }
 
         public abstract List<SeriesMeasure> GetWidgetData();
+        public abstract AnalyticData GetWidgetDataPart(WidgetArguments widgetPartArguments);
 
         public List<SeriesMeasure> GetData<T>(IQueryable<T> query)
         {
-            
+
             var seriesMeasures = new List<SeriesMeasure>();
             foreach (var measure in _Widget.WidgetMeasures)
             {
@@ -66,7 +75,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var groupByField = $"{groupBy.FieldCode}";
             if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
             {
-                groupByField = ConverDateByDateGroupCode( groupBy);
+                groupByField = ConverDateByDateGroupCode(groupBy);
             }
             var Label = groupByField;
             var join = "";
@@ -90,14 +99,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private object CreateSortBy()
         {
-            if(_Widget.SortBy == null)
+            if (_Widget.SortBy == null)
             {
                 return $" order by Label {_Widget.SortDirection}";
             }
             return $" order by Value {_Widget.SortDirection}";
         }
 
-        private string ConverDateByDateGroupCode( AnalyticsFactsFieldsMetaData groupBy)
+        private string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy)
         {
             switch (_Widget.DateGroupCode)
             {
@@ -116,13 +125,104 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private void FillEntityFields()
         {
-            var analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
-            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e=>e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
+            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
             _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
 
-        
+
+        internal AnalyticData GetDataPart<T>(IQueryable<T> query, List<string> analyticTableFields, WidgetArguments widgetPartArguments)
+        {
+            TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
+            query = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
+
+            var columns = BuildColumns(analyticTableFields, widgetPartArguments);
+            var queryString = CreateQuery(query, columns, widgetPartArguments);
+
+
+            AnalyticData analyticData = new AnalyticData();
+            analyticData.DataResult = DynamicListFromSql(queryString).ToList();
+            analyticData.Fields = columns;
+            return analyticData;
+        }
+
+        private static IEnumerable<dynamic> DynamicListFromSql(string Sql)
+        {
+            var context = DashboardContext.GetContext(0);
+            var db = context.GetActiveDbContext().Database;
+            using (var cmd = db.Connection.CreateCommand())
+            {
+                cmd.CommandText = Sql;
+                if (cmd.Connection.State != ConnectionState.Open) { cmd.Connection.Open(); }
+
+                using (var dataReader = cmd.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        var row = new ExpandoObject() as IDictionary<string, object>;
+                        for (var fieldCount = 0; fieldCount < dataReader.FieldCount; fieldCount++)
+                        {
+                            row.Add(dataReader.GetName(fieldCount), dataReader[fieldCount]);
+                        }
+                        yield return row;
+                    }
+                }
+            }
+        }
+
+        private List<AnalyticsFactsFieldsMetaData> BuildColumns(List<string> analyticTableFields, WidgetArguments widgetPartArguments)
+        {
+            var columns = new List<AnalyticsFactsFieldsMetaData>();
+
+            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+            columns.Add(groupBy);
+
+            var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
+            columns.Add(measure);
+
+            if (analyticTableFields != null && analyticTableFields.Count != 0)
+            {
+                columns.AddRange(analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id && analyticTableFields.Contains(e.FieldCode)).ToList());
+
+            }
+            return columns.GroupBy(x => x.FieldCode).Select(x => x.FirstOrDefault()).ToList();
+        }
+
+        private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
+        {
+            var groupByField = _EntityFields[_Widget.GroupById];
+            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue, groupByField);
+            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, groupByField)}
+                     From ({resultQueryable.ToQueryStringWithParameter()}) as data 
+                     {BuildQueryJoins(groupByField)}
+                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue} ";
+        }
+
+        private string BuildQueryJoins(AnalyticsFactsFieldsMetaData groupByField)
+        {
+
+            return $@"left join {groupByField.JoinedTableDBName} as jt on jt.{groupByField.JoinedTableKey} =  {groupByField.FieldCode}";
+        }
+
+        private string GetGroupByValue(string groupByValue, AnalyticsFactsFieldsMetaData groupByField)
+        {
+
+            if (groupByField.DataTypeCode != "Date" && groupByField.DataTypeCode != "DateTime")
+            {
+                return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+            }
+            // format date and add date group type to it
+            return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+
+        }
+
+        private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, AnalyticsFactsFieldsMetaData groupByField)
+        {
+            var query = string.Join(",", analyticTableFields.Select(x => x.FieldCode).Where(x => x != groupByField.FieldCode).ToList());
+            query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
+            return query;
+        }
     }
+
 
 
 }

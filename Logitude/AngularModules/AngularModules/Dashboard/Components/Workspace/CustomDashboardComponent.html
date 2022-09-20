@@ -54,7 +54,7 @@
                         <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
 
-                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard()">
+                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard(true)">
                         <img src="./Images/Buttons/Save.Red.png" class="LeftCenter" style="margin-left:2px;" />
                         <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
@@ -96,7 +96,7 @@
     </div>
 
     <div class="Dashboard-body">
-        <Custom-Layout [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [SelectedDashboard]="SelectedDashboard"></Custom-Layout>
+        <custom-layout [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
     </div>
 </div>
 
