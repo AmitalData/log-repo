@@ -648,16 +648,10 @@
                 </div>
                 <div *ngIf="FieldName == 'LandingDateTimeOnly'" style="position:relative;width:100%; height: 100%;">
                     <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
-
-
-                        <div *ngIf="IsHeaderScreenTemplate" class="TextTrimming"
-                             style="display: inline; padding-right:25px;">
-                            <span>{{Entity[FieldName] | DateTimePipe:'T'}}</span>
-
-
+                        <div class="TextTrimming"
+                             style="text-align: right;">
+                            {{Entity[FieldName] | DateTimePipe:'T'}}
                         </div>
-
-
                     </div>
                 </div>
             </div>
