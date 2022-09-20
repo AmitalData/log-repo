@@ -1299,7 +1299,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     OpenUnifreighTask(entityPM);
                 }
                 //Yuval Chalup 04.12.2016 TASK-24655 --->
-                if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+                if (declarationPM.Direction != "E" || (declarationPM.Direction == "E" && entityPM.ChangeSetOp != ChangeSetOperation.Insert) )
                 {
                     UpdateDeclarationFields(entityPM);
                 }
