@@ -83,6 +83,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
         {
             AutoSetOriginalDocumentTrue(entityPM);
+            var customContext = CustomContext.GetContext(entityPM.Tenant);
+
+            //if (entityPM.DeclarationId != null)
+            //{
+                //DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+
+                //var declaration = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+
+                //if (declaration?.Direction == "E")
+                //{
+                    var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
+                    var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
+
+                    var deleteItems = entityPM.CustomsDocumentMetaDataValues.Where(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null).ToList();
+
+                    if (deleteItems != null && deleteItems.Count() > 0)
+                    {
+                        entityPM.CustomsDocumentMetaDataValues.RemoveAll(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null);
+                        deleteItems.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
+                        entityPM.DeletedCustomsDocumentMetaDataValues.AddRange(deleteItems);
+                    }
+            //    }
+           
+
+            //}
 
             CustomsDocumentMetaDataValueUpdateService customsDocumentMetaDataValueUpdateService = new CustomsDocumentMetaDataValueUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             customsDocumentMetaDataValueUpdateService.UpdateMulti(entityPM.CustomsDocumentMetaDataValues, entityPM.DeletedCustomsDocumentMetaDataValues, entityPM, false);
