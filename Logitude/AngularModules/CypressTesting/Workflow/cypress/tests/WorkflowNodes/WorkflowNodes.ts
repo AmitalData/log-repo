@@ -5,7 +5,7 @@ import { StartNodeDetails } from "../../models/StartNodeDetails";
 import { WorkflowDetails } from "../../models/WorkflowDetails";
 import { ConditionDetails } from "../../models/ConditionDetails";
 
-
+//1
 Given("the user logged in and navigates to automation workspace", () => {
     cy.Login(true)
     Actions.NavigatesToAutomationsWorkspace()
@@ -27,7 +27,9 @@ When("click create", () => {
 Then("the flow should create successfully", () => {
     Actions.AssertCreateWorkflow()
 })
+//1
 
+//2
 Given("edit start configration with following details", (dataTable) => {
     let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
     Actions.FillEditFlowStartNodeDetails(startNodeDetails)
@@ -39,16 +41,26 @@ Given("add condition with following details", (dataTable) => {
 });
 
 Given("add condition group met with {string} with the following details", (GroupOperation,dataTable) => {
-    debugger
+    let groupRootConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
+    Actions.FillRootConditionsDetails(GroupOperation, groupRootConditionDetailsList);
+});
+
+When("save flow", () => {
+    Actions.SaveWorkflow();
+});
+
+Then("the flow should save successfully", () => {
+    Actions.AssertSaveWorkflow();
+});
+
+//2
+
+Given("add second level condition group met with {string} with the following details", (GroupOperation,dataTable) => {
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
     Actions.FillGroupConditionDetails(GroupOperation, groupConditionDetailsList);
 });
 
-Given("click Ok", () => {
-    Actions.CloseEditStartNodeWindow();
-});
-
-When("click save", () => {
+When("save flow", () => {
     Actions.SaveWorkflow();
 });
 

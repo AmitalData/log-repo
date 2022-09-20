@@ -17,7 +17,9 @@ export class WorkflowSelectors {
     public static readonly WorkflowCreateButton = "button[data-cy^='workflow-save-button'";
     public static readonly WorkflowSaveButton = "button[class^='EntityChangesButton']";
     public static readonly WorkflowStartEditButton = ".edit-button";
-    public static readonly WorkflowAddCondition = ".link-button";
+    public static readonly WorkflowFirstAddCondition = "[data-cy^='AddConditionButton']";
+    public static readonly WorkflowAddRootCondition = "[data-cy^='AddRootConditionButton']";
+    public static readonly WorkflowRootOperation = "[data-cy^='ConditionsOperation']";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_"+ index.toString()+ "']";
@@ -28,7 +30,7 @@ export class WorkflowSelectors {
     }
 
     public static WorkflowConditionValue(index: number): string {
-        return "[data-cy^='ConditionValue_"+ index.toString()+ "']";
+        return "input[data-cy^='ConditionValue_"+ index.toString()+ "']";
     }
 
     public static readonly WorkflowRootGroupCondition = "span[data-cy^='AddRootGroupButton']";
@@ -48,4 +50,6 @@ export class WorkflowSelectors {
     public static WorkflowGroupOperation(index: number): string {
         return "div[data-cy^='ConditionOperation_"+ index.toString()+ "']";
     }
+
+
 }
