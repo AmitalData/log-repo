@@ -1,5 +1,5 @@
 import { DashboardListComponent } from './Components/Workspace/DashboardLists/DashboardListComponent';
-import { EditShipmentLinkRendererComponent } from 'InfrastructureModules/InfrastructureBIReport/Components/TemplateRenderer/EditShipmentLinkRendererComponent';
+import { EditShipmentLinkRendererComponent } from './Components/ListTemplates/EditShipmentLinkRendererComponent';
 
 export const Components =
     [
