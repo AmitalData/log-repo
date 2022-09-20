@@ -2925,6 +2925,7 @@
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
     <Compile Include="Helpers\ResetUserPasswordDocumentService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
+    <Compile Include="Helpers\ShipmentDigitalArchivedArgs.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
@@ -3688,6 +3689,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsMessageTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsTransmissionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentDigitalFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentOrderPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPackageHarmonizeUpdateClass.cs" />
