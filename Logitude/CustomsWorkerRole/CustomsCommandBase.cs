@@ -499,7 +499,7 @@ namespace CustomsWorkerRole
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
 
-                                    response = _CustomDbQueueService.Receive(20*60);
+                                    response = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
                                     scopeRecive.Complete();
 

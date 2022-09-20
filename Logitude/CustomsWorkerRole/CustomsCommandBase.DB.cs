@@ -39,7 +39,7 @@ namespace CustomsWorkerRole
 
 
                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                    response = _CustomDbQueueService.Receive(nextRunDelayInSec: 20 * 60);//is own transaction !!!!
+                    response = _CustomDbQueueService.Receive(nextRunDelayInSec: CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);//is own transaction !!!!
                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
                     if (response == null || (response != null && response.MessageId == null))
                     {
