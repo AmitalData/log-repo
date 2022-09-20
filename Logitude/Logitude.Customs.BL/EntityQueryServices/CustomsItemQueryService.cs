@@ -78,7 +78,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return QuantityTypeCode;
         }
 
-        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant)
+        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant, bool isExport)
         {
             if (string.IsNullOrWhiteSpace(classificationCode)) return null;
             if (classificationCode.Length > 10)
@@ -87,6 +87,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
             var customsItems = customsItemQueryService.GetAllCustomsItemByClassificationCode(classificationCode);
+            customsItems = customsItems.FindAll(x => x.CustomsItemCategoryID == 1);
+
+            customsItems = isExport ?
+                customsItems.FindAll(x => x.CustomsBookTypeID == 2 || x.CustomsBookTypeID == 3) :
+                customsItems.FindAll(x => x.CustomsBookTypeID == 1);
 
             PropertiesDetailsHistoryPM propertiesDetailsHistory = null;
             MeasurmentUnitPM measurmentUnit = null;

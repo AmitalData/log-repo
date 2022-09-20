@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "cf5cd274a99d242012696f2d197eac31";
+		public const string HashString = "0fde757023e1c0206eacf972367c3bc1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17351,6 +17351,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_BULKUPLOADDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BULKUPLOADDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.BULKUPLOADDOCUMENTS", NameTextCodeDefaultText = @"Bulk Upload Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
+		   Feature DeclarationFeature_MultiUpdateClassificationCodeWindow = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdateClassificationCodeWindow", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdateClassificationCodeWindow", NameTextCodeDefaultText = @"הצגת כפתור עדכון קוד תהליך/הנחה פטור" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
    
 	    
 		}
@@ -20076,6 +20078,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndDocumentWithDifferentCustomsReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference", DefaultText = "A document and a document with a different customs reference",LocalDefaultText = @"לא ניתן לקשר מסמך עם סימוכין מכס שונה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"אין הצהרה עם סוג הובלה נבחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update one item",LocalDefaultText = @"עדכן פריט אחד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
