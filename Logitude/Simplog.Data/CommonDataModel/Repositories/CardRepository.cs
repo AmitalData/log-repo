@@ -171,12 +171,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return accountingCard;
         }
 
-        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false, string partnerType = null)
+        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false, List<string> partnerTypes = null)
         {
-            if (partnerType != null) {
+            if (partnerTypes != null) {
                 return  (from a in context.Cards
                              where a.Tenant == tenant
-                             && a.GLAccountId == id && a.PartnerTypeId == partnerType
+                             && a.GLAccountId == id && partnerTypes.Contains(a.PartnerTypeId)
                              select a).FirstOrDefault();
             }
             string key = $"GetCardByGLAccountId({id},{tenant})";
