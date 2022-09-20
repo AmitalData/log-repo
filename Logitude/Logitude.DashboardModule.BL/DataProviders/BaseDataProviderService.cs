@@ -15,6 +15,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -190,39 +191,73 @@ namespace Logitude.DashboardModule.BL.DataProviders
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
             var groupByField = _EntityFields[_Widget.GroupById];
-            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue, groupByField);
             return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, groupByField)}
                      From ({resultQueryable.ToQueryStringWithParameter()}) as data 
                      {BuildQueryJoins(groupByField)}
-                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue} ";
+                     Where {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
+        }
+
+        private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)
+        {
+
+            var fieldCode = _EntityFields[_Widget.GroupById].FieldCode;
+            if (groupByValue == null) return $@"{fieldCode} IS NULL";
+            if (groupBy.DataTypeCode == "LookUp") return $@"{fieldCode} = '{groupByValue}'";
+
+            var dateParts = groupByValue.Split('/');
+            string date = "";
+            switch (_Widget.DateGroupCode)
+            {
+                case "Day":
+                    date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-{ dateParts[2]}";
+                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
+
+                case "Month":
+                    int daysInMonth = DateTime.DaysInMonth(int.Parse(dateParts[0]), DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month);
+                    date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-";
+                    return $"{fieldCode} >= '{date}01' and {fieldCode} <='{date}{daysInMonth} 23:59:59.999'";
+
+                case "Year":
+                    date = $@"{dateParts[0]}-";
+                    return $"{fieldCode} >= '{date}01-31' and {fieldCode} <='{date}12-31 23:59:59.999'";
+
+                case "Quarter":
+                    return GetQuarterGroupStatment(fieldCode, dateParts);
+
+                default:
+                    date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-{ dateParts[2]}";
+                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
+            }
+
+        }
+
+        private string GetQuarterGroupStatment(string fieldCode, string[] dateParts)
+        {
+            var quarterStartMonth = (int.Parse(dateParts[1][1].ToString()) * 3) - 2;
+            var quarterEndMonth = (int.Parse(dateParts[1][1].ToString()) * 3);
+
+            var startDateDaysInMonth = DateTime.DaysInMonth(int.Parse(dateParts[0]), quarterStartMonth);
+            var endDateDaysInMonth = DateTime.DaysInMonth(int.Parse(dateParts[0]), quarterEndMonth);
+
+            var startDate = $@"{dateParts[0]}-{quarterStartMonth.ToString().PadLeft(2, '0')}-{startDateDaysInMonth}";
+            var endDate = $@"{dateParts[0]}-{quarterEndMonth.ToString().PadLeft(2, '0')}-{endDateDaysInMonth}";
+
+            return $"{fieldCode} >= '{startDate}' and {fieldCode} <='{endDate} 23:59:59.999'";
         }
 
         private string BuildQueryJoins(AnalyticsFactsFieldsMetaData groupByField)
         {
-
+            if (groupByField.DataTypeCode != "LookUp") return "";
             return $@"left join {groupByField.JoinedTableDBName} as jt on jt.{groupByField.JoinedTableKey} =  {groupByField.FieldCode}";
-        }
-
-        private string GetGroupByValue(string groupByValue, AnalyticsFactsFieldsMetaData groupByField)
-        {
-
-            if (groupByField.DataTypeCode != "Date" && groupByField.DataTypeCode != "DateTime")
-            {
-                return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
-            }
-            // format date and add date group type to it
-            return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
-
         }
 
         private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, AnalyticsFactsFieldsMetaData groupByField)
         {
             var query = string.Join(",", analyticTableFields.Select(x => x.FieldCode).Where(x => x != groupByField.FieldCode).ToList());
-            query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
+            if (groupByField.DataTypeCode == "LookUp") query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
+            else query = $@"{query},{groupByField.FieldCode} ";
             return query;
         }
     }
-
-
 
 }
