@@ -51,6 +51,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MAWB = entityPM.MAWB,
                 tenant = entityPM.Tenant,
                 ConnectedDeclarations = entityPM.ConnectedDeclarations,
+                NotConnectedDeclarations = entityPM.NotConnectedDeclarations,
                 ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now },
             };
 
@@ -167,6 +168,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string ConnectedDeclarations { get; set; }
+        public string NotConnectedDeclarations { get; set; }
         public DefaultResponseContentHeader ResponseContentHeader { get; set; }
         public string courierMasterId { get; set; }
         public int tenant { get; set; }
