@@ -221,7 +221,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, direction: dirtyDeclarationPM.Direction);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
 
         }
