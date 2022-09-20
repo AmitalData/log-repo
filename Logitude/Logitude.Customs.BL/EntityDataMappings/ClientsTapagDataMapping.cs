@@ -20,17 +20,23 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(ClientsTapagPM entityPM, ClientsTapag entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
-           
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPOCO.Id = entityPM.Id;
             }
+
+            entityPOCO.SearchFields = entityPM.TapagNumber.ToLower();
             
         }
 
         public void CustomPOCOToPM(ClientsTapagPM entityPM, ClientsTapag entityPOCO)
         {
+            this.CustomMappedPMProperties.Add(PMPropertyNames.SearchFields);
+
+            entityPM.SearchFields = entityPM.TapagNumber?.ToLower();
             //throw new NotImplementedException();
         }
    }

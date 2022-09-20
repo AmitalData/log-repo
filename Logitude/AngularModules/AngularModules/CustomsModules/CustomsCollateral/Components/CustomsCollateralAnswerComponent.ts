@@ -784,13 +784,11 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     }
  
-    initTaxExemptCodeTypesFilter(): ApiQueryFilters { 
-        debugger
+    initTaxExemptCodeTypesFilter(): ApiQueryFilters {
+
         const taxExemptCodeTypesFilter = new ApiQueryFilters();
         taxExemptCodeTypesFilter.GetAll = true; 
-        //taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")        
-        //taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", '2', '3', null, 'Contains', false, false, false, "string")
-        taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.customerId, null, null, "Equals", true, false, false, "string");
+        taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.ImporterId, null, null, "Equals", true, false, false, "string");
 
         
 
