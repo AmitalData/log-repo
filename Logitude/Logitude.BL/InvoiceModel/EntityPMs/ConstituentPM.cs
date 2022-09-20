@@ -19,5 +19,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MasterNumber { get; set; }
         public string HouseNumber { get; set; }
         public string MainEntityReference { get; set; }
+        public double? AmountInInvoiceCurrency { get; set; }
+        public double? TotalVATs { get; set; }
     }
 }
