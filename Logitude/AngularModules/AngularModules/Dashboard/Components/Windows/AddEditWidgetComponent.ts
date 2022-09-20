@@ -29,7 +29,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem = new WidgetFilterItem();
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
@@ -65,7 +65,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
         if (!filters) return;
-        this.RootFilter = new WidgetFilterItem(filters, true);
+        this.RootFilter = new WidgetFilterItem(filters, true, this.DashboardPM?.Id);
     }
 
     private ComputeChartImageSrc() {
@@ -131,7 +131,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set Title(value: string) {
         if (this.EntityPM.Title != value) {
             this.EntityPM.Title = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Title Change ", Message: "Changed To" + this.EntityPM.Title });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Title Change ", Message: "Changed To" + this.EntityPM.Title, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -139,8 +139,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
-            this.RootFilter = new WidgetFilterItem();
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId });
+            this.RootFilter = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -150,7 +150,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.TypeCode = value;
             this.ComputeChartImageSrc();
             this.CheckMeasureAddVisiblity();
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -179,7 +179,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set DateGroupCode(value: string) {
         if (this.EntityPM.DateGroupCode != value) {
             this.EntityPM.DateGroupCode = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Date Group Change", Message: "Changed To " + value });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Date Group Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
 
         }
     }
@@ -188,7 +188,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set SortBy(value: number) {
         if (this.EntityPM.SortBy != value) {
             this.EntityPM.SortBy = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Change", Message: "Changed To " + value });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -199,7 +199,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set MaximumGrouping(value: number) {
         if (this.EntityPM.MaximumGrouping != value) {
             this.EntityPM.MaximumGrouping = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -210,7 +210,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set SortDirection(value: string) {
         if (this.EntityPM.SortDirection != value) {
             this.EntityPM.SortDirection = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Direction Change", Message: "Changed To " + value });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Direction Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -230,7 +230,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.FirstTime = false;
             return;
         }
-        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField.DisplayName });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField.DisplayName, DashboardId: this.DashboardPM?.Id });
 
         this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
         this.FirstTime = false;
@@ -294,7 +294,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
                 key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
                 key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
-                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData") return val;
+                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData" && key !== "DashboardId") return val;
         });
     }
 
@@ -336,7 +336,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
-        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click", DashboardId: this.DashboardPM?.Id });
         this.CheckMeasureAddVisiblity();
     }
 }
@@ -349,12 +349,14 @@ export class WidgetMeasureItem extends BaseComponent {
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
+    DashboardPM: DashboardPM;
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.DashboardPM = fatherComponent?.DashboardPM;
         this.FilterMeasureFields();
     }
 
@@ -367,7 +369,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -375,7 +377,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureCode(value: string) {
         if (this.EntityPM.MeasureCode == value) return;
 
-        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
@@ -411,7 +413,7 @@ export class WidgetMeasureItem extends BaseComponent {
             this.Widget.RemoveWidgetMeasure(this.EntityPM);
         }
 
-        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

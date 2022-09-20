@@ -183,7 +183,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private selectedDashboardId: string;
     get SelectedDashboardId() { return this.selectedDashboardId; }
     set SelectedDashboardId(value: string) {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: this.SelectedDashboard?.Id });
         if (this.selectedDashboardId != value) {
             this.selectedDashboardId = value;
 
@@ -203,7 +203,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     EditLayoutClicked() {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked", DashboardId: this.SelectedDashboard?.Id });
         this.IsEditLayoutButtonVisible = false;
         this.IsEditDashboardButtonVisible = true;
         this.IsEditLayoutModeActive = true;
@@ -237,7 +237,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     EditDashboardClicked() {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page", DashboardId: this.SelectedDashboard?.Id });
         this.IsEditDashboardButtonVisible = false;
 
         var logitudeWindow = new LogitudeWindow();
@@ -255,7 +255,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     AddWidgetClicked() {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget add page" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget add page", DashboardId: this.SelectedDashboard?.Id });
         var myWidget: WidgetPM = new WidgetPM(this.SelectedDashboard);
         myWidget.Tenant = SessionInfo.LoggedUserTenant;
         var position = this.EvaluateNewWidgetPosition();
@@ -309,7 +309,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private isBackButtonClicked: boolean = false;
     BackButtonClicked() {
         this.isBackButtonClicked = true;
-        MixPanelLocator.PostDashboardAction({ ActionName: "Back Button Click" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Back Button Click", DashboardId: this.SelectedDashboard?.Id });
         if (this.HasChanges) {
             this.ConfirmSave();
         }
@@ -324,11 +324,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SaveDashboard();
-                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click" });
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
             }
 
             else if (confirmWindow.No) {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click" });
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
                 this.GoBack(true);
             }
         });
@@ -342,12 +342,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     RefreshLayoutClicked() {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
     }
     
     SaveDashboard(fromUI : boolean = false) {
         //this.CheckDeletedWidgets(dashboard);
-        if(fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click" });
+        if(fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {

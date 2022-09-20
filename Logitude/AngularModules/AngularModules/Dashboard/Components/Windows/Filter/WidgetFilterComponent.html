@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="Filters">
                                     <div class="FilterItem">
-                                        <WidgetFilter [DataSource]="item" [EntityId]="EntityId">
+                                        <WidgetFilter [DataSource]="item" [EntityId]="EntityId" [DashboardId] = "DashboardId">
                                         </WidgetFilter>
                                         <div *ngIf="FilterItems.length > 0 && item.IsGroup == true"
                                             style="margin-top: 10px;margin-left: 6px;">

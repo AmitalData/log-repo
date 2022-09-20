@@ -101,12 +101,12 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
                 myWidget.StartPotistion = item.StartPotistion;
             }
         });
-
+        MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
         this.CurrentSession.FireEvent("WidgetEdited");
     }
 
     openEditWidget(widget: ReactWidgetPM){
-        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page" });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";

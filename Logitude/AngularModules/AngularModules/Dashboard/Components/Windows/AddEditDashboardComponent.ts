@@ -55,7 +55,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard name change" });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard name change", DashboardId: this.EntityPM?.Id });
         }
     }
 
@@ -63,7 +63,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Description(value: string) {
         if (this.EntityPM.Description != value) {
             this.EntityPM.Description = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard description change" });
+            MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard description change", DashboardId: this.EntityPM?.Id });
         }
     }
 
@@ -71,7 +71,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set PermissionLevelCode(value: string) {
         if (this.EntityPM.PermissionLevelCode != value) {
             this.EntityPM.PermissionLevelCode = value;
-            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard permission change" });
+            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard permission change", DashboardId: this.EntityPM?.Id });
         }
     }
 
@@ -123,12 +123,12 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
             if (this.isNew) {
-                MixPanelLocator.PostDashboardAction({ ActionName: "New Dashboard save click" });
-                this.CreateDashboard();                
+                MixPanelLocator.PostDashboardAction({ ActionName: "New Dashboard save click", DashboardId: this.EntityPM?.Id });
+                this.CreateDashboard();
             }
 
             else {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Edit Dashboard save click" });
+                MixPanelLocator.PostDashboardAction({ ActionName: "Edit Dashboard save click", DashboardId: this.EntityPM?.Id });
                 this.UpdateDashboard();
             }
         }
@@ -138,7 +138,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.dashboardService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
             this.OnSaveCompleted(myResponse);
         });
-    }   
+    }
     private UpdateDashboard() {
         this.dashboardService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
             this.OnSaveCompleted(myResponse);

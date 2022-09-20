@@ -24,9 +24,8 @@ namespace WebFreight.Web.Helpers.MixPanel.events
             MixPanelEvent mixPanelEvent = new MixPanelEvent();
             mixPanelEvent.Name = mixPanelActionsEvent.ActionName;
             mixPanelEvent.AddProperty("Email", mixPanelActionsEvent.Email);
-            mixPanelEvent.AddProperty("is_public", "False");
-            mixPanelEvent.AddProperty("Tenant", tenant.ToString());
             mixPanelEvent.AddProperty("Message", mixPanelActionsEvent.Message);
+            mixPanelEvent.AddProperty("DashboardId", mixPanelActionsEvent.DashboardId);
             return mixPanelEvent;
         }
     }

@@ -29,9 +29,11 @@ export class WidgetFilterItem {
     public QueryFilterItems: WidgetFilterItem[] = [];
     public DateGroupCode: string;
     public Quarter: string;
+    public DashboardId: string;
 
-    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false) {
+    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false, dashboardId: string = null) {
         this.UIProperties = new UIProperties;
+        this.DashboardId = dashboardId;
         if (!buildRootFilter && field) this.BuildFieldData(field);
         else if (buildRootFilter) this.BuildRootFitler(field);
     }
@@ -41,7 +43,7 @@ export class WidgetFilterItem {
     }
 
     private BuildGroupFilter(oldFilter: WidgetFilterItem) {
-        let groupTreeFilter = new WidgetFilterItem();
+        let groupTreeFilter = new WidgetFilterItem(null, false, this.DashboardId);
         groupTreeFilter.IsGroup = true;
         groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
         oldFilter.QueryFilterItems?.forEach((oldField) => {
@@ -51,7 +53,7 @@ export class WidgetFilterItem {
     }
 
     private BuildFilter(oldField: WidgetFilterItem) {
-        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField, false, this.DashboardId);
         return this.BuildGroupFilter(oldField);
     }
 
