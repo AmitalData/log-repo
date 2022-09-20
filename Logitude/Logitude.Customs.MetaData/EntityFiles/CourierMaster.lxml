@@ -4478,7 +4478,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
-    DataTemplateName="&quot;TransportModeListHeaderTemplate&quot;"
+    DataTemplateName="&quot;&quot;"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
