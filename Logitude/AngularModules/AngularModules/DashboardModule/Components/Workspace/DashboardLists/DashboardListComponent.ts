@@ -8,7 +8,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
-import { EditShipmentLinkRendererComponent } from 'InfrastructureModules/InfrastructureBIReport/Components/TemplateRenderer/EditShipmentLinkRendererComponent';
+import { EditShipmentLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/EditShipmentLinkRendererComponent';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -99,7 +99,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     onColumnMoved(event: any) {
     }
 
-    public methodFromParent(cell) {
+    public OnShipmentNumberClick(cell) {
         this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
             if (!myResult.HasError) {
