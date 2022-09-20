@@ -237,7 +237,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
-
             return Ok(entityPM);
         }
 

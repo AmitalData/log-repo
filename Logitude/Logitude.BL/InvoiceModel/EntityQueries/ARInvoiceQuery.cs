@@ -1985,7 +1985,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                  .Where(d => d.Tenant == tenant
                                                                              && d.IsConstituentInvoice == true
                                                                              && d.ConsolidationInvoiceId == entityPM.Id)
-                                                                 .Select(d => new ConstituentPM()
+                                                                 .Select(d => new ConstituentPM
                                                                  {
                                                                      Id = d.Id,
                                                                      Tenant = d.Tenant,
@@ -1994,9 +1994,26 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                      CustomerRef = d.CustomerRef,
                                                                      MasterNumber = d.MasterNumber,
                                                                      HouseNumber = d.HouseNumber,
-                                                                     MainEntityReference = d.MainEntityReference
-
+                                                                     MainEntityReference = d.MainEntityReference,
+                                                                     AmountInInvoiceCurrency = d.AmountInInvoiceCurrency
                                                                  }).ToList();
+
+                        var ids = entityPM.ConstituentInvoices
+                                          .Select(a => a.Id)
+                                          .ToList();
+    
+                        var totalValts = myTotalVATQuery
+                                         .GetTotalVATsByInvoicesIds(ids, tenant)
+                                         .GroupBy(a => a.ARInvoiceId)
+                                         .ToDictionary(a => a.Key,
+                                                       x => x.Sum(a => a.InvoiceCurrencyVatableAmount));
+
+                        foreach (var item in entityPM.ConstituentInvoices)
+                        {
+                            item.TotalVATs = totalValts.ContainsKey(item.Id) 
+                                             ? totalValts[item.Id]
+                                             : 0.00;
+                        }
                     }
                 }
 
