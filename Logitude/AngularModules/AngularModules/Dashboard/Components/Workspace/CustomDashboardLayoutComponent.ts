@@ -16,6 +16,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 //import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 //import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
 
@@ -100,11 +101,12 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
                 myWidget.StartPotistion = item.StartPotistion;
             }
         });
-
+        MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
         this.CurrentSession.FireEvent("WidgetEdited");
     }
 
     openEditWidget(widget: ReactWidgetPM){
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";
@@ -119,8 +121,14 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             });
         });
     }
-    onSelectDataPoint(dataPointSelection: DataPointSelection){
 
+    private onSelectDataPoint(dataPointSelection: DataPointSelection){
+        if(!dataPointSelection) return;
+        SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        .then((cmpRef : any) => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run(dataPointSelection);
+        });
     }
 
     renderNewDashboard() {
@@ -131,7 +139,8 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             dataBinding: this.DashboardDataBinding,
             onChangeLayouts: this.onChangeLayouts.bind(this),
             openEditWidget: this.openEditWidget.bind(this),
-            onSelectDataPoint: this.onSelectDataPoint.bind(this)
+            onSelectDataPoint: this.onSelectDataPoint.bind(this),
+
         }),
             this.reactDashboradContainer.nativeElement);
     }

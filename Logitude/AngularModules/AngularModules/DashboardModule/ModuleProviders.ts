@@ -4,6 +4,7 @@ import { AnalyticsFactsFieldsMetaDataPMExtendedService } from './Services/Extend
 import { MeasureTypeListService } from './Services/StandardLists/MeasureTypeListService';
 import { WidgetTypeListService } from './Services/StandardLists/WidgetTypeListService';
 import { DashboardListService } from 'DashboardModule/Services/StandardLists/DashboardListService';
+import { DashboardAnalyticsService } from './Services/DashboardAnalyticsService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -17,6 +18,7 @@ export class ModuleProviders {
             case "MeasureTypeListService": { myResult = new MeasureTypeListService(); break; }
             case "WidgetTypeListService": { myResult = new WidgetTypeListService(); break; }
             case "DashboardListService": { myResult = new DashboardListService(); break; }
+            case "DashboardAnalyticsService": { myResult = new DashboardAnalyticsService(); break; }
         }
 
         return myResult;

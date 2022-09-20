@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIDataContract\AnalyticData.cs" />
     <Compile Include="APIDataContract\WidgetPartArguments.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MeasureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PermissionLevelDetails.Generated.cs" />

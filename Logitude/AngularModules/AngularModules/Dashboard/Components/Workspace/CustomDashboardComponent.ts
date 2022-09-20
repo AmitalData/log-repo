@@ -19,6 +19,7 @@ import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { Guid } from 'Infrastructure/Utilities/Guid';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
@@ -118,7 +119,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             reactWidgets.push(DashboardMapping.GetReactWidget(item));
         });
         this.reactWidgetsLayout = {lg:reactWidgets};
-        this.DashboardDataBinding.onGetLayouts.next(this.reactWidgetsLayout);
+        
+        this.DashboardDataBinding.onGetLayouts.next(this.deepClone(this.reactWidgetsLayout));
     }
     
     //GetReactDashboard(dashboard: DashboardPM): ReactDashboardPM {
@@ -180,6 +182,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private selectedDashboardId: string;
     get SelectedDashboardId() { return this.selectedDashboardId; }
     set SelectedDashboardId(value: string) {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: this.SelectedDashboard?.Id });
         if (this.selectedDashboardId != value) {
             this.selectedDashboardId = value;
 
@@ -200,6 +203,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     EditLayoutClicked() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked", DashboardId: this.SelectedDashboard?.Id });
         this.IsEditLayoutButtonVisible = false;
         this.IsEditDashboardButtonVisible = true;
         this.IsEditLayoutModeActive = true;
@@ -207,6 +211,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     AdDashboardClicked() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard add page" });
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add Dashboard";
 
@@ -232,6 +237,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     EditDashboardClicked() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page", DashboardId: this.SelectedDashboard?.Id });
         this.IsEditDashboardButtonVisible = false;
 
         var logitudeWindow = new LogitudeWindow();
@@ -249,6 +255,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     AddWidgetClicked() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget add page", DashboardId: this.SelectedDashboard?.Id });
         var myWidget: WidgetPM = new WidgetPM(this.SelectedDashboard);
         myWidget.Tenant = SessionInfo.LoggedUserTenant;
         var position = this.EvaluateNewWidgetPosition();
@@ -263,7 +270,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.HasChanges = true;
-                    this.AddWidgetToReactLayout(myWidget);
+                    this.AddWidgetToReactLayout(comp.EntityPM);
                 }
             });
         });
@@ -272,7 +279,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         myWidget.UniqueKey = Guid.newGuid();
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
-
+        this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
     
 
@@ -302,7 +309,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private isBackButtonClicked: boolean = false;
     BackButtonClicked() {
         this.isBackButtonClicked = true;
-
+        MixPanelLocator.PostDashboardAction({ ActionName: "Back Button Click", DashboardId: this.SelectedDashboard?.Id });
         if (this.HasChanges) {
             this.ConfirmSave();
         }
@@ -317,9 +324,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SaveDashboard();
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
             }
 
             else if (confirmWindow.No) {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
                 this.GoBack(true);
             }
         });
@@ -333,11 +342,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     RefreshLayoutClicked() {
-
+        MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
     }
     
-    SaveDashboard() {
+    SaveDashboard(fromUI : boolean = false) {
         //this.CheckDeletedWidgets(dashboard);
+        if(fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
@@ -367,6 +377,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
     private RejectChanges() {
         //this.myCloner.RejectChanges();
+    }
+
+    deepClone(obj){
+        var clone = JSON.parse(JSON.stringify(obj));
+        return clone;
     }
 }
 
