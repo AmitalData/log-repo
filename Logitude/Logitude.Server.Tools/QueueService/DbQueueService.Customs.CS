@@ -145,7 +145,13 @@ namespace Logitude.Server.Tools.QueueService
                         //NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
                         tenantPriPar.Value = tenantPriority;
-                        InterfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
+                        InterfaceTypeCodePar.Value = "";// DBNull.Value;
+                        if (!string.IsNullOrWhiteSpace(queueSendModel?.InterfaceTypeCode))
+                        {
+                            InterfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
+                        }
+                        
+                        
                         if (queueSendModel != null && queueSendModel.UseRabbitMQ)
                         {
                             UseRabbitMQPar.Value = 1;
