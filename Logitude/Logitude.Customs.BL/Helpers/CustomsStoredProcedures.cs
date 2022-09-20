@@ -57,16 +57,15 @@ namespace Logitude.Customs.BL.Helpers
             }
             else
             {
-                bool tested = false;
-                if (!tested)
+                int intIsPaymentProtested = 0;
+                if (IsPaymentProtested)
                 {
-                    throw new Exception("Declaration_SetIsPaymentProtested 4sqlServer 2do !!!");
+                    intIsPaymentProtested = 1;
                 }
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = 
-                        "update declarations dest SET dest.ispaymentprotested= case when exists (select 1 from declarationpaymentmethods t1 where t1.declarationid =dest.id) then 1 else 0 end " +
-                        $"where dest.id = '{declarationId}' and dest.tenant={tenant}  ;";
+                    string cmd =$"update Customs.Declarations SET IsPaymentProtested= {intIsPaymentProtested} where id = '{declarationId}' and tenant={tenant}  ";
+
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 
