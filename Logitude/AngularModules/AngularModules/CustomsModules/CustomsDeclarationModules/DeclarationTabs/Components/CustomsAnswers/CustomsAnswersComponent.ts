@@ -29,6 +29,8 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { InvoiceDateForBatchInvoicesComponent } from 'Accounting/Components/Others/InvoiceDateForBatchInvoicesComponent';
+import { contains } from 'cypress/types/jquery';
 
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
@@ -420,7 +422,12 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         //var declarationConstraints = [];
         for (var constraint of constraints) {
             var error = decErrors.find(d => d.ConstraintId == constraint.ConstraintNumber);
+        
             var item = new ConstraintLineModel(error, constraint,this);
+            
+            if(constraint.ConstraintStatusCode!="5" && constraint.ConstraintStatusCode!="8" && constraint.ConstraintStatusCode!="7")
+                      item.displayOnly=false;
+
             this.ConstraintsList.push(item);
         }
 
@@ -1221,6 +1228,7 @@ export class ConstraintLineModel extends BaseComponent {
             this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", true);
             this.displayOnly = false;
         }
+        
     }
 
 
@@ -1553,6 +1561,7 @@ export class ConstraintLineModel extends BaseComponent {
     ApprovalDenaialTitle = "";
 
     ViewConstraintDetails() {
+       
         var constraint = this.constraintPM;
 
         if (constraint.ApprovalDecision == "2") {
