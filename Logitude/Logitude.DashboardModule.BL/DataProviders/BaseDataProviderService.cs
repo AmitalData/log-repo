@@ -15,7 +15,6 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Dynamic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -191,50 +190,39 @@ namespace Logitude.DashboardModule.BL.DataProviders
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
             var groupByField = _EntityFields[_Widget.GroupById];
+            string groupbyValue = GetGroupByValue(widgetPartArguments.GroupByValue, groupByField);
             return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, groupByField)}
                      From ({resultQueryable.ToQueryStringWithParameter()}) as data 
                      {BuildQueryJoins(groupByField)}
-                     Where {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
-        }
-
-        private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)
-        {
-
-            var fieldCode = _EntityFields[_Widget.GroupById].FieldCode;
-            if (groupByValue == null) return $@"{fieldCode} IS NULL";
-            if (groupBy.DataTypeCode == "LookUp") return $@"{fieldCode} = '{groupByValue}'";
-
-            var dateParts = groupByValue.Split('/');
-            var date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-{ dateParts[2]}";
-            switch (_Widget.DateGroupCode)
-            {
-                case "Day":
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
-                case "Month":
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
-                case "Year":
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
-                case "Quarter":
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
-                default:
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
-            }
-
+                     Where {_EntityFields[_Widget.GroupById].FieldCode} = {groupbyValue} ";
         }
 
         private string BuildQueryJoins(AnalyticsFactsFieldsMetaData groupByField)
         {
-            if (groupByField.DataTypeCode != "LookUp") return "";
+
             return $@"left join {groupByField.JoinedTableDBName} as jt on jt.{groupByField.JoinedTableKey} =  {groupByField.FieldCode}";
+        }
+
+        private string GetGroupByValue(string groupByValue, AnalyticsFactsFieldsMetaData groupByField)
+        {
+
+            if (groupByField.DataTypeCode != "Date" && groupByField.DataTypeCode != "DateTime")
+            {
+                return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+            }
+            // format date and add date group type to it
+            return groupByValue == null ? "NULL" : $@"'{groupByValue}'";
+
         }
 
         private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, AnalyticsFactsFieldsMetaData groupByField)
         {
             var query = string.Join(",", analyticTableFields.Select(x => x.FieldCode).Where(x => x != groupByField.FieldCode).ToList());
-            if (groupByField.DataTypeCode == "LookUp") query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
-            else query = $@"{query},{groupByField.FieldCode} ";
+            query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
             return query;
         }
     }
+
+
 
 }
