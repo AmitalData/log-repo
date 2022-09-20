@@ -26,6 +26,7 @@ using UnifreightIIG.Common.DeclarationPrintServiceReference;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -220,9 +221,37 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, direction: dirtyDeclarationPM.Direction);
 
 
+        }
+
+        private void SetToQueue(DeclarationPM myDeclaration )
+        {
+
+            var logistictFile = setLogistictFile();
+            var unifreightHybridQueueTaskServiceFrom8303 = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, LogistictFile>(null, logistictFile);
+                unifreightHybridQueueTaskServiceFrom8303.Send(new UnifreightHybridQueueTaskParam()
+                {
+                    Action = "UpdateExportCustomsFile",
+                    ParameterName = "transmission",
+                    UServerDelayTime = DateTime.Now.TimeOfDay
+        });
+           
+        }
+
+        public LogistictFile setLogistictFile()
+        {
+            LogistictFile LogistictFile = new LogistictFile();
+
+            LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
+            {
+
+            };
+
+
+
+            return LogistictFile;
         }
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string MyDeclarationNumVersionId)
         {
@@ -277,6 +306,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM.Direction == "E")
                 {
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "MRS", status_DateTime: _TransmitionDateTime);
+                   if(this._MyDeclarationPM.Direction=="E") SetToQueue(this._MyDeclarationPM);
                 }
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);

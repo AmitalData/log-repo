@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 // 
@@ -956,4 +957,39 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
             }
         }
     }
+
+    public partial class LogistictFile
+    {
+        [System.Xml.Serialization.XmlElementAttribute("LogitudeCustomsFile")]
+        public LogitudeCustomsFile logitudeCustomsFile { get; set; }
+    }
+    public partial class LogitudeCustomsFiles
+    {
+        public string customFileNo { get; set; }
+        public string id { get; set; }
+        public string declarationNumber { get; set; }
+
+        public  string tadpisPrintDate { get; set; }
+        public Invoice[] invoice { get; set; }
+        public string TotalSum { get; set; }
+        public string currecy { get; set; }
+        public string totalNisSum { get; set; }
+        public string totalFreightSum { get; set; }
+        public string totalPackages { get; set; }
+        public string loadingDateTime { get; set; }
+        public string direction { get; set; }
+    }
+    public partial class Invoice
+    {
+        public string invoiceNumber { get; set; }
+        public string invoiceTotal { get; set; }
+        public string myPropeInvoiceCurrecyrty { get; set; }
+        public PratList[] pratList { get; set; }
+    }
+
+    public partial class PratList
+    {
+        public string[] pratMeches { get; set; }
+    }
+
 }
