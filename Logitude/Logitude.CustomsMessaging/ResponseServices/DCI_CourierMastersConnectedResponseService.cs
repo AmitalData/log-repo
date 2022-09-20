@@ -49,6 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             InitServices(customResponse.tenant);
 
             //int count = connected ? UpdateAllConnected(cmPm) : UpdateAllNotConnected(cmPm);
+            customResponse.ServerSplitDeclarationsList = customResponse.ServerSplitDeclarationsList.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
@@ -84,7 +85,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.ConnectedDeclarations == "ALL")
                     decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant).Select(r => r.Id).ToList();
                 else if (customResponse.ConnectedDeclarations?.Split(',') != null)
-                    decsIds = customResponse.ConnectedDeclarations?.Split(',').ToList();
+                    decsIds = customResponse.ConnectedDeclarations?.Split(',').Where(x => !string.IsNullOrEmpty(x)).ToList();
                 
                 count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
             }
@@ -94,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.NotConnectedDeclarations == "ALL")
                     decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant).Select(r => r.Id).ToList();
                 else if (customResponse.NotConnectedDeclarations?.Split(',') != null)
-                    decsIds = customResponse.NotConnectedDeclarations?.Split(',').ToList();
+                    decsIds = customResponse.NotConnectedDeclarations?.Split(',').Where(x => !string.IsNullOrEmpty(x)).ToList();
             
                 count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
             }
