@@ -33,7 +33,7 @@ export class DashboardMapping{
                 x: +widget.StartPotistion.split(',')[0],
                 y: +widget.StartPotistion.split(',')[1],
               }
-              myWidget.onChange = new Subject(),
+              //myWidget.onChange = new Subject(),
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
             });

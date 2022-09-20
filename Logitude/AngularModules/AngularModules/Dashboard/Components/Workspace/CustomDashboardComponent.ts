@@ -52,9 +52,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         isOnEditLayout: new Subject(),
         onGetLayouts: new BehaviorSubject({ lg: [] }),
         widgetUpdated: new Subject(),
-        onAddWidget: new Subject(),
-        onEditWidget: new Subject(),
-
+        //onAddWidget: new Subject(),
+        //onEditWidget: new Subject(),
     }
 
     ngOnInit(): void {
@@ -197,6 +196,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.IsEditLayoutButtonVisible = true;
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
+        this.HasChanges = false;
     }
 
     EditLayoutClicked() {
@@ -313,7 +313,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private ConfirmSave() {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm";
-        confirmWindow.Show("");
+        confirmWindow.Show("This Dashboard has unsaved changes do you want to save it?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SaveDashboard();
