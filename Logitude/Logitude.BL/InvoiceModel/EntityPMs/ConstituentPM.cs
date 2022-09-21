@@ -21,5 +21,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MainEntityReference { get; set; }
         public double? AmountInInvoiceCurrency { get; set; }
         public double? TotalVATs { get; set; }
+
+        public double? SubTotalInInvoiceCurrency { get; set; }
     }
 }
