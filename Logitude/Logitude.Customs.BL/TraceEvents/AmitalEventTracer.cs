@@ -85,6 +85,9 @@ namespace Logitude.Customs.BL.TraceEvents
                     if (!string.IsNullOrWhiteSpace( queueName ))
                     {
                         var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
+                    {
+                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
                         unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
                         {
                             Action = "StatusUpdate",
@@ -93,6 +96,8 @@ namespace Logitude.Customs.BL.TraceEvents
                             InterfaceTypeCode = queueName
                         });
                     }
+                    }
+                }
                     else
                     {
                         LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
