@@ -42,6 +42,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
                     }
 
+                    if (item.FieldName == "IsCustomerArchived")
+                    {
+                        queryableData = queryableData.Where(d => !d.IsCustomerArchived);
+                    }
+
                     if (item.FieldName == "TransportModeShipmentTypeFilters")
                     {
                         var transportModesString = item.FieldValue as string;
