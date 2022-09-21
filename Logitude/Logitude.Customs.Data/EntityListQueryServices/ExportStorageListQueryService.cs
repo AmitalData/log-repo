@@ -73,6 +73,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into cij
                                                    from cargoIdentifireType in cij.DefaultIfEmpty()
 
+                                                   join us in context.UnloadingSiteType.Select(r => new { r.Code, r.LocalName })
+                                                  on en.ExportLoadingPortcode equals us.Code
+                                                  into ulst
+                                                   from unloadingSiteType in ulst.DefaultIfEmpty()
+
+
                                                    select new ExportStorageList()
                                                    {
                                                        Id = en.Id,
@@ -143,6 +149,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ExporterCode = client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
+
+                                                       ExportLoadingPortcode=en.ExportLoadingPortcode,
+
+                                                       ExportLoadingPortName = unloadingSiteType.LocalName,
 
                                                        ActionCode = en.ActionCode,
                                                        ActionName = en.ExportLogisticPermitAction.LocalName,
