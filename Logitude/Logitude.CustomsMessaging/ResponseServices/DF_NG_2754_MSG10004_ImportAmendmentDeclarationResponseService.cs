@@ -307,10 +307,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         }
                         declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
-                        //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
+                       
                     }
                     else
-
                     {
                         if (declarationOrg.IsAmendment == true)
                             declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
@@ -318,7 +317,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
 
                             declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
-
+                        declarationPM.AmendmentRequestNumber = GetNextAmendmentRequestNumber(tenant);
                     }
                 }
 
@@ -593,7 +592,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return null;
             }
         }
+        private string GetNextAmendmentRequestNumber(int tenent)
+        {
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenent);
 
+
+            return (declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(tenent) + 1).ToString();
+
+
+        }
         private void DeleteSomeObjects(DeclarationPM declarationPM, int tenant, ICustomContext context)
         {
 
