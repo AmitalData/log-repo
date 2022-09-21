@@ -13,6 +13,9 @@ using System.Web.Mvc;
 using Logitude.Customs.Data.EntityLists;
 using System.Net;
 using WebFreight.Web.Helpers;
+using System.IO;
+using System.Net.Http.Headers;
+using WebFreight.Web.CustomWebServices.BL.XLSExport;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -35,6 +38,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, interfaceManagementQuery);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetInterfaceManagement2Excel(int tenant)
+        {
+            try
+            {
+               
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+
+                var o = new InterfaceManagementWSheetExport();
+                var result = o.ExportReport(tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+                response.Content = new StreamContent(new MemoryStream(result));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =
+                    "InterfaceManagementListExtended_" + DateTime.Now + ".xls";
+                return response;
+
             }
 
             catch (Exception ex)
