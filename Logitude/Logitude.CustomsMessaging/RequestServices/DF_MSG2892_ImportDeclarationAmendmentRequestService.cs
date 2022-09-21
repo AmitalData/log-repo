@@ -293,7 +293,7 @@ namespace Logitude.CustomsMessaging.RequestServices
              req.Response = new UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
 
-            req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
+            req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = _DeclarationPM.AmendmentRequestNumber
             };
             functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
@@ -338,7 +338,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
-            _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
+           // _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             //var myUpdateEventContextTagModel = new EventContextTagModel()
             //{
