@@ -748,43 +748,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             if (item.CostUnitPriceInSaleCurrency != null)
             {
-                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode);
+                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice1InSaleCurrency != null)
             {
-                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode);
+                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice2InSaleCurrency != null)
             {
-                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode);
+                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice3InSaleCurrency != null)
             {
-                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode);
+                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice4InSaleCurrency != null)
             {
-                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode);
+                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice5InSaleCurrency != null)
             {
-                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode);
+                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode, item);
             }
         }
 
-        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode)
+        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode, QuoteChargePM quoteCharge = null)
         {
             double? myResult = costUnitPriceInSaleCurrency;
 
 
             if (costUnitPriceInSaleCurrency != null)
             {
-                double markup = markUpValue == null ? 0 : markUpValue.Value;
+                double markup = this.GetMarkUpValueByCurrency(markUpValue, quoteCharge); 
 
                 if (markUpTypeCode == "P")
                 {
@@ -803,6 +803,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
 
             return myResult;
+        }
+
+        private double GetMarkUpValueByCurrency(double? markUp, QuoteChargePM quoteCharge = null)
+        {
+            double? markUpValue = (markUp == null ? 0 : markUp.Value);
+            if (quoteCharge.SaleCurrencyId == quoteCharge.MarkUpCurrencyId)
+            {
+                return (markUpValue == null ? 0 : markUpValue.Value);
+            }
+
+            var markUpLocalValue = markUpValue * quoteCharge.CostExchangeRate;
+            markUpValue = markUpLocalValue / quoteCharge.SaleExchangeRate;
+
+            return (markUpValue == null ? 0 : markUpValue.Value);
         }
 
         private void ComputeLineCostTotalAmounts(QuoteChargePM item)
