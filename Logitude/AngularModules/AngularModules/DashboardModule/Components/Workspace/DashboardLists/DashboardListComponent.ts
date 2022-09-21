@@ -9,6 +9,7 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
 import { EditShipmentLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/EditShipmentLinkRendererComponent';
+import * as moment from 'moment';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -62,8 +63,15 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         if (metaDataField.FieldCode == "ShipmentNumber") {
             column["cellRendererFramework"] = EditShipmentLinkRendererComponent;
         }
+        if (metaDataField.DataTypeCode == "Date" || metaDataField.DataTypeCode == "DateTime") {
+            column["cellRenderer"] = this.DateFormatter;
+        }
         return column;
     }
+
+    DateFormatter(params) {
+        return moment(params.value).format('DD/MM/YYYY');
+      }
 
     public StartBusyIndicator(message: string = "Generating...", width: number = 200) {
         this.CurrentSession.StartBusyIndicator(message);
