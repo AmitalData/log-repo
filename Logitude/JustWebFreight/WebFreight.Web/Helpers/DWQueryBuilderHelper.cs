@@ -710,7 +710,7 @@ namespace WebFreight.Web.Helpers
             if (HasMultipleSelection)
             {
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(Tenant);
-                var multipleDiminsionSelection = dWObjectFieldQuery.GetDWObjectFieldByDimTable(dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode);
+                var multipleDiminsionSelection = dWObjectFieldQuery.GetDWObjectFieldByDimTable(dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode, dWObjectTablePM.Code);
                 pivotTableNickname = " [" + multipleDiminsionSelection.DimensionTableCode + multipleDiminsionSelection.Name + "]";
                 if (sqlStatmentDetails.InnerTables.Where(innerTable => innerTable.DWObjectTableCode == dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode).Count() == 0)
                 {
