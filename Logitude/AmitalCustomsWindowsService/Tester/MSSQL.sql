@@ -1,4 +1,215 @@
-﻿-- customs diffrent then main- mssql
+﻿-----------------------------------------------------------
+-- customs diffrent then main- mssql
+USE [main]
+GO
+
+/****** Object:  StoredProcedure [dbo].[QUEUE_PEEK]    Script Date: 19/09/2022 14:05:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[QUEUE_PEEK]  
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_MESSAGEID float(53)  OUTPUT,
+   @V_MESSAGEBODY varchar(max)  OUTPUT,
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_RETRYNUMBER float(53)  OUTPUT,
+   @V_MESSAGECREATEDSERVERTIME datetime2(7)  OUTPUT,
+   @V_QUEUEDEFINITIONCODE varchar(max),
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_NEXTRUNDELAYINSEC float(53),
+   /*
+   *   SSMA warning messages:
+   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+   */
+
+   @V_WATINGSTATUS float(53)
+AS 
+   BEGIN
+
+      SET @V_MESSAGEID = NULL
+
+      SET @V_MESSAGEBODY = NULL
+
+      SET @V_RETRYNUMBER = NULL
+
+      SET @V_MESSAGECREATEDSERVERTIME = NULL
+
+      /*DECLARE @NextId INTEGER*/
+      DECLARE
+         @V_FREQUENCY numeric(10, 0)
+
+      DECLARE
+         @V_ROW$ID numeric(18, 0), 
+         @V_ROW$QUEUEDEFINITIONCODE varchar(265), 
+         @V_ROW$CREATEDATETIME datetime2(7), 
+         @V_ROW$STATUS numeric(10, 0), 
+         @V_ROW$MESSAGEBODY varchar(1000), 
+         @V_ROW$NEXTRUNDATETIME datetime2(7), 
+         @V_ROW$PROCESSINGDATETIME datetime2(7), 
+         @V_ROW$COMPLETEDATETIME datetime2(7), 
+         @V_ROW$RETRYNUMBER numeric(10, 0), 
+         @V_ROW$TENANT numeric(10, 0), 
+         @V_ROW$HASHCODE nvarchar(max), 
+         @V_ROW$TENANTPRIORITY numeric(10, 0), 
+         @V_ROW$INTERFACETYPECODE varchar(32), 
+         @V_ROW$QUEUECODERABBIT varchar(256), 
+         @V_ROW$USERABBITMQ numeric(1, 0), 
+         @V_ROW$HAVERABBITMQ numeric(1, 0), 
+         @V_ROW$RABBITMQCREATEDATE datetime2(7), 
+         @V_ROW$RABBITMQRETRYNUMBER numeric(10, 0), 
+         @V_ROW$RABBITMQERRMESS varchar(256), 
+         @V_ROW$ENTITYCODE varchar(40), 
+         @V_ROW$ENTITYID varchar(40)
+
+      /*-20220127 IM Rabbit*/
+      SET @V_FREQUENCY = 60
+
+      /* Find next available item available where the status is enabled*/
+      BEGIN
+
+         DECLARE
+             C_1 CURSOR LOCAL FOR 
+               /*
+               *   SSMA warning messages:
+               *   O2SS0210: Conversion of the specified hint is not supported: +FIRST_ROWS_1.
+               */
+
+               SELECT 
+                  QT.ID, 
+                  QT.QUEUEDEFINITIONCODE, 
+                  QT.CREATEDATETIME, 
+                  QT.STATUS, 
+                  QT.MESSAGEBODY, 
+                  QT.NEXTRUNDATETIME, 
+                  QT.PROCESSINGDATETIME, 
+                  QT.COMPLETEDATETIME, 
+                  QT.RETRYNUMBER, 
+                  QT.TENANT, 
+                  QT.HASHCODE, 
+                  QT.TENANTPRIORITY, 
+                  QT.INTERFACETYPECODE, 
+                  QT.QUEUECODERABBIT, 
+                  QT.USERABBITMQ, 
+                  QT.HAVERABBITMQ, 
+                  QT.RABBITMQCREATEDATE, 
+                  QT.RABBITMQRETRYNUMBER, 
+                  QT.RABBITMQERRMESS, 
+                  QT.ENTITYCODE, 
+                  QT.ENTITYID
+               FROM dbo.QUEUEMESSAGES  AS QT 
+                  WITH ( UPDLOCK,  READPAST )
+               WHERE 
+                  QT.NEXTRUNDATETIME <= sysdatetime() AND 
+                  /*ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586*/QT.STATUS = @V_WATINGSTATUS AND 
+                  QT.QUEUEDEFINITIONCODE = @V_QUEUEDEFINITIONCODE AND 
+                  QT.USERABBITMQ = 0
+               ORDER BY QT.TENANTPRIORITY ASC, QT.NEXTRUNDATETIME ASC
+
+         OPEN C_1
+
+         FETCH C_1
+             INTO 
+               @V_ROW$ID, 
+               @V_ROW$QUEUEDEFINITIONCODE, 
+               @V_ROW$CREATEDATETIME, 
+               @V_ROW$STATUS, 
+               @V_ROW$MESSAGEBODY, 
+               @V_ROW$NEXTRUNDATETIME, 
+               @V_ROW$PROCESSINGDATETIME, 
+               @V_ROW$COMPLETEDATETIME, 
+               @V_ROW$RETRYNUMBER, 
+               @V_ROW$TENANT, 
+               @V_ROW$HASHCODE, 
+               @V_ROW$TENANTPRIORITY, 
+               @V_ROW$INTERFACETYPECODE, 
+               @V_ROW$QUEUECODERABBIT, 
+               @V_ROW$USERABBITMQ, 
+               @V_ROW$HAVERABBITMQ, 
+               @V_ROW$RABBITMQCREATEDATE, 
+               @V_ROW$RABBITMQRETRYNUMBER, 
+               @V_ROW$RABBITMQERRMESS, 
+               @V_ROW$ENTITYCODE, 
+               @V_ROW$ENTITYID/* v_MessageId;*/
+
+         /*
+         *   SSMA warning messages:
+         *   O2SS0113: The value of @@FETCH_STATUS might be changed by previous FETCH operations on other cursors, if the cursors are used simultaneously.
+         */
+		 
+         IF @@FETCH_STATUS = 0
+            BEGIN
+               
+               /*
+               *   If f
+               *   If found, flag it to prevent being picked up again
+               */
+               IF (@V_ROW$ID IS NOT NULL)
+                  BEGIN
+
+                     SET @V_MESSAGEID = @V_ROW$ID
+
+                     /*SELECT RetryNumber       INTO v_RetryNumber        FROM QueueMessages        WHERE Id = v_MessageId;*/
+                     SET @V_RETRYNUMBER = @V_ROW$RETRYNUMBER
+
+                     /*SELECT MessageBody      INTO v_MessageBody       FROM QueueMessages       WHERE Id = v_MessageId;*/
+                     SET @V_MESSAGEBODY = @V_ROW$MESSAGEBODY
+
+                     SET @V_MESSAGECREATEDSERVERTIME = @V_ROW$CREATEDATETIME
+
+                     /*
+                     *   SSMA warning messages:
+                     *   O2SS0425: Dateadd operation may cause bad performance.
+                     */
+
+                     UPDATE dbo.QUEUEMESSAGES
+                        SET 
+                           PROCESSINGDATETIME = sysdatetime(), 
+                           NEXTRUNDATETIME = DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/, 
+                           RETRYNUMBER = (QUEUEMESSAGES.RETRYNUMBER + 1)
+                     WHERE QUEUEMESSAGES.ID = @V_MESSAGEID/* return queue data*/
+
+                     /*
+                     *   SSMA warning messages:
+                     *   O2SS0425: Dateadd operation may cause bad performance.
+                     */
+
+                     UPDATE dbo.QUEUEMESSAGEMOREDETAILS
+                        SET 
+                           PROCESSINGDATETIME = sysdatetime(), 
+                           NEXTRUNDATETIME = DATEADD(ss,@V_NEXTRUNDELAYINSEC,GETDATE()) , --ssma_oracle.dateadd(@V_NEXTRUNDELAYINSEC / 86400, sysdatetime())/*-(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),*/, 
+                           RETRYNUMBER = (QUEUEMESSAGEMOREDETAILS.RETRYNUMBER + 1)
+                     WHERE QUEUEMESSAGEMOREDETAILS.ID = @V_MESSAGEID/* return queue data*/
+
+                  END
+            END
+
+         CLOSE C_1
+
+         DEALLOCATE C_1
+
+      END
+
+   END
+GO
+
+---------
+
+-- customs diffrent then main- mssql
 USE [main]
 GO
 
@@ -9,41 +220,21 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[QUEUE_ENQUEUE]  
+CREATE PROCEDURE [dbo].[Queue_Enqueue]  
+--- CustomsBranch- Translate from Oracle!!!
    @V_QUEUEDEFINITIONCODE /*-create or replace PROCEDURE  TSTQueue_Enqueue(*/varchar(max),
    @V_MESSAGEBODY varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @V_TENANT float(53),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
-
    @V_DELAYSECONDS float(53),
    @V_CUSTOMERID varchar(max),
    @V_BATCHNUMBER varchar(max),
    @V_HASHCODE varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @V_WATINGSTATUS float(53),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @P_TENANTPRIORITY float(53),
    @P_INTERFACETYPECODE varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @P_USERABBITMQ float(53),
    @P_QUEUECODERABBIT varchar(max),
@@ -309,7 +500,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER PROCEDURE [dbo].[USP_GETNEXTTABLENUMBERVALUE]
+השתמש ב של רמאללה CREATE OR ALTER PROCEDURE [dbo].[USP_GETNEXTTABLENUMBERVALUE]
 (
 @pLastValue INT OUTPUT,
 @pTenant    INT,

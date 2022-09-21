@@ -12,6 +12,13 @@ namespace AmitalCustomsWindowsService.Tester
     {
 
         /*
+The 'PackageQuantity' property on 'ExportStorage' could not be set to a 'System.Int32' value. 
+        You must set this property to a non-null value of type 'System.Decimal'.
+         ALTER TABLE CUSTOMS.ExportStorageS ALTER COLUMN   PackageQuantity DECIMAL(10,0)
+ALTER TABLE CUSTOMS.ClientAddresses ALTER COLUMN   LocalApartment DECIMAL(4,0)
+ALTER TABLE CUSTOMS.ExportStorageS ALTER COLUMN   PackageQuantity DECIMAL(10,0)
+ALTER TABLE CUSTOMS.ExportStorageS ALTER COLUMN   IsDangerousGoods DECIMAL(1,0)
+
 
         sp_rename 'dbo.SHAREDLOGINVITATIONSTATUS', 'SharedLogisticsInvitationStatus';
         ALTER TABLE CUSTOMS.SupplierInvoiceItemS ALTER COLUMN OcrHeight  DECIMAL(5,0)
@@ -356,6 +363,7 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
         {
             string[] lines = 
             File.ReadAllLines(@"C:\log2004\Logitude\Logitude.Customs.Data\ICustomContext.cs");
+            int C = 0;
             foreach (var line in lines)
             {
                 if (line.Contains("IDbSet")){
@@ -364,7 +372,7 @@ EXEC sp_rename 'SETTINGS.USINGAZURE_MSQL', 'USINGAZURE';
                     string table1=line.Substring(pos + 1);
                     var ary=table1.Split( new string[] {" "} , StringSplitOptions.RemoveEmptyEntries);
                     string table = ary[0];
-                    Debug.WriteLine($"customContext.{table}.FirstOrDefault();");
+                    Debug.WriteLine($"var test{C++}= customContext.{table}.FirstOrDefault();");
                 }
             }
 
@@ -389,6 +397,9 @@ and NUMERIC_PRECISION>1 and NUMERIC_SCALE=0
             
             
         }
+
+        
+
         class MyTable
         {
             public bool IsGlobalModel { get; set; }

@@ -47,16 +47,18 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
-
+            
             bool test = false;
             if (test)
             {
-                (new Oracle2SQL())
-                .CreateCustomsContext();
-                //.CheckCustomsContext();
+                //int i=CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin();
+                CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
+                (new Oracle2SQL())                
+                    .CreateCustomsContext();
+                
                 //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
                 //.ChangeToBit();
-                (new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();
+                //(new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();
 
             }
 

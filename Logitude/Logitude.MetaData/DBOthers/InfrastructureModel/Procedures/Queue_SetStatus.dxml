@@ -4,7 +4,7 @@
   Name="Queue_SetStatus"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript_><![CDATA[
 CREATE procedure [dbo].[Queue_SetStatus]
 (
    @MessageId bigint,
@@ -28,7 +28,42 @@ END
 
 
 end
-]]></SqlScript>
+]]></SqlScript_>
+	<SqlScript>
+		<![CDATA[
+CREATE PROCEDURE dbo.Queue_SetStatus  
+--- CustomsBranch- Translate from Oracle!!
+  
+
+   @V_MESSAGEID float(53),
+   
+
+   @V_STATUD float(53)
+AS 
+   BEGIN
+
+      /*--INSERT INTO ZQUEUE_SETSTATUS (ID, STATUS, COMPLETEDATETIME) VALUES (v_messageid, v_statud,sysdate  );*/
+      DELETE dbo.QUEUEMESSAGES
+      WHERE QUEUEMESSAGES.ID = @V_MESSAGEID AND @V_STATUD = 1
+
+      UPDATE dbo.QUEUEMESSAGES
+         SET 
+            COMPLETEDATETIME = sysdatetime(), 
+            STATUS = @V_STATUD
+      WHERE QUEUEMESSAGES.ID = @V_MESSAGEID AND @V_STATUD != 1
+
+      UPDATE dbo.QUEUEMESSAGEMOREDETAILS
+         SET 
+            STATUS = @V_STATUD, 
+            COMPLETEDATETIME = sysdatetime()
+      WHERE QUEUEMESSAGEMOREDETAILS.ID = @V_MESSAGEID
+
+   END
+
+
+
+]]>
+	</SqlScript>
   <OracleScript>
 	  create or replace PROCEDURE queue_setstatus (
 	  v_messageid   IN   NUMBER,

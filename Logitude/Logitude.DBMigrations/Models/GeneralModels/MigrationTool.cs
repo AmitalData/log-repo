@@ -1853,7 +1853,10 @@ namespace Logitude.DBMigrations.Models
                     if (oracle2Sql)
                     {
 
-                        System.Diagnostics.Debug.WriteLine($" update [Global].[dbo].[DBSCRIPTSHISTORY] set [HASHVALUE]='{sxmlFileHashValue}' where [SXMLFILENAME]='{sxmlFileName}'  ");
+                        String queryString = "UPDATE [dbo].[DBScriptsHistory] SET  [ScriptBody] = '" + executedSxmlFileHashValue.Replace("'", "''") +
+     "', [HashValue] = '" + sxmlFileHashValue + "' WHERE [SxmlFileName] = '" + sxmlFileName + "';\n";
+
+                        System.Diagnostics.Debug.WriteLine(queryString);
                         return new ExecuteSxmlFileResult
                         {
                             ShouldExecute = false,
