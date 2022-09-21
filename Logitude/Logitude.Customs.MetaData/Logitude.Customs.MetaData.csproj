@@ -110,7 +110,6 @@
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
-    <None Include="DBScripts\Post\202201231428_SetReferantPackageType.sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />

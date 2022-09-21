@@ -196,6 +196,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CargoDescription = d.CargoDescription,
                                                                   FinalRelease = !d.HatraDate.HasValue,
                                                                   CasualSupplierName =d.CasualSupplierName,
+                                                                  Delivered=a.Delivered,
                                                               });
 
 
