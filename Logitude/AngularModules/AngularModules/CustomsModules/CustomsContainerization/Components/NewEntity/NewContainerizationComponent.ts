@@ -312,6 +312,8 @@ export class NewContainerizationComponent extends BaseComponent {
             //Display: "הגשה",
             Styles: { width: '60px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'TransportModeForExport',
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
             ColumnHeaderTemplateName: 'BlackTransportModeListHeaderTemplate',
