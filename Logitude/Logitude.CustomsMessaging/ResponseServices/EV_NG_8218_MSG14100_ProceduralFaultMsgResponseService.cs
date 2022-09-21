@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         proceduralFaultsConnectedEntityPM.EntityIdKey3 = conectedEntityItem.entityIdKey3;
                         proceduralFaultsConnectedEntityPM.EntityPath = conectedEntityItem.entityPath;
 
-                        if (conectedEntityItem.entityType == 1055)
+                        if (conectedEntityItem.entityType == 1055 || conectedEntityItem.entityType == 11188 || conectedEntityItem.entityType == 12414)
                         {
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                             myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
