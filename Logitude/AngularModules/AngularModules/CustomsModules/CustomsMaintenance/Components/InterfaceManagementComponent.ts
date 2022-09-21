@@ -15,6 +15,8 @@ import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceM
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent, CustomMessageProgressHelper } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+
 
 @Component({
     
@@ -42,6 +44,10 @@ export class InterfaceManagementComponent implements OnInit {
 
     private _entityListService: EntityListService;
     private CurrentSession = SessionLocator.SelectedSession;
+    CurrentQueryFilters: ApiQueryFilters;
+    //entityPM: InterfaceManagementPM;
+
+
     constructor() {
         this._entityListService = new EntityListService();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
@@ -81,8 +87,14 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.Code"),
             Styles: { width: '75px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Code'
         });
+
+
+       
+        
         this.columns.push({
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
@@ -91,7 +103,9 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.Description"),
             Styles: { width: '140px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Description'
         });
         this.columns.push({
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
@@ -101,15 +115,19 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.InOut"),
             Styles: { width: '80px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'InOut'
         });
         this.columns.push({
 
-            FieldName: 'SendOptionsCode',
-            DataTypeCode: 'Date',//'Number',
+            FieldName: 'DefaultSendOptionName',
+            DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.DefaultSendOptionsCode"),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DefaultSendOptionName',
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
 
@@ -122,6 +140,8 @@ export class InterfaceManagementComponent implements OnInit {
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.DefaultPriority"),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DefaultPriority',
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
 
@@ -134,6 +154,8 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.HasDefinition"),
             Styles: { width: '80px' },
+            ServerSideSortable: true,
+            SortByName: 'HasDefinition',
             IsCustomTemplate: true
         });
 
@@ -144,7 +166,9 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.SignatureTypeName"),
             Styles: { width: '100px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            // ServerSideSortable: true,
+            // SortByName: 'SignatureTypeName'
         });
         let textInterfaceTypeName = TextCodeTranslator.Translate("Customs.InterfaceManagement.F.InterfaceTypeName");
         if (AppTool.IsNullOrEmpty(textInterfaceTypeName)) {
@@ -158,18 +182,22 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: textInterfaceTypeName,
             Styles: { width: '120px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'InterfaceTypeName'
         });
 
  
     }
+
+    
     DataSource = {
 
         pageSize: 10,
         rowCount: null,
-        //SortData("RequestCreateDate", "Descending", false, false);
-        sortingCol: "",// "Id",
-        sortingDir: "",//"Descending",
+       // SortData("RequestCreateDate", "Descending", false, false),
+        sortingCol: "Code",// "Id",
+        sortingDir: "Descending",//"Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -180,8 +208,6 @@ export class InterfaceManagementComponent implements OnInit {
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-
-
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
@@ -190,13 +216,9 @@ export class InterfaceManagementComponent implements OnInit {
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
-
-        filters.SortBy = "Code";
-        filters.SortDirection = "Ascending";//"Descending";
-
-        //filters.SortBy = "CustomsName";//"Id";
-        //filters.SortDirection = "Descending";//"Descending";
-
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+        
 
         
         if (!AppTool.IsNullOrEmpty(this._SearchText)) {
@@ -259,6 +281,18 @@ export class InterfaceManagementComponent implements OnInit {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
     }
+
+    
+
+    Export2Excel() {
+        
+        var url = ServiceHelper.GetLogitudeURL() + 'api/InterfaceManagementListExtended/GetInterfaceManagement2Excel?'+ '&tenant=' +SessionLocator.Tenant;
+
+
+        window.open(url);
+
+    }
+
 
 
 }
