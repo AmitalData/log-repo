@@ -946,7 +946,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
             else {
                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
-                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
+                this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
 
 

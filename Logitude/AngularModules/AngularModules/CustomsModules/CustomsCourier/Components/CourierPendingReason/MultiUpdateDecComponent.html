@@ -46,7 +46,7 @@
                                       [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <SearchBox tabindex="1" [ObjectTableName]="'Customs.CustomsItems'"
+                            <SearchBox tabindex="1" [ObjectTableName]="'Customs.CustomsItem'"
                                        [IsQuickSearch]="true"
                                        [DropDownWidth]="144"
                                        [ItemHeight]="20"
@@ -57,7 +57,10 @@
                                        (TextChanged)="CustomsItemTextChanged($event)"
                                        [IsDisabled]="IsDisplayOnly"
                                        [HideIcons]="true"
-                                       (LostFocus)="CustomsItemLostFocus($event)"></SearchBox>
+                                       (LostFocus)="CustomsItemLostFocus($event)"
+                                       [QueryFilterItems]="taxExemptCodeTypesFilter"
+                                       [SearchFieldName]="'FullClassification'"
+                            ></SearchBox>
 
                         </td>
                         <td><div></div></td>
