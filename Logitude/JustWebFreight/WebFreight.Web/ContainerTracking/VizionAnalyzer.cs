@@ -132,8 +132,8 @@ namespace WebFreight.Web.ContainerTracking
 
             if (!string.IsNullOrEmpty(location?.unlocode) &&
                 !string.IsNullOrEmpty(mainLocation?.unlocode) &&
-                visionContainerStatus?.payload?.inland_destination?.unlocode != visionContainerStatus?.payload?.destination_port?.unlocode)
-                return true;
+                location?.unlocode == mainLocation?.unlocode)
+                return false;
 
             if (location.name == mainLocation.name &&
             location.country == mainLocation.country &&
