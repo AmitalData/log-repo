@@ -172,10 +172,8 @@ export class LoginComponent implements OnInit {
         
 
 
-        // if (isDevMode())
-        //     this.developerLogin();
-         //if(isDevMode())
-         //   this.developerLogin();
+        if (isDevMode())
+            this.developerLogin();
     }
 
     async developerLogin() {
@@ -186,7 +184,7 @@ export class LoginComponent implements OnInit {
         while(!this.TenantList?.length)
             await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
         this.ContinueClicked()
     }
 

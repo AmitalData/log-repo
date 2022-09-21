@@ -174,11 +174,13 @@
             border-bottom: 1px solid #3BB3E2;
         }
 
-            .LogTabControl .TabControlHead ul {
-        width: 100%;
+    .LogTabControl .TabControlHead ul {
+        width: calc(100% - 70px);
         height: 100%;
-        padding-left: 5px;
-        padding-right: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
+        display: inline-block;
+        overflow: hidden;
     }
 
     .CloseButtonWrapper {
@@ -211,6 +213,14 @@
         color: #2d71aa;
         border-radius: 50%;
     }
+
+    .btn-navigate {
+        width: 30px;
+        display: inline-block;
+        background: linear-gradient(to bottom, #f9fcff 9%,#e5f3ff 57%,#d4e4f7 100%);
+        position: relative;
+        top: -9px;
+    }
 </style>
 <table>
     <tr>
@@ -227,8 +237,9 @@
                 <td>
                     <div style="position: absolute; top: 0;" class="LogTabControl">
                         <div class="TabControlHead" [ngStyle]="MultiLineTabs ? {'overflow':'auto'} : ''">
-                            <ul>
-                                <li LocationDirective [IsSelected]="tab.IsSelected" *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" [style.float]="IsRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+                            <button *ngIf="showButton" (click)="scrollleft()" class="btn-navigate"><</button>
+                            <ul [style.dir]="IsRTL ? 'rtl' : 'ltr'" #tabs>
+                                <li LocationDirective [IsSelected]="tab.IsSelected" [style.float]="'none'" *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" (click)="SelectionChanged(tab)">
 
                                     <div style="position: relative; width: 100%;" class="InnerChild"
                                          [style.text-align]="IsRTL ? 'right' : 'left'"
@@ -241,8 +252,9 @@
 
                                 </li>
 
-                                <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab()" [style.float]="IsRTL ? 'right' : 'left'">+</li>
+                                <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab()" [style.float]="'none'">+</li>
                             </ul>
+                            <button *ngIf="showButton" (click)="scrollRight()" class="btn-navigate">></button>
                         </div>
 
 
