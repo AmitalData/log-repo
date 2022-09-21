@@ -13435,6 +13435,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
+                               IsCustomerArchived = f.IsCustomerArchived
                            };
 
             return myResult;

@@ -1047,7 +1047,7 @@
 
 
 
-												<table *ngIf="DirectionId == 'C' || ShowAddDocument"  style="height:30%">
+												<table *ngIf="DirectionId == 'C' || (ShowAddDocument && IsDSVTenant)"  style="height:30%">
 													<tr *ngIf="DirectionId == 'C'">
 														<td>
 															<table *ngIf="DirectionId == 'C'">
@@ -1347,12 +1347,12 @@
 																					<table>
 																						<tr>
 																							<td style="width:7px;">
-																								<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+																								<div *ngIf="TransportModeId != 'A'" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
 																							</td>
 
 																							<td style="height: 22px;width:100px;">
-																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																								<label *ngIf="TransportModeId != 'A'" style="padding-left:10px;color: rgb(110, 113, 114);">
 																									Package Type
 																								</label>
 																							</td>
@@ -1394,8 +1394,8 @@
 																				</td>
 																			</tr>
 																			<tr style="height: 33px;">
-																				<td [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
-																					<table>
+																				<td>
+																					<table *ngIf="TransportModeId != 'A'">
 																						<tr>
 																							<td style="height: 22px;">
 																								<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">

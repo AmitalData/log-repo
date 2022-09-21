@@ -2831,6 +2831,7 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\AttachmentDocumentNotifyService.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\AdvancedARInvoiceAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ARInvoiceAPISendInterfaceDataContract.cs" />
@@ -2908,6 +2909,7 @@
     <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
+    <Compile Include="Helpers\MixPanel\events\DashboardActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
@@ -2923,6 +2925,7 @@
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
     <Compile Include="Helpers\ResetUserPasswordDocumentService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
+    <Compile Include="Helpers\ShipmentDigitalArchivedArgs.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
@@ -3686,6 +3689,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsMessageTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsTransmissionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentDigitalFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentOrderPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPackageHarmonizeUpdateClass.cs" />

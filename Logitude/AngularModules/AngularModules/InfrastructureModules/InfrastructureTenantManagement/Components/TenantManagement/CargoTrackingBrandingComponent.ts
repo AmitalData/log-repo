@@ -316,6 +316,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
+    public get EnableExportToExcel() {
+        return this.EntityPM.EnableExportToExcel;
+    }
+    public set EnableExportToExcel(value: boolean) {
+        if (this.EntityPM.EnableExportToExcel != value) {
+            this.EntityPM.EnableExportToExcel = value;
+        }
+    }
+
     ValidateHexCode(value: string, fieldName: string) {
 
         const regex = new RegExp('^#([a-fA-F0-9]{6})$');
@@ -372,6 +381,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
         this.EnableBranding = value;
         this.SetUIPropertiesEnabled(value);
+
+    }
+
+    EnableExportToExcelChange(value: any) {
+
+        this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
+        this.EnableExportToExcel = value;
 
     }
 

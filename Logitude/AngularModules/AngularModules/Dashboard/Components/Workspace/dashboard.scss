@@ -1,10 +1,75 @@
-
- @import "primereact/resources/themes/lara-light-indigo/theme.css";
- @import "primereact/resources/primereact.css";
- @import "primeicons/primeicons.css";
- @import "react-grid-layout/css/styles";
+@import "primereact/resources/themes/lara-light-indigo/theme.css";
+@import "primereact/resources/primereact.css";
+@import "primeicons/primeicons.css";
+@import "react-grid-layout/css/styles";
 @import "react-resizable/css/styles";
- @import "logitude-dashboard-library/dist/assets/styles/fonts.scss";
+@import "logitude-dashboard-library/dist/assets/styles/fonts.scss";
 @import "logitude-dashboard-library/dist/assets/styles/global.scss";
 @import "logitude-dashboard-library/dist/assets/styles/colors.scss";
 @import "logitude-dashboard-library/dist/assets/styles/dl-dashboard.scss";
+
+
+
+.dashboard-tooltip {
+    cursor: default;
+    margin-left: 420px;
+    margin-top: -10px;
+    height: 45px;
+    width: 250px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    background: #EDEADE;
+    border-radius: 5px;
+    &__arrow {
+        width: 90px;
+        height: 46px;
+        position: absolute;
+        top: -2%;
+        left: -45px;
+        transform: translateX(-50%);
+        overflow: hidden;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #EDEADE;
+            transform: translateX(-50%) translateY(-50%) rotate(45deg);
+            top: 22px;
+            left: 104%;
+            box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.3);
+        }
+    }
+}
+
+.dashboard-tooltip:hover {
+    color: black;
+}
+
+.tooltip-container {
+
+}
+
+.tooltip-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    overflow: hidden;
+    outline: none;
+    color: blue;
+    cursor: pointer;
+}
+
+.tooltop-btn-container {
+    width: 100%;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    pointer-events:revert;
+}

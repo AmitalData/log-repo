@@ -23,6 +23,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ReactFlowInstance: any = null;
     public EntityPM: WorkFlowPM = null;
     public EntityId: string;
+    public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
@@ -70,6 +71,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (!serviceResponse.HasError) {
             this.EntityPM = serviceResponse.Result;
             this.WorkflowName = this.EntityPM.Name;
+            this.WorkflowEntity = this.EntityPM.Entity;
             this.renderReactFlowModeler();
             this.stopBusyIndicator();
         }
@@ -132,7 +134,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     buildPropertiesWindow = (openPropertiesEventObject: any) => {
         let propertiesWindow = new LogitudeWindow();
         let propertiesWindowArgs: any = {
-            Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData))
+            Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
+            WorkflowEntity: this.WorkflowEntity
         };
         propertiesWindow.Width = 960;
         propertiesWindow.Height = 760;

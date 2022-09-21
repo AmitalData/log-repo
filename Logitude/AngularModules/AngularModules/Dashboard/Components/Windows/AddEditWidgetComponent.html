@@ -105,6 +105,52 @@
                                             </td>
                                         </tr>
 
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'SortBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <ComboBox  (SelectedItemChanged)="SortBy = $event.Code"
+                                                                       [ItemsSource]="SortByCodes" 
+                                                                       [SelectedItem]="GetSelectedSort()"
+                                                                       [Binding] ="'Text'">
+                                                            </ComboBox>
+                                                        </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <ComboBox  (SelectedItemChanged)="SortDirection = $event"
+                                                                       [ItemsSource]="SortByDirections" 
+                                                                       [SelectedItem]="SortDirection">
+                                                            </ComboBox>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox  (SelectedItemChanged)="MaximumGrouping = $event"
+                                                            [ItemsSource]="MaximumGroupings" 
+                                                            [SelectedItem]="MaximumGrouping">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
 
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
@@ -171,7 +217,7 @@
                             <tr *ngIf="EntityId" style="height: 0;">
                                 <td colspan="2" style="height: 250px;">
                                     <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
-                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter"></WidgetFilter>
+                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter" [DashboardId] = "DashboardPM?.Id"></WidgetFilter>
                                     </div>
                                 </td>
                             </tr>

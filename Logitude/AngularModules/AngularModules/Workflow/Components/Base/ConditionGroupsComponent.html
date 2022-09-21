@@ -135,7 +135,7 @@
 
                 <div class="condition-row">
 
-                    <div class="delete-condition-container">
+                    <div *ngIf="!(AtLeastOneCondition && Conditions.length == 1)" class="delete-condition-container">
                         <img class="delete-condition-button" src="./Images/Trash-can.png"
                             (click)="deleteCondition(conditionIndex, Condition.isGroup)"
                             [attr.data-cy]="'DeleteConditionButton_' + Condition.id" />

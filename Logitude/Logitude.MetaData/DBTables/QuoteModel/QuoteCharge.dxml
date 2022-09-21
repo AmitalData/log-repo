@@ -494,7 +494,8 @@
   </Column>
   <Column
     Name="SaleTariffVersion"
-    Type="int"  DefaultValue="0">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -502,6 +503,13 @@
     Name="SaleTariffLineId"
     Type="varchar"
     Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MarkUpCurrencyId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -578,6 +586,11 @@
   <Relation
     ForeignKeyColumn="VatTypeId"
     ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MarkUpCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -85,7 +85,8 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (this.ObjectFieldPM) {
             this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldCode = this.ObjectFieldPM.FieldCode;
- 
+
+
 
             this.SelectedCustomField = this.ObjectFieldPM;
 
@@ -362,7 +363,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
         if (this.CurrentEntityType != "OnCreate") {
-            if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
+            if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
                 this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
                 this.OperatorList.push(new Operator("Changed", "CHANGED"));
             }
@@ -372,7 +373,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" ) {
 
             if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-                if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
+                if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
                     this.OperatorList.push(new Operator("Changed", "CHANGED"));
                 }
             }
@@ -391,6 +392,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
+    IsDelayAutomationConditions() {
+        return this.DelayAutomationconditionsViewModel ? true : false;
+    }
+
+    
+
     CustomFieldValueChanged(item) {
         {
             if (item) {
@@ -401,8 +408,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
                     this.IsHideGeneralControl = false;
                     this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
-
-
+                    this.ObjectFieldCode = item.FieldCode;
                     if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
                         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
                         this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");

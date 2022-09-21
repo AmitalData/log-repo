@@ -310,11 +310,14 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditDashboardComponent.html" />
     <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.css" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
@@ -1786,6 +1789,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
+    <TypeScriptCompile Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsFieldsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\DashboardList.ts" />
@@ -1822,6 +1826,8 @@
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterItem.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Workspace\CustomDashboardLayoutComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Services\DashboardMapping.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
@@ -4755,6 +4761,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\EditQuoteTemplateComponent - Copy.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\QuoteTemplatePricingSettingComponent - Copy.ts" />
+    <TypeScriptCompile Include="Quote\Components\Shared\MarkupCurrency.ts" />
     <TypeScriptCompile Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteTemplateSettingData.ts" />
@@ -8791,6 +8798,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
+    <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

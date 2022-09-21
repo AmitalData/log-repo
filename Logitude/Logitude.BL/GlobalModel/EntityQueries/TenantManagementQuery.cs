@@ -49,6 +49,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
                                                        ActivatePrivateSite = a.ActivatePrivateSite,
+                                                       EnableExportToExcel = a.EnableExportToExcel,
                                                        ContactEmail = a.ContactEmail
                                                    }).FirstOrDefault();
 
@@ -75,7 +76,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        CustomerURL = a.CustomerURL,
                                                        ActivatePrivateSite = a.ActivatePrivateSite,
                                                        ContactEmail = a.ContactEmail,
-                                                       EnableBranding = a.EnableBranding
+                                                       EnableBranding = a.EnableBranding,
+                                                       EnableExportToExcel = a.EnableExportToExcel
                                                    }).FirstOrDefault();
 
 
@@ -234,6 +236,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      RegisteredAirlines = a.RegisteredAirlines,
                                                      PendingAirlines = a.PendingAirlines,
                                                      EnableBranding = a.EnableBranding,
+                                                     EnableExportToExcel = a.EnableExportToExcel,
                                                      ActivatePrivateSite = a.ActivatePrivateSite,
                                                      ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                                      DeclarationMessage = a.DeclarationMessage,
@@ -437,6 +440,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   RegisteredAirlines = a.RegisteredAirlines,
                                                   PendingAirlines = a.PendingAirlines,
                                                   EnableBranding = a.EnableBranding,
+                                                  EnableExportToExcel = a.EnableExportToExcel,
                                                   ActivatePrivateSite = a.ActivatePrivateSite,
                                                   ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                                   DeclarationMessage = a.DeclarationMessage,
@@ -641,6 +645,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         RegisteredAirlines = a.RegisteredAirlines,
                         PendingAirlines = a.PendingAirlines,
                         EnableBranding = a.EnableBranding,
+                        EnableExportToExcel = a.EnableExportToExcel,
                         ActivatePrivateSite = a.ActivatePrivateSite,
                         ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                         DeclarationMessage = a.DeclarationMessage,
@@ -792,6 +797,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     RegisteredAirlines = entity.RegisteredAirlines,
                     PendingAirlines = entity.PendingAirlines,
                     EnableBranding = entity.EnableBranding,
+                    EnableExportToExcel = entity.EnableExportToExcel,
                     ActivatedforDeclarationApprove = entity.ActivatedforDeclarationApprove,
                     DeclarationMessage = entity.DeclarationMessage,
                     ContactEmail = entity.ContactEmail,
@@ -932,6 +938,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ShardLogisticTotalLastWeek = a.ShardLogisticTotalLastWeek,
                        ShardLogisticTotalLastMonth = a.ShardLogisticTotalLastMonth,
                        EnableBranding = a.EnableBranding,
+                       EnableExportToExcel = a.EnableExportToExcel,
                        ActivatePrivateSite = a.ActivatePrivateSite,
                        ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                        DeclarationMessage = a.DeclarationMessage,
@@ -1208,6 +1215,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              RegisteredAirlines = a.RegisteredAirlines,
                                              PendingAirlines = a.PendingAirlines,
                                              EnableBranding = a.EnableBranding,
+                                             EnableExportToExcel = a.EnableExportToExcel,
                                              ActivatePrivateSite = a.ActivatePrivateSite,
                                              ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                              DeclarationMessage = a.DeclarationMessage,

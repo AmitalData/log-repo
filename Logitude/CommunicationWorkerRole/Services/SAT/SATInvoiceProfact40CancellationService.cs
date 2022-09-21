@@ -68,52 +68,62 @@ namespace CommunicationWorkerRole.Services.SAT
 						arinvoiceRep.SubmitChanges();
 					}
 					else
-					{
-						string transError = resultadoCancelacion.Descripcion;
-						if ((transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") || transError == "El comprobante será cancelado")
+                    {
+                        string transError = resultadoCancelacion.Descripcion;
+                        if (IsWaitingToCancelledFromSAT(resultadoCancelacion))
 
-						{
-							waitingCommLog.CommunicationStatusTypeCode = "D";
-							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-							waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-							communicationLogRep.Update(waitingCommLog);
-							communicationLogRep.SubmitChanges();
+                        {
+                            waitingCommLog.CommunicationStatusTypeCode = "D";
+                            waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                            waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                            communicationLogRep.Update(waitingCommLog);
+                            communicationLogRep.SubmitChanges();
 
-							invoice.SATTransferStatusCode = "CS";
-							arinvoiceRep.Update(invoice);
-							arinvoiceRep.SubmitChanges();
-						}
-						else
-						{
-							if (waitingCommLog.Retries == 4)
-							{
-								if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
-								{
-									transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-									if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
-									{
-										transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
-									}
-									if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
-									{
-										invoice.SATTransferStatusCode = "TE";
-										invoice.TransmissionError = transError;
-										arinvoiceRep.Update(invoice);
-										arinvoiceRep.SubmitChanges();
-									}
-								}
-							}
+                            invoice.SATTransferStatusCode = "CS";
+                            arinvoiceRep.Update(invoice);
+                            arinvoiceRep.SubmitChanges();
+                        }
+                        else
+                        {
+                            if (waitingCommLog.Retries == 4)
+                            {
+                                if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
+                                {
+                                    transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+                                    if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+                                    {
+                                        transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
+                                    }
+                                    if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+                                    {
+                                        invoice.SATTransferStatusCode = "TE";
+                                        invoice.TransmissionError = transError;
+                                        arinvoiceRep.Update(invoice);
+                                        arinvoiceRep.SubmitChanges();
+                                    }
+                                }
+                            }
 
-							throw new Exception("Failed," + transError);
-						}
-					}
-				}
+                            throw new Exception("Failed," + transError);
+                        }
+                    }
+                }
 			}
 		}
 
-		private static string GetRelatedInvoiceUUID(ARInvoice invoice)
+        private static bool IsWaitingToCancelledFromSAT(ResultadoCancelacion resultadoCancelacion)
+        {
+            string transferError = resultadoCancelacion.Descripcion;
+            if(transferError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") return true;
+            if (transferError == "El comprobante será cancelado") return true;
+            if (transferError.Contains("Comprobante ya está en proceso de cancelación")) return true;
+
+            return false;
+        }
+
+        private static string GetRelatedInvoiceUUID(ARInvoice invoice)
         {
             if (string.IsNullOrEmpty(invoice.RelatedInvoice)) return "";
             ARInvoice relatedARInvoice = GetRelatedARInvoice(invoice);

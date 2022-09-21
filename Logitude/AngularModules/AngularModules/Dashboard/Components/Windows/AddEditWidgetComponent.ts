@@ -11,6 +11,7 @@ import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -28,9 +29,13 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem = new WidgetFilterItem();
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public MaximumGroupings = [5, 10, 25, 30, 50];
+    public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
+    public DefaultSort = this.SortByCodes[0];
+    public SortByDirections = ['asc', 'desc'];
     public GroupByQueryFilters: ApiQueryFilters;
 
     constructor() {
@@ -60,7 +65,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
         if (!filters) return;
-        this.RootFilter = new WidgetFilterItem(filters, true);
+        this.RootFilter = new WidgetFilterItem(filters, true, this.DashboardPM?.Id);
     }
 
     private ComputeChartImageSrc() {
@@ -86,6 +91,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             }
         }
     }
+
     public BuildMeasures() {
         this.WidgetMeasuresList = [];
 
@@ -105,11 +111,13 @@ export class AddEditWidgetComponent extends BaseComponent {
             item.CheckMeasureDeleteVisiblity();
         });
     }
+
     public CheckMeasureAddVisiblity() {
         var isAddVisible: boolean = true;
 
         if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
             isAddVisible = false;
+            if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList.splice(1, 1);
         }
 
         else if (this.WidgetMeasuresList.length != 1) {
@@ -123,6 +131,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set Title(value: string) {
         if (this.EntityPM.Title != value) {
             this.EntityPM.Title = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Title Change ", Message: "Changed To" + this.EntityPM.Title, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -130,7 +139,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
-            this.RootFilter = new WidgetFilterItem();
+            this.RootFilter = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -139,6 +149,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.TypeCode != value) {
             this.EntityPM.TypeCode = value;
             this.ComputeChartImageSrc();
+            this.CheckMeasureAddVisiblity();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -167,7 +179,43 @@ export class AddEditWidgetComponent extends BaseComponent {
     set DateGroupCode(value: string) {
         if (this.EntityPM.DateGroupCode != value) {
             this.EntityPM.DateGroupCode = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Date Group Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+
         }
+    }
+
+    get SortBy() { return this.EntityPM.SortBy; }
+    set SortBy(value: number) {
+        if (this.EntityPM.SortBy != value) {
+            this.EntityPM.SortBy = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+    get MaximumGrouping() {
+        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 25;
+        return this.EntityPM.MaximumGrouping;
+    }
+    set MaximumGrouping(value: number) {
+        if (this.EntityPM.MaximumGrouping != value) {
+            this.EntityPM.MaximumGrouping = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+    get SortDirection() {
+        if (!this.EntityPM?.SortDirection) this.EntityPM.SortDirection = "asc";
+        return this.EntityPM.SortDirection;
+    }
+    set SortDirection(value: string) {
+        if (this.EntityPM.SortDirection != value) {
+            this.EntityPM.SortDirection = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Direction Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+    public GetSelectedSort() {
+        return this.SortByCodes.find(x => x.Code == this.SortBy);
     }
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
@@ -182,6 +230,8 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.FirstTime = false;
             return;
         }
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField.DisplayName, DashboardId: this.DashboardPM?.Id });
+
         this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
         this.FirstTime = false;
     }
@@ -198,6 +248,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
         });
+
         this.ValidateInputs(errors);
         this.ValidationErrorsList = errors;
         if (errors.length != 0) return;
@@ -219,6 +270,11 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     ValidateInputs(errors: string[]) {
         this.ValidateMeasures(errors);
+        this.ValidateSort(errors);
+    }
+
+    ValidateSort(errors: string[]) {
+        if (this.WidgetMeasuresList.length <= 1 && this.SortBy == 2) errors.push("Invalid Sort On Measure 2");
     }
 
     ValidateMeasures(errors: string[]) {
@@ -238,7 +294,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
                 key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
                 key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
-                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData") return val;
+                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData" && key !== "DashboardId") return val;
         });
     }
 
@@ -249,17 +305,18 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('GroupBy');
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
-
         this.myCloner.AddField('EntityId');
         this.myCloner.AddField('DateGroupCodes');
-        this.myCloner.AddField('EndPosition');
+        this.myCloner.AddField('SortDirection');
+        this.myCloner.AddField('SortBy');
+        this.myCloner.AddField('MaximumGrouping');
 
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
-        
+
         this.EntityPM.WidgetMeasures.forEach(item => {
-            if(!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
+            if (!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
             this.WidgetMeasuresClone.push(Object.assign(new WidgetMeasurePM(null), item));
         });
 
@@ -279,6 +336,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click", DashboardId: this.DashboardPM?.Id });
         this.CheckMeasureAddVisiblity();
     }
 }
@@ -291,12 +349,14 @@ export class WidgetMeasureItem extends BaseComponent {
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
+    DashboardPM: DashboardPM;
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.DashboardPM = fatherComponent?.DashboardPM;
         this.FilterMeasureFields();
     }
 
@@ -309,6 +369,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -316,6 +377,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureCode(value: string) {
         if (this.EntityPM.MeasureCode == value) return;
 
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
@@ -345,6 +407,13 @@ export class WidgetMeasureItem extends BaseComponent {
         if (index != -1) {
             this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
+
+        index = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
+        if (index != -1) {
+            this.Widget.RemoveWidgetMeasure(this.EntityPM);
+        }
+
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

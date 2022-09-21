@@ -50,6 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.AdditionalPackagesOnly = userPm.AdditionalPackagesOnly;
             user.LayoutDirection = userPm.LayoutDirection;
             user.SignatureImageId = userPm.SignatureImageId;
+            user.HideDashboardToolTip = userPm.HideDashboardToolTip;
             BuildSearchFields(userPm, user);
         }
 

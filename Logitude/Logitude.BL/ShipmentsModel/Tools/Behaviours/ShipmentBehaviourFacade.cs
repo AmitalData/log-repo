@@ -15,6 +15,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
     {
         private IShipmentBehaviour updateShipmentComputedFields;
         private IShipmentBehaviour updateCrossDocks;
+        private IShipmentBehaviour shipmentDigitalFields;
         public bool ReceivablePricingUpdated_CrossDoc = false;
         public bool DatesUpdated_CrossDoc = false;
 
@@ -24,12 +25,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             updateCrossDocks = new UpdateCrossDockBehaviour(shipmentPM);
         }
 
+        public ShipmentBehaviourFacade(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentDigitalField shipmentComputedFields, bool isNewEntity)
+        {
+            shipmentDigitalFields = new ShipmentDigitalFieldsBehaviour(shipmentPM, context, shipmentComputedFields, isNewEntity);
+        }
+
         public void Handle()
         {
             updateShipmentComputedFields.Handle();
             updateCrossDocks.Handle();
             ReceivablePricingUpdated_CrossDoc = updateCrossDocks.ReceivablePricingUpdated;
             DatesUpdated_CrossDoc = updateCrossDocks.DatesFromCrossDocsUpdated;
+        }
+
+        public void HandleShipmentDigitalFields()
+        {
+            shipmentDigitalFields.Handle();
         }
 
         public void Trace(ShipmentTracing shipmentTracing)
@@ -41,7 +52,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             updateShipmentComputedFields.Save();
             updateCrossDocks.Save();
-
+            shipmentDigitalFields.Save();
         }
+
     }
 }

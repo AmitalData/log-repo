@@ -52,5 +52,6 @@ export class UserList {
 		AdditionalPackagesOnly: boolean;
 		GroupId: Array<string>;
 		SignatureImageId: string;
+        HideDashboardToolTip: boolean;
 	
 }

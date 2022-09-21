@@ -17,6 +17,7 @@ namespace WebFreight.Web.DataContracts
         public string InvertedLogoId { get; set; }
         public string CustomerURL { get; set; }
         public bool ActivatePrivateSite { get; set; }
+        public bool EnableExportToExcel { get; set; }
         public byte[] BackgroundBytes { get; set; }
         public byte[] ComapnylogoBytes { get; set; }
         public byte[] BrowserIconBytes { get; set; }

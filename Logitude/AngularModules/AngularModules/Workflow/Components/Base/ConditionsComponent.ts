@@ -15,8 +15,10 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     @Input() ShowChangedOperator: boolean;
     @Input() ConditionsOperation: string;
     @Input() Conditions: Condition[];
-
+    @Input() AtLeastOneCondition: boolean;
+    
     @Output() ConditionsOperationChange = new EventEmitter<string>();
+    @Output() IsValidConditionsChange = new EventEmitter<boolean>();
 
     public DataContext: any = this;
     public IsValidConditions: boolean = true;
@@ -32,6 +34,8 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     ngOnInit() {
         this.initializeConditionsIds();
+        this.IsValidConditions = this.isValidConditions();
+        this.IsValidConditionsChange.emit(this.IsValidConditions);
     }
 
     ngOnChanges() {
@@ -44,6 +48,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     conditionsChanged(event: any = null) {
         this.IsValidConditions = this.isValidConditions();
+        this.IsValidConditionsChange.emit(this.IsValidConditions);
         if (event === "add") {
             this.increaseConditionsCounter();
         }

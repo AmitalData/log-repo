@@ -308,6 +308,75 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private int? maximumGrouping ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MaximumGrouping  
+	   {
+	    
+	     get
+		{
+		   return maximumGrouping;
+		 }
+		 set
+		 {
+		   if(maximumGrouping != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MaximumGrouping",OldValue=maximumGrouping,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   maximumGrouping=value;
+		   }
+			
+		 }
+	   }
+	  private int? sortBy ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? SortBy  
+	   {
+	    
+	     get
+		{
+		   return sortBy;
+		 }
+		 set
+		 {
+		   if(sortBy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortBy",OldValue=sortBy,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   sortBy=value;
+		   }
+			
+		 }
+	   }
+	  private string sortDirection ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SortDirection  
+	   {
+	    
+	     get
+		{
+		   return sortDirection;
+		 }
+		 set
+		 {
+		   if(sortDirection != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SortDirection",OldValue=sortDirection,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sortDirection=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

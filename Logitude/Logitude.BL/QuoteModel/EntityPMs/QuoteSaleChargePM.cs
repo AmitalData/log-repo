@@ -39,6 +39,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? ContainerType3MarkUpValue { get; set; }
         public double? ContainerType4MarkUpValue { get; set; }
         public double? ContainerType5MarkUpValue { get; set; }
+        public string MarkUpCurrencyId { get; set; }
+
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }

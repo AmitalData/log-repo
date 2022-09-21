@@ -165,7 +165,7 @@ namespace WebFreight.Web.ContainerTracking
 
         private void HandelUpdateManager(ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest)
         {
-            string containerNumber = visionContainerStatus.payload.container_id;
+            string containerNumber = this.GetContainerNumber(visionContainerStatus.payload.container_id);
             Container myRequestContainer = this.GetContainer(containerTrackingRequest, containerNumber);
 
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
@@ -179,14 +179,50 @@ namespace WebFreight.Web.ContainerTracking
                 return;
             var container = GetContanerPM(containerTrackingRequest);
             manager.SetContainer(container);
-            MapContainersExternalData(container);
+            try
+            {
+                MapContainersExternalData(container);
 
-            manager.SetShipment(GetShipmentPM(containerTrackingRequest));
+                manager.SetShipment(GetShipmentPM(containerTrackingRequest));
 
-            manager.Update();
+                manager.Update();
+            }
+            catch (Exception ex)
+            {
+                comunicationLog.WasAnalyzed = false;
+                comunicationLog.CommunicationStatusTypeCode = "F";
+                comunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(comunicationLog.Tenant);
+                comunicationLog.LastStatusDateUTC = DateTime.UtcNow;
+                comunicationLog.ExceptionMessage = ex.Message;
+
+                if (ex.StackTrace != null)
+                {
+                    comunicationLog.ExceptionMessage = comunicationLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + ex.StackTrace;
+                }
+                var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
+                communicationLogRepository.Update(comunicationLog);
+                communicationLogRepository.SubmitChanges();
+                throw ex;
+            }
+            
 
         }
+        private string GetContainerNumber(string container_id)
+        {
+            string containerNumber = container_id;
 
+            if (container_id.Contains("-"))
+            {
+                var dash_index = container_id.LastIndexOf('-');
+                var value_after_dash = container_id.ElementAt(dash_index + 1);
+                if(value_after_dash != null && value_after_dash.ToString().Length == 1)
+                {
+                    containerNumber = container_id.Remove(dash_index, 1);
+                }
+            }
+
+            return containerNumber;
+        }
         private void MapContainersExternalData(ContainerPM container )
         {
             if(container == null)

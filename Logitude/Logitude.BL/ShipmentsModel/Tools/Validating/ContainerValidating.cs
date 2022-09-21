@@ -21,8 +21,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (entityPM.IsUpdatedOceanInsightsAnalyzer == true)
                 return;
+            if (entityPM.IsUpdatedVizionAnalyzer == true)
+                return;
 
-            if(string.IsNullOrEmpty( entityPM.ConcurrencyGUID) || string.IsNullOrEmpty(entityPM.NewConcurrencyGUID))
+            if (string.IsNullOrEmpty( entityPM.ConcurrencyGUID) || string.IsNullOrEmpty(entityPM.NewConcurrencyGUID))
             {
                 return;
             }
@@ -34,6 +36,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private static void ValidateShipmentConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
         {
             if (entityPM.IsUpdatedOceanInsightsAnalyzer == true)
+                return;
+            if (entityPM.IsUpdatedVizionAnalyzer == true)
                 return;
 
             var shipmentConcurrencyGUID = GetShipmentConcurrencyGUID(entityPM.ShipmentId, entityPM.Tenant);

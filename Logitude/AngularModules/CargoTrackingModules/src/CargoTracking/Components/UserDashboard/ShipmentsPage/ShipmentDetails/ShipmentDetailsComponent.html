@@ -1146,7 +1146,7 @@
 
 
 
-            <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [Title]="'SHO List'"
+            <panel *ngIf="!ShowShipmentAsDeclaration" [Title]="'SHO List'"
                 style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
                 <div body style="padding: 0px 8px 13px 0px;">
@@ -1173,7 +1173,7 @@
                                 <td>{{item.PODate | date:'dd/MM/yyyy'}}</td>
                                 <td>{{item.PickupActualDateTime | date:'dd/MM/yyyy'}}</td>
                                 <td>{{item.BookingConfirmationNumber}}</td>
-                                <td>{{item.CasualSupplierName}}</td>
+                                <td>{{item.SupplierName}}</td>
                             </tr>
 
                         </table>

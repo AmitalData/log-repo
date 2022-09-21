@@ -214,5 +214,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public DateTime? MainCarriageETDTime { get; set; }
         public DateTime? MainCarriageETATime { get; set; }
+        public bool IsCustomerArchived { get; set; }
+
+        
     }
 }

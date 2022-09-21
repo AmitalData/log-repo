@@ -28,11 +28,30 @@ export class CustomizationMainComponent {
     private myService: GeneralDomainService;
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public IsShowStandardFields: boolean = false;
+    public IsShowLabels: boolean = false;
+    public IsShowScreensLayout: boolean = false;
+    public IsShowCustomFields: boolean = false;
+    public IsShowRules: boolean = false;
+    public IsShowTabs: boolean = false;
+
     constructor() {
         this.myService = new GeneralDomainService();
         this.entityResourceService = new EntityResourceService();
         this.LoadTableTranslations();
         this.LoadPermessions();
+
+        this.SetCustomizationFeaturesPermission();
+    }
+
+    SetCustomizationFeaturesPermission() {
+        this.IsShowStandardFields = FeatureLocator.HasFeaturePermession("General", "StandardFieldsCustomization");
+        this.IsShowLabels = FeatureLocator.HasFeaturePermession("General", "LabelsCustomization");
+        this.IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
+        this.IsShowCustomFields = FeatureLocator.HasFeaturePermession("General", "CustomFieldsCustomization");
+        this.IsShowRules = FeatureLocator.HasFeaturePermession("General", "RulesCustomization");
+        this.IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
     }
 
     SetWindowArgs(args: any) {
@@ -148,24 +167,17 @@ export class CustomizationMainComponent {
     }
 
     public selectedRow: FieldsTranslations;
-    public IsFieldsCustomizationEnabled: boolean = false;
-    public IsRulesCustomizationEnabled: boolean = false;
-    public IsTabsCustomizationEnabled: boolean = false;
+
 
     Selecting(fieldsTranslations: FieldsTranslations) {
-        this.selectedRow = fieldsTranslations;
-        this.IsFieldsCustomizationEnabled = false;
-        this.IsRulesCustomizationEnabled = false;
-        this.IsTabsCustomizationEnabled = false;
 
+        this.selectedRow = fieldsTranslations;
         if (fieldsTranslations == null) {
             this.IsButtonEnabled = false;
             return;
         }
         this.IsButtonEnabled = true;
-        this.IsFieldsCustomizationEnabled = this.HaveFieldsCustomization(fieldsTranslations.ObjectTableName);
-        this.IsRulesCustomizationEnabled = this.HaveRulesCustomization(fieldsTranslations.ObjectTableName);
-        this.IsTabsCustomizationEnabled = this.HaveTabsCustomization(fieldsTranslations.ObjectTableName);
+
     }
 
     StandardFieldsClicked() {
@@ -207,7 +219,7 @@ export class CustomizationMainComponent {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Screens Layout: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
-                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID, IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled, IsTabsCustomizationEnabled: this.IsTabsCustomizationEnabled };
+                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID, IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled, IsTabsCustomizationEnabled: this.IsShowTabs };
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/ScreenLayoutComponent');
             });
         }

@@ -60,7 +60,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             }
                             else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                var oceanCodes = new List<string> { "FCLD", "LCLD", "MyGO" };
+                                var oceanCodes = new List<string> { "FCL", "FCLD", "LCL", "LCLD", "MyGO" };
                                 var orderedOccen = shipmentTypes.Where(a => oceanCodes
                                                                             .Contains(a, StringComparer.InvariantCultureIgnoreCase))
                                                                 .ToList();

@@ -280,6 +280,11 @@ export class QuoteChargePM {
     public set SaleTotalAmountLocal(newValue: number) { if (this.saleTotalAmountLocal != newValue) { this.saleTotalAmountLocal = newValue; this.MarkAsDirty("SaleTotalAmountLocal"); } }
        
 	 
+    private markUpCurrencyId: string;
+    public get MarkUpCurrencyId() { return this.markUpCurrencyId; }
+    public set MarkUpCurrencyId(newValue: string) { if (this.markUpCurrencyId != newValue) { this.markUpCurrencyId = newValue; this.MarkAsDirty("MarkUpCurrencyId"); } }
+       
+	 
     private markUpTypeCode: string;
     public get MarkUpTypeCode() { return this.markUpTypeCode; }
     public set MarkUpTypeCode(newValue: string) { if (this.markUpTypeCode != newValue) { this.markUpTypeCode = newValue; this.MarkAsDirty("MarkUpTypeCode"); } }

@@ -35,6 +35,7 @@ namespace WebFreight.Web.DataContracts
         public byte[] ShipmentHeaderBytes { get; set; }
         public bool ForceHttps { get; set; }
         public bool ActivatePrivateSite { get; set; }
+        public bool EnableExportToExcel { get; set; }
         public string ContactEmail { get; set; }
     }
 }
