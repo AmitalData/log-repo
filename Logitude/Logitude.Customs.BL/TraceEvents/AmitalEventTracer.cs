@@ -70,7 +70,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 {
 
                     return;
-                    
+
                 }
                 //EventTracer.CreateTraceEvent(new TraceEvent(), "CRTR", entityPM.Tenant, loggedContact.Id, entityPM.Id, null, "Trucker", null, null, false);
                 if (myAmitalEventTracer.MyFUStatus == null)//itzik
@@ -82,22 +82,21 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
                     string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
-                    if (!string.IsNullOrWhiteSpace( queueName ))
+                    if (!string.IsNullOrWhiteSpace(queueName))
                     {
-                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
-                    {
-                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                        unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                        if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
                         {
-                            Action = "StatusUpdate",
-                            ParameterName = "transmission",
-                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
-                            InterfaceTypeCode = queueName
-                        });
+                            var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                            unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                            {
+                                Action = "StatusUpdate",
+                                ParameterName = "transmission",
+                                UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
+                                InterfaceTypeCode = queueName
+                            });
+                        }
                     }
-                    }
-                }
+
                     else
                     {
                         LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
@@ -152,7 +151,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 case "CFIFILEM":
                 default:
                     //throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
-                    
+
                     break;
             }
 
@@ -228,8 +227,8 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
             myFollow_up_status.status_save = myAmitalEventTracer.MyFUStatus.status_save;// "no_fail";
-            //myFollow_up_status.status_date = myAmitalEventTracer.MyFUStatus.status_DateTime.ToShortDateString();// = DateTime.Now.ToShortDateString();
-            //myFollow_up_status.status_time = myAmitalEventTracer.MyFUStatus.status_DateTime.ToShortTimeString(); DateTime.Now.ToShortTimeString();
+                                                                                        //myFollow_up_status.status_date = myAmitalEventTracer.MyFUStatus.status_DateTime.ToShortDateString();// = DateTime.Now.ToShortDateString();
+                                                                                        //myFollow_up_status.status_time = myAmitalEventTracer.MyFUStatus.status_DateTime.ToShortTimeString(); DateTime.Now.ToShortTimeString();
             myFollow_up_status.status_date = myAmitalEventTracer.MyFUStatus.status_DateTime.Date.ToString("dd.MM.yy");
             myFollow_up_status.status_time = myAmitalEventTracer.MyFUStatus.status_DateTime.TimeOfDay.ToString("hh\\:mm");
             myFollow_up_status.status_id = myAmitalEventTracer.MyFUStatus.status_id;// "PUI";
