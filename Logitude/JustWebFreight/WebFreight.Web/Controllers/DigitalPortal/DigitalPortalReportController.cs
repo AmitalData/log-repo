@@ -34,8 +34,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalPortalReportController : ApiController
     {
         [HttpPost]
-        [Route("DigitalPortalReport/ExportDataToExcelFile")]
-        public IHttpActionResult ExportDataToExcelFile(GeneralFilters newFilters)
+        [Route("DigitalPortalReport/ExportShipmentDataToExcelFile")]
+        public IHttpActionResult ExportShipmentDataToExcelFile(GeneralFilters newFilters)
         {
             try
             {
