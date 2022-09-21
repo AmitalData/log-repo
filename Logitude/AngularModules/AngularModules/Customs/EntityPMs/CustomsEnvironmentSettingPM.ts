@@ -66,7 +66,7 @@ export class CustomsEnvironmentSettingPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsEnvironmentSetting");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsEnvironmentSetting");
            
         }
        }

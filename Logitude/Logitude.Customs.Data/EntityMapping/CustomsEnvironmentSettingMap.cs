@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CustomsEnvironmentSettingMap()
         { 
-				this.ToTable("CustomsEnvironmentSettings");
+			  this.ToTable("CustomsEnvironmentSettings", "Customs");
 		
 		    this.HasKey(t => new { t.Id, t.EnvironmentCode });
 	 
