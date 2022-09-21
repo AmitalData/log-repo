@@ -18,7 +18,7 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     @Input() public DashboardId: string;
 
 
-    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
     public Quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
     public Years: number[];
 

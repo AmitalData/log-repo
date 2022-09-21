@@ -12,6 +12,7 @@ import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/An
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { retry } from 'rxjs/operators';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -271,6 +272,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     ValidateInputs(errors: string[]) {
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
+        if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter)
     }
 
     ValidateSort(errors: string[]) {
@@ -283,6 +285,32 @@ export class AddEditWidgetComponent extends BaseComponent {
                 errors.push("Measure Field is Required");
         });
     }
+
+    ValidateFilters(errors: string[], filter: WidgetFilterItem) {
+        if (filter.QueryFilterItems && filter.QueryFilterItems.length != 0) {
+            filter.QueryFilterItems.forEach(filterItem => { this.ValidateFilters(errors, filterItem); });
+            return;
+        }
+        if (!filter.FieldId) {
+            errors.push("Filter Field is Required");
+            return;
+        }
+        if (!filter.Operator) {
+            errors.push("Filter Operator is Required");
+            return;
+        }
+        if (filter.Operator == "IsEmpty" || filter.Operator == "IsNotEmpty") return;
+        if (filter.Operator != "Current" && (!filter.FieldValue || filter.FieldValue == "")) errors.push("Filter Value is Required");
+        if (filter.Operator == "Between") this.ValidateBetweenOperator(errors, filter);
+    }
+
+    ValidateBetweenOperator(errors: string[], filter: WidgetFilterItem) {
+        if ((!filter.FieldSecondValue || filter.FieldSecondValue == "")) {
+            errors.push("Filter Second Date is Required");
+        }
+        if (filter.FieldSecondValue <= filter.FieldValue) errors.push("Filter First Date Must Be Bigger Than Second Date");
+    }
+
 
     private myCloner: Cloner;
     private SetFiltersString() {
