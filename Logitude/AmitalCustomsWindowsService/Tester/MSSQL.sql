@@ -220,41 +220,21 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[QUEUE_ENQUEUE]  
+CREATE PROCEDURE [dbo].[Queue_Enqueue]  
+--- CustomsBranch- Translate from Oracle!!!
    @V_QUEUEDEFINITIONCODE /*-create or replace PROCEDURE  TSTQueue_Enqueue(*/varchar(max),
    @V_MESSAGEBODY varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @V_TENANT float(53),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
-
    @V_DELAYSECONDS float(53),
    @V_CUSTOMERID varchar(max),
    @V_BATCHNUMBER varchar(max),
    @V_HASHCODE varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @V_WATINGSTATUS float(53),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @P_TENANTPRIORITY float(53),
    @P_INTERFACETYPECODE varchar(max),
-   /*
-   *   SSMA warning messages:
-   *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
-   */
 
    @P_USERABBITMQ float(53),
    @P_QUEUECODERABBIT varchar(max),
@@ -520,7 +500,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER PROCEDURE [dbo].[USP_GETNEXTTABLENUMBERVALUE]
+השתמש ב של רמאללה CREATE OR ALTER PROCEDURE [dbo].[USP_GETNEXTTABLENUMBERVALUE]
 (
 @pLastValue INT OUTPUT,
 @pTenant    INT,

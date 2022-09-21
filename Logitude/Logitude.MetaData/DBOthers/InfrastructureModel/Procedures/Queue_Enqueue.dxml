@@ -4,7 +4,7 @@
   Name="Queue_Enqueue"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript>
+  <SqlScript_>
     <![CDATA[
       CREATE procedure [dbo].[Queue_Enqueue] 
       (
@@ -53,9 +53,154 @@
       end;
 
     ]]>
-  </SqlScript>
+  </SqlScript_>
 
-  <OracleScript>
+	<SqlScript>
+		<![CDATA[
+CREATE PROCEDURE [dbo].[Queue_Enqueue]  
+--- CustomsBranch- Translate from Oracle!!!
+   @V_QUEUEDEFINITIONCODE /*-create or replace PROCEDURE  TSTQueue_Enqueue(*/varchar(max),
+   @V_MESSAGEBODY varchar(max),
+
+   @V_TENANT float(53),
+   @V_DELAYSECONDS float(53),
+   @V_CUSTOMERID varchar(max),
+   @V_BATCHNUMBER varchar(max),
+   @V_HASHCODE varchar(max),
+
+   @V_WATINGSTATUS float(53),
+
+   @P_TENANTPRIORITY float(53),
+   @P_INTERFACETYPECODE varchar(max),
+
+   @P_USERABBITMQ float(53),
+   @P_QUEUECODERABBIT varchar(max),
+   @P_ENTITYCODE varchar(max) = NULL,
+   @P_ENTITYID varchar(max) = NULL,
+   @V_QUEUEMESSAGEID numeric(18, 0)  OUTPUT
+AS 
+   BEGIN
+
+      SET @V_QUEUEMESSAGEID = NULL
+
+      
+      /*
+      *   -20211108 IM TenantPriority
+      *   -20220127 IM Rabbit
+      */
+      DECLARE
+		@V_CURRENT numeric(10, 0), 
+         @V_CURRENTDATE datetime2(0), 
+         @V_NEXTRUNDATETIME datetime2(0), 
+         @V_CID varchar(15), 
+         @V_BNO varchar(15), 
+         /*
+         *   SSMA warning messages:
+         *   O2SS0356: Conversion from NUMBER datatype can cause data loss.
+         */
+
+         @V_TENANTPRIORITY float(53)
+
+      SET @V_TENANTPRIORITY = @P_TENANTPRIORITY
+	   
+	   
+	   SELECT @V_CURRENT = NEXT VALUE FOR [dbo].[QUEUEMESSAGES_SEQ]
+      IF (@V_TENANTPRIORITY < 1)
+         SET @V_TENANTPRIORITY = 89
+
+      SET @V_CURRENTDATE = GETDATE()
+
+      /*
+      *   SSMA warning messages:
+      *   O2SS0425: Dateadd operation may cause bad performance.
+      */
+	  
+      SET @V_NEXTRUNDATETIME = DATEADD(ss,@V_DELAYSECONDS,GETDATE()) --ssma_oracle.dateadd(@V_DELAYSECONDS / 86400, sysdatetime())
+
+      INSERT dbo.QUEUEMESSAGES(
+		ID,
+         CREATEDATETIME, 
+         QUEUEDEFINITIONCODE, 
+         STATUS, 
+         MESSAGEBODY, 
+         TENANT, 
+         NEXTRUNDATETIME, 
+         RETRYNUMBER, 
+         HASHCODE, 
+         TENANTPRIORITY, 
+         INTERFACETYPECODE, 
+         USERABBITMQ, 
+         QUEUECODERABBIT, 
+         ENTITYCODE, 
+         ENTITYID)
+         VALUES (
+			@V_CURRENT,
+            @V_CURRENTDATE, 
+            @V_QUEUEDEFINITIONCODE, 
+            @V_WATINGSTATUS, 
+            @V_MESSAGEBODY, 
+            @V_TENANT, 
+            @V_NEXTRUNDATETIME, 
+            0, 
+            @V_HASHCODE, 
+            @V_TENANTPRIORITY, 
+            @P_INTERFACETYPECODE, 
+            @P_USERABBITMQ, 
+            @P_QUEUECODERABBIT, 
+            @P_ENTITYCODE, 
+            @P_ENTITYID)
+
+      IF @V_CUSTOMERID = ' '
+         SET @V_CID = NULL
+      ELSE 
+         SET @V_CID = @V_CUSTOMERID
+
+      IF @V_BATCHNUMBER = ' '
+         SET @V_BNO = NULL
+      ELSE 
+         SET @V_BNO = @V_BATCHNUMBER
+
+      /* 
+      *   SSMA error messages:
+      *   O2SS0490: Conversion of identifier QUEUEMESSAGES_SEQ1.CURRVAL for CURRVAL is not supported. SQL Server sequence generator does not support retrieving current sequence value. CURRVAL method can be converted by changing the project setting for sequence conversion to use “Using SSMA sequence generator”.
+
+      SET @V_QUEUEMESSAGEID = (NULL)
+      */
+
+	  SET @V_QUEUEMESSAGEID=@V_CURRENT
+
+      INSERT dbo.QUEUEMESSAGEMOREDETAILS(
+         ID, 
+         CREATEDATETIME, 
+         QUEUEDEFINITIONCODE, 
+         STATUS, 
+         MESSAGEBODY, 
+         TENANT, 
+         NEXTRUNDATETIME, 
+         RETRYNUMBER, 
+         FIELD1, 
+         FIELD2, 
+         TENANTPRIORITY)
+         VALUES (
+            @V_QUEUEMESSAGEID, 
+            @V_CURRENTDATE, 
+            @V_QUEUEDEFINITIONCODE, 
+            @V_WATINGSTATUS, 
+            @V_MESSAGEBODY, 
+            @V_TENANT, 
+            @V_NEXTRUNDATETIME, 
+            0, 
+            @V_CID, 
+            @V_BNO, 
+            @V_TENANTPRIORITY)
+
+   END
+;
+
+    ]]>
+	</SqlScript>
+
+	<OracleScript>
     <![CDATA[
 	create or replace PROCEDURE Queue_Enqueue(
 	    ---create or replace PROCEDURE  TSTQueue_Enqueue(
