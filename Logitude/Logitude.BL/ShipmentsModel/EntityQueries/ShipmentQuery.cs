@@ -4334,9 +4334,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentMasterData masterData = repository.context
                                                               .ShipmentMasterDatas
                                                               .FirstOrDefault(a => a.Id == shipment.MasterShipmentDataId);
-                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
-                                                     where a.Id == shipment.MasterShipmentDataId
-                                                     select a).FirstOrDefault();
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
