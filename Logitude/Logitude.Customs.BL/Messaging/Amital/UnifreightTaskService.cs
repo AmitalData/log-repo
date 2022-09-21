@@ -20,6 +20,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.Messaging.Amital
 {
@@ -122,25 +123,29 @@ namespace Logitude.Customs.BL.Messaging.Amital
                             requestData = string.Concat(requestData, requestData2);
                         }
                     }
-                    //eitan h 12/3/15 moved to static -->
-                    //short priority = 9;
-                    //switch (taskType)
-                    //{
-                    //    case "L2U":
-                    //        priority = 1;
-                    //        break;
-                    //    case "LD2U":
-                    //        priority = 2;
-                    //        break;
-                    //    case "LP2U":
-                    //        priority = 3;
-                    //        break;
-                    //    default:
-                    //        break;
-                    //}
-                    //<--eitan h 12/3/15 moved to static
+                    else if (!String.IsNullOrWhiteSpace(xmlStatus))
+                    {
+                        requestData = xmlStatus;
+                    }
+                        //eitan h 12/3/15 moved to static -->
+                        //short priority = 9;
+                        //switch (taskType)
+                        //{
+                        //    case "L2U":
+                        //        priority = 1;
+                        //        break;
+                        //    case "LD2U":
+                        //        priority = 2;
+                        //        break;
+                        //    case "LP2U":
+                        //        priority = 3;
+                        //        break;
+                        //    default:
+                        //        break;
+                        //}
+                        //<--eitan h 12/3/15 moved to static
 
-                    var myYCULTASKPM = new YCULTASKPM()
+                        var myYCULTASKPM = new YCULTASKPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         STATUS = "W",
@@ -336,6 +341,15 @@ namespace Logitude.Customs.BL.Messaging.Amital
             }
 
             LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
+
+        public class DIUnifreightTaskService : IDIUnifreightTaskService
+        {
+            public void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock)
+            {
+                var unifreightTaskService = new UnifreightTaskService();
+                unifreightTaskService.OpenUnifreighTaskGen(dirtyDeclarationPM, entname, primary, taskType, status, raiseStatus, xmlStatus, toLock);
+            }
         }
     }
 }
