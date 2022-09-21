@@ -56,7 +56,6 @@ namespace WebFreight.Web.WcfApi
                     AgentService service = new AgentService(commoncontext, entityPM.Tenant);
                     CurrencyRepository currencyRepository = new CurrencyRepository(commoncontext);
                     VatTypeRepository vatTypeRepository = new VatTypeRepository(commoncontext);
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commoncontext);
 
                     if (entityPM.InvoiceCurrencyId != null)
                     {
@@ -88,19 +87,12 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
 
-                    if (entityPM.PaymentTermId != null)
+                    entityPM.PaymentTermId = MapPaymentTermIdField(entityPM, commoncontext);
+                    if(string.IsNullOrEmpty(entityPM.PaymentTermId))
                     {
-                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
-                        }
+                        response.HasError = true;
+                        response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                        return response;
                     }
 
                     if (entityPM.PrimaryContactId != null)
@@ -169,6 +161,14 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
+        }
+
+        private string MapPaymentTermIdField(AgentPM entityPM, ICommonDataContext commoncontext)
+        {
+            if (string.IsNullOrEmpty(entityPM.PaymentTermId)) return null;
+            PaymentTerm paymentTerm = new PaymentTermRepository(commoncontext).GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+            if (paymentTerm == null) return null;
+            return paymentTerm.Id;
         }
 
         public AgentPM GetAgentPM(string code, int tenant, ref Response response)
