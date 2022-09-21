@@ -969,7 +969,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     public partial class LogistictFile
     {
         [System.Xml.Serialization.XmlElementAttribute("LogitudeCustomsFile")]
-        public LogitudeCustomsFile logitudeCustomsFile { get; set; }
+        public LogitudeCustomsFiles logitudeCustomsFile { get; set; }
     }
 
 
@@ -994,7 +994,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
         public  string tadpisPrintDate { get; set; }
 
         [System.Xml.Serialization.XmlElementAttribute("invoice")]
-        public Invoice[] invoice { get; set; }
+        public Invoices[] invoice { get; set; }
 
         [System.Xml.Serialization.XmlElementAttribute("TotalSum")]
         public string TotalSum { get; set; }
@@ -1025,7 +1025,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
-    public partial class Invoice
+    public partial class Invoices
     {
         [System.Xml.Serialization.XmlElementAttribute("invoiceNumber")]
         public string invoiceNumber { get; set; }
@@ -1033,11 +1033,11 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
         [System.Xml.Serialization.XmlElementAttribute("invoiceTotal")]
         public string invoiceTotal { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("myPropeInvoiceCurrecyrty")]
-        public string myPropeInvoiceCurrecyrty { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("invoiceCurrecy")]
+        public string invoiceCurrecy { get; set; }
 
         [System.Xml.Serialization.XmlElementAttribute("pratList")]
-        public PratList[] pratList { get; set; }
+        public PratList pratList { get; set; }
     }
 
 
