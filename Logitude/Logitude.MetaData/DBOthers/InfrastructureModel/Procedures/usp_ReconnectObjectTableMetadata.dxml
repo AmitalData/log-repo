@@ -11,7 +11,7 @@ create PROCEDURE [dbo].[usp_ReconnectObjectTableMetadata]
     @pTableName    varchar(50)
 )
 AS
-
+  
  
  
  Declare @ObjectTableId As varchar(15)
@@ -52,14 +52,14 @@ update SharedUserQueries set QueryId = (select Id from Queries where UniqueCode 
 update Queries set NameTextCodeId = (select Id from TextCodes where Code=Queries.NameTextCodeCode and tenant = Queries.Tenant)
 update ObjectTables set DescriptionTextCodeId = (select Id from TextCodes where Code=ObjectTables.DescriptionTextCodeCode and tenant = ObjectTables.Tenant)
 update ObjectTables set NewButtonTextCodeId = (select Id from TextCodes where Code=ObjectTables.NewButtonTextCodeCode)
-update Features set NameTextCodeId = (select Id from TextCodes where Code=Features.NameTextCodeCode and tenant = Features.Tenant)
+update Features set NameTextCodeId = (select Id from TextCodes where Code=Features.NameTextCodeCode and tenant = Features.Tenant and  OBJECTTABLEID = Features.OBJECTTABLEID )
 update Tips set ShortTextCode = (select Id from TextCodes where Code=Tips.ShortTextCodeCode)
 update ObjectTableTabs set TabNameTextCodeId = (select Id from TextCodes where Code=ObjectTableTabs.TabNameTextCodeCode and tenant = ObjectTableTabs.Tenant)
 update MenuButtons set LabelTextCodeId = (select Id from TextCodes where Code=MenuButtons.LabelTextCodeCode)
-update ObjectFields set FullNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.FullNameTextCodeCode and tenant = ObjectFields.Tenant) 
-update ObjectFields set HelpTextCodeId = (select Id from TextCodes where Code=ObjectFields.HelpTextCodeCode and tenant = ObjectFields.Tenant)
+update ObjectFields set FullNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.FullNameTextCodeCode and tenant = ObjectFields.Tenant and  OBJECTTABLEID = ObjectFields.OBJECTTABLEID)
+update ObjectFields set HelpTextCodeId = (select Id from TextCodes where Code=ObjectFields.HelpTextCodeCode and tenant = ObjectFields.Tenant and  OBJECTTABLEID = ObjectFields.OBJECTTABLEID)
 update ObjectFields set ShortNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.ShortNameTextCodeCode and tenant = ObjectFields.Tenant)
-update ObjectFields set ListTextCodeId = (select Id from TextCodes where Code=ObjectFields.ListTextCodeCode and tenant = ObjectFields.Tenant)
+update ObjectFields set ListTextCodeId = (select Id from TextCodes where Code=ObjectFields.ListTextCodeCode and tenant = ObjectFields.Tenant  and  OBJECTTABLEID = ObjectFields.OBJECTTABLEID)
 update Translations set TextCodeId = (select Id from TextCodes where Code=Translations.TextCodeCode and (tenant =  Translations.Tenant or tenant = 0)) where TextCodeCode in (select code from textcodes)
 
 --Features
@@ -262,6 +262,7 @@ BEGIN
       FROM TextCodes
       WHERE Code = Features.NameTextCodeCode
       AND tenant = Features.Tenant
+	  AND OBJECTTABLEID = Features.OBJECTTABLEID
       );
     UPDATE Tips
     SET ShortTextCode =
