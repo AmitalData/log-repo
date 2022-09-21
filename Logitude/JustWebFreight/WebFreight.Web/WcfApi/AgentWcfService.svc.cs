@@ -90,10 +90,10 @@ namespace WebFreight.Web.WcfApi
 
                     if (entityPM.PaymentTermId != null)
                     {
-                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
                         if (paymentTerm != null)
                         {
-                            entityPM.PaymentTermId = paymentTerm.Code;
+                            entityPM.PaymentTermId = paymentTerm.Id;
                         }
                         else
                         {
