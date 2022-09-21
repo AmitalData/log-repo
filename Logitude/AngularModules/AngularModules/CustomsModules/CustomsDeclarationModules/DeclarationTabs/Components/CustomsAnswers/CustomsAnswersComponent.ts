@@ -29,9 +29,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { InvoiceDateForBatchInvoicesComponent } from 'Accounting/Components/Others/InvoiceDateForBatchInvoicesComponent';
-import { contains } from 'cypress/types/jquery';
-
+ 
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
     providers: [DeclarationExtendedListService],
