@@ -44,6 +44,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
+using System.Xml.Linq;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1299,6 +1300,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
                                     {
                                         sendHybridM = false;
+                                        SendCustomsReferenceByTask(tenant, extDocPM.CustomReference, xmlstring, loggedUserId);
                                     }
                                 }
                                 if (sendHybridM)
@@ -1368,6 +1370,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+
+        private void SendCustomsReferenceByTask(int tenant, string cref, string xmlstring, string loggedUserId)
+        {
+            var _MyDeclarationPM = new DeclarationPM { Tenant = tenant };
+            IDIUnifreightTaskService unifreightTaskService = ContainerAccessor.Container.Resolve(typeof(IDIUnifreightTaskService), "DIUnifreightTaskService", new ParameterOverride("", tenant)) as IDIUnifreightTaskService;
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for FILING with reference " + cref );
+            LogMessagingUtil.Instance.AppendLine(xmlstring);
+            try
+            {
+                unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", cref, "L2UCREF", null, false, xmlstring, false);
+            }
+            catch (Exception ex)
+            {
+                AzureLog.SaveLogsInStorage("OpenUnifreighTask for FILING with reference " + cref, "E", DateTime.Now, ex.Message, ex.StackTrace, 0, loggedUserId, loggedUserId, null);
+                throw ex;
+            }
+        }
+
         public void Send2UServer(DocumentsFilingPM myDocumentsFilingPM, string loggingUserId, string extDocPMId)
         {
             var ExternalEntityName = myDocumentsFilingPM.ExternalEntityName;
