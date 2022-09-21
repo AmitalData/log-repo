@@ -2635,11 +2635,14 @@ export class QuoteChargeItem extends BaseComponent {
         this.MarkupCurrencyList.push(costCurrency);
         this.MarkupCurrencyList.push(saleCurrency);
 
-        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
-
-        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+        if (!this.IsNew) {
             this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
-            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            if (!this.markUpCurrencySelectedItem) {
+                this.MarkUpCurrencyCode = this.MarkupCurrencyList[0].CurrencyCode;
+            }
+            else {
+                this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            }
         }
     }
 
@@ -2763,7 +2766,7 @@ export class QuoteChargeItem extends BaseComponent {
     }
 
     GetMarkUpValueByCurrency(value) {
-        var markUpValue = (value == null ? 0 : this.MarkUpValue);
+        var markUpValue = (value == null ? 0 : value);
         if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
             return markUpValue;
         }
@@ -3028,6 +3031,8 @@ export class QuoteChargeItem extends BaseComponent {
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
+
+        this.FillMarkupCurrencyList();
     }
 
     OnMeasurementsCodeChanged() {

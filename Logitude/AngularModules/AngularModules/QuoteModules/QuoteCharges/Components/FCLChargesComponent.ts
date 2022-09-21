@@ -1583,11 +1583,14 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.MarkupCurrencyList.push(costCurrency);
         this.MarkupCurrencyList.push(saleCurrency);
 
-        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
-
-        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+        if (!this.IsNew) {
             this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
-            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            if (!this.markUpCurrencySelectedItem) {
+                this.MarkUpCurrencyCode = this.MarkupCurrencyList[0].CurrencyCode;
+            }
+            else {
+                this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            }
         }
     } 
 
@@ -3409,7 +3412,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     }
 
     GetMarkUpValueByCurrency(value) {
-        var markUpValue = (value == null ? 0 : this.MarkUpValue);
+        var markUpValue = (value == null ? 0 : value);
         if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
             return markUpValue;
         }
@@ -4603,6 +4606,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.Sale3Header[2] = q3 + p3;
         this.Sale4Header[2] = q4 + p4;
         this.Sale5Header[2] = q5 + p5;
+
+        this.FillMarkupCurrencyList();
     }
 
     get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
