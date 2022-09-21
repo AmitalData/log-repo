@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "a9a08c30918b9ceb6460afbef9342563";
+		public const string HashString = "64f3bf4413ed61a15780ab627879a1f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2076,10 +2076,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportLoadingPortcode",
 					  						DefaultText =  "LoadingSite",
-					  						FullLocalDefaultText =  "נמל טעינה",
+					  						FullLocalDefaultText =  " קוד נמל טעינה",
 					  						ListFieldLable =  "ExportLoadingPortcodeListLable",
 					  						ListLableDefaultText =  "LoadingSite",
-					  						ListLocalDefaultText =  "נמל טעינה",
+					  						ListLocalDefaultText =  " קוד נמל טעינה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2630,6 +2630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExportLoadingPortName",
 					  						ListPropertyPath =  "ExportLoadingPortName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
