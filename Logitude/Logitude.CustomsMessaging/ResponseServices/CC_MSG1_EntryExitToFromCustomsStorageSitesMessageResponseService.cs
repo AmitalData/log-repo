@@ -97,7 +97,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(Tanent);
                 var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
-                var storageSite = deliverySiteType.LocalName;
+                var storageSite = deliverySiteType?.LocalName;
 
                 //var declarationQueryService = new DeclarationQueryService(dbContext);
                 //DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declaration.Id, false, false);
@@ -123,7 +123,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = "תאריך שעה הסטטוס:" + customResponse.General.entryExitDateTime + ", שם אתר:" + storageSite + customResponse.ReportingDetails.containerNumber != null ? ", מכולה:" + customResponse.ReportingDetails.containerNumber : "",
+                        comments = "תאריך שעה הסטטוס:" + customResponse.General.entryExitDateTime + storageSite != null? ", שם אתר:" + storageSite : "" + customResponse.ReportingDetails.containerNumber != null ? ", מכולה:" + customResponse.ReportingDetails.containerNumber : "",
                         //מספ]ר מכולה  + אתר אחסון לשלוף מטבלת מכס , לקחת מהקאש
                     }
                 };
