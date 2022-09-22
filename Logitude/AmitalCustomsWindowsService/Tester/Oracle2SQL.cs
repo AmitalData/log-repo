@@ -62,7 +62,7 @@ Parameter name: transactionOptions.IsolationLevel
             foreach (var file in files)
             {
                 var text = File.ReadAllText(file);
-                var arr=text.Split( new string[] { ".ToTable" },StringSplitOptions.RemoveEmptyEntries).ToList();
+                var arr = text.Split(new string[] { ".ToTable" }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (Regex.Matches(text, ".ToTable").Count > 1)
                 {
 
@@ -73,7 +73,7 @@ Parameter name: transactionOptions.IsolationLevel
                     var d = new char[] { c };
                     string table1 = arr[1].Split(d)[1];
                     string table2 = arr[2].Split(d)[1];
-                    string tabSql= table1.Length> table2.Length ? table1 : table2;
+                    string tabSql = table1.Length > table2.Length ? table1 : table2;
                     string tabOra = table1.Length > table2.Length ? table2 : table1;
 
                     Debug.WriteLine($"EXEC sp_rename 'dbo.{tabOra}', '{tabSql}';");
@@ -98,6 +98,32 @@ EXEC sp_rename 'dbo.ExternalSysMissingTranslations', 'ExternalSystemsMissingTran
 EXEC sp_rename 'dbo.TemplateSectionModifications', 'QuoteTemplateSectionModifications';
 EXEC sp_rename 'dbo.AccountingInfoIdentifiers', 'AccountingInformationIdentifiers';
              */
+        }
+        public void GetReNameSchemaCustoms(string root)
+        {
+            root = @"C:\log2004\Logitude\Logitude.Customs.Data\EntityMapping";
+            Debug.WriteLine("CREATE SCHEMA Customs;  ");
+            var files = Directory.GetFiles(root, "*Map.cs", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                var text = File.ReadAllText(file);
+                var arr=text.Split( new string[] { ".ToTable" },StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (Regex.Matches(text, ".ToTable").Count > 1)
+                {
+
+                }
+                if (arr.Count == 2)
+                {
+                    char c = '\"';
+                    var d = new char[] { c };
+                    string table1 = arr[1].Split(d)[1];
+
+                    Debug.WriteLine($"ALTER SCHEMA Customs TRANSFER OBJECT::dbo.{table1};   ");
+                    
+
+                }
+            }
+
         }
 
         List<MyTable> myTables = new List<MyTable>();

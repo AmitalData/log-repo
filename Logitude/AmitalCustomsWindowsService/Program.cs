@@ -55,7 +55,8 @@ namespace AmitalCustomsWindowsService
                 //CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
                 (new Oracle2SQL())
                     //.CreateCustomsContext();
-                    .GetReNameLongTable(root: @"C:\log2004\Logitude\");
+                    //.GetReNameLongTable(root: @"C:\log2004\Logitude\");
+                    .GetReNameSchemaCustoms(root: @"C:\log2004\Logitude\");
 
                 //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
                 //.ChangeToBit();
