@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -55,7 +56,49 @@ Parameter name: transactionOptions.IsolationLevel
    at System.Transactions.TransactionScope..ctor(TransactionScopeOption scopeOption, TransactionOptions transactionOptions, TransactionScopeAsyncFlowOption asyncFlowOption)
 
         */
+        public void GetReNameLongTable(string root)
+        {
+            var files = Directory.GetFiles(root, "*Map.cs", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                var text = File.ReadAllText(file);
+                var arr=text.Split( new string[] { ".ToTable" },StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (Regex.Matches(text, ".ToTable").Count > 1)
+                {
 
+                }
+                if (arr.Count > 2)
+                {
+                    char c = '\"';
+                    var d = new char[] { c };
+                    string table1 = arr[1].Split(d)[1];
+                    string table2 = arr[2].Split(d)[1];
+                    string tabSql= table1.Length> table2.Length ? table1 : table2;
+                    string tabOra = table1.Length > table2.Length ? table2 : table1;
+
+                    Debug.WriteLine($"EXEC sp_rename 'dbo.{tabOra}', '{tabSql}';");
+
+                }
+            }
+
+            /*
+
+EXEC sp_rename 'dbo.SupplierInvoiceItemVehiclesAdd', 'SupplierInvoiceItemVehiclesAddtionals';
+EXEC sp_rename 'dbo.AutomationResultEmailRecips', 'AutomationResultEmailRecipients';
+EXEC sp_rename 'dbo.ChargesExtAccountsByProducts', 'ChargesExternalAccountsByProducts';
+EXEC sp_rename 'dbo.CustomerAccManagerByProducts', 'CustomerAccountManagerByProducts';
+EXEC sp_rename 'dbo.CustomerProdLocatActualDatas', 'CustomerProductLocationActualDatas';
+EXEC sp_rename 'dbo.CustomerTenantAccessCardBatchs', 'CustomerTenantAccessCardsBatches';
+EXEC sp_rename 'dbo.CustomerTenantAccesStatusTypes', 'CustomerTenantAccessStatusTypes';
+EXEC sp_rename 'dbo.DocumentFilingBackupBatches', 'DocumentFilingBackupBatches';
+EXEC sp_rename 'dbo.LogitudeMessagesTransLogs', 'LogitudeMessagesTransmissionLogs';
+EXEC sp_rename 'dbo.SharedLogsContactLastLogins', 'SharedLogisticsContactLastLogins';
+EXEC sp_rename 'dbo.SharedLogInvitationStatus', 'SharedLogisticsInvitationStatus';
+EXEC sp_rename 'dbo.ExternalSysMissingTranslations', 'ExternalSystemsMissingTranslations';
+EXEC sp_rename 'dbo.TemplateSectionModifications', 'QuoteTemplateSectionModifications';
+EXEC sp_rename 'dbo.AccountingInfoIdentifiers', 'AccountingInformationIdentifiers';
+             */
+        }
 
         List<MyTable> myTables = new List<MyTable>();
         public void GetReNameLongColumns(string root)
