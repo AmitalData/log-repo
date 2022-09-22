@@ -1167,6 +1167,8 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
+    <Compile Include="Controllers\Test\HybridTestController.cs" />
+    <Compile Include="Controllers\Test\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
@@ -2421,7 +2423,6 @@
     <Content Include="App_Code\AngularJS_App_Code\CarrierViewsController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Common\PortListViewsExtededController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Global\QueryColumnsController.cs" />
-    <Content Include="App_Code\TestController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Common\UserExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Common\RoleExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Common\BranchListExtendedController.cs" />
