@@ -25,6 +25,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             IShipmentsContext MyContext = ShipmentsContext.GetContext(_Widget.Tenant);
             ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
             var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
+            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
             var result = GetData(shipmentAnalyticIQueryable);
             return result;
         }
@@ -34,6 +35,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             IShipmentsContext MyContext = ShipmentsContext.GetContext(_Widget.Tenant);
             ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
             var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
+            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
             List<string> analyticTableFields = GetSelectFields();
             var result = base.GetDataPart<ShipmentAnalytic>(shipmentAnalyticIQueryable, analyticTableFields, widgetPartArguments);
             return result;
