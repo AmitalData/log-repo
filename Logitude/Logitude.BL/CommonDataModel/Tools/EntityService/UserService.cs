@@ -572,28 +572,52 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             globalContext.ContactPasswords.Add(contactPassword);
                         }
                     }
-
-                    GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-                    GlobalContact globalContact = globalContactRep.GetSingleGlobalContact(contact.Id);
-
-                    if (globalContact != null)
+                    if (LogitudeSettings.IsCostomsDeploy)
                     {
-                        globalContact.IsUser = true;
-                        globalContactRep.Update(globalContact);
+                        GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
+
+
+
+                        bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(contact.Tenant)
+                                                    where a.Email == contact.Email
+                                                    select a).Any();
+
+
+
+                        if (!globalContactExists)
+                        {
+                            GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
+                            if (conflictcontact != null)
+                            {
+                                globalContactRep.Remove(conflictcontact);
+                            }
+                            GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
+                        }
                     }
                     else
                     {
-                        GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
+                        GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
+                        GlobalContact globalContact = globalContactRep.GetSingleGlobalContact(contact.Id);
 
-                        if (conflictcontact != null)
+
+                        if (globalContact != null)
                         {
-                            globalContactRep.Remove(conflictcontact);
+                            globalContact.IsUser = true;
+                            globalContactRep.Update(globalContact);
                         }
+                        else
+                        {
+                            GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
 
-                        GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
-                        globalContactRep.Add(gcontact);
+                            if (conflictcontact != null)
+                            {
+                                globalContactRep.Remove(conflictcontact);
+                            }
+
+                            GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
+                            globalContactRep.Add(gcontact);
+                        }
                     }
-
                     globalContext.SaveChanges();
                     scope.Complete();
                 }
