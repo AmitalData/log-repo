@@ -55,7 +55,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
                                                              HasDefinition = s.Id != null ? true : false,
                                                              InterfaceType = a.InterfaceType,
-                                                             InterfaceTypeName = a.InterfaceType == "C" ? "עמילות" : a.InterfaceType == "B" ? "בלדרות" : "הכל"
+                                                             InterfaceTypeName = a.InterfaceType == "C" ? "Customs" : a.InterfaceType == "B" ? "Courier" : "All"
 
 
                                                          });
