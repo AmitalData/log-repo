@@ -248,6 +248,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 iQueryable = iQueryable.Where(d => d.NotApprovedPendingList != null);
             }
+            var filter = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierPendingReasonList").FirstOrDefault();
+            if (filter != null)
+            {
+                string myFilter = filter.FieldValue.ToString();
+                iQueryable = iQueryable.Where(x => x.CourierPendingReasonList.StartsWith(myFilter + ",") || x.CourierPendingReasonList.Contains("," + myFilter + ",") || x.CourierPendingReasonList.EndsWith("," + myFilter));
+
+            }
             return iQueryable;
         }
 
