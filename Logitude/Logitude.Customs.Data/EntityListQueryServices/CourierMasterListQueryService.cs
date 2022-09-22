@@ -90,9 +90,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        EstimatedArrivalTimeOnly= a.EstimatedArrivalDate,
                                                        EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
                                                        NoOfCourierHawbWithoutDelivery = a.NoOfCourierHawbWithoutDelivery,
-                                                       NoOfCourierHawbwWithoutHatara =a.NoOfCourierHawbwWithoutHatara,
+                                                       NoOfCourierHawbwWithoutHatara =a.NoOfCourierHawbwWithoutHatara,                                                     
+                                                       LandingDateDateOnly = a.LandingDate,
+                                                       LandingDateTimeOnly = (DateTime)a.LandingDate
 
-                                                   });
+        });
 
             return query;
         }
