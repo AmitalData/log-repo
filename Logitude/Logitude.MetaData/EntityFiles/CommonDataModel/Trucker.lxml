@@ -1014,7 +1014,7 @@
     ListPropertyPath="&quot;Code&quot;"
     DisplayInLookUpIndex="0"
     AutomaticField="false"
-    UniqueField="true"
+    UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="false"
     DependencyFilter1IsList="false"
