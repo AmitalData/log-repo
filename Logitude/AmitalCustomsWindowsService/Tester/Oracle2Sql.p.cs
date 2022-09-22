@@ -1123,5 +1123,13 @@ UPDATE [dbo].[DBScriptsHistory] SET  [ScriptBody] = 'NULL', [HashValue] = '68189
 UPDATE [dbo].[DBScriptsHistory] SET  [ScriptBody] = 'NULL', [HashValue] = 'ca6fd61a011dc09396d6a9a333a90f40' WHERE [SxmlFileName] = '202101120950_ModifyDBMigrationLastScriptTrigger.sxml';
 
 #endif
+
+
+#if false
+select * From objectfields f
+RIGHT join ObjectFieldValidations v on f.FIELDCODE = v.OBJECTFIELDCODE
+
+DELETE ObjectFieldValidations WHERE ID  IN ('1-251','1-252','1-253','1-254')
+#endif
 	}
 }
