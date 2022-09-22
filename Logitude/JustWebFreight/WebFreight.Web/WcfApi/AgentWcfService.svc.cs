@@ -86,6 +86,14 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
 
+                    entityPM.PaymentTermId = MapPaymentTermIdField(entityPM, commoncontext);
+                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    {
+                        response.HasError = true;
+                        response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                        return response;
+                    }
+
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(commoncontext);
@@ -152,6 +160,14 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
+        }
+
+        private string MapPaymentTermIdField(AgentPM entityPM, ICommonDataContext commoncontext)
+        {
+            if (string.IsNullOrEmpty(entityPM.PaymentTermId)) return null;
+            PaymentTerm paymentTerm = new PaymentTermRepository(commoncontext).GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+            if (paymentTerm == null) return null;
+            return paymentTerm.Id;
         }
 
         public AgentPM GetAgentPM(string code, int tenant, ref Response response)
