@@ -132,6 +132,11 @@ export class WidgetPM {
     public set SortDirection(newValue: string) { if (this.sortDirection != newValue) { this.sortDirection = newValue; this.MarkAsDirty("SortDirection"); } }
        
 	 
+    private key: string;
+    public get Key() { return this.key; }
+    public set Key(newValue: string) { if (this.key != newValue) { this.key = newValue; this.MarkAsDirty("Key"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	
