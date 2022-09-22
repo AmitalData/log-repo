@@ -1174,6 +1174,7 @@
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\InterfaceManagementWSheetExport .cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\LastMileReport.cs" />
