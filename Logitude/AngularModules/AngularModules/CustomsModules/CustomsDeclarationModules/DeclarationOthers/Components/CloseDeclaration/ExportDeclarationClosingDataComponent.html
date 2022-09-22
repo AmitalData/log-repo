@@ -117,7 +117,8 @@
                                 </td>
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
-                                                [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O' ? '' : 'XXX-XXXXXXXX'"
+
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="ManifestNumberPlaceholder" 
                                                 [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
                                 </td>
                             </tr>
