@@ -8,11 +8,11 @@ import { ConditionDetails } from "../../models/ConditionDetails";
 
 Given("the user logged in and navigates to automation workspace", () => {
     cy.Login(true)
-    Actions.NavigatesToAutomationsWorkspace()
+    Actions.NavigatesToAutomationsWorkspace();
 });
 
 Given("open workflows", () => {
-    Actions.OpenWorkflowsInAutomationTab()
+    Actions.OpenWorkflowsInAutomationTab();
 });
 
 Given("a flow with following details", (dataTable) => {
@@ -20,13 +20,34 @@ Given("a flow with following details", (dataTable) => {
     Actions.FillWorkflowDetails(workflowDetails);
 });
 
-When("click create", () => {
-    Actions.CreateNewWorkflow()
+When("create workflow", () => {
+    Actions.CreateNewWorkflow();
 });
 
 Then("the flow should create successfully", () => {
-    Actions.AssertCreateWorkflow()
-})
+    Actions.AssertCreateWorkflow();
+});
+
+Given("edit workflow general inforamtion with following details", (dataTable) => {
+    let workflowDetails = Assists.CreateInstance<WorkflowDetails>(dataTable, true);
+    Actions.FillUpdateWorkflowDetails(workflowDetails);
+});
+
+When("save workflow", () => {
+    Actions.UpdateNewWorkflow();
+});
+
+Then("the workflow should update successfully", () => {
+    Actions.AssertUpdateWorkflow();
+});
+
+When("open run history", () => {
+    Actions.OpenFlowRunHistory();
+});
+
+Then("the instances should appear successfully", () => {
+    Actions.AssertOpenFlowRunHistory();
+});
 
 Given("edit start configration with following details", (dataTable) => {
     let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
@@ -44,11 +65,7 @@ Given("add condition group met with {string} with the following details", (Group
     Actions.FillGroupConditionDetails(GroupOperation, groupConditionDetailsList);
 });
 
-Given("click Ok", () => {
-    Actions.CloseEditStartNodeWindow();
-});
-
-When("click save", () => {
+When("save flow", () => {
     Actions.SaveWorkflow();
 });
 
