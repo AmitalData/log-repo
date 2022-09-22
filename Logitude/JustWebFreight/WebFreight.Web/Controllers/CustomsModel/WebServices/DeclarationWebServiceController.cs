@@ -418,8 +418,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetWaitingDeclarationAmendmentByCustomsFile(string customFileNo)
+        {
 
- 
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                DeclarationQueryService queryService = new DeclarationQueryService(customContext);
+                var declaration = queryService.GetWaitingDeclarationAmendmentByCustomsFile(customFileNo, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declaration);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
 
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)

@@ -45,6 +45,7 @@ import { NotificationPM } from 'Customs/EntityPMs/NotificationPM';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from 'Infrastructure/Args';
 import { MainMenuItem } from 'Infrastructure/Components/MainMenuComponent/MainMenuComponent';
+import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -1373,20 +1374,52 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         ///Yuval Chalup 29.07.2015 TASK-14849 --->
 
     }
+    
     private CloseDeclarationMethod() {
-       
-        //var isExportDeclarationAmendments = true;
 
-        //if (isExportDeclarationAmendments) {
-        //    var msg = new MessageWindow();
-        //    msg.Width = 350;
-        //    msg.RTL = true;
-        //    msg.ShowWarningIcon = true;
-        //    msg.Show("קיים תיקון הצהרה בטיפול. לא ניתן לסגור הצהרה");
-        //    return;
-        //}
+
+        if (this.EntityPM.Direction != "E") {
+            this.ShowCloseDeclationWindow();
+            return;
+        }
+
+
+   
+        if (this.EntityPM.IsAmendmentDisplayOnly && this.EntityPM.AmendmentMessage == 'קיים תיקון הצהרה בסטטוס ממתינה לטיפול' ){
+            var txtMsg = this.EntityPM.AmendmentMessage + ". לא ניתן לסגור הצהרה.";
+
+            var msg = new MessageWindow();
+            msg.Width = 400;
+            msg.RTL = true;
+            msg.ShowWarningIcon = true; 
+            msg.IsMessageMultiLine;          
+            msg.Show(txtMsg);
+            return;
+        }
         
-       
+
+        var res = this.declarationWebService.GetWaitingDeclarationAmendment(this.EntityPM.CustomFileNo)
+            .subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    debugger
+                    
+                    if (response.Result == null) {
+                        //no waiting amendnent
+                        this.ShowCloseDeclationWindow();
+                    }
+                    else {
+                        var msg = new MessageWindow();
+                        msg.Width = 350;
+                        msg.RTL = true;
+                        msg.ShowWarningIcon = true;
+
+                        msg.Show("קיים תיקון הצהרה בטיפול. לא ניתן לסגור הצהרה.");
+                    }
+                }});
+ 
+    }
+
+    private ShowCloseDeclationWindow() {
         var args: any = {
             EntityPM: this.EntityPM,
         };
@@ -1402,8 +1435,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
     }
 
+  
 
- 
     private OpenNewContainerizationMethod() {
 
         if(this.containerizationIdList=="") {
