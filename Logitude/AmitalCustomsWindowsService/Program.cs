@@ -52,10 +52,11 @@ namespace AmitalCustomsWindowsService
             if (test)
             {
                 //int i=CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin();
-                CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
-                (new Oracle2SQL())                
-                    .CreateCustomsContext();
-                
+                //CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
+                (new Oracle2SQL())
+                    //.CreateCustomsContext();
+                    .GetReNameLongTable(root: @"C:\log2004\Logitude\");
+
                 //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
                 //.ChangeToBit();
                 //(new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();

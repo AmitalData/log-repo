@@ -1539,7 +1539,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             foreach (ObjectTable objectTable in ObjectTableList)
             {
-                if(objectTable.DBTableName == "ShipmentStoragePricings")
+                if(objectTable.DBTableName == "CustomerTenantAccessStatusTypes")
                 {
 
                 }
