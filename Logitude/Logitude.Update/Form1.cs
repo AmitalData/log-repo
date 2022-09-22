@@ -5808,6 +5808,214 @@ User/Pass",
         {
             Process.Start("ShipmentContainerLog.csv");
         }
+
+        private void uploadContactsButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(uploadContactstextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "csv|*.csv";
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Stream stream = openFileDialog.OpenFile();
+                    StreamReader streamReader = new StreamReader(stream);
+                    this.ReadExcelOfContacts(streamReader);
+                }
+            }
+        }
+
+        private void ReadExcelOfContacts(StreamReader streamReader)
+        {
+            List<ExcelContactItem> allContacts = new List<ExcelContactItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 9)
+                {
+                    string partnerName = this.GetText(lineParts, 1);
+                    string firstName = this.GetText(lineParts, 2);
+                    string lastName = this.GetText(lineParts, 3);
+                    string companyPos = this.GetText(lineParts, 4);
+                    string partnerType = this.GetText(lineParts, 5);
+                    string email = this.GetText(lineParts, 6);
+                    string phone = this.GetText(lineParts, 7);
+                    string mobile = this.GetText(lineParts, 8);
+
+                    allContacts.Add(new ExcelContactItem
+                    {
+                        PartnerName = partnerName,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        CompanyPos = companyPos,
+                        PartnerType = partnerType,
+                        Email = email,
+                        Phone = phone,
+                        Mobile = mobile,
+                    });
+                }
+            }
+
+            allContacts.Remove(allContacts[0]);            
+            Thread thread = new Thread(() => this.UploadContacts(allContacts));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private List<UploadContactFailItem> uploadContactFailItems;
+        private void UploadContacts(List<ExcelContactItem> allContacts)
+        {
+            uploadContactFailItems = new List<UploadContactFailItem>();
+            UploadContactsList.Items.Clear();
+
+            UploadContactsList.View = View.Details;
+            UploadContactsList.GridLines = true;
+            UploadContactsList.FullRowSelect = true;
+
+            //Add column header
+            UploadContactsList.Columns.Add("Partner Name", 200);
+            UploadContactsList.Columns.Add("Email", 200);
+            UploadContactsList.Columns.Add("Error Message", 400);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int tenant = Convert.ToInt32(uploadContactstextBox.Text);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (ExcelContactItem item in allContacts)
+            {
+                InsertNewContact(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Done in " + ts.ToString());
+
+            if (uploadContactFailItems.Count > 0)
+            {
+                string[] arr = new string[3];
+                foreach (UploadContactFailItem item in uploadContactFailItems)
+                {
+                    arr[0] = item.PartnerName;
+                    arr[1] = item.Email;
+                    arr[2] = item.ErrorMessage;
+
+                    UploadContactsList.Items.Add(new ListViewItem(arr));
+                }
+            }
+        }
+
+        private int contactsCount = 0;
+        
+        private void InsertNewContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
+        {
+            Card card = commonContext.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == item.PartnerType && d.EnglishName == item.PartnerName).FirstOrDefault();
+
+            if (card == null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Partner Not Exists"
+                });
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(item.FirstName) || string.IsNullOrEmpty(item.Email))
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Missing Email/ First Name"
+                });
+
+                return;
+            }
+
+            Contact newContact = commonContext.Contacts.Where(p => p.Email == item.Email && p.Tenant == tenant).FirstOrDefault();
+            if (newContact != null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    Email = item.Email,
+                    ErrorMessage = "Contact already exists"
+                });
+
+                return;
+            }
+
+            newContact = this.CreateNewContactInstance(item, tenant);
+            commonContext.Contacts.Add(newContact);
+
+            CardContact cardContact = new CardContact()
+            {
+                Id = IdCounter.GetNumber("CardContact", tenant).ToString(),
+                Tenant = tenant,
+                CardId = card.Id,
+                ContactId = newContact.Id,
+            };
+
+            commonContext.CardContacts.Add(cardContact);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading  " + contactsCount++.ToString());
+
+            if (contactsCount == 1000)
+            {
+                commonContext.SaveChanges();
+                contactsCount = 0;
+            }
+        }
+
+        private Contact CreateNewContactInstance(ExcelContactItem item, int tenant)
+        {
+            Contact newContact = new Contact();
+            newContact.Id = IdCounter.GetNumber("Contact", tenant).ToString();
+            newContact.Tenant = tenant;
+            newContact.UserType = "R";
+            newContact.Email = TrimLength(item.Email, 70);
+            newContact.EnglishName = TrimLength(item.FirstName + " " + item.LastName, 60);
+            newContact.Position = TrimLength(item.CompanyPos, 40);
+            newContact.BusinessPhone = TrimLength(item.Phone, 25);
+            newContact.Mobile = TrimLength(item.Mobile, 25);
+            newContact.CompanyName = TrimLength(item.PartnerName, 1000);
+            BuildSearchFields(newContact);
+            return newContact;
+        }
+        private string TrimLength(string field, int length)
+        {
+            if (!string.IsNullOrEmpty(field))
+            {
+                if (field.Length > length)
+                {
+                    field = field.Substring(0, length);
+                }
+            }
+
+            return field;
+        }
+        private void BuildSearchFields(Contact newContact)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Email);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.BusinessPhone);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Mobile);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.CompanyName);
+            TrimLength(mySearchFields, 1000);
+            newContact.SearchFields = mySearchFields;
+        }
     }
     public class TimeZoneExcelItem
     {
@@ -5887,17 +6095,25 @@ User/Pass",
 
     }
 
-    public class ExcelOceanInsightStatistics
+    public class ExcelContactItem
     {
-        public string CreateDate { get; set; }
-        public string ContainerNumber { get; set; }
-        public string CarrierScac { get; set; }
-        public string DepartureLocation { get; set; }
-        public string DestinationLocation { get; set; }
+        public string PartnerName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyPos { get; set; }
+        public string PartnerType { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
+    }
 
+    public class UploadContactFailItem
+    {
+        public string PartnerName { get; set; }
+        public string Email { get; set; }
+        public string ErrorMessage { get; set; }
+    }
 
-
-    } 
     public class ExcelOI
     {
         public int? tenant { get; set; }
