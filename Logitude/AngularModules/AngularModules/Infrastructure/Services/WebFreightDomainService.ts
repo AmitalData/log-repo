@@ -333,6 +333,7 @@ export class WebFreightDomainService {
     }
 
     GetGenerateDigitalPortalDomain(customerURL: string) {
+        customerURL = encodeURIComponent(customerURL);
         var url = this._apiUrl + '/GetGenerateDigitalPortalDomainAsync?customerURL=' + JSON.stringify(customerURL);
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
