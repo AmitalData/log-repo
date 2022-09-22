@@ -1796,6 +1796,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInInvoiceCurrency = arInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
                 invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
+                invoicesRecored.PaidDate = arInvoice.PaidDate;
 
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
                 {
@@ -3552,6 +3553,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInInvoiceCurrency = apInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
                 expenseChargesInLocalCurrency = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                invoicesRecored.PaidDate = apInvoice.PaidDate;
 
                 Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
                 if(vendorCard != null)
@@ -8988,6 +8990,9 @@ namespace WebFreight.Web.ReportsWebServices
                         record.VAT = myTotalVats.Sum(d => d.LocalVATAmount);
                         record.GrandTotal = invoice.SubTotalInLocalCurrency + myTotalVats.Sum(d => d.LocalVATAmount);
                         record.Currency = invoice.LocalCurrencyCode;
+                        record.TaxableAmount = myTotalVats.Where(x=>x.VatPercent != 0).Sum(d => d.LocalVatableAmount);
+                        record.NonTaxableAmount = myTotalVats.Where(x => x.VatPercent == 0).Sum(d => d.LocalVatableAmount);
+
                     }
                     else
                     {
@@ -8995,7 +9000,11 @@ namespace WebFreight.Web.ReportsWebServices
                         record.VAT = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                         record.GrandTotal = invoice.SubTotalInInvoiceCurrency + myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                         record.Currency = invoice.InvoiceCurrencyCode;
+                        record.TaxableAmount = myTotalVats.Where(x => x.VatPercent != 0).Sum(d => d.InvoiceCurrencyVATAmount);
+                        record.NonTaxableAmount = myTotalVats.Where(x => x.VatPercent == 0).Sum(d => d.InvoiceCurrencyVATAmount);
                     }
+
+
                    
                     totalData.ARInvoiceVATRoutingList.Add(record);
                 }
