@@ -226,57 +226,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        private void SetToQueue(DeclarationPM myDeclaration )
-        {
+        
 
-            var logistictFile = setLogistictFile(myDeclaration);
-            var unifreightHybridQueueTaskServiceFrom8303 = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, LogistictFile>(null, logistictFile);
-                unifreightHybridQueueTaskServiceFrom8303.Send(new UnifreightHybridQueueTaskParam()
-                {
-                    Action = "UpdateExportCustomsFile",
-                    ParameterName = "transmission",
-                    UServerDelayTime = DateTime.Now.TimeOfDay
-        });
-           
-        }
-
-        public LogistictFile setLogistictFile(DeclarationPM myDeclaration)
-        {
-            LogistictFile LogistictFile = new LogistictFile();
-            bool ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
-            LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
-            {
-                customFileNo = myDeclaration.CustomFileNo,
-                id = myDeclaration.Id,
-                declarationNumber = myDeclaration.DeclarationNumber,
-                tadpisPrintDate = DateTime.Now.ToString(),
-                TotalSum = ifCurrecyEquals ? myDeclaration.SupplierInvoices.Sum(s => s.InvoiceAmount).ToString():,
-                currecy =myDeclaration.SupplierInvoices[0].InsruanceCurrencyTypeCode,
-                totalNisSum=myDeclaration.SupplierInvoices.Sum(s=>s.SupplierInvoiceItems.Sum(si=>si.ItemFOBAmountNIS)).ToString(),
-                totalFreightSum=myDeclaration.SupplierInvoices.Sum(s=>s.TotalFreightInFreightCurrency).ToString(),
-                totalPackages=myDeclaration.SupplierInvoices.Sum(s=>s.SupplierInvoiceItems.Sum(si=>si.PackageQuantity)).ToString(),
-                loadingDateTime=DateTime.Now.ToString(),
-                direction=myDeclaration.Direction,
-
-            };
-            for (int i = 0; i < myDeclaration.SupplierInvoices.Count; i++)
-            {
-                Invoices invoice = new Invoices();
-                invoice.invoiceNumber = myDeclaration.SupplierInvoices[i].InvoiceNumber;
-                invoice.invoiceTotal = myDeclaration.SupplierInvoices[i].InvoiceAmount.ToString();
-                invoice.invoiceCurrecy = myDeclaration.SupplierInvoices[i].InvoiceCurrencyTypeCode;
-                PratList prat = new PratList();
-                for (int j = 0; j < myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count; j++)
-                {
-                    prat.pratMeches[j] = myDeclaration.SupplierInvoices[i].SupplierInvoiceItems[j].ClassificationCode;
-                }
-                invoice.pratList = prat;
-
-                LogistictFile.logitudeCustomsFile.invoice[i] = invoice;
-            }
-            
-            return LogistictFile;
-        }
+       
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
@@ -330,7 +282,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM.Direction == "E")
                 {
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "MRS", status_DateTime: _TransmitionDateTime);
-                   if(this._MyDeclarationPM.Direction=="E") SetToQueue(this._MyDeclarationPM);
+                   
+                        AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM, _TransmitionDateTime.ToString());
+                       
                 }
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
