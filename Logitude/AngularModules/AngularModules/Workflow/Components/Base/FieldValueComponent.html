@@ -19,7 +19,7 @@
 
     <div *ngIf="isPickListObjectField() && PickListTable">
         <PickList
-            [ObjectFieldName]="Name" 
+            [ObjectFieldName]="ObjectField.FieldName" 
             [ObjectTableName]="PickListTable.Name"
             [SelectedValue]="CurrentValue" 
             [DataContext]="DataContext"

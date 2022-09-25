@@ -19,16 +19,31 @@ export class ConditionOperatorsList {
             case FieldTypes.NText:
                 this.Items = [
                     new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.EqualsField),
                     new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.NotEqualsField),
                     new ListItem(ConditionOperators.Contains),
+                    new ListItem(ConditionOperators.ContainsField),
                     new ListItem(ConditionOperators.NotContains),
+                    new ListItem(ConditionOperators.NotContainsField),
                     new ListItem(ConditionOperators.StartsWith),
+                    new ListItem(ConditionOperators.StartsWithField),
                     new ListItem(ConditionOperators.EndsWith),
+                    new ListItem(ConditionOperators.EndsWithField),
                     new ListItem(ConditionOperators.IsEmpty),
                     new ListItem(ConditionOperators.Changed)
                 ];
                 break;
             case FieldTypes.LookUp:
+                this.Items = [
+                    new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.EqualsField),
+                    new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.NotEqualsField),
+                    new ListItem(ConditionOperators.IsEmpty),
+                    new ListItem(ConditionOperators.Changed)
+                ];
+                break;
             case FieldTypes.PickList:
                 this.Items = [
                     new ListItem(ConditionOperators.Equals),
@@ -40,7 +55,9 @@ export class ConditionOperatorsList {
             case FieldTypes.Boolean:
                 this.Items = [
                     new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.EqualsField),
                     new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.NotEqualsField),
                     new ListItem(ConditionOperators.Changed)
                 ];
                 break;
@@ -55,11 +72,17 @@ export class ConditionOperatorsList {
             case FieldTypes.UnsInteger:
                 this.Items = [
                     new ListItem(ConditionOperators.Equals),
+                    new ListItem(ConditionOperators.EqualsField),
                     new ListItem(ConditionOperators.NotEquals),
+                    new ListItem(ConditionOperators.NotEqualsField),
                     new ListItem(ConditionOperators.GreaterThan),
+                    new ListItem(ConditionOperators.GreaterThanField),
                     new ListItem(ConditionOperators.LessThan),
+                    new ListItem(ConditionOperators.LessThanField),
                     new ListItem(ConditionOperators.GreaterThanOrEquals),
+                    new ListItem(ConditionOperators.GreaterThanOrEqualsField),
                     new ListItem(ConditionOperators.LessThanOrEquals),
+                    new ListItem(ConditionOperators.LessThanOrEqualsField),
                     new ListItem(ConditionOperators.IsEmpty),
                     new ListItem(ConditionOperators.Changed)
                 ];
