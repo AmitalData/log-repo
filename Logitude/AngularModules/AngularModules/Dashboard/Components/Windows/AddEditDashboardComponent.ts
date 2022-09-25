@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
@@ -11,6 +11,8 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -20,7 +22,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     public EntityPM: DashboardPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditDashboardComponent;
-    private isNew: boolean = false;
+    public isNew: boolean = false;
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Dashboard";
@@ -76,10 +78,6 @@ export class AddEditDashboardComponent extends BaseComponent {
     }
 
     ChooseUsersClicked() {
-        //var args = new ChooseUserArgs();
-        //args.MyQuery = this.EntityPM;
-        //args.AllUsers = this.myUsersList;
-
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Choose Users";
         logWindow.Width = 725;
@@ -87,8 +85,6 @@ export class AddEditDashboardComponent extends BaseComponent {
         logWindow.WindowArgs = this.EntityPM;
         logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            //this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
-            //this.FillSharedWithUsersItemsSource();
         });
     }
 
@@ -148,6 +144,32 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (!myResponse.HasError) {
             this.EntityPM = myResponse.Result;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+
+        else {
+            this.ValidationErrorsList = myResponse.ErrorsArray;
+        }
+
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    DeleteButtonClicked() {
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm";
+        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicator("Deleting...");
+                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
+                service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                    this.OnDeleteCompleted(myResponse);
+                });
+            }
+        });
+    }
+    private OnDeleteCompleted(myResponse: ServiceResponse) {
+        if (!myResponse.HasError) {
+            this.CurrentSession.CloseCurrentWindowEmit("OK_delete");
         }
 
         else {

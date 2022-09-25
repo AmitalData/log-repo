@@ -1,4 +1,7 @@
 ﻿using Logitude.DashboardModule.BL.EntityPMs;
+using Logitude.DashboardModule.Data;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -38,7 +41,7 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                
+
                 ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                 Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
                 if (loggedContact != null)
@@ -55,6 +58,48 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
 
             DashboardSharedUserUpdateService dashboardSharedUserUpdateService = new DashboardSharedUserUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             dashboardSharedUserUpdateService.UpdateMulti(entityPM.DashboardSharedUsers, entityPM.DeletedDashboardSharedUsers, entityPM, false);
+        }
+
+        public void Delete(string dashboardId, int tenant)
+        {
+            IDashboardContext context = MainContext as DashboardContext;
+            DashboardRepository dashboardRepository = new DashboardRepository(context);
+            Dashboard entityPOCO = dashboardRepository.GetSingle(dashboardId, tenant);
+            if (entityPOCO == null) return;
+
+            this.DeleteWidgets(context, entityPOCO);
+            this.DeleteSharedUsers(context, entityPOCO);
+
+            dashboardRepository.Remove(entityPOCO);
+            dashboardRepository.SubmitChanges();
+        }
+        private void DeleteWidgets(IDashboardContext context, Dashboard entityPOCO)
+        {
+            WidgetRepository widgetRepository = new WidgetRepository(context);
+            List<Widget> widgets = widgetRepository.GetWidgetsByDashboardId(entityPOCO.Id, entityPOCO.Tenant).ToList();
+            foreach (Widget item in widgets)
+            {
+                this.DeleteWidgetMeasures(context, item);
+                widgetRepository.Remove(item);
+            }
+        }
+        private void DeleteWidgetMeasures(IDashboardContext context, Widget entityPOCO)
+        {
+            WidgetMeasureRepository widgetMeasureRepository = new WidgetMeasureRepository(context);
+            List<WidgetMeasure> measures = widgetMeasureRepository.GetWidgetMeasuresByWidgetId(entityPOCO.Id, entityPOCO.Tenant).ToList();
+            foreach (WidgetMeasure item in measures)
+            {
+                widgetMeasureRepository.Remove(item);
+            }
+        }
+        private void DeleteSharedUsers(IDashboardContext context, Dashboard entityPOCO)
+        {
+            DashboardSharedUserRepository sharedUserRepository = new DashboardSharedUserRepository(context);
+            List<DashboardSharedUser> users = sharedUserRepository.GetDashboardSharedUsersByDashboardId(entityPOCO.Id, entityPOCO.Tenant).ToList();
+            foreach (DashboardSharedUser item in users)
+            {
+                sharedUserRepository.Remove(item);
+            }
         }
     }
 }
