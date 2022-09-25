@@ -714,6 +714,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.SchedulerDetailsData = schedulerDetailsData;
         if (schedulerDetailsData) {
+            this.RemoveReportDetails(schedulerDetailsData);
             if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
@@ -726,6 +727,12 @@ export class TaskSchedulerItemClass extends BaseComponent {
                 this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
 
             }
+        }
+    }
+
+    private RemoveReportDetails(schedulerDetailsData: SchedulerDetails) {
+        if (this.EntityPM.Type != "Report") {
+            schedulerDetailsData.ReportDetails = null;
         }
     }
 }
