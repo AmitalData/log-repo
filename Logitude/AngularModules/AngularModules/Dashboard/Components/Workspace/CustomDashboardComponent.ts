@@ -39,6 +39,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
 
+    public CloneDashboardLayout: WidgetPM[] ;
     public reactWidgetsLayout:{lg:ReactWidgetPM[]} = {lg:[]};
     @Input('Show') Show;
     constructor() {
@@ -106,7 +107,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 if (this.SelectedDashboard) {
                     this.BindReactWidgets(this.SelectedDashboard.Widgets);
                     this.SelectedDashboardName = this.SelectedDashboard.Name;
-                    this.Clone();
                 }
             }           
         });        
@@ -115,12 +115,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         var reactWidgets: ReactWidgetPM[] = [];
 
         widgets.forEach(item => {
-            item.UniqueKey = item.Id;
+            item.Key = item.Id;
             reactWidgets.push(DashboardMapping.GetReactWidget(item));
         });
         this.reactWidgetsLayout = {lg:reactWidgets};
         
-        this.DashboardDataBinding.onGetLayouts.next(this.deepClone(this.reactWidgetsLayout));
+        this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
     }
     
     //GetReactDashboard(dashboard: DashboardPM): ReactDashboardPM {
@@ -207,6 +207,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.IsEditLayoutButtonVisible = false;
         this.IsEditDashboardButtonVisible = true;
         this.IsEditLayoutModeActive = true;
+        var cloneWidgets:WidgetPM[] = []
+        for (const item of this.SelectedDashboard.Widgets) {
+            cloneWidgets.push(DashboardMapping.deepCloneToType(item,new WidgetPM(this.SelectedDashboard)))
+        }
+        this.CloneDashboardLayout = cloneWidgets;
 
     }
 
@@ -275,8 +280,24 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             });
         });
     }
+    openEditWidget(widget: ReactWidgetPM){
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
+        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Edit Widget";
+        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
+        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.DashboardDataBinding.onEditWidget.next(DashboardMapping.GetReactWidget(comp.EntityPM));
+                    this.CurrentSession.FireEvent("WidgetEdited");
+                }
+            });
+        });
+    }
     AddWidgetToReactLayout(myWidget:WidgetPM){
-        myWidget.UniqueKey = Guid.newGuid();
+        myWidget.Key = Guid.newGuid();
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
@@ -376,13 +397,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.myCloner.AddEntity(this.SelectedDashboard);
     }
     private RejectChanges() {
-        //this.myCloner.RejectChanges();
+        this.SelectedDashboard.Widgets = this.CloneDashboardLayout;
+        this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
     }
-
-    deepClone(obj){
-        var clone = JSON.parse(JSON.stringify(obj));
-        return clone;
-    }
+    
 }
 
 

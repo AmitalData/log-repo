@@ -96,7 +96,7 @@
     </div>
 
     <div class="Dashboard-body">
-        <custom-layout [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
+        <custom-layout (openEditWidget)="openEditWidget($event)" [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
     </div>
 </div>
 

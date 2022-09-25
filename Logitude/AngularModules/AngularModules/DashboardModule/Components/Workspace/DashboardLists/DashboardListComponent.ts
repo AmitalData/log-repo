@@ -10,6 +10,7 @@ import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/Analyt
 import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
 import { EditShipmentLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/EditShipmentLinkRendererComponent';
 import * as moment from 'moment';
+import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -71,7 +72,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
 
     DateFormatter(params) {
         return moment(params.value).format('DD/MM/YYYY');
-      }
+    }
 
     public StartBusyIndicator(message: string = "Generating...", width: number = 200) {
         this.CurrentSession.StartBusyIndicator(message);
@@ -86,7 +87,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         var widgetPartArguments = new WidgetPartArguments();
         widgetPartArguments.GroupByValue = dataPointSelection.GroupById;
         widgetPartArguments.MeasureFieldId = dataPointSelection.MeasureFieldId;
-        widgetPartArguments.Widget = JSON.parse(JSON.stringify(dataPointSelection.Widget));
+        widgetPartArguments.Widget = DashboardMapping.GetWidgetPMFromReact(dataPointSelection.Widget);
         return widgetPartArguments;
     }
 

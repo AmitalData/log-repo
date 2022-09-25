@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, Input, Output,EventEmitter } from '@angular/core';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
@@ -44,7 +44,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     constructor() {
 
     }
-
+    @Output() openEditWidget:EventEmitter<ReactWidgetPM> = new EventEmitter<ReactWidgetPM>()
     _show: boolean = false;
     @Input('Show') set Show(value) {
         console.log('CustomDashboardLayoutComponent show= ', value);
@@ -94,33 +94,33 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
 
     onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
+        this.CurrentSession.FireEvent("WidgetEdited");
+
         layouts.lg.forEach(item => {
-            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == item.Id)[0];
+            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Id == item.Id);
             if (myWidget) {
                 myWidget.EndPosition = item.EndPosition;
                 myWidget.StartPotistion = item.StartPotistion;
             }
         });
+        this.CheckDeletedWidgets(layouts.lg);
         MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
-        this.CurrentSession.FireEvent("WidgetEdited");
+    }
+    private CheckDeletedWidgets(teactWidgets: ReactWidgetPM[]) {
+       var deletedWidgets: WidgetPM[] = [];
+
+       this.SelectedDashboard.Widgets.forEach(item => {
+           if (teactWidgets.find(d => d.Id == item.Id) == null) {
+               deletedWidgets.push(item);
+           }
+       });
+
+       deletedWidgets.forEach(item => {
+        this.SelectedDashboard.RemoveWidget(item);
+       });
     }
 
-    openEditWidget(widget: ReactWidgetPM){
-        MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
-        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Edit Widget";
-        logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
-        logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.DashboardDataBinding.widgetUpdated.next(DashboardMapping.GetReactWidget(myWidget));
-                    this.CurrentSession.FireEvent("WidgetEdited");
-                }
-            });
-        });
-    }
+    
 
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
         if(!dataPointSelection) return;
@@ -130,6 +130,9 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             cmpRef.instance.Run(dataPointSelection);
         });
     }
+    private openReactEditWidget(Widget: ReactWidgetPM){
+        this.openEditWidget.emit(Widget)
+    }
 
     renderNewDashboard() {
         ReactDOM.render(React.createElement(Dashboard, {
@@ -138,7 +141,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
             userId: SessionInfo.LoggedUserId,
             dataBinding: this.DashboardDataBinding,
             onChangeLayouts: this.onChangeLayouts.bind(this),
-            openEditWidget: this.openEditWidget.bind(this),
+            openEditWidget: this.openReactEditWidget.bind(this),
             onSelectDataPoint: this.onSelectDataPoint.bind(this),
 
         }),

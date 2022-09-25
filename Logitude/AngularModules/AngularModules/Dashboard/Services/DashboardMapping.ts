@@ -9,7 +9,7 @@ export class DashboardMapping{
 
         if (widget) {
             myWidget.Id = widget.Id;
-            myWidget.key= widget.Id ?? widget.UniqueKey;
+            myWidget.key= widget.Id ?? widget.Key;
             myWidget.Tenant = widget.Tenant;
             myWidget.Title = widget.Title;
             myWidget.GroupById = widget.GroupById;
@@ -33,7 +33,6 @@ export class DashboardMapping{
                 x: +widget.StartPotistion.split(',')[0],
                 y: +widget.StartPotistion.split(',')[1],
               }
-              //myWidget.onChange = new Subject(),
             widget.WidgetMeasures.forEach(item => {
                 myWidget.WidgetMeasures.push(this.GetReactWidgetMeasure(item));
             });
@@ -55,4 +54,41 @@ export class DashboardMapping{
 
         return myWidgetMeasuer;
     }
+
+    public static GetWidgetPMFromReact(Widget:ReactWidgetPM){
+        var w = {...Widget}
+        w.onChange = undefined;
+        return JSON.parse(JSON.stringify(w))
+    }
+
+
+    public static deepClone(obj){
+        var clone = JSON.parse(JSON.stringify(obj,
+            function (key, val) {
+                if (key !== "UIProperties" 
+                && key != 'entityParentPM'
+                && key != 'PropertyChanged'
+                && key != 'PropertyChanged'
+                && key != 'OldEntityPM') return val
+            }
+            )) ;
+
+        return clone;
+    }
+    public static deepCloneToType(obj,toObj:any){
+        var clone = JSON.parse(JSON.stringify(obj,
+            function (key, val) {
+                if (key !== "UIProperties" 
+                && key != 'entityParentPM'
+                && key != 'PropertyChanged'
+                && key != 'PropertyChanged'
+                && key != 'OldEntityPM') return val
+            }
+            )) ;
+            Object.assign(toObj,clone);
+        return toObj;
+    }
+
+
+
 }
