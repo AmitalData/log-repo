@@ -115,6 +115,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                     this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
                     this.SelectedDashboardName = this.SelectedDashboard.Name;
                 }
+
+                else {
+                    this.SelectedDashboardName = null;
+                }
             }           
         });        
     }
@@ -135,18 +139,18 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         if (this.selectedDashboardId != value) {
             this.selectedDashboardId = value;
 
-            LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, (value == null ? null : value));
+            LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, value);
             this.GetSingleDashboardWithWidgets(value);
         }
     }
 
     public BackButtonLable: string = "Back";
-    public IsEditLayoutButtonVisible: boolean = true;
+    public IsEditLayoutButtonVisible: boolean = !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
     public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutModeActive: boolean = false;
     public HasChanges: boolean = false;
     private ResetFlags() {
-        this.IsEditLayoutButtonVisible = true;
+        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
         this.HasChanges = false;
@@ -205,6 +209,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (s == "OK_delete") {
+                        this.SelectedDashboardId = null;
+                        this.ResetFlags();
                         this.LoadDefaultDashboardFromServer();
                     }
 
@@ -258,16 +264,18 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
     private CheckDeletedWidgets(teactWidgets: ReactWidgetPM[]) {
         var deletedWidgets: WidgetPM[] = [];
- 
-        this.SelectedDashboard.Widgets.forEach(item => {
-            if (teactWidgets.find(d => d.Id == item.Id) == null) {
-                deletedWidgets.push(item);
-            }
-        });
- 
-        deletedWidgets.forEach(item => {
-         this.SelectedDashboard.RemoveWidget(item);
-        });
+
+        if (this.SelectedDashboard) {
+            this.SelectedDashboard.Widgets.forEach(item => {
+                if (teactWidgets.find(d => d.Id == item.Id) == null) {
+                    deletedWidgets.push(item);
+                }
+            });
+
+            deletedWidgets.forEach(item => {
+                this.SelectedDashboard.RemoveWidget(item);
+            });
+        }
      }
 
     openEditWidget(widget: ReactWidgetPM){
