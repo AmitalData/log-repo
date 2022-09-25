@@ -91,6 +91,7 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using WebFreight.Web.MetaDataUpdate;
 using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
+using Newtonsoft.Json;
 
 namespace Logitude.Update
 {
@@ -4779,7 +4780,7 @@ User/Pass",
             OIStopWatch = new Stopwatch();
             OIStopWatch.Start();
 
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");            
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");
 
             storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
@@ -4801,7 +4802,7 @@ User/Pass",
                                                             .FirstOrDefault())
                                                             .OrderByDescending(x => x.CreateDate).ToList();
 
-            if(tenant > 0)
+            if (tenant > 0)
             {
                 communications = communications.Where(d => d.Tenant == tenant).ToList();
             }
@@ -5659,11 +5660,11 @@ User/Pass",
             ToDate = ToDate.AddDays(1);
 
             var ContainerCount = shipmentsContext.ShipmentPackages
-                .Where(a => 
+                .Where(a =>
                 (a.Shipment.ShipmentLevelCode == "C" && a.Shipment.ShipmentTypeId == "MyGO") || (a.Shipment.ShipmentLevelCode != "C" && a.Shipment.ShipmentTypeId == "FCLD")
-                && a.Shipment.IsOperationalClosed == false 
+                && a.Shipment.IsOperationalClosed == false
                 && a.Shipment.NumberOfContainers > 0
-                && a.Shipment.CreateDateTime >= fromDate.Date 
+                && a.Shipment.CreateDateTime >= fromDate.Date
                 && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
 
@@ -5692,13 +5693,13 @@ User/Pass",
                     this.ShipmentContainerLog.Text = SetLogs("stop...");
                     break;
                 }
-                    
+
                 var watch = new System.Diagnostics.Stopwatch();
 
                 watch.Start();
                 var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant, true);
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
-                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a=>  a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a => a.ContainerEntityId == null && a.ContainerNumber != null).Count();
                 try
                 {
                     AddContainers(shipmentsContext, shipmentPM);
@@ -5721,12 +5722,12 @@ User/Pass",
                 NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
                 if (numberOfContainer == 0)
                     numberOfContainer = 1;
-                var totalMinuts = watch.ElapsedMilliseconds/ numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
+                var totalMinuts = watch.ElapsedMilliseconds / numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
                 var minuts = Math.Floor(totalMinuts);
                 var sec = Convert.ToInt32(totalMinuts % 1 * 60);
                 this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S";
-                
-               
+
+
             }
             StopCreateContainerBool = false;
 
@@ -5779,7 +5780,7 @@ User/Pass",
         }
         private void WriteShipmentContainerLogErrorToFile()
         {
-            
+
             string path = @"ShipmentContainerLog.csv";
             if (!File.Exists(path))
             {
@@ -5790,8 +5791,8 @@ User/Pass",
                 }
             }
             File.WriteAllLines(path, logs);
-            
-            
+
+
         }
 
         private void label20_Click(object sender, EventArgs e)
@@ -5863,15 +5864,17 @@ User/Pass",
                 }
             }
 
-            allContacts.Remove(allContacts[0]);            
+            allContacts.Remove(allContacts[0]);
             Thread thread = new Thread(() => this.UploadContacts(allContacts));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private List<UploadContactFailItem> uploadContactFailItems;
+        private int contactsCount = 0;
         private void UploadContacts(List<ExcelContactItem> allContacts)
         {
+            contactsCount = 0;
             uploadContactFailItems = new List<UploadContactFailItem>();
             UploadContactsList.Items.Clear();
 
@@ -5914,8 +5917,6 @@ User/Pass",
             }
         }
 
-        private int contactsCount = 0;
-        
         private void InsertNewContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
         {
             Card card = commonContext.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == item.PartnerType && d.EnglishName == item.PartnerName).FirstOrDefault();
@@ -6016,6 +6017,238 @@ User/Pass",
             TrimLength(mySearchFields, 1000);
             newContact.SearchFields = mySearchFields;
         }
+
+        private ContainerRepository containerRepository;
+        private PortRepository portRepository;
+        private Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> containers;
+        private void getContainersButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(vizionTenantTextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                Thread thread = new Thread(() => this.GetVizionContainers());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        private void GetVizionContainers()
+        {
+            getContainersListView.Items.Clear();
+            getContainersListView.Columns.Clear();
+            getContainersListView.View = View.Details;
+            getContainersListView.GridLines = true;
+            getContainersListView.FullRowSelect = true;
+            getContainersListView.Columns.Add("Container #", 150);
+            getContainersListView.Columns.Add("PreCarriage-container", 100);
+            getContainersListView.Columns.Add("PreCarriage-Json", 100);
+            getContainersListView.Columns.Add("OnCarriage-container", 100);
+            getContainersListView.Columns.Add("OnCarriage-Json", 100);
+            getContainersListView.Columns.Add("POL-container", 100);
+            getContainersListView.Columns.Add("POL-Json", 100);
+            getContainersListView.Columns.Add("POD-container", 100);
+            getContainersListView.Columns.Add("POD-Json", 100);
+
+            int tenant = Convert.ToInt32(vizionTenantTextBox.Text);
+            DateTime date_2022_7 = new DateTime(2022, 7, 1);
+
+            containers = new Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus>();
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            portRepository = new PortRepository(context);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            containerRepository = new ContainerRepository(shipmentsContext);
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objecttableRep.GetObjectTableByName("Container", 0, true);
+
+            List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "General Update Container Status"
+                                                        && a.Tenant == tenant
+                                                        && a.InOut == "I"
+                                                        && a.WasAnalyzed == true
+                                                        && a.CommunicationStatusTypeCode == "D"
+                                                        && a.ObjectTableId == objectTable.Id
+                                                        && a.CreateDate >= date_2022_7 && a.CreateDate <= DateTime.Now)
+                                                        .GroupBy(x => new { x.Tenant, x.EntityId })
+                                                        .Select(x => x.OrderByDescending(y => y.CreateDate)
+                                                        .FirstOrDefault())
+                                                        .OrderByDescending(x => x.CreateDate).ToList();
+
+            string[] arr = new string[9];
+            foreach (CommunicationLog communicationLog in communications)
+            {
+                Simplog.Data.ShipmentsModel.EntityPOCOs.Container container = shipmentsContext.Containers
+                       .Where(d => d.Id == communicationLog.EntityId && d.Tenant == tenant).FirstOrDefault();
+
+                VisionContainerStatus visionContainerStatus = DeserializeVizionDocumentBody(communicationLog.DocumentId, tenant, documentRepository);
+                if (visionContainerStatus != null && container != null)
+                {
+                    arr[0] = container.ContainerNumber;
+                    arr[1] = container.PreCarriageLocation;
+                    arr[2] = this.GetPortForVizion(visionContainerStatus.payload?.inland_origin, tenant)?.CombinedCode;
+                    arr[3] = container.OnCarriageLocation;
+                    arr[4] = this.GetPortForVizion(visionContainerStatus.payload?.inland_destination, tenant)?.CombinedCode;
+                    arr[5] = container.POLLocation;
+                    arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
+                    arr[7] = container.PODLocation;
+                    arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
+
+                    getContainersListView.Items.Add(new ListViewItem(arr));
+                    containers.Add(container, visionContainerStatus);
+                }
+            }
+
+            if (communications.Count > 0)
+            {
+                updateContainersButton.Enabled = true;
+            }
+        }
+        public VisionContainerStatus DeserializeVizionDocumentBody(string documentId, int tenant, DocumentRepository documentRepository)
+        {
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
+            {
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+                byte[] fileData = storageservice.Read(fileInfo);
+                if (fileData != null)
+                {
+                    var datatext = Encoding.UTF8.GetString(fileData);
+                    return JsonConvert.DeserializeObject<VisionContainerStatus>(datatext);
+                }
+            }
+
+            return null;
+        }
+        private Port GetPortForVizion(Location portLocation, int tenant)
+        {
+            Port port = null;
+            if (!string.IsNullOrEmpty(portLocation.unlocode)) port = portRepository.GetOceanPortByCombinedCode(portLocation.unlocode, tenant);
+            if (port != null) return port;
+
+            var name1 = portLocation.name;
+            if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
+                name1 = portLocation.name.Split(',').First();
+            var name2 = portLocation.city;
+            port = this.GetPortByNames(name1, name2, tenant);
+            return port;
+        }
+        private Port GetPortByNames(string name1, string name2, int tenant)
+        {
+            var port = portRepository.GetOceanPortByNames(name1, name2, tenant);
+            if (port != null)
+                return port;
+
+            return null;
+        }
+        private string GetPortId(string portCode, int tenant)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
+            {
+                portId = port.Id;
+            }
+
+            return portId;
+        }
+
+        private void updateContainersButton_Click(object sender, EventArgs e)
+        {
+            if (containers.Count > 0)
+            {
+                Thread thread = new Thread(() => this.UpdateVizionContainers());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        private void UpdateVizionContainers()
+        {
+            foreach (var item in containers)
+            {
+                MapPOL(item);
+                MapPOD(item);
+                MapPreCarriage(item);
+                MapOnCarriage(item);
+
+                containerRepository.Update(item.Key);
+            }
+
+            containerRepository.SubmitChanges();
+        }
+        private void MapPOL(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.POLLocation = item.Value.payload?.origin_port?.unlocode;
+            item.Key.POLLocationPortId = this.GetPortId(item.Value.payload?.origin_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPOD(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.PODLocation = item.Value.payload?.destination_port?.unlocode;
+            item.Key.PODLocationPortId = this.GetPortId(item.Value.payload?.destination_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPreCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_origin, item.Value.payload?.origin_port))
+                return;
+            
+            var port = GetPortForVizion(item.Value.payload?.inland_origin, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.PreCarriageLocationPortId = port.Id;
+                item.Key.PreCarriageLocation = port.CombinedCode;
+            }
+        }
+        private void MapOnCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_destination, item.Value.payload?.destination_port))
+                return;
+
+            var port = GetPortForVizion(item.Value.payload?.inland_destination, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.OnCarriageLocationPortId = port.Id;
+                item.Key.OnCarriageLocation = port.CombinedCode;
+            }
+        }
+        private bool IsDifferentPort(Location location, Location mainLocation)
+        {
+            if (mainLocation == null)
+                return false;
+            if (location == null)
+                return false;
+
+            if (!string.IsNullOrEmpty(location?.unlocode) &&
+                !string.IsNullOrEmpty(mainLocation?.unlocode) &&
+                location?.unlocode == mainLocation?.unlocode)
+                return false;
+
+            if (location.name == mainLocation.name &&
+            location.country == mainLocation.country &&
+            location.city == mainLocation.city &&
+            location.state == mainLocation.state)
+                return false;
+
+            return true;
+        }
     }
     public class TimeZoneExcelItem
     {
@@ -6044,7 +6277,6 @@ User/Pass",
         public bool IsCoreFeature { get; set; }
 
     }
-
 
     public class HtmlStringParsingParams
     {
