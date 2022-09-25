@@ -91,7 +91,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.renderNewDashboard();
+        //this.renderNewDashboard();
     }
 
     onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
