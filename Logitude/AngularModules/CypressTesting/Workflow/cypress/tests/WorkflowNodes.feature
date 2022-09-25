@@ -6,8 +6,18 @@ Feature: Workflow node
         And open workflows
         And a flow with following details
             | Name | random |
-        When click create
+        When create workflow
         Then the flow should create successfully
+
+    Scenario: edit workflow general inforamtion
+        Given edit workflow general inforamtion with following details
+            | Name | random |
+        When save workflow
+        Then the workflow should update successfully
+
+    Scenario: open workflow run history
+        When open run history
+        Then the instances should appear successfully
 
     Scenario: edit start configration
         Given edit start configration with following details
@@ -23,7 +33,6 @@ Feature: Workflow node
             | Custom text   | Contains   | 33                      |
             | Custom Bool   | Equals     | False                   |
             | Custom NText  | Changed    | False                   |
-        And click Ok
-        When click save
+        When save flow
         Then the flow should save successfully
 

@@ -781,6 +781,13 @@ export class EditComponent implements OnDestroy {
     }
 
 
+    private CheckEntityStatusTabsFeatures() {
+        if (this.ObjectTableName != "EntityStatus") return false;
+        let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || entityStatusFeatureToggle)
+            return true;
+        return false;
+    }
 
     FillTabsItemsSource(allTabs: any[]) {
 
@@ -815,7 +822,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (tab.Type == 'Custom' || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Type == 'Custom' || this.CheckEntityStatusTabsFeatures() || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 

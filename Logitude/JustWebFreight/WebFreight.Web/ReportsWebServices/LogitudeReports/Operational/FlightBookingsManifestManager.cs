@@ -185,6 +185,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+                    myDataRecord.PackagesNotes = shipmentPackage.ContainerNotes;
                     myDataRecord.Routing = shipmentPackage.Routing;
                     myDataRecord.ShipperId = shipmentPackage.ShipperId;
                     myDataRecord.CutOffDate = shipmentPackage.CutOffDate;

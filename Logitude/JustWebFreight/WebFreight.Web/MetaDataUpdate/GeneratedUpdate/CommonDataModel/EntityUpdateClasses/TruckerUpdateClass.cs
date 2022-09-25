@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TruckerUpdateClass
    {  		
-		public const string HashString = "bf5ae8e38bc49bb5c6b858af9f93851c";
+		public const string HashString = "2e3261a7b4340ce2a51b772db77ca291";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -963,7 +964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
-					  						UniqueField =  true,
+					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,

@@ -6,13 +6,14 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'SubDomainGenerateComponent',
     templateUrl: './SubDomainGenerateComponent.html',
 })
 
-export class SubDomainGenerateComponent extends BaseComponent  {
+export class SubDomainGenerateComponent extends BaseComponent {
     public DataContext: SubDomainGenerateComponent = this;
     public ObjectTableName: string = "TenantManagement";
     public EntityPM: TenantManagementPM;
@@ -46,6 +47,10 @@ export class SubDomainGenerateComponent extends BaseComponent  {
     }
 
     OkButtonClicked() {
+        if (AppTool.IsNullOrEmpty(this.CustomCustomerURL)) {
+            this.ValidationErrorsList.push("Domain is Required");
+            return
+        }
         this.CurrentSession.StartBusyIndicator("Generating ..");
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetGenerateDigitalPortalDomain(this.CustomCustomerURL).subscribe((myResult: ServiceResponse) => {
@@ -54,8 +59,7 @@ export class SubDomainGenerateComponent extends BaseComponent  {
                 this.EntityPM.CustomerURL = this.CustomCustomerURL + "." + this.Domain;
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
-            else
-            {
+            else {
                 this.ValidationErrorsList = myResult.ErrorsArray;
             }
 

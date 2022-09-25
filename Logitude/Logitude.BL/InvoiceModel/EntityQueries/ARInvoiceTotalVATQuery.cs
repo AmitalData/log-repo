@@ -31,7 +31,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARInvoiceTotalVATPM> GetTotalVATs(string invoiceId, int tenant)
         {
-            return from a in repository.context.ARInvoiceTotalVATs.Include("VatType")
+            return from a in repository.context
+                                       .ARInvoiceTotalVATs
+                                       .Include("VatType")
                    where a.Tenant == tenant && a.ARInvoiceId == invoiceId
                    select new ARInvoiceTotalVATPM()
                    {
@@ -53,6 +55,34 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        VatTypeCode = a.VatType == null ? null : a.VatType.Code,
                        IsRegionalTax = a.IsRegionalTax,
                    };
+        }
+
+        public IQueryable<ARInvoiceTotalVATPM> GetTotalVATsByInvoicesIds(List<string> invoicesIds, int tenant)
+        {
+            return repository.context
+                             .ARInvoiceTotalVATs
+                             .Include("VatType")
+                   .Where(a => a.Tenant == tenant && invoicesIds.Contains(a.ARInvoiceId)) 
+                   .Select(a => new ARInvoiceTotalVATPM()
+                   {
+                       Id = a.Id,
+                       Tenant = a.Tenant,
+                       ARInvoiceId = a.ARInvoiceId,
+                       ExternalVATCard = a.ExternalVATCard,
+                       ExternalTAXItemId = a.ExternalTAXItemId,
+                       InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
+                       InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
+                       LocalVatableAmount = a.LocalVatableAmount,
+                       LocalVATAmount = a.LocalVATAmount,
+                       ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
+                       ProfitVatableAmount = a.ProfitVatableAmount,
+                       VatTypeId = a.VatTypeId,
+                       VATPercent = a.VatPercent,
+                       VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                       VatTypeCode = a.VatType == null ? null : a.VatType.Code,
+                       IsRegionalTax = a.IsRegionalTax,
+                   });
         }
 
         public IQueryable<ARInvoiceTotalVATList> GetIQueryableEntityList(IQueryable<ARInvoiceTotalVAT> iQueryable)

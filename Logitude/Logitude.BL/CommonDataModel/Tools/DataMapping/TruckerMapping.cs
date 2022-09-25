@@ -16,13 +16,13 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
-                entityCard.Code = entityPM.Code;
                 entityCard.Id = entityPM.Id = entityPM.Id;
                 entityCard.Tenant = entityPOCO.Tenant = entityPM.Tenant;
                 entityCard.CreateDate = entityPM.CreateDate;
                 entityCard.CreatedByUserId = entityPM.CreatedByUserId;
             }
 
+            entityCard.Code = entityPM.Code;
             entityPOCO.AddedManually = entityPM.AddedManually;
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;

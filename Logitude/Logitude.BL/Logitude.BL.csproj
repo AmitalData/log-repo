@@ -719,13 +719,17 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\InvoicePaymentNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
+    <Compile Include="ShipmentDigitalFieldQuery.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentDigitalFieldPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentRoutingLeg.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.Digital.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentDigitalFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentDocsFieldBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\ContainerTracking\GeneralContainerTrackingService.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />

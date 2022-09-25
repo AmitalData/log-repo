@@ -17,3 +17,27 @@ When("open flow", () => {
 Then("the flow builder open successfully", () => {
     Actions.AssertOpenFlowBuilder();
 });
+
+When("search flow", () => {
+    Actions.SearchFlowByName();
+});
+
+Then("the flow should appear successfully", () => {
+    Actions.AssertSearchFlowByName();
+});
+
+When("refresh workflow list", () => {
+    Actions.RefreshWorkflowLisr();
+});
+
+Then("the list should refresh successfully", () => {
+    Actions.AssertWorkflowListReresh();
+});
+
+When("export workflow list", () => {
+    Actions.ExportWorkflowList();
+});
+
+Then("the list should export successfully", () => {
+    Actions.AsserExportWorkflowList();
+});

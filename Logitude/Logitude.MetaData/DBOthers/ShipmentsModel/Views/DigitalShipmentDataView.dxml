@@ -124,6 +124,7 @@
     InlandDomesticToState.EnglishName AS InlandDomesticToStateName, 
     InlandDomesticFromState.EnglishName AS InlandDomesticFromStateName,
     ShipmentComputedFields.Transshipments as Transshipments,
+	ShipmentDigitalFields.IsCustomerArchived as IsCustomerArchived,
     dbo.Incoterms.Code AS IncotermCode,
 	FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,
 	FinalDestinationCountries.EnglishName AS MainCarriageFinalDestinationCountryName,
@@ -391,8 +392,11 @@
         dbo.Contacts AS LastSentByUserContact 
             ON Shipment.LastSentByUserId = LastSentByUserContact.Id 
     INNER JOIN
-        dbo.ShipmentComputedFields AS ShipmentComputedFields 
-            ON Shipment.Id = ShipmentComputedFields.Id
+        dbo.ShipmentDigitalFields AS ShipmentDigitalFields 
+            ON Shipment.Id = ShipmentDigitalFields.Id
+	INNER JOIN
+       dbo.ShipmentComputedFields AS ShipmentComputedFields 
+           ON Shipment.Id = ShipmentComputedFields.Id
     LEFT OUTER JOIN
         dbo.Cards AS AgentComputedCards 
 		   ON Shipment.AgentComputed = AgentComputedCards.Id
