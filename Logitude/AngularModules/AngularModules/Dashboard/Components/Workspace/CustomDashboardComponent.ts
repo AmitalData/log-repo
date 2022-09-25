@@ -252,6 +252,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 myWidget.EndPosition = item.EndPosition;
                 myWidget.StartPotistion = item.StartPotistion;
             }
+            var reactWidget:ReactWidgetPM = this.reactWidgetsLayout.lg.find(d => d.Id == item.Id);
+            if (reactWidget) {
+                reactWidget.Layout = item.Layout;
+            }
         });
         this.CheckDeletedWidgets(layouts.lg);
         MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
