@@ -25,7 +25,8 @@
                 <div style="vertical-align:top;" class="GeneratedGridContainer">
                     <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName" 
                         [dataSource]="DataSource" [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true"
-                        [QueryChangeEvent]="onQueryChangeEvent" [MenuHeaderchangeevent]="MenuHeaderchangeevent">
+                        [QueryChangeEvent]="onQueryChangeEvent" [MenuHeaderchangeevent]="MenuHeaderchangeevent" 
+                        (rowSelectedEvent)="onRowSelected($event)">
                     </logitude-grid-v2>
 
                     
