@@ -60,7 +60,9 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
 
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
-            var measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
+            AnalyticsFactsFieldsMetaData measureField = null;
+            if (measure.MeasureFieldId != null)
+            measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
 
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
@@ -89,13 +91,28 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var top = "";
             if (_Widget.MaximumGrouping.HasValue)
                 top = $"top({ _Widget.MaximumGrouping})";
+
+            var value = GetValueQuery(measure.MeasureCode,measureField);
             return $@"select  {top}
                             {Label} as Label,
                             {groupByField} as GroupById,
-                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2) ) as Value From 
+                            {value} as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
                             {join}
                             group by {Label},{groupByField} {sortBy}";
+        }
+
+        private string GetValueQuery(string measureCode, AnalyticsFactsFieldsMetaData measureField)
+        {
+            
+            if (measureCode != "Count")
+                return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
+            var key = _EntityFields.First().Value.FieldCode;
+            return $"CAST({measureCode}(data.{key}) AS DECIMAL(32, 2))";
+            
+
+
+
         }
 
         private object CreateSortBy()

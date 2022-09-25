@@ -253,14 +253,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 myWidget.EndPosition = item.EndPosition;
                 myWidget.StartPotistion = item.StartPotistion;
             }
-            var reactWidget:ReactWidgetPM = this.reactWidgetsLayout.lg.find(d => d.Id == item.Id);
-            if (reactWidget) {
-                reactWidget.Layout = item.Layout;
-            }
         });
         this.CheckDeletedWidgets(layouts.lg);
+        this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
-        console.log(this.reactWidgetsLayout);
         this.HasChanges = true;
     }
     private CheckDeletedWidgets(teactWidgets: ReactWidgetPM[]) {
@@ -282,6 +278,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     openEditWidget(widget: ReactWidgetPM){
         MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
+        myWidget.Key = widget.key;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
