@@ -100,8 +100,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 this.SelectedDashboard = myResponse.Result;
                 if (this.SelectedDashboard) {
                     this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
-                    this.DashboardDataBinding.onGetLayouts.next(this.reactWidgetsLayout);
-                    //this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
+                    this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
                     this.SelectedDashboardName = this.SelectedDashboard.Name;
                 }
             }           
@@ -267,7 +266,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     AddWidgetToReactLayout(myWidget:WidgetPM){
         myWidget.Key = Guid.newGuid();
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
-        //this.reactWidgetsLayout.lg.push(reactWidget);
+        this.reactWidgetsLayout.lg.push(reactWidget);
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
     
@@ -369,9 +368,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
     private RejectChanges() {
         this.SelectedDashboard.Widgets = this.CloneDashboardLayout;
-        // this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-        var layout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
-         this.DashboardDataBinding.onGetLayouts.next(layout);
+        this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
+        this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
     }
     
 }
