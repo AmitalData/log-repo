@@ -1995,7 +1995,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                      MasterNumber = d.MasterNumber,
                                                                      HouseNumber = d.HouseNumber,
                                                                      MainEntityReference = d.MainEntityReference,
-                                                                     AmountInInvoiceCurrency = d.AmountInInvoiceCurrency
+                                                                     AmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
+                                                                     SubTotalInInvoiceCurrency = d.SubTotalInInvoiceCurrency
                                                                  }).ToList();
 
                         var ids = entityPM.ConstituentInvoices
