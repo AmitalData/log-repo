@@ -56,9 +56,7 @@ export class DashboardMapping{
     }
 
     public static GetWidgetPMFromReact(Widget:ReactWidgetPM){
-        var w = {...Widget}
-        w.onChange = undefined;
-        return JSON.parse(JSON.stringify(w))
+        return JSON.parse(JSON.stringify(Widget))
     }
 
     public static deepClone(obj){

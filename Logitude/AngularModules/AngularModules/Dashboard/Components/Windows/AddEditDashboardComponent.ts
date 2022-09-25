@@ -12,6 +12,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -153,10 +154,17 @@ export class AddEditDashboardComponent extends BaseComponent {
     }
 
     DeleteButtonClicked() {
-        this.CurrentSession.StartBusyIndicator("Deleting...");
-        var service: DashboardPMExtendedService = new DashboardPMExtendedService();
-        service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            this.OnDeleteCompleted(myResponse);
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm";
+        confirmWindow.Show("Are you sure you want to delete this dashboard?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicator("Deleting...");
+                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
+                service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                    this.OnDeleteCompleted(myResponse);
+                });
+            }
         });
     }
     private OnDeleteCompleted(myResponse: ServiceResponse) {
