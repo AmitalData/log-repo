@@ -9,6 +9,8 @@ import { AppTool } from "../../Infrastructure/Tools";
 import { SessionLocator } from "../../Infrastructure/Utilities/SessionLocator";
 import { BIReportPreviewComponent } from "../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent";
 import { DocumentTypeTemplateViewModel } from "../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel";
+import { forEach } from "cypress/types/lodash";
+import { DocumentTypeTemplatesDetails } from "../../Infrastructure/DataContracts/SchedulerDetails";
 declare var window: any;
 
 export class BIReportDocumentTypeTemplateService {
@@ -74,10 +76,21 @@ export class BIReportDocumentTypeTemplateService {
                 this.ShowMessage((serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) ? serviceResponse.ErrorsArray[0] : "", "Logitude Message");
                 return;
             }
-            var documentTypeTemplate = serviceResponse.Result;
-            documentTypeTemplate = documentTypeTemplate.filter(d => (d.EntityId == this.EntityId && d.ObjectTableId == this.ObjectTableId) || (!d.AutomationId && !d.EntityId));
-            this.FillDocumentTypeList(documentTypeTemplate);
+            let availableDocumentTypeTemplates = this.bIReportPreviewComponent.AvailableDocumentTypeTemplates;
+            var documentTypeTemplates = serviceResponse.Result;
+            documentTypeTemplates = documentTypeTemplates.filter(documentTypeTemplate => this.FilterDocumentTypeTemplates(documentTypeTemplate, availableDocumentTypeTemplates));
+            this.FillDocumentTypeList(documentTypeTemplates);
         });
+    }
+
+    private FilterDocumentTypeTemplates(documentTypeTemplate: any, availableDocumentTypeTemplates: Array<any>) {
+        if (!documentTypeTemplate.AutomationId && !documentTypeTemplate.EntityId) return true;
+        if (documentTypeTemplate.ObjectTableId != this.ObjectTableId) return false;
+        if (documentTypeTemplate.EntityId != this.EntityId) return false;
+        if (!availableDocumentTypeTemplates) return false;
+        if (availableDocumentTypeTemplates.some(d => d.Id == documentTypeTemplate.Id)) return true;
+
+        return false;
     }
 
     FillDocumentTypeList(documentTypeTemplates: any) {
@@ -176,14 +189,23 @@ export class BIReportDocumentTypeTemplateService {
             logWindow.Title = "Edit Html Template";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                if ($event) {
+            logWindow.WindowClosed.subscribe(($templateId: any) => {
+                if ($templateId) {
                     this.LoadDocumentTypeHTMLTemplate();
-                    this.docuemntTypeTemplateId = $event;
+                    this.docuemntTypeTemplateId = $templateId;
+                    this.CheckAndAddToSchedulerTemplatesList($templateId);
                 }
             });
         }
     }
+
+    CheckAndAddToSchedulerTemplatesList(templateId: string) {
+        let documentTypeTemplate: DocumentTypeTemplatesDetails = new DocumentTypeTemplatesDetails();
+        documentTypeTemplate.Id = templateId;
+        if (this.bIReportPreviewComponent.AvailableDocumentTypeTemplates.indexOf(documentTypeTemplate) > -1) return;
+        this.bIReportPreviewComponent.AvailableDocumentTypeTemplates.push(documentTypeTemplate);
+    }
+
     AddDocumentTypeTemplate() {
         var windowArgs = this.GetWindowsArgsAdd();
 
@@ -194,15 +216,21 @@ export class BIReportDocumentTypeTemplateService {
 
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
+        logitudeWindow.WindowClosed.subscribe(($templateId: any) => {
+            if (!$templateId) return;
+
+            if ($templateId && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
-            if ($event) {
-                this.docuemntTypeTemplateId = $event;
-                this.SetDocumentTypeTemplateSelected();
-            }
 
+            this.docuemntTypeTemplateId = $templateId;
+            this.SetDocumentTypeTemplateSelected();
+            let documentTypeTemplate: DocumentTypeTemplatesDetails = new DocumentTypeTemplatesDetails();
+            documentTypeTemplate.Id = $templateId;
+            if (!this.bIReportPreviewComponent.AvailableDocumentTypeTemplates) {
+                this.bIReportPreviewComponent.AvailableDocumentTypeTemplates = [];
+            }
+            this.bIReportPreviewComponent.AvailableDocumentTypeTemplates.push(documentTypeTemplate);
         });
     }
 

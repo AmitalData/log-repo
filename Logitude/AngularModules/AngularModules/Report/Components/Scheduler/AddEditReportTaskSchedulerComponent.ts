@@ -419,6 +419,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
         this.DataContext.SchedulerDetails.ReportDetails.DWQueryFilterData = reportSchedulerDetails.DWQueryFilterData;
         this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplateId = reportSchedulerDetails.DocumentTypeTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplates = reportSchedulerDetails.DocumentTypeTemplates;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')

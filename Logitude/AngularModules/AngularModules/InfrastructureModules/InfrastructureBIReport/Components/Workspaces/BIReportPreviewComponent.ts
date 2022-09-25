@@ -99,14 +99,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
         if (this.documentTypeTemplateSelected != value) {
             this.documentTypeTemplateSelected = value;
-            this.IsEnableAddTemplate = true;
             this.IsEnableEditTemplate = true;
         }
     }
     private bIReportDocumentTypeTemplateService: BIReportDocumentTypeTemplateService;
     public IsEnableEditTemplate: boolean = false;
-    public IsEnableAddTemplate: boolean = false;
+    public IsEnableAddTemplate: boolean = true;
     public ObjectTableId: string;
+    public AvailableDocumentTypeTemplates: Array<any> = [];
 
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
@@ -182,6 +182,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
+        this.AvailableDocumentTypeTemplates = args['AvailableDocumentTypeTemplates'];
         if (this.IsScheduler) {
             this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this, "BIReport");
             this.bIReportDocumentTypeTemplateService.Load();

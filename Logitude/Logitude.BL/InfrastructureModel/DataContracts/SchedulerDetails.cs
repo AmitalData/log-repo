@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.InfrastructureModel.DataContracts
 {
@@ -74,6 +75,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public DWObjectFieldsDetails DWQueryFilterData { get; set; }
         [DataMember]
         public string DocumentTypeTemplateId { get; set; }
+        [DataMember]
+        public List<DocumentTypeTemplatesDetails> DocumentTypeTemplates { get; set; }
     }
 
     [DataContract(Namespace = "")]
@@ -85,5 +88,12 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public string Cc { get; set; }
         [DataMember]
         public string Bcc { get; set; }
+    }
+
+    [DataContract(Namespace = "")]
+    public class DocumentTypeTemplatesDetails
+    {
+        [DataMember]
+        public string Id { get; set; }
     }
 }
