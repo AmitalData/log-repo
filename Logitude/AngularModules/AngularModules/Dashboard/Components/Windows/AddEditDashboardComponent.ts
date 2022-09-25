@@ -156,7 +156,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     DeleteButtonClicked() {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm";
-        confirmWindow.Show("Are you sure you want to delete this dashboard?");
+        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Deleting...");

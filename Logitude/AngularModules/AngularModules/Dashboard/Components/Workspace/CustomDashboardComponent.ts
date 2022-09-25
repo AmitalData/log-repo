@@ -90,7 +90,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         var defaultId: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
         if (!AppTool.IsNullOrEmpty(defaultId)) {
             this.SelectedDashboardId = defaultId;
-            this.GetSingleDashboardWithWidgets(this.SelectedDashboardId);
+            this.ResetFlags();
+            this.GetSingleDashboardWithWidgets(this.SelectedDashboardId);            
         }
 
         else {
@@ -101,6 +102,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMExtendedService.GetDefaultDashboardId().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboardId = myResponse.Result;
+                this.ResetFlags();
                 this.GetSingleDashboardWithWidgets(this.SelectedDashboardId);
             }
         });
@@ -117,6 +119,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 }
 
                 else {
+                    this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({lg: []}));
                     this.SelectedDashboardName = null;
                 }
             }           
@@ -209,8 +212,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (s == "OK_delete") {
-                        this.SelectedDashboardId = null;
-                        this.ResetFlags();
                         this.LoadDefaultDashboardFromServer();
                     }
 
