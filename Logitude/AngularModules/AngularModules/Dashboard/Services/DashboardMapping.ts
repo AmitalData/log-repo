@@ -56,7 +56,10 @@ export class DashboardMapping{
     }
 
     public static GetWidgetPMFromReact(Widget:ReactWidgetPM){
-        return JSON.parse(JSON.stringify(Widget))
+        return JSON.parse(JSON.stringify(Widget,function (key, val) {
+            if (key !== "onChange") 
+                return val
+        }))
     }
 
     public static deepClone(obj){
@@ -72,19 +75,7 @@ export class DashboardMapping{
 
         return clone;
     }
-    public static deepCloneToType(obj,toObj:any){
-        var clone = JSON.parse(JSON.stringify(obj,
-            function (key, val) {
-                if (key !== "UIProperties" 
-                && key != 'entityParentPM'
-                && key != 'PropertyChanged'
-                && key != 'PropertyChanged'
-                && key != 'OldEntityPM') return val
-            }
-            )) ;
-            Object.assign(toObj,clone);
-        return toObj;
-    }
+    
 
 
 

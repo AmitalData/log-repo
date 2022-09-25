@@ -45,6 +45,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
 
     }
     @Output() openEditWidget:EventEmitter<ReactWidgetPM> = new EventEmitter<ReactWidgetPM>()
+    @Output() onReactChangeLayouts:EventEmitter<{ lg: ReactWidgetPM[]; }> = new EventEmitter<{ lg: ReactWidgetPM[]; }>()
     _show: boolean = false;
     @Input('Show') set Show(value) {
         console.log('CustomDashboardLayoutComponent show= ', value);
@@ -94,31 +95,9 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
 
     onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
-        this.CurrentSession.FireEvent("WidgetEdited");
-
-        layouts.lg.forEach(item => {
-            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Id == item.Id);
-            if (myWidget) {
-                myWidget.EndPosition = item.EndPosition;
-                myWidget.StartPotistion = item.StartPotistion;
-            }
-        });
-        this.CheckDeletedWidgets(layouts.lg);
-        MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
+        this.onReactChangeLayouts.emit(layouts);
     }
-    private CheckDeletedWidgets(teactWidgets: ReactWidgetPM[]) {
-       var deletedWidgets: WidgetPM[] = [];
-
-       this.SelectedDashboard.Widgets.forEach(item => {
-           if (teactWidgets.find(d => d.Id == item.Id) == null) {
-               deletedWidgets.push(item);
-           }
-       });
-
-       deletedWidgets.forEach(item => {
-        this.SelectedDashboard.RemoveWidget(item);
-       });
-    }
+    
 
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
         if(!dataPointSelection) return;
