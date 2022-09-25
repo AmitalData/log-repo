@@ -274,11 +274,17 @@
             this.uploadContactstextBox = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.uploadContactsButton = new System.Windows.Forms.Button();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.updateContainersButton = new System.Windows.Forms.Button();
+            this.getContainersListView = new System.Windows.Forms.ListView();
+            this.getContainersButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
             this.updateDashboardLabel = new System.Windows.Forms.Label();
             this.updateDashboardButton = new System.Windows.Forms.Button();
+            this.label26 = new System.Windows.Forms.Label();
+            this.vizionTenantTextBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -295,6 +301,7 @@
             this.groupBox4.SuspendLayout();
             this.PanelShipmentResults.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            this.tabPage7.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -1129,6 +1136,7 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -3009,6 +3017,50 @@
             this.uploadContactsButton.UseVisualStyleBackColor = true;
             this.uploadContactsButton.Click += new System.EventHandler(this.uploadContactsButton_Click);
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.vizionTenantTextBox);
+            this.tabPage7.Controls.Add(this.label26);
+            this.tabPage7.Controls.Add(this.updateContainersButton);
+            this.tabPage7.Controls.Add(this.getContainersListView);
+            this.tabPage7.Controls.Add(this.getContainersButton);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Vizion";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // updateContainersButton
+            // 
+            this.updateContainersButton.Enabled = false;
+            this.updateContainersButton.Location = new System.Drawing.Point(293, 20);
+            this.updateContainersButton.Name = "updateContainersButton";
+            this.updateContainersButton.Size = new System.Drawing.Size(110, 23);
+            this.updateContainersButton.TabIndex = 2;
+            this.updateContainersButton.Text = "Update Containers";
+            this.updateContainersButton.UseVisualStyleBackColor = true;
+            this.updateContainersButton.Click += new System.EventHandler(this.updateContainersButton_Click);
+            // 
+            // getContainersListView
+            // 
+            this.getContainersListView.HideSelection = false;
+            this.getContainersListView.Location = new System.Drawing.Point(24, 72);
+            this.getContainersListView.Name = "getContainersListView";
+            this.getContainersListView.Size = new System.Drawing.Size(968, 505);
+            this.getContainersListView.TabIndex = 1;
+            this.getContainersListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // getContainersButton
+            // 
+            this.getContainersButton.Location = new System.Drawing.Point(177, 20);
+            this.getContainersButton.Name = "getContainersButton";
+            this.getContainersButton.Size = new System.Drawing.Size(110, 23);
+            this.getContainersButton.TabIndex = 0;
+            this.getContainersButton.Text = "Get Containers";
+            this.getContainersButton.UseVisualStyleBackColor = true;
+            this.getContainersButton.Click += new System.EventHandler(this.getContainersButton_Click);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
@@ -3042,6 +3094,22 @@
             this.updateDashboardButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.updateDashboardButton.UseVisualStyleBackColor = true;
             this.updateDashboardButton.Click += new System.EventHandler(this.updateDashboardButton_Click);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(21, 25);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(41, 13);
+            this.label26.TabIndex = 3;
+            this.label26.Text = "Tenant";
+            // 
+            // vizionTenantTextBox
+            // 
+            this.vizionTenantTextBox.Location = new System.Drawing.Point(68, 20);
+            this.vizionTenantTextBox.Name = "vizionTenantTextBox";
+            this.vizionTenantTextBox.Size = new System.Drawing.Size(94, 20);
+            this.vizionTenantTextBox.TabIndex = 4;
             // 
             // Form1
             // 
@@ -3087,6 +3155,8 @@
             this.PanelShipmentResults.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
+            this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3356,6 +3426,12 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label uploadContactsLabel;
         private System.Windows.Forms.ListView UploadContactsList;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.Button getContainersButton;
+        private System.Windows.Forms.ListView getContainersListView;
+        private System.Windows.Forms.Button updateContainersButton;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox vizionTenantTextBox;
     }
 }
 
