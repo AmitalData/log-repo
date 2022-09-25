@@ -42,16 +42,17 @@ namespace CommunicationWorkerRole.Services
                 var loggedUserEmail = queueResponse.MessageValues["LoggedUserEmail"].ToString();
                 AuthenticationUtil.AuthenticatedUserEmail = loggedUserEmail;
 
-                if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
-                {
-                    DatabaseInitializer.RunOnSeconderyDB = true;
-                }
+               
 
                 queryExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
-                executionLog = queryExecutionLogRepository.GetSingle(logId, tenant);
+                executionLog = queryExecutionLogRepository.GetSingle(logId, tenant); 
                 if (executionLog != null && executionLog.StatusCode == "W")
                 {
                     UpdateExecutionLogStatus("P");
+                    if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                    {
+                        DatabaseInitializer.RunOnSeconderyDB = true;
+                    }
                     var queryFilters = LogitudeXmlSerializer.DeserializeObject<CustomApiQueryFilters>(executionLog.QueryFilterXML);
                     var queryToExcelExportService = new QueryToExcelExportService();
                     var queryArgs = new ExportQueryToExcelArgs()
@@ -63,6 +64,7 @@ namespace CommunicationWorkerRole.Services
                     };
 
                     queryToExcelExportService.ExportQueryDataToStorage(queryArgs);
+                    DatabaseInitializer.RunOnSeconderyDB = false;
                     UpdateExecutionLogStatus("D");
                 }
             }
