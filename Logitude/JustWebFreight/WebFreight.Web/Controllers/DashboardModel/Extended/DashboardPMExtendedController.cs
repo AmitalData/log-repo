@@ -1,7 +1,10 @@
 ﻿using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.BL.EntityQueryServices;
+using Logitude.DashboardModule.BL.EntityUpdateServices;
+using Logitude.DashboardModule.Data;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +52,29 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 loggedContactId = contactRepository.GetConactIdByemail(email, 0);
 
             return loggedContactId;
+        }
+
+        public HttpResponseMessage Delete(string dashboardId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Dashboard", "UPDATE", authToken.Tenant);
+
+                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
+                DashboardUpdateService service = new DashboardUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                service.Delete(dashboardId, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }

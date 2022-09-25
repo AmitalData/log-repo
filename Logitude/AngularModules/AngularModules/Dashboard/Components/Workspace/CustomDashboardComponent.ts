@@ -20,6 +20,7 @@ import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { LastFilterClass } from '../../../Infrastructure/Utilities/LastFilterClass';
 
 @Component({
     templateUrl:'CustomDashboardComponent.html',
@@ -35,13 +36,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public SelectedDashboard: DashboardPM;
     public SelectedDashboardName: string;
     public DataContext = this;
-
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
-
     public CloneDashboardLayout: WidgetPM[] ;
     public reactWidgetsLayout:{lg:ReactWidgetPM[]} = {lg:[]};
     @Input('Show') Show;
+    private filterName_SelectedDashboard: string = "SelectedDashboard";
+    private filterControlNameSpace: string = "Workspace.CustomDashboard";
     constructor() {
         super();
         this.dashboardPMService = new DashboardPMService();
@@ -92,6 +93,17 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     private GetDefaultDashboard() {
+        var defaultId: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
+        if (!AppTool.IsNullOrEmpty(defaultId)) {
+            this.SelectedDashboardId = defaultId;
+            this.GetSingleDashboardWithWidgets(this.SelectedDashboardId);
+        }
+
+        else {
+            this.LoadDefaultDashboardFromServer();           
+        }
+    }
+    private LoadDefaultDashboardFromServer() {
         this.dashboardPMExtendedService.GetDefaultDashboardId().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboardId = myResponse.Result;
@@ -186,6 +198,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         if (this.selectedDashboardId != value) {
             this.selectedDashboardId = value;
 
+            LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, (value == null ? null : value));
             this.GetSingleDashboardWithWidgets(value);
         }
     }
@@ -253,7 +266,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.HasChanges = this.SelectedDashboard.IsDirty;
+                    if (s == "OK_delete") {
+                        this.LoadDefaultDashboardFromServer();
+                    }
+
+                    else {
+                        this.HasChanges = this.SelectedDashboard.IsDirty;
+                    }
                 }
             });
         });
@@ -303,7 +322,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
     
-
     EvaluateNewWidgetPosition(){
         let widgetYPosition = 0;
         let widgetXPosition = 0;
@@ -325,7 +343,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         }
     
       }
-
 
     private isBackButtonClicked: boolean = false;
     BackButtonClicked() {

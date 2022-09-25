@@ -77,6 +77,14 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 57px;" *ngIf="!isNew">
+                        <button class="Button" (click)="DeleteButtonClicked()">Delete</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="!isNew">
+                        <div></div>
+                    </td>
+
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>

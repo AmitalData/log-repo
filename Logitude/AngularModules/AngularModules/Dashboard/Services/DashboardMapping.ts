@@ -61,7 +61,6 @@ export class DashboardMapping{
         return JSON.parse(JSON.stringify(w))
     }
 
-
     public static deepClone(obj){
         var clone = JSON.parse(JSON.stringify(obj,
             function (key, val) {

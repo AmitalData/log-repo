@@ -120,8 +120,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
        });
     }
 
-    
-
     private onSelectDataPoint(dataPointSelection: DataPointSelection){
         if(!dataPointSelection) return;
         SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
