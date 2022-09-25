@@ -19,6 +19,8 @@ namespace Logitude.Workflow.Data
    
        	 IDbSet<WorkFlow> WorkFlows { get; }
 		 IDbSet<WorkFlowInstance> WorkFlowInstances { get; }
+		 IDbSet<WorkFlowInstanceActivity> WorkFlowInstanceActivities { get; }
+		 IDbSet<WorkFlowInstanceActivityStatus> WorkFlowInstanceActivityStatuses { get; }
 		 IDbSet<WorkFlowInstanceStatus> WorkFlowInstanceStatuses { get; }
 		 IDbSet<WorkFlowStatus> WorkFlowStatuses { get; }
 	 

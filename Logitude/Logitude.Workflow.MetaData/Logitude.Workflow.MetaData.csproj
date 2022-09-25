@@ -65,6 +65,8 @@
     <None Include="DBTables\WorkFlowStatus.dxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
     <None Include="EntityFiles\WorkFlowInstance.lxml" />
+    <None Include="EntityFiles\WorkFlowInstanceActivity.lxml" />
+    <None Include="EntityFiles\WorkFlowInstanceActivityStatus.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceStatus.lxml" />
     <None Include="EntityFiles\WorkFlowStatus.lxml" />
   </ItemGroup>

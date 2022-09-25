@@ -60,24 +60,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowInstanceActivityStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowInstanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowStatusDetails.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceActivityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceActivityStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\WorkFlowDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkFlowInstanceActivityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkFlowInstanceActivityStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowInstanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowInstanceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowStatusDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\WorkFlowInstanceActivityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WorkFlowInstanceActivityStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowInstancePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowInstanceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowStatusPM.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceActivityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceActivityStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowStatusQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceActivityStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceActivityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowStatusUpdateService.Generated.cs" />
