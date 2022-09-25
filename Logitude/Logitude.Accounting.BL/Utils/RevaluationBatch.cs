@@ -31,6 +31,7 @@ namespace Logitude.Accounting.BL.Utils
 {
     public class RevaluationBatch
     {
+        const string CustomerGLAccountType = "2";
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
         IAccountingContext context;
@@ -205,17 +206,30 @@ namespace Logitude.Accounting.BL.Utils
             {
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
+            FilterInterestTranasctionsForCustomersGLAccountsOnly(journal, interestTransactions);
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
 
-
-            using (TransactionScope excScope = TransactionFactory.GetTransaction())
+            if (interestTransactions.Any())
             {
-                foreach (var item in interestTransactions)
+                using (TransactionScope excScope = TransactionFactory.GetTransaction())
                 {
-                    interestTransactionUpdateService.Update(item, true);
+                    foreach (var item in interestTransactions)
+                    {
+                        interestTransactionUpdateService.Update(item, true);
+                    }
+                    excScope.Complete();
                 }
-                excScope.Complete();
             }
+        }
+
+        private void FilterInterestTranasctionsForCustomersGLAccountsOnly(JournalPM journal, List<InterestTransactionPM> interestTransactions)
+        {
+            var repoGLAccountFastFetch = new GLAccountRepository(journal.Tenant);
+            var glAccounts = repoGLAccountFastFetch.GetByGLAccountsIdList(interestTransactions.Select(x => x.GLAccountId).ToList(), journal.Tenant);
+            var customersGLAccountsIds = glAccounts
+                .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
+                .Select(r => r.Id);
+            interestTransactions = interestTransactions.Where(x => customersGLAccountsIds.Contains(x.GLAccountId)).ToList();
         }
 
         private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)

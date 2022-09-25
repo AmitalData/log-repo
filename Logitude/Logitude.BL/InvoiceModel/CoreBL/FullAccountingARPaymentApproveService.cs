@@ -42,7 +42,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 {
     public class FullAccountingARPaymentApproveService
     {
-        const string PartnerTypeId_Customer = "CS";
+        const string CustomerChartOfAccountsTypeCode = "3";
+        const string CustomerGLAccountType = "2";
         const string ReturnedToCustomer = "5";
         GLAccountPM paymentGLAccount = null;
         CashBookPM PaymentCashbook = null;
@@ -148,28 +149,24 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private int originalEntityLineNumber = 0;
         public InterestTransactionPM GetInterestTransactionLineForCheque(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
-            if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
-            {
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
-                return interestTransaction;
-            }
-            return null;
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
+            return interestTransaction;
         }
 
         public InterestTransactionPM GetInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
         {
-            if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
-            {
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
-                return interestTransaction;
-            }
-            return null;
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
+            return interestTransaction;
         }
 
         private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType))
+            {
+                return null;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -190,6 +187,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private InterestTransactionPM MapInterestTransactionPMFromBankTransferARPaymentPM(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
         {
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType))
+            {
+                return null;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",

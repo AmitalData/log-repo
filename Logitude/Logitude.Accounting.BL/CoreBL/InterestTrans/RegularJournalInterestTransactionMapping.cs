@@ -15,7 +15,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 {
     public class RegularJournalInterestTransactionMapping
     {
-     
+        const string CustomerGLAccountType = "2";
         public  void CreatelInterestTransactions(JournalPM regularJournal)
         {
             if (regularJournal.TypeCode != JournalTypeValues.Regular)//0	Regular	רגיל	0,רגיל,False,Regular,	0
@@ -92,8 +92,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(regularJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), regularJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues+"" &&
-                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses+"" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers+"")
+                .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
 
 
@@ -161,8 +160,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(externalJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), externalJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues + "" &&
-                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses + "" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers + "")
+                .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
 
 

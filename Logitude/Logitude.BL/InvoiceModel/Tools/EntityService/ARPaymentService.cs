@@ -46,7 +46,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     {
         const string ChequeARPaymentAccountingMethod= "CH";
         const string BankTransferARPaymentAccountingMethod = "BT";
-
+        const string CustomerChartOfAccountsTypeCode = "3";
+        const string CustomerGLAccountType = "2";
         private int tenant;
         public ARPayment paymentPoco { get; set; }
         private ARPaymentPM paymentPM;
@@ -704,6 +705,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment);
+            if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType)) {
+                return null;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",

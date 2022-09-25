@@ -53,7 +53,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public const string QP_JournalTenant = "JournalTenant";
         public const string QP_JournalId = "JournalId";
-        const string PartnerTypeId_Customer = "CS";
         const string CashARPaymentAccountingMethod = "CA";
         const string ChequeARPaymentAccountingMethod = "CH";
         const string BankTransferARPaymentAccountingMethod = "BT";
@@ -117,17 +116,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
         }
-
         private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context) {
             if (journalPM is null || journalPM.IsLedgerCreated == true) {
                 return;
             }
-
             if (journalPM.AccountingEntityCode == AccountingEntityValues.ARPayment) {
                 ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(journalPM.Tenant);
                 ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePM(journalPM.AccountingEntityId, journalPM.Tenant);
-
-                if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod && aRPaymentPM.BillToPartnerTypeId == PartnerTypeId_Customer)
+                    
+                if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod)
                 {
                     CreateInterestTrascntionsForCashARPayment(journalPM, aRPaymentPM, context);
                 }
@@ -163,7 +160,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 aRInvoiceService.CreateARInvoiceInterestTransactions(journalPM.AccountingEntityId, journalPM.Tenant);
             }
         }
-        
+
         private void CreateInterestTrascntionsForCashARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
@@ -217,9 +214,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 var returnedCheque = arPaymentCheques.FirstOrDefault(x => x.ChequeNumber == chequeNumber);
                 int returnedChequeLineNumber = arPaymentCheques.Max(x => x.LineNumber) + returnedCheque.LineNumber;
                 var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM);
-                interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
-                if (!CheckIfInterestTransactionCreated(interestTranasction))
-                    interestTransactionUpdateService.Update(interestTranasction, true);
+                if (interestTranasction != null) {
+                    interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
+                    if (!CheckIfInterestTransactionCreated(interestTranasction))
+                        interestTransactionUpdateService.Update(interestTranasction, true);
+                }
             }
             else
             {
