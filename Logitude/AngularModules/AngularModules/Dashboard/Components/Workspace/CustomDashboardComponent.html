@@ -96,7 +96,7 @@
     </div>
 
     <div class="Dashboard-body">
-        <custom-layout (openEditWidget)="openEditWidget($event)" [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
+        <custom-layout (onReactChangeLayouts)="onReactChangeLayouts($event)" (openEditWidget)="openEditWidget($event)" [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
     </div>
 </div>
 
