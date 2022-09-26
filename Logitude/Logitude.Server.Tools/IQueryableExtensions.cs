@@ -23,16 +23,24 @@ namespace Logitude.Server.Tools
             foreach (var parameter in objectQuery.Parameters)
             {
                 var name = "@" + parameter.Name;
-                var value = "";
-                if (parameter.Value.GetType() == typeof(DateTime))
-                    value = "'" + ((DateTime)parameter.Value).ToString("MM/dd/yyyy HH:mm:ss") + "'";
-                else
-                    value = "'" + parameter.Value.ToString() + "'";
+                string value = GetValueAsString(parameter);
 
                 result = result.Replace(name, value);
             }
 
             return result;
+        }
+
+        private static string GetValueAsString(ObjectParameter parameter)
+        {
+            var value = "NULL";
+            if (parameter.Value == null)
+                return value;
+            if (parameter.Value.GetType() == typeof(DateTime))
+                value = "'" + ((DateTime)parameter.Value).ToString("MM/dd/yyyy HH:mm:ss") + "'";
+            else
+                value = "'" + parameter.Value.ToString() + "'";
+            return value;
         }
 
         /// <summary>
