@@ -201,11 +201,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
 
     EditDashboardClicked() {
         MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page", DashboardId: this.SelectedDashboard?.Id });
-        this.IsEditDashboardButtonVisible = false;
-
+        
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Dashboard";
-
         logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {

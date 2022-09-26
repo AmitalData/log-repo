@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Analytics Facts Fields MetaData&quot;"
-  Code="&quot;4089&quot;"
+  Code="&quot;11de&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;DashboardModule&quot;"
