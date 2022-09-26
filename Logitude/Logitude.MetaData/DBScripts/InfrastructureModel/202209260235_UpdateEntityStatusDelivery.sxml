@@ -1,0 +1,10 @@
+﻿<Script DBType="Main"  Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+ 
+  update [EntityStatus] set [Name] = 'Out for Delivery' 
+  where ObjectTableId = (select Id from ObjectTables where Name = 'Shipment') and Code = 'SDLY'
+
+    ]]>
+  </Sql>
+</Script>
