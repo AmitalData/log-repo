@@ -591,7 +591,7 @@
                                 </log-column>
 
                                 <!-- Markup currency -->
-                                <log-column [SortFieldName]="'MarkUpCurrencyId'" [width]="'100'" [header]="'Markup Currency'">
+                                <log-column *ngIf ="Father.IsMarkUpCurrencyHasFeatureToggle" [SortFieldName]="'MarkUpCurrencyId'" [width]="'100'" [header]="'Markup Currency'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsMarkupCurrencyValid">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
