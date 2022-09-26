@@ -757,6 +757,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.PickupETD = myFirstPickup.ETD;
                         invoicedataprovider.PickupAddress = myServicHelper.GetPickUpAddress(myFirstPickup);
                         invoicedataprovider.PickupShortAddress = myServicHelper.GetPickUpDeliveryShortAddress(myFirstPickup);
+                        invoicedataprovider.FirstPickupEmptyContainer = string.IsNullOrEmpty(myFirstPickup.EmptyPickupContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x=> x.Id == myFirstPickup.EmptyPickupContainerPartnerId && x.Tenant == tenant)?.EnglishName;
                     }
 
                     #endregion
@@ -844,6 +845,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         invoicedataprovider.LastDeliveryATD = lastDelivery.ATD;
+                        invoicedataprovider.LastDeliveryEmptyContainerReturn = string.IsNullOrEmpty(myFirstPickup.EmptyDeliveryContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x => x.Id == myFirstPickup.EmptyDeliveryContainerPartnerId && x.Tenant == tenant)?.EnglishName;
                     }
 
                     if (pickup != null)
