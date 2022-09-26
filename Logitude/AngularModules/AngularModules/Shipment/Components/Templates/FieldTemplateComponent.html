@@ -231,7 +231,7 @@
                         <td>
                             <div class="MediaFill">
                                 <div *ngIf="FieldName == 'ShipmentId'" class="TemplateTrimming">
-                                    <span class="hyperlink" (click)="ViewShipmentClicked()">View</span>
+                                    <span class="hyperlink" (click)="ViewShipmentClicked()">{{Entity.ShipmentNumber}}</span>
                                 </div>
 
                                 <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'ShipmentStatusName'" class="TemplateTrimming">
