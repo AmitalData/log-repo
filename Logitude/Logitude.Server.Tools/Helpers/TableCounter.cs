@@ -161,15 +161,15 @@ namespace Logitude.Server.Tools.Helpers
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
-                    List<int> newSPTenants = new List<int>()
-                    {
-                        1,42,1330,2573
-                    };
-                    if (newSPTenants.Where(a=>a == tenant).Count() > 0)
-                    {
-                        cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
-                    }
+                    //SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
+                    //List<int> newSPTenants = new List<int>()
+                    //{
+                    //    1,42,1330,2573
+                    //};
+                    //if (newSPTenants.Where(a=>a == tenant).Count() > 0)
+                    //{
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
+                    //}
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
