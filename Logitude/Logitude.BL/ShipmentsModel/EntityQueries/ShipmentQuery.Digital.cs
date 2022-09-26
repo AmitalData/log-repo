@@ -947,7 +947,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
             {
-                return shipment.MainCarriageToPortName + ", " + shipment.MainCarriageFromPortCountryCode; 
+                return shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode; 
             }
 
             return null;
@@ -1148,6 +1148,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        private string GetVerticalTimeLineMasterTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "MAWB";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "OBL";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "CMR/RWB/PRO #";
+            }
+
+            return null;
+        }
+
         private string GetCarrierTextCode(ShipmentPM shipment)
         {
             if (shipment.TransportModeId == "A")
@@ -1167,7 +1187,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        
+
         private string GetCarrierNumberTextCode(ShipmentPM shipment)
         {
             if (shipment.TransportModeId == "A")
@@ -1187,6 +1207,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
+
+        private string GetVerticalTimelineCarrierNumberTextCode(ShipmentPM shipment)
+        {
+            if (shipment.TransportModeId == "A")
+            {
+                return "Flight";
+            }
+
+            if (shipment.TransportModeId == "O")
+            {
+                return "Voyage";
+            }
+
+            if (shipment.TransportModeId == "I")
+            {
+                return "Trucker";
+            }
+
+            return null;
+        }
+
 
         private string GetTransportModeName(string transportModeId)
         {
@@ -1603,8 +1644,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var shipmentPickUpDeliveries = (from a in repository.context.ShipmentPickUpDeliveries.Include("FromAddressCountry").Include("ToAddressCountry") where a.ShipmentId == shipment.Id select a);
             VerticalTimeLineData VerticalTimeLineData = new VerticalTimeLineData();
 
-            // Pre Carraige, On Carraige
-            this.FillPreOnCarraigeLegsTimeLine(VerticalTimeLineData, shipment);
+            // Pick Up 
+            this.FillPickUpVerticalTimeLine(VerticalTimeLineData, shipmentPickUpDeliveries);
+
+            // WarehouseLeg,WarehouseLeg2 (Terminal hub)
+            this.FillWarehouseLegsTimeLine(VerticalTimeLineData, shipment);
+
+            // Pre Carraige
+            this.FillPreCarraigeLegTimeLine(VerticalTimeLineData, shipment);
 
             // Main Carraige from
             this.FillMainCarraigeFromVerticalTimeLine(VerticalTimeLineData, shipment);
@@ -1615,11 +1662,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             // Main Carraige to
             this.FillMainCarraigeToVerticalTimeLine(VerticalTimeLineData, shipment);
 
-            // WarehouseLeg,WarehouseLeg2
-            this.FillWarehouseLegsTimeLine(VerticalTimeLineData, shipment);
-
-            // Pick Up 
-            this.FillPickUpVerticalTimeLine(VerticalTimeLineData, shipmentPickUpDeliveries);
+            // On Carraige
+            this.FillOnCarraigeLegTimeLine(VerticalTimeLineData, shipment);
 
             // Delivery
             this.FillDeliveryVerticalTimeLine(VerticalTimeLineData, shipmentPickUpDeliveries);
@@ -1627,31 +1671,123 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return VerticalTimeLineData;
         }
 
-        private void FillPreOnCarraigeLegsTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
+        private void FillPickUpVerticalTimeLine(VerticalTimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        {
+
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (firstPickup == null)
+            {
+                return;
+            }
+
+            int tenant = firstPickup.Tenant;
+            timeLineData.Pickup = new VerticalTimeLineStop()
+            {
+                Title = "Pick up",
+                City = "",
+                CountryCode = "",
+                ATDDate = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
+                ATDDateType = firstPickup.ATD != null ? "Actual" : (firstPickup.ETD != null ? "Estimated" : null),
+                LegDetails = FillPickUpDeliveryLegDetails(firstPickup),
+                TransportModeId = firstPickup.TransportModeCode,
+            };
+
+            this.FillPickUpCityAndCountry(timeLineData, firstPickup, tenant);
+        }
+
+        private Dictionary<string, string> FillPickUpDeliveryLegDetails(ShipmentPickUpDelivery firstPickup)
+        {
+            Card trucker = CardRepository.GetSingleCard(firstPickup.CarrierId, tenant, true);
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Trucker Name", trucker?.EnglishName },
+                { "Trucker Number", firstPickup.CarrierNumber }
+            };
+
+            return legDetails;
+        }
+
+        private void FillWarehouseLegsTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+            {
+                VerticalTimeLineData.Warehouse1 = new VerticalTimeLineStop()
+                {
+                    Title = "Terminal hub",
+                    City = shipment.WarehouseLegAddressCity,
+                    CountryCode = shipment.WarehouseLegAddressCountryName,
+                    ATDDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
+                    ATDDateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
+                    ATADate = shipment.WarehouseLegActualReleaseDate != null ? shipment.WarehouseLegActualReleaseDate : shipment.WarehouseLegExpectedReleaseDate,
+                    ATADateType = shipment.WarehouseLegActualReleaseDate != null ? "Actual" : (shipment.WarehouseLegExpectedReleaseDate != null ? "Estimated" : null),
+                    LegDetails = FillTerminalLegDetails(shipment),
+                    TransportModeId = shipment.TransportModeId,
+                };
+            }
+        }
+
+        private Dictionary<string, string> FillTerminalLegDetails(ShipmentPM shipment)
+        {
+            var storageDays = GetStorageDays(shipment);
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Warehouse cut off date", shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy") },
+                { "Storage days", storageDays + " days" }
+            };
+
+            return legDetails;
+        }
+
+        private int GetStorageDays(ShipmentPM shipment)
+        {
+            int storageDays = 0;
+            if (shipment.WarehouseLegActualReleaseDate != null && shipment.WarehouseLegActualEntryDate != null)
+            {
+                if (shipment.WarehouseLegActualReleaseDate >= shipment.WarehouseLegActualEntryDate)
+                {
+                    DateTime warehouseLegActualReleaseDate = (DateTime)shipment.WarehouseLegActualReleaseDate;
+                    DateTime warehouseLegActualEntryDate = (DateTime)shipment.WarehouseLegActualEntryDate;
+                    TimeSpan span = warehouseLegActualReleaseDate.Subtract(warehouseLegActualEntryDate);
+                    storageDays = (int)Math.Round(span.TotalDays);
+                }
+            }
+
+            return storageDays;
+        }
+
+        private void FillPreCarraigeLegTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
         {
             if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
             {
                 VerticalTimeLineData.PreCarriage = new VerticalTimeLineStop()
                 {
-                    Title = "Pre carriage", 
+                    Title = "Pre carriage",
                     City = shipment.PreCarriageFromPortName,
                     CountryCode = shipment.PreCarriageFromPortCountryCode,
-                    Date = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
-                    DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
+                    ATDDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
+                    ATDDateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
+                    ATADate = shipment.PreCarriageATA != null ? shipment.PreCarriageATA : shipment.PreCarriageETA,
+                    ATADateType = shipment.PreCarriageATA != null ? "Actual" : (shipment.PreCarriageETA != null ? "Estimated" : null),
+                    TransportModeId = shipment.TransportModeId,
+                    LegDetails = FillPreCarriageLegDetails(shipment),
                 };
+            }
+        }
+
+        private Dictionary<string, string> FillPreCarriageLegDetails(ShipmentPM shipment)
+        {
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Carrier", CheckEmptyValue(shipment.PreCarriageCarrierName) },
+                { "Carrier No", CheckEmptyValue(shipment.PreCarriageCarrierNumber) }
+            };
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.PreCarriageVesselName));
             }
 
-            if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
-            {
-                VerticalTimeLineData.OnCarriage = new VerticalTimeLineStop()
-                {
-                    Title = "On carriage",
-                    City = shipment.OnCarriageFromPortName,
-                    CountryCode = shipment.OnCarriageFromPortCountryCode,
-                    Date = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD,
-                    DateType = shipment.OnCarriageATD != null ? "Actual" : (shipment.OnCarriageETD != null ? "Estimated" : null),
-                };
-            }
+            return legDetails;
         }
 
         private void FillMainCarraigeFromVerticalTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
@@ -1661,47 +1797,30 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
                 City = shipment.MainCarriageFromPortName,
                 CountryCode = shipment.MainCarriageFromPortCountryCode,
-                Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
-                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
+                ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+                ATDDateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
+                ATADate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
+                ATADateType = shipment.MainCarriageATA != null ? "Actual" : (shipment.MainCarriageETA != null ? "Estimated" : null),
+                LegDetails = FillMainCarriageFromLegDetails(shipment),
             };
         }
-       
-        private void FillMainCarraigeToVerticalTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
+
+        private Dictionary<string, string> FillMainCarriageFromLegDetails(ShipmentPM shipment)
         {
-            VerticalTimeLineData.MainCarriageTo = new VerticalTimeLineStop()
+            var master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master;
+            var legDetails = new Dictionary<string, string>
             {
-                Title = shipment.TransportModeId == "A" ? "Destination" : "Discharge port",
-                City = shipment.MainCarriageFinalDestinationPortName,
-                CountryCode = shipment.MainCarriageFinalDestinationPortCountryCode,
-                Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
-                DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
             };
-        }
-       
-        private void FillWarehouseLegsTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
-        {
-            if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+
+            if (shipment.TransportModeId == "O")
             {
-                VerticalTimeLineData.Warehouse1 = new VerticalTimeLineStop()
-                {
-                    Title = "Warehouse 1",
-                    City = shipment.WarehouseLegAddressCity,
-                    CountryCode = shipment.WarehouseLegAddressCountryName,
-                    Date = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
-                    DateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
-                };
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.MainCarriageVesselName));
             }
-            if (!string.IsNullOrEmpty(shipment.WarehouseLeg2WarehouseId))
-            {
-                VerticalTimeLineData.Warehouse2 = new VerticalTimeLineStop()
-                {
-                    Title = "Warehouse 2",
-                    City = shipment.WarehouseLeg2AddressCity,
-                    CountryCode = shipment.WarehouseLeg2AddressCountryName,
-                    Date = shipment.WarehouseLeg2ActualEntryDate != null ? shipment.WarehouseLeg2ActualEntryDate : shipment.WarehouseLeg2ExpectedEntryDate,
-                    DateType = shipment.WarehouseLeg2ActualEntryDate != null ? "Actual" : (shipment.WarehouseLeg2ExpectedEntryDate != null ? "Estimated" : null),
-                };
-            }
+
+            return legDetails;
         }
 
         private void FillTransshipmentTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
@@ -1713,8 +1832,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 1 port",
                     City = shipment.Transshipment1FromPortName,
                     CountryCode = shipment.Transshipment1FromPortCountryName,
-                    Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
-                    DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
+                    ATDDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
+                    ATDDateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
+                    ATADate = shipment.Transshipment1ATA != null ? shipment.Transshipment1ATA : shipment.Transshipment1ETA,
+                    ATADateType = shipment.Transshipment1ATA != null ? "Actual" : (shipment.Transshipment1ETA != null ? "Estimated" : null),
+                    LegDetails = FillTransshipment1LegDetails(shipment),
                 };
             }
 
@@ -1725,8 +1847,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 2 port",
                     City = shipment.Transshipment2FromPortName,
                     CountryCode = shipment.Transshipment2FromPortCountryName,
-                    Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
-                    DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
+                    ATDDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
+                    ATDDateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
+                    ATADate = shipment.Transshipment2ATA != null ? shipment.Transshipment2ATA : shipment.Transshipment2ETA,
+                    ATADateType = shipment.Transshipment2ATA != null ? "Actual" : (shipment.Transshipment2ETA != null ? "Estimated" : null),
+                    LegDetails = FillTransshipment2LegDetails(shipment),
                 };
             }
 
@@ -1737,31 +1862,230 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 3 port",
                     City = shipment.Transshipment3FromPortName,
                     CountryCode = shipment.Transshipment3FromPortCountryName,
-                    Date = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
-                    DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
+                    ATDDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
+                    ATDDateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
+                    ATADate = shipment.Transshipment3ATA != null ? shipment.Transshipment3ATA : shipment.Transshipment3ETA,
+                    ATADateType = shipment.Transshipment3ATA != null ? "Actual" : (shipment.Transshipment3ETA != null ? "Estimated" : null),
+                    LegDetails = FillTransshipment3LegDetails(shipment),
                 };
             }
         }
 
-        private void FillPickUpVerticalTimeLine(VerticalTimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        private Dictionary<string, string> FillTransshipment1LegDetails(ShipmentPM shipment)
         {
-            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
-            if (firstPickup == null)
+            var master = shipment.Transshipment1AdditionalMAWBOBLBL;
+            var legDetails = new Dictionary<string, string>
             {
-                return;
-            }
-
-            int tenant = firstPickup.Tenant;
-            timeLineData.Pickup = new VerticalTimeLineStop()
-            {
-                Title = "Pickup",
-                City = "",
-                CountryCode = "",
-                Date = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
-                DateType = firstPickup.ATD != null ? "Actual" : (firstPickup.ETD != null ? "Estimated" : null),
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
             };
 
-            this.FillPickUpCityAndCountry(timeLineData, firstPickup, tenant);
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.Transshipment1VesselName));
+            }
+
+            return legDetails;
+        }
+
+        private Dictionary<string, string> FillTransshipment2LegDetails(ShipmentPM shipment)
+        {
+            var master = shipment.Transshipment2AdditionalMAWBOBLBL;
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.Transshipment2VesselName));
+            }
+
+            return legDetails;
+        }
+
+        private Dictionary<string, string> FillTransshipment3LegDetails(ShipmentPM shipment)
+        {
+            var master = shipment.Transshipment3AdditionalMAWBOBLBL;
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.Transshipment3VesselName));
+            }
+
+            return legDetails;
+        }
+
+        private void FillMainCarraigeToVerticalTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
+        {
+            VerticalTimeLineData.MainCarriageTo = new VerticalTimeLineStop()
+            {
+                Title = shipment.TransportModeId == "A" ? "Destination" : "Discharge port",
+                City = shipment.MainCarriageFinalDestinationPortName,
+                CountryCode = shipment.MainCarriageFinalDestinationPortCountryCode,
+                ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
+                ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
+                LegDetails = FillMainCarraigeToLegDetails(shipment),
+            };
+        }
+
+        private Dictionary<string, string> FillMainCarraigeToLegDetails(ShipmentPM shipment)
+        {
+            var master = GetMasterOfDischargeLeg(shipment);
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(GetCarrierNameOfDischargeLeg(shipment)) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(GetCarrierNumberOfDischargeLeg(shipment)) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(GetVesselOfDischargeLeg(shipment)));
+            }
+
+            return legDetails;
+        }
+
+        private string GetMasterOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master;
+            }
+
+            return null;
+        }
+
+        private string GetCarrierNameOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageCarrierName;
+            }
+
+            return null;
+        }
+
+        private string GetCarrierNumberOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageCarrierNumber;
+            }
+
+            return null;
+        }
+
+        private string GetVesselOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageVesselName;
+            }
+
+            return null;
+        }
+
+        private void FillOnCarraigeLegTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
+        {
+
+            if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
+            {
+                VerticalTimeLineData.OnCarriage = new VerticalTimeLineStop()
+                {
+                    Title = "On carriage",
+                    City = shipment.OnCarriageFromPortName,
+                    CountryCode = shipment.OnCarriageFromPortCountryCode,
+                    ATADate = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
+                    ATADateType = shipment.OnCarriageATA != null ? "Actual" : (shipment.OnCarriageETA != null ? "Estimated" : null),
+                    TransportModeId = shipment.TransportModeId,
+                    LegDetails = FillOnCarriageLegDetails(shipment),
+                };
+            }
+        }
+
+        private Dictionary<string, string> FillOnCarriageLegDetails(ShipmentPM shipment)
+        {
+            Dictionary<string, string> legDetails = new Dictionary<string, string>();
+            legDetails.Add("Carrier", CheckEmptyValue(shipment.OnCarriageCarrierName));
+            legDetails.Add("Carrier No", CheckEmptyValue(shipment.OnCarriageCarrierNumber));
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(shipment.OnCarriageVesselName));
+            }
+
+            return legDetails;
         }
 
         private void FillDeliveryVerticalTimeLine(VerticalTimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
@@ -1778,13 +2102,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = "Delivery",
                 City = "",
                 CountryCode = "",
-                Date = finalDelivery.ATA != null ? finalDelivery.ATA : finalDelivery.ETA,
-                DateType = finalDelivery.ATA != null ? "Actual" : (finalDelivery.ETA != null ? "Estimated" : null),
+                ATDDate = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
+                ATDDateType = finalDelivery.ATD != null ? "Actual" : (finalDelivery.ETD != null ? "Estimated" : null),
+                ATADate = finalDelivery.ATA != null ? finalDelivery.ATA : finalDelivery.ETA,
+                ATADateType = finalDelivery.ATA != null ? "Actual" : (finalDelivery.ETA != null ? "Estimated" : null),
+                LegDetails = FillPickUpDeliveryLegDetails(finalDelivery),
+                TransportModeId = finalDelivery.TransportModeCode,
             };
 
             this.FillDeliveryCityAndCountry(timeLineData, finalDelivery, tenant);
         }
 
+        private string CheckEmptyValue(string value)
+        {
+            var newValue = value;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                newValue = "–";
+            }
+
+            return newValue;
+        }
         #endregion Shipment Vertical TimeLine
 
         public Tuple <string, int> GetShipmentIdBySecurityKey(string key)
@@ -1805,5 +2143,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return Tuple.Create(shipment.Id, shipment.Tenant);
         }
+   
     }
 }
