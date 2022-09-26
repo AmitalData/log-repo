@@ -684,7 +684,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "EHA,House Entity Automation Test", 
                 Description = "House Entity Automation Test", 
 			});
-			
 			 
             all.Add(new ToggleDetails()
             {    
@@ -693,7 +692,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QPI,Query Performance Inhancement", 
                 Description = "Query Performance Inhancement", 
 			});
-			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QMU", 
+                SearchFields = "QMU,Quote Markup Currency", 
+                Name = "Quote Markup Currency", 
+                Description = "Quote Markup Currency", 
+			});
 			
             return all;
        }
