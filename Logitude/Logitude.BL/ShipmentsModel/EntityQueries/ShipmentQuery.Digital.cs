@@ -1688,6 +1688,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CountryCode = "",
                 ATDDate = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
                 ATDDateType = firstPickup.ATD != null ? "Actual" : (firstPickup.ETD != null ? "Estimated" : null),
+                Date = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
+                DateType = firstPickup.ATD != null ? "Actual" : (firstPickup.ETD != null ? "Estimated" : null),
                 LegDetails = FillPickUpDeliveryLegDetails(firstPickup),
                 TransportModeId = firstPickup.TransportModeCode,
             };
@@ -1700,8 +1702,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             Card trucker = CardRepository.GetSingleCard(firstPickup.CarrierId, tenant, true);
             var legDetails = new Dictionary<string, string>
             {
-                { "Trucker Name", trucker?.EnglishName },
-                { "Trucker Number", firstPickup.CarrierNumber }
+                { "Trucker Name", CheckEmptyValue(trucker?.EnglishName) },
+                { "Trucker Number", CheckEmptyValue(firstPickup.CarrierNumber) }
             };
 
             return legDetails;
@@ -1716,6 +1718,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Terminal hub",
                     City = shipment.WarehouseLegAddressCity,
                     CountryCode = shipment.WarehouseLegAddressCountryName,
+                    Date = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
+                    DateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
                     ATDDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
                     ATDDateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
                     ATADate = shipment.WarehouseLegActualReleaseDate != null ? shipment.WarehouseLegActualReleaseDate : shipment.WarehouseLegExpectedReleaseDate,
@@ -1729,10 +1733,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillTerminalLegDetails(ShipmentPM shipment)
         {
             var storageDays = GetStorageDays(shipment);
+            var storageDaysText = storageDays == 0 ? "–" : storageDays + " days";
+            var warehouseLegCutOffDate = shipment.WarehouseLegCutOffDate == null ? "–" : shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy");
             var legDetails = new Dictionary<string, string>
             {
-                { "Warehouse cut off date", shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy") },
-                { "Storage days", storageDays + " days" }
+                { "Warehouse cut off date", warehouseLegCutOffDate},
+                { "Storage days", storageDaysText }
             };
 
             return legDetails;
@@ -1764,6 +1770,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Pre carriage",
                     City = shipment.PreCarriageFromPortName,
                     CountryCode = shipment.PreCarriageFromPortCountryCode,
+                    Date = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
+                    DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
                     ATDDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
                     ATDDateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
                     ATADate = shipment.PreCarriageATA != null ? shipment.PreCarriageATA : shipment.PreCarriageETA,
@@ -1797,6 +1805,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
                 City = shipment.MainCarriageFromPortName,
                 CountryCode = shipment.MainCarriageFromPortCountryCode,
+                Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 ATDDateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATADate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
@@ -1832,6 +1842,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 1 port",
                     City = shipment.Transshipment1FromPortName,
                     CountryCode = shipment.Transshipment1FromPortCountryName,
+                    Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
+                    DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
                     ATDDateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
                     ATADate = shipment.Transshipment1ATA != null ? shipment.Transshipment1ATA : shipment.Transshipment1ETA,
@@ -1847,6 +1859,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 2 port",
                     City = shipment.Transshipment2FromPortName,
                     CountryCode = shipment.Transshipment2FromPortCountryName,
+                    Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
+                    DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
                     ATDDateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
                     ATADate = shipment.Transshipment2ATA != null ? shipment.Transshipment2ATA : shipment.Transshipment2ETA,
@@ -1862,6 +1876,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 3 port",
                     City = shipment.Transshipment3FromPortName,
                     CountryCode = shipment.Transshipment3FromPortCountryName,
+                    Date = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
+                    DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
                     ATDDateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
                     ATADate = shipment.Transshipment3ATA != null ? shipment.Transshipment3ATA : shipment.Transshipment3ETA,
@@ -2066,6 +2082,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "On carriage",
                     City = shipment.OnCarriageFromPortName,
                     CountryCode = shipment.OnCarriageFromPortCountryCode,
+                    Date = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
+                    DateType = shipment.OnCarriageATA != null ? "Actual" : (shipment.OnCarriageETA != null ? "Estimated" : null),
                     ATADate = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
                     ATADateType = shipment.OnCarriageATA != null ? "Actual" : (shipment.OnCarriageETA != null ? "Estimated" : null),
                     TransportModeId = shipment.TransportModeId,
@@ -2102,8 +2120,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = "Delivery",
                 City = "",
                 CountryCode = "",
-                ATDDate = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
-                ATDDateType = finalDelivery.ATD != null ? "Actual" : (finalDelivery.ETD != null ? "Estimated" : null),
+                Date = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
+                DateType = finalDelivery.ATD != null ? "Actual" : (finalDelivery.ETD != null ? "Estimated" : null),
                 ATADate = finalDelivery.ATA != null ? finalDelivery.ATA : finalDelivery.ETA,
                 ATADateType = finalDelivery.ATA != null ? "Actual" : (finalDelivery.ETA != null ? "Estimated" : null),
                 LegDetails = FillPickUpDeliveryLegDetails(finalDelivery),
