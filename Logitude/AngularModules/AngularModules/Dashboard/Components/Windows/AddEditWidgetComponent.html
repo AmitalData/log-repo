@@ -95,9 +95,9 @@
                                                 <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
-                                                <ComboBox  (SelectedItemChanged)="DateGroupCode = $event"
-                                                            [ItemsSource]="DateGroupCodes" 
-                                                            [SelectedItem]="DateGroupCode">
+                                                <ComboBox (SelectedItemChanged)="DateGroupCode = $event"
+                                                          [ItemsSource]="DateGroupCodes"
+                                                          [SelectedItem]="DateGroupCode">
                                                 </ComboBox>
                                             </td>
                                             <td>
@@ -107,44 +107,12 @@
 
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'SortBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <ComboBox  (SelectedItemChanged)="SortBy = $event.Code"
-                                                                       [ItemsSource]="SortByCodes" 
-                                                                       [SelectedItem]="GetSelectedSort()"
-                                                                       [Binding] ="'Text'">
-                                                            </ComboBox>
-                                                        </td>
-                                                        <td style="width: 2px;">
-                                                            <div></div>
-                                                        </td>
-                                                        <td>
-                                                            <ComboBox  (SelectedItemChanged)="SortDirection = $event"
-                                                                       [ItemsSource]="SortByDirections" 
-                                                                       [SelectedItem]="SortDirection">
-                                                            </ComboBox>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr class="FormFieldRow">
-                                            <td>
                                                 <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
-                                                <ComboBox  (SelectedItemChanged)="MaximumGrouping = $event"
-                                                            [ItemsSource]="MaximumGroupings" 
-                                                            [SelectedItem]="MaximumGrouping">
+                                                <ComboBox (SelectedItemChanged)="MaximumGrouping = $event"
+                                                          [ItemsSource]="MaximumGroupings"
+                                                          [SelectedItem]="MaximumGrouping">
                                                 </ComboBox>
                                             </td>
                                             <td>
@@ -192,6 +160,38 @@
                                                     <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AddNewMeasureClicked()"></IconButton>
                                                     <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                                 </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'SortBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
+                                                                      [ItemsSource]="SortByCodes"
+                                                                      [SelectedItem]="GetSelectedSort()"
+                                                                      [Binding]="'Text'">
+                                                            </ComboBox>
+                                                        </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <ComboBox (SelectedItemChanged)="SortDirection = $event"
+                                                                      [ItemsSource]="SortByDirections"
+                                                                      [SelectedItem]="SortDirection">
+                                                            </ComboBox>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
 
