@@ -3040,6 +3040,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string City { get; set; }
         public DateTime? ATDDate { get; set; }
         public string ATDDateType { get; set; }
+        public DateTime? Date { get; set; }
+        public string DateType { get; set; }
         public DateTime? ATADate { get; set; }
         public string ATADateType { get; set; }
         public bool IsViaPortsDatesFilled { get; set; }
