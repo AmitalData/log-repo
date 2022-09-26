@@ -401,13 +401,6 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
         }
     }
 
-    get DocumentTypeTemplateIds() { return this.EntityPM.DocumentTypeTemplateIds; }
-    set DocumentTypeTemplateIds(newValue: any) {
-        if (this.EntityPM.DocumentTypeTemplateIds != newValue) {
-            this.EntityPM.DocumentTypeTemplateIds = newValue;
-        }
-    }
-
     get Description() { return this.EntityPM.Description; }
     set Description(newValue: string) {
         if (this.EntityPM.Description != newValue) {

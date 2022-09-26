@@ -123,13 +123,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             string objectTableId = ObjectTableRepository.GetObjectTableByName("TasksScheduler");
             foreach (DocumentTypeTemplate documentTypeTemplate in documentTypeTemplates)
             {
-                NewMethod(documentTypeTemplateRepository, objectTableId, documentTypeTemplate);
+                UpdateDocumentTypeTemplate(documentTypeTemplateRepository, objectTableId, documentTypeTemplate);
             }
 
             documentTypeTemplateRepository.SubmitChanges();
         }
 
-        private void NewMethod(DocumentTypeTemplateRepository documentTypeTemplateRepository, string objectTableId, DocumentTypeTemplate documentTypeTemplate)
+        private void UpdateDocumentTypeTemplate(DocumentTypeTemplateRepository documentTypeTemplateRepository, string objectTableId, DocumentTypeTemplate documentTypeTemplate)
         {
             documentTypeTemplate.EntityId = this.entityPM.Id;
             documentTypeTemplate.ObjectTableId = objectTableId;

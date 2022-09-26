@@ -187,7 +187,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
         if (this.IsScheduler) {
-            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this, "BIReport");
+            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this);
             this.bIReportDocumentTypeTemplateService.Load();
         }
 

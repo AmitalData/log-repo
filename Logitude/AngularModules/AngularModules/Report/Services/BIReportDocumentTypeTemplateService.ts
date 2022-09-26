@@ -26,7 +26,7 @@ export class BIReportDocumentTypeTemplateService {
 
 
 
-    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string) {
+    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent) {
 
         this.bIReportPreviewComponent = bIReportPreviewComponent;
         this.bIReportPreviewComponent.DocumentTypeTemplateLists = [];
@@ -74,7 +74,7 @@ export class BIReportDocumentTypeTemplateService {
                 return;
             }
             var documentTypeTemplates = serviceResponse.Result;
-            documentTypeTemplates = documentTypeTemplates.filter(d => (d.EntityId == this.EntityId && d.ObjectTableId == this.ObjectTableId) || (!d.AutomationId && !d.EntityId) || this.bIReportPreviewComponent.DocumentTypeTemplateIds.indexOf(d.Id) > -1);//|| this.bIReportPreviewComponent.DocumentTypeTemplateIds.indexOf(this.bIReportPreviewComponent.DocumentTypeTemplateSelected)
+            documentTypeTemplates = documentTypeTemplates.filter(d => (d.EntityId == this.EntityId && d.ObjectTableId == this.ObjectTableId) || (!d.AutomationId && !d.EntityId) || this.bIReportPreviewComponent.DocumentTypeTemplateIds.indexOf(d.Id) > -1);
             this.FillDocumentTypeList(documentTypeTemplates);
         });
     }
