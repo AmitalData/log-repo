@@ -6100,18 +6100,22 @@ User/Pass",
                 VisionContainerStatus visionContainerStatus = DeserializeVizionDocumentBody(communicationLog.DocumentId, tenant, documentRepository);
                 if (visionContainerStatus != null && container != null)
                 {
-                    arr[0] = container.ContainerNumber;
-                    arr[1] = container.PreCarriageLocation;
-                    arr[2] = this.GetPortForVizion(visionContainerStatus.payload?.inland_origin, tenant)?.CombinedCode;
-                    arr[3] = container.OnCarriageLocation;
-                    arr[4] = this.GetPortForVizion(visionContainerStatus.payload?.inland_destination, tenant)?.CombinedCode;
-                    arr[5] = container.POLLocation;
-                    arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
-                    arr[7] = container.PODLocation;
-                    arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
+                    if ((container.PreCarriageLocation != null && container.POLLocation != null && container.PreCarriageLocation == container.POLLocation)
+                        || (container.OnCarriageLocation != null && container.PODLocation != null && container.OnCarriageLocation == container.PODLocation))
+                    {
+                        arr[0] = container.ContainerNumber;
+                        arr[1] = container.PreCarriageLocation;
+                        arr[2] = this.GetPortForVizion(visionContainerStatus.payload?.inland_origin, tenant)?.CombinedCode;
+                        arr[3] = container.OnCarriageLocation;
+                        arr[4] = this.GetPortForVizion(visionContainerStatus.payload?.inland_destination, tenant)?.CombinedCode;
+                        arr[5] = container.POLLocation;
+                        arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
+                        arr[7] = container.PODLocation;
+                        arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
 
-                    getContainersListView.Items.Add(new ListViewItem(arr));
-                    containers.Add(container, visionContainerStatus);
+                        getContainersListView.Items.Add(new ListViewItem(arr));
+                        containers.Add(container, visionContainerStatus);
+                    }
                 }
             }
 
@@ -6212,8 +6216,12 @@ User/Pass",
         private void MapPreCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
         {
             if (!IsDifferentPort(item.Value.payload?.inland_origin, item.Value.payload?.origin_port))
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
                 return;
-            
+            }
+
             var port = GetPortForVizion(item.Value.payload?.inland_origin, item.Key.Tenant);
             if (port == null)
             {
@@ -6230,7 +6238,11 @@ User/Pass",
         private void MapOnCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
         {
             if (!IsDifferentPort(item.Value.payload?.inland_destination, item.Value.payload?.destination_port))
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
                 return;
+            }
 
             var port = GetPortForVizion(item.Value.payload?.inland_destination, item.Key.Tenant);
             if (port == null)
