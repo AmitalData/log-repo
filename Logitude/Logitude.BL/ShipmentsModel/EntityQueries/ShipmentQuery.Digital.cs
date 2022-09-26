@@ -1698,9 +1698,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillPickUpDeliveryLegDetails(ShipmentPickUpDelivery firstPickup)
         {
             Card trucker = CardRepository.GetSingleCard(firstPickup.CarrierId, tenant, true);
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add("Trucker Name", trucker?.EnglishName);
-            legDetails.Add("Trucker Number", firstPickup.CarrierNumber);
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Trucker Name", trucker?.EnglishName },
+                { "Trucker Number", firstPickup.CarrierNumber }
+            };
+
             return legDetails;
         }
 
@@ -1726,9 +1729,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillTerminalLegDetails(ShipmentPM shipment)
         {
             var storageDays = GetStorageDays(shipment);
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add("Warehouse cut off date", shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy"));
-            legDetails.Add("Storage days", storageDays + " days");
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Warehouse cut off date", shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy") },
+                { "Storage days", storageDays + " days" }
+            };
+
             return legDetails;
         }
 
@@ -1770,9 +1776,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private Dictionary<string, string> FillPreCarriageLegDetails(ShipmentPM shipment)
         {
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add("Carrier", CheckEmptyValue(shipment.PreCarriageCarrierName));
-            legDetails.Add("Carrier No", CheckEmptyValue(shipment.PreCarriageCarrierNumber));
+            var legDetails = new Dictionary<string, string>
+            {
+                { "Carrier", CheckEmptyValue(shipment.PreCarriageCarrierName) },
+                { "Carrier No", CheckEmptyValue(shipment.PreCarriageCarrierNumber) }
+            };
 
             if (shipment.TransportModeId == "O")
             {
@@ -1800,11 +1808,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillMainCarriageFromLegDetails(ShipmentPM shipment)
         {
             var master = shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master;
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierName));
-            legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierNumber));
-            legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
-            
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
+
             if (shipment.TransportModeId == "O")
             {
                 legDetails.Add("Vessel", CheckEmptyValue(shipment.MainCarriageVesselName));
@@ -1864,10 +1874,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillTransshipment1LegDetails(ShipmentPM shipment)
         {
             var master = shipment.Transshipment1AdditionalMAWBOBLBL;
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierName));
-            legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierNumber));
-            legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
 
             if (shipment.TransportModeId == "O")
             {
@@ -1880,10 +1892,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillTransshipment2LegDetails(ShipmentPM shipment)
         {
             var master = shipment.Transshipment2AdditionalMAWBOBLBL;
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierName));
-            legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierNumber));
-            legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
 
             if (shipment.TransportModeId == "O")
             {
@@ -1896,10 +1910,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Dictionary<string, string> FillTransshipment3LegDetails(ShipmentPM shipment)
         {
             var master = shipment.Transshipment3AdditionalMAWBOBLBL;
-            Dictionary<string, string> legDetails = new Dictionary<string, string>();
-            legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierName));
-            legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierNumber));
-            legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierName) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierNumber) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
 
             if (shipment.TransportModeId == "O")
             {
@@ -1918,11 +1934,128 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CountryCode = shipment.MainCarriageFinalDestinationPortCountryCode,
                 ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
+                LegDetails = FillMainCarraigeToLegDetails(shipment),
             };
         }
 
-        // 
-        
+        private Dictionary<string, string> FillMainCarraigeToLegDetails(ShipmentPM shipment)
+        {
+            var master = GetMasterOfDischargeLeg(shipment);
+            var legDetails = new Dictionary<string, string>
+            {
+                { GetCarrierTextCode(shipment), CheckEmptyValue(GetCarrierNameOfDischargeLeg(shipment)) },
+                { GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(GetCarrierNumberOfDischargeLeg(shipment)) },
+                { GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master) }
+            };
+
+            if (shipment.TransportModeId == "O")
+            {
+                legDetails.Add("Vessel", CheckEmptyValue(GetVesselOfDischargeLeg(shipment)));
+            }
+
+            return legDetails;
+        }
+
+        private string GetMasterOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1AdditionalMAWBOBLBL;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.TransportModeId == "A" ? (shipment.AirlinePrefix != null && shipment.Master != null ? shipment.AirlinePrefix + "-" + shipment.Master : shipment.Master) : shipment.Master;
+            }
+
+            return null;
+        }
+
+        private string GetCarrierNameOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1CarrierName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageCarrierName;
+            }
+
+            return null;
+        }
+
+        private string GetCarrierNumberOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1CarrierNumber;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageCarrierNumber;
+            }
+
+            return null;
+        }
+
+        private string GetVesselOfDischargeLeg(ShipmentPM shipment)
+        {
+            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+            {
+                return shipment.Transshipment3VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+            {
+                return shipment.Transshipment2VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+            {
+                return shipment.Transshipment1VesselName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+            {
+                return shipment.MainCarriageVesselName;
+            }
+
+            return null;
+        }
+
         private void FillOnCarraigeLegTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
         {
 
