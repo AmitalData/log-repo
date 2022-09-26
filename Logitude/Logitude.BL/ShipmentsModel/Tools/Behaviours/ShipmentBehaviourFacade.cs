@@ -3,11 +3,6 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviour;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
