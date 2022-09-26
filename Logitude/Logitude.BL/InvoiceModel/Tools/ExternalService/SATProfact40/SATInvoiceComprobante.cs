@@ -5,6 +5,8 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Base;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI40;
 using Simplog.Data.CommonDataModel;
@@ -489,33 +491,85 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<ComprobanteConcepto> conceptosList = new List<ComprobanteConcepto>();
             foreach (ARInvoiceLinePM line in arInvoicePM.InvoiceLines)
             {
-                if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense)
-                {
-                    ComprobanteConcepto concepto = new ComprobanteConcepto
-                    {
-                        ObjetoImp = SATData.IncludeTaxObjetoImp,
-                        Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
-                        Unidad = "SERVICIO",
-                        Descripcion = line.Description,
-                        Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)))
-                    };
-                    decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
-                    concepto.ValorUnitario = SATBaseProfact40Service.GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
-
-                    concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
-                    var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
-                    if (lineMeasurement != null)
-                    {
-                        concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement");
-                    }
-
-                    this.CalucalteLineTotals(line, concepto, allVatTypes, allVatPercentages, allVatGroups);
-
-                    conceptosList.Add(concepto);
-                }
+                conceptosList.Add(GetNewConcepto(allMeasurements, line));
             }
 
             return conceptosList;
+        }
+
+        private ComprobanteConcepto GetNewConcepto(List<Measurement> allMeasurements, ARInvoiceLinePM line)
+        {
+            decimal conceptoCantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0));
+            decimal conceptoImporte = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)));
+            decimal valorUnitario = Math.Abs(conceptoCantidad != 0 ? (conceptoImporte / conceptoCantidad) : 0);
+            decimal conceptoValorUnitario = SATBaseProfact40Service.GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
+            string conceptoClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
+            const string conceptoUnidad = "SERVICIO";
+
+            ComprobanteConcepto concepto = new ComprobanteConcepto
+            {
+                ACuentaTerceros = GetComprobanteConceptoACuentaTerceros(line),
+                ObjetoImp = SATData.IncludeTaxObjetoImp,
+                Cantidad = conceptoCantidad,
+                Unidad = conceptoUnidad,
+                Descripcion = line.Description,
+                Importe = conceptoImporte,
+                ValorUnitario = conceptoValorUnitario,
+                ClaveProdServ = conceptoClaveProdServ
+            };
+
+            var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
+            if (lineMeasurement != null)
+            {
+                concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement");
+            }
+
+            this.CalucalteLineTotals(line, concepto, allVatTypes, allVatPercentages, allVatGroups);
+
+            return concepto;
+        }
+
+        private ComprobanteConceptoACuentaTerceros GetComprobanteConceptoACuentaTerceros(ARInvoiceLinePM line)
+        {
+            if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense) { return null; }
+
+            ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
+            ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
+            CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM);
+
+            return new ComprobanteConceptoACuentaTerceros
+            {
+                RfcACuentaTerceros = payableVendorPM.VatNumber,
+                NombreACuentaTerceros = payableVendorPM.SATCustomerName,
+                RegimenFiscalACuentaTerceros = payableVendorPM.RegimenFiscalCode,
+                DomicilioFiscalACuentaTerceros = GetBillToAddressZipCode(payableVendorPM),
+            };
+        }
+
+        private CardPM GetPayableVendorPM(ShipmentReceivablePM shipmentReceivablePM)
+        {
+            if (shipmentReceivablePM == null || string.IsNullOrEmpty(shipmentReceivablePM.PayableVendorId))
+            {
+                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
+            }
+
+            CardQuery cardQuery = new CardQuery(arInvoicePM.Tenant);
+            CardPM payableVendorPM = cardQuery.GetSinglePM(shipmentReceivablePM.PayableVendorId, arInvoicePM.Tenant);
+            if (payableVendorPM == null)
+            {
+                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
+            }
+
+            return payableVendorPM;
+        }
+
+        private string GetBillToAddressZipCode(CardPM payableVendorPM)
+        {
+            AddressQuery addressQuery = new AddressQuery(payableVendorPM.Tenant);
+            List<AddressPM> payableVendorAddresses = addressQuery.GetAddressesByCardId(payableVendorPM.Id, payableVendorPM.Tenant);
+            AddressPM payableVendorBillingAddress = payableVendorAddresses.Where(address => address.AddressTypeId == "B").FirstOrDefault();
+
+            return payableVendorBillingAddress != null ? payableVendorBillingAddress.ZipCode : "";
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, ComprobanteConcepto concepto, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups)
