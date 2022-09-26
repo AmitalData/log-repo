@@ -603,6 +603,7 @@ namespace WebFreight.Web.DataProviders
             public double? VatableAmountInvoiceCurrency { get; set; }
             public double? NonVatableAmountInvoiceCurrency { get; set; }
             public double? RegionalTaxAmountInvoiceCurrency { get; set; }
+            public DateTime? PaidDate { get; set; }
         }
 
         public class InvoiceTotals
