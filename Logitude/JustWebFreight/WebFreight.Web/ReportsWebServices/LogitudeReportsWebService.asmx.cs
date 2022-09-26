@@ -8990,7 +8990,7 @@ namespace WebFreight.Web.ReportsWebServices
                         record.VAT = myTotalVats.Sum(d => d.LocalVATAmount);
                         record.GrandTotal = invoice.SubTotalInLocalCurrency + myTotalVats.Sum(d => d.LocalVATAmount);
                         record.Currency = invoice.LocalCurrencyCode;
-                        record.TaxableAmount = myTotalVats.Where(x=>x.VatPercent != 0).Sum(d => d.LocalVatableAmount);
+                        record.TaxableAmount = myTotalVats.Where(x => x.VatPercent != 0).Sum(d => d.LocalVatableAmount);
                         record.NonTaxableAmount = myTotalVats.Where(x => x.VatPercent == 0).Sum(d => d.LocalVatableAmount);
 
                     }
