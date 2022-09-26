@@ -90,6 +90,7 @@
                                             </td>
                                         </tr>
 
+
                                         <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
                                             <td>
                                                 <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -104,22 +105,6 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td>
-                                                <ComboBox (SelectedItemChanged)="MaximumGrouping = $event"
-                                                          [ItemsSource]="MaximumGroupings"
-                                                          [SelectedItem]="MaximumGrouping">
-                                                </ComboBox>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
@@ -194,6 +179,24 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox (SelectedItemChanged)="MaximumGrouping = $event"
+                                                          [ItemsSource]="MaximumGroupings"
+                                                          [SelectedItem]="MaximumGrouping">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        
+
+                                        
 
                                         <tr>
                                             <td>
