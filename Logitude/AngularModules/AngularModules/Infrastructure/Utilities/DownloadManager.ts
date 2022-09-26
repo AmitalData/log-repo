@@ -31,14 +31,14 @@ export class DownloadManager {
     }
 
 
-    public static DownloadPage(id: string, securityId: string=null ) {
+    public static DownloadPage(id: string, securityId: string = null, forceDownload: boolean = false) {
 
         var url: string = !AppTool.IsNullOrEmpty(securityId) ? "securityId=" + securityId: "id=" + id;
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(securityId)  ) {
             url += ("~" + id );
         }
         var token = ServiceHelper.GetLDocumentDownloadToken();
-        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token;
+        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token + "&forceDownload=" + forceDownload;
         var win = window.open(link, '_blank');
         
         if (win) {

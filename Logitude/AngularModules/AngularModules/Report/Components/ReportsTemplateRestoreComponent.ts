@@ -197,7 +197,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
     }
 
     DownloadButtonClicked(item: ReportsTemplateRestoreItem) {
-        DownloadManager.DownloadPage(item.ReportDocumentId);
+        DownloadManager.DownloadPage(item.ReportDocumentId, null, true);
 
     }
 }
