@@ -57,6 +57,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private const string InvoiceAlreadyReconciledMessage = "One or more invoices ledger transactions have been already reconciled";
         private const string BillToNotConnectedMessage = "The bill to is not connected to a GL Account.";
         private const string WorksChartOfAccountTypeCode = "6";
+        const string CustomerChartOfAccountsTypeCode = "3";
+        const string CustomerGLAccountType = "2";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3216,7 +3218,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
             entityPM = entityQuery.GetSinglePM(arinvoiceId, tenant);
             var invoiceTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsForInvoice(arinvoiceId, tenant).ToList();
-            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC"))
+            if (IsFullAccountingActivated(entityPM.Tenant) && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC"))
             {
                 foreach (var invoiceLine in entityPM.InvoiceLines)
                 {
@@ -3250,43 +3252,51 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat, account);
             }
-            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-            interestTransactionUpdateService.Create(interestTransaction);
+            if (interestTransaction != null)
+            {
+                IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+                interestTransactionUpdateService.Create(interestTransaction);
+            }
         }
         private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
         {
             ARInvoiceLinePM invoiceLine = GetInvoiceLineForTotalVat(invoiceTotalVat);
-            string interestTransactionGLAccount = null;
+            GLAccountPM interestTransactionGLAccount = null;
             GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
             if (entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId ) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
-                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount : debitGLAcount;
             } else if (!entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId ) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, entityPM.InvoiceCurrencyId, invoiceLine.Tenant);
-                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount : debitGLAcount;
             }
             else
             {
-                interestTransactionGLAccount = debitGLAcount?.Id;
+                interestTransactionGLAccount = debitGLAcount;
             }
-            InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+            if (interestTransactionGLAccount.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && interestTransactionGLAccount.AccountTypeCode == CustomerGLAccountType)
             {
+                InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+                {
 
-                InterestEntityTypeCode = "1",
-                EntityId = invoiceTotalVat.ARInvoiceId,
-                AccountingEntityCode = AccountingEntityValues.ARInvoice,
-                OriginalEntityLineNumber = invoiceLineNumber,
-                LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
-                ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
-                InterestValueDate = GetIntrestValueDate(invoiceLine),
-                Tenant = entityPM.Tenant,
-                GLAccountId = interestTransactionGLAccount,
-                CurrencyId = entityPM.InvoiceCurrencyId,
-                ChangeSetOp = ChangeSetOperation.Insert,
-            };
-            return InterestTransactionVatLine;
+                    InterestEntityTypeCode = "1",
+                    EntityId = invoiceTotalVat.ARInvoiceId,
+                    AccountingEntityCode = AccountingEntityValues.ARInvoice,
+                    OriginalEntityLineNumber = invoiceLineNumber,
+                    LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
+                    ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
+                    InterestValueDate = GetIntrestValueDate(invoiceLine),
+                    Tenant = entityPM.Tenant,
+                    GLAccountId = interestTransactionGLAccount?.Id,
+                    CurrencyId = entityPM.InvoiceCurrencyId,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                };
+                return InterestTransactionVatLine;
+            }
+            
+            return null;
         }
 
         private void BuildSearchFieldForInterest(string journalNumber, string invoiceNumber)
@@ -3325,36 +3335,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
         {
-            string interestTransactionGLAccount = null;
+            GLAccountPM interestTransactionGLAccount = null;
             GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
             if (entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId ) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
-                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount : debitGLAcount;
             } else if(!entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId ) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true){
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, entityPM.InvoiceCurrencyId, invoiceLine.Tenant);
-                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount : debitGLAcount;
             }
             else
             {
-                interestTransactionGLAccount = debitGLAcount?.Id;
+                interestTransactionGLAccount = debitGLAcount;
             }
-            InterestTransactionPM interestTransaction = new InterestTransactionPM()
-            {
-                InterestEntityTypeCode = "1",
-                EntityId = invoiceLine.ARInvoiceId,
-                AccountingEntityCode = AccountingEntityValues.ARInvoice,
-                OriginalEntityLineNumber = invoiceLine.LineNumber,
-                LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
-                GLAccountId = interestTransactionGLAccount,
-                ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
-                InterestValueDate = GetIntrestValueDate(invoiceLine),
-                Tenant = invoiceLine.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                CurrencyId = invoiceLine.ForiegnCurrencyId,
-               
-            };
-            return interestTransaction;
+            if (interestTransactionGLAccount.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && interestTransactionGLAccount.AccountTypeCode == CustomerGLAccountType) {
+                InterestTransactionPM interestTransaction = new InterestTransactionPM()
+                {
+                    InterestEntityTypeCode = "1",
+                    EntityId = invoiceLine.ARInvoiceId,
+                    AccountingEntityCode = AccountingEntityValues.ARInvoice,
+                    OriginalEntityLineNumber = invoiceLine.LineNumber,
+                    LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
+                    GLAccountId = interestTransactionGLAccount?.Id,
+                    ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
+                    InterestValueDate = GetIntrestValueDate(invoiceLine),
+                    Tenant = invoiceLine.Tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    CurrencyId = invoiceLine.ForiegnCurrencyId,
+
+                };
+                return interestTransaction;
+            }
+            return null;
         }
 
         private void UpdateInvoiceLine(ARInvoiceLinePM item)
