@@ -245,7 +245,11 @@ export class TasksSchedulerPM {
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
 	 
+    private documentTypeTemplateIds: Array<string>;
+    public get DocumentTypeTemplateIds() { return this.documentTypeTemplateIds; }
+    public set DocumentTypeTemplateIds(newValue: Array<string>) { if (this.documentTypeTemplateIds != newValue) { this.documentTypeTemplateIds = newValue; this.MarkAsDirty("DocumentTypeTemplateIds"); } }
 
+		 
     public OldEntityPM: TasksSchedulerPM;
 		
     public IsDirty: boolean;

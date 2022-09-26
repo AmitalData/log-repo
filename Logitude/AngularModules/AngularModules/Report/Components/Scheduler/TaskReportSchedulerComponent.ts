@@ -373,7 +373,6 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
     private newValueinDateFormat: Date;
-
     SchedulerDetails: SchedulerDetails;
     ReportSchedulerDetails: ReportSchedulerDetails;
     FTPDetails: FTPSchedulerDetails;
@@ -399,6 +398,13 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     set Name(newValue: string) {
         if (this.EntityPM.Name != newValue) {
             this.EntityPM.Name = newValue;
+        }
+    }
+
+    get DocumentTypeTemplateIds() { return this.EntityPM.DocumentTypeTemplateIds; }
+    set DocumentTypeTemplateIds(newValue: any) {
+        if (this.EntityPM.DocumentTypeTemplateIds != newValue) {
+            this.EntityPM.DocumentTypeTemplateIds = newValue;
         }
     }
 

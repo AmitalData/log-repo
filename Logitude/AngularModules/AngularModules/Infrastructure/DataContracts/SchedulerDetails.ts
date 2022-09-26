@@ -39,15 +39,11 @@ export class ReportSchedulerDetails {
     public MainCustomerFieldName: string;
     public DWQueryFilterData: any;
     public DocumentTypeTemplateId: string;
-    public DocumentTypeTemplates: Array<DocumentTypeTemplatesDetails>;
+    public DocumentTypeTemplateIds: Array<string> = [];
 }
 
 export class ReportSchedulerRecepients {
     public To: string;
     public Cc: string;
     public Bcc: string;
-}
-
-export class DocumentTypeTemplatesDetails {
-    public Id: string;
 }

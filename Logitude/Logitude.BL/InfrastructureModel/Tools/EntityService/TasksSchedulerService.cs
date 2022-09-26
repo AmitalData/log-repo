@@ -73,8 +73,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public bool isExceedsScheduledTasksLimitPerReport(int tenant, string entityId)
         {
-           int scheduledTasksLimitPerReport = tenantManagementRepository.GetScheduledTasksLimitPerReport(tenant);
-           int userDefinedTaskPerCurrentReport = entityRepository.GetUserTasksSchedulerPerReport(tenant, entityId);
+            int scheduledTasksLimitPerReport = tenantManagementRepository.GetScheduledTasksLimitPerReport(tenant);
+            int userDefinedTaskPerCurrentReport = entityRepository.GetUserTasksSchedulerPerReport(tenant, entityId);
 
             if(userDefinedTaskPerCurrentReport >= scheduledTasksLimitPerReport)
             {
@@ -107,15 +107,38 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+
+            ConnectDocumentTypeTemplateToScheduler();
+
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
             queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
         }
-        
+
+        private void ConnectDocumentTypeTemplateToScheduler()
+        {
+            if (this.entityPM.DocumentTypeTemplateIds == null & this.entityPM.DocumentTypeTemplateIds.Count <= 0) return;
+            DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPM.Tenant);
+            List<DocumentTypeTemplate> documentTypeTemplates = documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPM.DocumentTypeTemplateIds, this.entityPM.Tenant).ToList();
+            string objectTableId = ObjectTableRepository.GetObjectTableByName("TasksScheduler");
+            foreach (DocumentTypeTemplate documentTypeTemplate in documentTypeTemplates)
+            {
+                NewMethod(documentTypeTemplateRepository, objectTableId, documentTypeTemplate);
+            }
+
+            documentTypeTemplateRepository.SubmitChanges();
+        }
+
+        private void NewMethod(DocumentTypeTemplateRepository documentTypeTemplateRepository, string objectTableId, DocumentTypeTemplate documentTypeTemplate)
+        {
+            documentTypeTemplate.EntityId = this.entityPM.Id;
+            documentTypeTemplate.ObjectTableId = objectTableId;
+            documentTypeTemplateRepository.Update(documentTypeTemplate);
+        }
 
         private void FillNextRunDateFields()
         {
-           
+
             this.entityPM.NextRunTime = this.entityPM.NextRunTime == null ? this.entityPM.StartDateTime : this.entityPM.NextRunTime;
             this.entityPM.NextRunTimeUTC = this.entityPM.NextRunTimeUTC == null ? this.entityPM.StartDateTimeUTC : this.entityPM.NextRunTimeUTC;
         }
@@ -148,7 +171,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-     
+
 
     }
 }

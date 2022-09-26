@@ -110,8 +110,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             System.Type type6 = typeof(MultiSelectedValue);
                             System.Type type7 = typeof(ValueDetails);
                             System.Type type8 = typeof(ObjectFieldOperator);
-                            System.Type type9 = typeof(DocumentTypeTemplatesDetails);
-                            System.Type[] types = new System.Type[9];
+                            System.Type[] types = new System.Type[8];
                             types[0] = type1;
                             types[1] = type2;
                             types[2] = type3;
@@ -120,7 +119,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             types[5] = type6;
                             types[6] = type7;
                             types[7] = type8;
-                            types[8] = type9;
 
                             entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
@@ -177,13 +175,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         System.Type type2 = "string".GetType();
                         System.Type type3 = typeof(ReportSchedulerDetails);
                         System.Type type4 = typeof(ReportSchedulerRecepients);
-                        System.Type type5 = typeof(DocumentTypeTemplatesDetails);
-                        System.Type[] types = new System.Type[5];
+                        System.Type[] types = new System.Type[4];
                         types[0] = type1;
                         types[1] = type2;
                         types[2] = type3;
                         types[3] = type4;
-                        types[4] = type5;
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 

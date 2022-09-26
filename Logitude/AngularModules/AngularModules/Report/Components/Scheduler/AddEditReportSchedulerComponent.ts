@@ -6,7 +6,7 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients, ReportSchedulerDetails, SchedulerDetails, DocumentTypeTemplatesDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails, SchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 import { SchedulerExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { AppTool } from 'Infrastructure/Tools';
 import { BIReportPMService } from '../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -33,6 +33,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public BIReportEntity: any;
     public IsBIReport: boolean;
     public IsNew: boolean = true;
+    public TasksSchedulerId: string;
     public OldReportSchedulerDetails;
     private CurrentSession = SessionLocator.SelectedSession;
     schedulerExtendedPMService: SchedulerExtendedPMService;
@@ -90,6 +91,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (tasksSchedulerId) {
             this.IsNew = false;
         }
+        this.TasksSchedulerId = tasksSchedulerId;
         this.schedulerExtendedPMService
             .GetSchedulerDetailsById(tasksSchedulerId)
             .subscribe((myResult: ServiceResponse) => {
@@ -224,11 +226,11 @@ export class AddEditReportSchedulerComponent implements OnInit {
                     Name: this.BIReportEntity['Name'] + 'Scheduler',
                     ObjectTableName: 'BIReport',
                     EntityId: this.BIReportEntity['Id'],
+                    TasksSchedulerId: this.TasksSchedulerId,
                     IsScheduler: true,
                     IsNewScheduler: this.IsNew,
                     SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
                     DocumentTypeTemplateId: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DocumentTypeTemplateId,
-                    AvailableDocumentTypeTemplates: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DocumentTypeTemplates,
                     ParentComponent: this,
                 });
                 this.CurrentSession.StopBusyIndicator();
@@ -403,8 +405,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: null,
             DWQueryId: null,
             DWQueryFilterData: null,
-            DocumentTypeTemplates: null,
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
+            DocumentTypeTemplateIds: null,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -449,7 +451,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
-            DocumentTypeTemplates: this.PageChild_PRREP ? this.GetDocumentTemplateMessages() : this.OldReportSchedulerDetails.DocumentTypeTemplates,
+            DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.DocumentTypeTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             DWQueryFilterData: this.PageChild_PRREP ? this.GetNewSelectedFilters() : this.GetOriginalSelectedFilters(),
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
@@ -459,13 +461,6 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (!this.PageChild_PRREP) return "";
         if (!this.PageChild_PRREP.DocumentTypeTemplateSelected) return "";
        return this.PageChild_PRREP.DocumentTypeTemplateSelected.Id
-    }
-
-    GetDocumentTemplateMessages() {
-        if (!this.PageChild_PRREP) return [];
-        if (!this.PageChild_PRREP.AvailableDocumentTypeTemplates) return [];
-
-        return this.PageChild_PRREP.AvailableDocumentTypeTemplates;
     }
 
     private GetNewSelectedFilters(): any {

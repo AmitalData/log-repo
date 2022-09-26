@@ -343,6 +343,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.CurrentSession.StartBusyIndicatorSaving();
         if (reportSchedulerDetails) {
             this.SetReportDetails(reportSchedulerDetails);
+            this.EntityPM.DocumentTypeTemplateIds = reportSchedulerDetails.DocumentTypeTemplateIds;
         }
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
@@ -419,7 +420,6 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
         this.DataContext.SchedulerDetails.ReportDetails.DWQueryFilterData = reportSchedulerDetails.DWQueryFilterData;
         this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplateId = reportSchedulerDetails.DocumentTypeTemplateId;
-        this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplates = reportSchedulerDetails.DocumentTypeTemplates;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')
