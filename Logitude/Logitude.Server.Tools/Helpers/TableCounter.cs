@@ -164,9 +164,9 @@ namespace Logitude.Server.Tools.Helpers
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
                     List<int> newSPTenants = new List<int>()
                     {
-                        1,42,1330,2653,1688,2095,1526,1686
+                        1,42,1330,2573
                     };
-                    if (LogitudeSettings.DeploymentStage == "logitudePre")//(tenant <= 400)//newSPTenants.Where(a=>a == tenant).Count() > 0)
+                    if (newSPTenants.Where(a=>a == tenant).Count() > 0)
                     {
                         cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
                     }
