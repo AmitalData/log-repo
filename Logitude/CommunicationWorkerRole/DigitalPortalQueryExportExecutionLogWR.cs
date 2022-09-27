@@ -7,14 +7,14 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    public class QueryExportExecutionLogWR : WorkerEntryPoint
+    public class DigitalPortalQueryExportExecutionLogWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
 
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "QueryExportExecutionLogWR";
+            BatchServiceCode = "DigitalPortalQueryExportExecutionLogWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
             return base.OnStart();
@@ -22,13 +22,14 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue()
         {
-            queueservice = new DbQueueService("QueryExportExecutionLogQueue", 0);
+            queueservice = new DbQueueService("DigitalPortalQueryExportExecutionQueue", 0);
             var queueResponse = queueservice.Receive(new TimeSpan(0, 0, 1));
+            
             if (queueResponse != null && queueResponse.MessageId != null)
             {
                 ThreadStart reportExecutionServiceThreadStart = (() =>
-                     new QueryExportLogExecutionService(queueservice, queueResponse)
-                         .ExecuteQueryExportExecutionLog());
+                     new DigitalQueryQueryExportLogExecutionService(queueservice, queueResponse)
+                        .ExecuteQueryExportExecutionLog());
 
                 reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
                 new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
@@ -52,7 +53,13 @@ namespace CommunicationWorkerRole
                     }
                     catch (Exception exception)
                     {
-                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Query Export execution log queue worker role start", null, null);
+                        ExceptionHandler.HandleException(exception,
+                                                         DateTime.Now,
+                                                         0,
+                                                         null,
+                                                         "Query Export execution log queue worker role start",
+                                                         null,
+                                                         null);
                         Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
                 }
@@ -65,11 +72,17 @@ namespace CommunicationWorkerRole
             try
             {
                 queueservice = new DbQueueService();
-                queueservice.InitializeQueue("QueryExportExecutionLogQueue", 0);
+                queueservice.InitializeQueue("DigitalPortalQueryExportExecutionQueue", 0);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Query Export Execution Log worker role start", null, null);
+                ExceptionHandler.HandleException(ex,
+                                                 DateTime.Now,
+                                                 0,
+                                                 null,
+                                                 "Query Export Execution Log worker role start",
+                                                 null,
+                                                 null);
             }
         }
     }

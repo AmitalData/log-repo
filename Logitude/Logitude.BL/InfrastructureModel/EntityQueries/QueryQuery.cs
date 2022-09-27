@@ -36,7 +36,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public QueryPM GetSingleQueryPM(string Code, int tenant)
         {
             QueryPM result =
-            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
+            (from a in repository.context
+                                 .Queries
+                                 .Include("ObjectTable")
+                                 .Include("QueryGroup")
+                                 .Include("NameTextCode")
+                                 .Include("SharedByUser")
              where a.UniqueCode == Code && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
