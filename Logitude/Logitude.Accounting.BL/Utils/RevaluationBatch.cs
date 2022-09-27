@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
-            FilterInterestTranasctionsForCustomersGLAccountsOnly(journal, interestTransactions);
+            interestTransactions = FilterInterestTranasctionsForCustomersGLAccountsOnly(journal, interestTransactions);
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
 
             if (interestTransactions.Any())
@@ -222,14 +222,14 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void FilterInterestTranasctionsForCustomersGLAccountsOnly(JournalPM journal, List<InterestTransactionPM> interestTransactions)
+        private List<InterestTransactionPM> FilterInterestTranasctionsForCustomersGLAccountsOnly(JournalPM journal, List<InterestTransactionPM> interestTransactions)
         {
             var repoGLAccountFastFetch = new GLAccountRepository(journal.Tenant);
             var glAccounts = repoGLAccountFastFetch.GetByGLAccountsIdList(interestTransactions.Select(x => x.GLAccountId).ToList(), journal.Tenant);
             var customersGLAccountsIds = glAccounts
                 .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
-            interestTransactions = interestTransactions.Where(x => customersGLAccountsIds.Contains(x.GLAccountId)).ToList();
+            return interestTransactions.Where(x => customersGLAccountsIds.Contains(x.GLAccountId)).ToList();
         }
 
         private static InterestTransactionPM CreateInterestTransaction(JournalLinePM line)
