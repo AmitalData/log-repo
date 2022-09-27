@@ -1,4 +1,5 @@
-﻿using Simplog.Data.Helpers;
+﻿using Newtonsoft.Json;
+using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
@@ -45,7 +46,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public void Update(ShipmentAnalytic entity)
         {
-            context.ShipmentAnalytics.Attach(entity);
+            try
+            {
+                context.ShipmentAnalytics.Attach(entity);
+            }
+            catch { };
             context.SetAsModified(entity);
         }
 
@@ -74,11 +79,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
-        internal void AddFromShipment(Shipment entity)
+        public void AddFromShipment(Shipment entity, ShipmentMasterData entityMasterData)
         {
-            var shipmentAnalytic = ShipmentToShipmentAnalyticMapper.Map(entity);
+            var shipment = Clone(entity);
+            shipment.ShipmentMasterData = entityMasterData;
+            var shipmentAnalytic = ShipmentToShipmentAnalyticMapper.Map(shipment);
             Add(shipmentAnalytic);
-
         }
 
         internal void UpdateFromShipment(Shipment entity)
@@ -86,6 +92,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             var shipmentAnalytic = ShipmentToShipmentAnalyticMapper.Map(entity);
             if (context.ShipmentAnalytics.Any(e => e.Id == shipmentAnalytic.Id)) Update(shipmentAnalytic);
             else Add(shipmentAnalytic);
+        }
+
+        private T Clone<T>(T source)
+        {
+            var serialized = JsonConvert.SerializeObject(source);
+            return JsonConvert.DeserializeObject<T>(serialized);
         }
     }
 }
