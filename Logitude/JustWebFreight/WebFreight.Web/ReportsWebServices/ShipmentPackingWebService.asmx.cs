@@ -330,15 +330,15 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (currentdocumentType != null)
             {
-                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
-                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
+                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.EntityId == shipment.Id && fc.Tenant == tenant).ToList();
+                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.Tenant == tenant).ToList();
                 FormCustomField PackDate1 = (from a in customfieldsList where a.FieldCode == "PackDate" && a.EntityId == shipment.Id select a).FirstOrDefault();
                 DocumentTypeCustomField PackDate2 = (from a in documentCustomfieldsList where a.FieldCode == "PackDate" select a).FirstOrDefault();
 
 
                 provider.PackDate = PackDate1 != null ? PackDate1.Value : PackDate2 != null ? PackDate2.DefaultValue:null;
 
-                FormCustomField Remarks1 = (from a in customfieldsList where a.FieldCode == "Remarks" && a.EntityId == shipment.Id select a).FirstOrDefault();
+                FormCustomField Remarks1 = (from a in customfieldsList where a.FieldCode == "Remarks" select a).FirstOrDefault();
                 DocumentTypeCustomField Remarks2 = (from a in documentCustomfieldsList where a.FieldCode == "Remarks" select a).FirstOrDefault();
 
                 provider.Remarks = Remarks1 != null ? Remarks1.Value : (Remarks2 != null ? Remarks2.DefaultValue : "");

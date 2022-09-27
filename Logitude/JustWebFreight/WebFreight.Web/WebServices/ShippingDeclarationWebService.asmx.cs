@@ -51,7 +51,7 @@ namespace WebFreight.Web.WebServices
         private AddressRepository addressRepository;
         private ContactRepository contactRepository;
         private CountryRepository countryRepository;
-        
+
         [WebMethod]
         public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
@@ -171,8 +171,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousIMDGCode = shipment.DangerousIMDGCode;
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
-                this.FillINTTRADocumentProperties(myDataProvider);                
-                
+                this.FillINTTRADocumentProperties(myDataProvider);
+
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
@@ -305,7 +305,7 @@ namespace WebFreight.Web.WebServices
 
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.Incoterm = shipment.IncotermName;
-                myDataProvider.Salesman = shipment.SalesmanUserName;            
+                myDataProvider.Salesman = shipment.SalesmanUserName;
                 myDataProvider.TotalPayables = shipment.OpenPayablesInLocalCurrency + shipment.AccountedPayablesInLocalCurrency;
                 myDataProvider.ValueOfGoods = shipment.ValueOfGoods;
                 myDataProvider.ENSNumber = shipment.ENSNumber;
@@ -349,7 +349,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.SalesmanEmail = salesmanData.Email;
 
                 }
-                
+
                 #region Tenant
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -460,7 +460,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.PreForwardingETD = shipment.PreForwardingETD;
                 myDataProvider.PreForwardingETA = shipment.PreForwardingETA;
                 myDataProvider.MainCarriageATA = shipment.MainCarriageATA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageATA) : "";
-                myDataProvider.MainCarriageATADateTime= shipment.MainCarriageATA;
+                myDataProvider.MainCarriageATADateTime = shipment.MainCarriageATA;
                 myDataProvider.OnCarriageETA = shipment.OnCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnCarriageETA) : "";
                 myDataProvider.OnCarriageETA_DateTime = shipment.OnCarriageETA;
                 myDataProvider.OnForwardingETA = shipment.OnForwardingETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnForwardingETA) : "";
@@ -479,7 +479,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
 
                 Country OriginCountry = CountryRepository.GetSingleCountry(shipment.FromCountryId, tenant, false);
-                myDataProvider.OriginCountryName = OriginCountry != null ? OriginCountry.EnglishName : "" ;
+                myDataProvider.OriginCountryName = OriginCountry != null ? OriginCountry.EnglishName : "";
 
                 myDataProvider.Transshipment1ETA_String = shipment.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETA) : "";
                 myDataProvider.Transshipment1ETD_String = shipment.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETD) : "";
@@ -516,7 +516,7 @@ namespace WebFreight.Web.WebServices
                 {
                     QuoteRepository quoteRepository = new QuoteRepository(tenant);
                     Quote quote = quoteRepository.GetSingleQuote(shipment.QuoteId, tenant);
-                    if(quote != null)
+                    if (quote != null)
                     {
                         myDataProvider.ConnectedQuoteNumber = quote.QuoteNumber != null ? quote.QuoteNumber : "";
                     }
@@ -536,7 +536,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.Dimensions = myDataProvider.TotalVolumetricWeight;
                 }
 
-                if(!string.IsNullOrEmpty(shipment.TotalContainers))
+                if (!string.IsNullOrEmpty(shipment.TotalContainers))
                 {
                     myDataProvider.TotalContainers = shipment.TotalContainers;
                 }
@@ -615,7 +615,7 @@ namespace WebFreight.Web.WebServices
 
                         if (freightLocationWarehouseAddress.PhoneNumber != null || freightLocationWarehouseAddress.FaxNumber != null)
                         {
-                            myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(freightLocationWarehouseAddress.FaxNumber)? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
+                            myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(freightLocationWarehouseAddress.FaxNumber) ? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
                             myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress;
                         }
                     }
@@ -674,7 +674,7 @@ namespace WebFreight.Web.WebServices
 
                             if (shipperClientAddress.PhoneNumber != null || shipperClientAddress.FaxNumber != null)
                             {
-                                myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + Environment.NewLine + (shipperClientAddress.PhoneNumber != null ? "Tel: " + shipperClientAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty( shipperClientAddress.FaxNumber)? "Fax: " + shipperClientAddress.FaxNumber + " " : "");
+                                myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + Environment.NewLine + (shipperClientAddress.PhoneNumber != null ? "Tel: " + shipperClientAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(shipperClientAddress.FaxNumber) ? "Fax: " + shipperClientAddress.FaxNumber + " " : "");
                             }
 
                             if (!string.IsNullOrEmpty(shipperClientAddress.FaxNumber))
@@ -822,7 +822,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
                                 {
-                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeAddress.FaxNumber)? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeAddress.FaxNumber) ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
                                 }
 
 
@@ -987,7 +987,7 @@ namespace WebFreight.Web.WebServices
 
                             if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
                             {
-                                myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber)? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                                myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber) ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1044,7 +1044,7 @@ namespace WebFreight.Web.WebServices
 
                             if (consigneeNotImporterAddress.PhoneNumber != null || consigneeNotImporterAddress.FaxNumber != null)
                             {
-                                myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeNotImporterAddress.FaxNumber)? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
+                                myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeNotImporterAddress.FaxNumber) ? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
                             }
 
 
@@ -1075,7 +1075,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myConsigneePartnerAddress.PhoneNumber != null || myConsigneePartnerAddress.FaxNumber != null)
                             {
-                                myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneePartnerAddress.FaxNumber)? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
+                                myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneePartnerAddress.FaxNumber) ? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
                             }
                             myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(myConsigneePartnerAddress, true);
                         }
@@ -1118,7 +1118,7 @@ namespace WebFreight.Web.WebServices
 
                         if (mainCarriageCarrierAddress.PhoneNumber != null || mainCarriageCarrierAddress.FaxNumber != null)
                         {
-                            myDataProvider.MainCarriageCarrierAddress = myDataProvider.MainCarriageCarrierAddress + Environment.NewLine + (mainCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + mainCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(mainCarriageCarrierAddress.FaxNumber)? "Fax: " + mainCarriageCarrierAddress.FaxNumber + " " : "");
+                            myDataProvider.MainCarriageCarrierAddress = myDataProvider.MainCarriageCarrierAddress + Environment.NewLine + (mainCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + mainCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(mainCarriageCarrierAddress.FaxNumber) ? "Fax: " + mainCarriageCarrierAddress.FaxNumber + " " : "");
                         }
                     }
 
@@ -1153,7 +1153,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
 
                         string departmentId = commonContext.Users.Where(d => d.Id == currentContact.Id && d.Tenant == tenant).FirstOrDefault()?.DepartmentId;
-                        myDataProvider.UserDepartment = commonContext.Departments.Where(d => d.Id == departmentId && d.Tenant == tenant).FirstOrDefault()?.EnglishName;                               
+                        myDataProvider.UserDepartment = commonContext.Departments.Where(d => d.Id == departmentId && d.Tenant == tenant).FirstOrDefault()?.EnglishName;
                     }
 
                     myDataProvider.UserSignatureImage = this.GetUserSignatureImage(tenant, commonContext, contactEmail);
@@ -1353,7 +1353,7 @@ namespace WebFreight.Web.WebServices
 
                             if (notify1Address.PhoneNumber != null || notify1Address.FaxNumber != null)
                             {
-                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + Environment.NewLine + (notify1Address.PhoneNumber != null ? "Tel: " + notify1Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify1Address.FaxNumber)? "Fax: " + notify1Address.FaxNumber + " " : "");
+                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + Environment.NewLine + (notify1Address.PhoneNumber != null ? "Tel: " + notify1Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify1Address.FaxNumber) ? "Fax: " + notify1Address.FaxNumber + " " : "");
                             }
 
                             myDataProvider.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(notify1Address, true);
@@ -1417,7 +1417,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myAddress.PhoneNumber != null || myAddress.FaxNumber != null)
                                 {
-                                    myResult = myResult + Environment.NewLine + (myAddress.PhoneNumber != null ? "Tel: " + myAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myAddress.FaxNumber)? "Fax: " + myAddress.FaxNumber + " " : "");
+                                    myResult = myResult + Environment.NewLine + (myAddress.PhoneNumber != null ? "Tel: " + myAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myAddress.FaxNumber) ? "Fax: " + myAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -1480,7 +1480,7 @@ namespace WebFreight.Web.WebServices
 
                             if (notify2Address.PhoneNumber != null || notify2Address.FaxNumber != null)
                             {
-                                myDataProvider.Notify2Address = myDataProvider.Notify2Address + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify2Address.FaxNumber)? "Fax: " + notify2Address.FaxNumber + " " : "");
+                                myDataProvider.Notify2Address = myDataProvider.Notify2Address + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify2Address.FaxNumber) ? "Fax: " + notify2Address.FaxNumber + " " : "");
                             }
 
                             myDataProvider.Notify2Address_WithName = DataProviders.General.GetAddressWithName(notify2Address, true);
@@ -1584,7 +1584,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.ReleasingAgentAddress = myDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber)? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    myDataProvider.ReleasingAgentAddress = myDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber) ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -1710,7 +1710,7 @@ namespace WebFreight.Web.WebServices
 
                             if (preCarriageCarrierAddress.PhoneNumber != null || preCarriageCarrierAddress.FaxNumber != null)
                             {
-                                myDataProvider.PreCarriageCarrierAddress = myDataProvider.PreCarriageCarrierAddress + Environment.NewLine + (preCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + preCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preCarriageCarrierAddress.FaxNumber)? "Fax: " + preCarriageCarrierAddress.FaxNumber + " " : "");
+                                myDataProvider.PreCarriageCarrierAddress = myDataProvider.PreCarriageCarrierAddress + Environment.NewLine + (preCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + preCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preCarriageCarrierAddress.FaxNumber) ? "Fax: " + preCarriageCarrierAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1721,16 +1721,16 @@ namespace WebFreight.Web.WebServices
                 if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
                 {
                     Card preForwardingCarrier = (from a in commonContext.Cards
-                                               where a.Id == shipment.PreForwardingCarrierId
-                                               select a).FirstOrDefault();
+                                                 where a.Id == shipment.PreForwardingCarrierId
+                                                 select a).FirstOrDefault();
 
                     if (preForwardingCarrier != null)
                     {
                         myDataProvider.PreForwardingCarrierAddress = preForwardingCarrier.EnglishName;
 
                         Address preForwardingCarrierAddress = (from a in commonContext.Addresses
-                                                             where a.CardId == shipment.PreForwardingCarrierId && a.AddressTypeId == "M"
-                                                             select a).FirstOrDefault();
+                                                               where a.CardId == shipment.PreForwardingCarrierId && a.AddressTypeId == "M"
+                                                               select a).FirstOrDefault();
 
                         if (preForwardingCarrierAddress != null)
                         {
@@ -1743,7 +1743,7 @@ namespace WebFreight.Web.WebServices
 
                             if (preForwardingCarrierAddress.PhoneNumber != null || preForwardingCarrierAddress.FaxNumber != null)
                             {
-                                myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + (preForwardingCarrierAddress.PhoneNumber != null ? "Tel: " + preForwardingCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preForwardingCarrierAddress.FaxNumber)? "Fax: " + preForwardingCarrierAddress.FaxNumber + " " : "");
+                                myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + (preForwardingCarrierAddress.PhoneNumber != null ? "Tel: " + preForwardingCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preForwardingCarrierAddress.FaxNumber) ? "Fax: " + preForwardingCarrierAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1758,7 +1758,7 @@ namespace WebFreight.Web.WebServices
                                    where a.Id == shipment.ConsigneeNotImporterId
                                    select a).FirstOrDefault();
 
-                    if(myCard != null)
+                    if (myCard != null)
                     {
                         myDataProvider.ConsigneeNotImporter = myCard.EnglishName != null ? myCard.EnglishName + Environment.NewLine : "";
 
@@ -1777,7 +1777,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber)? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber) ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -2282,7 +2282,7 @@ namespace WebFreight.Web.WebServices
                         {
                             myDataProvider.ToPartnerName = toPartner.EnglishName;
 
-                            if(toAddress != null)
+                            if (toAddress != null)
                             {
                                 if (toAddress.IsLocalLanguage && !string.IsNullOrEmpty(toPartner.LocalName))
                                 {
@@ -2323,7 +2323,7 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.ToLocation_Label = "Place of Discharge";
                     }
-                    
+
                     #endregion
                 }
 
@@ -2510,7 +2510,7 @@ namespace WebFreight.Web.WebServices
                                                  where a.Id == shipment.MainCarriageVesselId
                                                  select a).FirstOrDefault();
                     if (maincarriagevessel != null)
-                    {                       
+                    {
                         mainVesselCode = maincarriagevessel.Code;
                     }
                 }
@@ -2733,12 +2733,12 @@ namespace WebFreight.Web.WebServices
 
                 if (documentTypePM != null)
                 {
-                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.EntityId == shipmentId && fc.Tenant == tenant).ToList();
 
-                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.Tenant == tenant).ToList();
 
                     FormCustomField copyOrOriginalCustomField = (from a in customfieldsList
-                                                                 where a.FieldCode == "OriginalsOrCopiesNo" && a.EntityId == shipment.Id
+                                                                 where a.FieldCode == "OriginalsOrCopiesNo"
                                                                  select a).FirstOrDefault();
 
                     DocumentTypeCustomField copyOrOriginalDocumentCustom = (from a in documentCustomfieldsList
@@ -2746,7 +2746,7 @@ namespace WebFreight.Web.WebServices
                                                                             select a).FirstOrDefault();
 
                     FormCustomField hasAttachmentListCustomField = (from a in customfieldsList
-                                                                    where a.FieldCode == "HasAttachmentList" && a.EntityId == shipment.Id
+                                                                    where a.FieldCode == "HasAttachmentList"
                                                                     select a).FirstOrDefault();
 
                     DocumentTypeCustomField hasAttachmentListDocumentCustom = (from a in documentCustomfieldsList
@@ -2754,7 +2754,7 @@ namespace WebFreight.Web.WebServices
                                                                                select a).FirstOrDefault();
 
                     FormCustomField InstructionsCustomField = (from a in customfieldsList
-                                                               where a.FieldCode == "Instructions" && a.EntityId == shipment.Id
+                                                               where a.FieldCode == "Instructions"
                                                                select a).FirstOrDefault();
 
                     DocumentTypeCustomField InstructionsDocumentCustom = (from a in documentCustomfieldsList
@@ -2762,7 +2762,7 @@ namespace WebFreight.Web.WebServices
                                                                           select a).FirstOrDefault();
 
                     FormCustomField remarkCustomField = (from a in customfieldsList
-                                                         where a.FieldCode == "Remark" && a.EntityId == shipment.Id
+                                                         where a.FieldCode == "Remark"
                                                          select a).FirstOrDefault();
 
                     DocumentTypeCustomField remarkDocumentCustom = (from a in documentCustomfieldsList
@@ -2770,7 +2770,7 @@ namespace WebFreight.Web.WebServices
                                                                     select a).FirstOrDefault();
 
                     FormCustomField sDdataproviderCustomField = (from a in customfieldsList
-                                                                 where a.FieldCode == "LastFreeDate" && a.EntityId == shipment.Id
+                                                                 where a.FieldCode == "LastFreeDate"
                                                                  select a).FirstOrDefault();
 
                     DocumentTypeCustomField sDdataproviderDocumentCustom = (from a in documentCustomfieldsList
@@ -2778,7 +2778,7 @@ namespace WebFreight.Web.WebServices
                                                                             select a).FirstOrDefault();
 
                     FormCustomField valueCustomField = (from a in customfieldsList
-                                                        where a.FieldCode == "Value" && a.EntityId == shipment.Id
+                                                        where a.FieldCode == "Value"
                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField valueDocumentCustom = (from a in documentCustomfieldsList
@@ -2786,7 +2786,7 @@ namespace WebFreight.Web.WebServices
                                                                    select a).FirstOrDefault();
 
                     FormCustomField shipper2CustomField = (from a in customfieldsList
-                                                           where a.FieldCode == "Shipper2" && a.EntityId == shipment.Id
+                                                           where a.FieldCode == "Shipper2"
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField shipper2DocumentCustom = (from a in documentCustomfieldsList
@@ -2794,7 +2794,7 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField shipper3CustomField = (from a in customfieldsList
-                                                           where a.FieldCode == "Shipper3" && a.EntityId == shipment.Id
+                                                           where a.FieldCode == "Shipper3"
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField shipper3DocumentCustom = (from a in documentCustomfieldsList
@@ -2802,7 +2802,7 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField shipper4CustomField = (from a in customfieldsList
-                                                           where a.FieldCode == "Shipper4" && a.EntityId == shipment.Id
+                                                           where a.FieldCode == "Shipper4"
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField shipper4DocumentCustom = (from a in documentCustomfieldsList
@@ -2810,7 +2810,7 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField shipper5CustomField = (from a in customfieldsList
-                                                           where a.FieldCode == "Shipper5" && a.EntityId == shipment.Id
+                                                           where a.FieldCode == "Shipper5"
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField shipper5DocumentCustom = (from a in documentCustomfieldsList
@@ -2818,7 +2818,7 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField HAWB2CustomField = (from a in customfieldsList
-                                                        where a.FieldCode == "HAWB2" && a.EntityId == shipment.Id
+                                                        where a.FieldCode == "HAWB2"
                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField HAWB2DocumentCustom = (from a in documentCustomfieldsList
@@ -2826,7 +2826,7 @@ namespace WebFreight.Web.WebServices
                                                                    select a).FirstOrDefault();
 
                     FormCustomField HAWB3CustomField = (from a in customfieldsList
-                                                        where a.FieldCode == "HAWB3" && a.EntityId == shipment.Id
+                                                        where a.FieldCode == "HAWB3"
                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField HAWB3DocumentCustom = (from a in documentCustomfieldsList
@@ -2834,7 +2834,7 @@ namespace WebFreight.Web.WebServices
                                                                    select a).FirstOrDefault();
 
                     FormCustomField HAWB4CustomField = (from a in customfieldsList
-                                                        where a.FieldCode == "HAWB4" && a.EntityId == shipment.Id
+                                                        where a.FieldCode == "HAWB4"
                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField HAWB4DocumentCustom = (from a in documentCustomfieldsList
@@ -2842,7 +2842,7 @@ namespace WebFreight.Web.WebServices
                                                                    select a).FirstOrDefault();
 
                     FormCustomField HAWB5CustomField = (from a in customfieldsList
-                                                        where a.FieldCode == "HAWB5" && a.EntityId == shipment.Id
+                                                        where a.FieldCode == "HAWB5"
                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField HAWB5DocumentCustom = (from a in documentCustomfieldsList
@@ -3279,7 +3279,7 @@ namespace WebFreight.Web.WebServices
 
                         // Horse 
                         this.SetHorseDetails(insidePackage, insideItem);
-                        
+
                         #region Car Details
                         insidePackage.Make = insideItem.Make;
                         insidePackage.Model = insideItem.Model;
@@ -3353,7 +3353,7 @@ namespace WebFreight.Web.WebServices
                             if (!string.IsNullOrEmpty(horse.GenderCode))
                             {
                                 HorseGender gender = (from pa in commonContext.HorseGenders
-                                                   where pa.Code == horse.GenderCode
+                                                      where pa.Code == horse.GenderCode
                                                       select pa).FirstOrDefault();
 
                                 if (gender != null)
@@ -3408,12 +3408,12 @@ namespace WebFreight.Web.WebServices
                     var resultquery = from att in packages
                                       group new { att.Quantity, att.Weight, att.Volume } by att.PackageType.EnglishName into newGroup
                                       orderby newGroup.Sum(s => Convert.ToInt32(s.Quantity)) descending
-                                      select new 
-                                      { 
-                                          Type = newGroup.Key, 
-                                          Count = newGroup.Sum(s => Convert.ToInt32(s.Quantity != null ? s.Quantity.Value : 0)), 
-                                          Weight = newGroup.Sum(s => s.Weight != null ? s.Weight.Value : 0), 
-                                          Volume = newGroup.Sum(s => s.Volume != null ? s.Volume.Value : 0) 
+                                      select new
+                                      {
+                                          Type = newGroup.Key,
+                                          Count = newGroup.Sum(s => Convert.ToInt32(s.Quantity != null ? s.Quantity.Value : 0)),
+                                          Weight = newGroup.Sum(s => s.Weight != null ? s.Weight.Value : 0),
+                                          Volume = newGroup.Sum(s => s.Volume != null ? s.Volume.Value : 0)
                                       };
 
                     StringBuilder packageNumberstrbuilder = new StringBuilder();
@@ -3834,7 +3834,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
                 }
 
-                this.ComputeLastToField(myDataProvider, myLastDelivery);                
+                this.ComputeLastToField(myDataProvider, myLastDelivery);
 
                 #region Warehouse Leg
                 myDataProvider.WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate;
@@ -4018,7 +4018,7 @@ namespace WebFreight.Web.WebServices
 
                 if (address.PhoneNumber != null || address.FaxNumber != null)
                 {
-                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(address.FaxNumber)? "Fax: " + address.FaxNumber + " " : "");
+                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(address.FaxNumber) ? "Fax: " + address.FaxNumber + " " : "");
                 }
             }
 
@@ -4195,7 +4195,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
                             {
-                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber)? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber) ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -4227,7 +4227,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myShipperAddress.PhoneNumber != null || myShipperAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myShipperAddress.PhoneNumber != null ? "Tel: " + myShipperAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myShipperAddress.FaxNumber)? "Fax: " + myShipperAddress.FaxNumber + " " : "");
+                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myShipperAddress.PhoneNumber != null ? "Tel: " + myShipperAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myShipperAddress.FaxNumber) ? "Fax: " + myShipperAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -4329,7 +4329,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
                             {
-                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber)? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber) ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -4337,7 +4337,7 @@ namespace WebFreight.Web.WebServices
                     else
                     {
                         Card myConsignee = (from a in commonContext.Cards
-                                          where a.Id == shipment.ConsigneeId
+                                            where a.Id == shipment.ConsigneeId
                                             select a).FirstOrDefault();
 
 
@@ -4361,7 +4361,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myConsigneeAddress.PhoneNumber != null || myConsigneeAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myConsigneeAddress.PhoneNumber != null ? "Tel: " + myConsigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneeAddress.FaxNumber)? "Fax: " + myConsigneeAddress.FaxNumber + " " : "");
+                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myConsigneeAddress.PhoneNumber != null ? "Tel: " + myConsigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneeAddress.FaxNumber) ? "Fax: " + myConsigneeAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -4528,7 +4528,7 @@ namespace WebFreight.Web.WebServices
                 }
             }
             #endregion
-            
+
             if (package.MarksAndNumbers == null)
             {
                 for (int i = 0; i < totalCount; i++)
@@ -4862,7 +4862,7 @@ namespace WebFreight.Web.WebServices
 
                     if (imageDetail != null)
                     {
-                        output = this.GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);                                           
+                        output = this.GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
                     }
                 }
             }
@@ -4947,7 +4947,7 @@ namespace WebFreight.Web.WebServices
 
         private string GetHandlerUserName(string handlerUserId)
         {
-            Contact handlerUser = this.contactRepository.GetSingleContact(handlerUserId,tenant);
+            Contact handlerUser = this.contactRepository.GetSingleContact(handlerUserId, tenant);
             if (handlerUser == null)
             {
                 return null;

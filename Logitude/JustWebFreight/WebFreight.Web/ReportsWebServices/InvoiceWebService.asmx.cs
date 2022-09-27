@@ -4721,11 +4721,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(documentTypeId))
             {
-                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId).ToList();
-                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId).ToList();
+                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId && fc.EntityId == myInvoice.Id && fc.Tenant == tenant).ToList();
+                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId && fc.Tenant == tenant).ToList();
 
                 FormCustomField shipper2CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper2" && a.EntityId == myInvoice.MainEntityId
+                                                       where a.FieldCode == "Shipper2"
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper2DocumentCustom = (from a in documentCustomfieldsList
@@ -4733,7 +4733,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper3CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper3" && a.EntityId == myInvoice.MainEntityId
+                                                       where a.FieldCode == "Shipper3"
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper3DocumentCustom = (from a in documentCustomfieldsList
@@ -4741,7 +4741,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper4CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper4" && a.EntityId == myInvoice.MainEntityId
+                                                       where a.FieldCode == "Shipper4"
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper4DocumentCustom = (from a in documentCustomfieldsList
@@ -4749,7 +4749,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper5CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper5" && a.EntityId == myInvoice.MainEntityId
+                                                       where a.FieldCode == "Shipper5"
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper5DocumentCustom = (from a in documentCustomfieldsList
@@ -4757,7 +4757,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField HAWB2CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB2" && a.EntityId == myInvoice.MainEntityId
+                                                    where a.FieldCode == "HAWB2"
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB2DocumentCustom = (from a in documentCustomfieldsList
@@ -4765,7 +4765,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB3CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB3" && a.EntityId == myInvoice.MainEntityId
+                                                    where a.FieldCode == "HAWB3"
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB3DocumentCustom = (from a in documentCustomfieldsList
@@ -4773,7 +4773,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB4CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB4" && a.EntityId == myInvoice.MainEntityId
+                                                    where a.FieldCode == "HAWB4"
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB4DocumentCustom = (from a in documentCustomfieldsList
@@ -4781,7 +4781,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB5CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB5" && a.EntityId == myInvoice.MainEntityId
+                                                    where a.FieldCode == "HAWB5"
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB5DocumentCustom = (from a in documentCustomfieldsList
