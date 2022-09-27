@@ -32,15 +32,16 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             var excludedFieldDataTypes = GetExcludedFieldDataTypes();
             List<FieldDataType> fieldDataTypes = context.FieldDataTypes
                 .Where(d => !excludedFieldDataTypes.Contains(d.Code)).ToList();
-            UpdateBooleanFieldDataTypeName(fieldDataTypes);
+            ChangeBooleanFieldDataTypeName(fieldDataTypes);
 
             return fieldDataTypes;
         }
 
-        private void UpdateBooleanFieldDataTypeName(List<FieldDataType> fieldDataTypes)
+        private void ChangeBooleanFieldDataTypeName(List<FieldDataType> fieldDataTypes)
         {
-            if (fieldDataTypes.Where(d => d.Code == "Boolean").FirstOrDefault() == null) return;
-            fieldDataTypes.Where(d => d.Code == "Boolean").FirstOrDefault().Name = "Checkbox";
+            var fieldDataType = fieldDataTypes.Where(d => d.Code == "Boolean").FirstOrDefault();
+            if (fieldDataType == null) return;
+            fieldDataType.Name = "Checkbox";
         }
 
         private List<string> GetExcludedFieldDataTypes()
