@@ -343,6 +343,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.CurrentSession.StartBusyIndicatorSaving();
         if (reportSchedulerDetails) {
             this.SetReportDetails(reportSchedulerDetails);
+            this.EntityPM.DocumentTypeTemplateIds = reportSchedulerDetails.DocumentTypeTemplateIds;
         }
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =

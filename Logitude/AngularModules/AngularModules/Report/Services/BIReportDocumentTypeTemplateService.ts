@@ -9,6 +9,7 @@ import { AppTool } from "../../Infrastructure/Tools";
 import { SessionLocator } from "../../Infrastructure/Utilities/SessionLocator";
 import { BIReportPreviewComponent } from "../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent";
 import { DocumentTypeTemplateViewModel } from "../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel";
+import { forEach } from "cypress/types/lodash";
 declare var window: any;
 
 export class BIReportDocumentTypeTemplateService {
@@ -17,25 +18,23 @@ export class BIReportDocumentTypeTemplateService {
     private bIReportPreviewComponent: BIReportPreviewComponent;
     private documentTypeCode = "BIRSC";
     private docuemntTypeTemplateId: string;
-    private documentType: any;
     private DocumentTypeSelected: any;
     private EntityId: any;
     private ObjectTableId: any;
-    private RequsetPageName: string;
+    private ParentObjectTableId: string;
+    private ParentEntityId: string;
 
-    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent, requsetPageName: string) {
+
+
+    constructor(docuemntTypeTemplateId: string, bIReportPreviewComponent: BIReportPreviewComponent) {
 
         this.bIReportPreviewComponent = bIReportPreviewComponent;
         this.bIReportPreviewComponent.DocumentTypeTemplateLists = [];
         this.docuemntTypeTemplateId = docuemntTypeTemplateId;
-        this.EntityId = bIReportPreviewComponent.EntityId;
-        this.ObjectTableId = this.GetObjectTableId();
-        this.RequsetPageName = requsetPageName;
-    }
-
-    GetObjectTableId() {
-        return window.ObjectTables.filter(f => f.Name == "BIReport")[0].Id;
-
+        this.EntityId = this.bIReportPreviewComponent.TasksSchedulerId;
+        this.ObjectTableId = window.ObjectTables.filter(f => f.Name == "TasksScheduler")[0].Id;
+        this.ParentEntityId = this.bIReportPreviewComponent.BIReportId;
+        this.ParentObjectTableId = window.ObjectTables.filter(f => f.Name == "BIReport")[0].Id;
     }
 
     Load() {
@@ -74,9 +73,9 @@ export class BIReportDocumentTypeTemplateService {
                 this.ShowMessage((serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) ? serviceResponse.ErrorsArray[0] : "", "Logitude Message");
                 return;
             }
-            var documentTypeTemplate = serviceResponse.Result;
-            documentTypeTemplate = documentTypeTemplate.filter(d => (d.EntityId == this.EntityId && d.ObjectTableId == this.ObjectTableId) || (!d.AutomationId && !d.EntityId));
-            this.FillDocumentTypeList(documentTypeTemplate);
+            var documentTypeTemplates = serviceResponse.Result;
+            documentTypeTemplates = documentTypeTemplates.filter(d => (d.EntityId == this.EntityId && d.ObjectTableId == this.ObjectTableId) || (!d.AutomationId && !d.EntityId) || this.bIReportPreviewComponent.DocumentTypeTemplateIds.indexOf(d.Id) > -1);
+            this.FillDocumentTypeList(documentTypeTemplates);
         });
     }
 
@@ -134,13 +133,10 @@ export class BIReportDocumentTypeTemplateService {
 
     }
     private GetWindowsArgsEdit(documentTemplate: any) {
-        let windowArgs: any = {};
-        windowArgs.DataViewModel = this.bIReportPreviewComponent;
+        let windowArgs: any = this.GetWindowsArgs();
         windowArgs.TemplateId = documentTemplate.Id;
         windowArgs.Tenant = documentTemplate.Tenant;
-        windowArgs.ObjectType = "DocumentTypeTemplateViewModel";
-        windowArgs.ObjectTableId = this.ObjectTableId ? this.ObjectTableId : null;
-        windowArgs.EntityId = this.EntityId ? this.EntityId : null;
+
         windowArgs.ChildObjectTableId = "";
         windowArgs.RequsetPageName = "BIReport";
         windowArgs.DocumentTypeTemplatePMLists = this.bIReportPreviewComponent.DocumentTypeTemplateLists;
@@ -149,13 +145,23 @@ export class BIReportDocumentTypeTemplateService {
         windowArgs.DontShowToField = true;
         return windowArgs;
     }
-    private GetWindowsArgsAdd() {
+
+    GetWindowsArgs() {
+        let entityId = !AppTool.IsNullOrEmpty(this.EntityId) ? this.EntityId : this.ParentEntityId;
+        let objectTableId = !AppTool.IsNullOrEmpty(this.EntityId) ? this.ObjectTableId : this.ParentObjectTableId;
         let windowArgs: any = {};
         windowArgs.DataViewModel = this.bIReportPreviewComponent;
+        windowArgs.ObjectType = "DocumentTypeTemplateViewModel";
+        windowArgs.ObjectTableId = !AppTool.IsNullOrEmpty(objectTableId) ? objectTableId : null;
+        windowArgs.EntityId = !AppTool.IsNullOrEmpty(entityId) ? entityId : null;
+        return windowArgs;
+    }
+
+
+    private GetWindowsArgsAdd() {
+        let windowArgs: any = this.GetWindowsArgs();
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.bIReportPreviewComponent.DocumentTypeTemplateLists
-        windowArgs.EntityId = this.EntityId ? this.EntityId : null;
-        windowArgs.ObjectTableId = this.ObjectTableId ? this.ObjectTableId : null;
         windowArgs.PageType = "Maintenance";
         windowArgs.TypeTab = "RichText";
         windowArgs.RequsetPageName = "BIReport";
@@ -176,14 +182,21 @@ export class BIReportDocumentTypeTemplateService {
             logWindow.Title = "Edit Html Template";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                if ($event) {
+            logWindow.WindowClosed.subscribe(($templateId: any) => {
+                if ($templateId) {
                     this.LoadDocumentTypeHTMLTemplate();
-                    this.docuemntTypeTemplateId = $event;
+                    this.docuemntTypeTemplateId = $templateId;
+                    this.CheckAndAddToSchedulerTemplatesList($templateId);
                 }
             });
         }
     }
+
+    CheckAndAddToSchedulerTemplatesList(templateId: string) {
+        if (this.bIReportPreviewComponent.DocumentTypeTemplateIds.indexOf(templateId) > -1) return;
+        this.bIReportPreviewComponent.DocumentTypeTemplateIds.push(templateId);
+    }
+
     AddDocumentTypeTemplate() {
         var windowArgs = this.GetWindowsArgsAdd();
 
@@ -194,15 +207,19 @@ export class BIReportDocumentTypeTemplateService {
 
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
+        logitudeWindow.WindowClosed.subscribe(($templateId: any) => {
+            if (!$templateId) return;
+
+            if ($templateId && this.bIReportPreviewComponent.DocumentTypeTemplateLists && this.bIReportPreviewComponent.DocumentTypeTemplateLists.length > 0) {
                 this.bIReportPreviewComponent.IsEnableEditTemplate = true;
             }
-            if ($event) {
-                this.docuemntTypeTemplateId = $event;
-                this.SetDocumentTypeTemplateSelected();
-            }
 
+            this.docuemntTypeTemplateId = $templateId;
+            this.SetDocumentTypeTemplateSelected();
+            if (!this.bIReportPreviewComponent.DocumentTypeTemplateIds) {
+                this.bIReportPreviewComponent.DocumentTypeTemplateIds = [];
+            }
+            this.bIReportPreviewComponent.DocumentTypeTemplateIds.push($templateId);
         });
     }
 

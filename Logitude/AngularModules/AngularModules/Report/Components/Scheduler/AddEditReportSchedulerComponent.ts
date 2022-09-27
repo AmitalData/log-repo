@@ -33,6 +33,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public BIReportEntity: any;
     public IsBIReport: boolean;
     public IsNew: boolean = true;
+    public TasksSchedulerId: string;
     public OldReportSchedulerDetails;
     private CurrentSession = SessionLocator.SelectedSession;
     schedulerExtendedPMService: SchedulerExtendedPMService;
@@ -90,6 +91,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (tasksSchedulerId) {
             this.IsNew = false;
         }
+        this.TasksSchedulerId = tasksSchedulerId;
         this.schedulerExtendedPMService
             .GetSchedulerDetailsById(tasksSchedulerId)
             .subscribe((myResult: ServiceResponse) => {
@@ -224,6 +226,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                     Name: this.BIReportEntity['Name'] + 'Scheduler',
                     ObjectTableName: 'BIReport',
                     EntityId: this.BIReportEntity['Id'],
+                    TasksSchedulerId: this.TasksSchedulerId,
                     IsScheduler: true,
                     IsNewScheduler: this.IsNew,
                     SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
@@ -403,6 +406,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DWQueryId: null,
             DWQueryFilterData: null,
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
+            DocumentTypeTemplateIds: null,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -447,6 +451,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
+            DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.DocumentTypeTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             DWQueryFilterData: this.PageChild_PRREP ? this.GetNewSelectedFilters() : this.GetOriginalSelectedFilters(),
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);

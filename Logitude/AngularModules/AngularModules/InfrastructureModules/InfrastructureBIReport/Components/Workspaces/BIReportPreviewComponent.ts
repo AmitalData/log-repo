@@ -51,6 +51,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
+    public TasksSchedulerId: string;
     public DWQueryId: string;
     public FolderId: string;
     public IsScheduler: boolean;
@@ -99,14 +100,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
         if (this.documentTypeTemplateSelected != value) {
             this.documentTypeTemplateSelected = value;
-            this.IsEnableAddTemplate = true;
             this.IsEnableEditTemplate = true;
         }
     }
     private bIReportDocumentTypeTemplateService: BIReportDocumentTypeTemplateService;
     public IsEnableEditTemplate: boolean = false;
-    public IsEnableAddTemplate: boolean = false;
+    public IsEnableAddTemplate: boolean = true;
     public ObjectTableId: string;
+    public DocumentTypeTemplateIds: string[] = [];
+    public BIReportId: string;
 
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
@@ -177,13 +179,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.DWQueryId = args['DWQueryId'];
         this.BIReportName = args['Name'];
         this.EntityId = args['EntityId'];
+        this.TasksSchedulerId = args['TasksSchedulerId'];
+        this.BIReportId = args['EntityId'];
         this.FolderId = args['FolderId'];
         this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports";
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
         this.ParentComponent = args['ParentComponent'];
         if (this.IsScheduler) {
-            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this, "BIReport");
+            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this);
             this.bIReportDocumentTypeTemplateService.Load();
         }
 
