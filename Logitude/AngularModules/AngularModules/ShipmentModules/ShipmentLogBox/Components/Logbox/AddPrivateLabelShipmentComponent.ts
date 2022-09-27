@@ -24,12 +24,13 @@ import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackag
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { AddEditPrivateLabelShipmentComponent } from './AddEditPrivateLabelShipmentComponent';
+import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 
 
 
 @Component({
 
-    templateUrl: './AddPrivateLabelShipmentComponent.html',
+    templateUrl: './AddPrivateLabelShipmentComponent.html', 
 })
 
 export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmentComponent {
@@ -52,6 +53,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     private shipmentPMService: ShipmentPMService;
     public departmentListService: DepartmentListService;
     public entityStatusListService: EntityStatusListService;
+    public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
     public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     private args: any;
     EntityProgressStatusId: string;
@@ -74,6 +76,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ToTextCode: string; 
     public ToPortTextCode: string;
     public isRTL: boolean = false;
+    public IsNew: boolean = false;
 
     constructor() {
         super();
@@ -84,8 +87,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUIProperties_Filters(); 
         this.TenantPM = SessionLocator.TenantPM;
         this.SessionIndex = this.CurrentSession.SessionIndex;
-        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-        this.BuildFiltersLists(); 
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1; 
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
@@ -95,14 +97,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
  
 
     SetFromPort() {
+        if (!this.IsNew) {
+            this.FromPort = this.EntityPM.FromPort;
+            return;
+        }
+
         this._PortExtendedPMService.getSinglePort("TLV", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
             this.FromPort =  Result.Result.Id;
         })
-
     }
 
 
-    SetUnits() { 
+    SetUnits() {
+        if (!this.IsNew) return;
         this.SetDimensionsUnitCode(); 
         this.SetVolumeUnitCode(); 
         this.SetGrossWeightUnitCode();
@@ -245,6 +252,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.incotermListService = new IncotermListService();
         this.shipmentPMService = new ShipmentPMService();  
         this.entityStatusListService = new EntityStatusListService();
+        this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
 
     SetWindowArgs(args: any) { 
@@ -253,15 +261,27 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private SetExportShipmentArgs(args: any) { 
         this.SetArgs(args);
+        if (this.IsNew) this.SetNewExportShipmentArgs();
+        else this.SetEditExportShipmentArgs();
+        this.SetUIProperties();
+    }
+
+    private SetNewExportShipmentArgs() {
         this.GetBranch();
         this.GetDepartment();
-        this.SetUIProperties();
-        this.BuildFiltersLists();
         this.SetUIProperties_Filters();
     }
+
+    private SetEditExportShipmentArgs() {
+        this.BuildShipmentTypes();
+        this.SetShipmentOrderPackages();
+        this.SetUIProperties_OrderDetails();
+    }
+
     private SetArgs(args: any) {
-        this.SetDirections(args);
+        this.SetIsCustomsActivated(args);
         this.args = args;
+        this.IsNew = args.IsNew;
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
@@ -269,8 +289,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.AllowCreateOceanShipmentsWithoutDocuments = SessionLocator.PrivateLableSettings.CreateOShipmentsWithoutDocs;
     }
 
-    private SetDirections(args: any) {
-        this.IsCustomsActivated = args.IsCustomsActivated;
+    private SetIsCustomsActivated(args: any) {
+        if (this.IsNew) {
+            this.IsCustomsActivated = args.IsCustomsActivated;
+            this.BuildFiltersLists(); 
+            return;
+        }
+        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(SessionLocator.Tenant, SessionLocator.PrivateLableSettings.HybridPartnerId).subscribe((res: any) => {
+            if (!res.HasError) {
+                this.IsCustomsActivated = res.Result.IsCustoms;
+                this.BuildFiltersLists(); 
+            }
+        });
     }
 
 
@@ -304,6 +334,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     SetUIProperties_Filters() {
+        if (!this.IsNew) return;
         this.DirectionId = 'E';
         this.TransportModeId = 'A'; 
     }
@@ -675,16 +706,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         if (this.DirectionId == 'C') this.SaveChanges();
-        else this.CreateExportShipment();
+        else this.UpsertExportShipment();
     }
      
-    private CreateExportShipment() {
+    private UpsertExportShipment() {
         this.ValidateReferenceNumber();
         this.ValidateRequiredFields();
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.InitializeExportShipmentFields();
+        if (this.ValidationErrorsList.length != 0) {
+            return;
         }
+        if (this.IsNew) this.InitializeNewExportShipmentFields();
+        else this.InitializeEditExportShipmentFields();
     }
 
     ValidateReferenceNumber() {
@@ -720,6 +753,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         });
     }
 
+    private UpdateShipment() {
+        this.shipmentPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (serviceResponse.HasError) {
+                this.ValidationErrorsList = serviceResponse.ErrorsArray;
+                return;
+            }
+            this.EntityPM = serviceResponse.Result;
+            this.CurrentSession.CloseCurrentWindow();
+        });
+    }
+
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     } 
@@ -734,7 +779,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public get StatusId() { return this.EntityPM.StatusId }
     public set StatusId(newValue: string) { this.EntityPM.StatusId = newValue; }
 
-    private InitializeExportShipmentFields() {
+    private InitializeNewExportShipmentFields() {
 
         this.CurrentSession.StartBusyIndicator("Creating...");
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId; 
@@ -771,6 +816,22 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     }
 
+    private InitializeEditExportShipmentFields() {
+
+        this.CurrentSession.StartBusyIndicator("Updating...");
+        this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId;
+        this.EntityPM.IsImporterShipment = true;
+        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
+        this.EntityPM.ShipmentCustomerTypeCode = "SHI";
+        this.EntityPM.MainCarriageFromPortId = this.TransportModeId == 'A' ? this.FromPort : this.MainCarriageFromPortId;
+        this.EntityPM.FromPortId = this.FromPort;
+        this.EntityPM.ShipmentOrderPackages = this.GetShipmentOrderPackages();
+        this.SetOrderPackagesOnFinish();
+        this.SetDocumentFilingIds();
+        this.UpdateShipment();
+    }
+
     GetShipmentOrderPackages(): ShipmentOrderPackagePM[] {
         if(this.EntityPM.ShipmentOrderPackages && this.EntityPM.ShipmentOrderPackages.length != 0) return this.EntityPM.ShipmentOrderPackages;
         var shipmentOrderPackage = new ShipmentOrderPackagePM(null); 
@@ -783,6 +844,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         var shipmentOrderPackages = [];
         shipmentOrderPackages.push(shipmentOrderPackage);
         return shipmentOrderPackages;
+    }
+
+    SetShipmentOrderPackages(): ShipmentOrderPackagePM[] {
+        if (!this.EntityPM.ShipmentOrderPackages || this.EntityPM.ShipmentOrderPackages.length == 0) return;
+        if (this.ShipmentTypeId != 'FCLD' || this.TransportModeId == 'A') return;
+
+        this.EntityPM.ShipmentOrderPackages.forEach((shipmentOrderPackage, index) => {
+            let fieldNumber = index + 1;
+            this['ContainerNumber' + fieldNumber] = shipmentOrderPackage.ContainerNumber;
+            this['Quantity' + fieldNumber] = shipmentOrderPackage.Quantity;
+            this['PackageTypeId' + fieldNumber] = shipmentOrderPackage.PackageTypeId;
+        });
     }
 
     CalculateShipmentOrderPackageVolume(shipmentOrderPackage : ShipmentOrderPackagePM): ShipmentOrderPackagePM {
@@ -997,8 +1070,16 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    ValidateRequestedFlightDate() { 
-        if (this.RequestedFlightDate.getTime() < new Date().getTime()) { 
+    ValidateRequestedFlightDate() {
+        let requestedFlightDate;
+        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate) && typeof(this.RequestedFlightDate) == "string") {
+            requestedFlightDate = new Date(this.RequestedFlightDate);
+        }
+        else {
+            requestedFlightDate = this.RequestedFlightDate.getTime();
+        }
+
+        if (requestedFlightDate < new Date().getTime()) { 
             this.ValidationErrorsList.push(this.RequestedDateLabel+ " must be for a future date");
         } 
     }
