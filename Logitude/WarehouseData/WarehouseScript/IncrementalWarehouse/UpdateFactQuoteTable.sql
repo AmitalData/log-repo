@@ -170,7 +170,7 @@
 
 
 	  BEGIN TRY
-      	   insert into Fact_Quotes ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[Type] , [Department],[Branch],[Quote Number],
+      	   insert into #Fact_QuotesTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[Type] , [Department],[Branch],[Quote Number],
 	   [Shipper],[Consignee],[Agent],[Customer],[Incoterms],[Opened by] ,[Open Date] , [Sent Date] ,[Accepted Date] ,[Declined Date] ,[Start Date] ,[Last Activity Date]
 	   ,[Salesman] , [Stage] , [Notes] ,[Closing Reason] , [Estimated Profit in Local Currency] ,
 	   [Sales Currency] , [Subject] , [Gross Weight In Kg] , [Chargeable Weight in Kg], [Volume in CBM] , [Number of Packages] , [Number of Containers] , 
@@ -227,6 +227,7 @@ END CATCH
 	CLOSE QuotesCursor
 	DEALLOCATE QuotesCursor
 
+				insert into Fact_Quotes select * from #Fact_QuotesTemp
 
 	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Quote'
 
