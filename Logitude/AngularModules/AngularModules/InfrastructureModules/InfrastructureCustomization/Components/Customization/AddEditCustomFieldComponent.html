@@ -150,7 +150,7 @@
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
-                                        <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox>
+                                        <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Name'"></ComboBox>
                                     </div>
                                 </td>
                             </tr>

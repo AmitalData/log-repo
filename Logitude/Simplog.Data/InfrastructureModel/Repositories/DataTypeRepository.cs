@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,11 +27,35 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.FieldDataTypes.Add(entity);
         }
 
-        public IQueryable<FieldDataType> GetDataTypes()
+        public List<FieldDataType> GetDataTypes()
         {
-            
-            
-            return context.FieldDataTypes;
+            var excludedFieldDataTypes = GetExcludedFieldDataTypes();
+            List<FieldDataType> fieldDataTypes = context.FieldDataTypes
+                .Where(d => !excludedFieldDataTypes.Contains(d.Code)).ToList();
+            UpdateBooleanFieldDataTypeName(fieldDataTypes);
+
+            return fieldDataTypes;
+        }
+
+        private void UpdateBooleanFieldDataTypeName(List<FieldDataType> fieldDataTypes)
+        {
+            if (fieldDataTypes.Where(d => d.Code == "Boolean").FirstOrDefault() == null) return;
+            fieldDataTypes.Where(d => d.Code == "Boolean").FirstOrDefault().Name = "Checkbox";
+        }
+
+        private List<string> GetExcludedFieldDataTypes()
+        {
+            List<string> excludedFieldDataTypes = new List<string>();
+            excludedFieldDataTypes.Add("Byte[]");
+            excludedFieldDataTypes.Add("Emails");
+            excludedFieldDataTypes.Add("Constant");
+            excludedFieldDataTypes.Add("List");
+            excludedFieldDataTypes.Add("SigDouble");
+            excludedFieldDataTypes.Add("UnsDecimal");
+            excludedFieldDataTypes.Add("UnsInteger");
+            excludedFieldDataTypes.Add("Raw");
+            excludedFieldDataTypes.Add("Binary");
+            return excludedFieldDataTypes;
         }
 
         public void Remove(FieldDataType entity)
