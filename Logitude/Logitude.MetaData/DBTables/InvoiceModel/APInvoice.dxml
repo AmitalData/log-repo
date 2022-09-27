@@ -580,4 +580,9 @@
     Columns="VendorGLAccountId" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+	Columns="Tenant,IsClosed" />
+  <Index
+	Columns="Tenant"
+	Include="SearchFields" />
 </Table>

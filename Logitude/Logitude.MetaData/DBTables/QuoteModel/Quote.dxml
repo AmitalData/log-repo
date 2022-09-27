@@ -1786,6 +1786,9 @@
     Columns="OpportunityId" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+	Columns="Tenant,IsCancelled"
+	Include="SearchFields" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
 </Table>
