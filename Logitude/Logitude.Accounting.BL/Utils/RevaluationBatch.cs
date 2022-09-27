@@ -188,10 +188,10 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     IAccountingContext context = AccountingContext.GetContext(tenant);
                     string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
-                        _ResponseText = errorMessage;
-                        _StatusCode = HttpStatusCode.InternalServerError;
-                        UpdateRevaluationStatus(id, tenant, (int)RevaluationStatusEnum.Failed+"", errorMessage, context);
-                    
+                    _ResponseText = errorMessage;
+                    _StatusCode = HttpStatusCode.InternalServerError;
+                    UpdateRevaluationStatus(id, tenant, (int)RevaluationStatusEnum.Failed + "", errorMessage, context);
+
                     excScope.Complete();
                 }
 
@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
-            FilterInterestTranasctionsForCustomersGLAccountsOnly(journal, interestTransactions);
+            interestTransactions = FilterInterestTranasctionsForCustomersGLAccountsOnly(journal, interestTransactions);
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
 
             if (interestTransactions.Any())
@@ -222,17 +222,17 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void FilterInterestTranasctionsForCustomersGLAccountsOnly(JournalPM journal, List<InterestTransactionPM> interestTransactions)
+        private List<InterestTransactionPM> FilterInterestTranasctionsForCustomersGLAccountsOnly(JournalPM journal, List<InterestTransactionPM> interestTransactions)
         {
             var repoGLAccountFastFetch = new GLAccountRepository(journal.Tenant);
             var glAccounts = repoGLAccountFastFetch.GetByGLAccountsIdList(interestTransactions.Select(x => x.GLAccountId).ToList(), journal.Tenant);
             var customersGLAccountsIds = glAccounts
                 .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
-            interestTransactions = interestTransactions.Where(x => customersGLAccountsIds.Contains(x.GLAccountId)).ToList();
+            return interestTransactions.Where(x => customersGLAccountsIds.Contains(x.GLAccountId)).ToList();
         }
 
-        private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
+        private static InterestTransactionPM CreateInterestTransaction(JournalLinePM line)
         {
             InterestTransactionPM newInterestTransaction = new InterestTransactionPM();
             newInterestTransaction.EntityId = line.JournalId;
@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.Utils
             newInterestTransaction.ForeignAmount = line.ForeignAmount;
             newInterestTransaction.CurrencyId = line.CurrencyId;
             newInterestTransaction.InterestValueDate = line.AccountingDate;
-            newInterestTransaction.GLAccountId = line.ActionCode == CreditCode  ? line.CreditAccountId : line.DebitAccountId;
+            newInterestTransaction.GLAccountId = line.ActionCode == CreditCode ? line.CreditAccountId : line.DebitAccountId;
             newInterestTransaction.Tenant = line.Tenant;
             newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
             return newInterestTransaction;
@@ -347,7 +347,7 @@ namespace Logitude.Accounting.BL.Utils
                                     Reference1 = revaluation.RevaluationNumber.ToString(),
                                     //                                  Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                                     Notes = TranslateTextsClassTranslate("Revaluations.Q.Revaluation", 0, useLocal),
-                                    DebitAccountId = createRevaluationJournalinDetail? gLAccountPM.Id:null,
+                                    DebitAccountId = createRevaluationJournalinDetail ? gLAccountPM.Id : null,
                                 };
                                 LogMessagingUtil.Instance.AppendLine("Credit Difference = " + difference);
                                 lineList.Add(journalLine_credit);

@@ -16,19 +16,20 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
     public class RegularJournalInterestTransactionMapping
     {
         const string CustomerGLAccountType = "2";
-        public  void CreatelInterestTransactions(JournalPM regularJournal)
+        public void CreatelInterestTransactions(JournalPM regularJournal)
         {
             if (regularJournal.TypeCode != JournalTypeValues.Regular)//0	Regular	רגיל	0,רגיל,False,Regular,	0
             {
                 return;
             }
-            if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal 
+            if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal
                 && regularJournal.AccountingEntityCode != AccountingEntityValues.Adjustment && regularJournal.AccountingEntityCode != AccountingEntityValues.BankAdjustment)
             {
                 return;
             }
             string interestEntityType = GetInterestEntityType(regularJournal);
-            if (interestEntityType != null) {
+            if (interestEntityType != null)
+            {
                 var repoInterestTransactionFastFetch = new InterestTransactionRepository(regularJournal.Tenant);
                 var AlreadyExist = repoInterestTransactionFastFetch.AlreadyExist(interestEntityType,//3 - “Journal”
                     regularJournal.Id,
@@ -69,7 +70,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             {
                 return InterestEntityTypes.Journal;
             }
-            else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment) {
+            else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment)
+            {
                 return InterestEntityTypes.Adjustments;
             }
             return null;
@@ -144,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
         }
 
 
-        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal,DateTime AccountingActivationDate, string interestEntityType)
+        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal, DateTime AccountingActivationDate, string interestEntityType)
         {
 
             var creditJournalLines = externalJournal.JournalLines
@@ -155,7 +157,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                 .Distinct()
                 .ToList();
 
-          
+
             var myPartnerIds = CreditAccountIdS;
             var repoGLAccountFastFetch = new GLAccountRepository(externalJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), externalJournal.Tenant);
@@ -185,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
              ).ToList();
 
 
-         
+
 
             var allInterestTransactions = creditLines.ToList();
             return allInterestTransactions;
