@@ -231,7 +231,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.FirstTime = false;
             return;
         }
-        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField.DisplayName, DashboardId: this.DashboardPM?.Id });
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
 
         this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
         this.FirstTime = false;
