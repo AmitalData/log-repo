@@ -195,24 +195,7 @@ namespace Logitude.BL.Helpers
 
                             if (insideMethodInfo != null)
                             {
-                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
-                                object[] parameters = new object[] { };
-                                switch (parametersInfo.Count())
-                                {
-                                    case 1:
-                                        parameters = new object[] { value };
-                                        break;
-                                    case 2:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                    case 3:
-                                        parameters = new object[] { value, tenant, false };
-                                        break;
-                                    default:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                }
-
+                                object[] parameters = GetMethodParameters(tenant, value, insideMethodInfo);
 
                                 insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
 
@@ -276,6 +259,27 @@ namespace Logitude.BL.Helpers
             }
 
             return resultValue;
+        }
+
+        private static object[] GetMethodParameters(int tenant, object value, MethodInfo insideMethodInfo)
+        {
+            ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+            switch (parametersInfo.Count())
+            {
+                case 1:
+                    return new object[] { value };
+                case 2:
+                    return new object[] { value, tenant };
+                case 3:
+                    return (IsStringParameter(parametersInfo[2])) ? new object[] { value, tenant, null } : new object[] { value, tenant, false };
+                default:
+                    return new object[] { value, tenant };
+            }
+        }
+
+        private static bool IsStringParameter(ParameterInfo parametersInfo)
+        {
+            return parametersInfo?.ParameterType?.Name == "String";
         }
 
         private static DateTime? ConvertToDate(string arg)

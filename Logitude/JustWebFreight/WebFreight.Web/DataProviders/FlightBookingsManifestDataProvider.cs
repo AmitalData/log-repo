@@ -71,6 +71,7 @@ namespace WebFreight.Web.DataProviders
         public string PackageReference2 { get; set; }
         public string PackageReference3 { get; set; }
         public string PackageReference4 { get; set; }
+        public string PackagesNotes { get; set; }
         public string Dimensions { get; set; }
         public string MasterLong { get; set; }
         public DateTime? ETD { get; set; }

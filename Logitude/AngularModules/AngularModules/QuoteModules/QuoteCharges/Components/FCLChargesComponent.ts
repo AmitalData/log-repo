@@ -52,6 +52,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
     public IsAllowingMultipleFreightCharges: boolean = false;
+    public IsMarkUpCurrencyHasFeatureToggle: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -87,7 +88,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.CheckMarkUpCurrencyFeatureToggle();
         this.Listen();
+    }
+
+    private CheckMarkUpCurrencyFeatureToggle() {
+        this.IsMarkUpCurrencyHasFeatureToggle = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMU")[0];
+        if (featureToggle) {
+            this.IsMarkUpCurrencyHasFeatureToggle = true;
+        }
     }
 
     public IsAllowingMultipleFreightChargesMethod() {
@@ -2906,7 +2916,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.CostQuantity) ? this.QuotePM.ValueOfGoods : this.CostQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
@@ -3272,7 +3282,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.SaleQuantity) ? this.QuotePM.ValueOfGoods : this.SaleQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
@@ -3412,15 +3422,20 @@ export class FCLQuoteChargeItem extends BaseComponent {
     }
 
     GetMarkUpValueByCurrency(value) {
-        var markUpValue = (value == null ? 0 : value);
-        if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+        if (!this.fatherComponent.IsMarkUpCurrencyHasFeatureToggle) {
+            return value;
+        }
+        else {
+            var markUpValue = (value == null ? 0 : value);
+            if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+                return markUpValue;
+            }
+
+            var markUpLocalValue = markUpValue * this.CostExchangeRate;
+            markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
             return markUpValue;
         }
-
-        var markUpLocalValue = markUpValue * this.CostExchangeRate;
-        markUpValue = markUpLocalValue / this.SaleExchangeRate;
-
-        return markUpValue;
     }
 
     ComputeSalePrice1() {

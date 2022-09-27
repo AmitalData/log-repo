@@ -10715,7 +10715,7 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="40"
