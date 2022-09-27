@@ -29,6 +29,7 @@ using Intuit.Ipp.Security;
 using Intuit.Ipp.OAuth2PlatformClient;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Logitude.BL.InvoiceModel.Tools;
 
 namespace CommunicationWorkerRole
 {
@@ -435,10 +436,12 @@ namespace CommunicationWorkerRole
         {
             OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(GetAccessToken(entityPM, mySetting));
             ServiceContext serviceContext = new ServiceContext(entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-            serviceContext.IppConfiguration.BaseUrl.Qbo = "https://quickbooks.api.intuit.com/";
+            serviceContext.IppConfiguration.BaseUrl.Qbo = QuickbooksService.GetQBOBaseURL(mySetting);
 
             return serviceContext;
         }
+
+
 
         public string GetAccessToken(AccountingSettingPM entityPM, Setting mySetting)
         {

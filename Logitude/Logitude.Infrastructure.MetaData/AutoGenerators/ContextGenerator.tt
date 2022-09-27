@@ -67,7 +67,6 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 
 #>
  
-         IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
@@ -498,7 +497,6 @@ namespace <#= contextnamespacestring #>
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
 			modelBuilder.Configurations.Add(new CustomsShipperMap());
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -544,13 +542,6 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
       //  {
         //    get; set;
        // }
-
-       public IDbSet<IndexerWaterMark> IndexerWaterMarks
-        {
-            get; set;
-
-        }
-
 #>
   
  }

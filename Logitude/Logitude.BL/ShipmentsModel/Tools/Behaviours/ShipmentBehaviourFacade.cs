@@ -3,11 +3,6 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviour;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
@@ -18,16 +13,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private IShipmentBehaviour shipmentDigitalFields;
         public bool ReceivablePricingUpdated_CrossDoc = false;
         public bool DatesUpdated_CrossDoc = false;
+        public ShipmentPM shipmentPM = null;
+        public IShipmentsContext shipmentsContext = null;
+        public bool isNewEntity = false;
 
         public ShipmentBehaviourFacade(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentComputedFields updatedShipmentComputedFields, bool isNewEntity)
         {
+            this.shipmentPM = shipmentPM;
+            this.shipmentsContext = context;
+            this.isNewEntity = isNewEntity;
             updateShipmentComputedFields = new UpdateShipmentComputedFieldsBehaviour(shipmentPM, context, updatedShipmentComputedFields, isNewEntity);
             updateCrossDocks = new UpdateCrossDockBehaviour(shipmentPM);
-        }
-
-        public ShipmentBehaviourFacade(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentDigitalField shipmentComputedFields, bool isNewEntity)
-        {
-            shipmentDigitalFields = new ShipmentDigitalFieldsBehaviour(shipmentPM, context, shipmentComputedFields, isNewEntity);
         }
 
         public void Handle()
@@ -38,9 +34,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             DatesUpdated_CrossDoc = updateCrossDocks.DatesFromCrossDocsUpdated;
         }
 
-        public void HandleShipmentDigitalFields()
+        public void HandleShipmentDigitalFields(ShipmentDigitalField shipmentDigitalFields)
         {
-            shipmentDigitalFields.Handle();
+            this.shipmentDigitalFields = new ShipmentDigitalFieldsBehaviour(shipmentPM, shipmentsContext, shipmentDigitalFields, isNewEntity);
+            this.shipmentDigitalFields.Handle();
         }
 
         public void Trace(ShipmentTracing shipmentTracing)
