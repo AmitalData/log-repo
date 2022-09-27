@@ -1019,6 +1019,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 550;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Payables/AddEditPayableComponent');
     }
     DeleteItem(itemComponent: ShipmentPayableItem) {

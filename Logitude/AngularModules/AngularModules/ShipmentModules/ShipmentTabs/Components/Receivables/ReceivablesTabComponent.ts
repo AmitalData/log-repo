@@ -921,6 +921,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 550;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Receivables/AddEditReceivableComponent');
     }
     DeleteItem(itemComponent: ShipmentReceivableItem) {

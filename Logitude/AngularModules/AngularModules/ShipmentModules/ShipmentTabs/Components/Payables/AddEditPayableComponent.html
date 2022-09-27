@@ -332,6 +332,26 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <!-- Additional Fields -->
+                                        <div [hidden]="DataContext.IsByContainerType" style="height:170px">
+                                            <div style="height:5px"></div>
+
+                                            <div class="SectionTitle">Additional Fields</div>
+                                            <table style="height:160px">
+                                                <tr>
+                                                    <td>
+                                                        <ScrollViewer>
+
+                                                            <div class="MediaFill">
+                                                                <div class="LocationDirective" #Child></div>
+                                                            </div>
+                                                        </ScrollViewer>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -420,7 +440,7 @@
                         </td>
                     </tr>
 
-                    <tr [style.height]="!DataContext.IsByContainerType ? '100%':'100px'">
+                    <tr [hidden]="!DataContext.IsByContainerType" [style.height]="!DataContext.IsByContainerType ? '100%':'100px'">
                         <td>
                             <div [class.ScrollViewer]="DataContext.IsByContainerType">
                                 <div [class.ScrollContent]="DataContext.IsByContainerType">
