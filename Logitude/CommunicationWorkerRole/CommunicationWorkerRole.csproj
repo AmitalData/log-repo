@@ -394,6 +394,7 @@
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="DigitalPortalQueryExportExecutionLogWR.cs" />
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
@@ -401,6 +402,7 @@
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
     <Compile Include="Services\DelayAutomationFieldValueService.cs" />
+    <Compile Include="Services\DigitalQueryQueryExportLogExecutionService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />

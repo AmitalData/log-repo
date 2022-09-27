@@ -716,7 +716,8 @@ namespace WebFreight.Web.Security
             PackagesCodesManager iManager = new PackagesCodesManager(tenant, loggedUserId, isCustomerCare);
             return iManager.BasePackagesCodes;
         }
-        private static string GetLoggedUserId(string email, int tenant)
+
+        public static string GetLoggedUserId(string email, int tenant)
         {
             string loggedUserId = null;
 
