@@ -325,6 +325,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
+                new ShipmentAnalyticRepository(objectContext).AddFromShipment(entityPoco, entityMasterData);
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
