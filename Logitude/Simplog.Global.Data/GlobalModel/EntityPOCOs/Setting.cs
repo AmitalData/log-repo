@@ -89,5 +89,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string AzurePrincipalSecretKey { get; set; }
         public string DNSIPAddress { get; set; }
         public string DNSZone { get; set; }
+        public string QboBaseUrl { get; set; }
+        public string QboEnvironment { get; set; }
     }
 }
