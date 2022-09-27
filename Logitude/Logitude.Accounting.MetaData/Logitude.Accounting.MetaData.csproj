@@ -391,6 +391,7 @@
       <LastGenOutput>AccountingDataContractsClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\AccountingDataContractsClassesGenerator.cs</LastOutputs>
     </Content>
+    <Content Include="DBScripts\202209270000_AddInterestForARPayments_PartnerTypeNotCustomer.axml" />
     <Content Include="DBScripts\202209131224_AddInterestForReturnedToCustomerCheques.axml" />
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
