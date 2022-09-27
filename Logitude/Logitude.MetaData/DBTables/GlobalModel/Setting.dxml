@@ -543,5 +543,21 @@
 		    <Constraints
 		      Nullable="true" />
 	</Column>
+  <Column
+      Name="QboBaseUrl"
+      Type="varchar"
+      Size="1000"
+      DefaultValue="'https://quickbooks.api.intuit.com/'">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+      Name="QboEnvironment"
+      Type="varchar"
+      Size="1000"
+      DefaultValue="'production'">
+    <Constraints
+      Nullable="true" />
+  </Column>
 	
 </Table>
