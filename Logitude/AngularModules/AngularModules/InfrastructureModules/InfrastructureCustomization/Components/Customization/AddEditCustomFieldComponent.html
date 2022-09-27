@@ -157,8 +157,23 @@
 
 
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
-                                <td style="height: 22px;">
-                                    <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
+
+
+
+                                <td style="height: 22px;" >
+                                    <table>
+                                        <tr>
+                                            <td style="width: 20px;">
+                                                <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
+                                            </td>
+
+                                            <td>
+                                                <div>
+                                                    <HelpIcon [HideHeader]="true" [Text]="'This field can\'t be editable With Read Only option unless from using Automatic updating like Documents Populate Automatic Date Values, events ​... etc'" [IconSize]="14"></HelpIcon>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 
