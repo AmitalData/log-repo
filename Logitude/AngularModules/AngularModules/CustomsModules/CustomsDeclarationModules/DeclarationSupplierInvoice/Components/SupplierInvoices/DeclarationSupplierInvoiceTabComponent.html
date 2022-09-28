@@ -299,7 +299,7 @@
 
                         <td class="TabTitleRow" style="width:150px">  {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}} </td>
 
-                        <td style="width: 270px;">
+                        <td>
                             <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
                                 <div class="DisbleBox">
                                     {{DisplayOnlyMessage}}
@@ -307,8 +307,8 @@
                                     <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
                                 </div>
                             </div>
-                            <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
-                                <div class="DisbleBox">
+                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
+                                <div *ngIf="ShowStorageStatusMessage || IsDisplayMessage" class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
                             </div>
@@ -319,17 +319,7 @@
                                 <button *ngIf="showMultiUpdateWindowBtn" [disabled]="IsDisplayOnly" class="Button" (click)="OpenMultiUpdateWindow()" style="width: 140px; display: inline-block;">  עדכון קוד תהליך/הנחה פטור </button>
                                 <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton>
                             </div>                                        
-                        </td>
-                        <td >
-                            <div>
-                                <table>
-                                    <tr>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-
-
+                        </td>                      
                     </tr>
 
                     <tr>

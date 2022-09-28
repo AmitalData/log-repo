@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 
                 if (!String.IsNullOrWhiteSpace( classificationCode))
                 {
-                    var key = "GetQuantityType," + classificationCode;
+                    var key = "GetQuantityType," + classificationCode + ",isExport," + isExport;
                     if (CacheManager.CacheWrapper.Get(key) == null)
                     {
                         CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
