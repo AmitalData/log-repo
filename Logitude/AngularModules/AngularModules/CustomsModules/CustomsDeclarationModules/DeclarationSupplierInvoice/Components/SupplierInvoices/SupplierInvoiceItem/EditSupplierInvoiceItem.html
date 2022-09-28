@@ -1495,7 +1495,8 @@
                                                                                         [HideColumns]="true"
                                                                                         [LookUpTableName]="'Customs.AmountType'"
                                                                                         (SelectedItemChanged)="item.SetLocalName($event, 'AdditionalPriceTypeName')"
-                                                                                        [FocusOnMe]="true">
+                                                                                        [FocusOnMe]="true"
+                                                                                        [QueryFilterItems]="AdditionalPriceTypeCodeFilterItems">
                                                                                 </LogLov>
 
                                                                             </div>
