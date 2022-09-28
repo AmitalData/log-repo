@@ -10,7 +10,8 @@ create PROCEDURE [dbo].[usp_DeleteObjectTableMetadata]
     @pTableName    varchar(50)
 )
 AS
-
+ 
+ 
  
  
  Declare @ObjectTableId As varchar(15)

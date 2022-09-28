@@ -20,7 +20,7 @@ using Simplog.Data.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
-    public class TableCounter
+    public partial class TableCounter
     {
         private static Object thisLock = new Object();
         public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
@@ -87,6 +87,12 @@ namespace Logitude.Server.Tools.Helpers
 
         private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString)
         {
+#if false
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return TableCounter.ExecuteNextTableNumberValueProcedureCustoms(tenant, counter, prefix, startNumber, strConnString);
+            }
+#endif
             string counterLastNumberValue;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {

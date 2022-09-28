@@ -1,4 +1,5 @@
-﻿using AmitalCustomsWindowsService.Utils;
+﻿using AmitalCustomsWindowsService.Tester;
+using AmitalCustomsWindowsService.Utils;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Customs.BL.EntityQueryServiceExt;
@@ -46,9 +47,23 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
-
-
             
+            bool test = false;
+            if (test)
+            {
+                //int i=CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin();
+                //CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
+                (new Oracle2SQL())
+                    //.CreateCustomsContext();
+                    //.GetReNameLongTable(root: @"C:\log2004\Logitude\");
+                    .GetReNameSchemaCustoms(root: @"C:\log2004\Logitude\");
+
+                //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
+                //.ChangeToBit();
+                //(new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();
+
+            }
+
             //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
 

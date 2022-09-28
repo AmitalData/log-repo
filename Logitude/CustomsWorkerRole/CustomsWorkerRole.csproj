@@ -170,6 +170,7 @@
     <Compile Include="CustomsAnalyzeQueueWR.cs" />
     <Compile Include="CustomsCommandAnalyzeResponseWR.cs" />
     <Compile Include="CustomsCommandBase.cs" />
+    <Compile Include="CustomsCommandBase.DB.cs" />
     <Compile Include="CustomsCommandDownloadDcaReceiveCorrelationWR.cs" />
     <Compile Include="CustomsCommandGetCustomRequestWR.cs" />
     <Compile Include="CustomsCommandSendDCAUploadStatusWR.cs" />

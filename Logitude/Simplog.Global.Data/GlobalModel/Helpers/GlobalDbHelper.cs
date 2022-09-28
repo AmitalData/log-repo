@@ -58,9 +58,18 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
 //#else
                         else
                         {
-                            currentDb = (from a in globalcontext.GlobalDBs
-                                         where a.Id == globaltenant.GlobalDBId
-                                         select a).FirstOrDefault();
+                            if (globaltenant == null)
+                            {
+                                currentDb = (from a in globalcontext.GlobalDBs
+
+                                             select a).FirstOrDefault();
+                            }
+                            else
+                            {
+                                currentDb = (from a in globalcontext.GlobalDBs
+                                             where a.Id == globaltenant.GlobalDBId
+                                             select a).FirstOrDefault();
+                            }
                         }
 //#endif
                         

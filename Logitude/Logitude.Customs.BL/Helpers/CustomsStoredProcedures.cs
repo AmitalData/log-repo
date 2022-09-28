@@ -57,16 +57,15 @@ namespace Logitude.Customs.BL.Helpers
             }
             else
             {
-                bool tested = false;
-                if (!tested)
+                int intIsPaymentProtested = 0;
+                if (IsPaymentProtested)
                 {
-                    throw new Exception("Declaration_SetIsPaymentProtested 4sqlServer 2do !!!");
+                    intIsPaymentProtested = 1;
                 }
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = 
-                        "update declarations dest SET dest.ispaymentprotested= case when exists (select 1 from declarationpaymentmethods t1 where t1.declarationid =dest.id) then 1 else 0 end " +
-                        $"where dest.id = '{declarationId}' and dest.tenant={tenant}  ;";
+                    string cmd =$"update Customs.Declarations SET IsPaymentProtested= {intIsPaymentProtested} where id = '{declarationId}' and tenant={tenant}  ";
+
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 
@@ -135,20 +134,20 @@ namespace Logitude.Customs.BL.Helpers
                 
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("Customs.usp_UpdateInvoiceItemsSequence", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_UpdateInvoiceItemsSequence", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter param1 = new SqlParameter("@DeclarationId", SqlDbType.VarChar);
+                    SqlParameter param1 = new SqlParameter("@V_DeclarationId", SqlDbType.VarChar);
                     param1.Direction = ParameterDirection.Input;
                     param1.Value = declarationId;
                     cmd.Parameters.Add(param1);
 
-                    SqlParameter param3 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
                     param3.Direction = ParameterDirection.Input;
                     param3.Value = tenant;
                     cmd.Parameters.Add(param3);
 
-                    SqlParameter param2 = new SqlParameter("@CounterKey", SqlDbType.Int);
+                    SqlParameter param2 = new SqlParameter("@V_CounterKey", SqlDbType.Int);
                     param2.Direction = ParameterDirection.Input;
                     param2.Value = counterKey;
                     cmd.Parameters.Add(param2);
@@ -285,20 +284,20 @@ AS */
 
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("Customs.usp_UpdateParentInvoiceItemsSequence", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_UPDATEPARENTINVOICEITEMSEQ", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter param1 = new SqlParameter("@DeclarationId", SqlDbType.VarChar);
+                    SqlParameter param1 = new SqlParameter("@V_DeclarationId", SqlDbType.VarChar);
                     param1.Direction = ParameterDirection.Input;
                     param1.Value = declarationId;
                     cmd.Parameters.Add(param1);
 
-                    SqlParameter param3 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
                     param3.Direction = ParameterDirection.Input;
                     param3.Value = tenant;
                     cmd.Parameters.Add(param3);
 
-                    SqlParameter param2 = new SqlParameter("@CounterKey", SqlDbType.Int);
+                    SqlParameter param2 = new SqlParameter("@V_CounterKey", SqlDbType.Int);
                     param2.Direction = ParameterDirection.Input;
                     param2.Value = counterKey;
                     cmd.Parameters.Add(param2);
@@ -433,20 +432,20 @@ AS */
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("Customs.usp_CopySupplierInvoiceItemsForDeclaration", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_CopySupplierInvoiceItemsForDeclaration", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter param1 = new SqlParameter("@SourceDeclarationId", SqlDbType.VarChar);
+                    SqlParameter param1 = new SqlParameter("@V_SourceDeclarationId", SqlDbType.VarChar);
                     param1.Direction = ParameterDirection.Input;
                     param1.Value = sourceDeclarationId;
                     cmd.Parameters.Add(param1);
 
-                    SqlParameter param2 = new SqlParameter("@TargetDeclarationId", SqlDbType.VarChar);
+                    SqlParameter param2 = new SqlParameter("@V_TargetDeclarationId", SqlDbType.VarChar);
                     param2.Direction = ParameterDirection.Input;
                     param2.Value = targetDeclarationId;
                     cmd.Parameters.Add(param2);
 
-                    SqlParameter param3 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
                     param3.Direction = ParameterDirection.Input;
                     param3.Value = tenant;
                     cmd.Parameters.Add(param3);
@@ -513,20 +512,20 @@ AS */
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("Customs.usp_CopySupplierInvoiceItemsCerForDeclaration", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_CopySuppInvoiceItemCers", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter param1 = new SqlParameter("@SourceDeclarationId", SqlDbType.VarChar);
+                    SqlParameter param1 = new SqlParameter("@V_SourceDeclarationId", SqlDbType.VarChar);
                     param1.Direction = ParameterDirection.Input;
                     param1.Value = sourceDeclarationId;
                     cmd.Parameters.Add(param1);
 
-                    SqlParameter param2 = new SqlParameter("@TargetDeclarationId", SqlDbType.VarChar);
+                    SqlParameter param2 = new SqlParameter("@V_TargetDeclarationId", SqlDbType.VarChar);
                     param2.Direction = ParameterDirection.Input;
                     param2.Value = targetDeclarationId;
                     cmd.Parameters.Add(param2);
 
-                    SqlParameter param3 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
                     param3.Direction = ParameterDirection.Input;
                     param3.Value = tenant;
                     cmd.Parameters.Add(param3);
