@@ -230,7 +230,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.CostQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.CostQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { quoteChargePM.CostQuantity = quoteChargePM.CostQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.CostQuantity; break; }
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
@@ -246,7 +246,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.SaleQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.SaleQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { quoteChargePM.SaleQuantity = quoteChargePM.SaleQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.SaleQuantity; break; }
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
@@ -438,7 +438,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { itemPM.CostQuantity = 1; break; }
                                         case "BCNT": { itemPM.CostQuantity = null; break; }
                                         case "BTEU": { itemPM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { itemPM.CostQuantity = itemPM.CostQuantity == null ? entityPM.ValueOfGoods : itemPM.CostQuantity; break; }
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
@@ -454,7 +454,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { itemPM.SaleQuantity = 1; break; }
                                         case "BCNT": { itemPM.SaleQuantity = null; break; }
                                         case "BTEU": { itemPM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { itemPM.SaleQuantity = itemPM.SaleQuantity == null ? entityPM.ValueOfGoods : itemPM.SaleQuantity; break; }
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
@@ -624,7 +624,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
+                    case "PRVL": { myResult = item.CostQuantity == null ? entityPM.ValueOfGoods : item.CostQuantity; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.CostTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
@@ -673,7 +673,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
+                    case "PRVL": { myResult = item.SaleQuantity == null ? entityPM.ValueOfGoods: item.SaleQuantity; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.SaleTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
