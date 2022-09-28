@@ -56,6 +56,8 @@ namespace Logitude.Server.Tools.QueueService
                 queueDefinition = new QueueDefinition() { Code = queueCode, Name = queueCode };
                 queueDefRep.Add(queueDefinition);
                 queueDefRep.SubmitChanges();
+                //SetInCache()
+                string key = $"GetQueueDefFromCache({queueCode})";
             }
 
             
@@ -67,7 +69,7 @@ namespace Logitude.Server.Tools.QueueService
             var def = CacheManager.GetOrInsertNewObject<QueueDefinition>(key, () =>
             {
                 return queueDefRep.GetSingleQueueDefinition(queueCode);
-            });
+            }, donotCacheNull:true);
             return def;
         }
 
@@ -390,6 +392,10 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
+            return ReceiveDetail(serverWaitTime, suppressSleep: false);
+        }
+        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
+        {
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;
@@ -433,7 +439,8 @@ namespace Logitude.Server.Tools.QueueService
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            //nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            nextRunDelayInSecPar.Value = serverWaitTime.Value.TotalSeconds;
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
@@ -545,7 +552,7 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
-            if (string.IsNullOrEmpty(response.MessageId))
+            if (!suppressSleep && string.IsNullOrEmpty(response.MessageId))
             {
                 Thread.Sleep(serverWaitTime.Value);
             }
@@ -964,6 +971,11 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
+        public void CompleteAsFailedParam(string queueId)
+        {
+            this.CurrentMessageId = queueId;
+            this.CompleteAsFailed();
+        }
         public void CompleteAsFailed()
         {
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
