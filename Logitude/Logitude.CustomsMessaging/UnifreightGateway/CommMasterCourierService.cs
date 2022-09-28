@@ -360,12 +360,25 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     if (allDeclarationIdsToInsert != null && allDeclarationIdsToInsert.Count() > 0)
                     {
                         toSendTask = true;
-                        var repo1 = new CourierDeclarationRepository(_context);
                         allDeclarationIdsToInsert.ChunkBy(100)
                         .ForEach(list100 =>
                         {
                             CheckCourierDeclarationToInsert(list100);
                         });
+
+                        if (_CourierMasterPM != null)
+                        {
+                            CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+                            CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+                            if (customsAirline != null && !String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode))
+                            {
+                                allDeclarationIdsToInsert.ChunkBy(100)
+                                .ForEach(list100 =>
+                                {
+                                    UpdateUnloadPortInDeclaration(list100, customsAirline.UnloadPortCode);
+                                });
+                            }
+                        }
                     }
 
                     MyGenericResponseObj.Stage = "Done Connecting Declarations To Master By WayBill";
@@ -454,6 +467,32 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     }
                     myCourierDeclarationUpdateService.FastInsert(declarationIds, _CourierMasterPM.Tenant, _CourierMasterPM.Id, sequenceNumericMax);
 
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+            }
+        }
+
+
+        private void UpdateUnloadPortInDeclaration(List<string> declarationIds, string unloadPortCode)
+        {
+
+            if (_CourierMasterPM != null)
+            {
+                var myConsignmentUpdateService = new ConsignmentUpdateService(_context, new Dictionary<string, IContext>(), _CourierMasterPM.Tenant);
+                AppendLogLine("try to Update Declaration with UnloadPort" + unloadPortCode);
+                try
+                {
+                    myConsignmentUpdateService.FastUpdateUnloadPortCode(declarationIds, _CourierMasterPM.Tenant, unloadPortCode);
                 }
                 catch (DbEntityValidationException ex)
                 {
