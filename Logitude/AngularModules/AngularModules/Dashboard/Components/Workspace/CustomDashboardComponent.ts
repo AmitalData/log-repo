@@ -129,7 +129,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         var reactWidgets: ReactWidgetPM[] = [];
 
         widgets.forEach(item => {
-            item.Key = item.Id;
             reactWidgets.push(DashboardMapping.GetReactWidget(item));
         });
         return {lg:reactWidgets};
@@ -246,7 +245,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
 
 
         layouts.lg.forEach(item => {
-            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Id == item.Id);
+            var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Key == item.key);
             if (myWidget) {
                 myWidget.EndPosition = item.EndPosition;
                 myWidget.StartPotistion = item.StartPotistion;
@@ -276,7 +275,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
 
     openEditWidget(widget: ReactWidgetPM){
         MixPanelLocator.PostDashboardAction({ ActionName: "Open Widget edit page", DashboardId: this.SelectedDashboard?.Id });
-        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.filter(d => d.Id == widget.Id)[0];
+        var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Key == widget.key);
         myWidget.Key = widget.key;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Widget";
@@ -292,7 +291,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         });
     }
     AddWidgetToReactLayout(myWidget:WidgetPM){
-        myWidget.Key = Guid.newGuid();
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
