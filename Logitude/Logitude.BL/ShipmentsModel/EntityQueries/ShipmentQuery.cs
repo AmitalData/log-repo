@@ -13318,6 +13318,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
                                ChargeableWeight = f.ChargeableWeight,
+                               GrossWeight = f.GrossWeight,
                                ValueOfGoods = f.ValueOfGoods,
                                Volume = f.Volume,
                                NumberOfPackages = f.NumberOfPackages,

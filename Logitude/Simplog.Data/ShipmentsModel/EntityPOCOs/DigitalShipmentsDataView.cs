@@ -9,6 +9,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public double? ChargeableWeight { get; set; }
+        public double? GrossWeight { get; set; }
         public double? Volume { get; set; }
         public double? ValueOfGoods { get; set; }
         public int? NumberOfPackages { get; set; }

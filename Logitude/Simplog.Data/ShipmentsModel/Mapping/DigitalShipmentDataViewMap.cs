@@ -276,6 +276,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.ValueOfGoods).HasColumnName("ValueOfGoods");
             this.Property(t => t.NumberOfPackages).HasColumnName("NumberOfPackages");
+            this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
         }
     }
 }

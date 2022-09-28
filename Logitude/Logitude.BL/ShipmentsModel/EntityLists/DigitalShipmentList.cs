@@ -8,6 +8,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public int Tenant { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? Volume { get; set; }
+        public double? GrossWeight { get; set; }
         public double? ValueOfGoods { get; set; }
         public int? NumberOfPackages { get; set; }
         public string SalesmanUserId { get; set; }
