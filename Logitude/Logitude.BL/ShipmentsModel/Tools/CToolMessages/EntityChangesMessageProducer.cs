@@ -53,6 +53,11 @@ namespace Logitude.Server.Tools.CToolWorkflows
             {
                 if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
                 {
+                    var shipmentChanges = GetShipmentUpdateChanges(entityPoco, entityPM);
+
+                    entityPM.FirstPickupATA = entityPoco.ShipmentComputedFields.FirstPickupATA;
+                    entityPM.FirstPickupATD = entityPoco.ShipmentComputedFields.FirstPickupATD;
+
                     var shipmentPMString = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                     Dictionary<string, object> shipmentPMDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(shipmentPMString);
                     shipmentPMDictionary.Add("DocumentsFilingPM", GetShipmentDocumentsFilingPM(entityPM.ShipmentNumber, entityPM.Tenant));
@@ -61,7 +66,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
                     {
                         Entity = JsonConvert.DeserializeObject(shipmentPMString),
-                        Changes = GetShipmentUpdateChanges(entityPoco, entityPM)
+                        Changes = shipmentChanges
                     };
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
