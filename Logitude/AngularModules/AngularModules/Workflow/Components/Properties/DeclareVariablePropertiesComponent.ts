@@ -19,7 +19,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public WorkflowEntityTable: ObjectTablePM;
-    private types: any[] = [{ Code: "Text", Name: "Text" }, { Code: "Date", Name: "Date" }, { Code: "Number", Name: "Number" }, { Code: "Boolean", Name: "Boolean" }];
+    public DataTypes: any[] = [{ Code: "Text", Name: "Text" }, { Code: "Date", Name: "Date" }, { Code: "Number", Name: "Number" }, { Code: "Boolean", Name: "Boolean" }];
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -80,7 +80,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     }
 
     public get CustomFieldDataType() {
-        var fieldDataType = this.types.filter(d => d.Code == this.VariableType)[0];
+        var fieldDataType = this.DataTypes.filter(d => d.Code == this.VariableType)[0];
         return fieldDataType;
     }
     public set CustomFieldDataType(newValue: any) {
