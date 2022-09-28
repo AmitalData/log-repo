@@ -90,11 +90,12 @@ namespace Logitude.Customs.BL.TraceEvents
             }
 
             mytransmission_details.Add(mytransmission_detail1);
+            
             mytransmission.transmission_details = mytransmission_details.ToArray();
             return mytransmission;
 
         }
-        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam)
+        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true)
         {
                         
             
@@ -118,10 +119,19 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 FolderName = "ExternalTasksQueue",
             };
-          
+            string myMainObject;
+            if (withTransmission)
+            {
+                var mytransmission = GetTransmission();
+                myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
+            }else
+            {
 
-            var mytransmission = GetTransmission();
-            string myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
+                myMainObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
+                myMainObject = myMainObject.Replace("<", "&lt;").Replace(">", "&gt;");
+
+
+            }
 
 
             List<QueueTask> queue1Tasks = new List<QueueTask>();

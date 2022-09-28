@@ -10,22 +10,28 @@ namespace Logitude.Customs.BL.TraceEvents
 {
     public   class AmitalInsertToQueueService
     {
+        public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
         public static void insertToQueue(DeclarationPM  declarationPM , string tadpisPrintDate=null)
         {
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
 
             var logistictFile = setLogistictFile(declarationPM, tadpisPrintDate);
             AmitalEventTracerModel myAmitalEventTracer = createEvent(declarationPM);
-            if (!mySetting.IsConnectedToUniFreight)
-            {
 
-                var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, LogistictFile>(myAmitalEventTracer, logistictFile);
-                unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+            if (!mySetting.IsConnectedToUniFreight && UseHybrid_When_NotIsConnectedToUniFreight)
+            {
+                if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", declarationPM.Tenant))
                 {
-                    Action = "UpdateExportCustomsFile",
-                    ParameterName = "transmission",
-                    UServerDelayTime = DateTime.Now.TimeOfDay
-                });
+
+
+                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, LogistictFile>(myAmitalEventTracer, logistictFile);
+                    unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                    {
+                        Action = "UpdateExportCustomsFile",
+                        ParameterName = "transmission",
+                        UServerDelayTime = DateTime.Now.TimeOfDay
+                    },false);
+                }
             }
         }
 
