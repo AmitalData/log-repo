@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 // 
@@ -956,4 +957,100 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
             }
         }
     }
+
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
+    public partial class LogistictFile
+    {
+        [System.Xml.Serialization.XmlElementAttribute("LogitudeCustomsFile")]
+        public LogitudeCustomsFiles logitudeCustomsFile { get; set; }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
+    public partial class LogitudeCustomsFiles
+    {
+        [System.Xml.Serialization.XmlElementAttribute("customFileNo")]
+        public string customFileNo { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("id")]
+        public string id { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("declarationNumber")]
+        public string declarationNumber { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("tadpisPrintDate")]
+        public  string tadpisPrintDate { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("invoice")]
+        public Invoices[] invoice { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("TotalSum")]
+        public string TotalSum { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("currecy")]
+        public string currecy { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("totalNisSum")]
+        public string totalNisSum { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("totalFreightSum")]
+        public string totalFreightSum { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("totalPackages")]
+        public string totalPackages { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("loadingDateTime")]
+        public string loadingDateTime { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("direction")]
+        public string direction { get; set; }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
+    public partial class Invoices
+    {
+        [System.Xml.Serialization.XmlElementAttribute("invoiceNumber")]
+        public string invoiceNumber { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("invoiceTotal")]
+        public string invoiceTotal { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("invoiceCurrecy")]
+        public string invoiceCurrecy { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("pratList")]
+        public PratList pratList { get; set; }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
+    public partial class PratList
+    {
+        [System.Xml.Serialization.XmlElementAttribute("pratMeches")]
+        public string[] pratMeches { get; set; }
+    }
+
 }

@@ -26,6 +26,7 @@ using UnifreightIIG.Common.DeclarationPrintServiceReference;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -224,6 +225,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
+
+        
+
+       
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
@@ -277,6 +282,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM.Direction == "E")
                 {
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "MRS", status_DateTime: _TransmitionDateTime);
+                   
+                        AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM, _TransmitionDateTime.ToString());
+                       
                 }
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
