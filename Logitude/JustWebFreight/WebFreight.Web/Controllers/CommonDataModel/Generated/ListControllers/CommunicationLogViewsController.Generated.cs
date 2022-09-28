@@ -231,6 +231,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+              
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = CommonDataContext.GetSecContext(tenant);
+                }
                 CommunicationLogRepository  communicationLogRepository = new CommunicationLogRepository(MyContext);
                 IQueryable<CommunicationLog> entityPocos = communicationLogRepository.GetCommunicationLogs(tenant);
 
