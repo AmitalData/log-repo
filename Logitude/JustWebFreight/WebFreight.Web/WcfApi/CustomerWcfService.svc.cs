@@ -299,39 +299,6 @@ namespace WebFreight.Web.WcfApi
                     }
 
 
-                    bool clearCustomerSalesmanByProducts = false;
-                    if (entityPM.CustomerSalesmanByProducts.Count() > 1)
-                    {
-                        if (entityPM.SalesmanUserId == null)
-                        {
-
-                            CustomerSalesmanByProductPM salesmanUser = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
-                            string salesManId = salesmanUser.SalesmanUserId;
-                            bool sameUser = true;
-                            foreach (CustomerSalesmanByProductPM salesman in entityPM.CustomerSalesmanByProducts)
-                            {
-                                if (salesman.SalesmanUserId != salesManId)
-                                {
-                                    sameUser = false;
-                                }
-
-                            }
-                            if (sameUser)
-                            {
-                                entityPM.SalesmanUserId = salesManId;//user.Id;
-                                clearCustomerSalesmanByProducts = true;
-
-                            }
-                        }
-
-                        if (clearCustomerSalesmanByProducts)
-                        {
-                            entityPM.CustomerSalesmanByProducts.Clear();
-                        }
-
-                    }
-
-
                     #endregion
 
                     #region Customer account manager by product
