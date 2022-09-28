@@ -302,15 +302,16 @@ export class AddEditWidgetComponent extends BaseComponent {
             return;
         }
         if (filter.Operator == "IsEmpty" || filter.Operator == "IsNotEmpty") return;
-        if (filter.Operator != "Current" && (!filter.FieldValue || filter.FieldValue == "")) errors.push("Filter Value is Required");
+        if (filter.Operator != "Previous" && filter.Operator != "Next" && filter.Operator != "Current" && (!filter.FieldValue || filter.FieldValue == "")) errors.push("Filter Value is Required");
+        if ((filter.Operator == "Previous" || filter.Operator == "Next") && (!filter.FieldValue3 || filter.FieldValue3 == "")) errors.push("Filter Value is Required");
         if (filter.Operator == "Between") this.ValidateBetweenOperator(errors, filter);
     }
 
     ValidateBetweenOperator(errors: string[], filter: WidgetFilterItem) {
-        if ((!filter.FieldSecondValue || filter.FieldSecondValue == "")) {
+        if ((!filter.FieldValue2 || filter.FieldValue2 == "")) {
             errors.push("Filter Second Date is Required");
         }
-        if (filter.FieldSecondValue <= filter.FieldValue) errors.push("Filter First Date Must Be Bigger Than Second Date");
+        if (filter.FieldValue2 <= filter.FieldValue) errors.push("Filter First Date Must Be Bigger Than Second Date");
     }
 
 
