@@ -62,7 +62,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
             AnalyticsFactsFieldsMetaData measureField = null;
             if (measure.MeasureFieldId != null)
-            measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
+                measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
 
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
@@ -92,7 +92,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             if (_Widget.MaximumGrouping.HasValue)
                 top = $"top({ _Widget.MaximumGrouping})";
 
-            var value = GetValueQuery(measure.MeasureCode,measureField);
+            var value = GetValueQuery(measure.MeasureCode, measureField);
             return $@"select  {top}
                             {Label} as Label,
                             {groupByField} as GroupById,
@@ -104,12 +104,12 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string GetValueQuery(string measureCode, AnalyticsFactsFieldsMetaData measureField)
         {
-            
+
             if (measureCode != "Count")
                 return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
             var key = _EntityFields.First().Value.FieldCode;
             return $"CAST({measureCode}(data.{key}) AS DECIMAL(32, 2))";
-            
+
 
 
 
@@ -194,8 +194,11 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
             columns.Add(groupBy);
 
-            var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
-            columns.Add(measure);
+            if (!string.IsNullOrEmpty(widgetPartArguments.MeasureFieldId))
+            {
+                var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
+                columns.Add(measure);
+            }
 
             if (analyticTableFields != null && analyticTableFields.Count != 0)
             {
