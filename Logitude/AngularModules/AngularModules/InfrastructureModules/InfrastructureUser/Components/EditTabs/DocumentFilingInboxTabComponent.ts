@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {UserPM} from '../../../../Common/EntityPMs/UserPM';
@@ -25,8 +25,9 @@ export class DocumentFilingInboxTabComponent extends BaseComponent implements On
         super();
         var domain = ObjectsLocator.GlobalSetting.DocumentFilingEmailDomain;
         if (SessionLocator.PrivateLableSettings) {
-            domain = "inbox.dsv.co.il";
+            domain = this.GetPrivateLableSettingsDomain(SessionLocator.PrivateLableSettings);
         }
+
         this.SettingsDomain = domain;
         this.EntityPM = entityArgs.EntityPM;
     }
@@ -35,10 +36,19 @@ export class DocumentFilingInboxTabComponent extends BaseComponent implements On
       
     }
 
+    GetPrivateLableSettingsDomain(privateLableSetting: any) {
+        var isDSVTenant = SessionLocator.PrivateLableSettings?.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        if (isDSVTenant) {
+            return "inbox.dsv.co.il";
+        }
+
+        return privateLableSetting?.PrivateLabelDomain;
+    }
 
     get DocumentFilingInbox() {
         return this.EntityPM.DocumentFilingInbox;
     }
+
     set DocumentFilingInbox(value: string) {
         if (this.EntityPM.DocumentFilingInbox != value){
             this.EntityPM.DocumentFilingInbox = value;
