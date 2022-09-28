@@ -43,7 +43,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public Object FieldValue { get; set; }
 
-        
+        public string FieldDataTypeName { get; set; }
 
     }
 }

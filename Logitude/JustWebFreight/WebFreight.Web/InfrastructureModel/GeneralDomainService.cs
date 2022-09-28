@@ -4179,7 +4179,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion
 
         #region FieldDataTypeDataTypes
-        public IQueryable<FieldDataType> GetFieldDataTypes(int tenant)
+        public List<FieldDataType> GetFieldDataTypes(int tenant)
         {
             DataTypeRepository = new DataTypeRepository(tenant);
             this.ChangeConnectionString(tenant);

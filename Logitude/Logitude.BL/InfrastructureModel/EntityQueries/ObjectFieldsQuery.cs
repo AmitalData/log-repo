@@ -260,7 +260,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ObjectFieldPM> GetCustomFieldsBytableID(string tableId, int tenant, int currenttenant)
         {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable")
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable").Include("DataType")
                                                 where a.Tenant == tenant
                                                 && a.ObjectTableId == tableId
                                                 && a.IsCustom == true && a.InActive == false
@@ -271,6 +271,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ConverterName = a.ConverterName,
                                                     DataTemplateName = a.DataTemplateName,
                                                     DataTypeCode = a.DataTypeCode,
+                                                    DataTypeName = a.DataType.Name,
                                                     DependencyFilter1Type = a.DependencyFilter1Type,
                                                     DependencyFilter1Value = a.DependencyFilter1Value,
                                                     DependencyFilter2Type = a.DependencyFilter2Type,

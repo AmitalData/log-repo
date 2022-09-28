@@ -150,15 +150,30 @@
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
-                                        <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox>
+                                        <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Name'"></ComboBox>
                                     </div>
                                 </td>
                             </tr>
 
 
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
-                                <td style="height: 22px;">
-                                    <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
+
+
+
+                                <td style="height: 22px;" >
+                                    <table>
+                                        <tr>
+                                            <td style="width: 20px;">
+                                                <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
+                                            </td>
+
+                                            <td>
+                                                <div>
+                                                    <HelpIcon [HideHeader]="true" [Text]="'This field can\'t be editable With Read Only option unless from using Automatic updating like Documents Populate Automatic Date Values, events ​... etc'" [IconSize]="14"></HelpIcon>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 
@@ -201,7 +216,7 @@
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
                                 <td style="height: 22px;">
-                                    <LogTextBox [ObjectFieldName]="'MaxLength'" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'MaxLength'" [DataContext]="DataContext" [Placeholder]="'Maximum'"></LogTextBox>
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
