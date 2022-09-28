@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,31 +15,45 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CustomsItemListQueryService
     {
-	    private IQueryable<CustomsItemList> GetIqueryableList(IQueryable<CustomsItem> iQueryable)
+        private IQueryable<CustomsItemList> GetIqueryableList(IQueryable<CustomsItem> iQueryable)
         {
-		IQueryable<CustomsItemList> query = (from a in iQueryable
-                                            select new CustomsItemList()
-											{
-                                                ID = a.ID,
-                                                FullClassification = a.FullClassification,
-                                                ComputedCheckDigit = a.ComputedCheckDigit,
-                                                CustomsBookTypeID = a.CustomsBookTypeID,
-                                                CustomsItemCategoryID = a.CustomsItemCategoryID,
-                                                CustomsItemHierarchicLocationID = a.CustomsItemHierarchicLocationID, 
-		                    	            });
+            IQueryable<CustomsItemList> query = (from a in iQueryable
+                                                 select new CustomsItemList()
+                                                 {
+                                                     ID = a.ID,
+                                                     FullClassification = a.FullClassification,
+                                                     ComputedCheckDigit = a.ComputedCheckDigit,
+                                                     CustomsBookTypeID = a.CustomsBookTypeID,
+                                                     CustomsItemCategoryID = a.CustomsItemCategoryID,
+                                                     CustomsItemHierarchicLocationID = a.CustomsItemHierarchicLocationID,
+                                                 });
             return query;
-		}
+        }
 
-        private IQueryable<CustomsItem> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CustomsItem> iQueryable)
+        private IQueryable<CustomsItem> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsItem> iQueryable)
         {
+            if (queryOperations.QueryFilterItems.Any(x => x.FieldName == "dateExpire"))
+            {
+                var join = iQueryable.Join(
+                    context.PropertiesDetailsHistorys,
+                    cusomsItem => cusomsItem.ID,
+                    propertiesDetailsHistory => propertiesDetailsHistory.CustomsItemID,
+                    (cusomsItem, propertiesDetailsHistory) => new { cusomsItem, propertiesDetailsHistory }
+                    );
+
+                join = join.Where(x=> x.propertiesDetailsHistory.StartDate <= DateTime.UtcNow);
+                join = join.Where(x=> x.propertiesDetailsHistory.EndDate >= DateTime.UtcNow);
+
+                iQueryable = join.Select(x => x.cusomsItem).Distinct().AsQueryable();
+            }
+
             return iQueryable;
         }
-	}
+    }
 
 
 }
-	
