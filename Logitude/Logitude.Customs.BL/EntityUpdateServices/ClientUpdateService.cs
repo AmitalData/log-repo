@@ -49,6 +49,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ClientsPoaUpdateService clientsPoaUpdateService = new ClientsPoaUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             clientsPoaUpdateService.UpdateMulti(entityPM.ClientPoas, entityPM.DeletedClientPoas, entityPM, false);
 
+
+            ClientsTapagUpdateService clientsTapagUpdateService = new ClientsTapagUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            clientsTapagUpdateService.UpdateMulti(entityPM.ClientsTapags, entityPM.DeletedClientsTapags, entityPM, false);
+
             base.UpdateComposition(entityPM);
         }
 
