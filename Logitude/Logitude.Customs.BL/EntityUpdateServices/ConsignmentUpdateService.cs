@@ -319,7 +319,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
 
                     string cmd = "Update Consignments set UnloadPortCode =:p1 ";
-                    cmd = cmd + " where ID IN (:p2)";
+                    cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
                     sqlCommand.Parameters.Add(new OracleParameter("p1", unloadPortCode));
@@ -334,7 +334,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     string cmd = "Update Consignments set UnloadPortCode =:p1 ";
-                    cmd = cmd + " where ID IN (:p2)";
+                    cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
                     sqlCommand.Parameters.Add(new OracleParameter("p1", unloadPortCode));
