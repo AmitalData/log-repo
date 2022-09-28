@@ -12,5 +12,6 @@ export enum FieldTypes {
     Integer = "Integer",
     SigDouble = "SigDouble",
     UnsDecimal = "UnsDecimal",
-    UnsInteger = "UnsInteger"
+    UnsInteger = "UnsInteger",
+    Number = "Number"
 }

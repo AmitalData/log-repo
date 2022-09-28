@@ -137,8 +137,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
             WorkflowEntity: this.WorkflowEntity
         };
+        if (openPropertiesEventObject.nodeType == "declareVariableNode") {
+            propertiesWindow.Height = 320;
+        } else {
+            propertiesWindow.Height = 760;
+        }
         propertiesWindow.Width = 960;
-        propertiesWindow.Height = 760;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;

@@ -2207,6 +2207,35 @@ export class FormatTool {
 
         return myResult;
     }
+
+    public static IsValidNameText(input: string): boolean {
+        var isvalid = true;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            let firstChar = input.charAt(0);
+
+            if (this.IsNumeric(firstChar) || !this.IsText(input)) {
+                isvalid = false;
+            }
+        }
+
+        return isvalid
+    }
+
+    public static IsTextBeginWithNumber(input: string): boolean {
+        var isvalid = false;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            let firstChar = input.charAt(0);
+
+            if (this.IsNumeric(firstChar)) {
+                isvalid = true;
+            }
+        }
+
+        return isvalid
+    }
+
     public static IsAlpha(input: string): boolean {
         var myResult = true;
 
