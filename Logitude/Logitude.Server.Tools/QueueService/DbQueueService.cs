@@ -398,8 +398,15 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
+             return ReceiveDetail(serverWaitTime, suppressSleep: false);
+        }
+        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime, bool suppressSleep)
+        {
  
-
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
+            }
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
@@ -560,7 +567,7 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
-            if (string.IsNullOrEmpty(response.MessageId))
+            if (!suppressSleep && string.IsNullOrEmpty(response.MessageId))
             {
                 Thread.Sleep(serverWaitTime.Value);
             }
