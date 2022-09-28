@@ -24,6 +24,7 @@ export class customsItemsService {
         taxExemptCodeTypesFilter.GetAll = true; 
         taxExemptCodeTypesFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, isExport ? "NotEqual" : "Equals", false, false, false, "string")        
         taxExemptCodeTypesFilter.addAdditionalFilter("CustomsItemCategoryID", '2', '3', null, 'Equals', false, false, false, "string")
+        taxExemptCodeTypesFilter.addAdditionalFilter("dateExpire", 1, null, null, 'Equals', true, false, false, "string")
 
         return taxExemptCodeTypesFilter;
     }
