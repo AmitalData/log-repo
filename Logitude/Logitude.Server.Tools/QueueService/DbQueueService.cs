@@ -560,7 +560,7 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
-            if (!suppressSleep && string.IsNullOrEmpty(response.MessageId))
+            if (string.IsNullOrEmpty(response.MessageId))
             {
                 Thread.Sleep(serverWaitTime.Value);
             }
