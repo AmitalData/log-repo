@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "61d4d42da4a2b60cdbaed4f2e5f31d4b";
-
+		public const string HashString = "d4d87bc2c7e78b65557797a5a7601b48";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,6 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    NameField =  "EnglishName",
 			      				    DependencyFilter1 =  "IsManualEntry",
 			      				    DependencyFilter2 =  "ObjectTableId",
+			      				    DependencyFilter3 =  "ManualActivatedFollowUp",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,

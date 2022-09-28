@@ -16,17 +16,22 @@
                                     <p style="font-size:11px;color:#6E7172;width:100px">Event Type</p>
 
                                 </td>
-
-
-
                                 <td>
                                     <div style="text-align:left;width:270px;">
-                                        <ComboBox style="width:270px;" (SelectedItemChanged)="EventTypeComboBoxChanged($event)" [ItemsSource]="EventTypes" [SelectedItem]="SelectedEventType" [Binding]="'EnglishName'"></ComboBox>
+                                        <LogLov [ObjectFieldName]="'EventTypeId'"
+                                                [SelectedValue]="AutomationEvent?.EventTypeId"
+                                                [NoObjectField]="true"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'EventType'"
+                                                [DependencyFilter1Value]="true"
+                                                [DependencyFilter2Value]="AutomationEvent?.ObjectTableId"
+                                                (SelectedItemChanged)="AutomationEvent.EventTypeId = $event"
+                                                [HideColumns]="true"
+                                                style="width:270px;">
+                                        </LogLov>    
                                     </div>
 
                                 </td>
-
-
                             </tr>
 
                             <tr style="height:10px;">
