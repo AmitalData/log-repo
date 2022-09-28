@@ -129,6 +129,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         var reactWidgets: ReactWidgetPM[] = [];
 
         widgets.forEach(item => {
+            item.Key = item.Id ?? item.Key;
             reactWidgets.push(DashboardMapping.GetReactWidget(item));
         });
         return {lg:reactWidgets};
