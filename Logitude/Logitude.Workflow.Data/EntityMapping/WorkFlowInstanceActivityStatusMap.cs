@@ -18,20 +18,11 @@ namespace Logitude.Workflow.Data.EntityMapping
     {
 	    string dbms;
         public WorkFlowInstanceActivityStatusMap()
-        { 
-		
-      dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-      if (dbms == "oracle")
-      {
-		this.ToTable("WorkFlowInstanceActivityStatuses");
-      }
-	  else
-	  {
-	    this.ToTable("WorkFlowInstanceActivityStatus");
-	  }
+        {
 
-		
-		    this.HasKey(t => new { t.Code });
+            this.ToTable("WorkFlowInstanceActivityStatuses");
+
+            this.HasKey(t => new { t.Code });
 	 
             this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(4).IsUnicode(false);
 
