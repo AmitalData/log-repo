@@ -1126,10 +1126,10 @@ export class QuoteMenuButtonsHandler {
 
                     //"PRVL"
                     entityQuantity = this.EntityPM.ValueOfGoods;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity == null && f.CostQuantity != entityQuantity).length > 0) {
                         displayUpdateMessage = true;
                     }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null && f.SaleQuantity != entityQuantity).length > 0) {
                         displayUpdateMessage = true;
                     }
 
@@ -1209,15 +1209,15 @@ export class QuoteMenuButtonsHandler {
                     displayUpdateMessage = true;
                 }
 
-                if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                    if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
-                        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                    }
+                //if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                //    if (this.EntityPM.QuoteCharges.filter(d => d.CostQuantity == null && (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
+                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                //    }
 
-                    else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
-                        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                    }
-                }
+                //    else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
+                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                //    }
+                //}
 
                 if (displayUpdateMessage && AppTool.IsNullOrEmpty(updateMessage)) {
                     updateMessage = "Please update charge screen by pressing on \"Update\" button first";
