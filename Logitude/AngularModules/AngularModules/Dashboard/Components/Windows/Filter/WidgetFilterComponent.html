@@ -108,9 +108,9 @@
                                                     <LogTextBox 
                                                         [NoValidation]="true" 
                                                         [HideLastColumn]="true"
-                                                        [Text]="item.FieldValue" 
+                                                        [Text]="item.TextFieldValue" 
                                                         [IsFreeText]="true"
-                                                        (ValueChanged)="item.TextBoxCondationValueChange($event)"
+                                                        (ValueChanged)="item.TextBoxValueChange($event)"
                                                         style="height:22px" 
                                                         [DataContext]="item"
                                                         HideLastColumn="true"
@@ -169,7 +169,7 @@
                                                     [HideColumns]="true"
                                                     [IsFreeValue]="true" 
                                                     [NoValidation]="true"
-                                                    [SelectedDateValue]="item.FieldSecondValue"
+                                                    [SelectedDateValue]="item.FieldValue2"
                                                     (ValueChanged)="item.SecondDatePickerCondationValueChange($event)"
                                                     [DataContext]="item">
                                                 </LogDatePicker>

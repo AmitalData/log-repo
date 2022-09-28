@@ -26,7 +26,8 @@ export class WidgetFilterItem {
 
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
-    public FieldSecondValue: any = null
+    public FieldValue2: any = null
+    public FieldValue3: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
     public DateGroupCode: string;
     public DashboardId: string;
@@ -74,7 +75,11 @@ export class WidgetFilterItem {
     FillFieldValue(field: WidgetFilterItem) {
         if ((this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') && (field.Operator == "GreaterThan" || field.Operator == "LessThan" || field.Operator == "Between")) {
             this.FieldValue = FieldValueResolver.ConvertToDate(field.FieldValue, "TreeFilter");
-            if (field.Operator == "Between") this.FieldSecondValue = FieldValueResolver.ConvertToDate(field.FieldSecondValue, "TreeFilter");
+            if (field.Operator == "Between") this.FieldValue2 = FieldValueResolver.ConvertToDate(field.FieldValue2, "TreeFilter");
+            return;
+        }
+        if ((this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') && (field.Operator == "Previous" || field.Operator == "Next")) {
+            this.FieldValue3 = field.FieldValue3;
             return;
         }
         if (this.FieldDataType == 'Boolean') {
@@ -185,14 +190,21 @@ export class WidgetFilterItem {
         this.SelectedOperator = operator;
         this.Operator = operator ? operator.Code : null;
         this.GetDefaultFieldValue();
-        this.FieldSecondValue = "";
+        this.FieldValue2 = "";
         this.GetDefaultDateGroup();
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Operator Change", Message: "Changed To " + operator.Code });
     }
 
     private GetDefaultFieldValue() {
-        if ((this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') && (this.Operator == 'Next' || this.Operator == 'Previous')) this.FieldValue = 1;
-        else this.FieldValue = "";
+        if ((this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') && (this.Operator == 'Next' || this.Operator == 'Previous')) {
+            this.FieldValue3 = 1;
+            this.FieldValue = "";
+        }
+        else {
+            this.FieldValue = "";
+            this.FieldValue3 = "";
+        }
+
     }
 
     private GetDefaultDateGroup() {
@@ -200,8 +212,9 @@ export class WidgetFilterItem {
         else this.DateGroupCode = null;
     }
 
-    TextBoxCondationValueChange(newValue) {
-        this.FieldValue = newValue;
+    TextBoxValueChange(newValue) {
+        if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') this.FieldValue3 = newValue;
+        else this.FieldValue = newValue;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + newValue });
     }
 
@@ -217,7 +230,7 @@ export class WidgetFilterItem {
     }
 
     SecondDatePickerCondationValueChange(date) {
-        this.FieldSecondValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        this.FieldValue2 = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Second Date Value Change", Message: "Changed To " + this.FieldValue });
     }
 
@@ -270,6 +283,11 @@ export class WidgetFilterItem {
     ShowDateGroups(item: WidgetFilterItem) {
         return this.IsNotEmptyNotEmtyOperator(item) && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') &&
             (item.Operator == "Previous" || item.Operator == "Current" || item.Operator == "Next");
+    }
+
+    get TextFieldValue(): string {
+        if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') return this.FieldValue3;
+        return this.FieldValue;
     }
 }
 

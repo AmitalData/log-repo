@@ -4,14 +4,21 @@ using Logitude.Server.Tools.TreeFilterQuery.Iterator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Globalization;
 
 namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 {
 
     public class DateGroupFilterExpression : IQueryTreeFilterExpression
     {
-
+        public string[] ValidOperator = new string[] {
+        "NotEqual",
+        "Equal",
+        "Previous",
+        "Current",
+        "Next",
+        "Between",
+        };
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             QueryTreeFilterIterator iterator = CreateIterator(queryTreeFilterContext);
@@ -23,32 +30,45 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
         }
         private void Handel(QueryFilterItem filterItem)
         {
-            if (string.IsNullOrEmpty(filterItem.DateGroupCode))
-                return;
+
             HandelDateGroupFilter(filterItem);
         }
 
 
-        private static void HandelDateGroupFilter(QueryFilterItem queryFilterItem)
+        private void HandelDateGroupFilter(QueryFilterItem queryFilterItem)
         {
-            if (queryFilterItem.Operator != "NotEqual" && queryFilterItem.Operator != "Equal")
+            if (!ValidOperator.Contains(queryFilterItem.Operator))
                 return;
             QueryFilterItem queryFilterItemLessThan = CloneQueryFilterItem(queryFilterItem); ;
             QueryFilterItem queryFilterItemGreaterThan = CloneQueryFilterItem(queryFilterItem); ;
-            if (queryFilterItem.FieldDataType == "NotEqual")
+            switch (queryFilterItem.Operator)
             {
-                HandelNotEqualOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                case "NotEqual":
+                    HandelNotEqualOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                    break;
+                case "Equal":
+                    HandelEqualOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                    break;
+                case "Previous": 
+                case "Next":
+                    HandelCalculatedOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                    break;
+                case "Current":
+                    queryFilterItem.FieldValue3 = 1;
+                    HandelCalculatedOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                    break;
+                case "Between":
+                    HandelBetweenOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
+                    break;
+
             }
-            else
-            {
-                HandelEqualOperator(queryFilterItem, queryFilterItemLessThan, queryFilterItemGreaterThan);
-            }
+
             ChangeToGroup(queryFilterItem);
             queryFilterItem.QueryFilterItems.Add(queryFilterItemLessThan);
             queryFilterItem.QueryFilterItems.Add(queryFilterItemGreaterThan);
         }
 
-        private static void ChangeToGroup(QueryFilterItem queryFilterItem)
+        private void ChangeToGroup(QueryFilterItem queryFilterItem)
         {
             queryFilterItem.FieldName = null;
             queryFilterItem.FieldValue = null;
@@ -66,43 +86,105 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
             queryFilterItem.QueryFilterItems = new List<QueryFilterItem>(); ;
         }
 
-        private static void HandelEqualOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
+        private void HandelEqualOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
         {
             queryFilterItemGreaterThan.Operator = "GreaterThanOrEqual";
             queryFilterItemLessThan.Operator = "LessThan";
             var date = DateTime.Parse(queryFilterItemLessThan.FieldValue.ToString());
-            date = ConvertDateByDateGroupCode(date, queryFilterItem.DateGroupCode);
+            ConvertDateByDateGroupCode(ref date, queryFilterItem.DateGroupCode);
             queryFilterItemLessThan.FieldValue = date;
         }
 
-        private static void HandelNotEqualOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
+        private void HandelNotEqualOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
         {
             queryFilterItemLessThan.Operator = "LessThan";
             queryFilterItemGreaterThan.Operator = "GreaterThanOrEqual";
             var date = DateTime.Parse(queryFilterItemGreaterThan.FieldValue.ToString());
-            date = ConvertDateByDateGroupCode(date, queryFilterItem.DateGroupCode);
+            ConvertDateByDateGroupCode(ref date, queryFilterItem.DateGroupCode);
             queryFilterItemGreaterThan.FieldValue = date;
         }
 
-        private static DateTime ConvertDateByDateGroupCode(DateTime date, string dateGroupCode)
+        private void HandelBetweenOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
+        {
+            queryFilterItemLessThan.Operator = "LessThan";
+            queryFilterItemGreaterThan.Operator = "GreaterThanOrEqual";
+            var startDate = DateTime.Parse(queryFilterItemGreaterThan.FieldValue.ToString());
+            var endDate = DateTime.Parse(queryFilterItemGreaterThan.FieldValue2.ToString());
+            queryFilterItemLessThan.FieldValue = endDate.Date.AddDays(1);
+            queryFilterItemGreaterThan.FieldValue = startDate.Date;
+        }
+
+
+        private void HandelCalculatedOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
+        {
+            queryFilterItemLessThan.Operator = "LessThan";
+            queryFilterItemGreaterThan.Operator = "GreaterThanOrEqual";
+
+
+            var number = int.Parse(queryFilterItem.FieldValue3.ToString());
+
+            DateTime startDate = GetStartDateByDateGroupCode(queryFilterItem, number);
+            DateTime endDate;
+            if (queryFilterItem.Operator == "Previous")
+            {
+                endDate = ConvertDateByDateGroupCode(ref startDate, queryFilterItem.DateGroupCode, number * -1);
+                queryFilterItemLessThan.FieldValue = startDate;
+                queryFilterItemGreaterThan.FieldValue = endDate;
+            }
+            else { 
+                endDate = ConvertDateByDateGroupCode(ref startDate, queryFilterItem.DateGroupCode, number);
+                queryFilterItemLessThan.FieldValue = endDate;
+                queryFilterItemGreaterThan.FieldValue = startDate;
+            }
+        }
+
+        private DateTime GetStartDateByDateGroupCode(QueryFilterItem queryFilterItem, int factor)
+        {
+
+            switch (queryFilterItem.DateGroupCode)
+            {
+                case "Day":
+                    return DateTime.Now.Date;
+                case "Week":
+                    return StartOfWeek(DateTime.Now.Date);
+                case "Month":
+                    return new DateTime(DateTime.Now.Year, DateTime.Now.Month,1);
+                case "Year":
+                    return new DateTime(DateTime.Now.Year, 1, 1);
+                case "Quarter":
+                    return new DateTime(DateTime.Now.Year, Convert.ToInt32(Math.Ceiling(DateTime.Now.Month/3.0) * 3 - 2 ), 1);
+                default:
+                    return DateTime.Now.Date;
+            }
+        }
+        private DateTime StartOfWeek(DateTime dt)
+        {
+            var culture = CultureInfo.CurrentCulture;
+            int diff = (7 + (dt.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+
+        private DateTime ConvertDateByDateGroupCode(ref DateTime date, string dateGroupCode, int factor = 1)
         {
             switch (dateGroupCode)
             {
                 case "Day":
-                    return date.AddDays(1);
+                    return date.AddDays(1 * factor);
+                case "Week":
+                    return date.AddDays(7 * factor);
                 case "Month":
-                    return date.AddMonths(1);
+                    return date.AddMonths(1 * factor);
                 case "Year":
-                    return date.AddYears(1);
+                    return date.AddYears(1 * factor);
                 case "Quarter":
-                    return date.AddMonths(3);
+                    return date.AddMonths(3 * factor);
                 default:
                     return date;
             }
 
         }
 
-        private static QueryFilterItem CloneQueryFilterItem(QueryFilterItem queryFilterItem)
+        private QueryFilterItem CloneQueryFilterItem(QueryFilterItem queryFilterItem)
         {
             return new QueryFilterItem
             {
@@ -124,7 +206,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
         private QueryTreeFilterIterator CreateIterator(QueryTreeFilterContext queryTreeFilterContext)
         {
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
-            var collection = iterator.collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode)).ToList();
+            var collection = iterator.collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode) || d.IsAnalyticsMetadatas).ToList();
             iterator.SetCollection(collection);
             return iterator;
         }
