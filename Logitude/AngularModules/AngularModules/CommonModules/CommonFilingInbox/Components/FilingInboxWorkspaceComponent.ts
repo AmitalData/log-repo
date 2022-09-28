@@ -1493,7 +1493,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             windowArgs.IsNew = true;
             newWindow.WindowArgs = windowArgs;
             if (SessionLocator.PrivateLableSettings) {
-              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelCustomsShipmentComponent');
             }
             else if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
               newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');

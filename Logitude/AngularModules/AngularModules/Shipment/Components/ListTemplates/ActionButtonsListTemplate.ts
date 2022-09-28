@@ -207,10 +207,10 @@ export class ActionButtonsListTemplate {
         newWindow.Height = isExportShipment ? 600 : this.IsDSV ? 376 : 420;
         newWindow.Width = isExportShipment ? 960 : 600;
         if (isExportShipment) {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddPrivateLabelShipmentComponent');
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
         }
         else {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelCustomsShipmentComponent');
         }
     }
 }
