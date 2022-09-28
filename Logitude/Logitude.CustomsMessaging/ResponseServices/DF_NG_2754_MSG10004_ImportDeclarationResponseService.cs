@@ -298,6 +298,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.InterfaceTypeCode == "2755")
             {
+                AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+
+
                 this._IsSubmitDeclarationResponse = true;
             }
 

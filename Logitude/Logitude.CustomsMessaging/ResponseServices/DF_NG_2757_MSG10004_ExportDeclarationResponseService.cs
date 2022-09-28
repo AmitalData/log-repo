@@ -651,6 +651,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             float.TryParse(_MyDeclarationPM.VersionId, out version);
             if (version >= 1.0)
             {
+                if(_MyDeclarationPM.Direction=="E")
+                AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
                 _MyDeclarationPM.IsSubmitDeclaration = true;
             }
 
@@ -663,6 +665,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.ResponseName == "8237" && customResponse.Response.Status[0].NameCode.Value == "36")
             {
+
+                if(_MyDeclarationPM.Direction=="E")
+                    AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
                 _MyDeclarationPM.IsExportClosed = true;
             }
 
@@ -1257,13 +1262,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }
+            
             if (isSendVPE)
             {
                 string xml_status = "new";
                 RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
         }
-
 
         private void UpdateDepositionStatusCode()
         {

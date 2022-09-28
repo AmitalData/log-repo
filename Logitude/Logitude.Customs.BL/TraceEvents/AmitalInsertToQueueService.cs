@@ -10,11 +10,11 @@ namespace Logitude.Customs.BL.TraceEvents
 {
     public   class AmitalInsertToQueueService
     {
-        public static void insertToQueue(DeclarationPM  declarationPM , string tadpisPrintDate)
+        public static void insertToQueue(DeclarationPM  declarationPM , string tadpisPrintDate=null)
         {
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
 
-            LogistictFile logistictFile = setLogistictFile(declarationPM, tadpisPrintDate);
+            var logistictFile = setLogistictFile(declarationPM, tadpisPrintDate);
             AmitalEventTracerModel myAmitalEventTracer = createEvent(declarationPM);
             if (!mySetting.IsConnectedToUniFreight)
             {
@@ -49,19 +49,25 @@ namespace Logitude.Customs.BL.TraceEvents
                 direction = myDeclaration.Direction,
 
             };
+            LogistictFile.logitudeCustomsFile.invoice = new Invoices[myDeclaration.SupplierInvoices.Count];
             for (int i = 0; i < myDeclaration.SupplierInvoices.Count; i++)
             {
                 Invoices invoice = new Invoices();
                 invoice.invoiceNumber = myDeclaration.SupplierInvoices[i].InvoiceNumber;
                 invoice.invoiceTotal = myDeclaration.SupplierInvoices[i].InvoiceAmount.ToString();
                 invoice.invoiceCurrecy = myDeclaration.SupplierInvoices[i].InvoiceCurrencyTypeCode;
-                PratList prat = new PratList();
+               
+                string[] pratMeches=new string[myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count] ;
+               
+
                 for (int j = 0; j < myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count; j++)
                 {
-                    prat.pratMeches[j] = myDeclaration.SupplierInvoices[i].SupplierInvoiceItems[j].ClassificationCode;
-                }
-                invoice.pratList = prat;
 
+                    pratMeches[j] = myDeclaration.SupplierInvoices[i].SupplierInvoiceItems[j].ClassificationCode;
+                }
+                invoice.pratList=new PratList();
+                invoice.pratList.pratMeches = pratMeches;
+               
                 LogistictFile.logitudeCustomsFile.invoice[i] = invoice;
             }
 
