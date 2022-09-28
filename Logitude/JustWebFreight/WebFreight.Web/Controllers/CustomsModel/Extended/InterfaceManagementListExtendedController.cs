@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName =
-                    "InterfaceManagementListExtended_" + DateTime.Now + ".xls";
+                    Guid.NewGuid().ToString() + ".xls";
                 return response;
 
             }
