@@ -351,8 +351,8 @@ namespace WebFreight.Web.Helpers
                 entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
             }
 
-            var res = entityLists.GetPaged(queryOperations.PageIndex, queryOperations.PageSize);
-            return res.Data.ToList();
+            var res = entityLists.ToList();
+            return res;
         }
 
         private List<DigitalShipmentList> GetShipmentsByFilter(GeneralFilters newFilters, int tenant)
