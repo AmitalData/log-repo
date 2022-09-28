@@ -32,7 +32,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         WorkflowInstanceId, 
 	         Code, 
 	         Name, 
-	         Value,
+	         Value, 
+	         Type,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         WorkflowInstanceId, 
 	         Code, 
 	         Name, 
-	         Value,
+	         Value, 
+	         Type,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -106,6 +108,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Value))
             {
 				entityPOCO.Value = entityPM.Value;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type))
+            {
+				entityPOCO.Type = entityPM.Type;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -169,6 +176,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.Value = entityPOCO.Value;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Type))
+            {
+					entityPM.Type = entityPOCO.Type;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowInstanceVariablePM entityPM, WorkFlowInstanceVariablePM oldEntityPM)
@@ -223,6 +235,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Value))
             {
                 oldEntityPM.Value = entityPM.Value;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type))
+            {
+                oldEntityPM.Type = entityPM.Type;
             }
 			
 		}
