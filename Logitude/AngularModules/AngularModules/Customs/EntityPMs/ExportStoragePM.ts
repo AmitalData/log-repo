@@ -229,6 +229,11 @@ export class ExportStoragePM {
     public set ActionName(newValue: string) { if (this.actionName != newValue) { this.actionName = newValue; this.MarkAsDirty("ActionName"); } }
        
 	 
+    private exportLoadingPortName: string;
+    public get ExportLoadingPortName() { return this.exportLoadingPortName; }
+    public set ExportLoadingPortName(newValue: string) { if (this.exportLoadingPortName != newValue) { this.exportLoadingPortName = newValue; this.MarkAsDirty("ExportLoadingPortName"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		
