@@ -559,4 +559,7 @@
     Columns="DueDate" />
   <Index
     Columns="OwnerId,ActivityStatusCode" />
+  <Index
+	Columns="Tenant,ActivityStatusCode"
+	Include="SearchFields" />
 </Table>
