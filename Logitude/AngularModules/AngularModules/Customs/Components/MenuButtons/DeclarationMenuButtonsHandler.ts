@@ -322,6 +322,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         if (this.EntityPM.Direction == "E") {
                             button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
                             button.LabelTextCodeCode = "";
+                            if(this.EntityPM.DeclarationStatusTypeCode == "11"){
+                                button.IsDisabled = true;
+                            }
                         
                         }
                     }
