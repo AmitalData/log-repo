@@ -50,6 +50,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Value")]
 	    public string Value { get; set; }
+        [Column("Type")]
+	    public string Type { get; set; }
     }
 }
 	 

@@ -273,6 +273,29 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private string type ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Type  
+	   {
+	    
+	     get
+		{
+		   return type;
+		 }
+		 set
+		 {
+		   if(type != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Type",OldValue=type,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   type=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

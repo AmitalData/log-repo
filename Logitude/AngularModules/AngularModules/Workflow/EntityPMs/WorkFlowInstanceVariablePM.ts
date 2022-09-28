@@ -79,6 +79,11 @@ export class WorkFlowInstanceVariablePM {
     public set Value(newValue: string) { if (this.value != newValue) { this.value = newValue; this.MarkAsDirty("Value"); } }
        
 	 
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstanceVariablePM;
 		

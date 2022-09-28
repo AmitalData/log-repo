@@ -18,6 +18,7 @@ export class WorkFlowInstanceVariableList {
 	WorkflowInstanceId: string;
 	Name: string;
 	Value: string;
+	Type: string;
 	
 }
  
