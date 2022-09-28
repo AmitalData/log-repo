@@ -587,9 +587,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CourierMasterQueryService queryService = new CourierMasterQueryService(customContext);
                 IQueryable<DeclarationPM> declarations = queryService.GetCourierConnectedDeclarations(queryOperations, tenant);
 
-                ServiceResponse response = new ServiceResponse();
-                response.Count = declarations.Count();
-                response.Result = declarations;
+                declarations = declarations.OrderBy(r => r.Id);
+                if (!queryOperations.GetAll)
+                {
+                    int skippedPorts = queryOperations.PageIndex;
+                    declarations = declarations.Skip(skippedPorts);
+                    declarations = declarations.Take(queryOperations.PageSize);
+                }
+
+                ServiceResponse response = new ServiceResponse();                
+                response.Count = queryService.GetCourierConnectedDeclarations(queryOperations, tenant).Count();
+                response.Result = declarations.ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
 
@@ -933,6 +941,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        [HttpPost]
+        public HttpResponseMessage SendConnectDeclaration([FromBody] CourierMasterPM courierMasterPM)
+        {
+            try
+            {
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
