@@ -1,24 +1,4 @@
 <style>
-    .link-button {
-        cursor: pointer;
-        color: #2b78e4;
-        float: left;
-    }
-
-    .link-button .plus-sign {
-        font-size: 13px;
-        font-weight: bold;
-        padding-right: 2px;
-    }
-
-    .link-button:not(.disabled):hover {
-        color: #03a9f4;
-    }
-
-    .link-button.disabled {
-        opacity: 0.5;
-    }
-
     .table-row {
         height: 1px;
     }
@@ -39,7 +19,6 @@
         padding-left: 10px;
         padding-right: 10px;
     }
-
     .select-entity-label {
         padding-bottom: 4px;
     }
@@ -82,13 +61,13 @@
         </td>
     </tr>
 
-    <tr *ngIf="WorkflowEntity != null" class="first-split-table-row">
+    <tr class="first-split-table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>
     </tr>
 
-    <tr *ngIf="WorkflowEntity != null" class="table-row">
+    <tr class="table-row">
         <td class="table-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'VariableName'"
@@ -103,7 +82,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="WorkflowEntity != null" class="table-row">
+    <tr class="table-row">
         <td class="table-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Data Type'" [ObjectFieldName]="'VariableType'"
@@ -116,14 +95,14 @@
         </td>
     </tr>
 
-    <tr *ngIf="WorkflowEntity != null && VariableType != null" class="table-row">
+    <tr *ngIf="VariableType != null" class="table-row">
         <td class="table-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Default Value'" [ObjectFieldName]="'VariableValue'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <FieldValue [Name]="'bla'" [DataType]="VariableType" [IsIntegerNumberInput]="false"
+                <FieldValue [Name]="'defaultValue'" [DataType]="VariableType" [IsIntegerNumberInput]="false"
                     [CurrentValue]="VariableValue" (ValueChanged)="updateVariableValue($event)">
                 </FieldValue>
             </div>

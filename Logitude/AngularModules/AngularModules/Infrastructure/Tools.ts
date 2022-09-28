@@ -2209,31 +2209,31 @@ export class FormatTool {
     }
 
     public static IsValidNameText(input: string): boolean {
-        var myResult = true;
+        var isvalid = true;
 
         if (!AppTool.IsNullOrEmpty(input)) {
             let firstChar = input.charAt(0);
 
             if (this.IsNumeric(firstChar) || !this.IsText(input)) {
-                myResult = false;
+                isvalid = false;
             }
         }
 
-        return myResult
+        return isvalid
     }
 
     public static IsTextBeginWithNumber(input: string): boolean {
-        var myResult = false;
+        var isvalid = false;
 
         if (!AppTool.IsNullOrEmpty(input)) {
             let firstChar = input.charAt(0);
 
             if (this.IsNumeric(firstChar)) {
-                myResult = true;
+                isvalid = true;
             }
         }
 
-        return myResult
+        return isvalid
     }
 
     public static IsAlpha(input: string): boolean {
