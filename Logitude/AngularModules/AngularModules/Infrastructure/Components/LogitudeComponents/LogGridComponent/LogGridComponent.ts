@@ -1413,7 +1413,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //this.init();
             this.updateDisplayList();
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
-            if (elem && this.backFromEdidIsChange) {
+            if (elem && (this.backFromEdidIsChange || forced)) {
                 elem.scrollTop = 0;
             }
             //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
