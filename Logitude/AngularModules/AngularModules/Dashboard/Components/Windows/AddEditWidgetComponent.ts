@@ -13,6 +13,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { retry } from 'rxjs/operators';
+import { Guid } from 'Infrastructure/Utilities/Guid';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -264,6 +265,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isNew) {
             this.isNew = false;
             this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
+            this.EntityPM.Key = Guid.newGuid();
             this.DashboardPM.AddWidget(this.EntityPM);
         }
         this.CurrentSession.CloseCurrentWindowEmit("OK");
