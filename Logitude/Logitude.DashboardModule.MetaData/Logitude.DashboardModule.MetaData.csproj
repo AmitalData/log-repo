@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardClassesGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBScripts\202209270207_DeleteWrongMetaDataFields.sxml" />
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />

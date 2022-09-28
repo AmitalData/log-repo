@@ -268,6 +268,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             });
 
             deletedWidgets.forEach(item => {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Widget Remove Click",Message :  "Widget Id : " + item?.Id, DashboardId: this.SelectedDashboard?.Id });
                 this.SelectedDashboard.RemoveWidget(item);
             });
         }

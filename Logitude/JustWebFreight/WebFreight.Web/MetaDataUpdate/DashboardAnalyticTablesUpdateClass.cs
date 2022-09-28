@@ -3,6 +3,7 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.MetaData.AnalyticsEntityFiles;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel;
 using System;
@@ -60,6 +61,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             var table = JsonConvert.DeserializeObject<AnalyticsFactsMetaData>(JsonConvert.SerializeObject(jsonTable));
             table.Id = sqlTable.Id;
+            table.SearchFields = BuildTableFieldSearchField(table);
             AnalyticsFactsMetaDataRepository.Update(table);
 
             var sqlFields = DashboardContext.AnalyticsFactsFieldsMetaDatas.AsNoTracking().ToDictionary(d => d.FieldCode, a => a);
@@ -98,11 +100,12 @@ namespace WebFreight.Web.MetaDataUpdate
             AnalyticsFactsFieldsMetaDataRepository.Add(field);
         }
 
-        private static AnalyticsFactsFieldsMetaData ConvertJsonFieldToSqlField(Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData jsonField, string fieldId, string tableId)
+        private AnalyticsFactsFieldsMetaData ConvertJsonFieldToSqlField(Logitude.DashboardModule.MetaDataTool.Models.FieldModels.AnalyticsFactsFieldsMetaData jsonField, string fieldId, string tableId)
         {
             var field = JsonConvert.DeserializeObject<AnalyticsFactsFieldsMetaData>(JsonConvert.SerializeObject(jsonField));
             field.Id = fieldId;
             field.AnalyticsFactsMetaDataId = tableId;
+            field.SearchFields = BuildFieldSearchField(field);
             return field;
         }
 
@@ -110,12 +113,29 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             var table = JsonConvert.DeserializeObject<AnalyticsFactsMetaData>(JsonConvert.SerializeObject(jsonTable));
             table.Id = IdCounter.GetNumber("AnalyticsFactsMetaData", 0);
+            table.SearchFields = BuildTableFieldSearchField(table);
             AnalyticsFactsMetaDataRepository.Add(table);
 
             foreach (var item in jsonTable.AnalyticsFactsFieldsMetaDatas)
             {
                 AddField(item, table.Id);
             }
+        }
+
+        private string BuildTableFieldSearchField(AnalyticsFactsMetaData table)
+        {
+            string mySearchFields = "";
+            MethodHelper.AddToSearchFields(ref mySearchFields, table.Name);
+            return mySearchFields;
+        }
+
+        private string BuildFieldSearchField(AnalyticsFactsFieldsMetaData field)
+        {
+            string mySearchFields = "";
+            MethodHelper.AddToSearchFields(ref mySearchFields, field.FieldCode);
+            MethodHelper.AddToSearchFields(ref mySearchFields, field.DisplayName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, field.DisplayNamePlural);
+            return mySearchFields;
         }
 
     }
