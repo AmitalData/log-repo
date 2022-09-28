@@ -1,11 +1,7 @@
 ﻿using Logitude.BL.Security;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.InvoiceModel.CustomFilters
 {

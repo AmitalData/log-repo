@@ -1,8 +1,12 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.CustomFilters;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Extensions;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -11,6 +15,8 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -23,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
+using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Security;
 
@@ -34,6 +41,17 @@ namespace WebFreight.Web.Helpers
         {
             return AddQueryExportExecutionLog(queryFilters);
         }
+
+        public DigitalExportResult ExportQueryDataToStorage(DigitalExportQueryToExcelArgs args)
+        {
+            SecurityUtility.IsWorkerRoleCall = Logitude.BL.Security.SecurityUtility.IsWorkerRoleCall = args.IsWorkerRoleCall;
+            var res = GetFileInfo(args);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(res.Data, res.BlobFileInfo);
+            return new DigitalExportResult() { FileName = res.BlobFileInfo.FileName };
+        }
+
+        #region private
 
         private DigitalExportResult AddQueryExportExecutionLog(GeneralFilters queryFilters)
         {
@@ -112,16 +130,17 @@ namespace WebFreight.Web.Helpers
                 row[0] = item.ShipmentNumber;
                 row[1] = item.TransportModeName;
                 row[2] = item.DirectionName;
-                row[4] = item.MainCarriageFromPortName;
-                row[5] = item.MainCarriageToPortName;
-                row[6] = item.MainCarriageATD.HasValue ? item.MainCarriageATD : null;
-                row[7] = item.MainCarriageATA.HasValue ? item.MainCarriageATA : null;
-                row[8] = item.Master;
-                row[9] = item.ShipperName;
-                row[10] = item.ConsigneeName;
-                row[11] = item.ShipmentTypeName;
-                row[12] = item.StatusName;
-                row[13] = item.NumberOfPackages.HasValue ? item.NumberOfPackages : 0;
+                row[3] = item.MainCarriageFromPortName;
+                row[4] = item.MainCarriageToPortName;
+                row[5] = item.MainCarriageATD.HasValue ? item.MainCarriageATD : null;
+                row[6] = item.MainCarriageATA.HasValue ? item.MainCarriageATA : null;
+                row[7] = item.Master;
+                row[8] = item.ShipperName;
+                row[9] = item.ConsigneeName;
+                row[10] = item.ShipmentTypeName;
+                row[11] = item.StatusName;
+                row[12] = item.NumberOfPackages.HasValue ? item.NumberOfPackages : 0;
+                row[13] = item.GrossWeight;
                 row[14] = item.ChargeableWeight.HasValue ? item.NumberOfPackages : 0;
                 row[15] = item.IncotermCode ;
                 row[16] = item.Volume.HasValue ? item.Volume : 0;
@@ -136,7 +155,207 @@ namespace WebFreight.Web.Helpers
             return memory.ToArray();
         }
 
-        private List<DigitalShipmentList> GetByShipmentsByFilter(GeneralFilters newFilters, int tenant)
+        private byte[] DigitalPortalInvoiceExportToExcel(List<ARInvoiceList> invoices)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+
+            // Build excel headers 
+            var table = new DataTable();
+            table.Columns.Add("Invoice Number");
+            table.Columns.Add("Invoice Type");
+            table.Columns.Add("My Reference");
+            table.Columns.Add("Your Reference");
+            table.Columns.Add("Invoice Date");
+            table.Columns.Add("Invoice Status");
+            table.Columns.Add("Payment Term");
+            table.Columns.Add("Invoice Currency");
+            table.Columns.Add("Total Amount");
+            table.Columns.Add("Open Amount ");
+            table.Columns.Add("Due Date");
+            table.Columns.Add("Print Notes");
+
+            foreach (var item in invoices)
+            {
+                DataRow row = table.NewRow();
+                row[0] = item.InvoiceNumber;
+                row[1] = item.ARInvoiceTypeName;
+                row[2] = item.MainEntityReference;
+                row[3] = item.CustomerRef;
+                row[4] = item.CreateDate;
+                row[5] = item.StatusName;
+                row[6] = item.PaymentTermName;
+                row[7] = item.InvoiceCurrencyCode;
+                row[8] = item.AmountInInvoiceCurrency;
+                row[9] = item.AmountDue;
+                row[10] = item.DueDate;
+                row[11] = item.PrintNotes;
+                table.Rows.Add(row);
+            }
+
+            sheet1.ImportDataTable(table, true, 1, 1);
+            workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+
+        private List<ARInvoiceList> GetInvoicesByFilters(GeneralFilters newFilters)
+        {
+            var myTenantRepository = new TenantRepository(newFilters.Tenant.Value);
+            var myTenant = myTenantRepository.GetSingleTenant(newFilters.Tenant.Value);
+
+            var filters = new ApiQueryFilters()
+            {
+                Filter1Value = newFilters.CardId,
+                Filter2Value = newFilters.CardType
+            };
+
+            var queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "ARInvoice",
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
+                QuerySection = "ARInvoices",
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection
+            };
+
+            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+            queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
+
+            var cardFilterValues = newFilters.CardId;
+
+            if (!string.IsNullOrWhiteSpace(cardFilterValues))
+            {
+                var cardBillToId = GetCardBillToId(newFilters.CardId, newFilters.Tenant.Value);
+                if (!string.IsNullOrWhiteSpace(cardBillToId))
+                {
+                    cardFilterValues = cardFilterValues + "," + cardBillToId;
+                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                }
+
+                queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
+            }
+
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", newFilters.Tenant.Value);
+
+            if (newFilters.AdditionalFilters.Any())
+            {
+                foreach (var filter in newFilters.AdditionalFilters)
+                {
+                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue?.ToString();
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        string valuestring2 = filter.FieldValue2?.ToString();
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            ARInvoiceAPiHelper.AddFilters(queryOperations, newFilters.Tenant.Value);
+            var genericFilter = new GenericFilter();
+            var MyContext = InvoiceContext.GetContext(newFilters.Tenant.Value);
+
+            var nonListQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+            };
+
+            var listQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+            };
+
+            var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
+            var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+
+            var entityPocos = aRInvoiceRepository.GetARInvoices(newFilters.Tenant.Value);
+
+            entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
+
+            var customfilters = new ARInvoiceCustomFilter(newFilters.Tenant.Value);
+            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+            entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, newFilters.Tenant.Value);
+            entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+
+            var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+            if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
+            {
+                ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
+
+                if (objectField != null)
+                {
+                    var sortClass = new GenericSort();
+
+                    if (!objectField.IsCustom)
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "text":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "double":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "datetime":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "integer":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "lookup":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, entityLists);
+                                    break;
+                                }
+                            default:
+                                {
+                                    entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                    }
+                }
+            }
+            else
+            {
+                entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+            }
+
+            var res = entityLists.GetPaged(queryOperations.PageIndex, queryOperations.PageSize);
+            return res.Data.ToList();
+        }
+
+        private List<DigitalShipmentList> GetShipmentsByFilter(GeneralFilters newFilters, int tenant)
         {
             var myTenantRepository = new TenantRepository(tenant);
             var myTenant = myTenantRepository.GetSingleTenant(tenant);
@@ -182,7 +401,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
@@ -209,7 +428,7 @@ namespace WebFreight.Web.Helpers
 
             IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(tenant);
 
-            shipments = DigitalPortalCustomFilter.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository, tenant);
+            shipments = Logitude.BL.ShipmentsModel.CustomFilters.DigitalPortalCustomFilter.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository, tenant);
 
             var nonListQueryOperation = new QueryOperations
             {
@@ -295,20 +514,18 @@ namespace WebFreight.Web.Helpers
             return entityLists?.ToList();
         }
 
-        public DigitalExportResult ExportQueryDataToStorage(DigitalExportQueryToExcelArgs args)
+        private string GetCardBillToId(string cardId, int tenant)
         {
-            SecurityUtility.IsWorkerRoleCall = Logitude.BL.Security.SecurityUtility.IsWorkerRoleCall = args.IsWorkerRoleCall;
-            var res = GetFileInfo(args);
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(res.Data, res.BlobFileInfo);
-            return new DigitalExportResult() { FileName = res.BlobFileInfo.FileName };
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToId;
         }
 
         private DigitalXslExportResult GetFileInfo(DigitalExportQueryToExcelArgs args)
         {
             var queryFilters = args.QueryFilters;
             int tenant = (int)queryFilters.Tenant;
-            string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", ""); ;
+            string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
 
             string fileName = !string.IsNullOrEmpty(args.OutputFileName)
                               ? args.OutputFileName
@@ -319,8 +536,12 @@ namespace WebFreight.Web.Helpers
             switch (ObjectTableName)
             {
                 case "DigitalShipmentsView":
-                    var res = GetByShipmentsByFilter(args.QueryFilters, args.QueryFilters.Tenant.Value);
-                    data = DigitalPortalShipmentExportToExcel(res);
+                    var shipmentData = GetShipmentsByFilter(args.QueryFilters, args.QueryFilters.Tenant.Value);
+                    data = DigitalPortalShipmentExportToExcel(shipmentData);
+                    break;
+                case "DigitalInvoice":
+                    var invoiceData = GetInvoicesByFilters(args.QueryFilters);
+                    data = DigitalPortalInvoiceExportToExcel(invoiceData);
                     break;
                 default:
                     break;
@@ -341,6 +562,8 @@ namespace WebFreight.Web.Helpers
                 Data = data
             };
         }
+
+        #endregion private
     }
 
     public class DigitalXslExportResult

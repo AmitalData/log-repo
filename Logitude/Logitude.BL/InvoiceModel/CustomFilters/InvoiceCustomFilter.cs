@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using Simplog.Data.Helpers;
-using System.Data.Entity.Core.Objects;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 
@@ -15,6 +12,7 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
     public class InvoiceCustomFilter
     {
         public int Tenant { get; set; }
+
         public InvoiceCustomFilter(int tenant)
         {
             this.Tenant = tenant;

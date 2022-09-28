@@ -10,6 +10,7 @@
 	Shipment.Volume,
 	Shipment.ValueOfGoods,
 	Shipment.NumberOfPackages,
+	Shipment.GrossWeight,
 	Shipment.CarrierLastStatusDate,
 	Shipment.MasterShipmentDataId, 
 	Shipment.IsOperationalClosed, 

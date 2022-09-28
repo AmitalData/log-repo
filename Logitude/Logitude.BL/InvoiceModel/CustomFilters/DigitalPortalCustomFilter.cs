@@ -11,9 +11,9 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
             queryableData = queryableData.Where(d =>
-             d.MainEntityReference.Contains(digitalPortalSearchFields)
-          || d.InvoiceNumber.Contains(digitalPortalSearchFields)
-          || (d.BillTo != null && d.BillTo.EnglishName.Contains(digitalPortalSearchFields))
+             d.MainEntityReference.StartsWith(digitalPortalSearchFields)
+              || d.InvoiceNumber.StartsWith(digitalPortalSearchFields)
+              || (d.BillTo != null && d.BillTo.EnglishName.StartsWith(digitalPortalSearchFields))
            );
 
             return queryableData;
