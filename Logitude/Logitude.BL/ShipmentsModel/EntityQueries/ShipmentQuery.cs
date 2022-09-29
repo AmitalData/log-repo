@@ -1828,6 +1828,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.WarehouseLegTerminalName = GetCardName(byLocalName, cardObject);
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
+                    shipmentPM.WarehouseLegAddressCity = cardObject.CityName;
                 }
             }
 
