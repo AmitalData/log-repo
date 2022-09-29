@@ -2,6 +2,7 @@
   <SqlScript>
     <![CDATA[
 
+
 CREATE VIEW [dbo].[CustomersDataView]
 AS
 SELECT        
@@ -31,6 +32,7 @@ dbo.Customers.BlockNewInvoiceCreation, dbo.Customers.BlockNewShipmentCreation,db
 dbo.Customers.ActivatedByUserId, dbo.Customers.ActivationRequestedByUserId, dbo.Customers.SetAsInactiveByUserId,
 ActivatedByUserContacts.EnglishName as ActivatedByUserName, SetAsInactiveByUserContacts.EnglishName as SetAsInactiveByName,
 ActivationRequestedByUserContacts.EnglishName as ActivationRequestedByUserName, dbo.Customers.ActivationDate, dbo.Customers.InactiveDate, dbo.Customers.ActivationRequestDate,dbo.cards.CreatedByPartner, dbo.cards.StateName, dbo.cards.GLAccountId , dbo.cards.GLAccountDisplayNumber, dbo.cards.IsAutonomy as  IsAutonomy
+,(select Max(LoginDateTime) as LastLoginDate from SharedLogisticsContactLastLogins where Via='PC' and CardId=dbo.Cards.Id and Tenant=dbo.Cards.Tenant) as LastLoginDateViaPC, (select Max(LoginDateTime) as LastLoginDate from SharedLogisticsContactLastLogins where Via='Mobile' and CardId=dbo.Cards.Id and Tenant=dbo.Cards.Tenant) as LastLoginDateViaMobile
 
 
 FROM dbo.Customers  Inner join
@@ -63,6 +65,7 @@ FROM dbo.Customers  Inner join
 						 dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
              dbo.Cards AS CustomerCard ON dbo.Customers.Id = CustomerCard.Id LEFT OUTER JOIN dbo.Cards as BillToCards on CustomerCard.BillToId = BillToCards.Id LEFT OUTER JOIN
 						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
+
           
 where dbo.Cards.PartnerTypeId <> 'AC'
 

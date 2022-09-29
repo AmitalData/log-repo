@@ -1049,5 +1049,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string SATCustomerName { get; set; }
+        [DataMember]
+        public DateTime? LastLoginDateViaPC { get; set; }
+        [DataMember]
+        public DateTime? LastLoginDateViaMobile { get; set; }
     }
 }
