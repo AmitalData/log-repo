@@ -6049,6 +6049,10 @@ User/Pass",
             getContainersListView.Columns.Add("POL-Json", 100);
             getContainersListView.Columns.Add("POD-container", 100);
             getContainersListView.Columns.Add("POD-Json", 100);
+            getContainersListView.Columns.Add("ac empty return-container", 100);
+            getContainersListView.Columns.Add("ac empty return-Json", 100);
+            getContainersListView.Columns.Add("es empty return-container", 100);
+            getContainersListView.Columns.Add("es empty return-Json", 100);
 
             int tenant = Convert.ToInt32(vizionTenantTextBox.Text);
             DateTime date_2022_7 = new DateTime(2022, 7, 1);
@@ -6075,7 +6079,7 @@ User/Pass",
                                                         .FirstOrDefault())
                                                         .OrderByDescending(x => x.CreateDate).ToList();
 
-            string[] arr = new string[9];
+            string[] arr = new string[13];
             foreach (CommunicationLog communicationLog in communications)
             {
                 Simplog.Data.ShipmentsModel.EntityPOCOs.Container container = shipmentsContext.Containers
@@ -6085,7 +6089,9 @@ User/Pass",
                 if (visionContainerStatus != null && container != null)
                 {
                     if ((container.PreCarriageLocation != null && container.POLLocation != null && container.PreCarriageLocation == container.POLLocation)
-                        || (container.OnCarriageLocation != null && container.PODLocation != null && container.OnCarriageLocation == container.PODLocation))
+                        || (container.OnCarriageLocation != null && container.PODLocation != null && container.OnCarriageLocation == container.PODLocation)
+                        || EmptyMap.Checked
+                        )
                     {
                         arr[0] = container.ContainerNumber;
                         arr[1] = container.PreCarriageLocation;
@@ -6096,6 +6102,10 @@ User/Pass",
                         arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
                         arr[7] = container.PODLocation;
                         arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
+                        arr[9] = container.ActualEmptyReturn?.ToString();
+                        arr[10] = visionContainerStatus.payload?.milestones.Find(e=>e.description == "Gate in empty return" && e.planned)?.timestamp.ToString();
+                        arr[11] = container.EstimatedEmptyReturn?.ToString();
+                        arr[12] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp.ToString();
 
                         getContainersListView.Items.Add(new ListViewItem(arr));
                         containers.Add(container, visionContainerStatus);
@@ -6177,16 +6187,33 @@ User/Pass",
         {
             foreach (var item in containers)
             {
-                MapPOL(item);
-                MapPOD(item);
-                MapPreCarriage(item);
-                MapOnCarriage(item);
+                if (EmptyMap.Checked)
+                {
+                    MapEmptyReturn(item);
+                }
+                else
+                {
+                    MapPOL(item);
+                    MapPOD(item);
+                    MapPreCarriage(item);
+                    MapOnCarriage(item);
+                }
+                
 
                 containerRepository.Update(item.Key);
             }
 
             containerRepository.SubmitChanges();
         }
+
+        private void MapEmptyReturn(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            var EstimatedEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && e.planned)?.timestamp;
+            item.Key.EstimatedEmptyReturn = EstimatedEmptyReturn ?? item.Key.EstimatedEmptyReturn;
+            var ActualEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp;
+            item.Key.ActualEmptyReturn = ActualEmptyReturn ?? item.Key.ActualEmptyReturn;
+        }
+
         private void MapPOL(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
         {
             item.Key.POLLocation = item.Value.payload?.origin_port?.unlocode;
