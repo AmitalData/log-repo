@@ -312,7 +312,7 @@ namespace WebFreight.Web.ContainerTracking
         public static string GateInOriginPort = "Gate in at origin port";
         public static string GateOutFromDestinationPort = "Gate out from destination port";
         public static string DischargedFromVesselAtDestinationPort = "Discharged from vessel at destination port";
-        public static string GateInEmptyReturn = "Discharged from vessel at destination port";
+        public static string GateInEmptyReturn = "Gate in empty return";
         public static string CarrierRelease = "Carrier release";
         public static string CustomsRelease = "Customs release";
 
