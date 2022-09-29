@@ -233,7 +233,7 @@
                                         <tr>
                                             <td style="width:140px">
 
-                                                <SearchBox *ngIf="taxExemptCodeTypesFilter && EntityPM.EntityParentPM.direction == 'E'" [ObjectTableName]="'Customs.ClientsTapag'"
+                                                <SearchBox *ngIf="TapagNumberTypesFilter && EntityPM.EntityParentPM.direction == 'E'" [ObjectTableName]="'Customs.ClientsTapag'"
                                                     [IsQuickSearch]="true"
                                                     [DropDownWidth]="125"
                                                     [ItemHeight]="20"
@@ -245,7 +245,7 @@
                                                     [Watermark]="''"
                                                     (LostFocus)="CustomsItemLostFocus($event)"
                                                     (ItemClicked)="CustomsItemClicked($event)"
-                                                    [QueryFilterItems]="taxExemptCodeTypesFilter"
+                                                    [QueryFilterItems]="TapagNumberTypesFilter"
                                                     >
 
                                                 </SearchBox>
