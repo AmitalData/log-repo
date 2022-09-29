@@ -1300,7 +1300,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
                                     {
                                         sendHybridM = false;
-                                        SendCustomsReferenceByTask(tenant, extDocPM.CustomReference, xmlstring, loggedUserId);
+                                        SendCustomsReferenceByTask(tenant, extDocPM.Id, extDocPM.CustomReference, xmlstring, loggedUserId);
                                     }
                                 }
                                 if (sendHybridM)
@@ -1371,15 +1371,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void SendCustomsReferenceByTask(int tenant, string cref, string xmlstring, string loggedUserId)
+        private void SendCustomsReferenceByTask(int tenant, string documentsFilingId, string cref, string xmlstring, string loggedUserId)
         {
             var _MyDeclarationPM = new DeclarationPM { Tenant = tenant };
             IDIUnifreightTaskService unifreightTaskService = ContainerAccessor.Container.Resolve(typeof(IDIUnifreightTaskService), "DIUnifreightTaskService", new ParameterOverride("", tenant)) as IDIUnifreightTaskService;
-            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for FILING with reference " + cref );
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for FILING " + documentsFilingId + "  with reference " + cref );
             LogMessagingUtil.Instance.AppendLine(xmlstring);
             try
             {
-                unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", cref, "L2UCREF", null, false, xmlstring, false);
+                unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", documentsFilingId, "L2UCREF", null, false, xmlstring, false);
             }
             catch (Exception ex)
             {
