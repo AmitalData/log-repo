@@ -1020,7 +1020,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
         logitudeWindow.Width = 750;
-        logitudeWindow.Height = 550;
+        logitudeWindow.Height = 530;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Payables/AddEditPayableComponent');
     }
     DeleteItem(itemComponent: ShipmentPayableItem) {
@@ -2197,6 +2197,7 @@ export class ShipmentPayableItem extends BaseComponent {
         }
     }
 
+    public AddEditPayableComponent: any;
     get MeasurementId() { return this.EntityPM.MeasurementId; }
     set MeasurementId(newValue: string) {
         if (this.EntityPM.MeasurementId != newValue) {
@@ -2210,7 +2211,7 @@ export class ShipmentPayableItem extends BaseComponent {
                 this.Quantity = null;
                 this.EntityPM.MeasurementCode = null;
                 this.EntityPM.MeasurementShortName = null;
-                this.UpdateInsideItemsSource_Measurement();
+                this.UpdateInsideItemsSource_Measurement();     
             }
 
             else {
@@ -2248,6 +2249,10 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "BCNT": {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
+                                    if (this.AddEditPayableComponent) {
+                                        this.AddEditPayableComponent.LoadByContainerAdditionalFieldsArea();
+                                    }
+
                                     break;
                                 }
 

@@ -351,6 +351,26 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <div style="height:5px"></div>
+                                        <!-- Additional Fields -->
+                                        <div [hidden]="DataContext.IsByContainerType" style="height:148px">
+
+                                            <div class="SectionTitle">Additional Fields</div>
+                                            <table style="height:128px">
+                                                <tr>
+                                                    <td>
+                                                        <ScrollViewer>
+
+                                                            <div class="MediaFill">
+                                                                <div class="LocationDirective" #AdditionalFieldsArea></div>
+                                                            </div>
+                                                        </ScrollViewer>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -358,7 +378,7 @@
                     </tr>
 
                     <!-- BYCT -->
-                    <tr>
+                    <tr [style.height]="DataContext.IsByContainerType? '133px':'0px'">
                         <td>
                             <div class="MediaFill" *ngIf="DataContext.IsByContainerType">
                                 <div class="SimpleGridView">
@@ -407,30 +427,28 @@
                         </td>
                     </tr>
 
+                    <tr [hidden]="!DataContext.IsByContainerType">
+                        <td style="vertical-align:top; padding-top:10px">
+                            <div style="height:179px">
 
-                    <tr [style.height]="!DataContext.IsByContainerType ? '100%':'100px'">
-                        <td >
-                            <div  [class.ScrollViewer]="DataContext.IsByContainerType">
-                                <div [class.ScrollContent]="DataContext.IsByContainerType" >
-                                    <table>
-                                        <tr style="height: 1px;">
-                                            <td class="SectionTitle">Additional Fields</td>
-                                        </tr>
+                                <div class="SectionTitle">Additional Fields</div>
+                                <table style="height:160px">
+                                    <tr>
+                                        <td>
+                                            <ScrollViewer>
 
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <div class="LocationDirective" #Child></div>
+                                                <div class="MediaFill">
+                                                    <div class="LocationDirective" #ByContainerAdditionalFieldsArea></div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                        <tr style="height:10px;"><td></td></tr>
+                                            </ScrollViewer>
+                                        </td>
+                                    </tr>
+                                </table>
 
-
-                                    </table>
-                                </div>
                             </div>
-</td>
+
+                        </td>
+
                     </tr>
 
 

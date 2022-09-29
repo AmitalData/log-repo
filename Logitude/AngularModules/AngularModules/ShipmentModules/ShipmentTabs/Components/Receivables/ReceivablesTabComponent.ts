@@ -922,7 +922,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
         logitudeWindow.Width = 750;
-        logitudeWindow.Height = 550;
+        logitudeWindow.Height = 530;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Receivables/AddEditReceivableComponent');
     }
     DeleteItem(itemComponent: ShipmentReceivableItem) {
@@ -1854,6 +1854,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         }
     }
 
+    public AddEditReceivableComponent: any;
     get MeasurementId() { return this.EntityPM.MeasurementId; }
     set MeasurementId(newValue: string) {
         if (this.EntityPM.MeasurementId != newValue) {
@@ -1906,6 +1907,9 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 case "BCNT": {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
+                                    if (this.AddEditReceivableComponent) {
+                                        this.AddEditReceivableComponent.LoadByContainerAdditionalFieldsArea();
+                                    }
                                     break;
                                 }
 

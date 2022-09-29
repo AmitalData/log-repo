@@ -21,8 +21,16 @@ export class ClassicScreenLayoutService implements IScreenLayoutService {
     }
 
     private GetNumberOfScreenColumns(screen: any) {
-        let additionalFieldsShipmentPackageScreenCode = 'ShipmentPackage.AdditionalFields';
-        return screen.ScreenCode == additionalFieldsShipmentPackageScreenCode ? 1 : screen.NumberOfColumns;
+        let additionalFieldsForOneColumnScreensCodes = this.GetScreensCodesWithOneColumnForAdditionalFields();
+        return additionalFieldsForOneColumnScreensCodes.indexOf(screen.ScreenCode) > -1 ? 1 : screen.NumberOfColumns;
+    }
+
+    private GetScreensCodesWithOneColumnForAdditionalFields() {
+        return [
+            "ShipmentPackage.AdditionalFields",
+            "ShipmentPayable.AdditionalFields",
+            "ShipmentReceivable.AdditionalFields"
+        ];
     }
 
     public GetScreenRows(sectionNumber: number) {
