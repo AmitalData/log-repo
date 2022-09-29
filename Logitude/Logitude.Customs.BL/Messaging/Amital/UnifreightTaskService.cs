@@ -210,14 +210,14 @@ namespace Logitude.Customs.BL.Messaging.Amital
             {
                 using (var myAmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
                 {
-                    
+
                     var myGGGQUpdateService = new GGGQUpdateService(myAmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;
                     var myYCULTASKUpdateService = new YCULTASKUpdateService(myAmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;
                     var requestData = "";
-                    var addStatus = ""; 
-                    var comment = ""; 
+                    var addStatus = "";
+                    var comment = "";
                     var addComment = "";
 
                     if (toLock)
@@ -237,7 +237,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                             myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                         }
                     }
-                    if (taskType == "LD2U" && dirtyDeclarationPM.IsSignedVersion) 
+                    if (taskType == "LD2U" && dirtyDeclarationPM.IsSignedVersion)
                     {
                         if (raiseStatus != true)
                         {
@@ -294,7 +294,12 @@ namespace Logitude.Customs.BL.Messaging.Amital
                             requestData = string.Concat(requestData, requestData2);
                         }
                     }
-                    
+
+                    if (String.IsNullOrWhiteSpace(requestData) && !String.IsNullOrWhiteSpace(xmlStatus))
+                    {
+                        requestData = xmlStatus;
+                    }
+
                     var myYCULTASKPM = new YCULTASKPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -305,7 +310,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         PRIORITY = YCULTASKPM.calcPriority(taskType),
                         TYPE = taskType,
                         USRCODE = unifreightUser,
-                        ARCHIVE = "F", 
+                        ARCHIVE = "F",
                     };
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
