@@ -83,8 +83,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     var ifSwiss = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant).Find(c => c.StorageSiteCode == "ILSWS");
                     if (ifSwiss != null) {
-                        List<string> listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode))) 
-                        || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
+                        List<string> listReasonCode;
+                        if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
+                        {
+                            listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
+                        }
+                        else
+                        {
+                            listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
+                            || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
+                        }
                         foreach (var item in listReasonCode)
                         {
                             if (courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
