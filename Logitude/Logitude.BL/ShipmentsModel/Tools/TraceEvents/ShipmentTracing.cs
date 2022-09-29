@@ -1905,14 +1905,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     }
                 }
 
-                List<TraceEvent> traceEventList = new List<TraceEvent>();
+                IQueryable<TraceEvent> traceEventList = Enumerable.Empty<TraceEvent>().AsQueryable();
                 if (traceEvent.EventType.IsCustomerView || !string.IsNullOrEmpty(traceEvent.EventType.EntityStatusId))
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
                     string objectTableId = objectTable.Id;
 
-                    traceEventList = traceEventRep.GetTraceEvents(tenant, entityPM.Id, objectTableId).ToList();
+                     traceEventList = traceEventRep.GetTraceEvents(tenant, entityPM.Id, objectTableId);
                 }
 
                 if (traceEvent.EventType.IsCustomerView)
@@ -1928,7 +1928,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 if (!string.IsNullOrEmpty(traceEvent.EventType.EntityStatusId))
                 {
                     List<TraceEvent> operationalEvents = traceEventList.Where(d => d.EventType != null && d.EventType.EntityStatus != null && d.EventType.EntityStatus.EntityStatusTypeCode == "O").ToList();
-                    List<TraceEvent> nonOperationalEvents = traceEventList;
+                    List<TraceEvent> nonOperationalEvents = new List<TraceEvent>();
 
                     if(FeatureToggleHelper.HasFeatureToggle("OPS", tenant))
                     {
@@ -2292,10 +2292,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             string objectTableId = objectTable.Id;
 
             TraceEventRepository traceEventRep = new TraceEventRepository(entityPM.Tenant);
-            List<TraceEvent> myEventList = traceEventRep.GetTraceEvents(entityPM.Tenant, entityPM.Id, objectTableId).ToList();
-            myEventList = myEventList.Where(d => d.EventType.IsCustomerView && !d.Deleted).ToList();
+            var myEventList = traceEventRep.GetTraceEvents(entityPM.Tenant, entityPM.Id, objectTableId).Where(d => d.EventType.IsCustomerView && !d.Deleted);
 
-            if (myEventList.Count > 0)
+            if (myEventList.Any())
             {
                 TraceEvent myHigherEvent = myEventList.OrderByDescending(d => d.LogDateTime).FirstOrDefault();
                 if (myHigherEvent != null)
