@@ -150,7 +150,8 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             List<PropertyChange> shipmentChanges = WorkflowEntityChanges.GetChangedProperties(entityPoco, entityPM);
             List<PropertyChange> ShipmentMasterDataChanges = WorkflowEntityChanges.GetChangedProperties(entityPoco.ShipmentMasterData, entityPM);
-            return shipmentChanges.Union(ShipmentMasterDataChanges).ToList();
+            List<PropertyChange> ShipmentComputedFieldsChanges = WorkflowEntityChanges.GetChangedProperties(entityPoco.ShipmentComputedFields, entityPM);
+            return shipmentChanges.Union(ShipmentMasterDataChanges).Union(ShipmentComputedFieldsChanges).ToList();
         }
         #endregion
 
