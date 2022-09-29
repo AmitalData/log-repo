@@ -1683,12 +1683,12 @@ namespace WebFreight.Web.WebServices
                 DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "716" && doc.Tenant == tenant).FirstOrDefault();
                 if (currentdocumentType != null)
                 {
-                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
+                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.EntityId == shipment.Id && fc.Tenant == tenant).ToList();
 
-                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
+                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.Tenant == tenant).ToList();
 
                     FormCustomField numberOfOriginalsCustomField = (from a in customfieldsList
-                                                                    where a.FieldCode == "NumberOfOriginals" && a.EntityId == shipment.Id
+                                                                    where a.FieldCode == "NumberOfOriginals"
                                                                     select a).FirstOrDefault();
 
                     DocumentTypeCustomField numberOfOriginalsDocumentCustom = (from a in documentCustomfieldsList
@@ -1698,7 +1698,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.NumberOfOriginals = numberOfOriginalsCustomField != null ? numberOfOriginalsCustomField.Value : numberOfOriginalsDocumentCustom != null ? numberOfOriginalsDocumentCustom.DefaultValue : null;
 
                     FormCustomField copyOrOriginalCustomField = (from a in customfieldsList
-                                                                 where a.FieldCode == "CopyOrOriginal" && a.EntityId == shipment.Id
+                                                                 where a.FieldCode == "CopyOrOriginal"
                                                                  select a).FirstOrDefault();
 
                     DocumentTypeCustomField copyOrOriginalDocumentCustom = (from a in documentCustomfieldsList
@@ -1706,7 +1706,7 @@ namespace WebFreight.Web.WebServices
                                                                             select a).FirstOrDefault();
 
                     FormCustomField hasAttachmentListCustomField = (from a in customfieldsList
-                                                                    where a.FieldCode == "HasAttachmentList" && a.EntityId == shipment.Id
+                                                                    where a.FieldCode == "HasAttachmentList"
                                                                     select a).FirstOrDefault();
 
                     DocumentTypeCustomField hasAttachmentListDocumentCustom = (from a in documentCustomfieldsList
@@ -1716,7 +1716,7 @@ namespace WebFreight.Web.WebServices
                     haSattachment = hasAttachmentListCustomField != null ? hasAttachmentListCustomField.Value : hasAttachmentListDocumentCustom.DefaultValue;
 
                     FormCustomField fblNotesCustomField = (from a in customfieldsList
-                                                           where a.FieldCode == "FBLNotes" && a.EntityId == shipment.Id
+                                                           where a.FieldCode == "FBLNotes"
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField fblNotesDocumentCustom = (from a in documentCustomfieldsList
@@ -1724,7 +1724,7 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField fblNotesCustomField2 = (from a in customfieldsList
-                                                            where a.FieldCode == "FBLNotes2" && a.EntityId == shipment.Id
+                                                            where a.FieldCode == "FBLNotes2"
                                                             select a).FirstOrDefault();
 
                     DocumentTypeCustomField fblNotesDocumentCustom2 = (from a in documentCustomfieldsList
