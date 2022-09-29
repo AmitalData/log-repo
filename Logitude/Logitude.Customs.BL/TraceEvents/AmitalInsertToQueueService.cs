@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 {
 
 
-                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, LogistictFile>(myAmitalEventTracer, logistictFile);
+                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE >(myAmitalEventTracer, logistictFile);
                     unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
                     {
                         Action = "UpdateExportCustomsFile",
@@ -36,9 +36,9 @@ namespace Logitude.Customs.BL.TraceEvents
         }
 
 
-        public static LogistictFile setLogistictFile(DeclarationPM myDeclaration , string tadpisPrintDate=null)
+        public static Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE setLogistictFile(DeclarationPM myDeclaration , string tadpisPrintDate=null)
         {
-            LogistictFile LogistictFile = new LogistictFile();
+            Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE LogistictFile = new Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE();
             bool ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
             LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
             {
