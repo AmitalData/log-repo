@@ -296,7 +296,16 @@
                                                     </td>
 
                                                     <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
-                                                        <ComboBox [ItemsSource]="EventTypes" [Binding]="'EnglishName'" [SelectedItem]="AddDataContext.SelectedEventType" (SelectedItemChanged)="AddDataContext.SelectedEventType = $event" (LostFocus)="OnInputBoxLostFocus()"></ComboBox>
+                                                        <LogLov [ObjectFieldName]="'EventTypeId'"
+                                                                [SelectedValue]="AddDataContext.EventTypeId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="AddDataContext"
+                                                                [LookUpTableName]="'EventType'"
+                                                                [DependencyFilter2Value]="ObjectTableId"
+                                                                [DependencyFilter3Value]="true"
+                                                                (SelectedItemChanged)="AddDataContext.EventTypeChange($event)"
+                                                                [HideColumns]="true">
+                                                        </LogLov>    
                                                     </td>
                                                 </tr>
 

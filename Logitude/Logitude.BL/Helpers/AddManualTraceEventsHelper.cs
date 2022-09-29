@@ -305,12 +305,11 @@ namespace Logitude.BL.Helpers
             string objectTableId = objectTable.Id;
 
             TraceEventRepository traceEventRep = new TraceEventRepository(tenant);
-            List<TraceEvent> myEventList = traceEventRep.GetTraceEvents(tenant, entityPM.Id, objectTableId).ToList();
-            myEventList = myEventList.Where(d => d.EventType.IsCustomerView && !d.Deleted).ToList();
+            var traceEvents = traceEventRep.GetTraceEvents(tenant, entityPM.Id, objectTableId).Where(d => d.EventType.IsCustomerView && !d.Deleted);
 
-            if (myEventList.Count > 0)
+            if (traceEvents.Any())
             {
-                TraceEvent myHigherEvent = myEventList.OrderByDescending(d => d.EventDateTime).FirstOrDefault();
+                TraceEvent myHigherEvent = traceEvents.OrderByDescending(d => d.EventDateTime).FirstOrDefault();
                 if (myHigherEvent != null)
                 {
                     entityPM.LastSharedEventId = myHigherEvent.EventTypeId;

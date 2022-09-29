@@ -235,7 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     ContainerData containerRecord = new ContainerData();
                     counter++;
-                    
+
                     PackageType packtype = (from pa in commonContext.PackageTypes
                                             where pa.Id == package.PackageTypeId
                                             select pa).FirstOrDefault();
@@ -318,14 +318,22 @@ namespace WebFreight.Web.ReportsWebServices
                 cmrDataProvider.IssueDate = DateTime.Now.Date;
                 cmrDataProvider.PickUpOrDeliveryNumber = shipment.ShipmentNumber;
 
+                DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
+                                                     where copy.Id == documentTypeCopyId
+                                                     select copy).FirstOrDefault();
+                List<FormCustomField> customfieldsList = new List<FormCustomField>();
+                List<DocumentTypeCustomField> documentCustomfieldsList = new List<DocumentTypeCustomField>();
 
-                // custom fields//
-                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.ToList();
-                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.ToList();
 
+                if (documenttypecopy != null)
+                {
+                    customfieldsList = commonContext.FormCustomFields.Where(a => a.EntityId == shipment.Id && a.DocumentTypeId == documenttypecopy.DocumentTypeId && a.Tenant == tenant).ToList();
+                    documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(a => a.DocumentTypeId == documenttypecopy.DocumentTypeId && a.Tenant == tenant).ToList();
+
+                }
                 //----cash on delivery---//
                 FormCustomField cashOnDeliveryField = (from a in customfieldsList
-                                                       where a.FieldCode == "CashOnDelivery" && a.EntityId == shipment.Id
+                                                       where a.FieldCode == "CashOnDelivery"
                                                        select a).FirstOrDefault();
                 DocumentTypeCustomField cashOnDeliveryDocumentCustom = (from a in documentCustomfieldsList
                                                                         where a.FieldCode == "CashOnDelivery"
@@ -342,7 +350,7 @@ namespace WebFreight.Web.ReportsWebServices
                 //--Documents attached--//
 
                 FormCustomField documentsAttachedField = (from a in customfieldsList
-                                                          where a.FieldCode == "DocumentsAttached" && a.EntityId == shipment.Id
+                                                          where a.FieldCode == "DocumentsAttached"
                                                           select a).FirstOrDefault();
                 DocumentTypeCustomField documentsAttachedDocumentCustom = (from a in documentCustomfieldsList
                                                                            where a.FieldCode == "DocumentsAttached"
@@ -359,7 +367,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //----Instructions(13)---//
                 FormCustomField instructions13Field = (from a in customfieldsList
-                                                       where a.FieldCode == "Instructions(13)" && a.EntityId == shipment.Id
+                                                       where a.FieldCode == "Instructions(13)"
                                                        select a).FirstOrDefault();
                 DocumentTypeCustomField instructions13DocumentCustom = (from a in documentCustomfieldsList
                                                                         where a.FieldCode == "Instructions(13)"
@@ -375,9 +383,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 cmrDataProvider.SendersInstructions = cmrDataProvider.Instructions_13 != null ? cmrDataProvider.Instructions_13 : "";
 
-                DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
-                                                     where copy.Id == documentTypeCopyId
-                                                     select copy).FirstOrDefault();
+
                 if (documenttypecopy != null)
                 {
                     string[] copyNameandNumber = new string[5];
@@ -418,10 +424,10 @@ namespace WebFreight.Web.ReportsWebServices
         private void FillInsidePackagesList(List<InsideShipmentPackage> insidePackages, ContainerData containerRecord)
         {
             containerRecord.InsidePackagesLines = new List<InsidePackageLine>();
-            
+
             foreach (InsideShipmentPackage insideItem in insidePackages)
             {
-                InsidePackageLine insidePackage =  this.CreateInsidePackageLine(insideItem);                
+                InsidePackageLine insidePackage = this.CreateInsidePackageLine(insideItem);
                 containerRecord.InsidePackagesLines.Add(insidePackage);
             }
         }
@@ -432,7 +438,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             PackageType insidePackageType = (from pa in commonContext.PackageTypes
                                              where pa.Id == insideItem.PackageTypeId
-                                             select pa).FirstOrDefault();            
+                                             select pa).FirstOrDefault();
 
             insidePackage.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
             insidePackage.Quantity = insideItem.Quantity;

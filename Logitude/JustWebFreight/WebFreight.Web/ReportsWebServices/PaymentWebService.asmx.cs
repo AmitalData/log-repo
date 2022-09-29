@@ -287,12 +287,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (documentTypePM != null)
                     {
-                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.EntityId == currentPayment.Id && fc.Tenant == tenant).ToList();
 
-                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.Tenant == tenant).ToList();
 
                         FormCustomField paidByCustomField = (from a in customfieldsList
-                                                             where a.FieldCode == "PaidBy" && a.EntityId == currentPayment.Id
+                                                             where a.FieldCode == "PaidBy"
                                                              select a).FirstOrDefault();
 
                         DocumentTypeCustomField paidByDocumentCustom = (from a in documentCustomfieldsList

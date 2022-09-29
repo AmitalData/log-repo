@@ -1236,7 +1236,7 @@ namespace WebFreight.Web.WcfApi
                         ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", 0, true);
                         string objectTableId = objectTable.Id;
 
-                        List<TraceEvent> quoteEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId).ToList();
+                        var quoteEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId);
                         List<TraceEventParams> toBuildEvents = new List<TraceEventParams>();
                         foreach (TraceEventPM traceEvent in eventsList)
                         {

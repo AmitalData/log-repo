@@ -167,7 +167,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         private void CreateTraceEvent(ShipmentPM shipmentPM)
         {
             AddManualTraceEventsHelper addManualTraceEventsHelper = new AddManualTraceEventsHelper(shipmentPM.Tenant);
-            List<TraceEvent> shipmentEvents = this.GetShipmentEvents(shipmentPM);
+            var shipmentEvents = this.GetShipmentEvents(shipmentPM);
             foreach (TraceEventPM traceEvent in shipmentPM.AddManualEvents)
             {
                 this.ValidateEventType(traceEvent, shipmentPM.Tenant);
@@ -189,14 +189,14 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 }
             }
         }
-        private List<TraceEvent> GetShipmentEvents(ShipmentPM shipmentPM)
+        private IQueryable<TraceEvent> GetShipmentEvents(ShipmentPM shipmentPM)
         {
             TraceEventRepository traceEventRepository = new TraceEventRepository(shipmentPM.Tenant);
-            return traceEventRepository.GetTraceEvents(shipmentPM.Tenant, shipmentPM.Id, ObjectTableRepository.GetObjectTableByName("Shipment")).ToList();
+            return traceEventRepository.GetTraceEvents(shipmentPM.Tenant, shipmentPM.Id, ObjectTableRepository.GetObjectTableByName("Shipment"));
         }
-        private bool IsTraceEventAdded(TraceEventPM traceEvent, List<TraceEvent> shipmentEvents)
+        private bool IsTraceEventAdded(TraceEventPM traceEvent, IQueryable<TraceEvent> shipmentEvents)
         {
-            return shipmentEvents.Where(e => e.EventTypeId == traceEvent.EventTypeId && e.EventDateTime == traceEvent.EventDateTime).Any();
+            return shipmentEvents.Any(e => e.EventTypeId == traceEvent.EventTypeId && e.EventDateTime == traceEvent.EventDateTime);
         }
         private void ValidateEventType(TraceEventPM traceEvent, int tenant)
         {
