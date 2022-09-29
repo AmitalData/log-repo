@@ -89,10 +89,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         proceduralFaultsConnectedEntityPM.EntityIdKey3 = conectedEntityItem.entityIdKey3;
                         proceduralFaultsConnectedEntityPM.EntityPath = conectedEntityItem.entityPath;
 
-                        if (conectedEntityItem.entityType == 1055 || conectedEntityItem.entityType == 11188 || conectedEntityItem.entityType == 12414)
-                        {
-                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                            myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
+
+
+                        DeclarationQueryService declarationUpdateService1 = new DeclarationQueryService(requestParams.Tenant);
+                        myDeclarationPM = declarationUpdateService1.GetSingleDeclarationByNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant, false);
+                        
+                            if(conectedEntityItem.entityType == 1055)
+                            { 
+                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
+                            }
                             if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                             {
                                 this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
@@ -126,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     myInsertEventContextTagModel.MyNotificationPM.Description = "תיק " + myDeclarationPM.CustomFileNo + "- עודכן ליקוי מכס";
                                 }
                             }
-                        }
+                        //}
                         this._MyProceduralFaultPM.ProceduralFaultsConnEntities.Add(proceduralFaultsConnectedEntityPM);
                     }
                 }
