@@ -185,16 +185,16 @@
                 <table>
                     <tr>
                         <td class="recordsLimit-radio-cell">
-                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'one'"
-                                (Checked)="updateRecordsLimit('one')" [Text]="'Only the first record'" [Top]="5"
-                                [DataCy]="'record-limit-one'">
+                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'FirstRecord'"
+                                (Checked)="updateRecordsLimit('FirstRecord')" [Text]="'Only the first record'" [Top]="5"
+                                [DataCy]="'record-limit-first'">
                             </RadioButton>
                         </td>
                     </tr>
                     <tr>
                         <td class="recordsLimit-radio-cell">
-                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'all'"
-                                (Checked)="updateRecordsLimit('all')" [Text]="'All records'" [Top]="5"
+                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'AllRecords'"
+                                (Checked)="updateRecordsLimit('AllRecords')" [Text]="'All records'" [Top]="5"
                                 [DataCy]="'record-limit-all'">
                             </RadioButton>
                         </td>

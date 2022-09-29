@@ -4,6 +4,7 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
+import { GetRecordsLimit} from "Workflow/Constants/GetRecordsLimit";
 import { Condition } from "Workflow/Models/Condition";
 
 @Component({
@@ -36,7 +37,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Name = this.Data["name"] || null;
         this.EntityId = this.Data["entityId"] || null;
         this.EntityName = this.Data["entityName"] || null;
-        this.RecordsLimit = "one"
+        this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordsLimit.FirstRecord
 
         this.Conditions = this.Data["conditions"] || [];
         this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
