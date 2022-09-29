@@ -1,4 +1,5 @@
 ﻿
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -157,8 +158,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string response = "";
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
-                    var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
-                    cancelOldCommunicationLogs.CancelOldECTHRDataMaman(requestParams.Tenant, itemDeclarationIdStorageSiteCode.Key);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
+                    if (feature != null)
+                    {
+                        var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                        cancelOldCommunicationLogs.CancelOldECTHRDataMaman(requestParams.Tenant, itemDeclarationIdStorageSiteCode.Key);
+                    }
                     if (def.DEFDATA.Contains("ILMMN") && itemDeclarationIdStorageSiteCode.Value == "ILMMN") // Maman
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
