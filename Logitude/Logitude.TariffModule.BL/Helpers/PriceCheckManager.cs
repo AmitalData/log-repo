@@ -293,11 +293,16 @@ namespace Logitude.TariffModule.BL.Helpers
         
         private List<TariffSearchSummary> GetTariffSearchSummary(IQueryable<TariffLine> iQueryable)
         {
-            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();            
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort 
+            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort
                                         && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)
-                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true) 
-                                        && (viaPort != null ? p.ViaPortId == viaPort : true));            
+                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));
+
+            if (!string.IsNullOrEmpty(viaPort))
+            {
+                iQueryable = iQueryable.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true);
+            }
+
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -344,22 +349,22 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
 
-            List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
+            List<Tariff> costTariffs = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
 
-            if (TariffListTemp.Count > 0)
+            if (costTariffs.Count > 0)
             {
                 if (string.IsNullOrEmpty(currencyId))
                 {
-                    currencyId = TariffListTemp.FirstOrDefault().CurrencyId;
+                    currencyId = costTariffs.FirstOrDefault().CurrencyId;
                 }
             }
 
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
-                TariffListTemp = TariffListTemp.Where(p => p.TariffProductId == product).ToList();
+                costTariffs = costTariffs.Where(p => p.TariffProductId == product).ToList();
             }
 
-            items = GetTariffResults(iQueryable, propIndex, TariffListTemp);
+            items = GetTariffResults(iQueryable, propIndex, costTariffs);
 
             List<Tariff> TariffList = this.tariffRepository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
@@ -410,7 +415,13 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
             {
                 List<TariffLine> filteredLines = new List<TariffLine>();
-                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && (viaPort != null ? p.ViaPortId == viaPort : true)).ToList();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort).ToList();
+
+                if (!string.IsNullOrEmpty(viaPort))
+                {
+                    filteredLines = filteredLines.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true).ToList();
+                }
+
                 if (filteredLines.Count() == 0)
                 {
                     filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.IsToAllOtherPorts == true).ToList();

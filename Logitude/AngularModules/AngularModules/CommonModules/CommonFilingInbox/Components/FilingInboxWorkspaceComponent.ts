@@ -160,7 +160,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             this.IsLogBox = true;
         }
 
-        if (SessionLocator.PrivateLableSettings) {
+        if (SessionLocator.PrivateLableSettings && SessionLocator.PrivateLableSettings.PrivateLabelShortName.toLocaleLowerCase() == "dsv") {
             this.IsDSVConnectVisible = true;
         }
         else {
@@ -290,11 +290,21 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             if (myResult != null && !myResult.HasError) {
                 var domain = ObjectsLocator.GlobalSetting.DocumentFilingEmailDomain;
                 if (SessionLocator.PrivateLableSettings) {
-                    domain = "inbox.dsv.co.il";
+                    domain = this.GetPrivateLableSettingsDomain(SessionLocator.PrivateLableSettings);
                 }
+
                 this.SettingsDomain = myResult.Result != null ? myResult.Result.DocumentFilingInbox + "@" + domain : "";
             }
         });
+    }
+
+    GetPrivateLableSettingsDomain(privateLableSetting: any) {
+        var isDSVTenant = SessionLocator.PrivateLableSettings?.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        if (isDSVTenant) {
+            return "inbox.dsv.co.il";
+        }
+
+        return privateLableSetting?.PrivateLabelDomain;
     }
 
     //Fill DocumentTypeList 
@@ -897,7 +907,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.Customer = entity.ShipperName;
             }
 
-            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() != "in progress") {
+            var isDSVTenant = SessionLocator.PrivateLableSettings?.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && isDSVTenant) {
                 this.IsDSVConnectEnable = true;
             }
             else {

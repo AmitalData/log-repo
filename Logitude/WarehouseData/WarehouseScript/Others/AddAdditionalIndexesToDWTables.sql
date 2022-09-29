@@ -57,6 +57,28 @@ end
 IF (OBJECT_ID ('dw_Shipments', 'U')  IS NOT NULL)
 BEGIN
 
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Shipment_IsStandalonePickupDelivery_ShipmentLevelCode_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dw_Shipments]'))
+  begin
+  
+  CREATE NONCLUSTERED INDEX [IX_Shipment_ShipmentLevelCode_IsStandalonePickupDelivery] ON [dbo].[dw_Shipments] ([IsStandalonePickupDelivery] , [ShipmentLevelCode],[AutomaticLastUpdateDate])
+  INCLUDE([ComputedStatusId],[FromPortId],[ToPortId],[IsOperationalClosed],[IsAccountingClosed],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[CreatedByUserId],[CreateDateTime],[DepartmentId],[ShipmentTypeId],[CustomerId],[ShipperId],[ConsigneeId],[AgentComputed],[Routing],[DirectionId],[TransportModeId],[VolumeUnitCode],[AgentReference2],[AgentReference1],[GrossWeightUnitCode],[ChargeableWeightUnitCode],[VolumetricWeight],[GrossWeightInKG],[NumberOfPackages],[VolumeInCBM],[BookingNumberOfPackages],[OrderGrossWeight],[BookingVolume],[SpecialServicesTypeId],[CustomerReference1],[CustomerReference2],[AccountManagerUserId],[OperationalCloseDate],[AccountingCloseDate],[OperationalDate],[MasterShipmentDataId],[RegistryDate],[GrossWeightPerTon],[FirstOperationalCloseDate],[ProjectNumber],[HousesOpenPayablesInLocal],[HousesOpenPayablesInProfit],[HousesACCTPayablesInLocal],[HousesACCTPayablesInProfit],[HousesOpenReceivablesInLocal],[HousesOpenReceivablesInProfit],[HousesACCTReceivablesInLocal],[HousesACCTReceivablesInProfit],[PlannedCargoReadyDate],[ApprovedCargoReadyDate],[HandlerUserId],[Notify1Reference2],[Id],[Tenant]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+  end
+
+
+    IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Shipment_IsCancelled_IsStandalonePickupDelivery_ShipmentLevelCode' 
+    AND object_id = OBJECT_ID('[dw_Shipments]'))
+  begin
+  
+  CREATE NONCLUSTERED INDEX [IX_Shipment_IsCancelled_IsStandalonePickupDelivery_ShipmentLevelCode] ON [dbo].[dw_Shipments] ([IsCancelled] , [IsStandalonePickupDelivery] , [ShipmentLevelCode])
+INCLUDE ([ComputedStatusId],[FromPortId],[ToPortId],[IsOperationalClosed],[IsAccountingClosed],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[CreatedByUserId],[CreateDateTime],[DepartmentId],[ShipmentTypeId],[CustomerId],[ShipperId],[ConsigneeId],[AgentComputed],[Routing],[DirectionId],[TransportModeId],[VolumeUnitCode],[AgentReference2],[AgentReference1],[GrossWeightUnitCode],[ChargeableWeightUnitCode],[VolumetricWeight],[GrossWeightInKG],[NumberOfPackages],[VolumeInCBM],[BookingNumberOfPackages],[OrderGrossWeight],[BookingVolume],[SpecialServicesTypeId],[CustomerReference1],[CustomerReference2],[AccountManagerUserId],[OperationalCloseDate],[AccountingCloseDate],[OperationalDate],[MasterShipmentDataId],[RegistryDate],[GrossWeightPerTon],[FirstOperationalCloseDate],[ProjectNumber],[HousesOpenPayablesInLocal],[HousesOpenPayablesInProfit],[HousesACCTPayablesInLocal],[HousesACCTPayablesInProfit],[HousesOpenReceivablesInLocal],[HousesOpenReceivablesInProfit],[HousesACCTReceivablesInLocal],[HousesACCTReceivablesInProfit],[PlannedCargoReadyDate],[ApprovedCargoReadyDate],[HandlerUserId],[Notify1Reference2],[Id],[Tenant])
+
+  end
+
+
+
   IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Shipment_IsCancelled_ShipmentLevelCode_RowNumber_Fact_Shipments' 
     AND object_id = OBJECT_ID('[dw_Shipments]'))
   begin CREATE NONCLUSTERED INDEX [IX_Shipment_IsCancelled_ShipmentLevelCode_RowNumber_Fact_Shipments] ON [dbo].[dw_Shipments] ([IsCancelled] , [ShipmentLevelCode],[RowNumber_Fact_Shipments]) end
@@ -80,4 +102,85 @@ INCLUDE ([ProfitCurrencyId],[ComputedStatusId],[FreelancerAddressId],[Freelancer
 
 end
 
+
+
+
+
+IF (OBJECT_ID ('dw_ShipmentReceivables', 'U')  IS NOT NULL)
+BEGIN
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ShipmentReceivables_ShipmentId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_ShipmentReceivables]'))
+  begin 
+  
+  CREATE NONCLUSTERED INDEX [IX_ShipmentReceivables_ShipmentId] ON[dbo].[dw_ShipmentReceivables]([ShipmentId])
+  INCLUDE ([ARInvoiceLineId],[AmountInProfitCurrency],[Notes],[TotalAmount],[TotalAmountLocal],[ChargesTypeId],[ShipmentReceivableParentId],[Id])
+
+  end
+
+end
+
+
+IF (OBJECT_ID ('dw_PayableProratedAmounts', 'U')  IS NOT NULL)
+BEGIN
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_PayableProratedAmounts_InvoiceId_ShipmentId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_PayableProratedAmounts]'))
+  begin 
+  
+  CREATE NONCLUSTERED INDEX [IX_PayableProratedAmounts_ShipmentId] ON[dbo].[dw_PayableProratedAmounts]([ShipmentId])
+  INCLUDE ([ProratedAmountInLocalCurrency],[ProratedAmountInProfitCurrency])
+
+  end
+
+end
+
+
+
+
+
+
+IF (OBJECT_ID ('dw_ShipmentPayables', 'U')  IS NOT NULL)
+BEGIN
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ShipmentPayables_ShipmentId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_ShipmentPayables]'))
+  begin 
+  
+  CREATE NONCLUSTERED INDEX [IX_ShipmentPayables_ShipmentId] ON[dbo].[dw_ShipmentPayables]([ShipmentId])
+INCLUDE([ShipmentPayableParentId],[ChargesTypeId],[VendorId],[Notes],[ExpectedAmount],[ExpectedAmountLocal],[ExpectedAmountInProfitCurrency],[AccountedAmountInLocalCurrency],[AccountedAmountInProfitCurrency],[OpenAmountInProfitCurrency],[OpenAmountInLocalCurrency],[Id]) WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+
+  end
+
+end
+
+IF (OBJECT_ID ('dw_APInvoiceLines', 'U')  IS NOT NULL)
+BEGIN
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_APInvoiceLines_EntityPayableId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_APInvoiceLines]'))
+  begin 
+  
+  CREATE NONCLUSTERED INDEX [XI_APInvoiceLines_EntityPayableId] ON[dbo].[dw_APInvoiceLines]([EntityPayableId])
+INCLUDE([APInvoiceId],[LocalCurrencyAmount],[ProfitCurrencyAmount],[ForiegnCurrencyAmount],[ForiegnCurrencyId],[Notes])
+
+  end
+
+end
+
+
+
+IF (OBJECT_ID ('dw_ARInvoiceLines', 'U')  IS NOT NULL)
+BEGIN
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ARInvoiceLines_ReceivableId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_ARInvoiceLines]'))
+  begin 
+  
+  CREATE NONCLUSTERED INDEX [XI_ARInvoiceLines_ReceivableId] ON[dbo].[dw_ARInvoiceLines]([ReceivableId])
+    INCLUDE ([ARInvoiceId],[LocalCurrencyAmount],[ProfitCurrencyAmount],[ForiegnCurrencyAmount],[ForiegnCurrencyId],[Notes],[Description] , [LocalDescription])					  -- ,
+
+  end
+
+end
 

@@ -200,6 +200,7 @@ export class AddEditReceivableComponent {
             expensePayable.MeasurementId = this.DataContext.MeasurementId;
             expensePayable.MeasurementCode = this.DataContext.MeasurementCode;
             expensePayable.VendorId = this.DataContext.PayableVendorId;
+            expensePayable.VendorName = this.DataContext.PayableVendorName;
             expensePayable.ChargesTypeCode = this.DataContext.EntityPM.ChargesTypeCode;
             expensePayable.ChargesTypeName = this.DataContext.ChargesTypeName;
             expensePayable.ChargesGroupCode = this.DataContext.ChargesGroupCode;

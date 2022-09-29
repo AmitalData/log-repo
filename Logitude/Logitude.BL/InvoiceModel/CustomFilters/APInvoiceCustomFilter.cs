@@ -2,7 +2,6 @@
 using System.Linq;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InvoiceModel;
 

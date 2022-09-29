@@ -67,6 +67,9 @@ namespace WarehouseData.Helper
                 CustomFieldWarehouseService customFieldWarehouseService = new CustomFieldWarehouseService();
                 updateFactSqlString = customFieldWarehouseService.BuildCustomFields(updateFactSqlString, table);
             }
+
+            updateFactSqlString = generalDataWarehouseService.CreateSqlTempDataWarehouseTable(table, false) + " " +updateFactSqlString;
+
             generalDataWarehouseService.ExecuteSql(updateFactSqlString, connectionString);
         }
 

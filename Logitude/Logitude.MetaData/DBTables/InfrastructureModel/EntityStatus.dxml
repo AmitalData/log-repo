@@ -109,4 +109,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,ObjectTableId" />
+  <Index
+	Columns="Tenant,Code" />
 </Table>

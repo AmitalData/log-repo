@@ -15,20 +15,21 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 {
     public class RegularJournalInterestTransactionMapping
     {
-     
-        public  void CreatelInterestTransactions(JournalPM regularJournal)
+        const string CustomerGLAccountType = "2";
+        public void CreatelInterestTransactions(JournalPM regularJournal)
         {
             if (regularJournal.TypeCode != JournalTypeValues.Regular)//0	Regular	רגיל	0,רגיל,False,Regular,	0
             {
                 return;
             }
-            if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal 
+            if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal
                 && regularJournal.AccountingEntityCode != AccountingEntityValues.Adjustment && regularJournal.AccountingEntityCode != AccountingEntityValues.BankAdjustment)
             {
                 return;
             }
             string interestEntityType = GetInterestEntityType(regularJournal);
-            if (interestEntityType != null) {
+            if (interestEntityType != null)
+            {
                 var repoInterestTransactionFastFetch = new InterestTransactionRepository(regularJournal.Tenant);
                 var AlreadyExist = repoInterestTransactionFastFetch.AlreadyExist(interestEntityType,//3 - “Journal”
                     regularJournal.Id,
@@ -69,7 +70,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             {
                 return InterestEntityTypes.Journal;
             }
-            else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment) {
+            else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment)
+            {
                 return InterestEntityTypes.Adjustments;
             }
             return null;
@@ -92,8 +94,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(regularJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), regularJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues+"" &&
-                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses+"" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers+"")
+                .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
 
 
@@ -145,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
         }
 
 
-        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal,DateTime AccountingActivationDate, string interestEntityType)
+        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal, DateTime AccountingActivationDate, string interestEntityType)
         {
 
             var creditJournalLines = externalJournal.JournalLines
@@ -156,13 +157,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                 .Distinct()
                 .ToList();
 
-          
+
             var myPartnerIds = CreditAccountIdS;
             var repoGLAccountFastFetch = new GLAccountRepository(externalJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), externalJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues + "" &&
-                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses + "" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers + "")
+                .Where(r => r.ChartOfAccountsTypeCode == (int)ChartOfAccountsTypeEnum.Customers + "" && r.AccountTypeCode == CustomerGLAccountType)
                 .Select(r => r.Id);
 
 
@@ -187,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
              ).ToList();
 
 
-         
+
 
             var allInterestTransactions = creditLines.ToList();
             return allInterestTransactions;
