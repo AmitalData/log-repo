@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { StringIterator } from "cypress/types/lodash";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { AppTool, FormatTool } from "Infrastructure/Tools";
@@ -37,12 +38,12 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateVariableName(variableName: any) {
+    updateVariableName(variableName: string) {
         this.Data["VariableName"] = variableName;
         this.VariableName = variableName;
 
         if (variableName) {
-            this.Data["VariableCode"] = variableName.replaceAll(' ', '').trim();
+            this.Data["VariableCode"] = variableName.replace(/\s/g, '').trim().toLowerCase();
         }
         this.setUIProperties();
     }

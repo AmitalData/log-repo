@@ -1,10 +1,208 @@
 <style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
     .table-row {
         height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .select-entity-label {
+        padding-bottom: 4px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .select-entity-label,
+    .set-conditions-label,
+    .select-get-record-label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .recordsLimit-radios-container {
+        width: 320px;
+    }
+
+    .recordsLimit-radio-cell {
+        width: 80px;
+    }
+
+    .start-conditions-container {
+        overflow: auto;
+        width: 936px;
+        height: 370px;
+    }
+
+    .min-start-conditions-container {
+        height: 285px;
     }
 </style>
 
 <table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <!-- Name -->
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'record-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <!-- Object -->
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-get-record-label">Get Records Of This Oject</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
+                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
+                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
+                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
+                    [DataCy]="'ff'">
+                </LogLov>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <!-- Condition -->
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-get-record-label">Filter {{EntityName}} Records</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td>
+            <div class="table-row-cell-block start-conditions-container"
+                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                    (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions">
+                </Conditions>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-get-record-label">How Many Records To Store</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block recordsLimit-radios-container">
+                <table>
+                    <tr>
+                        <td class="recordsLimit-radio-cell">
+                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'one'"
+                                (Checked)="updateRecordsLimit('one')" [Text]="'Only the first record'" [Top]="5"
+                                [DataCy]="'record-limit-one'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="recordsLimit-radio-cell">
+                            <RadioButton [Name]="'RecordsLimitRadio'" [IsChecked]="RecordsLimit === 'all'"
+                                (Checked)="updateRecordsLimit('all')" [Text]="'All records'" [Top]="5"
+                                [DataCy]="'record-limit-all'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
 
     <tr>
         <td>
