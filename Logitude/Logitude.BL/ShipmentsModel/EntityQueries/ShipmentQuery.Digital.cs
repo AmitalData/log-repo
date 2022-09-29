@@ -1717,7 +1717,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     Title = "Terminal hub",
                     City = shipment.WarehouseLegAddressCity,
-                    CountryCode = shipment.WarehouseLegAddressCountryName,
+                    CountryCode = shipment.WarehouseLegAddressCountryCode,
                     Date = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
                     DateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
                     ATDDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
@@ -1841,7 +1841,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     Title = "Transshipment 1 port",
                     City = shipment.Transshipment1FromPortName,
-                    CountryCode = shipment.Transshipment1FromPortCountryName,
+                    CountryCode = shipment.Transshipment1FromPortCountryCode,
                     Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
                     DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
@@ -1858,7 +1858,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     Title = "Transshipment 2 port",
                     City = shipment.Transshipment2FromPortName,
-                    CountryCode = shipment.Transshipment2FromPortCountryName,
+                    CountryCode = shipment.Transshipment2FromPortCountryCode,
                     Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
                     DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
@@ -1875,7 +1875,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     Title = "Transshipment 3 port",
                     City = shipment.Transshipment3FromPortName,
-                    CountryCode = shipment.Transshipment3FromPortCountryName,
+                    CountryCode = shipment.Transshipment3FromPortCountryCode,
                     Date = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
                     DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
