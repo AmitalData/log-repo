@@ -133,7 +133,7 @@
 
 
                                             <td style="width:150px;max-width:150px;min-width:150px;"
-                                                 *ngIf="item.IsNotEmptyNotEmtyOperator(item) && item.FieldDataType == 'LookUp'">
+                                                 *ngIf="item.IsNotEmptyNotEmtyOperator(item) && item.FieldDataType == 'LookUp' && item.SelectedField">
                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
                                                         [ObjectFieldName]="'FieldValue'"
                                                         [ObjectTableName]="item.SelectedField.JoinedTableName" [DataContext]="item"
