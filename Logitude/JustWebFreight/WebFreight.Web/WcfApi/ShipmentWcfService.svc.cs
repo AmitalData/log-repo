@@ -263,7 +263,7 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-                  
+
                     if (entityPM.ConsigneeId != null)
                     {
                         string cardId = cardsReporistory.GetCardIdByCode(entityPM.ConsigneeId, entityPM.Tenant);
@@ -356,7 +356,7 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-                     
+
 
                     if (entityPM.MainCarriageCarrierId != null)
                     {
@@ -673,7 +673,7 @@ namespace WebFreight.Web.WcfApi
                     #region WarehouseLeg
                     MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
                     #endregion
-                     
+
                     #region CustomAgent
                     MapCustomAgent(entityPM, cardsReporistory);
                     #endregion
@@ -686,9 +686,7 @@ namespace WebFreight.Web.WcfApi
                     MapFreightForwarder(entityPM, cardsReporistory);
                     #endregion
 
-                    #region ShipmentTotals
-                    ComputeHelper.ComputeTotals(entityPM);
-                    #endregion
+                    CalculateShipmentPackagesTotalFields(entityPM);
 
                     MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
 
@@ -792,7 +790,7 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
 
 
-                        
+
 
                         if (entityPM.ShipmentLevelCode == "A")
                         {
@@ -916,6 +914,29 @@ namespace WebFreight.Web.WcfApi
             }
 
 
+        }
+
+        private static void CalculateShipmentPackagesTotalFields(ShipmentPM entityPM)
+        {
+            double? shipmentChargeableWeight = entityPM.ChargeableWeight;
+            double? shipmentGrossWeight = entityPM.GrossWeight;
+            ComputeHelper.ComputeTotals(entityPM);
+            CalculateChargeableWeight(entityPM, shipmentChargeableWeight);
+            CalculateGrossWeight(entityPM, shipmentGrossWeight);
+        }
+
+        private static void CalculateChargeableWeight(ShipmentPM entityPM, double? shipmentChargeableWeight)
+        {
+            if (shipmentChargeableWeight == entityPM.ChargeableWeight) return;
+            entityPM.ChargeableWeight = shipmentChargeableWeight;
+            entityPM.ChargeableWeightEdited = true;
+        }
+
+        private static void CalculateGrossWeight(ShipmentPM entityPM, double? shipmentGrossWeight)
+        {
+            if (shipmentGrossWeight == entityPM.GrossWeight) return;
+            entityPM.GrossWeight = shipmentGrossWeight;
+            entityPM.GrossWeightEdited = true;
         }
 
         private void MapDatesFields(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
