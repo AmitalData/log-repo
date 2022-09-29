@@ -113,9 +113,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
                 if (this.SelectedDashboard) {
-                    this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
-                    this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-                    this.SelectedDashboardName = this.SelectedDashboard.Name;
+                    this.applyWDashboard();
                 }
 
                 else {
@@ -124,6 +122,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 }
             }           
         });        
+    }
+    applyWDashboard(){
+        this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
+        this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
+        this.SelectedDashboardName = this.SelectedDashboard.Name;
     }
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];
@@ -370,6 +373,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
                 this.SelectedDashboardId = this.SelectedDashboard?.Id;
+                this.applyWDashboard();
                 this.ResetFlags();
 
                 if (this.isBackButtonClicked) {
