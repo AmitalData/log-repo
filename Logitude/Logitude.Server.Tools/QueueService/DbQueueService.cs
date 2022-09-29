@@ -398,7 +398,7 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
-
+ 
             return ReceiveDetail(serverWaitTime, suppressSleep: false);
         }
         public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
@@ -410,7 +410,7 @@ namespace Logitude.Server.Tools.QueueService
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
             }
 
-            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;
 
