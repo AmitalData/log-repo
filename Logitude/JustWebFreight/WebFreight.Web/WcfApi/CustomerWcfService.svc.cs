@@ -298,6 +298,7 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
+                    FillSalesman(entityPM);
 
                     #endregion
 
@@ -582,6 +583,18 @@ namespace WebFreight.Web.WcfApi
 
 
 
+        }
+
+        private static void FillSalesman(CustomerPM entityPM)
+        {
+            if (entityPM.SalesmanUserId != null) return;
+            if (entityPM.CustomerSalesmanByProducts.Count() == 0) return;
+
+            CustomerSalesmanByProductPM customerSalesmanByProductPM = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
+            if (customerSalesmanByProductPM != null)
+            {
+                entityPM.SalesmanUserId = customerSalesmanByProductPM.SalesmanUserId;
+            }
         }
 
         private bool IsPrivateLabelFieldChanged(CustomerPM customerPM, Customer customer, string workEnvironemnt)
