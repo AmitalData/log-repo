@@ -392,7 +392,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = status_DateTime ?? DateTime.Now,
-                    comments = dirtyDeclarationPM.Id,
+                    comments = dirtyDeclarationPM.DeclarationNumber,
 
 
 
