@@ -107,7 +107,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
             if (measureCode != "Count")
                 return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
-            var key = _EntityFields.First().Value.FieldCode;
+            var key = "Id";
             return $"CAST({measureCode}(data.{key}) AS DECIMAL(32, 2))";
 
 
