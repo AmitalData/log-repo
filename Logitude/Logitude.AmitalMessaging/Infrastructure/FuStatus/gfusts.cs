@@ -966,7 +966,8 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/gfusts")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
-    public partial class LogistictFile
+    
+    public partial class LOGICUSTFILE
     {
         [System.Xml.Serialization.XmlElementAttribute("LogitudeCustomsFile")]
         public LogitudeCustomsFiles logitudeCustomsFile { get; set; }
@@ -981,40 +982,40 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
     public partial class LogitudeCustomsFiles
     {
-        [System.Xml.Serialization.XmlElementAttribute("customFileNo")]
+        [System.Xml.Serialization.XmlElementAttribute("CustomFileNo")]
         public string customFileNo { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("id")]
+        [System.Xml.Serialization.XmlElementAttribute("Id")]
         public string id { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("declarationNumber")]
+        [System.Xml.Serialization.XmlElementAttribute("DeclarationNumber")]
         public string declarationNumber { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("tadpisPrintDate")]
+        [System.Xml.Serialization.XmlElementAttribute("TadpisPrintDate")]
         public  string tadpisPrintDate { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("invoice")]
+        [System.Xml.Serialization.XmlElementAttribute("Invoice")]
         public Invoices[] invoice { get; set; }
 
         [System.Xml.Serialization.XmlElementAttribute("TotalSum")]
         public string TotalSum { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("currecy")]
+        [System.Xml.Serialization.XmlElementAttribute("Currecy")]
         public string currecy { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("totalNisSum")]
+        [System.Xml.Serialization.XmlElementAttribute("TotalNisSum")]
         public string totalNisSum { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("totalFreightSum")]
+        [System.Xml.Serialization.XmlElementAttribute("TotalFreightSum")]
         public string totalFreightSum { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("totalPackages")]
+        [System.Xml.Serialization.XmlElementAttribute("TotalPackages")]
         public string totalPackages { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("loadingDateTime")]
+        [System.Xml.Serialization.XmlElementAttribute("LoadingDateTime")]
         public string loadingDateTime { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("direction")]
+        [System.Xml.Serialization.XmlElementAttribute("Direction")]
         public string direction { get; set; }
     }
 
@@ -1027,16 +1028,16 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
     public partial class Invoices
     {
-        [System.Xml.Serialization.XmlElementAttribute("invoiceNumber")]
+        [System.Xml.Serialization.XmlElementAttribute("InvoiceNumber")]
         public string invoiceNumber { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("invoiceTotal")]
+        [System.Xml.Serialization.XmlElementAttribute("InvoiceTotal")]
         public string invoiceTotal { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("invoiceCurrecy")]
+        [System.Xml.Serialization.XmlElementAttribute("InvoiceCurrecy")]
         public string invoiceCurrecy { get; set; }
 
-        [System.Xml.Serialization.XmlElementAttribute("pratList")]
+        [System.Xml.Serialization.XmlElementAttribute("PratList")]
         public PratList pratList { get; set; }
     }
 
@@ -1049,7 +1050,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/gfusts", IsNullable = false)]
     public partial class PratList
     {
-        [System.Xml.Serialization.XmlElementAttribute("pratMeches")]
+        [System.Xml.Serialization.XmlElementAttribute("PratMeches")]
         public string[] pratMeches { get; set; }
     }
 
