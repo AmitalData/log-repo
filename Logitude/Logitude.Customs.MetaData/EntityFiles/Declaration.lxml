@@ -25545,5 +25545,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CancelOldCommunication&quot;"
+      FeatureTypeCode="&quot;Act&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelOldCommunication&quot;"
+      FeatureDefaultText="&quot;CancelOldCommunication&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
