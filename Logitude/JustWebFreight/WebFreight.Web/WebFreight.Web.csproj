@@ -6051,6 +6051,17 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentPackageItem.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsMessageType.cs" />
+    <Content Include="Web.https.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.https.Debug.config">
+      <DependentUpon>Web.https.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.https.Release.config">
+      <DependentUpon>Web.https.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ShipmentsController.cs" />
