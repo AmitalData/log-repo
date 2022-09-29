@@ -206,7 +206,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
         private QueryTreeFilterIterator CreateIterator(QueryTreeFilterContext queryTreeFilterContext)
         {
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
-            var collection = iterator.collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode) || d.IsAnalyticsMetadatas).ToList();
+            var collection = iterator.collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode) ||
+                (d.IsAnalyticsMetadatas &&  d.Operator == "Between")).ToList();
             iterator.SetCollection(collection);
             return iterator;
         }
