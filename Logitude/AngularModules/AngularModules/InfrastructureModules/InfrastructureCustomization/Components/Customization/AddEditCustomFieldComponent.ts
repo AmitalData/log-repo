@@ -107,7 +107,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         }
         else {
-            if (this.objectField.MaxLength == 0) this.objectField.MaxLength = null;
+            this.ClearTextMaxLength();
             this.DataTypeSelectionMethod({ Code: this.objectField.DataTypeCode });
             //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
@@ -540,13 +540,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
-        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 2000) {
-            this.ValidationErrorsList.push("Maximum length of the text is 2000");
-        }
-
-        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength == 0) {
-            this.ValidationErrorsList.push("Max length number shouldn't be 0");
-        }
+        this.ValidateTextObjectField();
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
@@ -556,12 +550,13 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
-            this.SetMaxMinLengths();
+            this.SetTextMaxMinLengths();
             if (this.IsNew == true) {
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
+                        this.ClearTextMaxLength();
                     }
                     else {
                         CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
@@ -592,6 +587,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
+                        this.ClearTextMaxLength();
                     }
                     else {
                         CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
@@ -623,9 +619,41 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
-    private SetMaxMinLengths() {
+    private ValidateTextObjectField() {
+        if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
+
+        if (this.objectField.MaxLength > 2000) {
+            this.ValidationErrorsList.push("Maximum length of the text is 2000");
+        }
+
+        if (this.objectField.MaxLength == 0) {
+            this.ValidationErrorsList.push("Max length number shouldn't be 0");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MaxLength) &&!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength > this.objectField.MaxLength) {
+            this.ValidationErrorsList.push("Min length number shouldn't be greater than max length number");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength < 0) {
+            this.ValidationErrorsList.push("Min length number shouldn't be less than 0");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MaxLength) && this.objectField.MaxLength < 0) {
+            this.ValidationErrorsList.push("Max length number shouldn't be less than 0");
+        }
+    }
+
+    private SetTextMaxMinLengths() {
+        if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
+
         this.objectField.MaxLength = AppTool.IsNullOrEmpty(this.objectField.MaxLength) ? 0 : this.objectField.MaxLength;
         this.objectField.MinLength = AppTool.IsNullOrEmpty(this.objectField.MinLength) ? 0 : this.objectField.MinLength;
+    }
+
+    private ClearTextMaxLength() {
+        if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
+
+        if (this.objectField.MaxLength == 0) this.objectField.MaxLength = null;
     }
 
     CancelButtonClicked() {

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "5adee96c2b973515736704bcdbac3f35";
+		public const string HashString = "c1d56509786839a2ce36dd588f4bda45";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "612a",
+			      				    Code =  "d570",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -667,8 +667,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_MultiPrint = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiPrint", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MultiPrint", NameTextCodeDefaultText = @"Batch Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_CUSTOMDASH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDASH", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMDASH", NameTextCodeDefaultText = @"Custom Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
-		   
-            Feature GeneralFeature_CustomFieldsCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomFieldsCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomFieldsCustomization", NameTextCodeDefaultText = @"Custom Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_CustomFieldsCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomFieldsCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomFieldsCustomization", NameTextCodeDefaultText = @"Custom Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_StandardFieldsCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StandardFieldsCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.StandardFieldsCustomization", NameTextCodeDefaultText = @"Standard Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
@@ -2513,6 +2513,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOOriginal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Original", DefaultText = "Original",LocalDefaultText = @"מקורי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCShipmentContainerTracking = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Shipment.ContainerTracking", DefaultText = "Container Tracking Settings",LocalDefaultText = @"Container Tracking Settings", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMMin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Min", DefaultText = "%FieldName Field must be greater than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות גדול מ %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMEqualLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.EqualLength", DefaultText = "%FieldName Field must be equal %Equallength",LocalDefaultText = @"%FieldName השדה חייב להיות שווה %Equallength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

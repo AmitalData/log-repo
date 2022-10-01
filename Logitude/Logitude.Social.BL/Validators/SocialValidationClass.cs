@@ -1,4 +1,5 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -119,15 +120,9 @@ namespace Logitude.Social.BL.Validators
                     //}
 
                     string valueString = value != null ? value.ToString() : "";
-                    if (!string.IsNullOrEmpty(valueString))
+                    if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                     {
-                        if (!field.IsMaxLength)
-                        {
-                            if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                            {
-                                valid = false;
-                            }
-                        }
+                        valid = false;
                     }
                 }
 
@@ -245,16 +240,9 @@ namespace Logitude.Social.BL.Validators
                     //}
 
                     string valueString = value != null? value.ToString():"";
-                    if (!string.IsNullOrEmpty(valueString))
+                    if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                     {
-                        if (!field.IsMaxLength)
-                        {
-                            if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                            {
-                                error = "";//TranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
-
-                            }
-                        }
+                        error = "";//TranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
                     }
                 }
 

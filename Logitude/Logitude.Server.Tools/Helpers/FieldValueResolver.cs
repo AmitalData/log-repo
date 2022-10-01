@@ -6,6 +6,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -431,12 +432,9 @@ namespace Logitude.Server.Tools.Helpers
             }
             else if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
             {
-                if (!field.IsMaxLength)
+                if (result != null && FieldValueValidator.IsNotValidMinMaxValue(field, result.ToString()))
                 {
-                    if (result.ToString().Length > field.MaxLength || result.ToString().Length < field.MinLength)
-                    {
-                        throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
-                    }
+                    throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
                 }
 
             }

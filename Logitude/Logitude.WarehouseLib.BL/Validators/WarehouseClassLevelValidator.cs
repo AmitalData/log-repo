@@ -6,6 +6,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.ComponentModel.DataAnnotations;
+using Simplog.Data.Helpers;
 
 namespace Logitude.WarehouseLib.BL.Validators
 {
@@ -129,15 +130,9 @@ namespace Logitude.WarehouseLib.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null)
+                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
                         {
-                            if (!objectfeildprop.IsMaxLength)
-                            {
-                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
-                                {
-                                    return false;
-                                }
-                            }
+                            return false;
                         }
                     }
 
@@ -302,16 +297,9 @@ namespace Logitude.WarehouseLib.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null)
+                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
                         {
-                            if (!objectfeildprop.IsMaxLength)
-                            {
-                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
-                                {
-                                    stringLengthError = stringLengthError + "," + WarehouseTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
-
-                                }
-                            }
+                            stringLengthError = stringLengthError + "," + WarehouseTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
                         }
                     }
 

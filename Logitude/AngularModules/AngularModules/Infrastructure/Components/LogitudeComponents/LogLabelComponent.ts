@@ -275,7 +275,7 @@ export class LogLabelComponent implements OnInit {
                                             fieldValueLength = this.DataContext[this.ObjectFieldName].length;
                                         }
 
-                                        if (fieldValueLength > this.objectfield.MaxLength) {
+                                        if (this.objectfield.MaxLength != 0 && fieldValueLength > this.objectfield.MaxLength) {
                                             isValid = false;
                                         }
 
