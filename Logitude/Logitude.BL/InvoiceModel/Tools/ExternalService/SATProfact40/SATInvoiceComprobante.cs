@@ -40,7 +40,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private List<VatTypePercentagePM> allVatPercentages;
         private List<VATTypesGroup> allVatGroups;
         private List<ChargesType> allChargesTypes;
-        private bool hasExpenses;
         private ComputingPartnerTranslationHelper computingPartnerHelper;
         private SATInterfaceSetting satSetting;
         private string invoiceCurrencyCode;
@@ -60,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             allVatPercentages = GetAllVatPercentages();
             allVatGroups = GetAllVatGroups();
             allChargesTypes = GetAllChargesTypes();
-            hasExpenses = GetHasExpenses();
             invoiceCurrencyCode = GetInvoiceCurrencyCode();
         }
 
@@ -112,11 +110,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return chargesTypeRepository.GetChargesTypes(tenant).ToList();
         }
 
-        private bool GetHasExpenses()
-        {
-            return arInvoicePM.InvoiceLines.Any(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense); ;
-        }
-
         public Comprobante BuildNewInvoiceComprobante()
         {
 
@@ -151,10 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
 
             List<ARInvoiceTotalVATPM> arTotalVats = GetARInvoiceTotalVATPMs();
-            if(hasExpenses)
-            {
-                MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
-            }
+            MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             MapTotalAndSubTotalWithMatchCurrencyDigitsAfterPoint(comprobante);
 
             comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
@@ -593,7 +583,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private void AddMultiLineVatTypePercentage(ARInvoiceLinePM line, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<ComprobanteConceptoImpuestosTraslado> lineTranslados, List<ComprobanteConceptoImpuestosRetencion> lineRetencions, VatType lineVatType)
         {
-            List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
+            List<ARInvoiceTotalVATPM> totalVats = new List<ARInvoiceTotalVATPM>();
 
             List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
             List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == line.VatTypeId).ToList();
@@ -656,10 +646,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VATPercent / 100), 2);
                 record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VATPercent / 100), 2);
                 record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VATPercent / 100), 2);
-                totalNoneExpenseVats.Add(record);
+                totalVats.Add(record);
             }
 
-            foreach (ARInvoiceTotalVATPM lineTotal in totalNoneExpenseVats)
+            foreach (ARInvoiceTotalVATPM lineTotal in totalVats)
             {
                 if (lineTotal.VATPercent >= 0)
                 {
@@ -884,20 +874,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         public List<ARInvoiceTotalVATPM> GetARInvoiceTotalVATPMs()
         {
-            if (hasExpenses)
-            {
-                return CalculateNoneExpenseTotalVats();
-            }
-
-            ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(arInvoicePM.Tenant);
-            return aRInvoiceTotalVATQuery.GetTotalVATs(arInvoicePM.Id, arInvoicePM.Tenant).ToList();
+            return CalculateTotalVats();
         }
 
-        private List<ARInvoiceTotalVATPM> CalculateNoneExpenseTotalVats()
+        private List<ARInvoiceTotalVATPM> CalculateTotalVats()
         {
-            List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
-            if (myDataLines.Count <= 0) return totalNoneExpenseVats;
+            List<ARInvoiceTotalVATPM> totalVats = new List<ARInvoiceTotalVATPM>();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
+            if (myDataLines.Count <= 0) return totalVats;
 
 
             List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
@@ -931,7 +915,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 record.LocalVATAmount = MethodHelper.Round((record.LocalVatableAmount * record.VATPercent / 100), 2);
                 record.InvoiceCurrencyVATAmount = MethodHelper.Round((record.InvoiceCurrencyVatableAmount * record.VATPercent / 100), 2);
                 record.ProfitCurrencyVATAmount = MethodHelper.Round((record.ProfitVatableAmount * record.VATPercent / 100), 2);
-                totalNoneExpenseVats.Add(record);
+                totalVats.Add(record);
 
                 localAmountTotal += record.LocalVATAmount;
                 invoiceAmountTotal += record.InvoiceCurrencyVATAmount;
@@ -943,7 +927,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             var subtotal = invoiceVatableAmountTotal;
             var total = invoiceVatableAmountTotal + invoiceAmountTotal;
 
-            return totalNoneExpenseVats;
+            return totalVats;
         }
 
         private void AddLineVatTypePercentage(List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<InvoiceTotalsClass> group_Source, ARInvoiceLinePM item)
@@ -1043,7 +1027,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             double subtotal = 0;
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
             foreach (var line in myDataLines)
             {
                 subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
