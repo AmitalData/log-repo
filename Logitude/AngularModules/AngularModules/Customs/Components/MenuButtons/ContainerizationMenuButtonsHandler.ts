@@ -339,6 +339,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         }
         else
         {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations))
+            {
+                let messageWindow = new MessageWindow();
+                messageWindow.Width = 300;
+                messageWindow.Height = 180;
+                messageWindow.Title = "שליחת המכלה";
+                messageWindow.Show("לא ניתן לשלוח מסר ביטול ללא הצהרות מקושרות");
+            }else {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
             confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
@@ -373,6 +381,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                     });
                 }
             });
+        }
         }
     }
 

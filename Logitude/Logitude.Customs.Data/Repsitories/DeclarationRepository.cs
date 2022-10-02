@@ -518,7 +518,7 @@ namespace Logitude.Customs.Data.Repsitories
                         select b).Select(c=>c.DeclarationId).ToList();
 
             return (from a in context.Declarations
-                    where query.Contains(a.Id) && a.Tenant == tenant
+                    where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
                     select a);
         }
         
