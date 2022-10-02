@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                     throw new Exception($"AlreadyExist InterestTransaction 4 regularJournal {regularJournal.Id}  - journal repushed ?!?!");
                 }
                 var allInterestTransactions = new List<InterestTransactionPM>();
-                if (regularJournal.ExternalSystem == "AMITAL" && !string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
+                if (!string.IsNullOrWhiteSpace(regularJournal.ExternalSystem)  && !string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
                 {
                     var pmFullAccountingSetting = FullAccountingSettingQueryService.Get(regularJournal.Tenant);
                     if (pmFullAccountingSetting == null && pmFullAccountingSetting.AccountingActivationDate.HasValue)
