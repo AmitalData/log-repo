@@ -519,15 +519,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        public List<Declaration> GetDeclarationsByExportContainerizationId(string exportContainerizationID)
-        {
-            List<Declaration> declarations = (from a in context.Declarations
-                                              where a.ExportContainerizationID == exportContainerizationID
-                                              select a).ToList();
 
-            return declarations;
 
-        }
+
         public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds, string clientID)
         {
             DateTime month3ago = DateTime.Now.AddDays(-90);

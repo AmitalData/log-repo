@@ -168,7 +168,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestedCustomsDocId, 
 	         ExportDeclarationOfficeCode, 
 	         PhysicalCheck, 
-	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         AmedmentType, 
 	         IsExportClosed, 
@@ -404,7 +403,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSiteName, 
 	         ShipCodeName, 
 	         CancelRejectionReasonName, 
-	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         ExportTaxationDateTime, 
 	         ExporterImporterCode, 
@@ -1148,11 +1146,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
             {
 				entityPOCO.PhysicalCheck = entityPM.PhysicalCheck;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
-            {
-				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
@@ -1916,11 +1909,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PhysicalCheck = entityPOCO.PhysicalCheck;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportContainerizationID))
-            {
-					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSubmitDeclaration))
             {
 					entityPM.IsSubmitDeclaration = entityPOCO.IsSubmitDeclaration;
@@ -2675,11 +2663,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
             {
                 oldEntityPM.PhysicalCheck = entityPM.PhysicalCheck;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
-            {
-                oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
