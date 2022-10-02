@@ -141,6 +141,7 @@
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
     <Compile Include="BL\ExternalFieldMappingBL.cs" />
+    <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
