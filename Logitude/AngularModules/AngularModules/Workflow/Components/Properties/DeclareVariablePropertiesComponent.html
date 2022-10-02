@@ -19,6 +19,7 @@
         padding-left: 10px;
         padding-right: 10px;
     }
+
     .select-entity-label {
         padding-bottom: 4px;
     }
@@ -89,8 +90,13 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <ComboBox [ItemsSource]="DataTypes" (SelectedItemChanged)="DataTypeSelectionMethod($event)"
-                    [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox>
+                <!-- <ComboBox [ItemsSource]="DataTypes" (SelectedItemChanged)="DataTypeSelectionMethod($event)"
+                    [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox> -->
+
+
+                <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'" [SelectedItem]="GetSelectedDataType()"
+                    (SelectedItemChanged)="DataTypeSelectionMethod($event)" [ListType]="''">
+                </ComboBox>
             </div>
         </td>
     </tr>
