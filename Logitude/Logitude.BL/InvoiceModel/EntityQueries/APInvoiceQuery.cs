@@ -954,25 +954,25 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             List<string> allowedBranchesIds = new List<string>();
             if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
 
-            return (from a in repository.context.APInvoices.Include("VendorCard")
-                    where a.Tenant == tenant
-                    && a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA"
-                    && !a.IsClosed
-                    && (!isBranchRestricted || allowedBranchesIds.Contains(a.BranchId))
-                    group a by new
+            return (from invoice in repository.context.APInvoices.Include("VendorCard")
+                    where invoice.Tenant == tenant
+                    && invoice.StatusCode != "VD" && invoice.StatusCode != "PD" && invoice.StatusCode != "WA"
+                    && !invoice.IsClosed
+                    && (!isBranchRestricted || allowedBranchesIds.Contains(invoice.BranchId))
+                    group invoice by new
                     {
-                        a.VendorCard.EnglishName,
-                        a.VendorId,
-                        a.VendorCard.PartnerTypeId,
+                        VendorEnglishName = invoice.VendorCard.EnglishName,
+                        invoice.VendorId,
+                        VendorPartnerTypeId = invoice.VendorCard.PartnerTypeId,
                     } into gr
-                    orderby gr.Key.EnglishName
+                    orderby gr.Key.VendorEnglishName
                     select new CreditorsClass()
                     {
                         Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
-                        CreditorName = gr.Key.EnglishName,
-                        Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                        CreditorName = gr.Key.VendorEnglishName,
+                        Overdue = (from s in gr where s.DueDate <= DateTime.Today.Date select new { overDue1 = currencyIndex == 1 ? s.AmountDueInProfitCurrency : s.AmountDueInLocalCurrency }).Sum(ss => ss.overDue1),
                         CreditorId = gr.Key.VendorId,
-                        CreditorType = gr.Key.PartnerTypeId,
+                        CreditorType = gr.Key.VendorPartnerTypeId,
                     }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
         }
         private List<CreditorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)

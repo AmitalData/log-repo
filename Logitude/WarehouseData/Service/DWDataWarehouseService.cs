@@ -729,9 +729,7 @@ namespace WarehouseData.Service
 
             if (isPrivateDB)
             {
-                condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from PrivateWaterMarks where TableName = " + "'" + buildDWArgs.table.TableName + "'" + " and PrivateTenant = " + buildDWArgs.PrivateTenant + ") ";
-                if (!buildDWArgs.table.IsCloseTable && buildDWArgs.table.FieldsDBName.Contains("Tenant")) condition += " and Tenant in " + buildDWArgs.RelatedTenants;
-                else if (buildDWArgs.table.DBTableName == "Tenants") condition += " and Id in " + buildDWArgs.RelatedTenants;
+                condition = GetPrivateLabelDBCondition(buildDWArgs);
             }
 
             if (buildDWArgs.table.TableName == "ObjectField")
@@ -740,6 +738,18 @@ namespace WarehouseData.Service
             }
 
             return condition;
+        }
+
+        private static string GetPrivateLabelDBCondition(BuildDWArgs buildDWArgs)
+        {
+            string privateLabelDBCondition = "";
+
+            if (!buildDWArgs.table.IsCloseTable && buildDWArgs.table.FieldsDBName.Contains("Tenant")) privateLabelDBCondition = " where Tenant in " + buildDWArgs.RelatedTenants;
+            else if (buildDWArgs.table.DBTableName == "Tenants") privateLabelDBCondition = " where Id in " + buildDWArgs.RelatedTenants;
+
+            privateLabelDBCondition += (string.IsNullOrEmpty(privateLabelDBCondition) ? " where " : " and ") + "AutomaticLastUpdateDate > ( select LastUpdateDate from PrivateWaterMarks where TableName = " + "'" + buildDWArgs.table.TableName + "'" + " and PrivateTenant = " + buildDWArgs.PrivateTenant + ") ";
+                        
+            return privateLabelDBCondition;
         }
 
         public void UpdateAutomaticLastUpdate(TableClass table, string sourceConnectionString, string destinationConnectionString, int? tenant = null)
@@ -778,7 +788,8 @@ namespace WarehouseData.Service
                         if (!string.IsNullOrEmpty(value.ToString()))
                         {
                             datetime = (DateTime?)(value);
-                            if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+
+                            if (datetime != null) result = GetFormatedLastUpdateDate(datetime.Value);
                         }
 
                     }
@@ -795,7 +806,22 @@ namespace WarehouseData.Service
             return result;
         }
 
-   
+        private string GetFormatedLastUpdateDate(DateTime lastUpdateDate)
+        {
+            DateTime threeDaysAgoDate = DateTime.Now.AddDays(-3);
+            string lastUpdateDateFormat = "MM/dd/yyyy hh:mm:ss.fff tt";
+
+            if (DateTime.Compare(threeDaysAgoDate, lastUpdateDate) > 0)
+            {
+                return threeDaysAgoDate.ToString(lastUpdateDateFormat);
+            }
+            else
+            {
+                return lastUpdateDate.ToString(lastUpdateDateFormat);
+            }
+        }
+
+
 
 
     }

@@ -73,7 +73,11 @@ namespace Logitude.DashboardModule.Data
 	
             modelBuilder.Configurations.Add(new DashboardMap());
 	
+            modelBuilder.Configurations.Add(new DashboardSharedUserMap());
+	
             modelBuilder.Configurations.Add(new MeasureTypeMap());
+	
+            modelBuilder.Configurations.Add(new PermissionLevelMap());
 	
             modelBuilder.Configurations.Add(new WidgetMap());
 	
@@ -379,7 +383,19 @@ namespace Logitude.DashboardModule.Data
 	 
 	 }
 	
+	 public IDbSet<DashboardSharedUser> DashboardSharedUsers 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<MeasureType> MeasureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PermissionLevel> PermissionLevels 
 	 {
 	      get; set;
 	 

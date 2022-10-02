@@ -112,6 +112,26 @@ export class WidgetPM {
     public set Filters(newValue: string) { if (this.filters != newValue) { this.filters = newValue; this.MarkAsDirty("Filters"); } }
        
 	 
+    private dateGroupCode: string;
+    public get DateGroupCode() { return this.dateGroupCode; }
+    public set DateGroupCode(newValue: string) { if (this.dateGroupCode != newValue) { this.dateGroupCode = newValue; this.MarkAsDirty("DateGroupCode"); } }
+       
+	 
+    private maximumGrouping: number;
+    public get MaximumGrouping() { return this.maximumGrouping; }
+    public set MaximumGrouping(newValue: number) { if (this.maximumGrouping != newValue) { this.maximumGrouping = newValue; this.MarkAsDirty("MaximumGrouping"); } }
+       
+	 
+    private sortBy: number;
+    public get SortBy() { return this.sortBy; }
+    public set SortBy(newValue: number) { if (this.sortBy != newValue) { this.sortBy = newValue; this.MarkAsDirty("SortBy"); } }
+       
+	 
+    private sortDirection: string;
+    public get SortDirection() { return this.sortDirection; }
+    public set SortDirection(newValue: string) { if (this.sortDirection != newValue) { this.sortDirection = newValue; this.MarkAsDirty("SortDirection"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

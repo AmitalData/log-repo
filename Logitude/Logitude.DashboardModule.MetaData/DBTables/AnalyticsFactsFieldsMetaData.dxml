@@ -93,6 +93,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="JoinedTableDBName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AnalyticsFactsMetaDataId"
     ReferencedTable="AnalyticsFactsMetaDatas"

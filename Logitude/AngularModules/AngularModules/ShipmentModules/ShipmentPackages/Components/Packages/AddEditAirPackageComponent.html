@@ -265,7 +265,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr style="height:223px;">
                                     <td>
                                         <div class="MediaFill" style="overflow-x: hidden;">
                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.PackageItemsList" [Disabled]="!DataContext.IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
@@ -329,10 +329,34 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td style="vertical-align:top">
+                                        <!-- Additional Fields -->
+                                        <div style="height:190px">
+                                            <div style="height:10px"></div>
+
+                                            <div class="SectionTitle">Additional Fields</div>
+                                                <table style="height:160px">
+                                                    <tr>
+                                                        <td>
+                                                            <ScrollViewer>
+
+                                                                <div class="MediaFill">
+                                                                    <div class="LocationDirective" #Child></div>
+                                                                </div>
+                                                            </ScrollViewer>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                          
+                                        </div>
+
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td>
                             <table>
                                 <tr style="height: 1px;">
@@ -350,7 +374,7 @@
 
                             </table>
                         </td>
-                    </tr>
+                    </tr>-->
                 </table>
             </ScrollViewer>
         </td>

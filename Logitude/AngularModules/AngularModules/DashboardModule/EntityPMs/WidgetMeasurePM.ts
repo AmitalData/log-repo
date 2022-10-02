@@ -52,11 +52,6 @@ export class WidgetMeasurePM {
     public set MeasureFieldId(newValue: string) { if (this.measureFieldId != newValue) { this.measureFieldId = newValue; this.MarkAsDirty("MeasureFieldId"); } }
        
 	 
-    private dateGroupCode: string;
-    public get DateGroupCode() { return this.dateGroupCode; }
-    public set DateGroupCode(newValue: string) { if (this.dateGroupCode != newValue) { this.dateGroupCode = newValue; this.MarkAsDirty("DateGroupCode"); } }
-       
-	 
 
     public OldEntityPM: WidgetMeasurePM;
 	

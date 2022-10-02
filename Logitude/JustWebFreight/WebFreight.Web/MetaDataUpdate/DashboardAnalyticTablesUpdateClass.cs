@@ -41,13 +41,13 @@ namespace WebFreight.Web.MetaDataUpdate
             var analyticsFactsMetaDatas = GetAnalyticsFactsMetaDatasFromDataBase();
             foreach (var jsonTable in jsonFilesTables)
             {
-                UpdateAnalyticsFactsMetaData(jsonTable, analyticsFactsMetaDatas.ContainsKey(jsonTable.TableName) ? analyticsFactsMetaDatas[jsonTable.TableName] : null);
+                UpdateAnalyticsFactsMetaData(jsonTable, analyticsFactsMetaDatas.ContainsKey(jsonTable.Name) ? analyticsFactsMetaDatas[jsonTable.Name] : null);
             }
         }
 
         private Dictionary<string, AnalyticsFactsMetaData> GetAnalyticsFactsMetaDatasFromDataBase()
         {
-            return DashboardContext.AnalyticsFactsMetaDatas.AsNoTracking().ToDictionary(d => d.TableName, a => a);
+            return DashboardContext.AnalyticsFactsMetaDatas.AsNoTracking().ToDictionary(d => d.Name, a => a);
         }
 
         private void UpdateAnalyticsFactsMetaData(Logitude.DashboardModule.MetaDataTool.Models.AnalyticsFactsMetaData jsonTable, AnalyticsFactsMetaData sqlTable)

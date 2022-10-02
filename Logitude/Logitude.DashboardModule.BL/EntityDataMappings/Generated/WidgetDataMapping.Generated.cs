@@ -31,7 +31,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         EndPosition, 
 	         TypeCode, 
 	         EntityId, 
-	         Filters,
+	         Filters, 
+	         DateGroupCode, 
+	         MaximumGrouping, 
+	         SortBy, 
+	         SortDirection,
 	      }
 
 
@@ -47,7 +51,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         EndPosition, 
 	         TypeCode, 
 	         EntityId, 
-	         Filters,
+	         Filters, 
+	         DateGroupCode, 
+	         MaximumGrouping, 
+	         SortBy, 
+	         SortDirection,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +107,26 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Filters))
             {
 				entityPOCO.Filters = entityPM.Filters;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateGroupCode))
+            {
+				entityPOCO.DateGroupCode = entityPM.DateGroupCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaximumGrouping))
+            {
+				entityPOCO.MaximumGrouping = entityPM.MaximumGrouping;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortBy))
+            {
+				entityPOCO.SortBy = entityPM.SortBy;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
+            {
+				entityPOCO.SortDirection = entityPM.SortDirection;
 			}
 			}
 
@@ -155,6 +183,26 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Filters = entityPOCO.Filters;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateGroupCode))
+            {
+					entityPM.DateGroupCode = entityPOCO.DateGroupCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaximumGrouping))
+            {
+					entityPM.MaximumGrouping = entityPOCO.MaximumGrouping;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SortBy))
+            {
+					entityPM.SortBy = entityPOCO.SortBy;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SortDirection))
+            {
+					entityPM.SortDirection = entityPOCO.SortDirection;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -204,6 +252,26 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Filters))
             {
                 oldEntityPM.Filters = entityPM.Filters;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateGroupCode))
+            {
+                oldEntityPM.DateGroupCode = entityPM.DateGroupCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaximumGrouping))
+            {
+                oldEntityPM.MaximumGrouping = entityPM.MaximumGrouping;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortBy))
+            {
+                oldEntityPM.SortBy = entityPM.SortBy;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
+            {
+                oldEntityPM.SortDirection = entityPM.SortDirection;
             }
 			
 		}

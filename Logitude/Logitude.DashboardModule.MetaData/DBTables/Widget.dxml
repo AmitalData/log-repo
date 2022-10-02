@@ -23,7 +23,7 @@
     Type="nvarchar"
     Size="300">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="GroupById"
@@ -72,6 +72,32 @@
     Name="Filters"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DateGroupCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MaximumGrouping"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SortBy"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SortDirection"
+    Type="varchar"
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

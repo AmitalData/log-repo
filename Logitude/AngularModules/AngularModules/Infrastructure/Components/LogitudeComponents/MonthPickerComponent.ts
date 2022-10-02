@@ -29,7 +29,7 @@ export class MonthpickerComponent implements OnInit {
     }
     @Input() set PickerType(value: string) {
         if (value == this.pickerType) return;
-        this.pickerType = value;     
+        this.pickerType = value;
         this.ManagePickerType();
         this.DateText = null;
         this.model = new MonthPickerModel();
@@ -159,12 +159,17 @@ export class MonthpickerComponent implements OnInit {
                 break;
             case "Quarter":
                 this.DateText = this.SelectedQuarter + " - " + this.model.selectedYearText;
-                dateString = "01/01/" + this.model.selectedYearText;
+                var startQuarterMonth = this.GetStartQuarterMonth();
+                dateString = `01/${startQuarterMonth}/${this.model.selectedYearText}`;
                 break;
             default:
                 break;
         }
         return dateString;
+    }
+    private GetStartQuarterMonth() {
+        var quarter = +this.SelectedQuarter[1];
+        return quarter * 3 - 2;
     }
 }
 

@@ -596,8 +596,13 @@ namespace WebFreight.Web.DataProviders
             public double? ExpenseChargesInLocalCurrency { get; set; }
             public string UUID { get; set; }
             public string BillToCode { get; set; }
-
             public string BillToType { get; set; }
+            public double? VatableAmountLocalCurrency { get; set; }
+            public double? NonVatableAmountLocalCurrency { get; set; }
+            public double? RegionalTaxAmountLocalCurrency { get; set; }
+            public double? VatableAmountInvoiceCurrency { get; set; }
+            public double? NonVatableAmountInvoiceCurrency { get; set; }
+            public double? RegionalTaxAmountInvoiceCurrency { get; set; }
         }
 
         public class InvoiceTotals

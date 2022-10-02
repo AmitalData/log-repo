@@ -319,7 +319,7 @@
                                                 <!-- Receive All Statuses -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
@@ -335,7 +335,7 @@
                                                 <!-- Inactive -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
@@ -352,7 +352,7 @@
                                                 <!-- HasLogboxAccess -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
@@ -368,7 +368,7 @@
                                                 <!-- IsCustomsActivated -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [Text]="'Is Customs Activated'" [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
@@ -384,7 +384,7 @@
                                                 <!-- IsExportActivated -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [Text]="'Is Export Activated'" [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
@@ -400,13 +400,29 @@
                                                 <!-- CreateShipmentsWithoutDocs -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <div style="display:inline-flex;width:300px">
+                                                        <div style="display:inline-flex;width:310px">
                                                             <div style="display:inline;width:auto">
                                                                 <LogLabel [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
                                                             </div>
                                                             <div style="display:inline;width:auto;margin-left:5px">
                                                                 <LogCheckBox [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- CreateOcceanShipmentsWithoutDocs -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [ObjectFieldName]="'CreateOShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'CreateOShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
 
                                                             </div>
                                                         </div>

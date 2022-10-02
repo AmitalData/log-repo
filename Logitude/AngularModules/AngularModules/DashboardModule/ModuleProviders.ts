@@ -2,6 +2,8 @@ import { AnalyticsFactsFieldsMetaDataListService } from './Services/StandardList
 import { AnalyticsFactsMetaDataListService } from './Services/StandardLists/AnalyticsFactsMetaDataListService';
 import { AnalyticsFactsFieldsMetaDataPMExtendedService } from './Services/ExtendedPMs/AnalyticsFactsFieldsMetaDataExtendedService';
 import { MeasureTypeListService } from './Services/StandardLists/MeasureTypeListService';
+import { WidgetTypeListService } from './Services/StandardLists/WidgetTypeListService';
+import { DashboardListService } from 'DashboardModule/Services/StandardLists/DashboardListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -13,6 +15,8 @@ export class ModuleProviders {
             case "AnalyticsFactsMetaDataListService": { myResult = new AnalyticsFactsMetaDataListService(); break; }
             case "AnalyticsFactsFieldsMetaDataPMExtendedService": { myResult = new AnalyticsFactsFieldsMetaDataPMExtendedService(); break; }
             case "MeasureTypeListService": { myResult = new MeasureTypeListService(); break; }
+            case "WidgetTypeListService": { myResult = new WidgetTypeListService(); break; }
+            case "DashboardListService": { myResult = new DashboardListService(); break; }
         }
 
         return myResult;

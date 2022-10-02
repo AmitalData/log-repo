@@ -38,7 +38,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                           journal.AccountingEntityCode,
                           journal.Tenant
                       }
-
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -75,7 +74,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceId = journal.AccountingEntityId,
                        AccountingEntityCode = interestTransaction.AccountingEntityCode
                    }).Union(interestTransactionsForAdustmentsAndRevaluationJournals);
-
             return query;
         }
 

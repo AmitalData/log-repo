@@ -37,6 +37,8 @@ using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using Microsoft.Azure.Management.ResourceManager;
 using Simplog.Server.Infrastructure;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -445,6 +447,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                customerURL = JsonConvert.DeserializeObject<string>(customerURL);
                 await RunAddingDNSRecordAsync(customerURL);
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
@@ -454,8 +457,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private static bool IsValidDomain(string subDomain)
+        {
+            if (string.IsNullOrWhiteSpace(subDomain))
+            {
+                return false;
+            }
+
+            var fullDomain = $"{subDomain}.logitudeworld.com";
+
+            // Regex to check valid domain name.
+            var pattern = "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$";
+
+            var regex = new Regex(pattern);
+
+            if (regex.Match(fullDomain).Success)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private static async Task RunAddingDNSRecordAsync(string customerURL)
         {
+            if (!IsValidDomain(customerURL))
+            {
+                throw new Exception("Invalid domain name");
+            }
+
             var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
             var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
             var secret = LogitudeSettings.AzurePrincipalSecretKey;
@@ -463,26 +493,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             var resourceGroupName = "globallogitude";
             var zoneName = LogitudeSettings.DNSZone; 
             var DNSIPAddress = LogitudeSettings.DNSIPAddress;
-            var recordSetName = customerURL;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12;
             var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
-            var dnsClient = new DnsManagementClient(serviceCreds);
-            dnsClient.SubscriptionId = subscriptionId;
+            var dnsClient = new DnsManagementClient(serviceCreds)
+            {
+                SubscriptionId = subscriptionId
+            };
+
             try
             {
                 // Build the service credentials and DNS management client
-                var recordSetParams = new RecordSet();
-                recordSetParams.TTL = 3600;
-                recordSetParams.ARecords = new List<ARecord>();
-                recordSetParams.ARecords.Add(new ARecord(DNSIPAddress));
-                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, recordSetName, RecordType.A, recordSetParams).Result;
+                var recordSetParams = new RecordSet
+                {
+                    TTL = 3600,
+                    ARecords = new List<ARecord>
+                    {
+                        new ARecord(DNSIPAddress)
+                    }
+                };
+
+                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.A, recordSetParams).Result;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
         }
-
 
         #region SendBlockToServer
         int counter = -1;
@@ -527,7 +563,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SendBlockToServer(false, fileData, ObjectTableName, tenant);
                     Res = ObjectTableName + DateTime.Now.ToShortDateString() + ".xls";
                 }
-
                 else
                 {
                     // Uploading done successfully
@@ -543,7 +578,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             return Res;
-
         }
 
 

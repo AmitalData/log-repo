@@ -23,7 +23,12 @@ namespace Logitude.Server.Tools
             foreach (var parameter in objectQuery.Parameters)
             {
                 var name = "@" + parameter.Name;
-                var value = "'" + parameter.Value.ToString() + "'";
+                var value = "";
+                if (parameter.Value.GetType() == typeof(DateTime))
+                    value = "'" + ((DateTime)parameter.Value).ToString("MM/dd/yyyy HH:mm:ss") + "'";
+                else
+                    value = "'" + parameter.Value.ToString() + "'";
+
                 result = result.Replace(name, value);
             }
 

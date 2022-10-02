@@ -13383,6 +13383,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                IsOperationalClosed = f.IsOperationalClosed,
+                               IsAccountingClosed = f.IsAccountingClosed,
                                PreCarriageETD = f.PreCarriageETD,
                                AccountManagerUserName = f.AccountManagerUserName,
                                SalesmanUserName = f.SalesmanUserName,

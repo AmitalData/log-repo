@@ -9,6 +9,8 @@ import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
+import { AppTool } from 'Infrastructure/Tools';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -20,12 +22,20 @@ export class AddEditWidgetComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
+    private FirstTime: boolean = true;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Widget";
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
+    public WidgetMeasuresClone: WidgetMeasurePM[];
     public RootFilter: WidgetFilterItem = new WidgetFilterItem();
     public IsAddNewMeasureVisible: boolean = true;
+    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public MaximumGroupings = [5, 10, 25, 30, 50];
+    public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
+    public DefaultSort = this.SortByCodes[0];
+    public SortByDirections = ['asc', 'desc'];
+    public GroupByQueryFilters: ApiQueryFilters;
 
     constructor() {
         super();
@@ -42,6 +52,12 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.CheckMeasureAddVisiblity();
         this.Clone();
         this.GetFilters();
+        this.BuildQueryFilters();
+    }
+
+    BuildQueryFilters() {
+        this.GroupByQueryFilters = new ApiQueryFilters();
+        this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
     }
 
     GetFilters() {
@@ -74,6 +90,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             }
         }
     }
+
     public BuildMeasures() {
         this.WidgetMeasuresList = [];
 
@@ -85,6 +102,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
             newItem.Tenant = SessionInfo.LoggedUserTenant;
             newItem.WidgetId = this.EntityPM.Id;
+            newItem.MeasureCode = "Sum";
             this.WidgetMeasuresList.push(new WidgetMeasureItem(newItem, true, this));
         }
 
@@ -92,11 +110,13 @@ export class AddEditWidgetComponent extends BaseComponent {
             item.CheckMeasureDeleteVisiblity();
         });
     }
+
     public CheckMeasureAddVisiblity() {
         var isAddVisible: boolean = true;
 
         if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
             isAddVisible = false;
+            if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList.splice(1, 1);
         }
 
         else if (this.WidgetMeasuresList.length != 1) {
@@ -125,6 +145,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     set TypeCode(value: string) {
         if (this.EntityPM.TypeCode != value) {
             this.EntityPM.TypeCode = value;
+            this.ComputeChartImageSrc();
+            this.CheckMeasureAddVisiblity();
         }
     }
 
@@ -149,6 +171,60 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get DateGroupCode() { return this.EntityPM.DateGroupCode; }
+    set DateGroupCode(value: string) {
+        if (this.EntityPM.DateGroupCode != value) {
+            this.EntityPM.DateGroupCode = value;
+        }
+    }
+
+    get SortBy() { return this.EntityPM.SortBy; }
+    set SortBy(value: number) {
+        if (this.EntityPM.SortBy != value) {
+            this.EntityPM.SortBy = value;
+        }
+    }
+
+    get MaximumGrouping() {
+        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 25;
+        return this.EntityPM.MaximumGrouping;
+    }
+    set MaximumGrouping(value: number) {
+        if (this.EntityPM.MaximumGrouping != value) {
+            this.EntityPM.MaximumGrouping = value;
+        }
+    }
+
+    get SortDirection() {
+        if (!this.EntityPM?.SortDirection) this.EntityPM.SortDirection = "asc";
+        return this.EntityPM.SortDirection;
+    }
+    set SortDirection(value: string) {
+        if (this.EntityPM.SortDirection != value) {
+            this.EntityPM.SortDirection = value;
+        }
+    }
+
+    public GetSelectedSort() {
+        return this.SortByCodes.find(x => x.Code == this.SortBy);
+    }
+
+    public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
+    get SelectedGroupField() { return this.selectedGroupField; }
+    set SelectedGroupField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedGroupField == value) {
+            this.FirstTime = false;
+            return;
+        }
+        this.selectedGroupField = value;
+        if (this.FirstTime) {
+            this.FirstTime = false;
+            return;
+        }
+        this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
+        this.FirstTime = false;
+    }
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -162,6 +238,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
         });
 
+        this.ValidateInputs(errors);
         this.ValidationErrorsList = errors;
         if (errors.length != 0) return;
 
@@ -178,6 +255,22 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.DashboardPM.AddWidget(this.EntityPM);
         }
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+
+    ValidateInputs(errors: string[]) {
+        this.ValidateMeasures(errors);
+        this.ValidateSort(errors);
+    }
+
+    ValidateSort(errors: string[]) {
+        if (this.WidgetMeasuresList.length <= 1 && this.SortBy == 2) errors.push("Invalid Sort On Measure 2");
+    }
+
+    ValidateMeasures(errors: string[]) {
+        this.WidgetMeasuresList.forEach(measure => {
+            if (!AppTool.IsNullOrEmpty(measure.MeasureCode) && measure.MeasureCode != "Count" && AppTool.IsNullOrEmpty(measure.MeasureFieldId))
+                errors.push("Measure Field is Required");
+        });
     }
 
     private myCloner: Cloner;
@@ -201,19 +294,33 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('GroupBy');
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
+        this.myCloner.AddField('EntityId');
+        this.myCloner.AddField('DateGroupCodes');
+        this.myCloner.AddField('SortDirection');
+        this.myCloner.AddField('SortBy');
+        this.myCloner.AddField('MaximumGrouping');
 
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
+
+
+        this.EntityPM.WidgetMeasures.forEach(item => {
+            if (!this.WidgetMeasuresClone) this.WidgetMeasuresClone = [];
+            this.WidgetMeasuresClone.push(Object.assign(new WidgetMeasurePM(null), item));
+        });
+
     }
+
     private RejectChanges() {
         this.myCloner.RejectChanges();
+        this.EntityPM.WidgetMeasures = this.WidgetMeasuresClone;
     }
 
     AddNewMeasureClicked() {
         var newItem: WidgetMeasurePM = new WidgetMeasurePM(null);
         newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
-
+        newItem.MeasureCode = "Sum";
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
@@ -229,13 +336,14 @@ export class WidgetMeasureItem extends BaseComponent {
     public DataContext: WidgetMeasureItem = this;
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
-    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public FieldQueryFilters: ApiQueryFilters;
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.FilterMeasureFields();
     }
 
     public CheckMeasureDeleteVisiblity() {
@@ -252,29 +360,30 @@ export class WidgetMeasureItem extends BaseComponent {
 
     get MeasureCode() { return this.EntityPM.MeasureCode; }
     set MeasureCode(value: string) {
-        if (this.EntityPM.MeasureCode != value) {
-            this.EntityPM.MeasureCode = value;
-        }
+        if (this.EntityPM.MeasureCode == value) return;
+
+        this.EntityPM.MeasureCode = value;
+        this.MeasureFieldId = null;
+        this.FilterMeasureFields();
     }
 
-    public selectedField: AnalyticsFactsFieldsMetaDataList = null;
-    get SelectedField() { return this.selectedField; }
-    set SelectedField(value: AnalyticsFactsFieldsMetaDataList) {
-        if (this.selectedField != value) {
-            this.selectedField = value;
-            this.ResetDateFields();
-        }
-    }
+    FilterMeasureFields() {
+        this.FieldQueryFilters = new ApiQueryFilters();
 
-    get DateGroupCode() { return this.EntityPM.DateGroupCode; }
-    set DateGroupCode(value: string) {
-        if (this.EntityPM.DateGroupCode != value) {
-            this.EntityPM.DateGroupCode = value;
-        }
-    }
+        switch (this.EntityPM.MeasureCode) {
+            case "Avg":
+            case "Sum":
+                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
+                break;
 
-    ResetDateFields() {
-        this.EntityPM.DateGroupCode = null;
+            case "Min":
+            case "Max":
+                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
+                break;
+
+            default:
+                break;
+        }
     }
 
     DeleteMeasureClicked() {
@@ -282,6 +391,12 @@ export class WidgetMeasureItem extends BaseComponent {
         if (index != -1) {
             this.fatherComponent.WidgetMeasuresList.splice(index, 1);
         }
+
+        index = this.Widget.WidgetMeasures.indexOf(this.EntityPM);
+        if (index != -1) {
+            this.Widget.RemoveWidgetMeasure(this.EntityPM);
+        }
+
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

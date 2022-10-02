@@ -5,4 +5,8 @@ export class ConnectedOrder
     PONumber: string;
     Code: string;
     SupplyDateTime: Date;
+    PODate: Date;
+    PickupActualDateTime: Date;
+    BookingConfirmationNumber: string;
+    SupplierName: string;
 }

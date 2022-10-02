@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
                 List<string> notifyBackPartners = new List<string>();
                 string Emails = "";
                 string NotifyBackEmails = "";
-
+                List <DocumentDefultAttachment> emptyDefaultDocuments = new List<DocumentDefultAttachment>();
                 if (allActiveUsers)
                 {
                     UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
@@ -128,7 +128,7 @@ namespace WebFreight.Web.Helpers
 
                 }
 
-                if (notifyBackContactIds.Count > 0 && notifyBackPartners.Count > 0)
+                if (notifyBackContactIds.Count > 0)
                 {
                     ContactQuery contactQuery = new ContactQuery(automation.Tenant);
                     List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
@@ -154,13 +154,21 @@ namespace WebFreight.Web.Helpers
 
                     string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, automationDocumentResult);
                     comunicationLogId = communicationLog;
+                    emptyDefaultDocuments = automationDocumentResult.EmptyDefaultDocuments;
+                 
                 }
 
-                if (!string.IsNullOrEmpty(NotifyBackEmails))
+                if (!string.IsNullOrEmpty(NotifyBackEmails) && notifyBackPartners!=null && notifyBackPartners.Count() > 0)
                 {
                     EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
                     Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
                 }
+
+                if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
+                {
+                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails);
+                }
+
             }
 
             return comunicationLogId;
@@ -318,10 +326,16 @@ namespace WebFreight.Web.Helpers
                     context.CommunicationAttachments.Add(attachment);
 
                 }
+            }
+            automationDocumentResult.EmptyDefaultDocuments = documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments!=null ? documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments : new List<DocumentDefultAttachment>() ;
 
+            DocumentDefultAttachment documentDefultAttachment = AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
+
+            if(documentDefultAttachment!=null && string.IsNullOrEmpty(documentDefultAttachment.DocumentId))
+            {
+                automationDocumentResult.EmptyDefaultDocuments.Add(documentDefultAttachment);
             }
 
-            AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
 
             if (!string.IsNullOrEmpty(automationSendEmailArgs.ExternalAttachmentDocumentId))
             {
@@ -346,7 +360,7 @@ namespace WebFreight.Web.Helpers
             return isAllowedToSend;
         }
 
-        private  void AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
+        private DocumentDefultAttachment AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
         {
             if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
             {
@@ -367,8 +381,31 @@ namespace WebFreight.Web.Helpers
                     CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
                     context.CommunicationAttachments.Add(attachment);
                 }
+
+                return !string.IsNullOrEmpty(documentId) ? new DocumentDefultAttachment() { DocumentId = documentId } :GetReportTemplateDocumentAttachment(automationSendEmailArgs, reportTemplateDocOutArgs);
             }
+            return null;
         }
+        private DocumentDefultAttachment GetReportTemplateDocumentAttachment(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
+        {
+            string documentTypeName = string.Empty;
+           
+            if (new DocumentTypeRepository(automationSendEmailArgs.Tenant).IsQuotationDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant))
+            {
+                documentTypeName = new QuoteTemplateRepository(automationSendEmailArgs.Tenant).GetSingleQuoteTemplate(automationSendEmailArgs.ReportTemplateId, automationSendEmailArgs.Tenant)?.Name;
+            }
+            else if (!string.IsNullOrEmpty(reportTemplateDocOutArgs.DocumentCopyId))
+            {
+                documentTypeName = new DocumentTypeCopyRepository(automationSendEmailArgs.Tenant).GetSingleDocumentTypeCopy(automationSendEmailArgs.DocumentCopyId)?.Name;
+            }
+            else
+            {
+                documentTypeName = new DocumentTypeRepository(automationSendEmailArgs.Tenant).GetSingleDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant)?.Name;
+            }
+
+            return new DocumentDefultAttachment() {DocumentTypeName = documentTypeName }; 
+        }
+
 
         private  string GetReportTemplateDocumentId(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
         {

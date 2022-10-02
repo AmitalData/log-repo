@@ -114,7 +114,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            return ((string)queryFilterValue).Contains(entityFieldValue) ? true : false;
+            return ((string)entityFieldValue).Contains(queryFilterValue) ? true : false;
         }
 
 
@@ -122,14 +122,14 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            return !((string)queryFilterValue).Contains(entityFieldValue) ? true : false;
+            return !((string)entityFieldValue).Contains(queryFilterValue) ? true : false;
         }
 
         private bool AssertEndsWith(QueryFilterItem queryFilterItem)
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            return ((string)queryFilterValue).EndsWith(entityFieldValue) ? true : false;
+            return ((string)entityFieldValue).EndsWith(queryFilterValue) ? true : false;
         }
 
 
@@ -138,39 +138,35 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
 
-            return ((string)queryFilterValue).StartsWith(entityFieldValue) ? true : false;
+            return ((string)entityFieldValue).StartsWith(queryFilterValue) ? true : false;
         }
 
         private bool AssertLargerThan(QueryFilterItem queryFilterItem)
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem) ;
-            IComparable comparable = (IComparable)queryFilterValue;
-            return comparable.CompareTo(entityFieldValue) == 1 ? true : false;
+            return entityFieldValue.CompareTo(queryFilterValue) <= 0 ? false : true;
         }
 
         private bool AssertGreaterOrEqual(QueryFilterItem queryFilterItem)
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            IComparable comparable = (IComparable)queryFilterValue;
-            return (comparable.CompareTo(entityFieldValue) == 1 || comparable.CompareTo(entityFieldValue) == 0) ? true : false;
+            return entityFieldValue.CompareTo(queryFilterValue) == -1 ? false : true; 
         }
 
         private bool AssertLessThanOrEqual(QueryFilterItem queryFilterItem)
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            IComparable comparable = (IComparable)queryFilterValue;
-            return (comparable.CompareTo(entityFieldValue) == -1 || comparable.CompareTo(entityFieldValue) == 0) ? true : false;
+            return entityFieldValue.CompareTo(queryFilterValue) ==1 ? false : true; 
         }
 
         private bool AssertLessThan(QueryFilterItem queryFilterItem)
         {
             var queryFilterValue = GetQueryFilterItemFieldValue(queryFilterItem);
             var entityFieldValue = GetEntityFieldValue(queryFilterItem);
-            IComparable comparable = (IComparable)queryFilterValue;
-            return comparable.CompareTo(entityFieldValue) == -1 ? true : false;
+            return entityFieldValue.CompareTo(queryFilterValue) >=0 ? false : true; 
         }
 
         private bool AssertNotEquals(QueryFilterItem queryFilterItem)

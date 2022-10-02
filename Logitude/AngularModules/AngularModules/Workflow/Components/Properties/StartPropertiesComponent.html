@@ -190,7 +190,7 @@
                     </span>
                 </div>
 
-                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId" [AtLeastOneCondition]="false"
                     [ShowChangedOperator]="Trigger !== CreateTrigger" [(ConditionsOperation)]="ConditionsOperation"
                     [(Conditions)]="Conditions"></Conditions>
 

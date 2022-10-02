@@ -1179,6 +1179,7 @@
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\AnalyticsFactsMetaDataViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\MeasureTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\PermissionLevelViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\WidgetTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsFieldsMetaDataController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\AnalyticsFactsMetaDataController.Generated.cs" />
@@ -2830,6 +2831,7 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\AttachmentDocumentNotifyService.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\AdvancedARInvoiceAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ARInvoiceAPISendInterfaceDataContract.cs" />
@@ -2907,6 +2909,7 @@
     <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
+    <Compile Include="Helpers\MixPanel\events\DashboardActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
@@ -3338,6 +3341,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPaymentTermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsShipUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardSharedUserUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationUpdateClass.cs" />
@@ -3414,6 +3418,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PermissionLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PointerLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeStatusUpdateClass.cs" />

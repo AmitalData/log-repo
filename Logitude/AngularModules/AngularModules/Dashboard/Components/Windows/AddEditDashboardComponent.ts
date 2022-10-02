@@ -7,6 +7,9 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -20,15 +23,31 @@ export class AddEditDashboardComponent extends BaseComponent {
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Dashboard";
+    public SessionIndex: number;
+    public PermissionLevelsList: CodeNameClass[] = [];
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+        this.BuildPermissionLevelsList();
     }
 
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs['EntityPM'];
         this.DataContext = this;
         this.isNew = AppTool.IsNullOrEmpty(this.EntityPM.Id);
+        this.Clone();
+    }
+
+    private BuildPermissionLevelsList() {
+        this.PermissionLevelsList = [];
+
+        this.PermissionLevelsList.push(new CodeNameClass("ONM", "Only Me"));
+        this.PermissionLevelsList.push(new CodeNameClass("PUB", "Public"));
+        this.PermissionLevelsList.push(new CodeNameClass("SPF", "Specific Users"));
+
+        if (this.isNew)
+            this.PermissionLevelCode = "ONM";
     }
 
     get Name() { return this.EntityPM.Name }
@@ -45,13 +64,55 @@ export class AddEditDashboardComponent extends BaseComponent {
         }
     }
 
-    CancelButtonClicked() {        
+    get PermissionLevelCode() { return this.EntityPM.PermissionLevelCode; }
+    set PermissionLevelCode(value: string) {
+        if (this.EntityPM.PermissionLevelCode != value) {
+            this.EntityPM.PermissionLevelCode = value;
+        }
+    }
+
+    ChooseUsersClicked() {
+        //var args = new ChooseUserArgs();
+        //args.MyQuery = this.EntityPM;
+        //args.AllUsers = this.myUsersList;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Choose Users";
+        logWindow.Width = 725;
+        logWindow.Height = 520;
+        logWindow.WindowArgs = this.EntityPM;
+        logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            //this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+            //this.FillSharedWithUsersItemsSource();
+        });
+    }
+
+    CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('Name');
+        this.myCloner.AddField('Description');
+        this.myCloner.AddField('PermissionLevelCode');
+
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        if (this.PermissionLevelCode == "SPF" && this.EntityPM.DashboardSharedUsers.length == 0) {
+            errors.push("You have to select at least on user");
+        }
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {

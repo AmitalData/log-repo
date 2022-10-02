@@ -490,6 +490,21 @@
                                     </ng-template>
                                 </log-column>
 
+                                <!-- Markup currency -->
+                                <log-column [SortFieldName]="'MarkUpCurrencyId'" [width]="'100'" [header]="'Markup Currency'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleUnitPrice && item.IsMarkupCurrencyValid">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
+                                                {{item.MarkUpCurrencyCode}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode && item.IsMarkupCurrencyValid">
+                                                <ComboBox [FocusOnMe]="'true'" (SelectedItemChanged)="item.MarkUpCurrencySelectedItem = $event" [ItemsSource]="item.MarkupCurrencyList" [SelectedItem]="item.MarkUpCurrencySelectedItem" [Binding]="'CurrencyCode'"></ComboBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
                                 <!-- Sale Price -->
                                 <log-column [width]="'120'">
                                     <ng-template let-item>

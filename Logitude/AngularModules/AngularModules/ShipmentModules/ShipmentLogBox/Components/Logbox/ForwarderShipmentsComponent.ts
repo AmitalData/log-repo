@@ -166,6 +166,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public searchFields: string;
     public HasSharedDocs: boolean = true;
     public AllowCreateAirExportShipmentsWithoutDocuments: boolean = false;
+    public AllowCreateOceanExportShipmentsWithoutDocuments: boolean = false;
     public ShipmentDirection: string;
     @Output() SearchFieldchangeevent = new EventEmitter();
     DataSource = {
@@ -187,6 +188,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         this.SourceEntity = args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
         this.AllowCreateAirExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "A" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
+        this.AllowCreateOceanExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "O" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateOShipmentsWithoutDocs;
         if (this.SourceEntity) {
             this.ShipmentDirection = this.SourceEntity.DirectionId;
             this.IsExportShipment = this.ShipmentDirection == 'E';

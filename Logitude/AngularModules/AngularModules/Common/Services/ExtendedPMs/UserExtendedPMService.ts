@@ -193,6 +193,18 @@ export class UserExtendedPMService {
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
+    MarkShowDashboardToolTip(userId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return this._http.get(this._apiUrl + '/GetMarkShowDashboardToolTip?userId=' + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
 
     CheckUserReleaseNotesToolTip(userId: string) {
         var authHeader = new Headers();

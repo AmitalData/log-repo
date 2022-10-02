@@ -37,6 +37,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var measure in _Widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
+                seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
@@ -60,13 +61,57 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return resultQueryables.ToList();
         }
 
-        private static string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
         {
-            return $@"select 
-                            data.{groupBy.FieldCode} as Label,
-                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(16,2) ) as Value From 
+            var groupByField = $"{groupBy.FieldCode}";
+            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
+            {
+                groupByField = ConverDateByDateGroupCode( groupBy);
+            }
+            var Label = groupByField;
+            var join = "";
+            if (groupBy.DataTypeCode == "LookUp")
+            {
+                join = $" left join {groupBy.JoinedTableDBName} as JoinedTable on JoinedTable.{groupBy.JoinedTableKey} = {groupByField} ";
+                Label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
+            }
+            var sortBy = CreateSortBy();
+            var top = "";
+            if (_Widget.MaximumGrouping.HasValue)
+                top = $"top({ _Widget.MaximumGrouping})";
+            return $@"select  {top}
+                            {Label} as Label,
+                            {groupByField} as GroupById,
+                            CAST({measure.MeasureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2) ) as Value From 
                             ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            group by {groupBy.FieldCode}";
+                            {join}
+                            group by {Label},{groupByField} {sortBy}";
+        }
+
+        private object CreateSortBy()
+        {
+            if(_Widget.SortBy == null)
+            {
+                return $" order by Label {_Widget.SortDirection}";
+            }
+            return $" order by Value {_Widget.SortDirection}";
+        }
+
+        private string ConverDateByDateGroupCode( AnalyticsFactsFieldsMetaData groupBy)
+        {
+            switch (_Widget.DateGroupCode)
+            {
+                case "Day":
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ),'/' ,CAST(DAY(Data.{groupBy.FieldCode}) as varchar(3) ))";
+                case "Month":
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ))";
+                case "Year":
+                    return $"CAST(YEAR(Data.{groupBy.FieldCode}) as varchar(20))";
+                case "Quarter":
+                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/Q',MONTH(data.{groupBy.FieldCode})/4+1)";
+                default:
+                    return $"convert(varchar, Data.{groupBy.FieldCode}, 105)";
+            }
         }
 
         private void FillEntityFields()

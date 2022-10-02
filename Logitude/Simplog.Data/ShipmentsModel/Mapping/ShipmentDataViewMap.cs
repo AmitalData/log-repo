@@ -380,7 +380,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OBLTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ENSNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.LastSharedEventId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LastSharedEventName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.LastSharedEventName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.LastSharedEventLocation).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.LastSharedEventNotes).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.INTTRASIStatusCode).HasMaxLength(4).IsUnicode(false);

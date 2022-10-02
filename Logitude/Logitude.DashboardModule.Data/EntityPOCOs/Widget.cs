@@ -51,6 +51,14 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         public virtual AnalyticsFactsMetaData EntityMetaData { get; set; }
         [Column("Filters")]
 	    public string Filters { get; set; }
+        [Column("DateGroupCode")]
+	    public string DateGroupCode { get; set; }
+        [Column("MaximumGrouping")]
+	    public int? MaximumGrouping { get; set; }
+        [Column("SortBy")]
+	    public int? SortBy { get; set; }
+        [Column("SortDirection")]
+	    public string SortDirection { get; set; }
     }
 }
 	 

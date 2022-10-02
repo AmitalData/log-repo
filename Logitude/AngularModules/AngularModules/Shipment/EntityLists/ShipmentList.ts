@@ -172,6 +172,7 @@ export class ShipmentList {
 		hasChanges: boolean;
 		StatusId: string;
 		StatusName: string;
+		StatusCode: string;
 		ExactStatusName: string;
 		StatusDate: Date;
 		StatusLocation: string;

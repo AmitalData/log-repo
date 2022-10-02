@@ -2286,6 +2286,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
                         ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                         ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
+                        MarkUpCurrencyId = item.MarkUpCurrencyId,
                     };
 
                     entityPM.QuoteCostCharges.Add(costChargePM);
@@ -2857,6 +2858,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 VATAmountInLineSaleCurrency = item.VATAmountInLineSaleCurrency,
                 SaleTotalAmountIncludingVAT = item.SaleTotalAmountIncludingVAT,
                 SaleTotalAmountLocalIncludingVAT = item.SaleTotalAmountLocalIncludingVAT,
+                MarkUpCurrencyId = item.MarkUpCurrencyId,
+
             };
             return saleChargePM;
         }

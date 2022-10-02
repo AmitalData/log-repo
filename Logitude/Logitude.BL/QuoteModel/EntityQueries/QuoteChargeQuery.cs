@@ -139,6 +139,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                           SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                           SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                          MarkUpCurrencyId = a.MarkUpCurrencyId
                                       }).FirstOrDefault();
 
             return myResult;
@@ -255,6 +256,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                                 SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                                 SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
@@ -447,6 +449,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
                                                 SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
                                                 SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId
                                             }).ToList();
 
             return output.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();

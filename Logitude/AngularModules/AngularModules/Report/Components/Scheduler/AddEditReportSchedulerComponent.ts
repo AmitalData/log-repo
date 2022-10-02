@@ -446,8 +446,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
             CreatedByUserId: SessionLocator.LoggedUserId,
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
-            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.GetOriginalSelectedFilters(),
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
+            DWQueryFilterData: this.PageChild_PRREP ? this.GetNewSelectedFilters() : this.GetOriginalSelectedFilters(),
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -456,6 +456,13 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (!this.PageChild_PRREP) return "";
         if (!this.PageChild_PRREP.DocumentTypeTemplateSelected) return "";
        return this.PageChild_PRREP.DocumentTypeTemplateSelected.Id
+    }
+
+    private GetNewSelectedFilters(): any {
+        if (this.PageChild_PRREP.SelectedFiltersDataSource[0] && this.PageChild_PRREP.DWQueryData) {
+            this.PageChild_PRREP.SelectedFiltersDataSource[0].AndOr = this.PageChild_PRREP.DWQueryData.Filters?.AndOr;
+        }
+        return this.PageChild_PRREP.SelectedFiltersDataSource[0];
     }
 
     GetOriginalSelectedFilters() {
