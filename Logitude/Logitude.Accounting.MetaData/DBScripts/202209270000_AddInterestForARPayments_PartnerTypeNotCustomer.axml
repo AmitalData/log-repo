@@ -17,10 +17,10 @@
 	inner join Cards c on c.Id = arp.BillToId AND c.Tenant = arp.Tenant
     Inner Join JournalLines jl on j.Id = jl.JournalId AND j.Tenant = jl.Tenant
     inner join GLAccounts gla on gla.Id = jl.CreditAccountId AND  gla.tenant = jl.tenant
-	left join InterestTransactions ints on arp.Id = ints.EntityId AND arp.Tenant = ints.Tenant
+	left join InterestTransactions ints on arp.Id = ints.EntityId AND arp.Tenant = ints.Tenant AND ints.InterestEntityTypeCode = 2
     where j.AccountingEntityCode = '3' AND jl.ActionCode = '1' AND j.IsLedgerCreated = 1
 	AND c.PartnerTypeId !='CS' AND gla.AccountTypeCode = '2' AND gla.ChartOfAccountsTypeCode = '3'
-	AND (arp.IsExternalEntity = 0 OR (arp.IsExternalEntity = 1 AND jl.DueDate >= t.AccountingActivationDate AND jl.LocalAmount != 0))
+	AND (j.ExternalSystem is null OR (j.ExternalSystem is not null AND jl.DueDate >= t.AccountingActivationDate AND jl.LocalAmount != 0))
 	AND ints.Id is null -- arp dont have interests
   
   -- ARInvoices
@@ -44,10 +44,10 @@ Select CONCAT('ARICC-', ROW_NUMBER() OVER(ORDER BY (SELECT 1))) as Id, jl.Tenant
 	inner join Cards c on c.Id = ari.BillToId AND c.Tenant = ari.Tenant
     Inner Join JournalLines jl on j.Id = jl.JournalId AND j.Tenant = jl.Tenant
     inner join GLAccounts gla on gla.Id = jl.DebitAccountId AND  gla.tenant = jl.tenant
-	left join InterestTransactions ints on ari.Id = ints.EntityId AND ari.Tenant = ints.Tenant
+	left join InterestTransactions ints on ari.Id = ints.EntityId AND ari.Tenant = ints.Tenant AND ints.InterestEntityTypeCode = 1
     where j.AccountingEntityCode = '2' AND jl.ActionCode = '1' AND j.IsLedgerCreated = 1
 	AND c.PartnerTypeId !='CS' AND gla.AccountTypeCode = '2' AND gla.ChartOfAccountsTypeCode = '3'
-	AND (ari.IsExternalEntity = 0 OR (ari.IsExternalEntity = 1 AND jl.DueDate >= t.AccountingActivationDate AND jl.LocalAmount != 0))
+	AND (j.ExternalSystem is null OR (j.ExternalSystem is not null AND jl.DueDate >= t.AccountingActivationDate AND jl.LocalAmount != 0))
 	AND ints.Id is null -- ari dont have interests
      ]]>
  </Sql>
