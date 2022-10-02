@@ -77,7 +77,7 @@ namespace WebFreight.Web.WcfApi
                         if (queueResponse.RetryNumber > 10)
                         {
                             stringBuilder.AppendLine($"queueResponse.RetryNumber {queueResponse.RetryNumber} > 10");
-                            queueservice.CompleteAsFailed();
+                            queueservice.Complete();
                             return new ResponseExportSignTask() { };
                         }
                         if (queueResponse.MessageId != null)
@@ -122,7 +122,7 @@ namespace WebFreight.Web.WcfApi
                         if (queueResponse.RetryNumber > 10)
                         {
                             stringBuilder.AppendLine($"queueResponse.RetryNumber {queueResponse.RetryNumber} > 10");
-                            queueservice.CompleteAsFailed();
+                            queueservice.Complete();
                             
                             return new ResponseExportSignTask() { };
 
