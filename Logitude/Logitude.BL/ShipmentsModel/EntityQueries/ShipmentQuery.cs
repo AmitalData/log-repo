@@ -15207,6 +15207,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     var shipmentMasterDataFields = shipmentsMasterDataFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
                     MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
 
+                    shipmentAdditionalFields.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipmentId);
+
                     shipmentsAdditionalFields.Add(shipmentAdditionalFields);
                 }
 
@@ -15241,6 +15243,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 var shipmentMasterDataFields = shipmentsMasterDataFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
                 MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
 
+                shipmentAdditionalFields.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipmentId);
                 return shipmentAdditionalFields;
             }
             return new ShipmentAdditionalFields();
@@ -15308,7 +15311,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                      PackageTypeId = shipmentOrderPackage.PackageTypeId,
                                                                                      PackageTypeCode = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.Code,
                                                                                      PackageTypeName = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.EnglishName
-                                                                                 }).ToList()
+                                                                                 }).ToList(),
                                                     }).AsQueryable();
 
             return shipmentsOrderPackageFieldsQuery.ToList();
