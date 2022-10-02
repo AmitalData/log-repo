@@ -19,6 +19,7 @@ export class CourierPendingReasonList {
 	UnifreightStatusCode: string;
 	ErrorPlaceName: string;
 	MamanSuspendedCode: string;
+	SwissportSuspendedCode: string;
 	
 }
  

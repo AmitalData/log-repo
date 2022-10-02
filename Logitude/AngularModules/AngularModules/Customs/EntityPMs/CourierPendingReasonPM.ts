@@ -79,6 +79,11 @@ export class CourierPendingReasonPM {
     public set MamanSuspendedCode(newValue: string) { if (this.mamanSuspendedCode != newValue) { this.mamanSuspendedCode = newValue; this.MarkAsDirty("MamanSuspendedCode"); } }
        
 	 
+    private swissportSuspendedCode: string;
+    public get SwissportSuspendedCode() { return this.swissportSuspendedCode; }
+    public set SwissportSuspendedCode(newValue: string) { if (this.swissportSuspendedCode != newValue) { this.swissportSuspendedCode = newValue; this.MarkAsDirty("SwissportSuspendedCode"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		
