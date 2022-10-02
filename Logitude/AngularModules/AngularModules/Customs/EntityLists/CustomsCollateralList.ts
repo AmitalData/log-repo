@@ -37,6 +37,8 @@ export class CustomsCollateralList {
 	CustomerId: string;
 	CustomerName: string;
 	IsAnswer: boolean;
+	Direction: string;
+	ImporterId: string;
 	
 }
  

@@ -104,6 +104,7 @@
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
@@ -130,6 +131,7 @@
     <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
     <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
+    <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -164,6 +166,7 @@
     <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
+    <None Include="DBScripts\Pre\20220720_UpdateExportStorages.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />
     <None Include="DBScripts\Pre\20220425_COMMLOG_DBIDCOUNTERS_SEQ.sxml" />
@@ -197,6 +200,7 @@
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
     <None Include="DBTables\CargoStatus.dxml" />
+    <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
@@ -227,6 +231,7 @@
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
+    <None Include="DBTables\ClientsTapag.dxml" />
     <None Include="DBTables\ClosedTableStatus.dxml" />
     <None Include="DBTables\CollateralAnswerStatus.dxml" />
     <None Include="DBTables\CollateralAnswerType.dxml" />
@@ -539,6 +544,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />
@@ -1039,6 +1045,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFiles\ExportDeclarationClosingData.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBScripts\Post\XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

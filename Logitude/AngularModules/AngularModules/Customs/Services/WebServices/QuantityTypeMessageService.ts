@@ -20,13 +20,13 @@ export class QuantityTypeMessageService {
 
     }
 
-    GetQuantityType(classificationCode: string) {
+    GetQuantityType(classificationCode: string, isExport: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
     
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetQuantityType?' + 'classificationCode=' + classificationCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetQuantityType?' + 'classificationCode=' + classificationCode + '&isExport=' + isExport, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

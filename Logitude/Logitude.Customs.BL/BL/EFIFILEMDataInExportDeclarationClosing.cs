@@ -26,17 +26,7 @@ namespace Logitude.Customs.BL.BL
                 entityPM.DeclarationId = dec.Id;
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 entityPM.Tenant = tenant;
-                var list = dec.Consignments.Where(con => con.ConsignmentType == "E").ToList();
-                if (list.Count == 1)
-                {
-                    var con = list.FirstOrDefault();
-                    entityPM.FinalCargoTypeCode = con.CargoTypeCode;
-                    entityPM.FinalSecondCargoId = con.SecondCargoID;
-                    entityPM.FinalThirdCargoId = con.ThirdCargoID;
-                    entityPM.FinalManifestNumber = con.ManifestNumber;
-                    entityPM.FinalShipCode = con.ShipCode;
-                    entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
-                }
+                
                 entityPM = SetEFIFILEMData(declarationid, tenant, entityPM, dec);
             }
 

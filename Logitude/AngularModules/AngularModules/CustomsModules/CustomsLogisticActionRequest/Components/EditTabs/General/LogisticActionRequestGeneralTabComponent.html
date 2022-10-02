@@ -40,7 +40,7 @@
                             <div style="position: relative;">
                                 <div class="RadioButton">
                                     <input type="radio" id="air" value="air" name="TransportMode"
-                                        (click)="TransportModeClicked('A')" />
+                                        (click)="TransportModeClicked('A')" [checked]="entityPM.TransportmodeId === 'A'" />
                                     <label for="air" style="font-size:12px;">
                                         {{'Customs.General.O.Air' | TextCodeTranslationPipe}}
                                     </label>
@@ -56,7 +56,7 @@
                             <div style="position: relative;">
                                 <div class="RadioButton">
                                     <input id="ocean" type="radio" value="ocean" (click)="TransportModeClicked('O')"
-                                        name="TransportMode" />
+                                        name="TransportMode"  [checked]="entityPM.TransportmodeId === 'O'"/>
                                     <label for="ocean" style="font-size:12px;">
                                         {{'Customs.General.O.Ocean' | TextCodeTranslationPipe}}
                                     </label>
@@ -72,7 +72,7 @@
                             <div style="position: relative;">
                                 <div class="RadioButton">
                                     <input type="radio" id="land" value="land" (click)="TransportModeClicked('L')"
-                                        name="TransportMode" />
+                                        name="TransportMode"  [checked]="entityPM.TransportmodeId === 'L'"/>
                                     <label for="land" style="font-size:12px;">
                                         {{'Customs.General.O.Land' | TextCodeTranslationPipe}}
                                      </label>
@@ -388,14 +388,14 @@
                                 </td>
                                 <td style="width: 57px;vertical-align: bottom;">
                                     <button class="RedButton" (click)="OkButtonClicked()"
-                                        [disabled]="!OKButtonEnabled">{{'General.B.Save' |
+                                        [disabled]="!OKButtonEnabled || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)">{{'General.B.Save' |
                                         TextCodeTranslationPipe}}</button>
                                 </td>
                                 <td style="width: 10px;vertical-align: bottom;">
                                     <div></div>
                                 </td>
                                 <td style="width:110px;  vertical-align: bottom;">
-                                    <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
+                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)" [AvoidDoubleClick]="true"
                                         #MyCustomSendOptionsComponent
                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>

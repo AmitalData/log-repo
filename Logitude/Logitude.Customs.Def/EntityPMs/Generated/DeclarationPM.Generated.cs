@@ -5446,29 +5446,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportContainerizationID ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportContainerizationID  
-	   {
-	    
-	     get
-		{
-		   return exportContainerizationID;
-		 }
-		 set
-		 {
-		   if(exportContainerizationID != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportContainerizationID",OldValue=exportContainerizationID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportContainerizationID=value;
-		   }
-			
-		 }
-	   }
 	  private bool? isSubmitDeclaration ;
 	  	  
        
@@ -5695,6 +5672,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportDeclarationAmendments",OldValue=isExportDeclarationAmendments,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   isExportDeclarationAmendments=value;
+		   }
+			
+		 }
+	   }
+	  private string exportLoadingPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportLoadingPortCode  
+	   {
+	    
+	     get
+		{
+		   return exportLoadingPortCode;
+		 }
+		 set
+		 {
+		   if(exportLoadingPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportLoadingPortCode",OldValue=exportLoadingPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportLoadingPortCode=value;
 		   }
 			
 		 }

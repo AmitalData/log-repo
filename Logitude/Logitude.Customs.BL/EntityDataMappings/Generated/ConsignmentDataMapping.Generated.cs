@@ -90,6 +90,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ConsignmentType, 
 	         DeliverySiteCode, 
 	         ExportStoragesId, 
+	         CargoTypeCodeForExport, 
+	         StorageSiteCodeExport, 
 	         ExportContainerizationID,
 	      }
 

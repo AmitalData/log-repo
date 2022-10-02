@@ -307,18 +307,19 @@
                                     <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
                                 </div>
                             </div>
-                            <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
-                                <div class="DisbleBox">
+                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
+                                <div *ngIf="ShowStorageStatusMessage || IsDisplayMessage" class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
                             </div>
                         </td>
-
-                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
-                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
-
-                        </td>
-
+                        
+                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;width: 200px;">
+                            <div>
+                                <button *ngIf="showMultiUpdateWindowBtn" [disabled]="IsDisplayOnly" class="Button" (click)="OpenMultiUpdateWindow()" style="width: 140px; display: inline-block;">  עדכון קוד תהליך/הנחה פטור </button>
+                                <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton>
+                            </div>                                        
+                        </td>                      
                     </tr>
 
                     <tr>

@@ -136,6 +136,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -208,6 +209,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -282,6 +284,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -357,6 +360,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -432,6 +436,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -510,6 +515,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -586,6 +592,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -664,6 +671,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -739,6 +747,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -817,6 +826,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -892,6 +902,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -970,6 +981,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1048,6 +1060,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1123,6 +1136,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1198,6 +1212,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1273,6 +1288,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1351,6 +1367,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1428,6 +1445,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1503,6 +1521,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1581,6 +1600,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1656,6 +1676,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1731,6 +1752,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1806,6 +1828,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1881,6 +1904,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1956,6 +1980,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2033,6 +2058,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2108,6 +2134,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2183,6 +2210,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2258,6 +2286,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2333,6 +2362,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2402,6 +2432,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2476,6 +2507,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2563,7 +2595,7 @@
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="40" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -2650,7 +2682,7 @@
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="40" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -2737,7 +2769,7 @@
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="40" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -2816,7 +2848,7 @@
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="40" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -2903,7 +2935,7 @@
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;IsClosed&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="40" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -2983,6 +3015,12 @@
       Code="&quot;Customs.LogisticActionRequest.O.FindDeclaration2&quot;"
       DefaultText="&quot;According to the file number, whether to make a link&quot;"
       LocalDefaultText="&quot;לפי מס' התיק , האם לבצע קישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.ChangeTransportType&quot;"
+      DefaultText="&quot;Are you interested in changing the shipping type&quot;"
+      LocalDefaultText="&quot;האם אתה מעוניין לשנות סוג שילוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

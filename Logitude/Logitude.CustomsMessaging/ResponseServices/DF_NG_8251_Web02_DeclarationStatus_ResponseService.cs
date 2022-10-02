@@ -226,7 +226,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             }
                                         }
                                     }
-                                    if (declarationQuantity == cargoQuantity)
+                                    if (declarationQuantity == cargoQuantity &&  declarationQuantity!=0)
                                     {
                                         availableStatus = "SMG";
                                     }
@@ -479,7 +479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ICommonDataContext commondbContext = CommonDataContext.GetContext(requestParams.Tenant);
                                 UserRepository userRepository = new UserRepository(commondbContext);
                                 var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-                                if (setting.IsConnectedToUniFreight)
+                                if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                                 {
                                     if (declarationPM.Direction == "E")
                                     {
@@ -489,11 +489,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
                                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
                                             {
-                                                RaiseEvent(declarationPM,user.Id, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM,user?.Id, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                             if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                             {
-                                                RaiseEvent(declarationPM, user.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM, user?.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                         }
 

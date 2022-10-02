@@ -1338,7 +1338,7 @@ export class CargoSplitGeneralTabComponent
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
         
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן אחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1374,7 +1374,7 @@ export class CargoSplitGeneralTabComponent
                    errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
                }
                if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
-                   errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען ראשון");
+                   errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען רםשון");
                }
            }
             errors.push.apply(errors, this.decCargoSplitCargoIdentifierModel.CheckRequired());
@@ -1554,7 +1554,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבואן אחד");
+            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {
@@ -1645,11 +1645,11 @@ export class CargoSplitGeneralTabComponent
 
         for (let tab of this.Tabs) {
             if (tab.EntityPM.DecCargoSplitConsItems == null || tab.EntityPM.DecCargoSplitConsItems.length < 1) {
-                errors.push("חובה להזין נתוני אריזות");
+                errors.push("חובה להזין נתוני םריזות");
             }
             for (let item of tab.EntityPM.DecCargoSplitConsItems) {
                 if (item.DecCargoSplitConsPackDets == null || item.DecCargoSplitConsPackDets.length < 1) {
-                    errors.push("קיימות אריזות ללא פירוט");
+                    errors.push("קיימות םריזות ללם פירוט");
                     break;
                 }
                 for (let pack of item.DecCargoSplitConsPackDets) {

@@ -30,6 +30,7 @@ import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/Object
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 
 
 @Component({
@@ -54,6 +55,9 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     allowExport: boolean = false;
+    taxExemptCodeTypesFilter: ApiQueryFilters;
+
+    public InvoiceNumberText: string = "Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber";
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -81,18 +85,19 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         this.IdentificationsList = new ObservableCollection([]);
         this.LevyList = new ObservableCollection([]);
     }
-    SetWindowArgs(args: any) {
+    SetWindowArgs(args: any) {       
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsDisplayOnly = args.IsDisplayOnly;
             this.allowExport = args.allowExport;
+            this.allowExport ? this.InvoiceNumberText="Customs.SupplierInvoiceItemsConnectedDeclaration.O.InvoiceSequence": this.InvoiceNumberText;    
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
-
+            
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
             this.FillGridsData(); // copy  grids data from entity PM to ItemSource arrays
-
+            this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
 
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();
@@ -808,7 +813,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.OriginalItemPM.ItemAdditionalStatus = false;
 
         }
-
+ 
         //console.log("Ok, New -> ", this.ClonedItemPM)
         //console.log("    Old -> ", this.OldItemPM)
 
@@ -919,7 +924,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         clonedEntity = new SupplierInvoiceItemPM(entityToClone.EntityParentPM); // check it !!
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
-
+       
         // --------------------------[ Arrays ]------------------------------
         // Modification
         clonedEntity.SupplierInvoiceItemsMods = [];
@@ -976,7 +981,20 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.MapEntitytoEntity(item, clonedItem);
             clonedEntity.SupplierInvoiceItemLevies.push(clonedItem);
         });
-
+        // Prices List
+        clonedEntity.SupplierInvoiceItemsPrices = []; 
+        entityToClone.SupplierInvoiceItemsPrices.forEach((itemMod) => {
+            var clonedItemMod = new SupplierInvoiceItemsPricePM(itemMod.EntityParentPM);
+            this.MapEntitytoEntity(itemMod, clonedItemMod);
+            clonedEntity.SupplierInvoiceItemsPrices.push(clonedItemMod);
+        });
+        // AbachStatements List
+        clonedEntity.SuppInvoiceItemsAbachStatements = []; 
+        entityToClone.SuppInvoiceItemsAbachStatements.forEach((itemMod) => {
+            var clonedItemMod = new SuppInvoiceItemsAbachStatementPM(itemMod.EntityParentPM); 
+            this.MapEntitytoEntity(itemMod, clonedItemMod);
+            clonedEntity.SuppInvoiceItemsAbachStatements.push(clonedItemMod);
+        });
 
         return clonedEntity;
     }

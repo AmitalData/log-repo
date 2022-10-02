@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -104,15 +104,13 @@ export class ConsigmentTabContentComponent
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
 
-    openKanamDeclaration()
-    {
+    openKanamDeclaration() {
         this._declarationExtendedListService.GetSingleDeclarationByNumber(this.ManifestNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
-                if (entity != null)
-                {
+                if (entity != null) {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -122,13 +120,12 @@ export class ConsigmentTabContentComponent
                             });
                         });
                 }
-                else
-                {
+                else {
                     var messageWindow = new MessageWindow();
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לא נמצאה הצהרה");
+                    messageWindow.Show("לם נמצםה הצהרה");
                 }
             }
         });
@@ -136,8 +133,7 @@ export class ConsigmentTabContentComponent
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
-        if (AppTool.IsNullOrEmpty(this.CargoTypeCode) && this.declarationPM.TransportModeId == 'A' && this.ConsignmentType== 'E')
-        {
+        if (AppTool.IsNullOrEmpty(this.CargoTypeCode) && this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
             this.CargoTypeCode = "16";
         }
 
@@ -177,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -193,7 +189,7 @@ export class ConsigmentTabContentComponent
     private Listen() {
         this._SubDisplayModeChanged =
             DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
-         
+
 
                 if (this.ShowExcludeConsignmentBoolean && this.ExcludeConsignment)
                     this.IsDisplayOnly = true;
@@ -203,7 +199,7 @@ export class ConsigmentTabContentComponent
                 this.ParentIsDisplayOnly = IsDisplayOnly;
 
                 this.SetScreenFieldsEditability();
-         
+
                 this.UIProperties.SetEnabled("CrateNumber", "Customs.DeclarationCourierStatus", false);
                 this.BuildSitesList();
                 this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
@@ -291,7 +287,7 @@ export class ConsigmentTabContentComponent
         this.InitLOVFilters();//38388
         this.CheckRequrierdFieldsForSend();
         this.GetDeclarationCourierStatusData();
-        
+
         console.log("Tabs Args: ", args);
     }
 
@@ -306,23 +302,23 @@ export class ConsigmentTabContentComponent
     GetDeclarationCourierStatusData() {
         if (this.IsCourierDeclaration) {
 
-                let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+            let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
-                let filters = new ApiQueryFilters();
+            let filters = new ApiQueryFilters();
 
-                filters.addAdditionalFilter("DeclarationId", this.declarationPM.Id, null, null, "Equals", false, false, false, "string");
-                filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-                filters.PageSize = 1;
-                myDeclarationCourierStatusListService.getByFilters(filters)
-                    .subscribe((serviceResponse1: ServiceResponse) => {
-                        let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
-                        if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
-                            this._DeclarationCourierStatus = mappedDeclarationCourierStatusList[0];
-                            this.CrateNumber = this._DeclarationCourierStatus.CrateNumber;
-                        }
+            filters.addAdditionalFilter("DeclarationId", this.declarationPM.Id, null, null, "Equals", false, false, false, "string");
+            filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+            filters.PageSize = 1;
+            myDeclarationCourierStatusListService.getByFilters(filters)
+                .subscribe((serviceResponse1: ServiceResponse) => {
+                    let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                    if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
+                        this._DeclarationCourierStatus = mappedDeclarationCourierStatusList[0];
+                        this.CrateNumber = this._DeclarationCourierStatus.CrateNumber;
+                    }
 
-                    });
-          
+                });
+
         }
     }
 
@@ -356,6 +352,7 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportLoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CargoTypeCodeForExport", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ManifestDate", this.ObjectTableName, !this.IsDisplayOnly);
@@ -365,10 +362,11 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StorageSiteCodeExport", this.ObjectTableName, !this.IsDisplayOnly);
         if (this.declarationPM.TransportModeId != 'O') {
             this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, false);
         }
-        
+
     }
 
     LoadCouriersVat() {
@@ -430,7 +428,15 @@ export class ConsigmentTabContentComponent
         this.SetDateVisibilty();
         this.SetTipsInsideCargoIdentifires(newValue);
         if (newValue == "17")
-            this.LoadCouriersVat();        
+            this.LoadCouriersVat();
+    }
+
+    public get CargoTypeCodeForExport() { return this.EntityPM ? this.EntityPM.CargoTypeCode : null; }
+    public set CargoTypeCodeForExport(newValue: string) {
+        this.EntityPM.CargoTypeCode = newValue;
+     
+    if(this.declarationPM.Direction=='E')
+        this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
     }
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
@@ -438,18 +444,18 @@ export class ConsigmentTabContentComponent
 
 
     public get ConsignmentType() { return this.EntityPM ? this.EntityPM.ConsignmentType : null; }
-    public set ConsignmentType(newValue: string) { this.EntityPM.ConsignmentType = newValue; }
+    public set ConsignmentType(newValue: string) { this.EntityPM.ConsignmentType = newValue; this.SetCargoTypeTranssshipment() }
 
     public get ShipCode() { return this.EntityPM ? this.EntityPM.ShipCode : null; }
     public set ShipCode(newValue: string) { this.EntityPM.ShipCode = newValue; }
 
 
     public get ThirdCargoID() { return this.EntityPM ? this.EntityPM.ThirdCargoID : null; }
-    public set ThirdCargoID (newValue: string) {
+    public set ThirdCargoID(newValue: string) {
         this.EntityPM.ThirdCargoID = newValue;
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
-        }        
+        }
     }
 
     public get UnloadDate() { return this.EntityPM ? this.EntityPM.UnloadDate : null; }
@@ -467,12 +473,12 @@ export class ConsigmentTabContentComponent
     private timerToken: any;
 
     public get SecondCargoID() { return this.EntityPM ? this.EntityPM.SecondCargoID : null; }
-    public set SecondCargoID(newValue: string) {                
+    public set SecondCargoID(newValue: string) {
         this.EntityPM.SecondCargoID = newValue;
 
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
-        }        
+        }
     }
 
 
@@ -541,6 +547,9 @@ export class ConsigmentTabContentComponent
 
     public get StorageSiteCode() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
     public set StorageSiteCode(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
+
+    public get StorageSiteCodeExport() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
+    public set StorageSiteCodeExport(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
 
     public get LoadingPortCode() { return this.EntityPM ? this.EntityPM.LoadingPortCode : null; }
     public set LoadingPortCode(newValue: string) { this.EntityPM.LoadingPortCode = newValue; }
@@ -648,33 +657,58 @@ export class ConsigmentTabContentComponent
     //#endregion
 
     setRequired() {
+ 
         if (this.declarationPM.Direction == 'E') {
             this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, true);
-            if (this.ManifestNumber != null) {
+            if (!AppTool.IsNullOrEmpty(this.ManifestNumber)) {
                 this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, false);
             }
 
             if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
                 this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, true);
-                if (this.SecondCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
                     this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
                 }
             } else {
                 this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
             }
             if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
+                
                 this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, true);
-                if (this.ThirdCargoID != null) {
+                if (!AppTool.IsNullOrEmpty(this.ThirdCargoID)) {
                     this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
                 }
             } else {
                 this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
             }
+            if (this.EntityPM.ConsignmentType == 'E') {
+                this.UIProperties.SetWarning("ExportUnloadingPortCode", this.ObjectTableName, true);
+                if (this.ExportUnloadingPortCode != null) {
+                    this.UIProperties.SetWarning("ExportUnloadingPortCode", this.ObjectTableName, false);
+                }
+
+ 
+                this.UIProperties.SetWarning("ExportLoadingPortCode", this.ObjectTableName, true);
+                if (this.ExportLoadingPortCode != null) {
+                    this.UIProperties.SetWarning("ExportLoadingPortCode", this.ObjectTableName, false);
+                }
+             }
+            if (this.EntityPM.ConsignmentType == 'I') {
+                this.UIProperties.SetWarning("LoadingPortCode", this.ObjectTableName, true);
+                if (this.LoadingPortCode != null) {
+                    this.UIProperties.SetWarning("LoadingPortCode", this.ObjectTableName, false);
+                }
+
+                this.UIProperties.SetWarning("UnloadPortCode", this.ObjectTableName, true);
+                if (this.UnloadPortCode != null) {
+                    this.UIProperties.SetWarning("UnloadPortCode", this.ObjectTableName, false);
+                }
+            }
         }
     }
     SetTipsInsideCargoIdentifires(value: string) {
 
-         if (this.declarationPM.Direction == 'E') {
+        if (this.declarationPM.Direction == 'E') {
             this._CargoIdentifireTypeListService.getSingleFromCache(value)
                 .subscribe((Response: ServiceResponse) => {
                     if (Response.Result != null) {
@@ -686,13 +720,12 @@ export class ConsigmentTabContentComponent
                     }
                 });
         }
-        else
-        {
+        else {
             switch (value) {
                 case '1':
                     {
                         this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ רםשי";
                         this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
@@ -705,7 +738,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
+                        this.ManifestNumberPlaceholder = "הזן הצהרת םחסנה";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -721,12 +754,12 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
                         break;
                     }
                 case '20':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
+                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלם";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -751,6 +784,21 @@ export class ConsigmentTabContentComponent
             }
         }
     }
+    SetCargoTypeTranssshipment() {
+        if (this.declarationPM.DeclarationTypeCode == "3" && this.ConsignmentType == 'I') {
+            if (this.declarationPM.TransportModeId == 'A' || this.declarationPM.TransportModeId == 'O') {
+                this.CargoTypeCode = ""
+                this.ManifestNumber = ""
+                this.SecondCargoID = ""
+                this.ThirdCargoID = ""
+                if (this.declarationPM.TransportModeId == 'A')
+                    this.CargoTypeCode = "1"
+                else
+                    this.CargoTypeCode = "11"
+
+            }
+        }
+    }
     AddPackageButtonClicked() {
         var line = new ConsignmentPackagePM(this.EntityPM);
         this.EntityPM.AddConsignmentPackage(line);
@@ -761,6 +809,7 @@ export class ConsigmentTabContentComponent
 
     OpenEditDangerWindow(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
+
             var windowArgs: any = {};
             windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
             windowArgs.Declaration = this.declarationPM;
@@ -1077,11 +1126,11 @@ export class ConsigmentTabContentComponent
         });
     }
 
-    
+
     async onBlurCargoId(cargoNumber: 'a' | 'b' | 'c', newVlue: string) {
-        if(
-            this.declarationPM.Direction !== 'E' || 
-            this.declarationPM.TransportModeId !== 'O' || 
+        if (
+            this.declarationPM.Direction !== 'E' ||
+            this.declarationPM.TransportModeId !== 'O' ||
             !this.EntityPM.ExportStoragesId ||
             this.CargoIdKeyOrigin[cargoNumber] == newVlue) return;
 
@@ -1098,15 +1147,15 @@ export class ConsigmentTabContentComponent
                     break;
                 case 'c':
                     this.ThirdCargoID = this.CargoIdKeyOrigin[cargoNumber]
-                    break;            
-        }
+                    break;
+            }
     }
-    
-    async ConfirmDisconnectExportStorage() {                
+
+    async ConfirmDisconnectExportStorage() {
         const confirmWindow = new ConfirmWindow();
         confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '\n' + TextCodeTranslator.Translate("Customs.Declaration.O.ChangeCargoId"));
-        
-        return new Promise<boolean>((resolve, reject) => {            
+
+        return new Promise<boolean>((resolve, reject) => {
             confirmWindow.WindowClosed.subscribe((event: any) => resolve(confirmWindow.Yes));
         });
     }

@@ -23,7 +23,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.InvoiceItemLineNumber = entityParentPM.LineNumber;
+            int lastKey = 0;
 
+            if (entityParentPM.SupplierInvoiceItemsPrices.Count > 0)
+            {
+                lastKey = entityParentPM.SupplierInvoiceItemsPrices.Max(d => d.LineNumber);
+            }
+            entityPM.LineNumber = lastKey + 1;
 
             base.OnCreating(entityPM, entityParentPM);
         }

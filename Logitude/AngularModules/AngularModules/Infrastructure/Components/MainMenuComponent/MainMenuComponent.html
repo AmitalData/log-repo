@@ -54,7 +54,8 @@
                                                             <ul>
                                                                 <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
                                                                     (click)="SelectionChanged(item)"
-                                                                    [class.SelectedMenuItem]="item === SelectedMenu"
+                                                                    [class.SelectedMenuItem]="item?.TextCode === SelectedMenu?.TextCode"
+                                                                   
                                                                     [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                                                     <img [attr.title]="item.TextCode | TextCodeTranslationPipe" *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px'} : {'left': '5px'}" />
                                                                     <img [attr.title]="item.TextCode | TextCodeTranslationPipe" *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '6px'} : {'left': '6px'}" />

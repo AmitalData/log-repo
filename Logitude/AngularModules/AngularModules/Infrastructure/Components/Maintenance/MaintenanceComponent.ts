@@ -524,8 +524,8 @@ export class MaintenanceComponent {
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item)); 
                 }
-            });
 
+            });
         }
 
         let yaronWantWithoutLogiUpdate = false;// in "customs" branch do not use it !!

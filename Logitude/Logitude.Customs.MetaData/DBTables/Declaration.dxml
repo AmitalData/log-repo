@@ -1003,13 +1003,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExportContainerizationID"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsSubmitDeclaration"
     Type="bit">
     <Constraints
@@ -1032,6 +1025,13 @@
     Name="ExportClosedErrorXML"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportLoadingPortCode"
+    Type="varchar"
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1243,6 +1243,11 @@
   <Relation
     ForeignKeyColumn="AmedmentType"
     ReferencedTable="AmedmentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportLoadingPortCode"
+    ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index

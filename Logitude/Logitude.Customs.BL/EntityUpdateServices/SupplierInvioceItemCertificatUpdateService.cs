@@ -952,9 +952,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entity.ChangeSetOp = ChangeSetOperation.Insert;
                 entity.InvoiceCounterKey = invoiceItem.CounterKey;
                 entity.Tenant = tenant;
-                entity.CertificateNumber = certificateNumber;
-                entity.CertificateExemptionTypeCode = certificateExemptionTypeCode;
-                entity.ResConfirmationTypeCode = resConfirmationTypeCode;
+                if (attachmentTypeCode == "4")
+                    entity.CertificateExemptionTypeCode = certificateExemptionTypeCode;
+                else
+                {
+                    entity.CertificateNumber = certificateNumber;
+                    entity.ResConfirmationTypeCode = resConfirmationTypeCode;
+                }
+
                 entity.ReqConfirmationTypeCode = reqConfirmationTypeCode;
                 entity.AttachmentTypeCode = attachmentTypeCode;
                 if (entity.SequenceNumeric == 0)

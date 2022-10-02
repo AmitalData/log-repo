@@ -41,6 +41,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.OperationMode).HasColumnName("OperationMode").HasMaxLength(2).IsUnicode(false);
 
+            this.Property(t => t.ExportFile).HasColumnName("ExportFile").HasMaxLength(15).IsUnicode(false);
+
             this.Property(t => t.IsChange).HasColumnName("IsChange");
 
             this.Property(t => t.IsMultiCustomers).HasColumnName("IsMultiCustomers").HasMaxLength(100).IsUnicode(true);
@@ -54,6 +56,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SecondCargoID).HasColumnName("SecondCargoID").HasMaxLength(35).IsUnicode(false);
 
             this.Property(t => t.ThirdCargoID).HasColumnName("ThirdCargoID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

@@ -1802,10 +1802,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return declarationPMs;
         }
-
-        public List<DeclarationPM> GetDeclarationsByExportContainerizationId(string containerizationId)
+        
+        public List<DeclarationPM> GetByConsigmentExportContainerizationID(string containerizationId,int tenant)
         {
-            List<Declaration> declarations = repository.GetDeclarationsByExportContainerizationId(containerizationId);
+            var query = repository.GetByConsigmentExportContainerizationID(containerizationId, tenant);
+            List<Declaration> declarations = query.ToList();
             DeclarationDataMapping mappings = new DeclarationDataMapping();
             List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
             foreach (Declaration declaration in declarations)
@@ -1818,6 +1819,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return declarationPMs;
         }
+
 
         public int GetInvoiceItemsWithTradeAgreementCount(string declarationId, int tenant)
         {

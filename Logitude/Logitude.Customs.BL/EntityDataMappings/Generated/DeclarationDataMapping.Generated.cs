@@ -168,11 +168,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestedCustomsDocId, 
 	         ExportDeclarationOfficeCode, 
 	         PhysicalCheck, 
-	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         AmedmentType, 
 	         IsExportClosed, 
-	         ExportClosedErrorXML,
+	         ExportClosedErrorXML, 
+	         ExportLoadingPortCode,
 	      }
 
 
@@ -403,7 +403,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSiteName, 
 	         ShipCodeName, 
 	         CancelRejectionReasonName, 
-	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         ExportTaxationDateTime, 
 	         ExporterImporterCode, 
@@ -413,7 +412,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportClosedErrorXML, 
 	         DeclarationOfficeHandlerCode, 
 	         TransferExporterCode, 
-	         IsExportDeclarationAmendments,
+	         IsExportDeclarationAmendments, 
+	         ExportLoadingPortCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1147,11 +1147,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.PhysicalCheck = entityPM.PhysicalCheck;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
-            {
-				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
             {
 				entityPOCO.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
@@ -1170,6 +1165,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
             {
 				entityPOCO.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
+            {
+				entityPOCO.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1908,11 +1908,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PhysicalCheck = entityPOCO.PhysicalCheck;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportContainerizationID))
-            {
-					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSubmitDeclaration))
             {
 					entityPM.IsSubmitDeclaration = entityPOCO.IsSubmitDeclaration;
@@ -1931,6 +1926,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportClosedErrorXML))
             {
 					entityPM.ExportClosedErrorXML = entityPOCO.ExportClosedErrorXML;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportLoadingPortCode))
+            {
+					entityPM.ExportLoadingPortCode = entityPOCO.ExportLoadingPortCode;
             }
 
 		}
@@ -2664,11 +2664,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.PhysicalCheck = entityPM.PhysicalCheck;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
-            {
-                oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
             {
                 oldEntityPM.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
@@ -2687,6 +2682,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
             {
                 oldEntityPM.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
+            {
+                oldEntityPM.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
             }
 			
 		}

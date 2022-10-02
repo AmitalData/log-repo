@@ -31,13 +31,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContainerizationStatus, 
 	         HataraStatus, 
 	         OperationMode, 
+	         ExportFile, 
 	         IsChange, 
 	         IsMultiCustomers, 
 	         IsMultiExportFiles, 
 	         CargoTypeCode, 
 	         ManifestNumber, 
 	         SecondCargoID, 
-	         ThirdCargoID,
+	         ThirdCargoID, 
+	         TransportModeId,
 	      }
 
 
@@ -65,7 +67,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ManifestNumber, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         ContainerizationCargoID,
+	         ContainerizationCargoID, 
+	         TransportModeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -114,6 +117,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.OperationMode = entityPM.OperationMode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+				entityPOCO.ExportFile = entityPM.ExportFile;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
             {
 				entityPOCO.IsChange = entityPM.IsChange;
@@ -142,6 +150,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdCargoID))
             {
 				entityPOCO.ThirdCargoID = entityPM.ThirdCargoID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeId))
+            {
+				entityPOCO.TransportModeId = entityPM.TransportModeId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -195,6 +208,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OperationMode = entityPOCO.OperationMode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFile))
+            {
+					entityPM.ExportFile = entityPOCO.ExportFile;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsChange))
             {
 					entityPM.IsChange = entityPOCO.IsChange;
@@ -223,6 +241,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ThirdCargoID))
             {
 					entityPM.ThirdCargoID = entityPOCO.ThirdCargoID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransportModeId))
+            {
+					entityPM.TransportModeId = entityPOCO.TransportModeId;
             }
 
 		}
@@ -271,6 +294,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.OperationMode = entityPM.OperationMode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+                oldEntityPM.ExportFile = entityPM.ExportFile;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
             {
                 oldEntityPM.IsChange = entityPM.IsChange;
@@ -299,6 +327,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdCargoID))
             {
                 oldEntityPM.ThirdCargoID = entityPM.ThirdCargoID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeId))
+            {
+                oldEntityPM.TransportModeId = entityPM.TransportModeId;
             }
 			
 		}

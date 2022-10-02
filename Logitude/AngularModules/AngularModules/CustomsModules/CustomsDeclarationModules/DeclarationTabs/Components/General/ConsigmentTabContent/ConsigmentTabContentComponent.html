@@ -656,13 +656,12 @@
                                         <tr style="height: 25px;">
                                             <!-- CargoTypeCode -->
                                             <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLabel [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'מזהה מטען'"></LogLabel>
+                                                    [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [DataContext]="DataContext" [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CargoIdentifireType'"
@@ -885,14 +884,14 @@
 
 
                                             <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'StorageSiteCode'"
-                                                    [ObjectTableName]="ObjectTableName" [Text]="'אתר מסירה'"
+                                                <LogLabel [ObjectFieldName]="'StorageSiteCodeExport'"
+                                                    [ObjectTableName]="ObjectTableName" 
                                                     [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td style="width: 160px;">
 
-                                                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Customs.DeliverySiteType'"
                                                     [DisplayMemberPath]="'LocalName'" [HideColumns]="true">
@@ -1093,7 +1092,7 @@
                                                     [Text]="'מזהה מטען'"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [DataContext]="DataContext" [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CargoIdentifireType'"
@@ -1326,17 +1325,17 @@
 
 
                                             <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'StorageSiteCode'"
-                                                    [ObjectTableName]="ObjectTableName" [Text]="'אתר מסירה'"
+                                                <LogLabel [ObjectFieldName]="'StorageSiteCodeExport'"
+                                                    [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td style="width: 160px;">
 
-                                                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="StorageSiteCode"
+                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="StorageSiteCodeExport"
                                                     [HideColumns]="true">
                                                 </LogLov>
                                             </td>
@@ -1650,10 +1649,10 @@
                                             <log-cell-template #logcelltemplate>
                                                 <div style="text-align: right;width:100%;height:100%;">
                                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.MarksNumbers}}</span>
+                                                         <span>{{item.MarksNumbers}}</span> 
                                                     </div>
                                                     <div *ngIf="logcelltemplate.IsEditMode"
-                                                        style="height: 90%; width: 90%;">
+                                                        style="height: 90%; width: 100%;">
                                                         <LogTextBox [ObjectFieldName]="'MarksNumbers'"
                                                             [InputType]="'ntext'" [DataContext]="item"
                                                             [ObjectTableName]="'Customs.ConsignmentPackage'"

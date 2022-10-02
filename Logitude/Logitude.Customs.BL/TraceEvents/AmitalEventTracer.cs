@@ -19,17 +19,17 @@ namespace Logitude.Customs.BL.TraceEvents
 {
     public class AmitalEventTracer
     {
+        public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
 
-
-        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser=false)
+        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser = false)
         {
             try
             {
-                if (myAmitalEventTracer?.MyFUStatus!= null)
+                if (myAmitalEventTracer?.MyFUStatus != null)
                 {
                     LogMessagingUtil.Instance.AppendLine($"CreateFUStatus:{myAmitalEventTracer.MyFUStatus.status_id}:{myAmitalEventTracer?.MyFUStatus.entname}={myAmitalEventTracer?.MyFUStatus.primary_number}");
                 }
-                
+
                 if (myAmitalEventTracer.notes == "DO_NOT_RAISE_EVENT")
                 {
                     suppress_RAISE_EVENT = true;
@@ -61,11 +61,16 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 if (!mySetting.IsConnectedToUniFreight && mySetting.UnfConnectionString == null)
                 {
-                    return;
+                    if (!UseHybrid_When_NotIsConnectedToUniFreight)
+                    {
+                        return;
+                    }
                 }
                 if (myAmitalEventTracer.NotConnectedToUniface)
                 {
+
                     return;
+                    
                 }
                 //EventTracer.CreateTraceEvent(new TraceEvent(), "CRTR", entityPM.Tenant, loggedContact.Id, entityPM.Id, null, "Trucker", null, null, false);
                 if (myAmitalEventTracer.MyFUStatus == null)//itzik
@@ -73,25 +78,41 @@ namespace Logitude.Customs.BL.TraceEvents
                     throw new BusinessErrorException("NO DATA TO SEND FU/Status INTERFACE to Amital !! (myAmitalEventTracer.MyFUStatus == null)");
                 }
 
-                var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser:  iscustomUser);
-                var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                //myUServerCommunicationService.Send();
-                myUServerCommunicationService.Send(
-                     new UServerCommunicationServiceParam()
-                     {
-                         SendImmediately = false,
-                         SuppressBuildCom = false,
-                         UServerDelayTime = myAmitalEventTracer.UServerDelayTime
-                     });
+                var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser: iscustomUser);
+                if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
+                {
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
+                    {
+                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                        unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                        {
+                            Action = "StatusUpdate",
+                            ParameterName = "transmission",
+                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                        });
+                    }
+                }
+                else
+                {
+                    var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                    //myUServerCommunicationService.Send();
+                    myUServerCommunicationService.Send(
+                         new UServerCommunicationServiceParam()
+                         {
+                             SendImmediately = false,
+                             SuppressBuildCom = false,
+                             UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                         });
+
+                }
 
 
-                    
 
             }
             finally
             {
-                
-                if (myAmitalEventTracer.MyUnifreightEventParam!=null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
+
+                if (myAmitalEventTracer.MyUnifreightEventParam != null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
                 {
 
                     var myOpenUnifreighTask = new UnifreightEventTaskService();
@@ -105,7 +126,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
         }
 
-        
+
 
         public static GFUSTS GetFUStatus(AmitalEventTracerModel myAmitalEventTracer, bool iscustomUser = false)
         {
@@ -157,7 +178,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 }
             }
 
-             //<-- Mirit 07/06/15 task 13520
+            //<-- Mirit 07/06/15 task 13520
             myFollow_up_status.foll_up_details = new foll_up_details[] {
                     new  foll_up_details()
                     {
@@ -196,7 +217,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             var myReference_list = new List<reference_list>();
 
-            
+
             return myFUStatus;
         }
         //protected  void Trace(DeclarationPM entityPM)
@@ -211,5 +232,5 @@ namespace Logitude.Customs.BL.TraceEvents
     }
 
 
-   
+
 }

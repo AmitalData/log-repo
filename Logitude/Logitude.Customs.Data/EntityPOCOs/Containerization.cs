@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string OperationMode { get; set; }
 	      
         public virtual NDMessageActionCode NDMessageActionCode { get; set; }
+        [Column("ExportFile")]
+	    public string ExportFile { get; set; }
         [Column("IsChange")]
 	    public bool IsChange { get; set; }
         [Column("IsMultiCustomers")]
@@ -63,6 +65,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SecondCargoID { get; set; }
         [Column("ThirdCargoID")]
 	    public string ThirdCargoID { get; set; }
+        [ForeignKey("CustomsTransportMode")]
+        [Column("TransportModeId")]
+	    public string TransportModeId { get; set; }
+	      
+        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
     }
 }
 	 

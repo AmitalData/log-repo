@@ -66,6 +66,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ExportFile"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsChange"
     Type="bit">
     <Constraints
@@ -112,6 +119,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TransportModeId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ContainerizationStatus"
     ReferencedTable="ContainerizationStatusCodes"
@@ -130,6 +144,11 @@
   <Relation
     ForeignKeyColumn="CargoTypeCode"
     ReferencedTable="CargoIdentifireTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TransportModeId"
+    ReferencedTable="CustomsTransportModes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

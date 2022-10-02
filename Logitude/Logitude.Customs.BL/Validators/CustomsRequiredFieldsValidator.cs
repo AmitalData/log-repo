@@ -52,13 +52,8 @@ namespace Logitude.Customs.BL.Validators
             }
 
             string isExport = declaration.Direction == "E" ? "E" : "I";
-            var fromCache = declaration.Direction == "E" ? false : true;
-            if (fromCache)
-            {
-                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
-                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
+            var fromCache =  false ;
 
-            }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
             DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
@@ -91,7 +86,15 @@ namespace Logitude.Customs.BL.Validators
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "שורת פרטי מקבל", TableName = "Customs.Declaration" });
 
             }
+            if (declaration.Direction == "E" && declaration.DeclarationTypeCode == "3")
+            {
+                if (declaration.ExportDeclarationOfficeCode == null)
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "בית מכס מייצא", TableName = "Customs.Declaration" });
+                bool isImport = declaration.Consignments.Any(c => c.ConsignmentType == "I");
+                if (!isImport)
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "בהצהרת שטעון יש לציין לפחות משגור יבוא אחד" });
 
+            }
 
             #endregion
 
@@ -145,17 +148,17 @@ namespace Logitude.Customs.BL.Validators
 
                 //supplierInvoiceArray[supplierInvoice.InvoiceCounterKey] = supplierInvoice.InvoiceNumber;
 
-                if (declaration.Direction == "E" && supplierInvoice.AccountTypeCode != "I04")
-                {
-                    if (string.IsNullOrEmpty(supplierInvoice.BuyerName))
-                    {
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerName", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
-                    }
-                    if (string.IsNullOrEmpty(supplierInvoice.BuyerAddress))
-                    {
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerAddress", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
-                    }
-                }
+                //if (declaration.Direction == "E" && supplierInvoice.AccountTypeCode != "I04")
+                //{
+                //    if (string.IsNullOrEmpty(supplierInvoice.BuyerName))
+                //    {
+                //        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerName", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
+                //    }
+                //    if (string.IsNullOrEmpty(supplierInvoice.BuyerAddress))
+                //    {
+                //        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerAddress", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
+                //    }
+                //}
                 supplierInvoiceItems = allInvoiceItems.Where(d => d.DeclarationId == supplierInvoice.DeclarationId && d.CounterKey == supplierInvoice.InvoiceCounterKey).ToList();//supplierInvoice.SupplierInvoiceItems;//mohammad fix wi 20751
                 supplierInvoiceModifications = supplierInvoice.SupplierInvoiceModifications;
                 supplierInvoicFreightAmounts = supplierInvoice.SupplierInvoiceFreightAmounts;
@@ -553,6 +556,23 @@ namespace Logitude.Customs.BL.Validators
                             {
                                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ThirdCargoID", TableName = "Customs.Consignment" });
                             }
+                            if (Consignment.ConsignmentType =="I" && Consignment.LoadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "אתר טעינה אחרון", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "I" && Consignment.UnloadPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "נמל פריקה", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "E" && Consignment.ExportUnloadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ExportUnloadingPortCode", TableName = "Customs.Consignment" });
+                            }
+                            if (Consignment.ConsignmentType == "E" && Consignment.ExportLoadingPortCode == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ExportLoadingPortCode", TableName = "Customs.Consignment" });
+                            }
+
                         }
                     }
                     foreach (PropertyInfo info in ConsignmentProperties)

@@ -192,6 +192,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClientsPoaMap());
 	
+            modelBuilder.Configurations.Add(new ClientsTapagMap());
+	
             modelBuilder.Configurations.Add(new ClosedTableStatusMap());
 	
             modelBuilder.Configurations.Add(new CollateralAnswerStatusMap());
@@ -1708,6 +1710,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClientsPoa> ClientsPoas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClientsTapag> ClientsTapags 
 	 {
 	      get; set;
 	 

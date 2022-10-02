@@ -22,7 +22,7 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
         <tr>
             <td style="width: 16px; min-width: 16px; padding:0 !important;">
                 <div class="LogitudeCheckBox" [style.zIndex]="ZIndex">
-                    <input [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" />
+                    <input [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" (change)="OnChecked($event)"/>
                     <label [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
@@ -92,6 +92,7 @@ export class CheckBox{
 
     public Top: number = null;
     public ZIndex: number = 0;
+    @Output() NotChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -125,12 +126,16 @@ export class CheckBox{
         }
     }
 
-    OnClick() {
+    OnClick() {       
         this.IsChecked = !this.IsChecked;
         this.Checked.emit(this.IsChecked);
     }
 
     OnLostFocus() {
         this.LostFocus.emit(true);
+    }
+   
+    OnChecked(event) {
+          this.NotChecked.emit(event);
     }
 }

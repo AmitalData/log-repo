@@ -373,7 +373,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-
+            
 
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
@@ -468,6 +468,15 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.Declaration = Getdeclaration(_DeclarationPM);
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
             _context = null;
+
+
+            for (int i = 0; i < _DeclarationPM?.SupplierInvoices?.Count; i++)
+            {
+                if (_DeclarationPM.SupplierInvoices[i].AccountTypeCode == "I04" || _DeclarationPM.SupplierInvoices[i].IncotermCode == null)
+                {
+                    req.Declaration.GoodsShipment[i].TradeTerms = null;
+                }
+            }
 
             return req;
         }
@@ -1565,11 +1574,25 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
+
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
-            {
                 DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value = supplierInvoiceItemPM.TradeAgreementCode };
-            }
+
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TaxExemptCode))
+                DMExtensions.TaxExemptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsTaxExemptCode() { Value = GetTaxExemptCode(supplierInvoiceItemPM) };
+
             return DMExtensions;
+        }
+
+        private string GetTaxExemptCode(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
+
+            else if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
+                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
+
+            return supplierInvoiceItemPM.TaxExemptCode;
         }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement[] GetDangerousGoodsStatement(List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements)
@@ -1881,23 +1904,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //}
             DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
-
-            if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode))
-            {
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
-                }
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
-                }
-                //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
-            }
-
             DMExtensions.Vehicle = GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentification(supplierInvoiceItemPM.SupplierInvoiceItemVehicles); // Mirit 16/08/15 Task 15960
-                                                                                                                                                                             // if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.PreferenceDocumentNumber)) // moran 9.3.15 - Task 11774
-                                                                                                                                                                             //SetIDTypeValue<PreferenceDocumentNumberType>("11"); //                                                                                                                                                            // SetIDTypeValue<PreferenceDocumentNumberType>("11"); //
             DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
             DMExtensions.InvoiceLineNumbers = "1";// supplierInvoiceItemPM.ActualInvoiceLines;
             DMExtensions.TransactionNatureCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTransactionNatureCode>(supplierInvoiceItemPM.TransactionNatureCode);
@@ -2068,8 +2075,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
                 {
 
-                    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
-                    ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
+                    SecondCargoID =  consignmentPM.SecondCargoID !=null? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID): new SecondCargoIDType() { Value=""}, // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+                    ThirdCargoID =    SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID)  // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
                 }
             };
             if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))

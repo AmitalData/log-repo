@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 var myDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
-                amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                //amitalContext = AmitalContext.GetContext(ResolvedTenant());
 
                 if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
                 {
@@ -735,16 +735,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
-                    if (this._MyDeclarationPM.Direction == "E") 
-                    {
-                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
-                        ForiegnKeyCheck.Check<Declaration>(_MyDeclarationPM, ResolvedTenant());
-                        _MyDeclarationPM.Consignments.ForEach(x =>
-                        {
-                            ForiegnKeyCheck.CheckClosedTable(x, ResolvedTenant());
-                            ForiegnKeyCheck.Check<Consignment>(x, ResolvedTenant());
-                        });
-                    }
+                    if (_MyDeclarationPM.Direction == "E")
+                        ClearWrongValues(_MyDeclarationPM);
 
                     _MyDeclarationPM.IsCourierDeclaration = false;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
@@ -821,11 +813,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         return;
                     }
 
-                    if (this._MyDeclarationPM.Direction == "E")
-                    {
-                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
-                        //ForiegnKeyCheck.Check<Declaration>(_MyDeclarationPM, ResolvedTenant());
-                    }
+                    if (_MyDeclarationPM.Direction == "E")
+                        ClearWrongValues(_MyDeclarationPM);
 
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
@@ -939,6 +928,55 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 scope.Complete();
 
             }
+        }
+
+        private void ClearWrongValues(DeclarationPM declarationPm)
+        {
+            int tenant = ResolvedTenant();
+            ForiegnKeyCheck.CheckClosedTable(declarationPm, tenant);
+            ForiegnKeyCheck.Check<Declaration>(declarationPm, tenant);
+
+            declarationPm.Consignments.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<Consignment>(x, tenant);
+            });
+
+            declarationPm.SupplierInvoices.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<SupplierInvoice>(x, tenant);
+            });
+
+            declarationPm.DeclarationTaxes.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DeclarationTax>(x, tenant);
+            });
+
+            declarationPm.DeclarationConstraints.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DeclarationConstraint>(x, tenant);
+            });
+
+            declarationPm.DeclarationConsAcceptances.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DeclarationConsAcceptancePM>(x, tenant);
+            });
+
+            declarationPm.DecDangersContacts.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DecDangersContact>(x, tenant);
+            });
+
+            declarationPm.DeclarationExportRecipients.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DeclarationExportRecipient>(x, tenant);
+            });
         }
 
         private void ExportDeclarationInsert()

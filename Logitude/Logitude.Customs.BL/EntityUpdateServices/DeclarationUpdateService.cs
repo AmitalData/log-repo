@@ -188,9 +188,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
+            if (string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode))
+            {
+                if (entityPM.Direction == "E" ) { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
+            }
             
-            if (entityPM.Direction == "I" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "1";
-            if (entityPM.Direction == "E" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "2";
 
             OnCreatingExportDeclaration(entityPM);
 
@@ -381,6 +383,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
+                    entityPM.ExportLoadingPortCode = consignment.ExportLoadingPortCode;
                     entityPM.StorageSiteCode = consignment.StorageSiteCode;
                     if (entityPM.IsCourierDeclaration)
                     {
@@ -799,7 +802,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //mohammad insurance if taxation changed
             
             ReCalculateDueTaxationDateChange(entityPM, entityPOCO);
-            UpdateContainerizationDueHatraDateChange(entityPM, entityPOCO);
+            UpdateHataraStatusByContarization(entityPM, entityPOCO);
             if (this.SuppressNewConcurrencyGUID)
             {
                 LogMessagingUtil.Instance.AppendLine("SuppressNewConcurrencyGUID");
@@ -2852,7 +2855,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 InvoiceItemLineNumber = ItemsConDeclar.InvoiceItemLineNumber,
                                 LineNumber = ItemsConDeclar.LineNumber,
                                 Tenant = toDeclaration.Tenant,
-                                DeclarationNumber = toDeclaration.DeclarationNumber,
+                                DeclarationNumber = ItemsConDeclar.DeclarationNumber,
                                 ItemSequence = ItemsConDeclar.ItemSequence,
                                 DeclarationTypeCode = ItemsConDeclar.DeclarationTypeCode,
                                 InvoiceNumber = ItemsConDeclar.InvoiceNumber,
@@ -3315,25 +3318,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.MarkAsChanged = true;
         }
 
-        public void UpdateContainerizationDueHatraDateChange(DeclarationPM entityPM, Declaration entityPOCO)
+        public void UpdateHataraStatusByContarization(DeclarationPM entityPM, Declaration entityPOCO)
         {
-            if (entityPM.Direction == "E" && !string.IsNullOrEmpty(entityPM.ExportContainerizationID))
+            
+            if (entityPM.Direction == "E" &&  entityPM.HatraDate!= entityPOCO.HatraDate)
             {
-                if (entityPM.HatraDate.HasValue && entityPM.HatraDate != entityPOCO.HatraDate)
+               
+                ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(entityPM.Tenant);
+                var list = consignmentQueryService.GetConsgnmentByDeclarationId(entityPM.Id, entityPM.Tenant);
+                list?.ForEach(x =>
                 {
-                    ICustomContext context = MainContext as CustomContext;
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
-                    var list = declarationQueryService.GetDeclarationsByExportContainerizationId(entityPM.ExportContainerizationID);
-                    if (list.All(x => x.HatraDate.HasValue))
+                    if (!string.IsNullOrEmpty(x.ExportContainerizationID))
                     {
-                        ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
-                        var containerization = containerizationQueryService.GetSingle(entityPM.ExportContainerizationID, false, true);
-                        containerization.HataraStatus = "1";
-                        containerization.ChangeSetOp = ChangeSetOperation.Update;
-                        ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        containerizationUpdateService.Update(containerization, true);
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                        var listDec = declarationQueryService.GetByConsigmentExportContainerizationID(x.ExportContainerizationID, entityPM.Tenant);
+                        if (listDec.All(y => y.HatraDate.HasValue||y.Id == entityPM.Id))
+                        {
+                            ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(entityPM.Tenant);
+                            var containerization = containerizationQueryService.GetSingle(x.ExportContainerizationID, false, true);
+                            containerization.HataraStatus = "1";
+                            containerization.ChangeSetOp = ChangeSetOperation.Update;
+                            ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            containerizationUpdateService.Update(containerization, true);
+                        }
                     }
-                }
+
+                });       
             }
         }
         public void ReCalculateDueTaxationDateChange(DeclarationPM entityPM,Declaration entityPOCO)
