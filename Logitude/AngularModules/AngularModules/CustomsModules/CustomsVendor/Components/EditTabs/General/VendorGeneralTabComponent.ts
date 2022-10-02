@@ -40,6 +40,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public IsNewEntity: boolean = false;
     public ValdationErrorList: any[];
     public SubCountryCodeEnabled: boolean = false;
+    public isEntityChange: boolean = false;
     IsDelete: boolean = false;
     CommunicationsList: ObservableCollection;
     RequestParams: VendorInsertUpdateDeleteMessageRequestParams;
@@ -56,7 +57,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
     }
 
-    SetTabArgs(args: any, valdationErrorList: any[]) {
+    SetTabArgs(args: any, valdationErrorList: any[] = []) {
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
 
@@ -284,7 +285,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
         }
 
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,deleteParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false).then((res) => {
-
+            this.isEntityChange = true;
             this.ResponseData = res;
             console.log("[Delete] Response/ShowProgressBar : ", this.ResponseData);
 
@@ -440,6 +441,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
             //}
             myShowProgressBarParams
             ).then((res) => {
+                this.isEntityChange = true;
 
             this.ResponseData = res;
             console.log("[Send] Response/ShowProgressBar : ", this.ResponseData);

@@ -13,6 +13,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
+import { VendorGeneralTabComponent } from './General/VendorGeneralTabComponent';
 
 @Component({
     
@@ -73,7 +74,7 @@ export class VendorEditComponent extends BaseComponent {
         }
     }
 
-    private GENERAL: any = null;
+    public GENERAL: VendorGeneralTabComponent = null;
     private COMMUNICATION: any = null;
     private EVENTS: any = null;
     private REQUESTSHEET: any = null;

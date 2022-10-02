@@ -85,6 +85,7 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
+    public isEntityChange: boolean = false;
     
     
 
@@ -1457,6 +1458,7 @@ export class EditComponent implements OnDestroy {
                             this.EntityPM = myResponse.Result;
                             this.EntityId = this.EntityPM.Id;
                             this.entityArgs.EntityPM = this.EntityPM;
+                            this.isEntityChange = true;
 
                             if (this.ObjectTable.CacheOnClient) {
                                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
@@ -1471,6 +1473,7 @@ export class EditComponent implements OnDestroy {
                                 this.OnEntityCreated();
                                 this.UpdateComponentMembers();
                                 this.FireSaveCompleted(true);
+                                
                                 // this is for navigation
                                 if (loadNextEntity) {
                                     this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
@@ -1519,7 +1522,8 @@ export class EditComponent implements OnDestroy {
                         else {
                             this.EntityPM = myResponse.Result;
                             this.entityArgs.EntityPM = this.EntityPM;
-
+                            this.isEntityChange = true;
+                            
                             if (this.ObjectTable.CacheOnClient) {
                                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
                             }

@@ -81,7 +81,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     height: number = 800;
     columns: any[];
     scrollTop: number = 0;
-    rowsPerPage: number;
+    rowsPerPage: number = 0;
     bufferFromRow: number;
     bufferNumberOfRows: number;
     pixelsPerPage: number = this.rowsPerPage * this.rowHeight;
@@ -613,7 +613,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
             //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
             this.controller.cachedData[res.rowIndex] = res.Data;
-            this.backFromEdidIsChange = res.rowData.IsChanged;
+            this.backFromEdidIsChange = res.isEntityChange;
             this.updateDisplayList();
         }
     }
@@ -1303,10 +1303,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     sortingDir: string = ''; //'Descending';
     sortingCol: string = ''; //'CreateDateTime';
   AfterServerSort: boolean = false;
-  ServerSort(colDef, id, forced: boolean = false) {
+  ServerSort(colDef, id, forced: boolean = false) {    
         //var div = element.parentNode.parentNode;
     //console.log(div.getAttribute('id'));
-    if (forced == false) {
+    if (forced) {
       this.selectedRow = null;
       this.MySelectedRowIndex = null;
       this.SelectedRow = null;
@@ -1413,7 +1413,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //this.init();
             this.updateDisplayList();
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
-            if (elem && (this.backFromEdidIsChange || forced)) {
+            if (elem) {
                 elem.scrollTop = 0;
             }
             //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
@@ -2623,7 +2623,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     if (newValue && newValue != this.sortServerProp) {
 
       this.sortServerProp = newValue;
-      if (this.sortServerProp && this.sortServerProp.isBackFromEdit == true) {
+      if (this.sortServerProp && this.sortServerProp.isBackFromEdit == true && this.backFromEdidIsChange) {
           this.MyisBackFromEdit = true;
         this.sortServerProp.isBackFromEdit = false;
         newValue.isBackFromEdit = false;

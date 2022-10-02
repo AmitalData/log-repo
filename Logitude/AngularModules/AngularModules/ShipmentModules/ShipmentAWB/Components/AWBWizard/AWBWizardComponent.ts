@@ -73,6 +73,7 @@ export class AWBWizardComponent implements AfterViewInit{
     public ValidationErrorsList: string[] = [];
     public ValidationWarningsList: string[] = [];
     public IsValidationSingleLine: boolean = false;
+    public isEntityChange: boolean = false;
     public IsImportWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -2682,6 +2683,7 @@ export class AWBWizardComponent implements AfterViewInit{
         });
     }
     private OnSaveCompletedSuccessfully() {
+        this.isEntityChange = true;
         this.CurrentSession.FireEvent("RefreshShipmentsTabFromAWBWizard");
 
         if (this.isReloadingOnSave) {

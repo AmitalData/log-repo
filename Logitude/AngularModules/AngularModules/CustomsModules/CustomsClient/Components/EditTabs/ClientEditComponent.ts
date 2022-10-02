@@ -40,7 +40,9 @@ export class ClientEditComponent extends BaseComponent{
    responseData: INF_MSG_GenericResponseData;
    clientMessageService: ClientMessagesService = new ClientMessagesService();
    public ValidationErrorsList: string[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
+   private CurrentSession = SessionLocator.SelectedSession;
+   public isEntityChange: boolean = false;
+
    constructor(public entityArgs: EntityArgs) {
        super();
 
@@ -259,7 +261,7 @@ export class ClientEditComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-        
+        this.isEntityChange = true;
         if (this.isNewClient) {
             this.clientPMService.insert(this.CurrentEntity).subscribe((response:any) => {
                 var result = response.Result;

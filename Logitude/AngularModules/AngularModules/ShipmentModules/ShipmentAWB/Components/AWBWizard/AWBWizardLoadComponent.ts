@@ -16,6 +16,7 @@ import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirec
 export class AWBWizardLoadComponent implements AfterViewInit {
   public EntityId: string = null;
   public EntityPM: ShipmentPM;
+  public childComponentInstance: any = null;
   private CurrentSession = SessionLocator.SelectedSession;
   @ViewChild(ChildDirective) Child: ChildDirective;
 
@@ -67,18 +68,20 @@ export class AWBWizardLoadComponent implements AfterViewInit {
         .then(cmpRef => {
           cmpRef.instance.SetWindowArgs(myAWBWizardArgs);
           this.CurrentSession.StopBusyIndicator();
+          this.childComponentInstance = cmpRef.instance;
         });
-    }
-
-    else {
+      }
+      
+      else {
       var myFSRWizardArgs: FSRWizardArgs = new FSRWizardArgs();
       myFSRWizardArgs.EntityPM = this.EntityPM;
       myFSRWizardArgs.ShipmentLevelCode = this.EntityPM.ShipmentLevelCode;
 
       SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/FSRWizard/FSRWizardComponent', this.Child.Location)
-        .then(cmpRef => {
-          cmpRef.instance.SetWindowArgs(myFSRWizardArgs);
-          this.CurrentSession.StopBusyIndicator();
+      .then(cmpRef => {
+        cmpRef.instance.SetWindowArgs(myFSRWizardArgs);
+        this.CurrentSession.StopBusyIndicator();
+        this.childComponentInstance = cmpRef.instance;
         });
     }
   }

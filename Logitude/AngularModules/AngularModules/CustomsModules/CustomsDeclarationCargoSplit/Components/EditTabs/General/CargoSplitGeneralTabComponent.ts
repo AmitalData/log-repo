@@ -120,6 +120,8 @@ export class CargoSplitGeneralTabComponent
     //}
     _EntityResourceFinished: boolean = false
     private CurrentSession = SessionLocator.SelectedSession;
+    public isEntityChange: boolean = false;
+
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationCargoSplitPM();
@@ -1231,6 +1233,7 @@ export class CargoSplitGeneralTabComponent
                 }
 
                 else {
+                    this.isEntityChange = true;
                     if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
