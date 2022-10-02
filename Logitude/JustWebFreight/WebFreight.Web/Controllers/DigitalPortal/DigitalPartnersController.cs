@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            if (string.IsNullOrWhiteSpace(searchText))
+            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
             {
                 return Ok(new List<Partner>());
             }
