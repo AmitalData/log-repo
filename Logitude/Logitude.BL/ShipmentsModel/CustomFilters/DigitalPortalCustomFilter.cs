@@ -115,6 +115,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
+
+            if (digitalPortalSearchFields.Length < 3)
+            {
+                return queryableData;
+            }
+
             queryableData = queryableData.Where(d => d.ShipperReference1.StartsWith(digitalPortalSearchFields)
                                                       || d.ShipperReference2.StartsWith(digitalPortalSearchFields)
                                                       || d.ConsigneeReference1.StartsWith(digitalPortalSearchFields)
@@ -128,8 +134,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                       || d.Master.StartsWith(digitalPortalSearchFields)
                                                       || d.FromPortName.StartsWith(digitalPortalSearchFields)
                                                       || d.ToPortName.StartsWith(digitalPortalSearchFields)
-                                                      || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields)
-           );
+                                                      || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields));
 
             return queryableData;
         }
