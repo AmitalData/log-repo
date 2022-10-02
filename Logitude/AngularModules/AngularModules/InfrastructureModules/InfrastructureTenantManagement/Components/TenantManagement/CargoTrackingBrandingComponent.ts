@@ -101,7 +101,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.BrandingTabName = "Cargo Tracking Branding";
         this.IsLogitudeEnvironment = false;
         var digitalPortalBrandingToggleFeatureForTenantZero = SessionLocator.TenantZeroFeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
-        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
+        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB" && d.TenantNumber == +this.EntityPM.Id)[0];
         if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL") && (digitalPortalBrandingToggleFeatureForTenantZero || digitalPortalBrandingToggleFeatureForCurrentTenant)) {
             this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
             this.IsLogitudeEnvironment = true;
