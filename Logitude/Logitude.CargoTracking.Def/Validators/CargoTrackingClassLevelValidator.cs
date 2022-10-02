@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -85,43 +86,35 @@ namespace Logitude.CargoTracking.Def.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null)
+                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
                         {
-                            if (!objectfeildprop.IsMaxLength)
+                            if (type.Name.Contains("PM") && objectfeildprop.DataTypeCode == "nText")
                             {
-                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                try
                                 {
-
-                                    if (type.Name.Contains("PM") && objectfeildprop.DataTypeCode == "nText")
+                                    //var sss= Convert.ToBase64String(Encoding.GetEncoding("windows-1255").GetBytes("DDDDDDFF AAAAAAAשששששש")) ;
+                                    var entityPMEncode = (value as EntityPM);
+                                    if (!String.IsNullOrWhiteSpace(entityPMEncode.EncodeBase64NVARCHARFieldsBy))
                                     {
-                                        try
+                                        var valDecode = Encoding.GetEncoding(entityPMEncode.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(propertyValue.ToString()));
+                                        if (valDecode.Length > objectfeildprop.MaxLength || valDecode.Length < objectfeildprop.MinLength)
                                         {
-                                            //var sss= Convert.ToBase64String(Encoding.GetEncoding("windows-1255").GetBytes("DDDDDDFF AAAAAAAשששששש")) ;
-                                            var entityPMEncode = (value as EntityPM);
-                                            if (!String.IsNullOrWhiteSpace(entityPMEncode.EncodeBase64NVARCHARFieldsBy))
-                                            {
-                                                var valDecode = Encoding.GetEncoding(entityPMEncode.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(propertyValue.ToString()));
-                                                if (valDecode.Length > objectfeildprop.MaxLength || valDecode.Length < objectfeildprop.MinLength)
-                                                {
-                                                    return false;
-                                                }
-
-                                            }
-
-                                        }
-                                        catch (Exception)
-                                        {
-
                                             return false;
                                         }
 
                                     }
-                                    else
-                                    {
-                                        return false;
-                                    }
-                                    
+
                                 }
+                                catch (Exception)
+                                {
+
+                                    return false;
+                                }
+
+                            }
+                            else
+                            {
+                                return false;
                             }
                         }
                     }
@@ -224,16 +217,9 @@ namespace Logitude.CargoTracking.Def.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null)
+                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
                         {
-                            if (!objectfeildprop.IsMaxLength)
-                            {
-                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
-                                {
-                                    stringLengthError = stringLengthError + "," + CargoTrackingTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
-
-                                }
-                            }
+                            stringLengthError = stringLengthError + "," + CargoTrackingTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
                         }
                     }
                 }

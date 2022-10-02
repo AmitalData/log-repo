@@ -3,6 +3,7 @@ declare var System: any;
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {AppTool} from '../Tools';
 import {RulesValidator} from './RulesValidator';
+import { FieldValidator } from './FieldValidator';
 
 export class ClassLevelValidator {
     public ErrorsArray: any[];
@@ -116,30 +117,9 @@ export class ClassLevelValidator {
                                     fieldvalue = "";
                                 }
 
-                                if (!objectfield.IsMaxLength &&
-                                    (fieldvalue.length > objectfield.MaxLength || fieldvalue.length < objectfield.MinLength)) {
-
-                                    var errorMsg = "";
-                                    if (objectfield.MinLength == 0)
-                                    {
-                                        // display only max length error
-                                        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                        var error: string = translatedMaxError.replace("%Maxlength", objectfield.MaxLength);
-                                        error = error.replace("%FieldName", fieldName);
-                                        errorMsg = error;
-                                    }
-                                    else
-                                    {
-                                        //display min max errors
-                                        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                        var minFieldError: string = translatedMinMaxError.replace("%Minlength", objectfield.MinLength);
-                                        minFieldError = minFieldError.replace("%Maxlength", objectfield.MaxLength);
-                                        minFieldError = minFieldError.replace("%FieldName", fieldName);
-                                        errorMsg = minFieldError;
-                                    }
-                                    
-                                    errorsArray.push(errorMsg);
-
+                                var fieldValidator: FieldValidator = new FieldValidator();
+                                if (!fieldValidator.IsValidTextValue(objectfield, fieldvalue)) {
+                                    errorsArray.push(fieldValidator.GetMinMaxErrorMessage(objectfield, fieldvalue));
                                 }
                             }
                         }
