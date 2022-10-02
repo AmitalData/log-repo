@@ -11,7 +11,7 @@ import { ConditionDetails } from "../models/ConditionDetails";
 
 let ConditionCounter = 1;
 let ConditionGroupButton = 1;
-let mai;
+
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
 }
@@ -43,6 +43,8 @@ export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
     let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName)
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
+    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner,workflowDetails.Owner)
 }
 
 export function OpenEditStartNode() {
@@ -76,53 +78,60 @@ export function AssertCreateWorkflow() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostWorkflowFlowBuilder, 200)
 }
 
-export function FillConditionDetails(conditionDetails: ConditionDetails) {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
-    cy.Click(WorkflowSelectors.WorkflowFirstAddCondition, null).then(() => {
-        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(1), conditionDetails.Field);
-        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(1), conditionDetails.Operation, 0);
-        FillConditionValue(WorkflowSelectors.WorkflowConditionValue(1), conditionDetails.Value, conditionDetails.Field);
-        ConditionCounter++;
-    })
-}
-
 export function FillRootConditionsDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
-    cy.Click(WorkflowSelectors.WorkflowAddRootCondition, null);
+    cy.Click(WorkflowSelectors.WorkflowFirstAddCondition, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
-    let ConditionGroupButton = ConditionCounter;
-    cy.log("root condition counter" + (ConditionCounter + conditionDetailsList.length))
-    FillConditionsGroup(conditionDetailsList, (ConditionGroupButton + conditionDetailsList.length));
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length));
+    ConditionGroupButton = ConditionCounter;
 }
 
-export function FillGroupConditionDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
     OpenEditStartNode();
-    cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
+    if (!IsRootGroup) {
+        cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
+    }
+    else {
+        cy.Click(WorkflowSelectors.WorkflowGroupButton(ConditionGroupButton - conditionDetailsList.length), null)
+    }
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-    let ConditionGroupButton = ConditionCounter;
-    FillConditionsGroup(conditionDetailsList, ((ConditionGroupButton + conditionDetailsList.length)));
+
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    ConditionGroupButton = ConditionCounter;
 }
 
-export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], sss: number) {
-    cy.log("ssssssssssss" + sss)
-    for (let i = ConditionCounter, ListCounter = 0; i <= sss; i++, ListCounter++) {
-        cy.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiii"+i)
+export function FillNestedGroupConditionDetails(secondGroupSelector: number, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+    OpenEditStartNode();
+    cy.Click(WorkflowSelectors.WorkflowGroupButton(secondGroupSelector), null)
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
+
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    ConditionGroupButton = ConditionCounter;
+}
+
+export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], IsRootConditions: boolean, LoopCounter: number) {
+    var ListCounter = 0
+    for (let i = ConditionCounter; i < LoopCounter; i++, ListCounter++) {
         cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[ListCounter].Field);
         BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
         cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[ListCounter].Operation, 0);
         FillConditionValue(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[ListCounter].Value, conditionDetailsList[ListCounter].Field);
         ConditionCounter++;
-        if (i < (conditionDetailsList.length + 1))
+        if (i < (LoopCounter - 1) && IsRootConditions) {
             cy.Click(WorkflowSelectors.WorkflowAddRootCondition, null);
+        }
+        else if (i < (LoopCounter - 1) && IsRootConditions == false) {
+            cy.Click(WorkflowSelectors.WorkflowAddConditionButton(ConditionGroupButton), null);
+        }
     }
 }
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
         case "Main Carriage Final ATA":
-            return cy.FillDate(selector, value);
+            return cy.FillDate("input" + selector, value);
         case "Profit Differences":
             return cy.SelectDropDownListItem2(selector, value);
         case "Containers Numbers":
@@ -130,6 +139,20 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Agent":
             return cy.SelectDropDownListItem2(selector, value);
         case "Description of Goods":
+            return cy.FillLogTextBox(selector, value);
+        case "Create Date":
+            return cy.FillDate("input" + selector, value);
+        case "Chargeable Weight":
+            return cy.FillLogTextBox(selector, value);
+        case "Customer":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+        case "Department":
+            return cy.SelectDropDownListItem2(selector, value);
+        case "Order Gross Weight":
+            return cy.FillLogTextBox(selector, value);
+        case "Accounting Closed":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+        case "Notes":
             return cy.FillLogTextBox(selector, value);
     }
 }
