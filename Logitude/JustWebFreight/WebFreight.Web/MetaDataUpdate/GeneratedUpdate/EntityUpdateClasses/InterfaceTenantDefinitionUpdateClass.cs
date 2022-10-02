@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterfaceTenantDefinitionUpdateClass
    {  		
-		public const string HashString = "cb19e772aa891408a07e6635d855330f";
+		public const string HashString = "788d4f7cf6668ce2343c1e71755c670f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interface Tenant Definition",
-			      				    Code =  "6903",
+			      				    Code =  "adef",
 			      				    Name =  "Customs.InterfaceTenantDefinition Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -736,6 +736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SendTime",
 					  						DefaultText =  "Send Time",
+					  						FullLocalDefaultText =  "שעת שליחה",
 					  						ListFieldLable =  "SendTimeListLable",
 					  						ListLableDefaultText =  "SendTime",
 					  						ListLocalDefaultText =  "שעת שליחה",
