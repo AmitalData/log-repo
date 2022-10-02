@@ -255,10 +255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<Measurement> allMeasurements = measurementRepository.GetMeasurements(arInvoicePM.Tenant).ToList();
             foreach (ARInvoiceLinePM line in arInvoicePM.InvoiceLines)
             {
-                if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense)
-                {
-                    ValidateARInvoiceLine(allChargesTypes, allMeasurements, line);
-                }
+                ValidateARInvoiceLine(allChargesTypes, allMeasurements, line);
             }
         }
 
