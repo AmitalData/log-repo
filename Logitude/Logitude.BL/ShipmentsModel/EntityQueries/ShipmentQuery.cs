@@ -15314,8 +15314,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                  }).ToList(),
                                                     }).AsQueryable();
 
-            var ContainersNumbers = GetShipmentContainersNumbers(1, "");
-
             return shipmentsOrderPackageFieldsQuery.ToList();
         }
 
