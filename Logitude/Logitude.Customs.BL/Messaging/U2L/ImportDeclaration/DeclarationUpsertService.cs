@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 var myDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
-                amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                //amitalContext = AmitalContext.GetContext(ResolvedTenant());
 
                 if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
                 {
