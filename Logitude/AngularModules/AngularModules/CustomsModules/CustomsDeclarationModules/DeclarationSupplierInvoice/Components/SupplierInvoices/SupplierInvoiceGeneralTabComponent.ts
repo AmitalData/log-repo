@@ -67,6 +67,7 @@ import { TradeAgreementProtocolListService } from 'Customs/Services/StandardList
 import { IncotemrsFileValidationListService } from 'Customs/Services/StandardLists/IncotemrsFileValidationListService';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
+import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 
 
 @Component({
@@ -3352,7 +3353,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             else {
                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
-                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
+                this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
 
 
@@ -3577,7 +3578,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
-    OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
         var newValue = this.ClassificationCode;
         this.valid = true;
         this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
@@ -3646,6 +3647,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         this.ClassificationCode = newValue;
         classificationTextBox.TextValue = newValue;
+
         if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;
 
@@ -3693,7 +3695,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     }
                 }
             }
-            this.GetQuantityType();
+            this.GetQuantityType();           
         }
         else {
             //var element = document.getElementById(logCellTemplate.OuterDivId);

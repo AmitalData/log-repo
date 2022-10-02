@@ -33,10 +33,23 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
                 //$"update  {UserId}.CFIFILEM set  LOGITUDE_FILE ='{myLOGITUDE_FILE}' where FILE_NO={fileNo}"
                 $"update  {UserId}.CFIFILEM set  LOGITUDE_FILE =:p1 where FILE_NO=:p2",
-                 new List<Devart.Data.Oracle.OracleParameter>() { 
-                     new Devart.Data.Oracle.OracleParameter("p1", myLOGITUDE_FILE),  
-                     new Devart.Data.Oracle.OracleParameter("p2",fileNo)    
-                 }, //new List<object> {myLOGITUDE_FILE,fileNo },
+                (cmd) =>
+                {
+                 //   new List<Devart.Data.Oracle.OracleParameter>() {
+                 //    new Devart.Data.Oracle.OracleParameter("p1", myLOGITUDE_FILE),
+                 //    new Devart.Data.Oracle.OracleParameter("p2",fileNo)
+                 //}
+                    var p1=cmd.CreateParameter();
+                    p1.ParameterName = "p1";p1.DbType = System.Data.DbType.String;
+                    p1.Value = myLOGITUDE_FILE;
+
+                    var p2 = cmd.CreateParameter();
+                    p2.ParameterName = "p2"; p2.DbType = System.Data.DbType.Double;
+                    p2.Value = fileNo;
+
+
+                }
+, //new List<object> {myLOGITUDE_FILE,fileNo },
                 (dataReader) =>
                 {
                     Int32? val = null;

@@ -803,6 +803,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string direction ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Direction  
+	   {
+	    
+	     get
+		{
+		   return direction;
+		 }
+		 set
+		 {
+		   if(direction != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Direction",OldValue=direction,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   direction=value;
+		   }
+			
+		 }
+	   }
+	  private string importerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterId  
+	   {
+	    
+	     get
+		{
+		   return importerId;
+		 }
+		 set
+		 {
+		   if(importerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterId",OldValue=importerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

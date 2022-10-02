@@ -277,7 +277,7 @@ namespace Simplog.Server.Infrastructure.Azure
 
              
             CloudBlobContainer blobContainer = BlobClient.GetContainerReference(containername);
-            if (!LogitudeSettings.IsCostomsDeploy)
+            //if (!LogitudeSettings.IsCostomsDeploy)
             {
                 blobContainer.CreateIfNotExists();
             }

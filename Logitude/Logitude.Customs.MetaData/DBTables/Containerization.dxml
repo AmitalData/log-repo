@@ -66,6 +66,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ExportFile"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsChange"
     Type="bit">
     <Constraints

@@ -50,6 +50,8 @@ namespace Logitude.Server.Tools.QueueService
 
         new public CustomDBQueueMessage Receive(int? nextRunDelayInSec = null)
         {
+
+            
             //var r= new DualRepository()
             if (CurrentCustomQueueResponse != null && !String.IsNullOrWhiteSpace(CurrentCustomQueueResponse.MessageId) && CurrentCustomQueueResponse.QueueStatus == QueueStatusEnum.Received)
             {
@@ -115,7 +117,8 @@ namespace Logitude.Server.Tools.QueueService
             {
                 if (CurrentCustomQueueResponse.MessageCreatedServerTime.HasValue)
                 {
-                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) > TimeSpan.FromHours(12))
+                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) 
+                        > TimeSpan.FromHours(12))
                     {
                         this.SafeComplete();
                         safcomplete = true;

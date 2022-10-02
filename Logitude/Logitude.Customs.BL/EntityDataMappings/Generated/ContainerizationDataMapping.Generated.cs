@@ -31,6 +31,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContainerizationStatus, 
 	         HataraStatus, 
 	         OperationMode, 
+	         ExportFile, 
 	         IsChange, 
 	         IsMultiCustomers, 
 	         IsMultiExportFiles, 
@@ -114,6 +115,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OperationMode))
             {
 				entityPOCO.OperationMode = entityPM.OperationMode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+				entityPOCO.ExportFile = entityPM.ExportFile;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
@@ -202,6 +208,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OperationMode = entityPOCO.OperationMode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFile))
+            {
+					entityPM.ExportFile = entityPOCO.ExportFile;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsChange))
             {
 					entityPM.IsChange = entityPOCO.IsChange;
@@ -281,6 +292,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OperationMode))
             {
                 oldEntityPM.OperationMode = entityPM.OperationMode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+                oldEntityPM.ExportFile = entityPM.ExportFile;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))

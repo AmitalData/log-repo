@@ -236,9 +236,10 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
 
                     _IQueueService = new DbQueueService();
                     _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
-
-                    _ReceivedBrokeredMessage = _IQueueService.Receive();
-
+                    using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                    {
+                        _ReceivedBrokeredMessage = _IQueueService.Receive();
+                    }
                     if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                     {
                         //Thread.Sleep(TimeSpan.FromSeconds(5));

@@ -32,8 +32,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<CustomsEnvironmentSetting> iQueryable = (from a in context.CustomsEnvironmentSettings
                                                select a);
-            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -51,7 +50,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsEnvironmentSettingList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("CustomsEnvironmentSetting",tenant).ToList();
+                List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CustomsEnvironmentSetting",tenant).ToList();
 
                 ObjectField objectField = (from a in CustomsEnvironmentSettingObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
@@ -150,8 +149,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<CustomsEnvironmentSetting> iQueryable = (from a in context.CustomsEnvironmentSettings  select a);
 
-			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();

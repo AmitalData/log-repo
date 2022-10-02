@@ -1002,6 +1002,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 List<ClientList> myResult = myDomainService.GetClientFilters(arrayOfBytes, tenant);
                                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
                             }
+
+                        case "Customs.ClientsTapag":
+                            {
+                                ICustomContext ctx = CustomContext.GetContext(tenant);
+                                ClientsTapagListQueryService query = new ClientsTapagListQueryService(ctx);
+
+                                QueryOperations QO = new QueryOperations();
+                                QO.PageIndex = 0;
+                                QO.PageSize = 100;
+                                QO.SetFilter("TapagNumber", SearchFields, false, "Contains", null, false);
+
+                                List<ClientsTapagList> myResult = query.GetList(QO, tenant);
+
+                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                            }
                         case "Customs.CustomsItems":
                             {
                                 ICustomContext ctx = CustomContext.GetContext(tenant);

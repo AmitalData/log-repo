@@ -56,6 +56,8 @@ namespace Logitude.Server.Tools.QueueService
                 queueDefinition = new QueueDefinition() { Code = queueCode, Name = queueCode };
                 queueDefRep.Add(queueDefinition);
                 queueDefRep.SubmitChanges();
+                //SetInCache()
+                string key = $"GetQueueDefFromCache({queueCode})";
             }
 
             
@@ -67,7 +69,7 @@ namespace Logitude.Server.Tools.QueueService
             var def = CacheManager.GetOrInsertNewObject<QueueDefinition>(key, () =>
             {
                 return queueDefRep.GetSingleQueueDefinition(queueCode);
-            });
+            }, donotCacheNull:true);
             return def;
         }
 
@@ -79,6 +81,12 @@ namespace Logitude.Server.Tools.QueueService
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
             ,QueueSendModel queueSendModel= null)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return SendReturnIdCustoms(messageValues,
+            tenant, delayTime, CustomerId, BatchNumber, NextRunDate
+            , queueSendModel);
+            }
 
             int tenantPriority = queueSendModel?.TenantPriority ?? 89;
             if (tenantPriority < 1)
@@ -390,7 +398,20 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
-            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+             return ReceiveDetail(serverWaitTime, suppressSleep: false);
+        }
+        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime, bool suppressSleep)
+        {
+ 
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
+            }
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
+            }
+             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;
 
@@ -433,7 +454,8 @@ namespace Logitude.Server.Tools.QueueService
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            //nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            nextRunDelayInSecPar.Value = serverWaitTime.Value.TotalSeconds;
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
@@ -545,7 +567,7 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
-            if (string.IsNullOrEmpty(response.MessageId))
+            if (!suppressSleep && string.IsNullOrEmpty(response.MessageId))
             {
                 Thread.Sleep(serverWaitTime.Value);
             }
@@ -566,6 +588,10 @@ namespace Logitude.Server.Tools.QueueService
         }
         public QueueResponse Receive(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms(nextRunDelayInSec);
+            }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 
@@ -574,7 +600,7 @@ namespace Logitude.Server.Tools.QueueService
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 DataTable tblQueue = new DataTable();
-
+                
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -730,6 +756,12 @@ namespace Logitude.Server.Tools.QueueService
 
         public void Delay(TimeSpan delayTime)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                DelayCustoms(delayTime);
+                return ;
+            }
+
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -815,6 +847,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public void Return()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                throw new Exception("Queue_ReturnMessage not in use  in CostomsDeploy"); 
+            }
+    
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -884,6 +921,11 @@ namespace Logitude.Server.Tools.QueueService
         /// </summary>
         public void Complete()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                CompleteCustoms(false);
+                return;
+            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -964,8 +1006,18 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
+        public void CompleteAsFailedParam(string queueId)
+        {
+            this.CurrentMessageId = queueId;
+            this.CompleteAsFailed();
+        }
         public void CompleteAsFailed()
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                CompleteCustoms(true);
+                return;
+            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))

@@ -963,6 +963,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportLoadingPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportLoadingPortName  
+	   {
+	    
+	     get
+		{
+		   return exportLoadingPortName;
+		 }
+		 set
+		 {
+		   if(exportLoadingPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportLoadingPortName",OldValue=exportLoadingPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportLoadingPortName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

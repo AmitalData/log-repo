@@ -59,7 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomsEnvironmentSetting", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomsEnvironmentSetting", "READ", authToken.Tenant);
 	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CustomsEnvironmentSettingListQueryService customsEnvironmentSettingQuery = new CustomsEnvironmentSettingListQueryService(MyContext);
                 CustomsEnvironmentSettingList customsEnvironmentSettingList = customsEnvironmentSettingQuery.GetSingle(id, environmentcode);
@@ -82,7 +82,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomsEnvironmentSetting", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomsEnvironmentSetting", "READ", authToken.Tenant);
 	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CustomsEnvironmentSettingListQueryService customsEnvironmentSettingQuery = new CustomsEnvironmentSettingListQueryService(MyContext);
                 List<CustomsEnvironmentSettingList> result = customsEnvironmentSettingQuery.GetList(authToken.Tenant);
@@ -105,23 +105,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomsEnvironmentSetting", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomsEnvironmentSetting", "READ", authToken.Tenant);
 	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "CustomsEnvironmentSetting",
+                    ObjectTableName = "Customs.CustomsEnvironmentSetting",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "CustomsEnvironmentSettings",
+                    QuerySection = "Customs.CustomsEnvironmentSettings",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("CustomsEnvironmentSetting",tenant);
+				List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CustomsEnvironmentSetting",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {

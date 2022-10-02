@@ -96,6 +96,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ProcedureCurrentName  { get; set; }
        [DataMember]
        public string ActionName  { get; set; }
+       [DataMember]
+       public string ExportLoadingPortName  { get; set; }
    }
 
 }

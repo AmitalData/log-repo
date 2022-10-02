@@ -82,6 +82,7 @@
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\ClientsPoaPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientsTapagPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationHataraStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
@@ -130,11 +131,8 @@
     <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StorageStatusTablePM.Generated.cs" />
-
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
