@@ -98,5 +98,6 @@ namespace Logitude.BL.ShipmentsModel.DigitalModels
         public string OnCarriageToPortCode { get; set; }
         public string OnCarriageToPortName { get; set; }
         public string OnCarriageToPortCountryCode { get; set; }
+        public string ContainersNumbers { get; set; }
     }
 }
