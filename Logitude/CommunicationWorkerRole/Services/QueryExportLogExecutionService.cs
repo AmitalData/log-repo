@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Resolvers;
-using Logitude.Server.Tools;
+﻿using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
@@ -8,12 +7,6 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole.Services
@@ -24,34 +17,38 @@ namespace CommunicationWorkerRole.Services
         private DbQueueService queueService = null;
         private QueueResponse queueResponse = null;
         QueryExportExecutionLog executionLog;
+
         public QueryExportLogExecutionService(DbQueueService queueService, QueueResponse queueResponse)
         {
             this.queueService = queueService;
             this.queueResponse = queueResponse;
-
         }
+
         public void ExecuteQueryExportExecutionLog()
         {
             try
             {
+                var logId = queueResponse.MessageValues.Keys.Contains("LogId")
+                            ? queueResponse.MessageValues["LogId"].ToString() 
+                            : "";
 
+                int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out int tenant);
 
-                var logId = queueResponse.MessageValues.Keys.Contains("LogId") ? queueResponse.MessageValues["LogId"].ToString() : "";
-                var tenant = int.Parse(queueResponse.MessageValues["Tenant"].ToString());
                 var fileName = queueResponse.MessageValues["FileName"].ToString();
                 var loggedUserEmail = queueResponse.MessageValues["LoggedUserEmail"].ToString();
                 AuthenticationUtil.AuthenticatedUserEmail = loggedUserEmail;
 
-                if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
-                {
-                    DatabaseInitializer.RunOnSeconderyDB = true;
-                }
-
                 queryExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
-                executionLog = queryExecutionLogRepository.GetSingle(logId, tenant);
+                executionLog = queryExecutionLogRepository.GetSingle(logId, tenant); 
                 if (executionLog != null && executionLog.StatusCode == "W")
                 {
                     UpdateExecutionLogStatus("P");
+
+                    if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                    {
+                        DatabaseInitializer.RunOnSeconderyDB = true;
+                    }
+
                     var queryFilters = LogitudeXmlSerializer.DeserializeObject<CustomApiQueryFilters>(executionLog.QueryFilterXML);
                     var queryToExcelExportService = new QueryToExcelExportService();
                     var queryArgs = new ExportQueryToExcelArgs()
@@ -59,10 +56,11 @@ namespace CommunicationWorkerRole.Services
                         QueryFilters = queryFilters,
                         IsWorkerRoleCall = true,
                         OutputFileName = fileName,
-                        LoggedUserEmail = loggedUserEmail,
+                        LoggedUserEmail = loggedUserEmail
                     };
 
                     queryToExcelExportService.ExportQueryDataToStorage(queryArgs);
+                    DatabaseInitializer.RunOnSeconderyDB = false;
                     UpdateExecutionLogStatus("D");
                 }
             }
@@ -70,8 +68,6 @@ namespace CommunicationWorkerRole.Services
             {
                 HandleReportExecutionException(ex);
             }
-
-
         }
 
         private void UpdateExecutionLogStatus(string status, string exception = null)
@@ -79,15 +75,22 @@ namespace CommunicationWorkerRole.Services
             if (executionLog != null)
             {
                 executionLog.StatusCode = status;
+
                 if (exception != null)
+                {
                     executionLog.ExceptionMessage = exception;
+                }
+
                 if (status == "F" || status == "D")
+                {
                     executionLog.DoneDate = DateTime.Now;
+                }
 
                 queryExecutionLogRepository.Update(executionLog);
                 queryExecutionLogRepository.SubmitChanges();
             }
         }
+
         private void HandleReportExecutionException(Exception ex)
         {
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Query to excel execution log queue worker role start", null, null);
@@ -103,7 +106,10 @@ namespace CommunicationWorkerRole.Services
                     UpdateExecutionLogStatus("F");
                 }
             }
-            else queueService.CompleteAsFailed();
+            else
+            {
+                queueService.CompleteAsFailed();
+            }
         }
     }
 }

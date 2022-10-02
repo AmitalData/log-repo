@@ -63,4 +63,6 @@
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+	Columns="DocumentTypeId,Tenant,EntityId" />
 </Table>

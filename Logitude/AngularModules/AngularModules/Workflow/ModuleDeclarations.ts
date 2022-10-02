@@ -12,6 +12,7 @@ import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComp
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
 import { RunHistoryWorkflowComponent } from "./Components/CreateEditWorkflow/RunHistoryWorkflowComponent";
+import { WorkflowInstanceActivityComponent } from "./Components/CreateEditWorkflow/WorkflowInstanceActivityComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
@@ -36,6 +37,7 @@ export const Components = [
     ConditionGroupsComponent,
     FieldValueComponent,
     FooterButtonsComponent,
+    WorkflowInstanceActivityComponent,
 ];
 
 export class ModuleDeclarations {
@@ -60,6 +62,7 @@ export class ModuleDeclarations {
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }
             case "FooterButtonsComponent": { result = FooterButtonsComponent; break; }
+            case "WorkflowInstanceActivityComponent": { result = WorkflowInstanceActivityComponent; break; }
         }
         return result;
     }

@@ -166,7 +166,7 @@
                     </div>
 
 
-                    <div *ngIf="!isNoValueOperator(Condition.operator) && isDateTimeField(Condition.fieldCode)"
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && !isFieldCompareOperator(Condition.operator) && isDateTimeField(Condition.fieldCode)"
                         class="condition-value-expression-container">
 
                         <ComboBox [ItemsSource]="DateTimeValueExpressionsItems" [Binding]="'Name'"
@@ -178,7 +178,8 @@
                     </div>
 
 
-                    <div *ngIf="!isNoValueOperator(Condition.operator)" class="condition-value-container"
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && !isFieldCompareOperator(Condition.operator)"
+                        class="condition-value-container"
                         [ngClass]="{'condition-date-value-container': isDateTimeField(Condition.fieldCode)}">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
@@ -199,6 +200,30 @@
 
                     </div>
 
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator)" class="condition-value-container">
+
+                        <LogLov *ngIf="Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
+                            [NoObjectField]="true" [ObjectFieldName]="'ConditionFieldValue_' + Condition.id"
+                            [DataContext]="DataContext"
+                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(ObjectFieldsDictionary[Condition.fieldCode])"
+                            [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                            [SelectedValue]="Condition.valueCode" [HideColumns]="true"
+                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                            (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
+                            [DataCy]="'ConditionFieldValue_' + Condition.id">
+                        </LogLov>
+
+                        <LogLov *ngIf="!Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
+                            [NoObjectField]="true" [ObjectFieldName]="'ConditionFieldValue_' + Condition.id"
+                            [DataContext]="DataContext"
+                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(ObjectFieldsDictionary[Condition.fieldCode])"
+                            [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                            [SelectedValue]="Condition.valueCode" [HideColumns]="true"
+                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                            (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
+                            [DataCy]="'ConditionFieldValue_' + Condition.id">
+                        </LogLov>
+                    </div>
 
                     <div *ngIf="isNoValueOperator(Condition.operator)" class="condition-value-container">
 

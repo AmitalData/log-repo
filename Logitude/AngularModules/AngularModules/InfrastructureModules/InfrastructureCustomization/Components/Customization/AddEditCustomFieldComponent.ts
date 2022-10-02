@@ -107,6 +107,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         }
         else {
+            if (this.objectField.MaxLength == 0) this.objectField.MaxLength = null;
             this.DataTypeSelectionMethod({ Code: this.objectField.DataTypeCode });
             //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
@@ -543,6 +544,10 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("Maximum length of the text is 2000");
         }
 
+        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength == 0) {
+            this.ValidationErrorsList.push("Max length number shouldn't be 0");
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.authHeader = new Headers();
@@ -551,6 +556,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
+            this.SetMaxMinLengths();
             if (this.IsNew == true) {
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
@@ -615,6 +621,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         else {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
+    }
+
+    private SetMaxMinLengths() {
+        this.objectField.MaxLength = AppTool.IsNullOrEmpty(this.objectField.MaxLength) ? 0 : this.objectField.MaxLength;
+        this.objectField.MinLength = AppTool.IsNullOrEmpty(this.objectField.MinLength) ? 0 : this.objectField.MinLength;
     }
 
     CancelButtonClicked() {

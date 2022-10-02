@@ -216,12 +216,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
 
-            string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode);
+            string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
             var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
             var query = new DocumentTypeQuery(authToken.Tenant);
             var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+            var mainEntityId = entityPM.MainEntityId;
+            var childEntityId = entityPM.Id;
+            if (entityPM.IsConsolidationInvoice)
+            {
+                mainEntityId = entityPM.Id;
+                childEntityId = null;
+            }
 
-            var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, authToken.Tenant);
+            var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(mainEntityId, childEntityId, docType.Id, authToken.Tenant);
 
             if (docsOutData != null)
             {
@@ -237,7 +244,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
-
             return Ok(entityPM);
         }
 
@@ -415,11 +421,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region private 
 
-        private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
+        private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode, bool isConsolidationInvoice)
         {
             string code = "999S";
 
-            if (aRInvoiceTypeCode.Equals("CI", StringComparison.InvariantCultureIgnoreCase))
+            if (isConsolidationInvoice)
+            {
+                code = "999C";
+            }
+            else if (aRInvoiceTypeCode.Equals("CI", StringComparison.InvariantCultureIgnoreCase))
             {
                 code = "999CI";
             }
@@ -485,7 +495,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             string reportUrl = null;
             var tenant = item.Tenant;
-            var documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(item.ARInvoiceTypeCode);
+            var documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(item.ARInvoiceTypeCode, item.IsConsolidationInvoice);
             var docType = documentTypeQuery.GetSinglePMByCodeAndTenant(documentTypeCode, tenant);
             var docId = "";
             var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(item.MainEntityId, item.Id, docType.Id, tenant);

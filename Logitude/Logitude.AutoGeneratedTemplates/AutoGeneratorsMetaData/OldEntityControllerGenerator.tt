@@ -1215,7 +1215,7 @@ else
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= contextTenantParam #>);
 <#+ 
-if(tableName == "ARInvoice")
+if(tableName == "ARInvoice" || tableName == "CommunicationLog")
 {
 #>              
 

@@ -5,6 +5,8 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Base;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI40;
 using Simplog.Data.CommonDataModel;
@@ -38,7 +40,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private List<VatTypePercentagePM> allVatPercentages;
         private List<VATTypesGroup> allVatGroups;
         private List<ChargesType> allChargesTypes;
-        private bool hasExpenses;
         private ComputingPartnerTranslationHelper computingPartnerHelper;
         private SATInterfaceSetting satSetting;
         private string invoiceCurrencyCode;
@@ -58,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             allVatPercentages = GetAllVatPercentages();
             allVatGroups = GetAllVatGroups();
             allChargesTypes = GetAllChargesTypes();
-            hasExpenses = GetHasExpenses();
             invoiceCurrencyCode = GetInvoiceCurrencyCode();
         }
 
@@ -110,11 +110,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return chargesTypeRepository.GetChargesTypes(tenant).ToList();
         }
 
-        private bool GetHasExpenses()
-        {
-            return arInvoicePM.InvoiceLines.Any(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense); ;
-        }
-
         public Comprobante BuildNewInvoiceComprobante()
         {
 
@@ -149,10 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
 
             List<ARInvoiceTotalVATPM> arTotalVats = GetARInvoiceTotalVATPMs();
-            if(hasExpenses)
-            {
-                MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
-            }
+            MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             MapTotalAndSubTotalWithMatchCurrencyDigitsAfterPoint(comprobante);
 
             comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
@@ -489,33 +481,85 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<ComprobanteConcepto> conceptosList = new List<ComprobanteConcepto>();
             foreach (ARInvoiceLinePM line in arInvoicePM.InvoiceLines)
             {
-                if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense)
-                {
-                    ComprobanteConcepto concepto = new ComprobanteConcepto
-                    {
-                        ObjetoImp = SATData.IncludeTaxObjetoImp,
-                        Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
-                        Unidad = "SERVICIO",
-                        Descripcion = line.Description,
-                        Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)))
-                    };
-                    decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
-                    concepto.ValorUnitario = SATBaseProfact40Service.GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
-
-                    concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
-                    var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
-                    if (lineMeasurement != null)
-                    {
-                        concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement");
-                    }
-
-                    this.CalucalteLineTotals(line, concepto, allVatTypes, allVatPercentages, allVatGroups);
-
-                    conceptosList.Add(concepto);
-                }
+                conceptosList.Add(GetNewConcepto(allMeasurements, line));
             }
 
             return conceptosList;
+        }
+
+        private ComprobanteConcepto GetNewConcepto(List<Measurement> allMeasurements, ARInvoiceLinePM line)
+        {
+            decimal conceptoCantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0));
+            decimal conceptoImporte = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)));
+            decimal valorUnitario = Math.Abs(conceptoCantidad != 0 ? (conceptoImporte / conceptoCantidad) : 0);
+            decimal conceptoValorUnitario = SATBaseProfact40Service.GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
+            string conceptoClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
+            const string conceptoUnidad = "SERVICIO";
+
+            ComprobanteConcepto concepto = new ComprobanteConcepto
+            {
+                ACuentaTerceros = GetComprobanteConceptoACuentaTerceros(line),
+                ObjetoImp = SATData.IncludeTaxObjetoImp,
+                Cantidad = conceptoCantidad,
+                Unidad = conceptoUnidad,
+                Descripcion = line.Description,
+                Importe = conceptoImporte,
+                ValorUnitario = conceptoValorUnitario,
+                ClaveProdServ = conceptoClaveProdServ
+            };
+
+            var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
+            if (lineMeasurement != null)
+            {
+                concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement");
+            }
+
+            this.CalucalteLineTotals(line, concepto, allVatTypes, allVatPercentages, allVatGroups);
+
+            return concepto;
+        }
+
+        private ComprobanteConceptoACuentaTerceros GetComprobanteConceptoACuentaTerceros(ARInvoiceLinePM line)
+        {
+            if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense) { return null; }
+
+            ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
+            ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
+            CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM);
+
+            return new ComprobanteConceptoACuentaTerceros
+            {
+                RfcACuentaTerceros = payableVendorPM.VatNumber,
+                NombreACuentaTerceros = payableVendorPM.SATCustomerName,
+                RegimenFiscalACuentaTerceros = payableVendorPM.RegimenFiscalCode,
+                DomicilioFiscalACuentaTerceros = GetBillToAddressZipCode(payableVendorPM),
+            };
+        }
+
+        private CardPM GetPayableVendorPM(ShipmentReceivablePM shipmentReceivablePM)
+        {
+            if (shipmentReceivablePM == null || string.IsNullOrEmpty(shipmentReceivablePM.PayableVendorId))
+            {
+                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
+            }
+
+            CardQuery cardQuery = new CardQuery(arInvoicePM.Tenant);
+            CardPM payableVendorPM = cardQuery.GetSinglePM(shipmentReceivablePM.PayableVendorId, arInvoicePM.Tenant);
+            if (payableVendorPM == null)
+            {
+                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
+            }
+
+            return payableVendorPM;
+        }
+
+        private string GetBillToAddressZipCode(CardPM payableVendorPM)
+        {
+            AddressQuery addressQuery = new AddressQuery(payableVendorPM.Tenant);
+            List<AddressPM> payableVendorAddresses = addressQuery.GetAddressesByCardId(payableVendorPM.Id, payableVendorPM.Tenant);
+            AddressPM payableVendorBillingAddress = payableVendorAddresses.Where(address => address.AddressTypeId == "B").FirstOrDefault();
+
+            return payableVendorBillingAddress != null ? payableVendorBillingAddress.ZipCode : "";
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, ComprobanteConcepto concepto, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups)
@@ -539,7 +583,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private void AddMultiLineVatTypePercentage(ARInvoiceLinePM line, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<ComprobanteConceptoImpuestosTraslado> lineTranslados, List<ComprobanteConceptoImpuestosRetencion> lineRetencions, VatType lineVatType)
         {
-            List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
+            List<ARInvoiceTotalVATPM> totalVats = new List<ARInvoiceTotalVATPM>();
 
             List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
             List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == line.VatTypeId).ToList();
@@ -602,10 +646,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VATPercent / 100), 2);
                 record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VATPercent / 100), 2);
                 record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VATPercent / 100), 2);
-                totalNoneExpenseVats.Add(record);
+                totalVats.Add(record);
             }
 
-            foreach (ARInvoiceTotalVATPM lineTotal in totalNoneExpenseVats)
+            foreach (ARInvoiceTotalVATPM lineTotal in totalVats)
             {
                 if (lineTotal.VATPercent >= 0)
                 {
@@ -830,20 +874,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         public List<ARInvoiceTotalVATPM> GetARInvoiceTotalVATPMs()
         {
-            if (hasExpenses)
-            {
-                return CalculateNoneExpenseTotalVats();
-            }
-
-            ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(arInvoicePM.Tenant);
-            return aRInvoiceTotalVATQuery.GetTotalVATs(arInvoicePM.Id, arInvoicePM.Tenant).ToList();
+            return CalculateTotalVats();
         }
 
-        private List<ARInvoiceTotalVATPM> CalculateNoneExpenseTotalVats()
+        private List<ARInvoiceTotalVATPM> CalculateTotalVats()
         {
-            List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
-            if (myDataLines.Count <= 0) return totalNoneExpenseVats;
+            List<ARInvoiceTotalVATPM> totalVats = new List<ARInvoiceTotalVATPM>();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
+            if (myDataLines.Count <= 0) return totalVats;
 
 
             List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
@@ -877,7 +915,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 record.LocalVATAmount = MethodHelper.Round((record.LocalVatableAmount * record.VATPercent / 100), 2);
                 record.InvoiceCurrencyVATAmount = MethodHelper.Round((record.InvoiceCurrencyVatableAmount * record.VATPercent / 100), 2);
                 record.ProfitCurrencyVATAmount = MethodHelper.Round((record.ProfitVatableAmount * record.VATPercent / 100), 2);
-                totalNoneExpenseVats.Add(record);
+                totalVats.Add(record);
 
                 localAmountTotal += record.LocalVATAmount;
                 invoiceAmountTotal += record.InvoiceCurrencyVATAmount;
@@ -889,7 +927,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             var subtotal = invoiceVatableAmountTotal;
             var total = invoiceVatableAmountTotal + invoiceAmountTotal;
 
-            return totalNoneExpenseVats;
+            return totalVats;
         }
 
         private void AddLineVatTypePercentage(List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<InvoiceTotalsClass> group_Source, ARInvoiceLinePM item)
@@ -989,7 +1027,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             double subtotal = 0;
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
             foreach (var line in myDataLines)
             {
                 subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);

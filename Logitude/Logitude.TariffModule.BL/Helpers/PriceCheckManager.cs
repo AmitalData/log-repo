@@ -293,11 +293,16 @@ namespace Logitude.TariffModule.BL.Helpers
         
         private List<TariffSearchSummary> GetTariffSearchSummary(IQueryable<TariffLine> iQueryable)
         {
-            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();            
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort 
+            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort
                                         && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)
-                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true) 
-                                        && (viaPort != null ? p.ViaPortId == viaPort : true));            
+                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));
+
+            if (!string.IsNullOrEmpty(viaPort))
+            {
+                iQueryable = iQueryable.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true);
+            }
+
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -344,254 +349,23 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
 
-            List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
+            List<Tariff> costTariffs = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
 
-            if (TariffListTemp.Count > 0)
+            if (costTariffs.Count > 0)
             {
                 if (string.IsNullOrEmpty(currencyId))
                 {
-                    currencyId = TariffListTemp.FirstOrDefault().CurrencyId;
+                    currencyId = costTariffs.FirstOrDefault().CurrencyId;
                 }
             }
 
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
-                TariffListTemp = TariffListTemp.Where(p => p.TariffProductId == product).ToList();
+                costTariffs = costTariffs.Where(p => p.TariffProductId == product).ToList();
             }
 
-            if (TariffListTemp != null && TariffListTemp.Count > 0)
-            {
-                TariffListTemp.ForEach(itemStep =>
-                {
-                    int initialPropIndex = -1;
+            items = GetTariffResults(iQueryable, propIndex, costTariffs);
 
-                    if (!string.IsNullOrEmpty(itemStep.PriceSteps))
-                    {
-                        var convertedWeightByUOM = CalculateWeightByUnitOfMeasurementCode(itemStep.UnitOfMeasurementCode);
-           
-                        List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
-                        int index = 0;
-                        initialSteps.ForEach(item =>
-                        {
-                            if (float.Parse(item) > convertedWeightByUOM)
-                            {
-                                initialPropIndex = index;
-                                return;
-                            }
-
-                            else if (float.Parse(item) == convertedWeightByUOM)
-                            {
-                                initialPropIndex = ++index;
-                                return;
-                            }
-
-                            else
-                            {
-                                index++;
-                            }
-                        });
-
-                        if (initialPropIndex == -1)
-                        {
-                            initialPropIndex = initialSteps.Count;
-                        }
-                    }
-                    else
-                    {
-                        initialPropIndex = propIndex;
-                    }
-
-                    if (initialPropIndex == 0)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.MinPrice,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g  
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.MinPrice),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 0,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else  if (initialPropIndex == 1)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step1Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step1Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 1,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 2)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step2Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step2Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 2,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 3)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step3Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step3Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 3,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 4)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step4Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step4Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 4,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 5)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step5Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step5Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 5,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 6)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step6Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step6Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 6,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 7)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step7Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step7Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 7,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 8)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step8Price,
-                                                  item.Version,
-                                                  item.UnitOfMeasurementCode
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step8Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 8,
-                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
-                                              })).ToList();
-                    }
-                });
-            }
-            
             List<Tariff> TariffList = this.tariffRepository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
@@ -641,7 +415,13 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
             {
                 List<TariffLine> filteredLines = new List<TariffLine>();
-                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && (viaPort != null ? p.ViaPortId == viaPort : true)).ToList();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort).ToList();
+
+                if (!string.IsNullOrEmpty(viaPort))
+                {
+                    filteredLines = filteredLines.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true).ToList();
+                }
+
                 if (filteredLines.Count() == 0)
                 {
                     filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.IsToAllOtherPorts == true).ToList();
@@ -946,6 +726,265 @@ namespace Logitude.TariffModule.BL.Helpers
 
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
+        }
+
+        private List<TariffResult> GetTariffResults(IQueryable<TariffLine> iQueryable, int propIndex, List<Tariff> tariffs)
+        {
+            if (tariffs == null || tariffs.Count == 0) return new List<TariffResult>();
+
+            var items = new List<TariffResult>();
+            tariffs.ForEach(itemStep =>
+            {
+                int index = GetPirceStepIndex(propIndex, itemStep);
+                items.AddRange(BuildTarrifResult(iQueryable, itemStep, index));
+            });
+
+            return items;
+        }
+
+        private List<TariffResult> BuildTarrifResult(IQueryable<TariffLine> iQueryable, Tariff itemStep, int index)
+        {
+            var items = new List<TariffResult>();
+            switch (index)
+            {
+                case 0:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.MinPrice,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.MinPrice),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 0,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 1:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step1Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step1Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 1,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 2:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step2Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step2Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 2,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 3:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step3Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step3Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 3,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 4:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step4Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step4Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 4,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 5:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step5Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step5Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 5,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 6:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step6Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step6Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 6,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 7:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step7Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step7Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 7,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 8:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step8Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step8Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 8,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+            }
+
+            if (items.Any() && items[0].Price == null && index > 0) return BuildTarrifResult(iQueryable, itemStep, index - 1);
+            return items;
+        }
+
+        private int GetPirceStepIndex(int propIndex, Tariff itemStep)
+        {
+            if (string.IsNullOrEmpty(itemStep.PriceSteps)) return propIndex;
+
+            int initialPropIndex = -1;
+            var convertedWeightByUOM = CalculateWeightByUnitOfMeasurementCode(itemStep.UnitOfMeasurementCode);
+
+            List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
+            int index = 0;
+            initialSteps.ForEach(item =>
+            {
+                if (float.Parse(item) > convertedWeightByUOM)
+                {
+                    initialPropIndex = index;
+                    return;
+                }
+
+                else if (float.Parse(item) == convertedWeightByUOM)
+                {
+                    initialPropIndex = ++index;
+                    return;
+                }
+
+                else
+                {
+                    index++;
+                }
+            });
+
+            if (initialPropIndex == -1)
+            {
+                initialPropIndex = initialSteps.Count;
+            }
+
+            return initialPropIndex;
         }
 
         private void CalculateTariffActualPrice(TariffResult tariff, decimal? minprice)

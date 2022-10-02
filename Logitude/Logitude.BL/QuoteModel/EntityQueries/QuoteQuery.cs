@@ -2783,6 +2783,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
         private QuoteSaleChargePM MapChargePMToSaleChargePM(QuoteChargePM item)
         {
+            var vatAmount = item.VatAmount == null ? 0 : item.VatAmount;
             QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
             {
                 Id = item.Id,
@@ -2852,7 +2853,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                 ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                 IsChargeBySteps = item.IsChargeBySteps,
-                SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
+                SalesWithVATAmount = item.SaleTotalAmount + vatAmount,
                 QuoteChargesGroupCode = item.QuoteChargesGroupCode,
                 VATAmountInLocalCurrency = item.VATAmountInLocalCurrency,
                 VATAmountInLineSaleCurrency = item.VATAmountInLineSaleCurrency,

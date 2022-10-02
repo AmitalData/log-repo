@@ -11,6 +11,7 @@ import { ConditionDetails } from "../models/ConditionDetails";
 
 let ConditionCounter = 1;
 let ConditionGroupButton = 1;
+let workflowName;
 
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
@@ -22,14 +23,56 @@ export function OpenWorkflowsInAutomationTab() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
 }
 
+export function SearchFlowByName() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetBackToWorkflowsList, RequestAliases.GetBackToWorkflowViews);
+    BackToWorkflowList();
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews);
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowSearchBox, workflowName);
+}
+
+export function RefreshWorkflowLisr() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews);
+    cy.Click(WorkflowSelectors.WorkflowListRefreshButton, null)
+}
+
+export function ExportWorkflowList() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetQueryExportExecution, RequestAliases.GetQueryExportExecution);
+    cy.Click(WorkflowSelectors.WorkflowListExcelExport, null)
+}
+
+export function AsserExportWorkflowList() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQueryExportExecution, 200);
+    BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file')
+}
+
+export function AssertWorkflowListReresh() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
+}
+
+export function AssertSearchFlowByName() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200);
+}
+
+function BackToWorkflowList() {
+    cy.Click(WorkflowSelectors.BackToWorkflowListButton, 'Workflows', null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetBackToWorkflowViews, 200);
+}
+
+function GetWorkflowNameInBuilder() {
+    cy.get(WorkflowSelectors.FlowNameInFlowBuilder).should(($div) => {
+        workflowName = $div.text().replace(/\s/g, "");
+    })
+}
+
 export function OpenFirstFlowInWorkFlowList() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowFlowBuilder, RequestAliases.GetWorkflowFlowBuilder);
     cy.Click(WorkflowSelectors.WorkFlowFlowRow + BaseSelectors.FirstElement, null);
 }
 
 export function AssertOpenFlowBuilder() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
-    BaseAssertion.AssertElementExist(WorkflowSelectors.FlowBuilderEditButton)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowFlowBuilder, 200);
+    BaseAssertion.AssertElementExist(WorkflowSelectors.FlowBuilderEditButton);
+    GetWorkflowNameInBuilder();
 }
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
@@ -55,27 +98,58 @@ export function OpenEditStartNode() {
 
 export function OpenNewWorkflow() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetNewWorkflow, RequestAliases.GetNewWorkflow);
-    cy.Click(WorkflowSelectors.NewWorkflow, null)
-    BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200)
+    cy.Click(WorkflowSelectors.NewWorkflow, null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
+}
+
+export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
+    cy.Click(WorkflowSelectors.FlowEditButton, null);
+    let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : null;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName);
 }
 
 export function CreateNewWorkflow() {
     cy.DefineRequestWait(RestAPI.POST, URLs.WorkflowRequest, RequestAliases.PostWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowCreateButton, null)
+    cy.Click(WorkflowSelectors.WorkflowCreateButton, null);
+}
+
+export function UpdateNewWorkflow() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowGeneralSaveButton, null);
+}
+
+export function AssertUpdateWorkflow() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutWorkflowFlowBuilder, 200)
+}
+
+export function CloseEditStartNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true);
+}
+
+export function OpenFlowRunHistory() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetWorkflowInstance);
+    cy.Click(WorkflowSelectors.FlowRunHistory, null);
+}
+
+export function AssertOpenFlowRunHistory() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowInstance, 200);
+    cy.Click(WorkflowSelectors.WorkflowGeneralBackButton, null);
 }
 
 export function SaveWorkflow() {
+    CloseEditStartNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
     cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true)
     cy.Click(WorkflowSelectors.WorkflowSaveButton, null)
 }
 
 export function AssertSaveWorkflow() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutWorkflowFlowBuilder, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.PutWorkflowFlowBuilder, 200);
 }
 
 export function AssertCreateWorkflow() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostWorkflowFlowBuilder, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.PostWorkflowFlowBuilder, 200);
 }
 
 export function FillRootConditionsDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {

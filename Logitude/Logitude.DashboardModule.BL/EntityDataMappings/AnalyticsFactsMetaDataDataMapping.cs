@@ -32,7 +32,6 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
             string mySearchFields = "";
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.TableName);
 
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;

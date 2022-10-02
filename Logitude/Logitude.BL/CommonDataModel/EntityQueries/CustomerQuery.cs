@@ -2470,6 +2470,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    SharedLogisticsInvitationStatusCode = customer.SharedLogisticsInvitationStatusCode,
                                                    IsActiveForMobile = customer.IsActiveForMobile,
                                                    LastLoginDate = customer.LastLoginDate,
+                                                   LastLoginDateViaPC = customer.LastLoginDateViaPC,
+                                                   LastLoginDateViaMobile = customer.LastLoginDateViaMobile,
                                                    InvitationDate = customer.InvitationDate,
                                                    IndustryName = customer.IndustryName,
                                                    LeadDescription = customer.LeadDescription,

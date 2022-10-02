@@ -2,9 +2,112 @@
     .table-row {
         height: 1px;
     }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .select-entity-label {
+        padding-bottom: 4px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .select-entity-label,
+    .set-conditions-label,
+    .select-trigger-label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+
+    .start-conditions-container {
+        overflow: auto;
+        width: 936px;
+        height: 370px;
+    }
+
+    .min-start-conditions-container {
+        height: 285px;
+    }
 </style>
 
 <table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'VariableName'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="VariableName"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'VariableName'"
+                    (ValueChanged)="updateVariableName($event)" [DataCy]="'variable-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Data Type'" [ObjectFieldName]="'VariableType'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <ComboBox [ItemsSource]="DataTypes" (SelectedItemChanged)="DataTypeSelectionMethod($event)"
+                    [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="VariableType != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Default Value'" [ObjectFieldName]="'VariableValue'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <FieldValue [Name]="'defaultValue'" [DataType]="VariableType" [IsIntegerNumberInput]="false"
+                    [CurrentValue]="VariableValue" (ValueChanged)="updateVariableValue($event)">
+                </FieldValue>
+            </div>
+        </td>
+    </tr>
 
     <tr>
         <td>
@@ -16,7 +119,8 @@
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'declare-variable-properties-save-button'"
+                (CancelButtonClicked)="cancelButtonClicked()"
+                [SaveButtonDataCy]="'declare-variable-properties-save-button'"
                 [CancelButtonDataCy]="'declare-variable-properties-cancel-button'"></FooterButtons>
 
         </td>

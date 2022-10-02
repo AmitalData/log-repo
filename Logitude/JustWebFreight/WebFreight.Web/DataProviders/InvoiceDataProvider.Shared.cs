@@ -603,6 +603,7 @@ namespace WebFreight.Web.DataProviders
             public double? VatableAmountInvoiceCurrency { get; set; }
             public double? NonVatableAmountInvoiceCurrency { get; set; }
             public double? RegionalTaxAmountInvoiceCurrency { get; set; }
+            public DateTime? PaidDate { get; set; }
         }
 
         public class InvoiceTotals
@@ -698,6 +699,8 @@ namespace WebFreight.Web.DataProviders
         public string PreForwardingToPortName { get; set; }
         public string PreForwardingToPortCode { get; set; }
         public string ConnectedQuoteNumber { get; set; }
+        public string FirstPickupEmptyContainer { get; set; }
+        public string LastDeliveryEmptyContainerReturn { get; set; }
     }
     public class Payment
     {

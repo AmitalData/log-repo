@@ -11,6 +11,9 @@ import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { retry } from 'rxjs/operators';
+import { Guid } from 'Infrastructure/Utilities/Guid';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -28,7 +31,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem = new WidgetFilterItem();
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
@@ -64,7 +67,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
         if (!filters) return;
-        this.RootFilter = new WidgetFilterItem(filters, true);
+        this.RootFilter = new WidgetFilterItem(filters, true, this.DashboardPM?.Id);
     }
 
     private ComputeChartImageSrc() {
@@ -130,6 +133,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set Title(value: string) {
         if (this.EntityPM.Title != value) {
             this.EntityPM.Title = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Title Change ", Message: "Changed To" + this.EntityPM.Title, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -137,7 +141,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
-            this.RootFilter = new WidgetFilterItem();
+            this.RootFilter = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -147,6 +152,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.TypeCode = value;
             this.ComputeChartImageSrc();
             this.CheckMeasureAddVisiblity();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -175,6 +181,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     set DateGroupCode(value: string) {
         if (this.EntityPM.DateGroupCode != value) {
             this.EntityPM.DateGroupCode = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Date Group Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+
         }
     }
 
@@ -182,6 +190,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set SortBy(value: number) {
         if (this.EntityPM.SortBy != value) {
             this.EntityPM.SortBy = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -192,6 +201,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set MaximumGrouping(value: number) {
         if (this.EntityPM.MaximumGrouping != value) {
             this.EntityPM.MaximumGrouping = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -202,6 +212,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set SortDirection(value: string) {
         if (this.EntityPM.SortDirection != value) {
             this.EntityPM.SortDirection = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Sort By Direction Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -221,6 +232,8 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.FirstTime = false;
             return;
         }
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
+
         this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
         this.FirstTime = false;
     }
@@ -252,6 +265,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isNew) {
             this.isNew = false;
             this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
+            this.EntityPM.Key = Guid.newGuid();
             this.DashboardPM.AddWidget(this.EntityPM);
         }
         this.CurrentSession.CloseCurrentWindowEmit("OK");
@@ -260,6 +274,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     ValidateInputs(errors: string[]) {
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
+        if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter)
     }
 
     ValidateSort(errors: string[]) {
@@ -273,6 +288,33 @@ export class AddEditWidgetComponent extends BaseComponent {
         });
     }
 
+    ValidateFilters(errors: string[], filter: WidgetFilterItem) {
+        if (filter.QueryFilterItems && filter.QueryFilterItems.length != 0) {
+            filter.QueryFilterItems.forEach(filterItem => { this.ValidateFilters(errors, filterItem); });
+            return;
+        }
+        if (!filter.FieldId) {
+            errors.push("Filter Field is Required");
+            return;
+        }
+        if (!filter.Operator) {
+            errors.push("Filter Operator is Required");
+            return;
+        }
+        if (filter.Operator == "IsEmpty" || filter.Operator == "IsNotEmpty") return;
+        if (filter.Operator != "Previous" && filter.Operator != "Next" && filter.Operator != "Current" && (!filter.FieldValue || filter.FieldValue == "")) errors.push("Filter Value is Required");
+        if ((filter.Operator == "Previous" || filter.Operator == "Next") && (!filter.FieldValue3 || filter.FieldValue3 == "")) errors.push("Filter Value is Required");
+        if (filter.Operator == "Between") this.ValidateBetweenOperator(errors, filter);
+    }
+
+    ValidateBetweenOperator(errors: string[], filter: WidgetFilterItem) {
+        if ((!filter.FieldValue2 || filter.FieldValue2 == "")) {
+            errors.push("Filter Second Date is Required");
+        }
+        if (filter.FieldValue2 <= filter.FieldValue) errors.push("Filter First Date Must Be Bigger Than Second Date");
+    }
+
+
     private myCloner: Cloner;
     private SetFiltersString() {
         if (!this.RootFilter || !this.RootFilter.QueryFilterItems || this.RootFilter.QueryFilterItems.length == 0) {
@@ -283,7 +325,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             if (key !== "UIProperties" && key !== "IsGroup" && key !== "andOr" &&
                 key !== "AndOrOps" && key !== "BooleanList" && key !== "IndexOrder" &&
                 key !== "FieldCode" && key !== "Operators" && key !== "SelectedOperator" &&
-                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData") return val;
+                key !== "null" && key !== "SelectedField" && key !== "DontRefreshFieldData" && key !== "DashboardId") return val;
         });
     }
 
@@ -325,6 +367,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click", DashboardId: this.DashboardPM?.Id });
         this.CheckMeasureAddVisiblity();
     }
 }
@@ -337,12 +380,14 @@ export class WidgetMeasureItem extends BaseComponent {
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
+    DashboardPM: DashboardPM;
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.DashboardPM = fatherComponent?.DashboardPM;
         this.FilterMeasureFields();
     }
 
@@ -355,6 +400,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
 
@@ -362,6 +408,7 @@ export class WidgetMeasureItem extends BaseComponent {
     set MeasureCode(value: string) {
         if (this.EntityPM.MeasureCode == value) return;
 
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
@@ -397,6 +444,7 @@ export class WidgetMeasureItem extends BaseComponent {
             this.Widget.RemoveWidgetMeasure(this.EntityPM);
         }
 
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 }

@@ -781,6 +781,13 @@ export class EditComponent implements OnDestroy {
     }
 
 
+    private CheckEntityStatusTabsFeatures() {
+        if (this.ObjectTableName != "EntityStatus") return false;
+        let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || entityStatusFeatureToggle)
+            return true;
+        return false;
+    }
 
     FillTabsItemsSource(allTabs: any[]) {
 
@@ -815,7 +822,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (tab.Type == 'Custom' || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Type == 'Custom' || this.CheckEntityStatusTabsFeatures() || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 
@@ -865,7 +872,7 @@ export class EditComponent implements OnDestroy {
         }
 
         myTabsSorted.forEach(item => {
-            var itemTab: TabItem = new TabItem(item);
+            var itemTab: TabItem = new TabItem(item, this.EntityId);
             itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (item.ControlPath.indexOf("Doc") > -1) {
@@ -2078,18 +2085,30 @@ export class TabItem {
     public EntityPM: any;
     public TextCode: string;
     public IsDisabled: boolean = false;
-    constructor(itemPM: any) {
+    private entityId: string;
+    constructor(itemPM: any, entityId: any) {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
+        this.entityId = entityId;
         this.TextCode = this.GetTextCode(itemPM);
     }
 
     private GetTextCode(itemPM: any) {
         var textCode = itemPM.TabNameTextCodeCode;
-        if ((ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog")
-            && itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL") && itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
+            textCode = this.GetTextCodeOfCargoTrackingBranding(itemPM);
+        }
+        return textCode;
+    }
+
+    private GetTextCodeOfCargoTrackingBranding(itemPM: any) {
+        var textCode = itemPM.TabNameTextCodeCode;
+        var digitalPortalBrandingToggleFeatureForTenantZero = SessionLocator.TenantZeroFeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
+        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB" && d.TenantNumber == +this.entityId)[0];
+        if (digitalPortalBrandingToggleFeatureForTenantZero || digitalPortalBrandingToggleFeatureForCurrentTenant) {
             textCode = "TenantManagement.TH.LogitudeDigitalBranding";
         }
+
         return textCode;
     }
 }

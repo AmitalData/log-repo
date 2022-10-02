@@ -52,6 +52,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
     public IsAllowingMultipleFreightCharges: boolean = false;
+    public IsMarkUpCurrencyHasFeatureToggle: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -87,7 +88,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.CheckMarkUpCurrencyFeatureToggle();
         this.Listen();
+    }
+
+    private CheckMarkUpCurrencyFeatureToggle() {
+        this.IsMarkUpCurrencyHasFeatureToggle = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMU")[0];
+        if (featureToggle) {
+            this.IsMarkUpCurrencyHasFeatureToggle = true;
+        }
     }
 
     public IsAllowingMultipleFreightChargesMethod() {
@@ -1568,7 +1578,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
     public MarkupCurrencyList: MarkupCurrency[];
     public MarkUpCurrencyCode: string = null;
-    private FillMarkupCurrencyList() {
+    public FillMarkupCurrencyList() {
         this.MarkupCurrencyList = [];
         var costCurrency = new MarkupCurrency();
         costCurrency.CurrencyCode = this.CostCurrencyCode;
@@ -1583,11 +1593,14 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.MarkupCurrencyList.push(costCurrency);
         this.MarkupCurrencyList.push(saleCurrency);
 
-        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
-
-        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+        if (!this.IsNew) {
             this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
-            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            if (!this.markUpCurrencySelectedItem) {
+                this.MarkUpCurrencyCode = this.MarkupCurrencyList[0].CurrencyCode;
+            }
+            else {
+                this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            }
         }
     } 
 
@@ -1914,7 +1927,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 isEnabled_SaleMinAmount = false;
             }
 
-            isMarkupCurrencyValid = (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) && (this.SaleCurrencyId != this.CostCurrencyId);
+            isMarkupCurrencyValid = (!this.QuotePM.IsSaleCurrencySameAsCost) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -2903,7 +2916,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.CostQuantity) ? this.QuotePM.ValueOfGoods : this.CostQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
@@ -3269,7 +3282,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.SaleQuantity) ? this.QuotePM.ValueOfGoods : this.SaleQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
@@ -3390,7 +3403,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         else {
             var myResult = this.SaleUnitPrice;
-            var markup = this.GetMarkUpValueByCurrency();
+            var markup = this.GetMarkUpValueByCurrency(this.MarkUpValue);
 
             if (this.MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPriceInSaleCurrency + (this.CostUnitPriceInSaleCurrency * (markup / 100));
@@ -3408,16 +3421,21 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
-    GetMarkUpValueByCurrency() {
-        var markUpValue = (this.MarkUpValue == null ? 0 : this.MarkUpValue);
-        if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+    GetMarkUpValueByCurrency(value) {
+        if (!this.fatherComponent.IsMarkUpCurrencyHasFeatureToggle) {
+            return value;
+        }
+        else {
+            var markUpValue = (value == null ? 0 : value);
+            if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+                return markUpValue;
+            }
+
+            var markUpLocalValue = markUpValue * this.CostExchangeRate;
+            markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
             return markUpValue;
         }
-
-        var markUpLocalValue = markUpValue * this.CostExchangeRate;
-        markUpValue = markUpLocalValue / this.SaleExchangeRate;
-
-        return markUpValue;
     }
 
     ComputeSalePrice1() {
@@ -3588,6 +3606,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
 
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
+
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
                         }
@@ -3680,6 +3700,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
 
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
+
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
                         }
@@ -3759,6 +3781,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                         else {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
+
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3840,6 +3864,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
 
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
+
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
                         }
@@ -3920,6 +3946,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
 
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
+
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
                         }
@@ -3999,6 +4027,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                         else {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
+
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -4591,6 +4621,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.Sale3Header[2] = q3 + p3;
         this.Sale4Header[2] = q4 + p4;
         this.Sale5Header[2] = q5 + p5;
+
+        this.FillMarkupCurrencyList();
     }
 
     get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
@@ -4658,6 +4690,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
 
         this.OnChargeCurrencyChanged();
+        this.FillMarkupCurrencyList();
     }
     OnQuoteSaleCurrencyDataChanged() {
 

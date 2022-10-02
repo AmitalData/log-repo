@@ -758,7 +758,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public void Add(Shipment entity)
         {
-            new ShipmentAnalyticRepository(shipmentsContext).AddFromShipment(entity);
             context.Shipments.Add(entity);
         }
 

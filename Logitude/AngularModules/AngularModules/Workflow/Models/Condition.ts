@@ -9,6 +9,7 @@ export class Condition {
     public fieldCode: string;
     public type: string;
     public value: string;
+    public valueCode: string;
     public valueExpression: string;
     public operator: string;
     public conditions: Condition[];

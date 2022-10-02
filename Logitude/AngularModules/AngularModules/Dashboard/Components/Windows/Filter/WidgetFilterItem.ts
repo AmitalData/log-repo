@@ -2,6 +2,7 @@ import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIPro
 import { AppTool } from 'Infrastructure/Tools';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 export class WidgetFilterItem {
@@ -25,12 +26,15 @@ export class WidgetFilterItem {
 
     private SelectedField: AnalyticsFactsFieldsMetaDataList;
     public FieldValue: any = null
+    public FieldValue2: any = null
+    public FieldValue3: any = null
     public QueryFilterItems: WidgetFilterItem[] = [];
     public DateGroupCode: string;
-    public Quarter: string;
+    public DashboardId: string;
 
-    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false) {
+    constructor(field: WidgetFilterItem = null, buildRootFilter: boolean = false, dashboardId: string = null) {
         this.UIProperties = new UIProperties;
+        this.DashboardId = dashboardId;
         if (!buildRootFilter && field) this.BuildFieldData(field);
         else if (buildRootFilter) this.BuildRootFitler(field);
     }
@@ -40,7 +44,7 @@ export class WidgetFilterItem {
     }
 
     private BuildGroupFilter(oldFilter: WidgetFilterItem) {
-        let groupTreeFilter = new WidgetFilterItem();
+        let groupTreeFilter = new WidgetFilterItem(null, false, this.DashboardId);
         groupTreeFilter.IsGroup = true;
         groupTreeFilter.setAndOrOperation(oldFilter.FilterType);
         oldFilter.QueryFilterItems?.forEach((oldField) => {
@@ -50,7 +54,7 @@ export class WidgetFilterItem {
     }
 
     private BuildFilter(oldField: WidgetFilterItem) {
-        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField);
+        if (oldField.QueryFilterItems.length == 0) return new WidgetFilterItem(oldField, false, this.DashboardId);
         return this.BuildGroupFilter(oldField);
     }
 
@@ -60,7 +64,6 @@ export class WidgetFilterItem {
         this.FieldName = field.FieldName;
         this.DateGroupCode = field.DateGroupCode;
         this.FieldDataType = field.FieldDataType;
-        this.Quarter = field.Quarter;
         this.FillFieldValue(field);
         this.Operator = field.Operator;
         this.FilterType = field.FilterType;
@@ -70,8 +73,13 @@ export class WidgetFilterItem {
     }
 
     FillFieldValue(field: WidgetFilterItem) {
-        if (this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') {
+        if ((this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') && (field.Operator == "GreaterThan" || field.Operator == "LessThan" || field.Operator == "Between")) {
             this.FieldValue = FieldValueResolver.ConvertToDate(field.FieldValue, "TreeFilter");
+            if (field.Operator == "Between") this.FieldValue2 = FieldValueResolver.ConvertToDate(field.FieldValue2, "TreeFilter");
+            return;
+        }
+        if ((this.FieldDataType == 'DateTime' || this.FieldDataType == 'Date') && (field.Operator == "Previous" || field.Operator == "Next")) {
+            this.FieldValue3 = field.FieldValue3;
             return;
         }
         if (this.FieldDataType == 'Boolean') {
@@ -101,6 +109,7 @@ export class WidgetFilterItem {
             this.ResetField();
             return;
         }
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Field Change", Message: "Changed To " + field.DisplayName });
         if (this.SelectedField && this.SelectedField.Id == field.Id) return;
         this.FieldSelectedChanged(field);
     }
@@ -124,75 +133,161 @@ export class WidgetFilterItem {
         this.FillOperators(field.DataTypeCode);
         this.Operator = null;
         this.SelectedOperator = null;
-        this.Quarter = null;
         this.DateGroupCode = null;
     }
 
 
     private FillOperators(dataTypeCode: string) {
         this.Operators = [];
+        switch (dataTypeCode) {
+            case "DateTime":
+            case "Date":
+                this.Operators.push(new Operator("After", "GreaterThan"));
+                this.Operators.push(new Operator("Before", "LessThan"));
+                this.Operators.push(new Operator("Previous", "Previous"));
+                this.Operators.push(new Operator("Current", "Current"));
+                this.Operators.push(new Operator("Next", "Next"));
+                this.Operators.push(new Operator("Between", "Between"));
+                break;
 
-        if (dataTypeCode == "DateTime" || dataTypeCode == "Date" || dataTypeCode == "Integer" || dataTypeCode == "Decimal" || dataTypeCode == "Double") {
-            this.Operators.push(new Operator("Equal", "Equal"));
-            this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
-            this.Operators.push(new Operator("Greater Than", "GreaterThan"));
-            this.Operators.push(new Operator("Less Than", "LessThan"));
-            this.Operators.push(new Operator("Greater Than Or Equal", "GreaterThanOrEqual"));
-            this.Operators.push(new Operator("Less Than Or Equal", "LessThanOrEqual"));
-        }
-        else if (dataTypeCode == "Boolean") {
-            this.Operators.push(new Operator("Equal", "Equal"));
-        }
-        else if (dataTypeCode == "LookUp") {
-            this.Operators.push(new Operator("Equal", "Equal"));
-            this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
-        }
-        else {
-            this.Operators.push(new Operator("Equal", "Equal"));
-            this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
-            this.Operators.push(new Operator("Contains", "Contains"));
-            this.Operators.push(new Operator("Does Not Contain", "NotContains"));
-        }
+            case "Integer":
+            case "Decimal":
+            case "Double":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Greater Than", "GreaterThan"));
+                this.Operators.push(new Operator("Less Than", "LessThan"));
+                this.Operators.push(new Operator("Greater Than Or Equal", "GreaterThanOrEqual"));
+                this.Operators.push(new Operator("Less Than Or Equal", "LessThanOrEqual"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
 
-        this.Operators.push(new Operator("Is Empty", "IsEmpty"));
-        this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+            case "Boolean":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+
+            case "LookUp":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+            default:
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Contains", "Contains"));
+                this.Operators.push(new Operator("Does Not Contain", "NotContains"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+        }
     }
 
     public OperationValueChanged(operator) {
         this.SelectedOperator = operator;
         this.Operator = operator ? operator.Code : null;
-        this.FieldValue = "";
-        this.Quarter = null;
-        this.DateGroupCode = null;
+        this.GetDefaultFieldValue();
+        this.FieldValue2 = "";
+        this.GetDefaultDateGroup();
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Operator Change", Message: "Changed To " + operator.Code });
     }
 
-    TextBoxCondationValueChange(newValue) {
-        this.FieldValue = newValue;
+    private GetDefaultFieldValue() {
+        if ((this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') && (this.Operator == 'Next' || this.Operator == 'Previous')) {
+            this.FieldValue3 = 1;
+            this.FieldValue = "";
+        }
+        else {
+            this.FieldValue = "";
+            this.FieldValue3 = "";
+        }
+
+    }
+
+    private GetDefaultDateGroup() {
+        if (this.Operator == "Previous" || this.Operator == "Current" || this.Operator == "Next") this.DateGroupCode = "Day";
+        else this.DateGroupCode = null;
+    }
+
+    TextBoxValueChange(newValue) {
+        if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') this.FieldValue3 = newValue;
+        else this.FieldValue = newValue;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + newValue });
     }
 
     BooleanListValueChanged(newValue: boolean) {
         this.IsChecked = newValue;
         this.FieldValue = this.IsChecked ? "true" : "false";
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + newValue });
     }
 
-    DatePickerCondationValueChange(date, quarter) {
+    DatePickerCondationValueChange(date) {
         this.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
-        this.Quarter = this.DateGroupCode == "Quarter" ? quarter : null;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Value Change", Message: "Changed To " + this.FieldValue });
+    }
+
+    SecondDatePickerCondationValueChange(date) {
+        this.FieldValue2 = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Second Date Value Change", Message: "Changed To " + this.FieldValue });
     }
 
     public AndOrOpsChanged(value) {
         this.AndOr = value;
         this.FilterType = value;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter AndOr Operator Change", Message: "Changed To " + value });
     }
 
     public DateGroupCodeChange(DateGroupCode: string) {
         this.DateGroupCode = DateGroupCode;
-        this.FieldValue = "";
-        this.Quarter = null;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Date Group Change", Message: "Changed To " + DateGroupCode });
     }
 
     LogLovCondationValueChange(newValue) {
         this.FieldValue = newValue ? !AppTool.IsNullOrEmpty(newValue.Id) ? newValue.Id : newValue.Code : "";
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Filter Operator Change", Message: "Changed To " + this.FieldValue });
+    }
+
+
+    ShowTextBox(item: WidgetFilterItem) {
+        return this.IsNotEmptyNotEmtyOperator(item) &&
+            (!item.FieldDataType || item.FieldDataType == '' ||
+                item.FieldDataType == 'Text' || item.FieldDataType == 'nText' ||
+                item.FieldDataType == 'Integer' || item.FieldDataType == 'Double' ||
+                item.FieldDataType == 'SigDouble' || item.FieldDataType == 'Decimal' ||
+                ((item.FieldDataType == 'Date' || item.FieldDataType == 'DateTime') && (item.Operator == 'Next' || item.Operator == 'Previous'))
+            )
+    }
+
+    IsNotEmptyNotEmtyOperator(item: WidgetFilterItem) {
+        return item.Operator && item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty';
+    }
+
+    GetTextInputType(item: WidgetFilterItem) {
+        if (item.FieldDataType == 'Date' || item.FieldDataType == 'DateTime') return "Integer";
+        if (item.FieldDataType == "Text") return "nText";
+        return item.FieldDataType;
+    }
+
+    ShowFirstDatePicker(item: WidgetFilterItem) {
+        return this.IsNotEmptyNotEmtyOperator(item) && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') &&
+            (item.Operator == "GreaterThan" || item.Operator == "LessThan" || item.Operator == "Between");
+    }
+
+    ShowSecondDatePicker(item: WidgetFilterItem) {
+        return this.IsNotEmptyNotEmtyOperator(item) && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') && item.Operator == "Between";
+    }
+
+    ShowDateGroups(item: WidgetFilterItem) {
+        return this.IsNotEmptyNotEmtyOperator(item) && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') &&
+            (item.Operator == "Previous" || item.Operator == "Current" || item.Operator == "Next");
+    }
+
+    get TextFieldValue(): string {
+        if (this.FieldDataType == 'Date' || this.FieldDataType == 'DateTime') return this.FieldValue3;
+        return this.FieldValue;
     }
 }
 

@@ -1,12 +1,8 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
-using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
@@ -14,25 +10,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel.DomainServices.Server;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Diagnostics;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.BL.EntityPMs;
-using WebFreight.Web.DataContracts;
-using Logitude.Server.Tools;
-using System.Drawing;
-using WebFreight.Web.Helpers.BIReport;
 
 namespace WebFreight.Web.Helpers
 {
@@ -42,7 +27,7 @@ namespace WebFreight.Web.Helpers
         public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {
             string xmlData = "";
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            MemoryStream memory = new MemoryStream();
 
             int tenant = exportToExcelArgs.Tenant;
             byte[] xmlFilters = exportToExcelArgs.XmlFilters;
@@ -54,7 +39,11 @@ namespace WebFreight.Web.Helpers
             QueryQuery queryQuery = new QueryQuery(queryRep);
             QueryPM query = exportToExcelArgs.QueryPM != null ? exportToExcelArgs.QueryPM : queryQuery.GetSingleQueryPM(exportToExcelArgs.QueryCode, tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
-            List<QueryColumnPM> queryColumns = exportToExcelArgs.QueryColumns != null ? exportToExcelArgs.QueryColumns : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, exportToExcelArgs.UserId, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
+            List<QueryColumnPM> queryColumns =  exportToExcelArgs.QueryColumns != null ?
+                                                exportToExcelArgs.QueryColumns :
+                                                queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, exportToExcelArgs.UserId, query.UniqueCode)
+                                                .OrderBy(q => q.IndexOrder)
+                                                .ToList();
 
             if (exportToExcelArgs.QueryColumns == null)
             {
@@ -79,6 +68,7 @@ namespace WebFreight.Web.Helpers
             MethodInfo getListMethodInfo = null;
             MethodInfo getCountMethodInfo = null;
             object context = null;
+            
             if (typename != null)
             {
                 Type contextType = Type.GetType(typename.Replace("Context", "Service"));
@@ -338,7 +328,7 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            System.Linq.IQueryable querableEntities = null;
+            IQueryable querableEntities = null;
 
             if (getListMethodInfo != null && getCountMethodInfo != null)
             {
@@ -643,6 +633,7 @@ namespace WebFreight.Web.Helpers
 
             return memory.ToArray();
         }
+        
         public byte[] ExportDataToExcel(ExportToExcelArgs args)
         {
             MemoryStream memory = new MemoryStream();
@@ -697,6 +688,7 @@ namespace WebFreight.Web.Helpers
             {
                 string nodename = TranslateTextsClass.Translate(node.Name, args.Tenant);
                 QueryColumnPM column = args.QueryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
+                
                 if (column != null)
                 {
                     if (!string.IsNullOrEmpty(column.DisplayText))
@@ -915,7 +907,10 @@ namespace WebFreight.Web.Helpers
 
                         foreach (QueryColumnPM column in queryColumns)
                         {
-                            string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
+                            string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
+                                          ? column.ObjectFieldListLabelTextCodeCode 
+                                          : column.ObjectFieldFullNameTextCodeCode;
+
                             System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
                             string value = " ";
 
@@ -939,12 +934,10 @@ namespace WebFreight.Web.Helpers
 
                         }
 
-
                         entities.Add(table);
 
                         datacount++;
                     }
-
                 }
 
                 if (dataList == null || datacount == 0)
@@ -970,9 +963,6 @@ namespace WebFreight.Web.Helpers
             }
 
             return entities.ToString();
-
-
-
         }
 
         private string ResoloveLogBoxShipmentFieldValue(object entity, QueryColumnPM column)
@@ -1112,8 +1102,6 @@ namespace WebFreight.Web.Helpers
                     }
             }
 
-
-
             ReflectionProperties ReturnData = null;
             if (getListMethodInfo != null && getCountMethodInfo != null)
             {
@@ -1126,6 +1114,7 @@ namespace WebFreight.Web.Helpers
         }
     }
 }
+
 class ReflectionProperties
 {
     public MethodInfo ListMethodInfo { get; set; }
@@ -1142,27 +1131,21 @@ class ExcelTotals
         Total = total;
         IndexOrder = indexOrder;
     }
+
     public string FieldCode { get; set; }
     public double Total { get; set; }
     public int IndexOrder { get; set; }
 }
 
-
-
 public class ExportToExcelArgs
 {
-
     public byte[] XmlFilters { get; set; }
     public string QueryCode { get; set; }
-
     public int Tenant { get; set; }
-
     public string UserId { get; set; }
     public string TypeName { get; set; }
-
+    public bool RunOnDigitalWorker { get; set; }
     public QueryPM QueryPM { get; set; }
     public  List<QueryColumnPM> QueryColumns { get; set; }
     public IEnumerator Data { get; set; }
-
-
 }

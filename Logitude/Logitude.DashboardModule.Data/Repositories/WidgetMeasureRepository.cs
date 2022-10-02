@@ -19,6 +19,12 @@ namespace Logitude.DashboardModule.Data.Repositories
             WidgetKeys myEntityKeys = entityKeys as WidgetKeys;
             return (from a in context.WidgetMeasures where a.WidgetId == myEntityKeys.Id select a).ToList();
         }
-   }
+
+
+        public List<WidgetMeasure> GetWidgetMeasuresByWidgetId(string widgetId, int tenant)
+        {
+            return (from a in context.WidgetMeasures where a.Tenant == tenant && a.WidgetId == widgetId select a).ToList();
+        }
+    }
 }
    

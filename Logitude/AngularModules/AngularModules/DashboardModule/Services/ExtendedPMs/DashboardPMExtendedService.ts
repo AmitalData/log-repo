@@ -40,4 +40,15 @@ export class DashboardPMExtendedService {
 
         return entityList;
     }
+
+    Delete(dashboardId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.delete(this._apiUrl + '?dashboardId=' + dashboardId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }    
 }

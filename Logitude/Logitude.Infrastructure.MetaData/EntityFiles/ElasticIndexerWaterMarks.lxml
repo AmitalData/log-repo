@@ -3,7 +3,7 @@
   Id="&quot;1b658e5a-2a13-402d-b777-ba15884996f3&quot;"
   ObjectTableName="&quot;IndexerWaterMark&quot;"
   IsNew="true"
-  DBTableName="&quot;IndexerWaterMark&quot;"
+  DBTableName="&quot;IndexerWaterMarks&quot;"
   ObjectTableSingular="&quot;IndexerWaterMark&quot;"
   ObjectTablePlural="&quot;IndexerWaterMarks&quot;"
   DescriptionDefaultText="&quot;IndexerWaterMarks&quot;"

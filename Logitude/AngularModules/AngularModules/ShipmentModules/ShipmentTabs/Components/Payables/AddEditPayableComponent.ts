@@ -29,29 +29,46 @@ export class AddEditPayableComponent implements OnDestroy {
     public IsOrangeInfoVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private PropertyChangedEvent: any = null;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('AdditionalFieldsArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('ByContainerAdditionalFieldsArea', { read: ViewContainerRef, static: false }) byContainerViewContainerRef: ViewContainerRef;
 
     constructor() {
-        this.RunComponent();
+        this.LoadAdditionalCustomFieldsArea();
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
+    public LoadAdditionalCustomFieldsArea() {
+
+        if (!this.viewContainerRef ) {
+            this.RunComponentTimer("DefaultAdditionalCustomFields");
+            return;
         }
 
-        else {
-            this.RunComponentTimer();
-        }
+        this.LoadChildComponent(this.viewContainerRef);
     }
+
+    IsByContainerAdditionalFieldsAreaLoaded: boolean = false;
+    public LoadByContainerAdditionalFieldsArea() {
+
+        if (this.IsByContainerAdditionalFieldsAreaLoaded) return;
+
+        this.Retries= 0;
+        if (!this.byContainerViewContainerRef) {
+            this.RunComponentTimer("ByContainerAdditionalCustomFields");
+            return;
+        }
+
+        this.LoadChildComponent(this.byContainerViewContainerRef);
+        this.IsByContainerAdditionalFieldsAreaLoaded = true;
+    }
+
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName:String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -59,13 +76,13 @@ export class AddEditPayableComponent implements OnDestroy {
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+            this.timerToken = componentName == "ByContainerAdditionalCustomFields" ? setTimeout(() => this.LoadByContainerAdditionalFieldsArea(), 1) : setTimeout(() => this.LoadAdditionalCustomFieldsArea(), 1);
         }
     }
 
-    LoadChildComponent() {
+    LoadChildComponent(viewContainerRef) {
         let screenCode: string = "ShipmentPayable.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.HideLastColumn = true;
                 cmpRef.instance.LabelWidth = 120;
@@ -80,6 +97,7 @@ export class AddEditPayableComponent implements OnDestroy {
     SetDataContext(dataContext: ShipmentPayableItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        dataContext.AddEditPayableComponent = this;
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.IsOrangeInfoVisible = AppTool.IsNullOrEmpty(this.EntityPM.ShipmentPayableParentId) ? false : true;
         this.SetDependencies();

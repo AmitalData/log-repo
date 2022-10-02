@@ -57,6 +57,11 @@ export class ObjectFieldPM {
     public set DataTypeCode(newValue: string) { if (this.dataTypeCode != newValue) { this.dataTypeCode = newValue; this.MarkAsDirty("DataTypeCode"); } }
 
 
+    private dataTypeName: string;
+    public get DataTypeName() { return this.dataTypeName; }
+    public set DataTypeName(newValue: string) { if (this.dataTypeName != newValue) { this.dataTypeName = newValue; this.MarkAsDirty("DataTypeName"); } }
+
+
     private maxLength: number;
     public get MaxLength() { return this.maxLength; }
     public set MaxLength(newValue: number) { if (this.maxLength != newValue) { this.maxLength = newValue; this.MarkAsDirty("MaxLength"); } }

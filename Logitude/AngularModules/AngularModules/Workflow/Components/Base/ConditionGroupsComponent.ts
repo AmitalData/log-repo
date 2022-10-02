@@ -68,6 +68,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
+            this.Conditions[conditionIndex].valueCode = null;
             this.Conditions[conditionIndex].valueExpression = this.isDateTimeType(objectField?.DataTypeCode) ? DateTimeValueExpressions.Date : null;
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
             this.emitConditionsChanged();
@@ -83,23 +84,42 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
             this.updateConditionValueAccordingToUpdateOperator(operatorCode, conditionIndex);
-            this.Conditions[conditionIndex].operator = operatorCode;
-            this.emitConditionsChanged();
         }
     }
 
     updateConditionValueAccordingToUpdateOperator(operatorCode: string, conditionIndex: number) {
-        if (this.isNoValueOperator(operatorCode) || this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)) {
+        if (this.isNoValueOperator(operatorCode)) {
             let value = this.isNoValueOperator(operatorCode) ? BooleanValues.True : null;
             let valueExpression = this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null;
             this.updateConditionValue(value, conditionIndex);
             this.updateConditionValueExpression(valueExpression, conditionIndex, false);
+            this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
         }
+        else if ((this.isFieldCompareOperator(operatorCode) && !this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator)) || 
+                 (!this.isFieldCompareOperator(operatorCode) && this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator))) {
+            this.Conditions[conditionIndex].value = null;
+            this.Conditions[conditionIndex].valueCode = null;
+            let valueExpression = this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null;
+            this.updateConditionValueExpression(valueExpression, conditionIndex, false);
+            this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+        }
+
+        this.Conditions[conditionIndex].operator = operatorCode;
+        this.emitConditionsChanged();
     }
 
     updateConditionValue(value: string, conditionIndex: number) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+            this.emitConditionsChanged();
+        }
+    }
+
+    updateConditionFieldValue(objectField: ObjectFieldPM, conditionIndex: number) {
+        this.saveInObjectFieldsDictionary(objectField);
+        if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.valueCode) {
+            this.Conditions[conditionIndex].value = objectField ? objectField.FieldName : null;
+            this.Conditions[conditionIndex].valueCode = objectField ? objectField.FieldCode : null;
             this.emitConditionsChanged();
         }
     }
@@ -153,6 +173,20 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         let apiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
         return apiQueryFilters;
+    }
+
+    getObjectFieldsValueQueryFilters(objectField: ObjectFieldPM) {
+        let apiQueryFilters = new ApiQueryFilters();
+        apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
+        apiQueryFilters.addAdditionalFilter("DataTypeCode", objectField.DataTypeCode, null, null, "Equals", false, false, false, "Text");
+        if (objectField && objectField.DataTypeCode === FieldTypes.LookUp) {
+            apiQueryFilters.addAdditionalFilter("LookUpTableId", objectField.LookUpTableId, null, null, "Equals", false, false, false, "Text");
+        }
+        return apiQueryFilters;
+    }
+
+    isFieldCompareOperator(operatorCode: string) {
+        return operatorCode && operatorCode.endsWith("<field>");
     }
 
     isNoValueOperator(operatorCode: string) {

@@ -223,6 +223,22 @@
                         </td>
                     </tr>
 
+                    <!-- Enable Export To Excel -->
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'EnableExportToExcel'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="true" (Checked)="EnableExportToExcelChange($event)" [IsChecked]="EnableExportToExcel"></CheckBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
                     <!-- Main Color -->
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
@@ -332,22 +348,9 @@
                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td>
-                            <table>
-                                <tr>
-                                    <td style="width:70px">
-                                        <div style="padding: 0px 5px;">
-                                            <button class="Button" (click)="onGenerateClicked()">Generate</button>
-                                        </div>
-                                    </td>
-                                    <td style="width:100px">
-                                        <div style="padding: 0px 5px;">
-                                            <button class="Button" (click)="openLoginPolicyPopup()">Login Policy</button>
-                                        </div>
-                                    </td>
-                                    <td> <div></div> </td>
-                                </tr>
-                            </table>
-
+                            <div style="width: 150px; padding: 0px 5px;">
+                                <button class="Button" (click)="openLoginPolicyPopup()">Login Policy</button>
+                            </div>
                         </td>
                     </tr>
 

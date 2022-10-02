@@ -42,6 +42,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
                     }
 
+                    if (item.FieldName == "IsCustomerArchived")
+                    {
+                        queryableData = queryableData.Where(d => !d.IsCustomerArchived);
+                    }
+
                     if (item.FieldName == "TransportModeShipmentTypeFilters")
                     {
                         var transportModesString = item.FieldValue as string;
@@ -110,17 +115,17 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
-            queryableData = queryableData.Where(d => d.ShipperReference1.Contains(digitalPortalSearchFields)
-                                                      || d.ShipperReference2.Contains(digitalPortalSearchFields)
-                                                      || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
-                                                      || d.ConsigneeReference2.Contains(digitalPortalSearchFields)
-                                                      || d.CustomerReference1.Contains(digitalPortalSearchFields)
-                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
-                                                      || d.CustomerReference2.Contains(digitalPortalSearchFields)
+            queryableData = queryableData.Where(d => d.ShipperReference1.StartsWith(digitalPortalSearchFields)
+                                                      || d.ShipperReference2.StartsWith(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference1.StartsWith(digitalPortalSearchFields)
+                                                      || d.ConsigneeReference2.StartsWith(digitalPortalSearchFields)
+                                                      || d.CustomerReference1.StartsWith(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.StartsWith(digitalPortalSearchFields)
+                                                      || d.CustomerReference2.StartsWith(digitalPortalSearchFields)
                                                       || d.ShipmentNumber.Contains(digitalPortalSearchFields)
-                                                      || d.MainCarriageCarrierNumber.Contains(digitalPortalSearchFields)
-                                                      || d.House.Contains(digitalPortalSearchFields)
-                                                      || d.Master.Contains(digitalPortalSearchFields)
+                                                      || d.MainCarriageCarrierNumber.StartsWith(digitalPortalSearchFields)
+                                                      || d.House.StartsWith(digitalPortalSearchFields)
+                                                      || d.Master.StartsWith(digitalPortalSearchFields)
                                                       || d.FromPortName.StartsWith(digitalPortalSearchFields)
                                                       || d.ToPortName.StartsWith(digitalPortalSearchFields)
                                                       || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields)

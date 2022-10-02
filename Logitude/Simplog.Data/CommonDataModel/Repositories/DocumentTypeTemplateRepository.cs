@@ -144,7 +144,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplatesBydocumentTypeTemplateIds(List<string>documentTypeTemplateIds,int tenant)
         {
             return from a in context.DocumentTypeTemplates
-                   where a.Tenant == tenant && documentTypeTemplateIds.Contains(a.Id) && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
+                   where a.Tenant == tenant && documentTypeTemplateIds.Contains(a.Id)
                    select a;
         }
     }

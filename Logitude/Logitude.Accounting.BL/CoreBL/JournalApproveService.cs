@@ -53,7 +53,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public const string QP_JournalTenant = "JournalTenant";
         public const string QP_JournalId = "JournalId";
-        const string PartnerTypeId_Customer = "CS";
         const string CashARPaymentAccountingMethod = "CA";
         const string ChequeARPaymentAccountingMethod = "CH";
         const string BankTransferARPaymentAccountingMethod = "BT";
@@ -117,17 +116,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
         }
-
-        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context) {
-            if (journalPM is null || journalPM.IsLedgerCreated == true) {
+        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context)
+        {
+            if (journalPM is null || journalPM.IsLedgerCreated == true)
+            {
                 return;
             }
-
-            if (journalPM.AccountingEntityCode == AccountingEntityValues.ARPayment) {
+            if (journalPM.AccountingEntityCode == AccountingEntityValues.ARPayment)
+            {
                 ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(journalPM.Tenant);
                 ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePM(journalPM.AccountingEntityId, journalPM.Tenant);
 
-                if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod && aRPaymentPM.BillToPartnerTypeId == PartnerTypeId_Customer)
+                if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod)
                 {
                     CreateInterestTrascntionsForCashARPayment(journalPM, aRPaymentPM, context);
                 }
@@ -145,8 +145,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     CreateInterestTrascntionsForBankTransfersARPayment(journalPM, aRPaymentPM, context);
                 }
-            } else if (journalPM.AccountingEntityCode == AccountingEntityValues.Journal || journalPM.AccountingEntityCode == AccountingEntityValues.Adjustment
-                 || journalPM.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
+            }
+            else if (journalPM.AccountingEntityCode == AccountingEntityValues.Journal || journalPM.AccountingEntityCode == AccountingEntityValues.Adjustment
+               || journalPM.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
             {
                 var journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
                 journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM);
@@ -163,14 +164,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 aRInvoiceService.CreateARInvoiceInterestTransactions(journalPM.AccountingEntityId, journalPM.Tenant);
             }
         }
-        
+
         private void CreateInterestTrascntionsForCashARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
             var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode);
-            if(!CheckIfInterestTransactionCreated(interestTranasction))
-            interestTransactionUpdateService.Update(interestTranasction, true);
+            if (!CheckIfInterestTransactionCreated(interestTranasction))
+                interestTransactionUpdateService.Update(interestTranasction, true);
         }
 
         private bool CheckIfInterestTransactionCreated(InterestTransactionPM interestTransactionPM)
@@ -180,14 +181,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 return true;
             }
             InterestTransactionUniqueConstraintFields uniqueConstraintFields = new InterestTransactionUniqueConstraintFields()
-            { GLAccountId = interestTransactionPM.GLAccountId,
-                Tenant = interestTransactionPM.Tenant, 
-                InterestEntityTypeCode = interestTransactionPM.InterestEntityTypeCode, 
-                EntityId = interestTransactionPM.EntityId, 
-                OriginalEntityLineNumber = interestTransactionPM.OriginalEntityLineNumber };
+            {
+                GLAccountId = interestTransactionPM.GLAccountId,
+                Tenant = interestTransactionPM.Tenant,
+                InterestEntityTypeCode = interestTransactionPM.InterestEntityTypeCode,
+                EntityId = interestTransactionPM.EntityId,
+                OriginalEntityLineNumber = interestTransactionPM.OriginalEntityLineNumber
+            };
 
             InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestTransactionPM.Tenant);
-            var interestTransaction= interestTransactionQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
+            var interestTransaction = interestTransactionQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
             if (interestTransaction == null) return false;
             else return true;
 
@@ -217,9 +220,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 var returnedCheque = arPaymentCheques.FirstOrDefault(x => x.ChequeNumber == chequeNumber);
                 int returnedChequeLineNumber = arPaymentCheques.Max(x => x.LineNumber) + returnedCheque.LineNumber;
                 var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM);
-                interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
-                if (!CheckIfInterestTransactionCreated(interestTranasction))
-                    interestTransactionUpdateService.Update(interestTranasction, true);
+                if (interestTranasction != null)
+                {
+                    interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
+                    if (!CheckIfInterestTransactionCreated(interestTranasction))
+                        interestTransactionUpdateService.Update(interestTranasction, true);
+                }
             }
             else
             {
@@ -240,7 +246,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var bankTranfer in aRPaymentPM.ARPaymentBankTranfers)
             {
                 var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM);
-                if (!CheckIfInterestTransactionCreated(interestTranasction) )
+                if (!CheckIfInterestTransactionCreated(interestTranasction))
                     interestTransactionUpdateService.Update(interestTranasction, true);
             }
         }
@@ -348,7 +354,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
 
-            const string TransferCardId= "1-717294";
+            const string TransferCardId = "1-717294";
             const int TransferCardTenant = 10;
 
             /// orian 300000 trans in a month >> 1 journal 6 transaction no more then 6 GLAccountTotalByMonths >  in a secound 
@@ -402,15 +408,15 @@ namespace Logitude.Accounting.BL.CoreBL
                                               }
                                        )
                                        .ToList();
-                    
-                    
+
+
                     var gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_AccountingContext);
                     var gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
                     var glAccounts = allGLAccountTotalByMonthsForAccountingOnly.Select(x => x.AccountId).ToList();
                     var gLAccountMoreDataPMList = gLAccountMoreDataQueryService.GetByGLAccountsIdList(glAccounts, _Tenant);
                     glAccountsToUpdate.ForEach(x =>
                     {
-                        var glAccountMoreDataPM =  gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
+                        var glAccountMoreDataPM = gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
                         //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
                         if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
                         {
@@ -427,7 +433,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     });
-                    
+
                     Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
@@ -508,7 +514,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 #endif
 
-                    if (DateTime.Now < new DateTime(2022,06,19) && stringBuilderWhyTransferCardBadBalance.Length>0)
+                    if (DateTime.Now < new DateTime(2022, 06, 19) && stringBuilderWhyTransferCardBadBalance.Length > 0)
                     {
                         WriteLogWhyTransferCardBadBalance(_Tenant, _JournalPM.Id, this._AccountingContext, stringBuilderWhyTransferCardBadBalance);
                     }
@@ -538,7 +544,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
-                
+
                 JournalFailedService journalFailedService = new JournalFailedService(tenant, seedJournalId);
                 journalFailedService.InsertJournalMoreData(accountingContext, sb);
             }
@@ -547,7 +553,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //throw;
             }
-            
+
 
         }
 
@@ -702,7 +708,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 reconciliationsList.Count > 0)
             {
                 var taxReportPM = GetTaxReportPM(_JournalPM.AccountingEntityId);
-                
+
 
                 var reconciliationNumbersList = reconciliationsList.Select(x => x.Number).ToList();
                 taxReportPM.ReconciliationsNumbers = String.Join(",", reconciliationNumbersList);
@@ -1048,7 +1054,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalApproveService.MyActions actions =
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
                 var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId, selectedQueue);
-               var res = myJournalApproveService.SubmitApprove(actions);
+                var res = myJournalApproveService.SubmitApprove(actions);
 
                 if (res.Success)
                 {
@@ -1292,7 +1298,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     AccountId = r.AccountId,
                     Tenant = r.Tenant,
-                    PeriodPast= r.PeriodPast.GetValueOrDefault(),
+                    PeriodPast = r.PeriodPast.GetValueOrDefault(),
                     Period0 = r.Period0.GetValueOrDefault(),
                     Period1 = r.Period1.GetValueOrDefault(),
                     Period2 = r.Period2.GetValueOrDefault(),
@@ -1731,7 +1737,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public int Tenant { get; set; }
         public decimal PeriodPast { get; set; }
         public decimal Period0 { get; set; }
-        
+
         public decimal Period1 { get; set; }
         public decimal Period2 { get; set; }
         public decimal Period3 { get; set; }

@@ -88,7 +88,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
     private CheckMarkUpCurrencyFeatureToggle() {
         this.IsMarkUpCurrencyHasFeatureToggle = false;
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MUC")[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMU")[0];
         if (featureToggle) {
             this.IsMarkUpCurrencyHasFeatureToggle = true;
         }
@@ -1004,10 +1004,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 //"PRVL"
                 entityQuantity = this.EntityPM.ValueOfGoods;
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostQuantity == null && f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostQuantity == null && f.CostMeasurementCode == "PRVL" && f.CostQuantity == null  && f.CostQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleQuantity == null && f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleQuantity == null && f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
                 
@@ -1585,7 +1585,7 @@ export class QuoteChargeItem extends BaseComponent {
                 //isEnabled_SaleMeasurement = false;
             }
 
-            isMarkupCurrencyValid = (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) && (this.SaleCurrencyId != this.CostCurrencyId);
+            isMarkupCurrencyValid = (!this.QuotePM.IsSaleCurrencySameAsCost) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -2293,7 +2293,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.CostQuantity) ? this.QuotePM.ValueOfGoods : this.CostQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
@@ -2635,11 +2635,14 @@ export class QuoteChargeItem extends BaseComponent {
         this.MarkupCurrencyList.push(costCurrency);
         this.MarkupCurrencyList.push(saleCurrency);
 
-        this.markUpCurrencySelectedItem = this.MarkupCurrencyList[0];
-
-        if (!AppTool.IsNullOrEmpty(this.MarkUpCurrencyId)) {
+        if (!this.IsNew) {
             this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
-            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            if (!this.markUpCurrencySelectedItem) {
+                this.MarkUpCurrencyCode = this.MarkupCurrencyList[0].CurrencyCode;
+            }
+            else {
+                this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            }
         }
     }
 
@@ -2653,7 +2656,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.SaleQuantity) ? this.QuotePM.ValueOfGoods : this.SaleQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
@@ -2763,15 +2766,20 @@ export class QuoteChargeItem extends BaseComponent {
     }
 
     GetMarkUpValueByCurrency(value) {
-        var markUpValue = (value == null ? 0 : this.MarkUpValue);
-        if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+        if (!this.fatherComponent.IsMarkUpCurrencyHasFeatureToggle) {
+            return value;
+        }
+        else {
+            var markUpValue = (value == null ? 0 : value);
+            if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+                return markUpValue;
+            }
+
+            var markUpLocalValue = markUpValue * this.CostExchangeRate;
+            markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
             return markUpValue;
         }
-
-        var markUpLocalValue = markUpValue * this.CostExchangeRate;
-        markUpValue = markUpLocalValue / this.SaleExchangeRate;
-
-        return markUpValue;
     }
 
     private mySaleUnitPriceString: string = null;
@@ -3028,6 +3036,8 @@ export class QuoteChargeItem extends BaseComponent {
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
+
+        this.FillMarkupCurrencyList();
     }
 
     OnMeasurementsCodeChanged() {
@@ -3116,6 +3126,7 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.OnChargeCurrencyChanged();
+        this.FillMarkupCurrencyList();
     }
     OnQuoteSaleCurrencyDataChanged() {
 

@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers
                     InvertedLogoId = tenantManagementPM.InvertedLogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
                     ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
+                    EnableExportToExcel = tenantManagementPM.EnableExportToExcel,
                     ContactEmail = tenantManagementPM.ContactEmail,
                     
                 };

@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ContactInputTemplateArgs } from 'CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { ListComponentArgs } from 'Infrastructure/Args';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -127,5 +130,20 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             IsCustomTemplate: true,
             Styles: { width: '400px' },
         });
+    }
+
+    onRowSelected($event) {
+        if ($event != null) {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height = 570;
+            logWindow.Title = "Instance Activities";
+            logWindow.IsShowCloseButton = true
+            var windowArgs: any = {};
+            windowArgs.EntityId = $event.rowData.Id;
+            windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceActivityComponent');
+        }
     }
 }

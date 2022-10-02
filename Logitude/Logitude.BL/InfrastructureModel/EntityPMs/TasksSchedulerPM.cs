@@ -64,6 +64,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }
 
-
+        public List<string> DocumentTypeTemplateIds { get; set; }
     }
 }

@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { WidgetFilterItem } from './WidgetFilterItem';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 @Component({
@@ -14,12 +15,13 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     @Input() public IsRoot: boolean;
     @Input() public DataSource: WidgetFilterItem;
     @Input() public EntityId: string;
+    @Input() public DashboardId: string;
 
 
-    public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
+    public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
     public Quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
     public Years: number[];
-    
+
     ngOnInit() {
         this.Years = [];
         this.BuidYears();
@@ -39,28 +41,32 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     }
 
     AddEmptyFilter() {
-        var groupFilter = new WidgetFilterItem();
+        var groupFilter = new WidgetFilterItem(null, false, this.DashboardId);
         groupFilter.IsGroup = true;
-        groupFilter.QueryFilterItems.push(new WidgetFilterItem());
+        groupFilter.QueryFilterItems.push(new WidgetFilterItem(null, false, this.DashboardId));
         this.DataSource.QueryFilterItems.push(groupFilter);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Add Empty Filter Click", DashboardId: this.DashboardId });
     }
 
     onDeleteFilterClick(filterItem: WidgetFilterItem) {
         this.DataSource.QueryFilterItems = this.FilterItems.filter(item => item !== filterItem);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Delete Filter Click", DashboardId: this.DashboardId });
     }
 
     AddFilterToGroup(item: WidgetFilterItem) {
-        item.QueryFilterItems.push(new WidgetFilterItem());
+        item.QueryFilterItems.push(new WidgetFilterItem(null, false, this.DashboardId));
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Add Filter Click", DashboardId: this.DashboardId });
     }
 
     AddGroup(item: WidgetFilterItem) {
-        let newGroupTreeFilter = new WidgetFilterItem();
+        let newGroupTreeFilter = new WidgetFilterItem(null, false, this.DashboardId);
         newGroupTreeFilter.IsGroup = true;
 
-        var newGroupField = new WidgetFilterItem();
+        var newGroupField = new WidgetFilterItem(null, false, this.DashboardId);
         newGroupTreeFilter.QueryFilterItems.push(newGroupField);
 
         item.QueryFilterItems.push(newGroupTreeFilter);
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Filter Click", DashboardId: this.DashboardId });
     }
 
 }

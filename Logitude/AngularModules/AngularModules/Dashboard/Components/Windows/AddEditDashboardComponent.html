@@ -65,6 +65,10 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                    <td style="width: 57px;" *ngIf="!isNew">
+                        <button class="ActualRedButton" (click)="DeleteButtonClicked()">Delete</button>
+                    </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -76,6 +80,7 @@
                     <td style="width: 5px;">
                         <div></div>
                     </td>
+
 
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="OkButtonClicked()">Ok</button>

@@ -1828,6 +1828,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.WarehouseLegTerminalName = GetCardName(byLocalName, cardObject);
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
+                    shipmentPM.WarehouseLegAddressCity = cardObject.CityName;
                 }
             }
 
@@ -13317,6 +13318,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
+                               ChargeableWeight = f.ChargeableWeight,
+                               GrossWeight = f.GrossWeight,
+                               ValueOfGoods = f.ValueOfGoods,
+                               Volume = f.Volume,
+                               NumberOfPackages = f.NumberOfPackages,
                                LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
@@ -13435,6 +13441,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
+                               IsCustomerArchived = f.IsCustomerArchived
                            };
 
             return myResult;

@@ -85,6 +85,11 @@ export class DocumentTypeCustomFieldPM {
     public set FieldValue(newValue: string) { if (this.fieldValue != newValue) { this.fieldValue = newValue; this.MarkAsDirty("FieldValue"); } }
        
 	 
+    private fieldDataTypeName: string;
+    public get FieldDataTypeName() { return this.fieldDataTypeName; }
+    public set FieldDataTypeName(newValue: string) { if (this.fieldDataTypeName != newValue) { this.fieldDataTypeName = newValue; this.MarkAsDirty("FieldDataTypeName"); } }
+       
+	 
 
     public OldEntityPM: DocumentTypeCustomFieldPM;
 		

@@ -18,6 +18,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Input() Name: string;
     @Input() CurrentValue: string;
     @Input() IsIntegerNumberInput: boolean = false;
+    @Input() DataType: string;
 
     @Output() ValueChanged = new EventEmitter<string>();
 
@@ -25,6 +26,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     public LookupTable: ObjectTablePM;
     public PickListTable: ObjectTablePM;
     public DateTimeCurrentValue: Date;
+    public Type: string;
+    public Digit: any;
 
     public ObjectTablePMService = new ObjectTablePMService();
 
@@ -34,6 +37,13 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     constructor() {
         super();
+        if (this.DataType) {
+            this.Type = this.DataType.toLocaleLowerCase()
+            this.Digit = 3
+        } else if (this.ObjectField) {
+            this.Type = this.ObjectField.DataTypeCode.toLowerCase()
+            this.Digit = this.ObjectField.DigitsAfterPoint
+        }
     }
 
     ngOnInit() {
@@ -130,19 +140,22 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     isTextObjectField() {
-        return this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.NText || this.ObjectField.DataTypeCode === FieldTypes.Text);
+        return (this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.NText || this.ObjectField.DataTypeCode === FieldTypes.Text))
+            || (this.DataType && this.DataType === FieldTypes.Text);
     }
 
     isBooleanObjectField() {
-        return this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.Boolean;
+        return (this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.Boolean)
+            || (this.DataType && this.DataType === FieldTypes.Boolean);
     }
 
     isDateTimeObjectField() {
-        return this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.DateTime || this.ObjectField.DataTypeCode === FieldTypes.Date);
+        return (this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.DateTime || this.ObjectField.DataTypeCode === FieldTypes.Date))
+            || (this.DataType && this.DataType === FieldTypes.Date);
     }
 
     isNumberObjectField() {
-        return this.ObjectField &&
+        return (this.ObjectField &&
             (
                 this.ObjectField.DataTypeCode === FieldTypes.BigInteger ||
                 this.ObjectField.DataTypeCode === FieldTypes.Decimal ||
@@ -151,6 +164,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
                 this.ObjectField.DataTypeCode === FieldTypes.SigDouble ||
                 this.ObjectField.DataTypeCode === FieldTypes.UnsDecimal ||
                 this.ObjectField.DataTypeCode === FieldTypes.UnsInteger
-            );
+            ))
+            || (this.DataType && this.DataType === FieldTypes.Number);
     }
 }

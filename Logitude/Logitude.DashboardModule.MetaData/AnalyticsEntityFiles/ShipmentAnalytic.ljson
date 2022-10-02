@@ -1,21 +1,8 @@
 {
-  "HashString": "d3f59c01615a468c8d893988682ac5df",
+  "HashString": "652addefa760475a885297cb3d1c51bf",
   "Name": "Shipment Analytics",
   "TableName": "ShipmentAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
-    {
-      "HashString": "8902806364754301a848db2f1574b9b8",
-      "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": true,
-      "FieldCode": "QuoteNumber",
-      "DisplayName": "Quote Number",
-      "DisplayNamePlural": "Quotes Numbers",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
-    },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",

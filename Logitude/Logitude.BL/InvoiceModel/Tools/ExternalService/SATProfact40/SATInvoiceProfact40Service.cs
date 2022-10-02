@@ -78,13 +78,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public void SendProfactoXML()
         {
             List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(arInvoicePM.Tenant).ToList();
-            bool IsHasExpenseChargeInvoiceLine = HasExpenseChargeInvoiceLine(allChargesTypes);
-            if (IsHasExpenseChargeInvoiceLine)
-            {
-                SetSATTransferStatus(SATData.NoTransferNeedSATTransferStatusCode);
-                return;
-            }
-
+            
             Tenant currentTenant = tenantRepository.GetSingleTenant(arInvoicePM.Tenant);
 
             SATInvoiceComprobanteValidator sATInvoiceComprobanteValidator = new SATInvoiceComprobanteValidator(arInvoicePM, currentTenant);
@@ -95,11 +89,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARInvoicePM = arInvoicePM });
             SetSATTransferStatus(SATData.InTransferingSATTransferStatusCode);
-        }
-
-        private bool HasExpenseChargeInvoiceLine(List<ChargesType> allChargesTypes)
-        {
-            return arInvoicePM.InvoiceLines.All(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense == true);
         }
 
         private void SetSATTransferStatus(string satTransferStatusCode)

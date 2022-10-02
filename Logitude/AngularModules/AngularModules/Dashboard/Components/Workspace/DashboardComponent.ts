@@ -23,6 +23,7 @@ import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDir
 import { UserExtendedPMService } from 'Common/Services/ExtendedPMs/UserExtendedPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
@@ -90,11 +91,15 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     set SelectedPageItem(newValue: string) {
         if (this.selectedPageItem != newValue) {
             this.selectedPageItem = newValue;
-            if (newValue == "CUSTOM" && this.ShowDashboardToolTip)  this.CloseToolTip();                
+            if (newValue == "CUSTOM") {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
+                if(this.ShowDashboardToolTip) this.CloseToolTip();
+            }                 
         }
     }
 
     CloseDashboardToolTipClick(){
+        MixPanelLocator.PostDashboardAction({ ActionName: "Tooltip Close" });
         this.CloseToolTip();
     }
 

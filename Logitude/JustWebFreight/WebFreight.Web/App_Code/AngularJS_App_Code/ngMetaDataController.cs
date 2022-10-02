@@ -714,7 +714,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             TextCodeRepository txtCodeRep = new TextCodeRepository(translationTenant);
             TranslationRepository translationRep = new TranslationRepository(translationTenant);
 
-            List<Translation> AllTranslations = translationRep.GetTranslationsByTenant(translationTenant);
+            List<Translation> AllTranslations = translationRep.GetTranslationsByTenantList(translationTenant);
             TenantRepository tenantRep = new TenantRepository(translationTenant);
             Tenant tenantPoco = tenantRep.GetSingleByTenant(translationTenant);
             TenantManagmentPrivateLabelsPM privatelabel = null;

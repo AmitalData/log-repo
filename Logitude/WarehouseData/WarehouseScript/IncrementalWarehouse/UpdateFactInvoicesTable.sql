@@ -164,7 +164,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			END
 		----------------------------------------------
 		BEGIN TRY
-		insert into Fact_Invoices 
+		insert into #Fact_InvoicesTemp 
 			([Id], [Source Tenant], [Parent Tenant], [Invoice Number], [VAT Number], [Shipment Number], [Subtotal (Local)], [Subtotal (Profit)],
 			[Invoice Amount (Local)], [Invoice Amount (Profit)], [Amount Due (Local)], [Amount Due (Profit)], [Print Note], [Invoice Date], [Create Date],
 			[Approved Date], [Due Date], [Print Date], [First Approve Date], [Branch], [Payment Term], [Invoice Local Currency], [Invoice Currency],
@@ -200,6 +200,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	CLOSE InvoicesCursor
 	DEALLOCATE InvoicesCursor
 
+			insert into Fact_Invoices select * from #Fact_InvoicesTemp
 
 	update dw_WaterMarks set LastUpdateDate = @APInvoicesAutomaticLastUpdateDate where TableName = 'APInvoice'
 

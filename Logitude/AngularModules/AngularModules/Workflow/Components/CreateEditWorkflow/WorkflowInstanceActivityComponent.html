@@ -1,0 +1,82 @@
+<table style="padding:10px">
+    <tr style="height:1px">
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width: 1px; padding-left: 5px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top">
+            <div class="MediaFill">
+                <logitude-edit-grid *ngIf="!IsLoading" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
+                    (RowDataLoaded)="OnRowLoaded($event)" [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
+
+                    <log-row-details>
+                        <row-template>
+                            <ng-template let-item>
+                                <div style="min-height: 80px; width: 100%; background: #f27f7f; position: relative; 
+                                border:2px solid red ; border-top: none; padding: 10px;">
+                                    <p style="white-space: pre-line ; color:white;" [innerHTML]="item.ErrorMessage">
+                                    </p>
+                                </div>
+                            </ng-template>
+                        </row-template>
+                    </log-row-details>
+
+                    <!-- Sequence -->
+                    <log-column [width]="'185'" [header]="'Sequence'" [SortFieldName]="'Sequence'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Sequence}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- ActionName -->
+                    <log-column [width]="'185'" [header]="'ActionName'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.ActionName}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- StartTime -->
+                    <log-column [width]="'185'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.StartTime}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Duration -->
+                    <log-column [width]="'185'" [header]="'Duration'" [SortFieldName]="'Duration'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Duration}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+
+                    <!-- StatusName -->
+                    <log-column [width]="'185'" [header]="'StatusName'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                <div
+                                    [ngStyle]="{'color': (item.StatusCode == 'FAED') ? 'red' : (item.StatusCode == 'STED') ? '#4f4ff9' :''}">
+                                    {{item.StatusName}}
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>

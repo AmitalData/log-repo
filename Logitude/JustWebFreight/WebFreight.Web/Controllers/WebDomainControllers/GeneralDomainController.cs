@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
              
                 DataTypeRepository dataTypeRepository = new DataTypeRepository(tenant);
-                List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails" && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger").ToList();
+                List<FieldDataType> result = dataTypeRepository.GetDataTypes();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 

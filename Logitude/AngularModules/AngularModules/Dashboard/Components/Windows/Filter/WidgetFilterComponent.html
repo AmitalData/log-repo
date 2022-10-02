@@ -68,7 +68,7 @@
                                 <div>
                                     <table style="height:30px;">
                                         <tr style="height:30px;" class="MyFilterItem">
-                                            <td style="width:170px;max-width:170px;min-width:87px;">
+                                            <td style="width:150px;max-width:150px;min-width:150px;">
                                                 <LogLov [SelectedValue]="item.FieldId"
                                                         [ObjectTableName]="'Widget'"
                                                         [DataContext]="item"
@@ -86,7 +86,7 @@
                                             <td style="width:7px;">
                                                 <div style="width:7px;"></div>
                                             </td>
-                                            <td style="width:170px;max-width:170px;min-width:87px;">
+                                            <td style="width:150px;max-width:150px;min-width:150px;">
                                                 <ComboBox 
                                                         style="width:100px;" 
                                                         [ItemsSource]="item.Operators"
@@ -97,29 +97,31 @@
                                                         (SelectedItemChanged)="item.OperationValueChanged($event)">
                                                 </ComboBox>
                                             </td>
+
                                             <td style="width:7px;">
                                                 <div style="width:7px;"></div>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (!item.FieldDataType || item.FieldDataType == '' ||item.FieldDataType == 'Text' || item.FieldDataType == 'nText' || item.FieldDataType == 'Integer' || item.FieldDataType == 'Double' || item.FieldDataType == 'SigDouble' ||item.FieldDataType == 'Decimal')">
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowTextBox(item)">
                                                 <div>
                                                     <LogTextBox 
                                                         [NoValidation]="true" 
                                                         [HideLastColumn]="true"
-                                                        [Text]="item.FieldValue" 
+                                                        [Text]="item.TextFieldValue" 
                                                         [IsFreeText]="true"
-                                                        (ValueChanged)="item.TextBoxCondationValueChange($event)"
+                                                        (ValueChanged)="item.TextBoxValueChange($event)"
                                                         style="height:22px" 
                                                         [DataContext]="item"
                                                         HideLastColumn="true"
                                                         HideColumns="true"
-                                                        DontAllowAutoSelect="true"></LogTextBox>
+                                                        DontAllowAutoSelect="true"
+                                                        [InputType]="item.GetTextInputType(item)"></LogTextBox>
                                                 </div>
                                             </td>
 
 
-                                           <td style="width:170px;max-width:170px;min-width:87px;"
+                                           <td style="width:150px;max-width:150px;min-width:150px;"
                                                 *ngIf="item.Operator && item.FieldDataType == 'Boolean' && item.Operator == 'Equal'">
                                                 <ComboBox 
                                                     style="width:107px;"
@@ -129,25 +131,22 @@
                                                     [WaterMark]="'Value'"></ComboBox>
                                             </td>
 
-                                            <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="!item.Operator || item.Operator == 'IsEmpty' || item.Operator == 'IsNotEmpty'">
-                                                <div></div>
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                 *ngIf="item.IsNotEmptyNotEmtyOperator(item) && item.FieldDataType == 'LookUp' && item.SelectedField">
+                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
+                                                        [ObjectFieldName]="'FieldValue'"
+                                                        [ObjectTableName]="item.SelectedField.JoinedTableName" [DataContext]="item"
+                                                        [IsFreeText]="true" [NoValidation]="true" [HideColumns]="true"
+                                                        [HideLastColumn]="true" [SelectedValue]="item.FieldValue"
+                                                        [LookUpTableName]="item.SelectedField.JoinedTableName"
+                                                        [PlaceHolder]="'Value'" [SelectedItemObject]="item.FieldValue">
+                                                </LogLov>
                                             </td>
 
-                                            <td *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date')" style="width:170px;max-width:170px;min-width:87px;">
-                                                <ComboBox  (SelectedItemChanged)="item.DateGroupCodeChange($event)"
-                                                           [ItemsSource]="DateGroupCodes" 
-                                                           [SelectedItem]="item.DateGroupCode"
-                                                           style="width: 70px;">
-                                                </ComboBox>
-                                            </td>
 
-                                            <td style="width:7px;" *ngIf="item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date')">
-                                                <div style="width:7px;"></div>
-                                            </td>
-
-                                           <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="item.Operator && item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty' && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') && 'Day' == item.DateGroupCode">
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowFirstDatePicker(item)">
                                                 <LogDatePicker 
                                                     [InputType]="'date'" 
                                                     [HideColumns]="true"
@@ -158,27 +157,36 @@
                                                     [DataContext]="item">
                                                 </LogDatePicker>
                                             </td>
-                                            
-                                           <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="item.Operator && item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty' && (item.FieldDataType == 'DateTime' || item.FieldDataType == 'Date') && 'Day' != item.DateGroupCode">
-                                                <monthpicker [SelectedDate]="item.FieldValue" 
-                                                            (OnChange)="item.DatePickerCondationValueChange($event.date, $event.quarter)" 
-                                                            [PickerType]="item.DateGroupCode" 
-                                                            [SelectedQuarter]="item.Quarter">
-                                                </monthpicker>
+
+                                            <td *ngIf="item.ShowSecondDatePicker(item)" style="width:7px;">
+                                                <div style="width:7px;"></div>
                                             </td>
-                                                             
-                                            <td style="width:170px;max-width:170px;min-width:87px;"
-                                                *ngIf="item.SelectedField && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'LookUp'">
-                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
-                                                    [ObjectFieldName]="'FieldValue'"
-                                                    [ObjectTableName]="item.SelectedField.JoinedTableName" [DataContext]="item"
-                                                    [IsFreeText]="true" [NoValidation]="true" [HideColumns]="true"
-                                                    [HideLastColumn]="true" [SelectedValue]="item.FieldValue"
-                                                    [LookUpTableName]="item.SelectedField.JoinedTableName"
-                                                    [PlaceHolder]="'Value'" [SelectedItemObject]="item.FieldValue">
-                                                </LogLov>
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowSecondDatePicker(item)">
+                                                <LogDatePicker 
+                                                    [InputType]="'date'" 
+                                                    [HideColumns]="true"
+                                                    [IsFreeValue]="true" 
+                                                    [NoValidation]="true"
+                                                    [SelectedDateValue]="item.FieldValue2"
+                                                    (ValueChanged)="item.SecondDatePickerCondationValueChange($event)"
+                                                    [DataContext]="item">
+                                                </LogDatePicker>
                                             </td>
+
+                                            <td *ngIf="item.ShowDateGroups(item) && item.Operator != 'Current'" style="width:7px;">
+                                                <div style="width:7px;"></div>
+                                            </td>
+
+                                            <td *ngIf="item.ShowDateGroups(item)" style="width:150px;max-width:150px;min-width:150px;">
+                                                <ComboBox  (SelectedItemChanged)="item.DateGroupCodeChange($event)"
+                                                           [ItemsSource]="DateGroupCodes" 
+                                                           [SelectedItem]="item.DateGroupCode"
+                                                           style="width: 70px;">
+                                                </ComboBox>
+                                            </td>
+                                                  
                                             <td colspan="5">
                                                 <div></div>
                                             </td>
@@ -197,7 +205,7 @@
                                 </div>
                                 <div class="Filters">
                                     <div class="FilterItem">
-                                        <WidgetFilter [DataSource]="item" [EntityId]="EntityId">
+                                        <WidgetFilter [DataSource]="item" [EntityId]="EntityId" [DashboardId] = "DashboardId">
                                         </WidgetFilter>
                                         <div *ngIf="FilterItems.length > 0 && item.IsGroup == true"
                                             style="margin-top: 10px;margin-left: 6px;">

@@ -42,7 +42,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 {
     public class FullAccountingARPaymentApproveService
     {
-        const string PartnerTypeId_Customer = "CS";
+        const string CustomerChartOfAccountsTypeCode = "3";
+        const string CustomerGLAccountType = "2";
         const string ReturnedToCustomer = "5";
         GLAccountPM paymentGLAccount = null;
         CashBookPM PaymentCashbook = null;
@@ -81,7 +82,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void AddARPaymentJounal()
         {
-            if (!paymentPM.SetVoided) {
+            if (!paymentPM.SetVoided)
+            {
                 ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
                 ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
                 arPaymentsJournal.Tenant = tenant;
@@ -148,28 +150,24 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private int originalEntityLineNumber = 0;
         public InterestTransactionPM GetInterestTransactionLineForCheque(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
-            if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
-            {
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
-                return interestTransaction;
-            }
-            return null;
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
+            return interestTransaction;
         }
 
         public InterestTransactionPM GetInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
         {
-            if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
-            {
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
-                return interestTransaction;
-            }
-            return null;
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
+            return interestTransaction;
         }
 
         private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType))
+            {
+                return null;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -190,6 +188,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private InterestTransactionPM MapInterestTransactionPMFromBankTransferARPaymentPM(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
         {
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType))
+            {
+                return null;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -235,7 +237,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             int LineNumberCounter = GetInitialLineNumberForCheque(paymentPM);
             foreach (ARPaymentChequeReplicaPM chequeReplica in paymentPM.ARPaymentChequeReplicas.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete).ToList())
             {
-                
+
                 ARPaymentChequePM cheque = CreateARPaymentChequeForReplica(paymentPM, ref LineNumberCounter, chequeReplica);
                 if (!IsDraft)
                 {
@@ -248,25 +250,26 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             DeleteARPaymentBankTranfer();
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
-            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any()) {
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any())
+            {
                 foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete).ToList())
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
                     SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
-                    
+
                 }
             }
             else
             {
                 ARPaymentBankTranferPM aRPaymentBankTranferPM = CreateFirstARPaymentBankTransfer(paymentPM);
-              if(aRPaymentBankTranferPM != null)  SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
+                if (aRPaymentBankTranferPM != null) SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
             }
         }
         private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
-        {   
+        {
             ARPaymentBankTranfer poco = new ARPaymentBankTranfer();
             ARPaymentBankTranferMapping.MapEntity(aRPaymentBankTranfer, poco, true);
-            
+
             paymentBankTranferRepository.Add(poco);
             paymentBankTranferRepository.SubmitChanges();
         }
@@ -283,7 +286,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             chequeRepository.RemoveARPaymentsCheques(paymentPM.Id, paymentPM.ARPaymentChequeReplicas.Where(x => x.ChangeSetOp == ChangeSetOperation.Delete).Select(x => x.Id).ToList(), tenant);
             chequeRepository.SubmitChanges();
         }
-        
+
         private int GetInitialLineNumberForBankTransfer(ARPaymentPM arpaymentPM)
         {
             int LineNumberCounter = 1;
@@ -542,7 +545,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private void CreatePaymentJournalIfNotCreated()
         {
             JournalPM journal = GetPaymentJournal();
-            if (journal == null) {
+            if (journal == null)
+            {
                 CreateNewPaymentJournal();
             }
         }
@@ -594,9 +598,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
         {
-            
-                CreateAutomaticReconcileForJournal();
-            
+
+            CreateAutomaticReconcileForJournal();
+
         }
         private JournalPM GetPaymentJournal()
         {
@@ -623,28 +627,30 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
                 paymentPM.PaymentInvoices.ForEach(r =>
+                {
+
+                    var arInvoiceCanBeReconcilied = CheckIfArInvoiceCanBeReconcilied(r.ARInvoiceId, tenant);
+                    if (arInvoiceCanBeReconcilied)
                     {
-
-                        var arInvoiceCanBeReconcilied = CheckIfArInvoiceCanBeReconcilied(r.ARInvoiceId, tenant);
-                        if (arInvoiceCanBeReconcilied) {
-                            var item = new AutoReconcileRecord()
-                            {
-                                AccountingEntityId = r.ARInvoiceId,
-                                LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
-                                ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
-                                ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
+                        var item = new AutoReconcileRecord()
+                        {
+                            AccountingEntityId = r.ARInvoiceId,
+                            LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
+                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
+                            ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
 
 
-                            };
-                            AutoReconcileRecordList.Add(item);
-                        }
+                        };
+                        AutoReconcileRecordList.Add(item);
                     }
+                }
                 );
-                if (AutoReconcileRecordList.Count > 0) {
+                if (AutoReconcileRecordList.Count > 0)
+                {
                     AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList);
                     AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
                 }
-                
+
             }
         }
 
@@ -695,7 +701,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             return glaAccountId;
         }
 
-        private string GetGLAccountIdByBankAccountId(ARPaymentBankTranferPM bankTranfer) {
+        private string GetGLAccountIdByBankAccountId(ARPaymentBankTranferPM bankTranfer)
+        {
             string glaAccountId = "";
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
             BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(bankTranfer.BankAccountId, bankTranfer.Tenant);
@@ -721,7 +728,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 CreateJournalLineForEachBankTransfer(ref counter, "2");
             return counter;
         }
-        
+
         private int CreateJournalLineForARPaymentCheque(ARPaymentChequePM arPaymentcheque, string actionCode, ref int counter)
         {
             GLAccountPM paymentGLAccount = GetPaymentGLAccount();
@@ -770,7 +777,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (paymentPM.AccountingPaymentMethodCode == "CH")
             {
                 CreateCreditLinesForEachCheque(ref counter);
-            } else if (paymentPM.AccountingPaymentMethodCode == "BT" && paymentPM.ARPaymentBankTranfers != null)
+            }
+            else if (paymentPM.AccountingPaymentMethodCode == "BT" && paymentPM.ARPaymentBankTranfers != null)
             {
                 CreateCreditLinesForEachBankTransfer(ref counter);
             }

@@ -72,12 +72,20 @@ namespace Logitude.Workflow.Data
 	
             modelBuilder.Configurations.Add(new WorkFlowInstanceMap());
 	
+            modelBuilder.Configurations.Add(new WorkFlowInstanceActivityMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowInstanceActivityStatusMap());
+	
             modelBuilder.Configurations.Add(new WorkFlowInstanceStatusMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowInstanceVariableMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
 				
 				
 			modelBuilder.Entity<WorkFlowInstance>().Property(x => x.Duration).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<WorkFlowInstanceActivity>().Property(x => x.Duration).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -369,7 +377,25 @@ namespace Logitude.Workflow.Data
 	 
 	 }
 	
+	 public IDbSet<WorkFlowInstanceActivity> WorkFlowInstanceActivities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowInstanceActivityStatus> WorkFlowInstanceActivityStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<WorkFlowInstanceStatus> WorkFlowInstanceStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowInstanceVariable> WorkFlowInstanceVariables 
 	 {
 	      get; set;
 	 

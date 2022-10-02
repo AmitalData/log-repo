@@ -99,6 +99,7 @@ namespace WebFreight.Web.WebPages
 
                 string securityKey = Request["securityId"] ?? "";
                 string token = Request["tempId"] ?? "";
+                bool forceDownload = Request["forceDownload"] != null && Request["forceDownload"] == "true";
                 string securityId = "";
                 string CustomName = "";
                 string Tenant = Request["tenant"] ?? "";
@@ -320,6 +321,11 @@ namespace WebFreight.Web.WebPages
                                     {
                                         this.LogIt($"_DatainByte {_DatainByte.Length}= up.DownloadFile");
                                     }
+
+                                    if (forceDownload && string.IsNullOrEmpty(CustomName))
+                                    {
+                                        CustomName = up.GetDocumentById(filename, (int)tenant)?.CalculatedFileName;
+                                    }
                                 }
                                 else isValid = false;
 
@@ -481,6 +487,10 @@ namespace WebFreight.Web.WebPages
 
                         }
 
+                        if (forceDownload)
+                        {
+                            ShowType = "attachment";
+                        }
 
                         if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {

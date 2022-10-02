@@ -1278,7 +1278,7 @@ namespace CommunicationWorkerRole
         {
             OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(GetAccessToken(tenant, entityPM, mySetting));
             ServiceContext serviceContext = new ServiceContext(entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-            serviceContext.IppConfiguration.BaseUrl.Qbo = "https://quickbooks.api.intuit.com/";
+            serviceContext.IppConfiguration.BaseUrl.Qbo = QuickbooksService.GetQBOBaseURL(mySetting);
 
             return serviceContext;
         }

@@ -92,6 +92,7 @@ using WebFreight.Web.MetaDataUpdate;
 using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.TreeFilterQuery;
+using Newtonsoft.Json;
 
 namespace Logitude.Update
 {
@@ -4780,7 +4781,7 @@ User/Pass",
             OIStopWatch = new Stopwatch();
             OIStopWatch.Start();
 
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");            
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");
 
             storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
@@ -4802,7 +4803,7 @@ User/Pass",
                                                             .FirstOrDefault())
                                                             .OrderByDescending(x => x.CreateDate).ToList();
 
-            if(tenant > 0)
+            if (tenant > 0)
             {
                 communications = communications.Where(d => d.Tenant == tenant).ToList();
             }
@@ -5660,11 +5661,11 @@ User/Pass",
             ToDate = ToDate.AddDays(1);
 
             var ContainerCount = shipmentsContext.ShipmentPackages
-                .Where(a => 
+                .Where(a =>
                 (a.Shipment.ShipmentLevelCode == "C" && a.Shipment.ShipmentTypeId == "MyGO") || (a.Shipment.ShipmentLevelCode != "C" && a.Shipment.ShipmentTypeId == "FCLD")
-                && a.Shipment.IsOperationalClosed == false 
+                && a.Shipment.IsOperationalClosed == false
                 && a.Shipment.NumberOfContainers > 0
-                && a.Shipment.CreateDateTime >= fromDate.Date 
+                && a.Shipment.CreateDateTime >= fromDate.Date
                 && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
 
@@ -5693,13 +5694,13 @@ User/Pass",
                     this.ShipmentContainerLog.Text = SetLogs("stop...");
                     break;
                 }
-                    
+
                 var watch = new System.Diagnostics.Stopwatch();
 
                 watch.Start();
                 var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant, true);
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
-                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a=>  a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a => a.ContainerEntityId == null && a.ContainerNumber != null).Count();
                 try
                 {
                     AddContainers(shipmentsContext, shipmentPM);
@@ -5722,12 +5723,12 @@ User/Pass",
                 NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
                 if (numberOfContainer == 0)
                     numberOfContainer = 1;
-                var totalMinuts = watch.ElapsedMilliseconds/ numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
+                var totalMinuts = watch.ElapsedMilliseconds / numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
                 var minuts = Math.Floor(totalMinuts);
                 var sec = Convert.ToInt32(totalMinuts % 1 * 60);
                 this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S";
-                
-               
+
+
             }
             StopCreateContainerBool = false;
 
@@ -5780,7 +5781,7 @@ User/Pass",
         }
         private void WriteShipmentContainerLogErrorToFile()
         {
-            
+
             string path = @"ShipmentContainerLog.csv";
             if (!File.Exists(path))
             {
@@ -5791,8 +5792,8 @@ User/Pass",
                 }
             }
             File.WriteAllLines(path, logs);
-            
-            
+
+
         }
 
         private void label20_Click(object sender, EventArgs e)
@@ -5823,6 +5824,486 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+    
+
+        private void uploadContactsButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(uploadContactstextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "csv|*.csv";
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Stream stream = openFileDialog.OpenFile();
+                    StreamReader streamReader = new StreamReader(stream);
+                    this.ReadExcelOfContacts(streamReader);
+                }
+            }
+        }
+
+        private void ReadExcelOfContacts(StreamReader streamReader)
+        {
+            List<ExcelContactItem> allContacts = new List<ExcelContactItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 9)
+                {
+                    string partnerName = this.GetText(lineParts, 1);
+                    string firstName = this.GetText(lineParts, 2);
+                    string lastName = this.GetText(lineParts, 3);
+                    string companyPos = this.GetText(lineParts, 4);
+                    string partnerType = this.GetText(lineParts, 5);
+                    string email = this.GetText(lineParts, 6);
+                    string phone = this.GetText(lineParts, 7);
+                    string mobile = this.GetText(lineParts, 8);
+
+                    allContacts.Add(new ExcelContactItem
+                    {
+                        PartnerName = partnerName,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        CompanyPos = companyPos,
+                        PartnerType = partnerType,
+                        Email = email,
+                        Phone = phone,
+                        Mobile = mobile,
+                    });
+                }
+            }
+
+            allContacts.Remove(allContacts[0]);
+            Thread thread = new Thread(() => this.UploadContacts(allContacts));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private List<UploadContactFailItem> uploadContactFailItems;
+        private int contactsCount = 0;
+        private void UploadContacts(List<ExcelContactItem> allContacts)
+        {
+            contactsCount = 0;
+            uploadContactFailItems = new List<UploadContactFailItem>();
+            UploadContactsList.Items.Clear();
+
+            UploadContactsList.View = View.Details;
+            UploadContactsList.GridLines = true;
+            UploadContactsList.FullRowSelect = true;
+
+            //Add column header
+            UploadContactsList.Columns.Add("Partner Name", 200);
+            UploadContactsList.Columns.Add("Email", 200);
+            UploadContactsList.Columns.Add("Error Message", 400);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int tenant = Convert.ToInt32(uploadContactstextBox.Text);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (ExcelContactItem item in allContacts)
+            {
+                InsertNewContact(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Done in " + ts.ToString());
+
+            if (uploadContactFailItems.Count > 0)
+            {
+                string[] arr = new string[3];
+                foreach (UploadContactFailItem item in uploadContactFailItems)
+                {
+                    arr[0] = item.PartnerName;
+                    arr[1] = item.Email;
+                    arr[2] = item.ErrorMessage;
+
+                    UploadContactsList.Items.Add(new ListViewItem(arr));
+                }
+            }
+        }
+
+        private void InsertNewContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
+        {
+            Card card = commonContext.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == item.PartnerType && d.EnglishName == item.PartnerName).FirstOrDefault();
+
+            if (card == null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Partner Not Exists"
+                });
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(item.FirstName) || string.IsNullOrEmpty(item.Email))
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Missing Email/ First Name"
+                });
+
+                return;
+            }
+
+            Contact newContact = commonContext.Contacts.Where(p => p.Email == item.Email && p.Tenant == tenant).FirstOrDefault();
+            if (newContact != null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    Email = item.Email,
+                    ErrorMessage = "Contact already exists"
+                });
+
+                return;
+            }
+
+            newContact = this.CreateNewContactInstance(item, tenant);
+            commonContext.Contacts.Add(newContact);
+
+            CardContact cardContact = new CardContact()
+            {
+                Id = IdCounter.GetNumber("CardContact", tenant).ToString(),
+                Tenant = tenant,
+                CardId = card.Id,
+                ContactId = newContact.Id,
+            };
+
+            commonContext.CardContacts.Add(cardContact);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading  " + contactsCount++.ToString());
+
+            if (contactsCount == 1000)
+            {
+                commonContext.SaveChanges();
+                contactsCount = 0;
+            }
+        }
+
+        private Contact CreateNewContactInstance(ExcelContactItem item, int tenant)
+        {
+            Contact newContact = new Contact();
+            newContact.Id = IdCounter.GetNumber("Contact", tenant).ToString();
+            newContact.Tenant = tenant;
+            newContact.UserType = "R";
+            newContact.Email = TrimLength(item.Email, 70);
+            newContact.EnglishName = TrimLength(item.FirstName + " " + item.LastName, 60);
+            newContact.Position = TrimLength(item.CompanyPos, 40);
+            newContact.BusinessPhone = TrimLength(item.Phone, 25);
+            newContact.Mobile = TrimLength(item.Mobile, 25);
+            newContact.CompanyName = TrimLength(item.PartnerName, 1000);
+            BuildSearchFields(newContact);
+            return newContact;
+        }
+        private string TrimLength(string field, int length)
+        {
+            if (!string.IsNullOrEmpty(field))
+            {
+                if (field.Length > length)
+                {
+                    field = field.Substring(0, length);
+                }
+            }
+
+            return field;
+        }
+        private void BuildSearchFields(Contact newContact)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Email);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.BusinessPhone);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Mobile);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.CompanyName);
+            TrimLength(mySearchFields, 1000);
+            newContact.SearchFields = mySearchFields;
+        }
+
+        private ContainerRepository containerRepository;
+        private PortRepository portRepository;
+        private Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> containers;
+        private void getContainersButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(vizionTenantTextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                Thread thread = new Thread(() => this.GetVizionContainers());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        private void GetVizionContainers()
+        {
+            getContainersListView.Items.Clear();
+            getContainersListView.Columns.Clear();
+            getContainersListView.View = View.Details;
+            getContainersListView.GridLines = true;
+            getContainersListView.FullRowSelect = true;
+            getContainersListView.Columns.Add("Container #", 150);
+            getContainersListView.Columns.Add("PreCarriage-container", 100);
+            getContainersListView.Columns.Add("PreCarriage-Json", 100);
+            getContainersListView.Columns.Add("OnCarriage-container", 100);
+            getContainersListView.Columns.Add("OnCarriage-Json", 100);
+            getContainersListView.Columns.Add("POL-container", 100);
+            getContainersListView.Columns.Add("POL-Json", 100);
+            getContainersListView.Columns.Add("POD-container", 100);
+            getContainersListView.Columns.Add("POD-Json", 100);
+            getContainersListView.Columns.Add("ac empty return-container", 100);
+            getContainersListView.Columns.Add("ac empty return-Json", 100);
+            getContainersListView.Columns.Add("es empty return-container", 100);
+            getContainersListView.Columns.Add("es empty return-Json", 100);
+
+            int tenant = Convert.ToInt32(vizionTenantTextBox.Text);
+            DateTime date_2022_7 = new DateTime(2022, 7, 1);
+
+            containers = new Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus>();
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            portRepository = new PortRepository(context);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            containerRepository = new ContainerRepository(shipmentsContext);
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objecttableRep.GetObjectTableByName("Container", 0, true);
+
+            List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "General Update Container Status"
+                                                        && a.Tenant == tenant
+                                                        && a.InOut == "I"
+                                                        && a.WasAnalyzed == true
+                                                        && a.CommunicationStatusTypeCode == "D"
+                                                        && a.ObjectTableId == objectTable.Id
+                                                        && a.CreateDate >= date_2022_7 && a.CreateDate <= DateTime.Now)
+                                                        .GroupBy(x => new { x.Tenant, x.EntityId })
+                                                        .Select(x => x.OrderByDescending(y => y.CreateDate)
+                                                        .FirstOrDefault())
+                                                        .OrderByDescending(x => x.CreateDate).ToList();
+
+            string[] arr = new string[13];
+            foreach (CommunicationLog communicationLog in communications)
+            {
+                Simplog.Data.ShipmentsModel.EntityPOCOs.Container container = shipmentsContext.Containers
+                       .Where(d => d.Id == communicationLog.EntityId && d.Tenant == tenant).FirstOrDefault();
+
+                VisionContainerStatus visionContainerStatus = DeserializeVizionDocumentBody(communicationLog.DocumentId, tenant, documentRepository);
+                if (visionContainerStatus != null && container != null)
+                {
+                    if ((container.PreCarriageLocation != null && container.POLLocation != null && container.PreCarriageLocation == container.POLLocation)
+                        || (container.OnCarriageLocation != null && container.PODLocation != null && container.OnCarriageLocation == container.PODLocation)
+                        || EmptyMap.Checked
+                        )
+                    {
+                        arr[0] = container.ContainerNumber;
+                        arr[1] = container.PreCarriageLocation;
+                        arr[2] = this.GetPortForVizion(visionContainerStatus.payload?.inland_origin, tenant)?.CombinedCode;
+                        arr[3] = container.OnCarriageLocation;
+                        arr[4] = this.GetPortForVizion(visionContainerStatus.payload?.inland_destination, tenant)?.CombinedCode;
+                        arr[5] = container.POLLocation;
+                        arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
+                        arr[7] = container.PODLocation;
+                        arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
+                        arr[9] = container.ActualEmptyReturn?.ToString();
+                        arr[10] = visionContainerStatus.payload?.milestones.Find(e=>e.description == "Gate in empty return" && e.planned)?.timestamp.ToString();
+                        arr[11] = container.EstimatedEmptyReturn?.ToString();
+                        arr[12] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp.ToString();
+
+                        getContainersListView.Items.Add(new ListViewItem(arr));
+                        containers.Add(container, visionContainerStatus);
+                    }
+                }
+            }
+
+            if (communications.Count > 0)
+            {
+                updateContainersButton.Enabled = true;
+            }
+        }
+        public VisionContainerStatus DeserializeVizionDocumentBody(string documentId, int tenant, DocumentRepository documentRepository)
+        {
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
+            {
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+                byte[] fileData = storageservice.Read(fileInfo);
+                if (fileData != null)
+                {
+                    var datatext = Encoding.UTF8.GetString(fileData);
+                    return JsonConvert.DeserializeObject<VisionContainerStatus>(datatext);
+                }
+            }
+
+            return null;
+        }
+        private Port GetPortForVizion(Location portLocation, int tenant)
+        {
+            Port port = null;
+            if (!string.IsNullOrEmpty(portLocation.unlocode)) port = portRepository.GetOceanPortByCombinedCode(portLocation.unlocode, tenant);
+            if (port != null) return port;
+
+            var name1 = portLocation.name;
+            if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
+                name1 = portLocation.name.Split(',').First();
+            var name2 = portLocation.city;
+            port = this.GetPortByNames(name1, name2, tenant);
+            return port;
+        }
+        private Port GetPortByNames(string name1, string name2, int tenant)
+        {
+            var port = portRepository.GetOceanPortByNames(name1, name2, tenant);
+            if (port != null)
+                return port;
+
+            return null;
+        }
+        private string GetPortId(string portCode, int tenant)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
+            {
+                portId = port.Id;
+            }
+
+            return portId;
+        }
+
+        private void updateContainersButton_Click(object sender, EventArgs e)
+        {
+            if (containers.Count > 0)
+            {
+                Thread thread = new Thread(() => this.UpdateVizionContainers());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        private void UpdateVizionContainers()
+        {
+            foreach (var item in containers)
+            {
+                if (EmptyMap.Checked)
+                {
+                    MapEmptyReturn(item);
+                }
+                else
+                {
+                    MapPOL(item);
+                    MapPOD(item);
+                    MapPreCarriage(item);
+                    MapOnCarriage(item);
+                }
+                
+
+                containerRepository.Update(item.Key);
+            }
+
+            containerRepository.SubmitChanges();
+        }
+
+        private void MapEmptyReturn(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            var EstimatedEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && e.planned)?.timestamp;
+            item.Key.EstimatedEmptyReturn = EstimatedEmptyReturn ?? item.Key.EstimatedEmptyReturn;
+            var ActualEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp;
+            item.Key.ActualEmptyReturn = ActualEmptyReturn ?? item.Key.ActualEmptyReturn;
+        }
+
+        private void MapPOL(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.POLLocation = item.Value.payload?.origin_port?.unlocode;
+            item.Key.POLLocationPortId = this.GetPortId(item.Value.payload?.origin_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPOD(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.PODLocation = item.Value.payload?.destination_port?.unlocode;
+            item.Key.PODLocationPortId = this.GetPortId(item.Value.payload?.destination_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPreCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_origin, item.Value.payload?.origin_port))
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
+                return;
+            }
+
+            var port = GetPortForVizion(item.Value.payload?.inland_origin, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.PreCarriageLocationPortId = port.Id;
+                item.Key.PreCarriageLocation = port.CombinedCode;
+            }
+        }
+        private void MapOnCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_destination, item.Value.payload?.destination_port))
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
+                return;
+            }
+
+            var port = GetPortForVizion(item.Value.payload?.inland_destination, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.OnCarriageLocationPortId = port.Id;
+                item.Key.OnCarriageLocation = port.CombinedCode;
+            }
+        }
+        private bool IsDifferentPort(Location location, Location mainLocation)
+        {
+            if (mainLocation == null)
+                return false;
+            if (location == null)
+                return false;
+
+            if (!string.IsNullOrEmpty(location?.unlocode) &&
+                !string.IsNullOrEmpty(mainLocation?.unlocode) &&
+                location?.unlocode == mainLocation?.unlocode)
+                return false;
+
+            if (location.name == mainLocation.name &&
+            location.country == mainLocation.country &&
+            location.city == mainLocation.city &&
+            location.state == mainLocation.state)
+                return false;
+
+            return true;
+        }
     }
     public class TimeZoneExcelItem
     {
@@ -5851,7 +6332,6 @@ User/Pass",
         public bool IsCoreFeature { get; set; }
 
     }
-
 
     public class HtmlStringParsingParams
     {
@@ -5902,17 +6382,25 @@ User/Pass",
 
     }
 
-    public class ExcelOceanInsightStatistics
+    public class ExcelContactItem
     {
-        public string CreateDate { get; set; }
-        public string ContainerNumber { get; set; }
-        public string CarrierScac { get; set; }
-        public string DepartureLocation { get; set; }
-        public string DestinationLocation { get; set; }
+        public string PartnerName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyPos { get; set; }
+        public string PartnerType { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
+    }
 
+    public class UploadContactFailItem
+    {
+        public string PartnerName { get; set; }
+        public string Email { get; set; }
+        public string ErrorMessage { get; set; }
+    }
 
-
-    } 
     public class ExcelOI
     {
         public int? tenant { get; set; }

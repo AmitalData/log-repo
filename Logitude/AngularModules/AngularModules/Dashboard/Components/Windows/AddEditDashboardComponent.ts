@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
@@ -10,6 +10,9 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -19,7 +22,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     public EntityPM: DashboardPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditDashboardComponent;
-    private isNew: boolean = false;
+    public isNew: boolean = false;
     private dashboardService: DashboardPMService;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Dashboard";
@@ -54,6 +57,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard name change", DashboardId: this.EntityPM?.Id });
         }
     }
 
@@ -61,6 +65,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set Description(value: string) {
         if (this.EntityPM.Description != value) {
             this.EntityPM.Description = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard description change", DashboardId: this.EntityPM?.Id });
         }
     }
 
@@ -68,14 +73,11 @@ export class AddEditDashboardComponent extends BaseComponent {
     set PermissionLevelCode(value: string) {
         if (this.EntityPM.PermissionLevelCode != value) {
             this.EntityPM.PermissionLevelCode = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard permission change", DashboardId: this.EntityPM?.Id });
         }
     }
 
     ChooseUsersClicked() {
-        //var args = new ChooseUserArgs();
-        //args.MyQuery = this.EntityPM;
-        //args.AllUsers = this.myUsersList;
-
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Choose Users";
         logWindow.Width = 725;
@@ -83,8 +85,6 @@ export class AddEditDashboardComponent extends BaseComponent {
         logWindow.WindowArgs = this.EntityPM;
         logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            //this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
-            //this.FillSharedWithUsersItemsSource();
         });
     }
 
@@ -107,21 +107,24 @@ export class AddEditDashboardComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
+
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.PermissionLevelCode == "SPF" && this.EntityPM.DashboardSharedUsers.length == 0) {
-            errors.push("You have to select at least on user");
+            errors.push("You have to choose at least one user");
         }
 
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
             if (this.isNew) {
-                this.CreateDashboard();                
+                MixPanelLocator.PostDashboardAction({ ActionName: "New Dashboard save click", DashboardId: this.EntityPM?.Id });
+                this.CreateDashboard();
             }
 
             else {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Edit Dashboard save click", DashboardId: this.EntityPM?.Id });
                 this.UpdateDashboard();
             }
         }
@@ -131,7 +134,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.dashboardService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
             this.OnSaveCompleted(myResponse);
         });
-    }   
+    }
     private UpdateDashboard() {
         this.dashboardService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
             this.OnSaveCompleted(myResponse);
@@ -141,6 +144,32 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (!myResponse.HasError) {
             this.EntityPM = myResponse.Result;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+
+        else {
+            this.ValidationErrorsList = myResponse.ErrorsArray;
+        }
+
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    DeleteButtonClicked() {
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm";
+        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicator("Deleting...");
+                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
+                service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                    this.OnDeleteCompleted(myResponse);
+                });
+            }
+        });
+    }
+    private OnDeleteCompleted(myResponse: ServiceResponse) {
+        if (!myResponse.HasError) {
+            this.CurrentSession.CloseCurrentWindowEmit("OK_delete");
         }
 
         else {

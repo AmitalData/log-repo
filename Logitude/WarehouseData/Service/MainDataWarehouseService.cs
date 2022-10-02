@@ -150,8 +150,11 @@ namespace WarehouseData.Helper
         {
 
             customFieldWarehouseService.BuildCustomObjectFieldsTable(connectionString, tableLists);
-            RunSqlFunctions(connectionString);
-            if(!isIncrement)  ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
+            if (!isIncrement)
+            {
+                RunSqlFunctions(connectionString);
+                ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
+            }
         }
 
 
@@ -235,9 +238,20 @@ namespace WarehouseData.Helper
 
             #region Update Fact Table
 
-            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
-                this.UpdateFactTable(destinationConnectionString, table);
-            });
+            if (privateTenant != null)
+            {
+                foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                {
+                    this.UpdateFactTable(destinationConnectionString, table);
+                }
+            }
+            else
+            {
+                Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
+                    this.UpdateFactTable(destinationConnectionString, table);
+                });
+
+            }
 
             FinishUpdatingDataWarehouse(destinationConnectionString);
 

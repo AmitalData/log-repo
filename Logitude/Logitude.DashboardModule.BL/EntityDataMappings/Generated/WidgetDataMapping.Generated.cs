@@ -55,7 +55,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DateGroupCode, 
 	         MaximumGrouping, 
 	         SortBy, 
-	         SortDirection,
+	         SortDirection, 
+	         Key,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

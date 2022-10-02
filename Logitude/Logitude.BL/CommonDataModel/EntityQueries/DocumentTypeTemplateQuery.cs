@@ -380,7 +380,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       HorizontalShift = a.HorizontalShift,
                                                                       VerticalShift = a.VerticalShift,
                                                                       Subject = a.Subject,
-                                                                      ObjectTableId = a.DocumentType.ObjectTableId,
+                                                                      ObjectTableId = string.IsNullOrEmpty(a.ObjectTableId) ? a.DocumentType.ObjectTableId : a.ObjectTableId,
                                                                       IsCopiedAtSignup = a.IsCopiedAtSignup,
                                                                       IsEnabledForCustomers = a.IsEnabledForCustomers,
                                                                       CountryCode = a.CountryCode,

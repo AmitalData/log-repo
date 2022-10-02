@@ -27,7 +27,28 @@ When("click create", () => {
 
 Then("the flow should create successfully", () => {
     Actions.AssertCreateWorkflow();
-})
+});
+
+Given("edit workflow general inforamtion with following details", (dataTable) => {
+    let workflowDetails = Assists.CreateInstance<WorkflowDetails>(dataTable, true);
+    Actions.FillUpdateWorkflowDetails(workflowDetails);
+});
+
+When("save workflow", () => {
+    Actions.UpdateNewWorkflow();
+});
+
+Then("the workflow should update successfully", () => {
+    Actions.AssertUpdateWorkflow();
+});
+
+When("open run history", () => {
+    Actions.OpenFlowRunHistory();
+});
+
+Then("the instances should appear successfully", () => {
+    Actions.AssertOpenFlowRunHistory();
+});
 
 Given("edit start configration with following details", (dataTable) => {
     let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);

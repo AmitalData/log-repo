@@ -440,6 +440,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string AccountManagerUserId { get; set; }
 
         public string ATTN { get; set; }
+        [DataMember]
+        public DateTime? LastLoginDateViaPC { get; set; }
+        [DataMember]
+        public DateTime? LastLoginDateViaMobile { get; set; }
 
     }
 

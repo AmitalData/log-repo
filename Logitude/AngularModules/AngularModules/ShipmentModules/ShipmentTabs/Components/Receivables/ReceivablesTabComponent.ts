@@ -32,6 +32,7 @@ import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMServ
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { CardList } from '../../../../Common/EntityLists/CardList';
 
 @Component({    
     templateUrl: './ReceivablesTabComponent.html',
@@ -921,6 +922,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 530;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Receivables/AddEditReceivableComponent');
     }
     DeleteItem(itemComponent: ShipmentReceivableItem) {
@@ -1852,6 +1855,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         }
     }
 
+    public AddEditReceivableComponent: any;
     get MeasurementId() { return this.EntityPM.MeasurementId; }
     set MeasurementId(newValue: string) {
         if (this.EntityPM.MeasurementId != newValue) {
@@ -1904,6 +1908,9 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 case "BCNT": {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
+                                    if (this.AddEditReceivableComponent) {
+                                        this.AddEditReceivableComponent.LoadByContainerAdditionalFieldsArea();
+                                    }
                                     break;
                                 }
 
@@ -2194,6 +2201,21 @@ export class ShipmentReceivableItem extends BaseComponent {
     set PayableVendorId(newVaule: string) {
         if (this.EntityPM.PayableVendorId != newVaule) {
             this.EntityPM.PayableVendorId = newVaule;
+        }
+    }
+
+    public PayableVendorName: string;
+    private payableVendor: CardList;
+    get PayableVendor() { return this.payableVendor; }
+    set PayableVendor(value: CardList) {
+        if (this.payableVendor != value) {
+            this.payableVendor = value;
+        }
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.PayableVendorName = value.EnglishName;
+        } else {
+            this.PayableVendorName = null;
         }
     }
 

@@ -19,7 +19,7 @@
 
     <div *ngIf="isPickListObjectField() && PickListTable">
         <PickList
-            [ObjectFieldName]="Name" 
+            [ObjectFieldName]="ObjectField.FieldName" 
             [ObjectTableName]="PickListTable.Name"
             [SelectedValue]="CurrentValue" 
             [DataContext]="DataContext"
@@ -36,7 +36,7 @@
     <div *ngIf="isTextObjectField()">
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()" [NoValidation]="true"
+            [Text]="CurrentValue" [InputType]="Type" [NoValidation]="true"
             [HideColumns]="true" [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 
@@ -46,8 +46,8 @@
     <div *ngIf="isNumberObjectField()">
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()"
-            [DigitsAfterPoint]="ObjectField.DigitsAfterPoint" [NoValidation]="true" [HideColumns]="true"
+            [Text]="CurrentValue" [InputType]="Type"
+            [DigitsAfterPoint]="Digit" [NoValidation]="true" [HideColumns]="true"
             [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 

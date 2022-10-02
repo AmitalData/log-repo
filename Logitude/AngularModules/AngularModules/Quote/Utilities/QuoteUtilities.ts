@@ -340,7 +340,7 @@ export class QuoteUtilities {
             newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
             newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
             newChargePM.MarkUpTypeCode = "F";
-            newChargePM.MarkUpCurrencyId = item.SaleCurrencyId;
+            newChargePM.MarkUpCurrencyId = item.MarkUpCurrencyId;
             newChargePM.ContainerType1MarkUpTypeCode = "F";
             newChargePM.ContainerType2MarkUpTypeCode = "F";
             newChargePM.ContainerType3MarkUpTypeCode = "F";
@@ -541,12 +541,14 @@ export class QuoteUtilities {
         shipmentPM.ShipperNotExporterName = entityPM.ShipperNotExporterName;
         shipmentPM.ShipperNotExporterNote = entityPM.ShipperNotExporterNote;
         shipmentPM.ShipperNotExporterReference1 = entityPM.ShipperNotExporterReference;
+        shipmentPM.ShipperNotExporterAddressId = entityPM.ShipperNotExporterAddressId;
 
         shipmentPM.ConsigneeNotImporterId = entityPM.ConsigneeNotImporterId;
         shipmentPM.ConsigneeNotImporterContactId = entityPM.ConsigneeNotImporterContactId;
         shipmentPM.ConsigneeNotImporterName = entityPM.ConsigneeNotImporterName;
         shipmentPM.ConsigneeNotImporterNote = entityPM.ConsigneeNotImporterNote;
         shipmentPM.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
+        shipmentPM.ConsigneeNotImporterAddressId = entityPM.ConsigneeNotImporterAddressId;
 
         shipmentPM.ShipperId = entityPM.ShipperId;
         shipmentPM.ShipperContactId = entityPM.ShipperContactId;

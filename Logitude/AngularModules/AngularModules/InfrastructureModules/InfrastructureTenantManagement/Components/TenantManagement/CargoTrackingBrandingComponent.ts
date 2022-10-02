@@ -96,10 +96,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
         }
     }
+
     SetBrandingTabName() {
         this.BrandingTabName = "Cargo Tracking Branding";
         this.IsLogitudeEnvironment = false;
-        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog") {
+        var digitalPortalBrandingToggleFeatureForTenantZero = SessionLocator.TenantZeroFeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
+        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB" && d.TenantNumber == +this.EntityPM.Id)[0];
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL") && (digitalPortalBrandingToggleFeatureForTenantZero || digitalPortalBrandingToggleFeatureForCurrentTenant)) {
             this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
             this.IsLogitudeEnvironment = true;
         }
@@ -316,6 +319,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
+    public get EnableExportToExcel() {
+        return this.EntityPM.EnableExportToExcel;
+    }
+    public set EnableExportToExcel(value: boolean) {
+        if (this.EntityPM.EnableExportToExcel != value) {
+            this.EntityPM.EnableExportToExcel = value;
+        }
+    }
+
     ValidateHexCode(value: string, fieldName: string) {
 
         const regex = new RegExp('^#([a-fA-F0-9]{6})$');
@@ -372,6 +384,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
         this.EnableBranding = value;
         this.SetUIPropertiesEnabled(value);
+
+    }
+
+    EnableExportToExcelChange(value: any) {
+
+        this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
+        this.EnableExportToExcel = value;
 
     }
 

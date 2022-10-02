@@ -114,6 +114,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int MobileTotalLastWeek { get; set; }
         public int MobileTotalLastMonth { get; set; }
         public bool EnableBranding { get; set; }
+        public bool EnableExportToExcel { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
         public string ContactEmail { get; set; }
