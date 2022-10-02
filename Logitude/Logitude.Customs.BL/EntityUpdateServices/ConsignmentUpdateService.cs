@@ -24,6 +24,7 @@ using Devart.Data.Oracle;
 using System.Data.SqlClient;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -288,7 +289,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 declarations = string.Join("','", declarationIds);
                 declarations = "'" + declarations + "'";
             }
-
+            if(!string.IsNullOrEmpty(unloadPortCode)) unloadPortCode = "'" + unloadPortCode + "'";
             int i = 0;
             if (!string.IsNullOrEmpty(declarations) && declarations.Split(',').Count() > 990)
             {
@@ -317,32 +318,88 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode =:pu ";
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
+                        //cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
 
-                    string cmd = "Update Consignments set UnloadPortCode =:p1 ";
-                    cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
+                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                        oracleCommand.Parameters.Add(new OracleParameter("pu", unloadPortCode));
+                        //oracleCommand.Parameters.Add(new OracleParameter("p2", whereIn));
 
-                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                    sqlCommand.Parameters.Add(new OracleParameter("p1", unloadPortCode));
-                    sqlCommand.Parameters.Add(new OracleParameter("p2", whereIn));
-                    con.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    con.Close();
+                        string formattedParams = whereIn.Replace(" ", string.Empty); // Or a custom format
+                        string[] splitParams = formattedParams.Split(',');
+
+                        ////List<OracleParamter> parameters = new List<OracleParameter>();
+
+                        ////string sql = @"SELECT * FROM FooTable WHERE FooValue IN (";
+                        for (int n = 0; n < splitParams.Length; n++)
+                        {
+                            cmd += ":p" + n + ",";
+                            //oracleCommand.Parameters.Add(new OracleParameter(":p" + n, OracleDbType.VarChar, splitParams[n], ParameterDirection.Input));
+                            oracleCommand.Parameters.Add(new OracleParameter(":p" + n, splitParams[n]));
+                        }
+                        cmd = cmd.Substring(0, (cmd.Length - 1));
+                        cmd += ')';
+
+                        con.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    else
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode = " + unloadPortCode;
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (" + whereIn + ")";
+
+                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
+
+                        con.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    
                 }
             }
             else
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = "Update Consignments set UnloadPortCode =:p1 ";
-                    cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
+                    
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode =:pu ";
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
+                        
+                        SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+                        sqlCommand.Parameters.Add(new SqlParameter("pu", unloadPortCode));
+                        
+                        string formattedParams = whereIn.Replace(" ", string.Empty); // Or a custom format
+                        string[] splitParams = formattedParams.Split(',');
 
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.Parameters.Add(new OracleParameter("p1", unloadPortCode));
-                    sqlCommand.Parameters.Add(new OracleParameter("p2", declarations));
+                        for (int n = 0; n < splitParams.Length; n++)
+                        {
+                            cmd += ":p" + n + ",";
+                            sqlCommand.Parameters.Add(new SqlParameter(":p" + n, splitParams[n]));
+                        }
+                        cmd = cmd.Substring(0, (cmd.Length - 1));
+                        cmd += ')';
 
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
+                        cn.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        cn.Close();
+                    }
+                    else
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode = " + unloadPortCode;
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (" + whereIn + ")";
+
+                        SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                        cn.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        cn.Close();
+                    }
                 }
             }
         }
