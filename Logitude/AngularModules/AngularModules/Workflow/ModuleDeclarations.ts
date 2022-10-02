@@ -11,8 +11,8 @@ import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailP
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
-import { RunHistoryWorkflowComponent } from "./Components/CreateEditWorkflow/RunHistoryWorkflowComponent";
-import { WorkflowInstanceActivityComponent } from "./Components/CreateEditWorkflow/WorkflowInstanceActivityComponent";
+import { RunHistoryWorkflowComponent } from "./Components/WorkflowInstance/RunHistoryWorkflowComponent";
+import { WorkflowInstanceActivityComponent } from "./Components/WorkflowInstance/WorkflowInstanceActivityComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";

@@ -21,6 +21,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public WorkflowEntityTable: ObjectTablePM;
+    public IsNew: boolean = true;
 
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
 
@@ -38,6 +39,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.VariableName = this.Data["VariableName"] || null;
         this.VariableType = this.Data["VariableType"] || null;
         this.VariableValue = this.Data["VariableValue"] || null;
+        this.IsNew = this.Data["VariableType"] ? false : true;
 
         this.setUIProperties();
     }
@@ -83,14 +85,6 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
             this.updateVariableType(fieldDataType.Code)
         }
     }
-
-    // public get CustomFieldDataType() {
-    //     var fieldDataType = this.DataTypes.filter(d => d.Code == this.VariableType)[0];
-    //     return fieldDataType;
-    // }
-    // public set CustomFieldDataType(newValue: any) {
-    //     this.VariableType = newValue.Code;
-    // }
 
     GetSelectedDataType() {
         return this.DataTypesItems.filter(i => i.Code == this.VariableType)[0];

@@ -84,9 +84,16 @@
 
 
 <div *ngIf="DataType">
+    <div *ngIf="isDataTypeText()">
+        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+            [Text]="CurrentValue" [InputType]="Text" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
+            (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogTextBox>
 
-    <div *ngIf="DataType === 'Decimal'">
+    </div>
 
+
+    <div *ngIf="isDataTypeNumber()">
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
             [Text]="CurrentValue" [InputType]="'decimal'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
             (ValueChanged)="updateValue($event)" [DataCy]="Name">
@@ -94,4 +101,20 @@
 
     </div>
 
+
+    <div *ngIf="isDataTypeBoolean()">
+        <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'" [SelectedItem]="ListItem(CurrentValue)"
+            (SelectedItemChanged)="updateValue($event.Code)" [ListType]="''" [CyData]="Name">
+        </ComboBox>
+
+    </div>
+
+
+    <div *ngIf="isDataTypeDateTime()">
+        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="Name" [DataContext]="DataContext"
+            [SelectedDateValue]="DateTimeCurrentValue" [InputType]="'date'" [IsFreeValue]="true" [NoValidation]="true"
+            [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name">
+        </LogDatePicker>
+
+    </div>
 </div>

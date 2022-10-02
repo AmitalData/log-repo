@@ -10,20 +10,21 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data;
- 
+
 namespace Logitude.Workflow.Data.EntityMapping
 {
- 
+
     public class WorkFlowInstanceActivityStatusMap : EntityTypeConfiguration<WorkFlowInstanceActivityStatus>
     {
-	    string dbms;
+        string dbms;
         public WorkFlowInstanceActivityStatusMap()
         {
+
 
             this.ToTable("WorkFlowInstanceActivityStatuses");
 
             this.HasKey(t => new { t.Code });
-	 
+
             this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(30).IsUnicode(false);
@@ -32,4 +33,3 @@ namespace Logitude.Workflow.Data.EntityMapping
         }
     }
 }
-	 

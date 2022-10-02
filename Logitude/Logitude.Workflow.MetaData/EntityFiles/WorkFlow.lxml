@@ -1450,11 +1450,11 @@
     TabLocalName="&quot;Run History&quot;"
     ObjectTableName="&quot;WorkFlow&quot;"
     Code="&quot;WFRH&quot;"
-    ControlPath="&quot;./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent&quot;"
+    ControlPath="&quot;./Workflow/Components/WorkflowInstance/RunHistoryWorkflowComponent&quot;"
     TextCode="&quot;WorkFlow.TH.RunHistory&quot;"
     IsPackagable="true"
     IndexOrder="1"
-    HtmlComponentURL="&quot;./Workflow/Components/CreateEditWorkflow/RunHistoryWorkflowComponent&quot;"
+    HtmlComponentURL="&quot;./Workflow/Components/WorkflowInstance/RunHistoryWorkflowComponent&quot;"
     HtmlComponentName="&quot;RunHistoryWorkflowComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />

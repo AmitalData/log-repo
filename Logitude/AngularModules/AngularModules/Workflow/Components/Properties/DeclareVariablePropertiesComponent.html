@@ -90,12 +90,8 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <!-- <ComboBox [ItemsSource]="DataTypes" (SelectedItemChanged)="DataTypeSelectionMethod($event)"
-                    [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox> -->
-
-
                 <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'" [SelectedItem]="GetSelectedDataType()"
-                    (SelectedItemChanged)="DataTypeSelectionMethod($event)" [ListType]="''">
+                    (SelectedItemChanged)="DataTypeSelectionMethod($event)" [ListType]="''" [IsDisabled] = "!IsNew">
                 </ComboBox>
             </div>
         </td>
