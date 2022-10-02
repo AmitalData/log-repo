@@ -583,6 +583,19 @@
 
                         <td><div></div></td>
                     </tr>
+                    <tr class="FormFieldRow">
+                        <td class="tbl1Label">
+                            <div *ngIf="DcaRenameVisibility">
+                                <LogLabel [ObjectFieldName]="'SendTime'"
+                                          [ObjectTableName]="'Customs.InterfaceTenantDefinition'"
+                                          [DataContext]="DataContext">
+
+                                </LogLabel>
+                            </div>
+
+                        </td>
+
+                    </tr>
                 </table>
             </td>
         </tr>
