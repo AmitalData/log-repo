@@ -25547,7 +25547,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;CancelOldCommunication&quot;"
-      FeatureTypeCode="&quot;Act&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelOldCommunication&quot;"
       FeatureDefaultText="&quot;CancelOldCommunication&quot;"
       IsPackagable="true"
