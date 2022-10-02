@@ -15,7 +15,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowName = "#WorkFlow_Name";
     public static readonly NewWorkflow = "#NewButton_WorkFlow";
     public static readonly WorkflowCreateButton = "button[data-cy^='workflow-save-button'";
-    public static readonly WorkflowSaveButton = "button[class^='EntityChangesButton']";
+    public static readonly WorkflowSaveButton = "button[data-cy^='save-workflow-changes-button']";
     public static readonly WorkflowStartEditButton = ".edit-button";
     public static readonly WorkflowAddCondition = ".link-button";
     public static readonly FlowNameInFlowBuilder = ".TabTitleRow";

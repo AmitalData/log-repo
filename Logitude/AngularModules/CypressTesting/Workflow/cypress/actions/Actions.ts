@@ -140,7 +140,6 @@ export function AssertOpenFlowRunHistory() {
 export function SaveWorkflow() {
     CloseEditStartNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true)
     cy.Click(WorkflowSelectors.WorkflowSaveButton, null)
 }
 

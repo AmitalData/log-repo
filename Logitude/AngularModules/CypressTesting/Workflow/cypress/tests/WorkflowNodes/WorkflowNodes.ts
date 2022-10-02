@@ -21,7 +21,7 @@ Given("a flow with following details", (dataTable) => {
     Actions.FillWorkflowDetails(workflowDetails);
 });
 
-When("click create", () => {
+When("create workflow", () => {
     Actions.CreateNewWorkflow();
 });
 

@@ -5,10 +5,10 @@ Feature: Workflow node
         Given the user logged in and navigates to automation workspace
         And open workflows
         And a flow with following details
-            | Name        | random         |
-            | Description | test workflow  |
-            | Owner       | test1@mail.com |
-        When click create
+            | Name        | random        |
+            | Description | test workflow |
+            | Owner       | SpecflowTest  |
+        When create workflow
         Then the flow should create successfully
 
     Scenario: edit workflow general inforamtion
