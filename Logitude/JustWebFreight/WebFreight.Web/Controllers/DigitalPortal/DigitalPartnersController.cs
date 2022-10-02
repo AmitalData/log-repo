@@ -266,7 +266,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId, true);
                 shipmentId = shipmentIdAndTenant.Item1;
                 var tenant = shipmentIdAndTenant.Item2;
 
