@@ -437,19 +437,19 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAll().subscribe((myResponse: ServiceResponse) => {
+                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var all: PaymentTermList[] = myResponse.Result;
-                        var list = all.filter(f => f.Days == days)[0];
+                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
+                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
 
-                        if (list != null) {
-                            myPaymentTermId = list.Id;
+                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
+                            myPaymentTermId = suitablePaymentTerm.Id;
                         }
 
                         else {
-                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (list != null) {
-                                myPaymentTermId = list.Id;
+                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (manuallySetPaymentTerm != null) {
+                                myPaymentTermId = manuallySetPaymentTerm.Id;
                             }
                         }
 
@@ -467,19 +467,19 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAll().subscribe((myResponse: ServiceResponse) => {
+                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var all: PaymentTermList[] = myResponse.Result;
-                        var list = all.filter(f => f.Days == days)[0];
+                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
+                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
 
-                        if (list != null) {
-                            myPaymentTermId = list.Id;
+                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
+                            myPaymentTermId = suitablePaymentTerm.Id;
                         }
 
                         else {
-                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (list != null) {
-                                myPaymentTermId = list.Id;
+                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (manuallySetPaymentTerm != null) {
+                                myPaymentTermId = manuallySetPaymentTerm.Id;
                             }
                         }
 

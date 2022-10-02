@@ -211,7 +211,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.IsResourcesReady = true;
 
             this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-            this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+            //this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
             this.BuildPartnersTypes();
