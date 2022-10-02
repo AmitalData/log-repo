@@ -401,7 +401,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
 
