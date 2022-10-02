@@ -60,7 +60,7 @@ namespace Logitude.BL.DataContracts
         public string carrier_scac { get; set; }
         public string container_id { get; set; }
         public string container_iso { get; set; }
-        public object bill_of_lading { get; set; }
+        public string bill_of_lading { get; set; }
         public Location inland_origin { get; set; }
         public Location origin_port { get; set; }
         public Location destination_port { get; set; }

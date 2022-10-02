@@ -177,15 +177,22 @@ namespace WebFreight.Web.ContainerTracking
             var comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest, entityId, objectTableName);
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
                 return;
-            var container = GetContanerPM(containerTrackingRequest);
-            manager.SetContainer(container);
+
             try
             {
-                MapContainersExternalData(container);
+                var analyz = false;
+                var container = GetContanerPM(containerTrackingRequest);
+                var shipment = GetShipmentPM(containerTrackingRequest);
+                manager.SetContainer(container);
+                manager.SetShipment(shipment);
+                if (IsValidToAnalyzed(shipment, container, containerTrackingRequest))
+                {
+                    MapContainersExternalData(container);
+                    manager.Update();
+                    analyz = true;
+                }
 
-                manager.SetShipment(GetShipmentPM(containerTrackingRequest));
-
-                manager.Update();
+                SetComunicationLogDone(comunicationLog, analyz);
             }
             catch (Exception ex)
             {
@@ -204,9 +211,30 @@ namespace WebFreight.Web.ContainerTracking
                 communicationLogRepository.SubmitChanges();
                 throw ex;
             }
-            
+
 
         }
+
+        private bool IsValidToAnalyzed(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
+        {
+            return (
+                    string.IsNullOrEmpty(visionContainerStatus?.payload?.bill_of_lading) ||
+                    string.IsNullOrEmpty(shipment.Master) ||
+                    visionContainerStatus?.payload?.bill_of_lading == shipment.Master
+                    ) &&
+                    !container.IsCancelled && 
+                    !container.IsClosed;
+        }
+
+        private void SetComunicationLogDone(CommunicationLog comunicationLog, bool wasAnalyzed)
+        {
+            comunicationLog.WasAnalyzed = wasAnalyzed;
+            comunicationLog.CommunicationStatusTypeCode = "D";
+            var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
+            communicationLogRepository.Update(comunicationLog);
+            communicationLogRepository.SubmitChanges();
+        }
+
         private string GetContainerNumber(string container_id)
         {
             string containerNumber = container_id;
@@ -215,7 +243,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 var dash_index = container_id.LastIndexOf('-');
                 var value_after_dash = container_id.ElementAt(dash_index + 1);
-                if(value_after_dash != null && value_after_dash.ToString().Length == 1)
+                if (value_after_dash != null && value_after_dash.ToString().Length == 1)
                 {
                     containerNumber = container_id.Remove(dash_index, 1);
                 }
@@ -223,9 +251,9 @@ namespace WebFreight.Web.ContainerTracking
 
             return containerNumber;
         }
-        private void MapContainersExternalData(ContainerPM container )
+        private void MapContainersExternalData(ContainerPM container)
         {
-            if(container == null)
+            if (container == null)
             {
                 containerUpdatedFields.ContainersExternal = null;
                 return;
@@ -326,7 +354,7 @@ namespace WebFreight.Web.ContainerTracking
         private CommunicationLog BuildCommunicationLogUpdateStatus(ContainerTrackingRequest containerTrackingRequest, string entityId, string objectTableName)
         {
             using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
-            {                
+            {
                 var byteArray = ConvertObjectToByteArray(visionContainerStatus);
                 var document = AddDocument(containerTrackingRequest.Tenant, byteArray);
                 var commLog = AddResponseCommunicationLog(objectTableName, entityId, document);
@@ -362,7 +390,7 @@ namespace WebFreight.Web.ContainerTracking
         private Container GetContainer(ContainerTrackingRequest containerTrackingRequest, string containerNumber)
         {
             var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
-            return shipmentContext.Containers.Where(r => r.ShipmentId == containerTrackingRequest.ShipmentId && r.ContainerNumber == containerNumber).FirstOrDefault();            
+            return shipmentContext.Containers.Where(r => r.ShipmentId == containerTrackingRequest.ShipmentId && r.ContainerNumber == containerNumber).FirstOrDefault();
         }
         private void FillContainerField(ContainerTrackingRequest containerTrackingRequest, Container container)
         {
@@ -414,7 +442,7 @@ namespace WebFreight.Web.ContainerTracking
             var commonContext = CommonDataContext.GetContext(document.Tenant);
 
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-            ObjectTableRepository objecttableRep = new ObjectTableRepository(document.Tenant);            
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(document.Tenant);
             ObjectTable objectTable = objecttableRep.GetObjectTableByName(objectTableName, 0, true);
             var commLog = CreateResponseCommunicationLog(objectTable, entityId, document);
             communicationLogRepository.Add(commLog);
@@ -432,13 +460,13 @@ namespace WebFreight.Web.ContainerTracking
                 Subject = "General Update Container Status",
                 Tenant = document.Tenant,
                 CommunicationLogTypeCode = "A",
-                CommunicationStatusTypeCode = "D",
+                CommunicationStatusTypeCode = "W",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(document.Tenant),
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDateUTC = DateTime.UtcNow,
                 Priority = 1,
-                WasAnalyzed = true,                
+                WasAnalyzed = false,
                 EntityId = entityId,
             };
         }
