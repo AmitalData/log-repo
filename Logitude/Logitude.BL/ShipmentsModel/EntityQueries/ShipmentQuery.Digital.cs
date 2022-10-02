@@ -1781,6 +1781,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ATADateType = shipment.PreCarriageATA != null ? "Actual" : (shipment.PreCarriageETA != null ? "Estimated" : null),
                     TransportModeId = shipment.TransportModeId,
                     LegDetails = FillPreCarriageLegDetails(shipment),
+                    LegTransportModeId = shipment.PreCarriageTransportModeId,
                 };
             }
         }
@@ -1793,7 +1794,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 { "Carrier No", CheckEmptyValue(shipment.PreCarriageCarrierNumber) }
             };
 
-            if (shipment.TransportModeId == "O")
+            if (shipment.PreCarriageTransportModeId == "O")
             {
                 legDetails.Add("Vessel", CheckEmptyValue(shipment.PreCarriageVesselName));
             }
@@ -2147,6 +2148,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ATDDateType = shipment.OnCarriageATD != null ? "Actual" : (shipment.OnCarriageETD != null ? "Estimated" : null),
                     TransportModeId = shipment.TransportModeId,
                     LegDetails = FillOnCarriageLegDetails(shipment),
+                    LegTransportModeId = shipment.OnCarriageTransportModeId,
                 };
             }
         }
@@ -2157,7 +2159,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             legDetails.Add("Carrier", CheckEmptyValue(shipment.OnCarriageCarrierName));
             legDetails.Add("Carrier No", CheckEmptyValue(shipment.OnCarriageCarrierNumber));
 
-            if (shipment.TransportModeId == "O")
+            if (shipment.OnCarriageTransportModeId == "O")
             {
                 legDetails.Add("Vessel", CheckEmptyValue(shipment.OnCarriageVesselName));
             }

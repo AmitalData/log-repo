@@ -3071,6 +3071,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsViaPortsDatesFilled { get; set; }
         [DataMember]
         public string TransportModeId { get; set; }
+        public string LegTransportModeId { get; set; }
         [XmlIgnore]
         public Dictionary<string, string> LegDetails { get; set; }
     }
