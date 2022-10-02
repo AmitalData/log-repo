@@ -1204,7 +1204,10 @@ export class CargoSplitGeneralTabComponent
                                         if (!response.HasError) {
                                             if (response.Result instanceof DeclarationCargoSplitPM) this.EntityPM = response.Result;
                                             this.BuildTabs();
-                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            this.RefreshEntity();
+                                            this.SetDisplayFields(this.ResponseStatusCode); 
+                                            this.decCargoSplitCargoIdentifierModel.SetDisplayFields(this.ResponseStatusCode);
+                                          
                                         }
                                     }
 
@@ -1720,10 +1723,11 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
         
     }
     
-    SetDisplayFields()
+    SetDisplayFields(responseStatusCode:string = null)
     {
         
-        if(this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "1" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "3" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "6")
+        if(this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "1" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "3" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "6"
+        || responseStatusCode=="1" || responseStatusCode=="3" || responseStatusCode=="6")
             {
                 this.UIProperties.SetEnabled("CargoTypeCode", "Customs.DecCargoSplitCargoIdentifier", false);
                 this.UIProperties.SetEnabled("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
