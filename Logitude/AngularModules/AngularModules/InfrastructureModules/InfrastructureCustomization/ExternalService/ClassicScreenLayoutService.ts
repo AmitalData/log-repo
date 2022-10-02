@@ -1,3 +1,4 @@
+import { AppTool } from '../../../Infrastructure/Tools';
 import { IScreenLayoutService} from '../Interface/IScreenLayoutService';
 
 export class ClassicScreenLayoutService implements IScreenLayoutService {
@@ -22,7 +23,8 @@ export class ClassicScreenLayoutService implements IScreenLayoutService {
 
     private GetNumberOfScreenColumns(screen: any) {
         let additionalFieldsForOneColumnScreensCodes = this.GetScreensCodesWithOneColumnForAdditionalFields();
-        return additionalFieldsForOneColumnScreensCodes.indexOf(screen.ScreenCode) > -1 ? 1 : screen.NumberOfColumns;
+        let screenCode = screen.ScreenCode ? screen.ScreenCode : screen.Code;
+        return additionalFieldsForOneColumnScreensCodes.indexOf(screenCode) > -1 ? 1 : screen.NumberOfColumns;
     }
 
     private GetScreensCodesWithOneColumnForAdditionalFields() {
