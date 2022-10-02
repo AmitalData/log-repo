@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ContactInputTemplateArgs } from 'CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { ListComponentArgs } from 'Infrastructure/Args';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ApiQueryFilters, FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from 'Infrastructure/Tools';
-import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
 
 const SearchBoxDelayTime = 700;
+
 @Component({
     templateUrl: './RunHistoryWorkflowComponent.html',
 })

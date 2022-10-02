@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { StringIterator } from "cypress/types/lodash";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { DataTypesList } from "Workflow/Models/DataTypesList";
+import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
     templateUrl: "./DeclareVariablePropertiesComponent.html"
@@ -20,7 +21,11 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public WorkflowEntityTable: ObjectTablePM;
-    public DataTypes: any[] = [{ Code: "Text", Name: "Text" }, { Code: "Date", Name: "Date" }, { Code: "Number", Name: "Number" }, { Code: "Boolean", Name: "Boolean" }];
+    public IsNew: boolean = true;
+
+    public DataTypesItems: ListItem[] = new DataTypesList().Items;
+
+    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -34,6 +39,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.VariableName = this.Data["VariableName"] || null;
         this.VariableType = this.Data["VariableType"] || null;
         this.VariableValue = this.Data["VariableValue"] || null;
+        this.IsNew = this.Data["VariableType"] ? false : true;
 
         this.setUIProperties();
     }
@@ -80,12 +86,8 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         }
     }
 
-    public get CustomFieldDataType() {
-        var fieldDataType = this.DataTypes.filter(d => d.Code == this.VariableType)[0];
-        return fieldDataType;
-    }
-    public set CustomFieldDataType(newValue: any) {
-        this.VariableType = newValue.Code;
+    GetSelectedDataType() {
+        return this.DataTypesItems.filter(i => i.Code == this.VariableType)[0];
     }
 
     cancelButtonClicked() {
