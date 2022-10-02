@@ -41,7 +41,7 @@
                     <span [style.color]="Entity['StatusName'] | LogBoxStatusForegroundPipe">{{FieldValue}}</span>
                 </div>
 
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'LastLoginDate'">
+                <div *ngIf="ObjectTableName == 'Customer' && (FieldName == 'LastLoginDate' || FieldName == 'LastLoginDateViaPC' || FieldName == 'LastLoginDateViaMobile')">
                     <span>{{FieldValue | DateTimeToDatePipe}}</span>
                 </div>
 

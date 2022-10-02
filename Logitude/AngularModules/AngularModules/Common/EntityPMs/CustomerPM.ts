@@ -1458,6 +1458,16 @@ export class CustomerPM {
     public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
        
 	 
+    private lastLoginDateViaPC: Date;
+    public get LastLoginDateViaPC() { return this.lastLoginDateViaPC; }
+    public set LastLoginDateViaPC(newValue: Date) { if (this.lastLoginDateViaPC != newValue) { this.lastLoginDateViaPC = newValue; this.MarkAsDirty("LastLoginDateViaPC"); } }
+       
+	 
+    private lastLoginDateViaMobile: Date;
+    public get LastLoginDateViaMobile() { return this.lastLoginDateViaMobile; }
+    public set LastLoginDateViaMobile(newValue: Date) { if (this.lastLoginDateViaMobile != newValue) { this.lastLoginDateViaMobile = newValue; this.MarkAsDirty("LastLoginDateViaMobile"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

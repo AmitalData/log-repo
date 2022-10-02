@@ -2,6 +2,7 @@
   <SqlScript>
     <![CDATA[
 
+
 CREATE VIEW [dbo].[CustomersDataView]
 AS
 SELECT        
@@ -31,6 +32,7 @@ dbo.Customers.BlockNewInvoiceCreation, dbo.Customers.BlockNewShipmentCreation,db
 dbo.Customers.ActivatedByUserId, dbo.Customers.ActivationRequestedByUserId, dbo.Customers.SetAsInactiveByUserId,
 ActivatedByUserContacts.EnglishName as ActivatedByUserName, SetAsInactiveByUserContacts.EnglishName as SetAsInactiveByName,
 ActivationRequestedByUserContacts.EnglishName as ActivationRequestedByUserName, dbo.Customers.ActivationDate, dbo.Customers.InactiveDate, dbo.Customers.ActivationRequestDate,dbo.cards.CreatedByPartner, dbo.cards.StateName, dbo.cards.GLAccountId , dbo.cards.GLAccountDisplayNumber, dbo.cards.IsAutonomy as  IsAutonomy
+, PCSharedLogisticsContactLastLogins.LastLoginDate as LastLoginDateViaPC, MobileSharedLogisticsContactLastLogins.LastLoginDate as LastLoginDateViaMobile
 
 
 FROM dbo.Customers  Inner join
@@ -62,7 +64,10 @@ FROM dbo.Customers  Inner join
 						 dbo.Contacts AS ActivatedByUserContacts ON dbo.Customers.ActivatedByUserId = ActivatedByUserContacts.Id LEFT OUTER JOIN
 						 dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
              dbo.Cards AS CustomerCard ON dbo.Customers.Id = CustomerCard.Id LEFT OUTER JOIN dbo.Cards as BillToCards on CustomerCard.BillToId = BillToCards.Id LEFT OUTER JOIN
-						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
+						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id LEFT OUTER JOIN
+						 (select Max(LoginDateTime) as LastLoginDate,Tenant,CardId from SharedLogisticsContactLastLogins where Via='Mobile' group by Tenant,CardId) AS MobileSharedLogisticsContactLastLogins ON dbo.Cards.Id = MobileSharedLogisticsContactLastLogins.CardId LEFT OUTER JOIN
+						 (select Max(LoginDateTime) as LastLoginDate,Tenant,CardId from SharedLogisticsContactLastLogins where Via='PC' group by Tenant,CardId) AS PCSharedLogisticsContactLastLogins ON dbo.Cards.Id = PCSharedLogisticsContactLastLogins.CardId
+
           
 where dbo.Cards.PartnerTypeId <> 'AC'
 

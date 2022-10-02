@@ -128,6 +128,8 @@ namespace WebFreight.Web.App_Code
                              TeamName = customer.TeamName,
                              SharedLogisticsInvitationStatusName = customer.SharedLogisticsInvitationStatusName,
                              LastLoginDate = customer.LastLoginDate,
+                             LastLoginDateViaPC = customer.LastLoginDateViaPC,
+                             LastLoginDateViaMobile = customer.LastLoginDateViaMobile,
                              InvitationDate = customer.InvitationDate,
                           
                              ClassifierName = customer.ClassifierName,

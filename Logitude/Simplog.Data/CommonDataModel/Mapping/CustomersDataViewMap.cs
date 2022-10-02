@@ -59,6 +59,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.IsCustomer).HasColumnName("IsCustomer");
             this.Property(t => t.LastLoginDate).HasColumnName("LastLoginDate");
+            this.Property(t => t.LastLoginDateViaPC).HasColumnName("LastLoginDateViaPC");
+            this.Property(t => t.LastLoginDateViaMobile).HasColumnName("LastLoginDateViaMobile");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
             this.Property(t => t.LeadDescription).HasColumnName("LeadDescription");
             this.Property(t => t.LocalName).HasColumnName("LocalName");

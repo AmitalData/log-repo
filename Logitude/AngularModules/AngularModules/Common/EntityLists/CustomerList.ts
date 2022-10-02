@@ -151,5 +151,9 @@ export class CustomerList {
 		BillToId: string;
 		BillToName: string;
 		SATCustomerName: string;
+		AccountManagerUserId: string;
+		ATTN: string;
+		LastLoginDateViaPC: Date;
+		LastLoginDateViaMobile: Date;
 	
 }

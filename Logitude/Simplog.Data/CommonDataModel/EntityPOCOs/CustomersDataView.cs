@@ -144,5 +144,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string BillToId { get; set; }
         public string BillToName { get; set; }
         public string SATCustomerName { get; set; }
+        public DateTime? LastLoginDateViaPC { get; set; }
+        public DateTime? LastLoginDateViaMobile { get; set; }
     }
 }
