@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ChangeInSupplierInvoice).HasColumnName("ChangeInSupplierInvoice").HasMaxLength(1).IsUnicode(false);
 
-            this.Property(t => t.BuyerName).HasColumnName("BuyerName").HasMaxLength(35).IsUnicode(true);
+            this.Property(t => t.BuyerName).HasColumnName("BuyerName").HasMaxLength(70).IsUnicode(true);
 
             this.Property(t => t.BuyerAddress).HasColumnName("BuyerAddress").HasMaxLength(256).IsUnicode(true);
 
