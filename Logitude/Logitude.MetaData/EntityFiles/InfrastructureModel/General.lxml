@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d570&quot;"
+  Code="&quot;eb95&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -418,8 +418,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.MinMax&quot;"
-      DefaultText="&quot;%FieldName Field must be less than %Maxlength and more than %Minlength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be less than %Maxlength and more than %Minlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2687,8 +2687,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.Max&quot;"
-      DefaultText="&quot;%FieldName Field must be less than %Maxlength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות קטן מ- %Maxlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be less than %Maxlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן מ- %Maxlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5159,14 +5159,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.Min&quot;"
-      DefaultText="&quot;%FieldName Field must be greater than %Minlength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות גדול מ %Minlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be more than %Minlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות יותר מ %Minlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.EqualLength&quot;"
-      DefaultText="&quot;%FieldName Field must be equal %Equallength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות שווה %Equallength&quot;"
+      DefaultText="&quot;%FieldName Field length must equal %Equallength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות שווה %Equallength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

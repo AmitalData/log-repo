@@ -626,12 +626,16 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("Maximum length of the text is 2000");
         }
 
+        if (this.objectField.MinLength > 2000) {
+            this.ValidationErrorsList.push("Minimum length of the text is 2000");
+        }
+
         if (this.objectField.MaxLength == 0) {
             this.ValidationErrorsList.push("Max length number shouldn't be 0");
         }
 
         if (!AppTool.IsNullOrEmpty(this.objectField.MaxLength) &&!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength > this.objectField.MaxLength) {
-            this.ValidationErrorsList.push("Min length number shouldn't be greater than max length number");
+            this.ValidationErrorsList.push("Min length number shouldn't be more than Max length number");
         }
 
         if (!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength < 0) {

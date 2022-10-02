@@ -21,6 +21,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
                 throw new ApplicationException("Maximum length of the text is 2000");
             }
 
+            if (entityPM.MinLength > 2000)
+            {
+                throw new ApplicationException("Minimum length of the text is 2000");
+            }
+
             if (entityPM.MaxLength < 0)
             {
                 throw new ApplicationException("Max length number shouldn't be less than 0");
@@ -28,7 +33,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
 
             if (entityPM.MinLength > entityPM.MaxLength && entityPM.MaxLength != 0)
             {
-                throw new ApplicationException("Min length number shouldn't be greater than max length number");
+                throw new ApplicationException("Min length number shouldn't be more than Max length number");
             }
 
             if (entityPM.MinLength < 0)

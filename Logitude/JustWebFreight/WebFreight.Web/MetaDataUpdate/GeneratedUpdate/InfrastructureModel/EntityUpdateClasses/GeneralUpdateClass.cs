@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "c1d56509786839a2ce36dd588f4bda45";
+		public const string HashString = "aeeed36d5c8c13bb54258841cae84bb1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "d570",
+			      				    Code =  "eb95",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -856,7 +856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMFieldIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.FieldIsRequired", DefaultText = "%FieldName Field is Required",LocalDefaultText = @"%FieldName שדה חובה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field length must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMSubmitFaild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.SubmitFaild", DefaultText = "Submit failed",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
@@ -1684,7 +1684,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBClear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.Clear", DefaultText = "Clear",LocalDefaultText = @"נקה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Max", DefaultText = "%FieldName Field must be less than %Maxlength",LocalDefaultText = @"%FieldName השדה חייב להיות קטן מ- %Maxlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Max", DefaultText = "%FieldName Field length must be less than %Maxlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות קטן מ- %Maxlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralOAPPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.APPayments", DefaultText = "AP/ Payments",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2514,9 +2514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCShipmentContainerTracking = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Shipment.ContainerTracking", DefaultText = "Container Tracking Settings",LocalDefaultText = @"Container Tracking Settings", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMMin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Min", DefaultText = "%FieldName Field must be greater than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות גדול מ %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMMin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Min", DefaultText = "%FieldName Field length must be more than %Minlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות יותר מ %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMEqualLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.EqualLength", DefaultText = "%FieldName Field must be equal %Equallength",LocalDefaultText = @"%FieldName השדה חייב להיות שווה %Equallength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMEqualLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.EqualLength", DefaultText = "%FieldName Field length must equal %Equallength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות שווה %Equallength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
