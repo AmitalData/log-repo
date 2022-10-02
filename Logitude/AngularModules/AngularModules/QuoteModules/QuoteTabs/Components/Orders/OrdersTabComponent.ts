@@ -203,7 +203,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
     private InitalizeFeatureOfClosedAutomatically() {
         this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("Quote", "QuoteClosedAutomatically");
