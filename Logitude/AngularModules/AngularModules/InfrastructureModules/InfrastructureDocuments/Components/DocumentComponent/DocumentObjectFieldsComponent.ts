@@ -44,6 +44,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     InSertDataFieldType: string;
     public HideSystemDataTab: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    FromComponent: string;
     constructor() {
       
         
@@ -73,7 +74,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.ObjectTypeField = args.ObjectTypeField;
         this.InSertDataFieldType = args.InSertDataFieldType;
         this.HideSystemDataTab = args.HideSystemDataTab;
-
+        this.FromComponent = args.FromComponent; 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
          if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC" || this.InSertDataFieldType == "To") this.ObjectTypeField = "Emails"; 
         } 
@@ -240,8 +241,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
                 var d = "f";
             }
 
-            field.LookUpTableId = this.GetFieldLookUpTableIdValue(field);
+            if (field.FieldName == "SummaryMarkup" && this.FromComponent == "QuotationComponent") {
+                return;
+            }
 
+            field.LookUpTableId = this.GetFieldLookUpTableIdValue(field);
 
             var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
             this.ObsList.push(view);

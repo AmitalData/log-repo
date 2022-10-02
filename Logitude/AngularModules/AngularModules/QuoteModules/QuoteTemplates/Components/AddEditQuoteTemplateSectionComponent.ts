@@ -151,11 +151,11 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                 var windowArgs: any = {};
                 windowArgs.InSertDataFieldType = "FroalaEditor";
                 windowArgs.ObjectTableId = tableId;
+                windowArgs.FromComponent = "QuotationComponent";
 
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 500;
                 logWindow.Height = 600;
-
                 logWindow.Title = "Insert Data Field";
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
