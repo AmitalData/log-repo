@@ -85,16 +85,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsEnvironmentSettingUpdateClass
    {  		
-		public const string HashString = "60546d2f67bbfda5fce5fb1336bf3148";
+		public const string HashString = "b40aee778b48970be1d597241318af89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "CustomsEnvironmentSetting",
+	             				    ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 			      				    IsNew =  true,
-			      				    DBTableName =  "CustomsEnvironmentSettings",
+			      				    DBTableName =  "Customs.CustomsEnvironmentSettings",
 			      				    ObjectTableSingular =  "CustomsEnvironmentSetting",
 			      				    ObjectTablePlural =  "CustomsEnvironmentSettings",
 			      				    HasCustomFilter =  false,
@@ -107,7 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Environment Setting",
-			      				    Code =  "2b9f",
+			      				    Code =  "51d0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -150,7 +150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -206,7 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnvironmentCode",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  20,
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UseRabbitMQ",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -321,7 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RabbitHost",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  256,
@@ -377,7 +377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RabbitUserName",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -433,7 +433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RabbitPassword",
-					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						ObjectTableName =  "Customs.CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -493,8 +493,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsEnvironmentSetting").ToList();
+		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsEnvironmentSetting").ToList();
 		       
 	      
 
@@ -513,7 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
 
 		   Feature CustomsEnvironmentSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);
 		   Feature CustomsEnvironmentSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);
@@ -524,7 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",

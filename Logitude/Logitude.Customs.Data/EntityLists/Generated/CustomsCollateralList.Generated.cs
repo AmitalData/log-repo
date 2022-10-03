@@ -72,6 +72,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomerName  { get; set; }
        [DataMember]
        public bool IsAnswer  { get; set; }
+       [DataMember]
+       public string Direction  { get; set; }
+       [DataMember]
+       public string ImporterId  { get; set; }
    }
 
 }

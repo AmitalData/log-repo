@@ -386,6 +386,7 @@
     <Compile Include="EntityDataMappings\ClientDrivingLicenseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsAddressCommTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsPoaDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClientsTapagDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClosedTableStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerTypeDataMapping.cs" />
@@ -598,6 +599,7 @@
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsAddressCommTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsPoaDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClientsTapagDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClosedTableStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerTypeDataMapping.Generated.cs" />
@@ -1104,6 +1106,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClientsTapagQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
@@ -1617,8 +1620,10 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClientsTapagUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticPermitUpdateService.Generated.cs" />

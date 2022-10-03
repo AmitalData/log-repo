@@ -319,6 +319,11 @@ namespace Logitude.DBMigrations.Models
 
         protected DXMLGeneratedScript GenerateScriptsFromDXMLTable(DXMLTable dxmlTable)
         {
+
+            if (dxmlTable.DXMLFileName.Contains("GlobalContact"))
+            {
+
+            }
             DXMLGeneratedScript dxmlGeneratedScript = CreateNewDXMLGeneratedScript();
 
             DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
@@ -1824,6 +1829,8 @@ namespace Logitude.DBMigrations.Models
 
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
+
+            
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
@@ -1842,6 +1849,21 @@ namespace Logitude.DBMigrations.Models
 
                 if (executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion <= executedSxmlFileVersion)
                 {
+                    bool oracle2Sql = false;
+                    if (oracle2Sql)
+                    {
+
+                        String queryString = "UPDATE [dbo].[DBScriptsHistory] SET  [ScriptBody] = '" + executedSxmlFileHashValue.Replace("'", "''") +
+     "', [HashValue] = '" + sxmlFileHashValue + "' WHERE [SxmlFileName] = '" + sxmlFileName + "';\n";
+
+                        System.Diagnostics.Debug.WriteLine(queryString);
+                        return new ExecuteSxmlFileResult
+                        {
+                            ShouldExecute = false,
+                            Action = null
+                        };
+                    }
+                    
                     ExitTool("Error: The Script Inside " + sxmlFileName + " File Has Been Changed, If You Are Sure You Want To Continue Executing The Script, You Should Change The Script Version");
                 }
 

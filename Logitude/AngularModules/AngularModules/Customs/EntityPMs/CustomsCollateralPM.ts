@@ -249,6 +249,16 @@ export class CustomsCollateralPM {
     public set IsAnswer(newValue: boolean) { if (this.isAnswer != newValue) { this.isAnswer = newValue; this.MarkAsDirty("IsAnswer"); } }
        
 	 
+    private direction: string;
+    public get Direction() { return this.direction; }
+    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
+       
+	 
+    private importerId: string;
+    public get ImporterId() { return this.importerId; }
+    public set ImporterId(newValue: string) { if (this.importerId != newValue) { this.importerId = newValue; this.MarkAsDirty("ImporterId"); } }
+       
+	 
 
     public OldEntityPM: CustomsCollateralPM;
 		

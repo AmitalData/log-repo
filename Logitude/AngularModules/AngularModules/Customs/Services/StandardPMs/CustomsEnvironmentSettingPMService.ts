@@ -69,7 +69,7 @@ export class CustomsEnvironmentSettingPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("CustomsEnvironmentSetting", entityPM);
+			var errorsArray = validator.Validate("Customs.CustomsEnvironmentSetting", entityPM);
 
 
 			if (errorsArray.length == 0) {
@@ -111,7 +111,7 @@ export class CustomsEnvironmentSettingPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("CustomsEnvironmentSetting", entityPM);
+			var errorsArray = validator.Validate("Customs.CustomsEnvironmentSetting", entityPM);
 
 
 			if (errorsArray.length == 0) {

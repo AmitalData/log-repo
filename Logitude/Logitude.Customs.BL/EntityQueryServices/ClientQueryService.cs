@@ -22,10 +22,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ClientAddressQueryService clientAddressQueryService = new ClientAddressQueryService(context);
             ClientDrivingLicenseQueryService clientDrivingLicenseQueryService = new ClientDrivingLicenseQueryService(context);
             ClientsPoaQueryService clientsPoaQueryService = new ClientsPoaQueryService(context);
+            ClientsTapagQueryService clientsTapagQueryService = new ClientsTapagQueryService(context);
 
             entityPM.ClientAddresses = clientAddressQueryService.GetMulti(clientKeys, true);
             entityPM.ClientDrivingLicenses = clientDrivingLicenseQueryService.GetMulti(clientKeys, true);
             entityPM.ClientPoas = clientsPoaQueryService.GetMulti(clientKeys, true);
+            entityPM.ClientsTapags = clientsTapagQueryService.GetMulti(clientKeys, true);
         }
         public string GetIdByCode(string code, int tenant,bool insertIfNotFount = false)
         {

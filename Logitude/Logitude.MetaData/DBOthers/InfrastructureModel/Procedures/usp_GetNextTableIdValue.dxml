@@ -4,7 +4,7 @@
   Name="usp_GetNextTableIdValue"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript_><![CDATA[
 CREATE PROCEDURE [dbo].[usp_GetNextTableIdValue]
 (
   @pLastNumber varchar(100) OUTPUT,
@@ -74,7 +74,122 @@ BEGIN;
  Set  @CurrentStrNumber = CONVERT(varchar(50) ,@Current)
 
  Set @pLastNumber = @DBStringNumber + '-'+ @CurrentStrNumber
-]]></SqlScript>
+]]></SqlScript_>
+	<SqlScript>
+		<![CDATA[
+CREATE OR ALTER PROCEDURE [dbo].[usp_GetNextTableIdValue]  
+--- CustomsBranch- Translate from Oracle!!!
+   @V_PLASTNUMBER /*drop procedure [dbo].[usp_GetNextTableIdValue]*/varchar(max)  OUTPUT,
+   @V_PTABLENAME varchar(max)
+AS 
+   BEGIN
+
+      SET @V_PLASTNUMBER = NULL
+
+      DECLARE
+         @V_COUNTER numeric(10, 0), 
+         @V_CURRENT numeric(10, 0), 
+         @V_DATABASENUMBER numeric(10, 0), 
+         @V_DBSTRINGNUMBER varchar(50), 
+         @V_CURRENTSTRNUMBER varchar(50), 
+         @V_TEMP numeric(1, 0) = 0
+
+      SET @V_COUNTER = 1
+
+      SELECT TOP (1) @V_DATABASENUMBER = DATABASEPROPERTIES.DATABASENUMBER
+      FROM dbo.DATABASEPROPERTIES
+
+      SET @V_DBSTRINGNUMBER = CAST(@V_DATABASENUMBER AS varchar(max))
+
+      /*-!<new> 20220426- faster create seq*/
+      IF @V_PTABLENAME = 'Document'
+         BEGIN
+
+            SELECT @V_CURRENT = NEXT VALUE FOR dbo.DOCUMENTDBIDCOUNTERS_SEQ
+
+            SET @V_CURRENTSTRNUMBER = CAST(@V_CURRENT AS varchar(max))
+
+            SET @V_PLASTNUMBER = ISNULL(@V_DBSTRINGNUMBER, '') + '-' + ISNULL(@V_CURRENTSTRNUMBER, '')
+
+            RETURN 
+
+         END
+
+      IF @V_PTABLENAME = 'CommunicationLog'
+         BEGIN
+
+            SELECT @V_CURRENT = NEXT VALUE FOR dbo.COMMLOG_DBIDCOUNTERS_SEQ
+
+            SET @V_CURRENTSTRNUMBER = CAST(@V_CURRENT AS varchar(max))
+
+            SET @V_PLASTNUMBER = ISNULL(@V_DBSTRINGNUMBER, '') + '-' + ISNULL(@V_CURRENTSTRNUMBER, '')
+
+            RETURN 
+
+         END
+
+      /*-!</new>*/
+      BEGIN
+
+         BEGIN TRY
+            SELECT @V_TEMP = 1
+            WHERE NOT EXISTS 
+               (
+                  SELECT DBIDCOUNTERS.TABLENAME
+                  FROM dbo.DBIDCOUNTERS
+                  WHERE DBIDCOUNTERS.TABLENAME = @V_PTABLENAME
+               )
+         END TRY
+
+         BEGIN CATCH
+            BEGIN
+               DECLARE
+                  @db_null_statement int
+            END
+         END CATCH
+
+      END
+
+      IF @V_TEMP = 1
+         BEGIN
+
+            SET @V_COUNTER = 1
+
+            INSERT dbo.DBIDCOUNTERS(TABLENAME, LASTIDNUMBER)
+               VALUES (@V_PTABLENAME, @V_COUNTER)
+
+            SET @V_CURRENT = 1
+
+         END
+      ELSE 
+         BEGIN
+
+            SELECT @V_CURRENT = DBIDCOUNTERS.LASTIDNUMBER
+            FROM dbo.DBIDCOUNTERS 
+               WITH ( UPDLOCK )
+            WHERE DBIDCOUNTERS.TABLENAME = @V_PTABLENAME
+
+            /* 20160211  ora-0001 ----no need     skip locked good for gggq select 1 row from alot ;;*/
+            SET @V_CURRENT = @V_CURRENT + 1
+
+            UPDATE dbo.DBIDCOUNTERS
+               SET 
+                  LASTIDNUMBER = @V_CURRENT
+            WHERE DBIDCOUNTERS.TABLENAME = @V_PTABLENAME
+
+         END
+
+      BEGIN
+
+         SET @V_CURRENTSTRNUMBER = CAST(@V_CURRENT AS varchar(max))
+
+         SET @V_PLASTNUMBER = ISNULL(@V_DBSTRINGNUMBER, '') + '-' + ISNULL(@V_CURRENTSTRNUMBER, '')
+
+      END
+
+   END
+]]>
+	</SqlScript>
   <OracleScript>
 	  <![CDATA[
 	  

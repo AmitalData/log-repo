@@ -34,7 +34,7 @@
 
         <div class="TextTrimming"
              style="display: inline; "
-             [ngStyle]="{color: rowData.AmendmentStatus | StringToColorPipe:'DeclarationAmendmentStatus'}">
+             [ngStyle]="{color: rowData.AmendmentStatus | StringToColorPipe:'DeclarationAmendmentStatus':entityPM.Direction}">
             <span style="font-weight: bold;">{{rowData.AmendmentStatusName}}</span>
 
         </div>

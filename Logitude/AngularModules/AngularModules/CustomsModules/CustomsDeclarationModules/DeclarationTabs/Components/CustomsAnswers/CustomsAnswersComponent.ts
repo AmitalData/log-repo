@@ -29,7 +29,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-
+ 
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
     providers: [DeclarationExtendedListService],
@@ -420,7 +420,18 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         //var declarationConstraints = [];
         for (var constraint of constraints) {
             var error = decErrors.find(d => d.ConstraintId == constraint.ConstraintNumber);
+        
             var item = new ConstraintLineModel(error, constraint,this);
+            
+            if(constraint.ConstraintStatusCode!="5" && constraint.ConstraintStatusCode!="8" && constraint.ConstraintStatusCode!="7")
+          {
+            item.isDisplayOfSecound=true;
+            item.displayOnly=false;
+            
+          }  
+
+                     
+
             this.ConstraintsList.push(item);
         }
 
@@ -1195,7 +1206,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 export class ConstraintLineModel extends BaseComponent {
 
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
-
+   isDisplayOfSecound=null;
     lineHeight: number = 62;
     hasNoError: boolean = false;
     parent: CustomsAnswersComponent;
@@ -1203,6 +1214,7 @@ export class ConstraintLineModel extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private declarationError: DeclarationErrorView, private constraintPM: DeclarationConstraintPM, Parent: CustomsAnswersComponent) {
         super();
+       
         this.parent = Parent;
         if (AppTool.IsNullOrEmpty(this.declarationError)) {
             this.hasNoError = true;
@@ -1210,6 +1222,7 @@ export class ConstraintLineModel extends BaseComponent {
         }
 
         this.textcode_TableNameTextCode = TextCodeTranslator.Translate(this.declarationError.TableNameTextCode);
+        if(this.isDisplayOfSecound!=null)
         this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", !this.parent.IsDisplayOnly);
         this.ManageScreensVisibility();
 
@@ -1221,6 +1234,7 @@ export class ConstraintLineModel extends BaseComponent {
             this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", true);
             this.displayOnly = false;
         }
+        
     }
 
 
@@ -1553,6 +1567,7 @@ export class ConstraintLineModel extends BaseComponent {
     ApprovalDenaialTitle = "";
 
     ViewConstraintDetails() {
+       
         var constraint = this.constraintPM;
 
         if (constraint.ApprovalDecision == "2") {

@@ -169,6 +169,7 @@ export class SendContainerizationService implements OnDestroy {
 
 
     OnCustomSendOptionsButtonClick(event) {
+        this.EntityPM.OperationMode="2";
         this.EntityPM.IsChange = false;
         this.CurrentSession.StartBusyIndicator("");
         this.containerizationPMService.update(this.EntityPM).subscribe((response: any) => {

@@ -81,14 +81,16 @@ namespace Logitude.Customs.BL.TraceEvents
                 var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser: iscustomUser);
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
-                    
-                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                    unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
                     {
-                        Action = "StatusUpdate",
-                        ParameterName = "transmission",
-                        UServerDelayTime = myAmitalEventTracer.UServerDelayTime
-                    });
+                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                        unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                        {
+                            Action = "StatusUpdate",
+                            ParameterName = "transmission",
+                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                        });
+                    }
                 }
                 else
                 {

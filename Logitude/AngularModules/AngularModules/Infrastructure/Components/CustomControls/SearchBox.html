@@ -690,7 +690,7 @@
                                 </table>
 
                                 <!--  Customs.CustomsItems -->
-                                <table *ngIf="ObjectTableName == 'Customs.CustomsItems'">
+                                <table *ngIf="ObjectTableName == 'Customs.CustomsItems' || ObjectTableName == 'Customs.CustomsItem'">
                                     <tr>
 
                                         <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
@@ -699,6 +699,17 @@
 
                                         <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
                                             <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.FullClassification}}</span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                 <!--  Customs.ClientsTapag -->
+                                 <table *ngIf="ObjectTableName == 'Customs.ClientsTapag'">
+                                    <tr>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.TapagNumber}}</span>
                                         </td>
 
                                     </tr>
