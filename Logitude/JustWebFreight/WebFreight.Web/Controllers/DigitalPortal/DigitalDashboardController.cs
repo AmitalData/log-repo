@@ -12,25 +12,20 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using WebFreight.Web.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
-using System.Data.Entity;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Simplog.Data.InvoiceModel.Repositories;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityLists;
+using Simplog.Server.Infrastructure.DataContracts.Models;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -56,7 +51,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        [HttpGet]
         [Route("DigitalDashboardController/GetShipmentsGroupedByStatus")]
         public IHttpActionResult GetShipmentsGroupedByStatus(GeneralFilters newFilters)
         {
@@ -69,6 +63,31 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentsGroupedByStatus = shipments?.Where(r => !string.IsNullOrEmpty(r.StatusCode)).GroupBy(r => r.StatusCode).ToList().ToDictionary(t => t.Key, t => t.Key.Count());
 
                 return Ok(shipmentsGroupedByStatus);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
+
+        [Route("DigitalDashboardController/GetDashboardSummary")]
+        public IHttpActionResult GetDashboardSummary(GeneralFilters newFilters)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+
+                var dashboardSummary = new DigitalDashboardSummary();
+                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
+                DateTime? currentWeek = currentDateTime.Value.AddDays(7).Date;
+                var shipments = GetFilteredShipmentList(newFilters, authToken.Tenant);
+                dashboardSummary.TotalShipmentsByETACount = shipments.Where(d=> d.MainCarriageETA >= currentDateTime && d.MainCarriageETA <= currentWeek).Count();
+                var invoices = GetFilteredInvoicesList(newFilters, authToken.Tenant);
+                dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime && d.DueDate <= currentWeek).Count();
+               
+                return Ok(dashboardSummary);
             }
             catch (Exception ex)
             {
