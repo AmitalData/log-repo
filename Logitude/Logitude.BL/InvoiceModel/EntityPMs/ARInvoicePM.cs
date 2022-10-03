@@ -432,5 +432,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATCancelReasonCode { get; set; }
 
         public bool IsDigitalDueDateColorRed { get; set; }
+        public string TotalEquation { get; set; }
     }
 }

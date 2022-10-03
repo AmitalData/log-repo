@@ -100,6 +100,7 @@ export class ARInvoiceList {
 		AccountingExternalCode: string;
 		ReadyForTransfer: boolean;
 		IsDueDateColorRed: boolean;
+		IsDigitalDueDateColorRed: boolean;
 		IsExpectedPaymentDateColorRed: boolean;
 		ApprovedDate: Date;
 		ApprovedByUserId: string;
@@ -146,6 +147,7 @@ export class ARInvoiceList {
 		BillToGLAccountId: string;
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
+		PaidStatus: string;
 		PaidDate: Date;
 		PartnerId: string;
 		PartnerName: string;

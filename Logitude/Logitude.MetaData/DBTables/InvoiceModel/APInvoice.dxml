@@ -514,6 +514,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TotalEquation"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
@@ -581,8 +588,8 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
-	Columns="Tenant,IsClosed" />
+    Columns="Tenant,IsClosed" />
   <Index
-	Columns="Tenant"
-	Include="SearchFields" />
+    Columns="Tenant"
+    Include="SearchFields" />
 </Table>

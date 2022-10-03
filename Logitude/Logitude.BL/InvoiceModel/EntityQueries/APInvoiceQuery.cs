@@ -180,6 +180,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ConcurrencyGUID = a.ConcurrencyGUID,
                              IsEquipment = a.IsEquipment,
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                             TotalEquation = a.TotalEquation,
                          });          
 
             return query;
@@ -588,6 +589,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         HouseNumbers = a.HouseNumbers,
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
                                         ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                        TotalEquation = a.TotalEquation,
                                     }).FirstOrDefault();
             return entityPM;
         }
@@ -681,6 +683,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         HouseNumbers = a.HouseNumbers,
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
                                         ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                        TotalEquation = a.TotalEquation,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1441,6 +1444,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 TotalVATOnly = a.TotalVATOnly,
                                                 PaidDate = a.PaidDate,
                                                 ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                                TotalEquation = a.TotalEquation,
                                             }).ToList();
             return invoicePMs;
         }

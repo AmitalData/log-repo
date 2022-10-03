@@ -599,12 +599,17 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
 
+    private AmountInLocalCurrencyEquations: string[];
+    private AmountInInvoiceCurrencyEquations: string[];
     public SummaryItems: SummaryItem[] = [];
     ComputeTotals() {
+        this.AmountInLocalCurrencyEquations = [];
+        this.AmountInInvoiceCurrencyEquations = [];
         this.BuildTotalVATs();
 
         this.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "LocalCurrencyAmount"), 2);
         this.SubTotalInInvoiceCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "InvoiceCurrencyAmount"), 2);
+
 
         if (this.EntityPM.TotalVATs.length > 0) {
             this.EntityPM.AmountInLocalCurrency_Summary = AppTool.Round(this.EntityPM.SubTotalInLocalCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "LocalVATAmount"), 2);
@@ -615,9 +620,28 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.EntityPM.AmountInLocalCurrency_Summary = 0;
             this.EntityPM.AmountInInvoiceCurrency_Summary = 0;
         }
-
+        this.BuildTotalEquation();
         this.BuildSummary();
     }
+
+    BuildTotalEquation() {
+        var equation = "";
+        var amountInLocalCurrencyEquation = "(";
+        this.AmountInLocalCurrencyEquations.forEach(item => {
+            amountInLocalCurrencyEquation = amountInLocalCurrencyEquation == "(" ? amountInLocalCurrencyEquation + item : amountInLocalCurrencyEquation + " + " + item;
+        });
+
+        var amountInInvoiceCurrencyEquation = "(";
+        this.AmountInInvoiceCurrencyEquations.forEach(item => {
+            amountInInvoiceCurrencyEquation = amountInInvoiceCurrencyEquation == "(" ? amountInInvoiceCurrencyEquation + item : amountInInvoiceCurrencyEquation + " + " + item;
+        });
+
+        amountInLocalCurrencyEquation = amountInLocalCurrencyEquation + ")"
+        equation = "AmountInLocalCurrency { " + this.EntityPM.AmountInLocalCurrency_Summary + " From ((" + this.EntityPM.SubTotalInLocalCurrency +  " + " + amountInLocalCurrencyEquation + ")R2) }" ;
+        equation = equation + " AmountInInvoiceCurrency { " + this.EntityPM.AmountInInvoiceCurrency_Summary + " From ((" + this.EntityPM.SubTotalInInvoiceCurrency +  " + " + amountInInvoiceCurrencyEquation + ")R2) }" ;
+        this.TotalEquation = equation;
+    }
+
     BuildTotalVATs() {
         if (this.EntityPM.TotalVATOnly) {
             this.BuildTotalVATsFromVATsOnly();
@@ -739,6 +763,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + pipe.transform(itemTotalVAT.VatPercent, "N3") + "%)"; //pipe.transform(item.InvoiceCurrencyVATAmount, "N2")
+
+                this.AmountInLocalCurrencyEquations.push(itemTotalVAT.LocalVATAmount + " From ((" + itemTotalVAT.LocalVatableAmount + "*" + itemTotalVAT.VatPercent + "/100)R2)");
+                this.AmountInInvoiceCurrencyEquations.push(itemTotalVAT.InvoiceCurrencyVATAmount + " From ((" + itemTotalVAT.InvoiceCurrencyVatableAmount + "*" + itemTotalVAT.VatPercent + "/100)R2)");
+
                 this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
             });
         }
@@ -827,6 +855,13 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.EntityPM.AmountDue = this.EntityPM.AmountInInvoiceCurrency == null ? 0 : this.EntityPM.AmountInInvoiceCurrency;
             this.EntityPM.AmountDueInLocalCurrency = this.EntityPM.AmountInLocalCurrency == null ? 0 : this.EntityPM.AmountInLocalCurrency;
             this.EntityPM.AmountDueInProfitCurrency = this.EntityPM.AmountInProfitCurrency == null ? 0 : this.EntityPM.AmountInProfitCurrency;
+        }
+    }
+
+    get TotalEquation() { return this.EntityPM.TotalEquation; }
+    set TotalEquation(value: string) {
+        if (this.EntityPM.TotalEquation != value) {
+            this.EntityPM.TotalEquation = value;
         }
     }
 
