@@ -46,9 +46,7 @@ namespace Logitude.Social.Data
             GlobalDB currentDb;
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             SocialContext context = new SocialContext(connection);
             return context;
         }
@@ -94,9 +92,10 @@ namespace Logitude.Social.Data
 			modelBuilder.Configurations.Add(new UserLastLoginMap());
 			modelBuilder.Configurations.Add(new ContactMap());
 			modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ObjectTableMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
-            modelBuilder.Configurations.Add(new AccountingSystemMap());
+
+			 modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());
             modelBuilder.Configurations.Add(new AccountTypeMap());
