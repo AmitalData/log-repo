@@ -86,7 +86,7 @@
 <div *ngIf="DataType">
     <div *ngIf="isDataTypeText()">
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="Text" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
+            [Text]="CurrentValue" [InputType]="'text'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
             (ValueChanged)="updateValue($event)" [DataCy]="Name">
         </LogTextBox>
 
