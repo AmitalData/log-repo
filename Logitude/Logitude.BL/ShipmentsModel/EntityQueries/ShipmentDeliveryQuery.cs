@@ -284,6 +284,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     entityPM.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                 }
                 #endregion
+
+
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = entityPM.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPickUpDelivery",
+                    ChildEntityId = entityPM?.Id,
+                    ChildEntities = new List<object>() { entityPM }.ToList(),
+                });
             }
 
             return entityPM;

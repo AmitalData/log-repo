@@ -197,6 +197,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).FirstOrDefault();
 
+           
+            
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = myResult.ShipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPackage",
+                ChildEntityId = myResult?.Id,
+                ChildEntities = new List<object>() { myResult }.ToList(),
+            });
+
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult?.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult?.Id, tenant);
             myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult?.Id, tenant);

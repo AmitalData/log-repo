@@ -30,7 +30,7 @@ namespace Logitude.Server.Tools.CustomFields
         private List<object> deletedChildEntities = null;
         private List<object> modificationChildEntities = null;
         private List<object> childEntities = null;
-
+        private string childEntityId  = string.Empty;
 
         private void Initialize(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
         {
@@ -38,6 +38,7 @@ namespace Logitude.Server.Tools.CustomFields
             objectTableId = ObjectTableRepository.GetObjectTableByName(childEntitiesCustomFieldArgs.ObjectTableName);
             childObjectTableId = ObjectTableRepository.GetObjectTableByName(childEntitiesCustomFieldArgs.ChildObjectTableName);
             entityId = childEntitiesCustomFieldArgs.EntityId;
+            childEntityId = childEntitiesCustomFieldArgs.ChildEntityId;
             tenant = childEntitiesCustomFieldArgs.Tenant;
             childObjectTableName = childEntitiesCustomFieldArgs.ChildObjectTableName;
             customFieldResolver = new CustomFieldResolver();
@@ -220,8 +221,11 @@ namespace Logitude.Server.Tools.CustomFields
 
         private  List<ChildEntitiesCustomField> GetChildEntitiesCustomFields()
         {
-
-          return  childEntitiesCustomFieldRepository.GetChildEntitiesCustomFields(tenant).Where(d=>d.EntityId == entityId && d.ObjectTableId == d.ObjectTableId && d.ChildObjectTableId == childObjectTableId).ToList();
+            if(!string.IsNullOrEmpty(childEntityId))
+            {
+                return childEntitiesCustomFieldRepository.GetChildEntitiesCustomFields(tenant).Where(d => d.ChildEntityId == childEntityId && d.ObjectTableId == objectTableId && d.ChildObjectTableId == childObjectTableId).ToList();
+            }
+            return  childEntitiesCustomFieldRepository.GetChildEntitiesCustomFields(tenant).Where(d=>d.EntityId == entityId && d.ObjectTableId == objectTableId && d.ChildObjectTableId == childObjectTableId).ToList();
 
         
         }

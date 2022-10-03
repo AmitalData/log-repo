@@ -232,6 +232,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
                    }).FirstOrDefault();
 
+            if (myResult != null)
+            {
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = myResult.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPayable",
+                    ChildEntityId = myResult?.Id,
+                    ChildEntities = new List<object>() { myResult }.ToList(),
+                });
+            }
+
+
             return myResult;
         }
     }
