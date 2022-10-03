@@ -112,8 +112,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var queryOperations = new QueryOperations()
             {
                 ObjectTableName = "Shipment",
-                PageIndex = newFilters.PageIndex,
-                PageSize = newFilters.PageSize,
                 QuerySection = "Shipments",
                 SortByColumnName = newFilters.SortBy,
                 SortDirectin = newFilters.SortDirection,
@@ -207,8 +205,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var queryOperations = new QueryOperations()
             {
                 ObjectTableName = "ARInvoice",
-                PageIndex = newFilters.PageIndex,
-                PageSize = newFilters.PageSize,
                 QuerySection = "ARInvoices",
                 SortByColumnName = newFilters.SortBy,
                 SortDirectin = newFilters.SortDirection
