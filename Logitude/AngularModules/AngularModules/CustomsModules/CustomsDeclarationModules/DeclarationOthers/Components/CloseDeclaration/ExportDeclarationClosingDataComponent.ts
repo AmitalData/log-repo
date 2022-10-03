@@ -46,7 +46,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public ActualTakeOffDate: string = "תאריך המראה בפועל";
 
     ManifestNumberPlaceholder: string = '';
-
+    SecondCargoIdPlaceholder: string = '';
+    ThirdCargoIdPlaceholder :string = '';
 
     constructor(
         private EntityResourceService: EntityResourceService,
@@ -77,6 +78,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             if (this.DecPM.IsExportClosed) {
                 this.DeclarationIsClosed = true
                 this.setInputsReadOnly();
+            }
+
+            if (this.DecPM.Direction === 'E'){
+                this.setIdentifiersPlaceHolders();
             }
         });
     }
@@ -111,26 +116,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
  
                     if (this.FinalCargoTypeCode == null) {
+
+                        this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
+                        this.FinalSecondCargoId = this.FinalSecondCargoId == null ? '' : this.FinalSecondCargoId;
+                        this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
+
                         this.FinalCargoTypeCode = '37';
-                       
-                        this._CargoIdentifireTypeListService.getSingleFromCache('37')
-                            .subscribe((Response: ServiceResponse) => {
-                                if (Response.Result != null) {
-                                    debugger
-                                    this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
-                                 
-                                    this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
-                                    this.FinalSecondCargoId = this.FinalSecondCargoId == null ? '' : this.FinalSecondCargoId;
-                                    this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
-                                   
-                                    this.setWarningValues();
-                                }
-                            });
+                                                          
+                    }
+                    else{
+                        this.setIdentifiersPlaceHolders();
                     }
 
                 }
                 else {
                     this.ManifestNumberPlaceholder = 'XXX-XXXXXXXX';
+                    this.setWarningValues();
                 }
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB)) {
@@ -166,8 +167,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     setWarningValues() {
-        if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
+        if (this.DecPM.Direction === 'E') {
             this.UIProperties.SetWarning("FinalManifestNumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FinalManifestNumber));
+            this.UIProperties.SetWarning("FinalSecondCargoId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder) );
+            this.UIProperties.SetWarning("FinalThirdCargoId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FinalThirdCargoId)  && !AppTool.IsNullOrEmpty(this.ThirdCargoIdPlaceholder));
         }
     }
 
@@ -242,6 +245,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
             this.EntityPM.IsDirty = true;
+
+            if (this.DecPM.Direction === 'E')
+            {
+                this.setIdentifiersPlaceHolders();
+            }
         }
     }
 
@@ -250,6 +258,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
+
+           
         }
     }
     get FinalSecondCargoId() { return this.EntityPM ? this.EntityPM.FinalSecondCargoId : null; }
@@ -324,7 +334,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
-        debugger;
+        
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
@@ -413,7 +423,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
-        debugger;
+        
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
 
@@ -430,6 +440,26 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
             });
         }
+    }
+
+
+    setIdentifiersPlaceHolders()
+    {
+        this._CargoIdentifireTypeListService.getSingleFromCache(this.FinalCargoTypeCode)
+        .subscribe((Response: ServiceResponse) => {
+            if (Response.Result != null) {
+                
+                this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
+                this.SecondCargoIdPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
+                this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
+
+                this.FinalManifestNumber = '';
+                this.FinalSecondCargoId = '';
+                this.FinalThirdCargoId = '';
+                            
+                this.setWarningValues();
+            }
+        });
     }
 
     async initOceanExportData() {
