@@ -857,8 +857,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                     left = 25;
                 }
                 //if (this.ShowArrow == true) {
-                //    left += 25;
-                //}
+                    //    left += 25;
+                    //}
                 this.TotalWidth = 0;
                 this.columns.forEach((value, key) => {
                     this.ColumnsQueryCode = value.QueryCode;
@@ -908,20 +908,17 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 ////if (RowsDiv) {
                 //    RowsDiv.classList.remove("GeneratedGridBody");
                 //    RowsDiv.classList.add("EditableGridBody");
-                ////}
-                if (this.cd) {
-                    this.cd.reattach();
-                    this.cd.detectChanges();
-                }
-            });
+                ////}                
+                this.detectChanges$.next();   
+           });
         }
         if (this.CustomColumnsReady) {
             this.ColumnsReady1Sub = this.CustomColumnsReady.subscribe((res) => {
                 var index = 0
                 var left = 0;
                 //if (this.ShowArrow == true) {
-                //    left += 25;
-                //}
+                    //    left += 25;
+                    //}
                 this.TotalWidth = 0;
                 this.columns = res;
                 this.columns.forEach((value, key) => {
@@ -1246,11 +1243,26 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         if (changes['ReattachToDetection']) {
             this.cd.reattach();
             this.cd.detectChanges();
-        }
-        else {
+        } else if(changes['columns'] && !changes['columns'].currentValue[0]?.Styles.right)
+                this.fixRightStyleInColumns();
+        else
             console.log("in else");
-        }
+    }
 
+    fixRightStyleInColumns() {
+        let left: number = 0;
+        let width: string;
+
+        this.columns.forEach((value) => {            
+            width = value.Styles.width.replace("px", "");
+
+            value.Styles = {
+                width: + (width) + 'px',
+                [this.RTL ? 'right' : 'left']: left + 'px',
+            };
+
+            left += +(width);
+        });
     }
 
     public LastHeaderColumnWidth: number;
