@@ -27,25 +27,42 @@ export class AddEditReceivableComponent {
     private CurrentSession = SessionLocator.SelectedSession;
 
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('AdditionalFieldsArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('ByContainerAdditionalFieldsArea', { read: ViewContainerRef, static: false }) byContainerViewContainerRef: ViewContainerRef;
 
     constructor() {
-        this.RunComponent();
+        this.LoadAdditionalCustomFieldsArea();
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
+    public LoadAdditionalCustomFieldsArea() {
+
+        if (!this.viewContainerRef) {
+            this.RunComponentTimer("DefaultAdditionalCustomFields");
+            return;
         }
 
-        else {
-            this.RunComponentTimer();
-        }
+        this.LoadChildComponent(this.viewContainerRef);
     }
+
+    IsByContainerAdditionalFieldsAreaLoaded: boolean = false;
+    public LoadByContainerAdditionalFieldsArea() {
+
+        if (this.IsByContainerAdditionalFieldsAreaLoaded) return;
+
+        this.Retries = 0;
+        if (!this.byContainerViewContainerRef) {
+            this.RunComponentTimer("ByContainerAdditionalCustomFields");
+            return;
+        }
+
+        this.LoadChildComponent(this.byContainerViewContainerRef);
+        this.IsByContainerAdditionalFieldsAreaLoaded = true;
+    }
+
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName: String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -53,17 +70,20 @@ export class AddEditReceivableComponent {
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+
+            this.timerToken = componentName == "ByContainerAdditionalCustomFields" ? setTimeout(() => this.LoadByContainerAdditionalFieldsArea(), 1) : setTimeout(() => this.LoadAdditionalCustomFieldsArea(), 1);
         }
     }
 
-    LoadChildComponent() {
+
+    LoadChildComponent(viewContainerRef) {
         let screenCode: string = "ShipmentReceivable.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.HideLastColumn = true;
                 cmpRef.instance.LabelWidth = 120;
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+
             });
     }
 
@@ -72,6 +92,7 @@ export class AddEditReceivableComponent {
     SetDataContext(dataContext: ShipmentReceivableItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        dataContext.AddEditReceivableComponent = this;
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.SetDependencies();
         this.BuildQueryFilters(); 
