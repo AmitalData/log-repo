@@ -182,6 +182,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        PayableVendorId = a.PayableVendorId,
                    }).FirstOrDefault();
 
+            if (myResult != null)
+            {
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = myResult.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentReceivable",
+                    ChildEntityId = myResult?.Id,
+                    ChildEntities = new List<object>() { myResult }.ToList(),
+                });
+            }
             return myResult;
         }
     }

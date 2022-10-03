@@ -98,7 +98,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 #region From PART
                 if (entityPOCO.PickUpDeliveryFromTypeCode == "PART")
-                {                   
+                {
                     if (!string.IsNullOrEmpty(entityPOCO.FromPartnerCardId))
                     {
                         Card card = cardRepository.GetSingleCard(entityPOCO.FromPartnerCardId, tenant);
@@ -285,6 +285,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     entityPM.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                 }
                 #endregion
+
+
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = entityPM.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPickUpDelivery",
+                    ChildEntityId = entityPM?.Id,
+                    ChildEntities = new List<object>() { entityPM }.ToList(),
+                });
+
             }
 
             return entityPM;
