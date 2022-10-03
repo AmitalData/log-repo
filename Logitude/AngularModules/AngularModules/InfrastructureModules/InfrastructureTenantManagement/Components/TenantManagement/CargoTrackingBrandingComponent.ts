@@ -409,8 +409,8 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     SetCustomerURLProperties(isBranding: boolean) {
         this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", isBranding);
-        this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
         if (this.IsLogitudeEnvironment) {
+            this.UIProperties.SetRequired("CustomerURL", "TenantManagement", isBranding && AppTool.IsNullOrEmpty(this.CustomerURL));
             this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", false);
             this.isGenerateEnabled = AppTool.IsNullOrEmpty(this.CustomerURL) ? true : false;
         }
