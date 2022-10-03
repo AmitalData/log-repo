@@ -28,9 +28,8 @@ namespace Logitude.Customs.BL.TraceEvents
                     unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
                     {
                         Action = "UpdateExportCustomsFile",
-                        ParameterName = "transmission",
-                        UServerDelayTime = DateTime.Now.TimeOfDay
-                    },false);
+                        ParameterName = "transmission"
+                                           },false);
                 }
             }
         }

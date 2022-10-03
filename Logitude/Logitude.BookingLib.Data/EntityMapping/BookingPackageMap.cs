@@ -43,21 +43,21 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.Volume).HasColumnName("Volume").HasPrecision(18, 3);
 
-            this.Property(t => t.Tare).HasColumnName("Tare");
+            this.Property(t => t.Tare).HasColumnName("Tare").HasPrecision(18, 2);
 
-            this.Property(t => t.Height).HasColumnName("Height");
+            this.Property(t => t.Height).HasColumnName("Height").HasPrecision(18, 2);
 
-            this.Property(t => t.Width).HasColumnName("Width");
+            this.Property(t => t.Width).HasColumnName("Width").HasPrecision(18, 2);
 
-            this.Property(t => t.Length).HasColumnName("Length");
+            this.Property(t => t.Length).HasColumnName("Length").HasPrecision(18, 2);
 
             this.Property(t => t.UnNumber).HasColumnName("UnNumber").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.ClassNumber).HasColumnName("ClassNumber").HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.Temperature).HasColumnName("Temperature");
+            this.Property(t => t.Temperature).HasColumnName("Temperature").HasPrecision(18, 2);
 
-            this.Property(t => t.Ventilation).HasColumnName("Ventilation");
+            this.Property(t => t.Ventilation).HasColumnName("Ventilation").HasPrecision(18, 2);
 
             this.Property(t => t.Seal2).HasColumnName("Seal2").HasMaxLength(15).IsUnicode(false);
 
