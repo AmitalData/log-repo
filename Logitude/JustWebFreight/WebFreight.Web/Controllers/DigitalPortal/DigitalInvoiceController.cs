@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         entity.ConsolidationInvoiceNumber = arInvoiceReps.GetInvoiceNumber(entity.ConsolidationInvoiceId, tenant);
                     }
 
-                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery);
+                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery, cardId);
                     var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                     if (currency != null)
                     {
@@ -239,7 +239,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
                 }
 
-                string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id;
+                string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id + ":isFromDigital:true:cardId:" + cardId;
                 entityPM.ReportUrl = url;
             }
 
@@ -491,7 +491,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return isShowAmountLocalCurrencyColumnInSharedLogistics;
         }
 
-        private string GetDocumntURL(ARInvoice item, DocumentOutQuery documentOutQuery, DocumentTypeQuery documentTypeQuery)
+        private string GetDocumntURL(ARInvoice item, DocumentOutQuery documentOutQuery, DocumentTypeQuery documentTypeQuery, string cardId)
         {
             string reportUrl = null;
             var tenant = item.Tenant;
@@ -510,7 +510,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
             }
 
-            string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + item.Id;
+            string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + item.Id+ ":isFromDigital:true:cardId:"+ cardId;
             reportUrl = url;
 
             return reportUrl;
