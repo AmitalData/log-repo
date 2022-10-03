@@ -108,6 +108,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         #region Private methods 
+       
         private IQueryable<DigitalShipmentList> GetFilteredShipmentList(GeneralFilters newFilters, int tenant)
         {
             var myTenantRepository = new TenantRepository(tenant);
@@ -183,6 +184,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return entityLists;
         }
+       
         private IQueryable<ARInvoiceList> GetFilteredInvoicesList(GeneralFilters newFilters, int tenant)
         {
             var myTenantRepository = new TenantRepository(tenant);
@@ -252,6 +254,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return entityLists;
 
         }
+       
         private string GetCardBillToId(string cardId, int tenant)
         {
             CardRepository cardRepository = new CardRepository(tenant);
@@ -260,6 +263,5 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         #endregion Private methods 
-
     }
 }
