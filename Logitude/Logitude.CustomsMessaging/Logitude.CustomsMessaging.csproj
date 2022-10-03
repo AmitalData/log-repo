@@ -292,6 +292,7 @@
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG8235_ExportDeclarationAmendmentMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService.cs" />
     <Compile Include="MessagingServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService.cs" />
     <Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestResponseService .cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
