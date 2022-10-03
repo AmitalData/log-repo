@@ -1,4 +1,5 @@
 ﻿using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -41,6 +42,7 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
 
         public static string GetCallBackDetailsXml(string documentFilingId, int tenant)
         {
+            if (!FeatureToggleHelper.HasFeatureToggle("ARS",tenant)) return "";
             string emailDocumentHandlerSerializerArgs = GetEmailDocumentHandlerCallBackArgs(documentFilingId, tenant);
             if (string.IsNullOrEmpty(emailDocumentHandlerSerializerArgs)) return "";
 
@@ -55,6 +57,7 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
 
         public static string GetCallBackDetailsXml(EmailDocumentHandlerArgs emailDocumentHandlerArgs)
         {
+            if (!FeatureToggleHelper.HasFeatureToggle("ARS", emailDocumentHandlerArgs.Tenant)) return "";
             if (emailDocumentHandlerArgs == null) return "";
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(emailDocumentHandlerArgs.Tenant);
             string documentTypeCode = documentTypeRepository.GetDocumentTypeCodeById(emailDocumentHandlerArgs.DocumentId, emailDocumentHandlerArgs.Tenant);

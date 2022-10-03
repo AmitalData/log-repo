@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;Toggles&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;dd91&quot;"
+  Code="&quot;5c53&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -827,6 +828,11 @@
       Name="&quot;Digital Portal Branding&quot;"
       Description="&quot;Digital Portal Branding Tab&quot;"
       SearchFields="&quot;DPB,Digital Portal Branding&quot;" />
+    <Record
+      Code="&quot;ARS&quot;"
+      Name="&quot;ARInvoice Sent Icon&quot;"
+      SearchFields="&quot;ARS,ARInvoice Sent Icon&quot;"
+      Description="&quot;ARInvoice Sent Icon&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
