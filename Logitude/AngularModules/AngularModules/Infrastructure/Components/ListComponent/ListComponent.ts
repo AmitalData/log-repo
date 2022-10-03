@@ -2686,9 +2686,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsNewEntityButtonVisible: boolean = false;
     public IsNewEntityButtonDisabled: boolean = false;
     private SetNewEntityButton() {
-        this.SetNewEntityLabel();
-        this.SetNewEntityButtonDisabled();
-        this.SetNewEntityButtonVisibility();
+        
+        if((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse))
+        {
+            this.SetNewEntityLabel();
+            this.SetNewEntityButtonDisabled();
+            this.SetNewEntityButtonVisibility();
+        }
     }
     
     private SetNewEntityLabel() {
