@@ -15,7 +15,7 @@ export class WorkFlowInstanceActivityList {
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	SearchFields: string;
-	Sequence: string;
+	Sequence: number;
 	ActionName: string;
 	StartTime: Date;
 	Duration: number;

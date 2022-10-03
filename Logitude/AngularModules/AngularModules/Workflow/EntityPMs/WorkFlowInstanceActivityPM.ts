@@ -59,9 +59,9 @@ export class WorkFlowInstanceActivityPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private sequence: string;
+    private sequence: number;
     public get Sequence() { return this.sequence; }
-    public set Sequence(newValue: string) { if (this.sequence != newValue) { this.sequence = newValue; this.MarkAsDirty("Sequence"); } }
+    public set Sequence(newValue: number) { if (this.sequence != newValue) { this.sequence = newValue; this.MarkAsDirty("Sequence"); } }
        
 	 
     private actionName: string;

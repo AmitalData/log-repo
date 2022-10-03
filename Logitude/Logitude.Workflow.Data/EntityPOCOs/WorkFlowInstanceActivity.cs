@@ -40,7 +40,7 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("Sequence")]
-	    public string Sequence { get; set; }
+	    public int Sequence { get; set; }
         [Column("ActionName")]
 	    public string ActionName { get; set; }
         [Column("StartTime")]
