@@ -1756,6 +1756,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               GlobalTaxCalculation = a.GlobalTaxCalculation,
                                               PaymentReferences = a.PaymentReferences,
                                               SATCancelReasonCode = a.SATCancelReasonCode,
+                                              TotalEquation = a.TotalEquation,
                                           }).ToList();
             return invoices;
         }
@@ -1891,6 +1892,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
                     BillToGLAccountId = entityPOCO.BillToGLAccountId,
                     IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
+                    TotalEquation = entityPOCO.TotalEquation,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

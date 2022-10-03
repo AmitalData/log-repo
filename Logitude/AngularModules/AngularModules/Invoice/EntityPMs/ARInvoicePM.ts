@@ -1102,6 +1102,11 @@ export class ARInvoicePM {
     public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
        
 	 
+    private paidStatus: string;
+    public get PaidStatus() { return this.paidStatus; }
+    public set PaidStatus(newValue: string) { if (this.paidStatus != newValue) { this.paidStatus = newValue; this.MarkAsDirty("PaidStatus"); } }
+       
+	 
     private paidDate: Date;
     public get PaidDate() { return this.paidDate; }
     public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
@@ -1155,6 +1160,16 @@ export class ARInvoicePM {
     private sATCancelReasonCode: string;
     public get SATCancelReasonCode() { return this.sATCancelReasonCode; }
     public set SATCancelReasonCode(newValue: string) { if (this.sATCancelReasonCode != newValue) { this.sATCancelReasonCode = newValue; this.MarkAsDirty("SATCancelReasonCode"); } }
+       
+	 
+    private isDigitalDueDateColorRed: boolean;
+    public get IsDigitalDueDateColorRed() { return this.isDigitalDueDateColorRed; }
+    public set IsDigitalDueDateColorRed(newValue: boolean) { if (this.isDigitalDueDateColorRed != newValue) { this.isDigitalDueDateColorRed = newValue; this.MarkAsDirty("IsDigitalDueDateColorRed"); } }
+       
+	 
+    private totalEquation: string;
+    public get TotalEquation() { return this.totalEquation; }
+    public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
        
 	 
 

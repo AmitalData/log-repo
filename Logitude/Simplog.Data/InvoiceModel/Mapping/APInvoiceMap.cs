@@ -64,6 +64,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.GlobalTaxCalculation).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ConnectedPaymentsNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.TotalEquation).IsMaxLength().IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("APInvoices");
@@ -143,6 +144,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.IsEquipment).HasColumnName("IsEquipment");
             this.Property(t => t.ConnectedPaymentsNumbers).HasColumnName("ConnectedPaymentsNumbers");
+            this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
 
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
