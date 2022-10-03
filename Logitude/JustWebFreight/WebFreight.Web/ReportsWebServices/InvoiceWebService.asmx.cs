@@ -1370,6 +1370,7 @@ namespace WebFreight.Web.ReportsWebServices
                             invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
                             invoicedataprovider.BillToAddress1 = billToCardAddress.Address1;
                             invoicedataprovider.BillToAddress2 = billToCardAddress.Address2;
+                            invoicedataprovider.BillToFax = billToCardAddress.FaxNumber;
                             invoicedataprovider.BillToCity = billToCardAddress.City;
                             if (billToCardAddress.Country != null)
                             {
@@ -3145,6 +3146,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 invoiceDataProvider.BillToAddress_NoName = DataProviders.General.GetAddress(billToAddress);
                                 invoiceDataProvider.BillToAddress1 = billToAddress.Address1;
                                 invoiceDataProvider.BillToAddress2 = billToAddress.Address2;
+                                invoicedataprovider.BillToFax = billToCardAddress.FaxNumber;
                                 invoiceDataProvider.BillToCity = billToAddress.City;
                                 if (billToAddress.Country != null)
                                 {
