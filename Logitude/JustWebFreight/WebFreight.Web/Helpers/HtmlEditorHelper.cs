@@ -5912,15 +5912,9 @@ namespace WebFreight.Web.Helpers
             string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
             string pageLink;
-            var isDigitalPortalVisibile = false;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
 
-            SecurityUtility.CheckContactFeature("General", "SHLOGDIGITALPORTAL", sharedLinkHTMLArgs.Tenant);
-            {
-                isDigitalPortalVisibile = true;
-            }
-
-            if (isDigitalPortalVisibile)
+            if (sharedTenant.IsDigitalPortalAccessActivated == true)
             {
                 pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key;
             }
