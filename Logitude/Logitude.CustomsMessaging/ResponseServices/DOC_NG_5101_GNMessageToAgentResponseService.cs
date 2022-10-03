@@ -122,7 +122,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        if (string.IsNullOrWhiteSpace(customsVendorId))
+                        var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant);
+                        if (string.IsNullOrWhiteSpace(customsVendorId)  && setting.IsConnectedToUniFreight)
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
                             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
