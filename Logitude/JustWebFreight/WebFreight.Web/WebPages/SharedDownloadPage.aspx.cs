@@ -37,16 +37,14 @@ namespace WebFreight.Web.WebPages
             return contactRep.CheckEmailAvailabilityForTenant(email, tenant);
         }
 
-        public bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant)
+        public bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant, bool isFromDigital = false, string cardId = "")
         {
             if (tenant != 0)
             {
                 bool exists = false;
 
                 if (!string.IsNullOrEmpty(email))
-                {//using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    //{
-                    //}
+                {
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
@@ -54,26 +52,29 @@ namespace WebFreight.Web.WebPages
 
                     if (contact != null)
                     {
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        CardContact cardContact = commonDataContext.CardContacts
+                                                                   .FirstOrDefault(d => d.ContactId == contact.Id
+                                                                                        && (d.CardId == partnerId
+                                                                                            || (isFromDigital 
+                                                                                                && d.CardId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase))));
                         if (cardContact != null)
                         {
                             exists = true;
-
                         }
                     }
-
-
                 }
+
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
                 }
+
                 return exists;
             }
+
             return true;
-
-
         }
+
         public bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
         {
             if (tenant != 0)
@@ -385,6 +386,8 @@ namespace WebFreight.Web.WebPages
             try
             {
                 bool isExternalLink = false;
+                bool isFromDigital = false;
+                string cardId = "";
                 string documentExtension = "";
                 string filename = "";
                 string entityType = "";
@@ -399,10 +402,15 @@ namespace WebFreight.Web.WebPages
                 {
                     isExternalLink = true;
                 }
+                                
+                if (headerRequest.Contains("isFromDigital"))
+                {
+                    isFromDigital = true;
+                }
 
                 if (!isExternalLink)
                 {
-                    email = this.Context.User.Identity.Name;
+                    email = Context.User.Identity.Name;
 
                     if (string.IsNullOrEmpty(email))
                     {
@@ -439,15 +447,11 @@ namespace WebFreight.Web.WebPages
                     }
                     DownloadAllDocuments(downloadAllDocumentsArgs);
                 }
-
                 else
                 {
                     filename = filestrings[1].ToString();
                     string documentId = filename.Split('.')[0].ToString();
-
                     Uploader up = new Uploader();
-
-
                     Document document = up.GetDocumentById(documentId, tenant);
                     if (document != null)
                     {
@@ -460,9 +464,14 @@ namespace WebFreight.Web.WebPages
                         _DatainByte = up.DownloadFile(documentId, documentExtension, "", tenant);
                     }
 
-
                     entityType = filestrings[2];
                     entityId = filestrings[3];
+
+                    if (filestrings.Contains("cardId"))
+                    {
+                        var cardIdIndex = Array.IndexOf(filestrings, "cardId");
+                        cardId = filestrings[cardIdIndex + 1];
+                    }
 
                     //invc//ship
                     bool isAuothenticatedRequest = false;
@@ -471,15 +480,14 @@ namespace WebFreight.Web.WebPages
                     {
                         case "ship":
                         case "master":
-                            ShipmentRepository rep = new ShipmentRepository(tenant);
+                            var rep = new ShipmentRepository(tenant);
                             Shipment shipment = rep.GetSingleShipment(entityId, tenant);
                             isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-
                             break;
                         case "invc":
                             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
                             ARInvoicePM entityPM = entityQuery.GetSinglePM(entityId, tenant);
-                            isAuothenticatedRequest = CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant);
+                            isAuothenticatedRequest = CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant, isFromDigital, cardId);
                             break;
                     }
 
@@ -612,10 +620,10 @@ namespace WebFreight.Web.WebPages
             var token = Request["Token"];
             if (string.IsNullOrEmpty(token) && headerRequest.Contains("TK="))
             {
-                token = filestrings[5].Replace("TK=", "");
+                token = filestrings.First(a => a.StartsWith("TK=")).Replace("TK=", "");
             }
-            return token;
 
+            return token;
         }
     }
 
