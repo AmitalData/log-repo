@@ -845,7 +845,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         invoicedataprovider.LastDeliveryATD = lastDelivery.ATD;
-                        invoicedataprovider.LastDeliveryEmptyContainerReturn = string.IsNullOrEmpty(myFirstPickup.EmptyDeliveryContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x => x.Id == myFirstPickup.EmptyDeliveryContainerPartnerId && x.Tenant == tenant)?.EnglishName;
+                        invoicedataprovider.LastDeliveryEmptyContainerReturn = string.IsNullOrEmpty(lastDelivery.EmptyDeliveryContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x => x.Id == lastDelivery.EmptyDeliveryContainerPartnerId && x.Tenant == tenant)?.EnglishName;
                     }
 
                     if (pickup != null)
