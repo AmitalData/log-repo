@@ -3413,7 +3413,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUCARLPM.ChangeSetOp = ChangeSetOperation.Insert;
 
             cCUCARLPM.COUNTER = decSupplierInvioceItemsCars.LineNumber;
-            cCUCARLPM.RIHBIT = decSupplierInvioceItemsCars.RichbitFileNumber;
+            cCUCARLPM.RIHBIT = decSupplierInvioceItemsCars.RichbitFileNumber.GetLast(10);
             cCUCARLPM.SHEILDNO = decSupplierInvioceItemsCars.VehicleChassisNumber;
 
             foreach (var decSupplierInvioceItemsCarMods in decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleMods)
