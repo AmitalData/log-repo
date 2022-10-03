@@ -52,8 +52,6 @@ namespace WebFreight.Web.WebPages
 
                     if (contact != null)
                     {
-                       // var cardBillToId = GetCardBillToId(cardId, tenant);
-
                         CardContact cardContact = commonDataContext.CardContacts
                                                                    .FirstOrDefault(d => d.ContactId == contact.Id
                                                                                         && (d.CardId == partnerId
@@ -73,21 +71,8 @@ namespace WebFreight.Web.WebPages
 
                 return exists;
             }
+
             return true;
-
-
-        }
-
-        private string GetCardBillToId(string cardId, int tenant)
-        {
-            if (string.IsNullOrWhiteSpace(cardId))
-            {
-                return string.Empty;
-            }
-
-            CardRepository cardRepository = new CardRepository(tenant);
-            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
-            return cardBillToId;
         }
 
         public bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
@@ -637,8 +622,8 @@ namespace WebFreight.Web.WebPages
             {
                 token = filestrings.First(a => a.StartsWith("TK=")).Replace("TK=", "");
             }
-            return token;
 
+            return token;
         }
     }
 
