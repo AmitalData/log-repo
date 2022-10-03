@@ -211,7 +211,7 @@
 
 	 ------------------------------------------------------
 
-	   insert into Fact_ARInvoices ([Id],[Source Tenant],[Parent Tenant], [AR Invoice Type], [Invoice Number], [Invoice Date], [Create Date], [Approved Date], [Due Date], [Print Date],[Paid Date], 
+	   insert into #Fact_ARInvoicesTemp ([Id],[Source Tenant],[Parent Tenant], [AR Invoice Type], [Invoice Number], [Invoice Date], [Create Date], [Approved Date], [Due Date], [Print Date],[Paid Date], 
 	   [Approved By], [Created By], [Printed By], [Invoice Salesman],  [Invoice Status], [Print Note], [Payment Term], [Invoice Local Currency], [Invoice Currency], [VAT Number], [Bill To], 
 	   
 	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
@@ -259,5 +259,5 @@ END CATCH
 	CLOSE ARInvoicesCursor
 	DEALLOCATE ARInvoicesCursor
 	 
-
+	  	insert into Fact_ARInvoices select * from #Fact_ARInvoicesTemp
 	end

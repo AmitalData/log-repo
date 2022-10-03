@@ -138,13 +138,13 @@ namespace WebFreight.Web.ReportsWebServices
                 DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Id == documentTypeId).FirstOrDefault();
                 if (currentdocumentType != null)
                 {
-                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
+                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.EntityId == shipmentPM.Id && fc.Tenant == tenant).ToList();
 
-                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
+                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.Tenant == tenant).ToList();
 
                     //AdditionalInformation
                     FormCustomField additionalInformationCustomField = (from a in customfieldsList
-                                                                        where a.FieldCode == "AdditionalInformation" && a.EntityId == shipmentPM.Id
+                                                                        where a.FieldCode == "AdditionalInformation"
                                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField additionalInformationDocumentCustom = (from a in documentCustomfieldsList
@@ -153,7 +153,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     // NumberOfLabels
                     FormCustomField numberOfLabelsCustomField = (from a in customfieldsList
-                                                                 where a.FieldCode == "NumberOfLabels" && a.EntityId == shipmentPM.Id
+                                                                 where a.FieldCode == "NumberOfLabels"
                                                                  select a).FirstOrDefault();
 
                     DocumentTypeCustomField numberOfLabelsnDocumentCustom = (from a in documentCustomfieldsList
@@ -162,7 +162,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //Contents
                     FormCustomField contentsCustomField = (from a in customfieldsList
-                                                                        where a.FieldCode == "Contents" && a.EntityId == shipmentPM.Id
+                                                                        where a.FieldCode == "Contents"
                                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField contentsDocumentCustom = (from a in documentCustomfieldsList

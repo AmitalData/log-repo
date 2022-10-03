@@ -1192,10 +1192,9 @@
     <Compile Include="Controllers\DigitalPortal\DigitalPortalReportController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalTotangoController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalAuthenticationHelper.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
-    <Compile Include="Controllers\DigitalPortal\Models\GeneralFilters.cs" />
-    <Compile Include="Controllers\DigitalPortal\Models\Partner.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -2858,6 +2857,7 @@
     <Compile Include="Helpers\ChangePasswordParameter.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
+    <Compile Include="Helpers\DigitalPortalQueryToExcelExportService.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />

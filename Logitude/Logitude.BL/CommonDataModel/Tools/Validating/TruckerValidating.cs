@@ -18,6 +18,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
         public static void Validate(EntityPMs.TruckerPM entityPM, Card Card, ICommonDataContext myContext, bool isNewEntity)
         {
             // ValidateVatNumber(entityPM);
+            if (!isNewEntity) ValidateVateCode(myContext, Card);
 
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
@@ -39,6 +40,15 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             {
                 AddressValidating.Validate(itemPM);
             }
+        }
+
+        private static void ValidateVateCode(ICommonDataContext myContext, Card card)
+        {
+            if (string.IsNullOrEmpty(card.Code) || card.Code.Length < 0 || card.Code.Length >= 7)
+                throw new ApplicationException("Code field must be less than 7 and more than 0");
+
+            var codeExists = myContext.Cards.Any(x => x.Id != card.Id && x.Code == card.Code && x.Tenant == card.Tenant);
+            if (codeExists) throw new ApplicationException("This trucker already exists");
         }
 
         private static void ValidateVatNumber(TruckerPM entityPM)

@@ -76,23 +76,23 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         break;
                     }
 
-                case "CBI":
-                    {
-                        if (shipmentPM.DimensionsUnitCode != "Inc")
-                        {
-                            throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
-                        }
-                        break;
-                    }
+                //case "CBI":
+                //    {
+                //        if (shipmentPM.DimensionsUnitCode != "Inc")
+                //        {
+                //            throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
+                //        }
+                //        break;
+                //    }
 
-                case "CBM":
-                    {
-                        if (shipmentPM.DimensionsUnitCode != "Cm")
-                        {
-                            throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
-                        }
-                        break;
-                    }
+                //case "CBM":
+                //    {
+                //        if (shipmentPM.DimensionsUnitCode != "Cm")
+                //        {
+                //            throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
+                //        }
+                //        break;
+                //    }
             }
         }
         public void ValidateAirShipmentCarrier()

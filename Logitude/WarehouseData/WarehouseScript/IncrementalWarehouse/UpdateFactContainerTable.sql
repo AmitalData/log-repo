@@ -195,7 +195,7 @@
 
 	 ------------------------------------------------------
 
-	 	 insert into Fact_Containers ([Id], [Source Tenant], [Parent Tenant], [Empty Pickup Actual], [Empty Pickup Port], [Empty Pickup Estimated], [Precarriage Port], [POL Port], [POL ETA],
+	 	 insert into #Fact_ContainersTemp ([Id], [Source Tenant], [Parent Tenant], [Empty Pickup Actual], [Empty Pickup Port], [Empty Pickup Estimated], [Precarriage Port], [POL Port], [POL ETA],
 	 [POL ATA], [POL Loaded Est], [POL Loaded Actual], [POL Vessel ETD], [POL Vessel ATD], [Trans1 Port], [Trans1 Vessel ETA], [Trans1 Vessel ATA],
 	 [Trans1 Discharge Est], [Trans1 Discharge Actual], [Trans1 Loaded Est], [Trans1 Loaded Actual], [Trans1 Vessel ETD], [Trans1 Vessel ATD], 
 	 [Trans2 Port], [Trans2 Vessel ETA], [Trans2 Vessel ATA], [Trans2 Discharge Est], [Trans2 Discharge Actual], [Trans2 Loaded Est],
@@ -254,5 +254,6 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 			End
 	CLOSE ContainersCursor
 	DEALLOCATE ContainersCursor
-
+		insert into Fact_Containers select * from #Fact_ContainersTemp
+			update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Container'
 		end

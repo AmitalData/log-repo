@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            if (string.IsNullOrWhiteSpace(searchText))
+            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
             {
                 return Ok(new List<Partner>());
             }
@@ -266,7 +266,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId, true);
                 shipmentId = shipmentIdAndTenant.Item1;
                 var tenant = shipmentIdAndTenant.Item2;
 

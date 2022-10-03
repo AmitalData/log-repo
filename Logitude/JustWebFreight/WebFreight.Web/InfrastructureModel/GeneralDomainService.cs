@@ -2387,7 +2387,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion
 
         #region Translations
-        public List<Translation> GetTranslations(int tenant)
+        public IQueryable<Translation> GetTranslations(int tenant)
         {
             TranslationRepository = new TranslationRepository(tenant);
             this.ChangeConnectionString(tenant);
@@ -3566,7 +3566,8 @@ namespace WebFreight.Web.InfrastructureModel
             this.ChangeConnectionString(translationTenant);
             List<FieldsTranslations> fieldsTranslationList = new List<FieldsTranslations>();
             List<TextCode> textCodesList = TextCodeRepository.GetTextCodesByTenant(translationTenant).Where(d => d.InActive == false).ToList<TextCode>();
-            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(translationTenant).ToList<Translation>();
+            var textCodes = textCodesList.Select(x => x.Code);
+            var translationsList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(x=> textCodes.Contains(x.TextCode.Code)).ToList();
 
             foreach (TextCode tc in textCodesList)
             {
@@ -3574,10 +3575,9 @@ namespace WebFreight.Web.InfrastructureModel
                                           where t.TextCode.Code == tc.Code
                                           select t).FirstOrDefault();
 
-                FieldsTranslations ft = new FieldsTranslations();
-
                 if (translaion != null)
                 {
+                    FieldsTranslations ft = new FieldsTranslations();
                     ft.IsTranslated = true;
                     ft.TranslateDate = translaion.TranslateDate;
                     ft.TranslatedText = translaion.TranslatedText;
@@ -3651,8 +3651,10 @@ namespace WebFreight.Web.InfrastructureModel
             //    textCodesList = textCodesList.Select(r=>r.ObjectTable.ObjectFields.Where(o=>o.IsCustom == false &&o.FieldLable == r.Code)))
             //}
             // GeneralDomainService defaultDomain = new GeneralDomainService();
-            List<Translation> translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode).ToList();
-            List<Translation> defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();//TranslationRepository.GetTranslations().Where(w => w.TranslationHeader.Tenant == 0 && w.TranslationHeader.Description == translationLanguage).ToList<Translation>();
+            var textCodes = textCodesList.Select(x => x.Code);
+            List<Translation> defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode && textCodes.Contains(d.TextCode.Code)).ToList();
+            List<Translation> translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode && textCodes.Contains(t.TextCodeCode)).ToList();
+            //TranslationRepository.GetTranslations().Where(w => w.TranslationHeader.Tenant == 0 && w.TranslationHeader.Description == translationLanguage).ToList<Translation>();
             foreach (TextCode tc in textCodesList)
             {
                 Translation translaion = translaionList.Where(t => t.TextCodeCode == tc.Code).FirstOrDefault();
@@ -4029,7 +4031,7 @@ namespace WebFreight.Web.InfrastructureModel
             Dictionary<string, Translation> translationsDictionary = new Dictionary<string, Translation>();
             Dictionary<string, Translation> defaultTranslationsDictionary = new Dictionary<string, Translation>();
             
-            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(w => w.Tenant == tenant && w.TranslationHeaderCode == language).ToList<Translation>();
+            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(w => w.Tenant == tenant && w.TranslationHeaderCode == language).ToList();
 
             List<Translation> defaultTranslationsList = TranslationRepository.GetTranslationsWithoutESByTenant(0).Where(d => d.TranslationHeaderCode == language && d.Tenant == 0).ToList();
 

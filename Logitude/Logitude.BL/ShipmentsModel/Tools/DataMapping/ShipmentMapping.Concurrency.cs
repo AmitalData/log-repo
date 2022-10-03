@@ -346,6 +346,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.GrossWeight = entityPM.GrossWeight;
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
+            entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
             entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;            
             entityPoco.HasContainerException = entityPM.HasContainerException;
             entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;

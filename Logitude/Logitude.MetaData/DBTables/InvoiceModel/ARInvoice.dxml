@@ -976,6 +976,10 @@
     Columns="Tenant,IsCancelled,IsClosed,StatusCode" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+	Columns="Tenant,IsClosed" />
+  <Index
+	Columns="Tenant,BillToId" />
   <UniqueConstraint
     Columns="Tenant,InvoiceNumber" />
 </Table>

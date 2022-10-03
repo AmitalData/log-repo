@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Newtonsoft.Json;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -3070,7 +3071,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsViaPortsDatesFilled { get; set; }
         [DataMember]
         public string TransportModeId { get; set; }
-        [DataMember]
+        public string LegTransportModeId { get; set; }
+        [XmlIgnore]
         public Dictionary<string, string> LegDetails { get; set; }
     }
 }

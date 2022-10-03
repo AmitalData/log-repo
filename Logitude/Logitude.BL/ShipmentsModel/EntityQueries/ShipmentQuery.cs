@@ -1828,6 +1828,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.WarehouseLegTerminalName = GetCardName(byLocalName, cardObject);
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
+                    shipmentPM.WarehouseLegAddressCity = cardObject.CityName;
                 }
             }
 
@@ -13317,6 +13318,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ATA = f.Transshipment3ATA,
                                Transshipment3ETD = f.Transshipment3ETD,
                                Transshipment3ETA = f.Transshipment3ETA,
+                               ChargeableWeight = f.ChargeableWeight,
+                               GrossWeight = f.GrossWeight,
+                               ValueOfGoods = f.ValueOfGoods,
+                               Volume = f.Volume,
+                               NumberOfPackages = f.NumberOfPackages,
                                LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
@@ -15201,6 +15207,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     var shipmentMasterDataFields = shipmentsMasterDataFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
                     MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
 
+                    shipmentAdditionalFields.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipmentId);
+
                     shipmentsAdditionalFields.Add(shipmentAdditionalFields);
                 }
 
@@ -15235,6 +15243,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 var shipmentMasterDataFields = shipmentsMasterDataFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
                 MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
 
+                shipmentAdditionalFields.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipmentId);
                 return shipmentAdditionalFields;
             }
             return new ShipmentAdditionalFields();
@@ -15302,7 +15311,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                      PackageTypeId = shipmentOrderPackage.PackageTypeId,
                                                                                      PackageTypeCode = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.Code,
                                                                                      PackageTypeName = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.EnglishName
-                                                                                 }).ToList()
+                                                                                 }).ToList(),
                                                     }).AsQueryable();
 
             return shipmentsOrderPackageFieldsQuery.ToList();

@@ -56,12 +56,13 @@ namespace WarehouseData.Helper
         }
 
 
-        public string CreateSqlTempDataWarehouseTable(TableClass table , bool addPrimaryKey = false)
+        public string CreateSqlTempDataWarehouseTable(TableClass table , bool addPrimaryKey = true)
         {
             string sql = "If(OBJECT_ID('tempdb..#" + table.DWObjectTableCode + "Temp') Is Not Null) Begin  Drop Table #" + table.DWObjectTableCode + "Temp End \r\n";
             sql += " CREATE TABLE #" + table.DWObjectTableCode + "Temp ( \r\n";
             foreach (DWObjectFieldDB field in table.DWObjectFieldDBLists)
             {
+                if (field.IsPrimaryKey && !addPrimaryKey) continue;
                 if (table.UseBatches && field.IsPrimaryKey) continue;
                 sql += field.FieldName + " ";
                 sql += GetDataWarehouseSqlFieldType(field , table);
@@ -163,12 +164,12 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber,StatusDate,StatusId", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasConstraint = true, DispayInScreen = true, HasNotSpecifiedValue = true, RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Shipments" } });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Shipments" } });
            
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", HasConstraint = true, DBTableName = "ShipmentPayables", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
-            tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", AdditionalIndexes = "EntityPayableId", DispayInScreen = true, Dw_TableName = "dw_APInvoiceLines", FieldsDBName = "EntityPayableId", KeyName = "APInvoiceId", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable",  ParentKeyName = "ShipmentId", HasConstraint = true, DBTableName = "ShipmentPayables", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", DispayInScreen = true, Dw_TableName = "dw_APInvoiceLines", FieldsDBName = "EntityPayableId", KeyName = "APInvoiceId", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "APInvoice", HasConstraint = true, DBTableName = "APInvoices", DispayInScreen = true, Dw_TableName = "dw_APInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices" } });
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
-            tableNameLists.Add(new TableClass() { TableName = "PayableProratedAmount", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "PayableProratedAmounts", Dw_TableName = "dw_PayableProratedAmounts", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
-            tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", ParentKeyName = "ARInvoiceId", FieldsDBName = "ARInvoiceId,ReceivableId", DispayInScreen = true, AdditionalIndexes = "ReceivableId", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable",ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "PayableProratedAmount", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "PayableProratedAmounts", Dw_TableName = "dw_PayableProratedAmounts", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", ParentKeyName = "ARInvoiceId", FieldsDBName = "ARInvoiceId,ReceivableId", DispayInScreen = true, DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoice", RelatedEntities = tableNameLists.Where(d => d.TableName == "ARInvoiceLine").ToList(), HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true, ParentKeyName ="MainEntityId" ,RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices", "Fact_ARInvoices" } });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable" || d.TableName == "PayableProratedAmount").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" }, HasNotSpecifiedValue =true , UseBatches
                 = true });

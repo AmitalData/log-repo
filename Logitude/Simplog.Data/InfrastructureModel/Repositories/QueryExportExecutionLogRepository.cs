@@ -3,15 +3,13 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
     public class QueryExportExecutionLogRepository : IRepository<QueryExportExecutionLog>
     {
-
         private IWebFreightContext currentContext;
+
         public QueryExportExecutionLogRepository(int tenant)
         {
             currentContext = WebFreightContext.GetContext(tenant);
@@ -22,13 +20,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             currentContext = context;
         }
 
-
-
         public QueryExportExecutionLog GetSingle(string id, int tenant)
         {
-            return (from a in context.QueryExportExecutionLogs
-                    where a.Id == id && a.Tenant == tenant
-                    select a).FirstOrDefault();
+            return context.QueryExportExecutionLogs
+                          .FirstOrDefault(a => a.Id == id 
+                                               && a.Tenant == tenant);
         }
 
         public IQueryable<QueryExportExecutionLog> GetAll(int tenant)
@@ -37,8 +33,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                    where a.Tenant == tenant
                    select a;
         }
-
-       
       
         public void Add(QueryExportExecutionLog entity)
         {
@@ -52,10 +46,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.QueryExportExecutionLogs.Remove(entity);
         }
 
-        
         public void Update(QueryExportExecutionLog entity)
         {
-             
             context.QueryExportExecutionLogs.Attach(entity);
             context.SetAsModified(entity);
         }

@@ -3674,7 +3674,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM.ShipperNotExporterAddressId = !newValue ? null : this.sourceEntityPM.ShipperNotExporterAddressId;
             this.EntityPM.ShipperNotExporterContactId = !newValue ? null : this.sourceEntityPM.ShipperNotExporterContactId;
 
-            if (this.EntityPM.QuoteCustomerTypeCode == "CNI") {
+            if (this.EntityPM.QuoteCustomerTypeCode == "SNE") {
                 this.EntityPM.CustomerId = this.sourceEntityPM.ShipperNotExporterId;
             }
         }

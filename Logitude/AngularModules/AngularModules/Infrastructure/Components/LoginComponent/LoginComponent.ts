@@ -966,6 +966,8 @@ export class LoginComponent implements OnInit {
     private GetFeatureToggles() {
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                SessionLocator.TenantZeroFeatureToggles = myResponse.Result.filter(d => d.TenantNumber == 0);
+
                 var tenant = InfraSettings.TenantPM.Id;
                 SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == tenant ||
                     (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber));
