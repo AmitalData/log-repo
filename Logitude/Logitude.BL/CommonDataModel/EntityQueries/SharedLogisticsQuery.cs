@@ -86,10 +86,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string GetBrandingURLButton(int tenant, string brandingURLPath)
         {
             string brandingBackgroundColor = GetBrandingURLBackgroundButton(tenant);
-            return " <table " + "style='cursor: pointer;width:120px;height:30px;border-color:" + brandingBackgroundColor + ";border-radius:5px;border:0px;color:white'" + " width ='120px'  bgcolor='" + brandingBackgroundColor + "' border='0'  cellspacing='0' cellpadding='0'>" +
+            return " <table " + "style='margin: 0 auto;cursor: pointer;width:256px;height:30px;border-color:" + brandingBackgroundColor + ";border-radius:5px;border:0px;color:white'" + " width ='256px'  bgcolor='" + brandingBackgroundColor + "' border='0'  cellspacing='0' cellpadding='0'>" +
                 "<tr>" +
                 "<td align='center'  style='padding: 8px 12px; border-radius: 2px;'>" +
-                "<a  style='font-weight: 500; font-size: 14px;text-decoration: none; padding: 0px; display: inline-block; color: #ffffff'" + " href='" + brandingURLPath + "'" + " > Join </ a >" +
+                "<a  style='font-weight: 500; font-size: 14px;text-decoration: none; padding: 0px; display: inline-block; color: #ffffff'" + " href='" + brandingURLPath + "'" + " > Login </ a >" +
                 "</ td >" +
                 "</ tr >" +
                 "</ table >";
