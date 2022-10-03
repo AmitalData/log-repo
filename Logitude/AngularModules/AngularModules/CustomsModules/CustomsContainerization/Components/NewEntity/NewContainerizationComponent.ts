@@ -226,7 +226,10 @@ export class NewContainerizationComponent extends BaseComponent {
         if(this.entityPM.Id!=null){
              var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations;
              connectDec =connectDec.substring(0, connectDec.length - 1);
-             filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
+
+             if(!AppTool.IsNullOrEmpty(connectDec)) {
+               filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
+             }
         }
 
 
