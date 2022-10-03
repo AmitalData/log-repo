@@ -859,6 +859,11 @@ export class APInvoicePM {
     public set ConnectedPaymentsNumbers(newValue: string) { if (this.connectedPaymentsNumbers != newValue) { this.connectedPaymentsNumbers = newValue; this.MarkAsDirty("ConnectedPaymentsNumbers"); } }
        
 	 
+    private totalEquation: string;
+    public get TotalEquation() { return this.totalEquation; }
+    public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		

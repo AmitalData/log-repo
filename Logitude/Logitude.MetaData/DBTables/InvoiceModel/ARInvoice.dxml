@@ -826,6 +826,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TotalEquation"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -977,9 +984,9 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
-	Columns="Tenant,IsClosed" />
+    Columns="Tenant,IsClosed" />
   <Index
-	Columns="Tenant,BillToId" />
+    Columns="Tenant,BillToId" />
   <UniqueConstraint
     Columns="Tenant,InvoiceNumber" />
 </Table>
