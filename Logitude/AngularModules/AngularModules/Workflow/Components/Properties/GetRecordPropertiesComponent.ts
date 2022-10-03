@@ -47,7 +47,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             let condition = new Condition();
             this.Conditions.push(condition);
         }
-
+        this.Data["recordsLimit"] = this.RecordsLimit ;
+        
         this.setUIProperties();
     }
 

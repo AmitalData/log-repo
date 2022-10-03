@@ -29,7 +29,7 @@ namespace Logitude.Workflow.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public string Sequence  { get; set; }
+       public int Sequence  { get; set; }
        [DataMember]
        public string ActionName  { get; set; }
        [DataMember]

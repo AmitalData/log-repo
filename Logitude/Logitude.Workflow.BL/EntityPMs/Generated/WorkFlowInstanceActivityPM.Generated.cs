@@ -181,12 +181,12 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string sequence ;
+	  private int sequence ;
 	  	  
        
 	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Sequence  
+       public int Sequence  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Workflow.BL.EntityPMs
 		 {
 		   if(sequence != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Sequence",OldValue=sequence,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Sequence",OldValue=sequence,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   sequence=value;
 		   }

@@ -53,8 +53,7 @@
   </Column>
   <Column
     Name="Sequence"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

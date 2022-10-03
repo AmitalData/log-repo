@@ -19,7 +19,6 @@ namespace Logitude.Workflow.Data.EntityMapping
 	    string dbms;
         public WorkFlowInstanceActivityStatusMap()
         {
-
             this.ToTable("WorkFlowInstanceActivityStatuses");
 
             this.HasKey(t => new { t.Code });
