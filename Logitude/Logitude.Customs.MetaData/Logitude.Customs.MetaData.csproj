@@ -548,7 +548,11 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
+
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
+
+    <None Include="EntityFiles\SignStation.lxml" />
+
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />

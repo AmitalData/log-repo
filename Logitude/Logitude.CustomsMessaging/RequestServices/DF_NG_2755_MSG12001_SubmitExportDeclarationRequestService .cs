@@ -48,47 +48,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode, requestParams.RequestVIA);
             }
 
-            var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
-            if (
-                declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
-                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault()) > TimeSpan.FromMinutes(1)
-                )
-            {
-
-                switch (requestParams.RequestVIA)
-                {
-                    case SendRequestVIA.WebServiceInteractive:
-                        requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                        break;
-                    case SendRequestVIA.WebServiceBatch:
-                        break;
-                    case SendRequestVIA.DCABatch:
-                        break;
-                    case SendRequestVIA.Default:
-                    default:
-                        throw new System.Exception("should not be SendRequestVIA.Default !!!!");
-                        break;
-                }
-                requestParams.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().ToShortDateString(), " שעה ", declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().ToShortTimeString());// "הבקשה תשלח בעתיד";
-                requestParams.FutureSendDateTime = declarationPaymentsPM.FuturePaymentDateTime;
-            }
-            if (!requestParams.FutureSendDateTime.HasValue)
-            {
-                switch (requestParams.RequestVIA)
-                {
-                    case SendRequestVIA.WebServiceInteractive:
-                        var myDF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                        myDF_MSG10000_ImportDeclarationRequestService.ManipulateRequestParams(requestParams);
-                        break;
-                    case SendRequestVIA.WebServiceBatch:
-                    case SendRequestVIA.DCABatch:
-                        break;
-                    case SendRequestVIA.Default:
-                    default:
-                        throw new System.Exception("should not be SendRequestVIA.Default !!!!");
-                        break;
-                }
-            }
+            
 
             base.ManipulateRequestParams(requestParams);
         }

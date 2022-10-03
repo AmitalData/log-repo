@@ -333,6 +333,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
+		 IDbSet<SignStation> SignStations { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }
 		 IDbSet<SiteType> SiteTypes { get; }
 		 IDbSet<SpecialActionDescriptionType> SpecialActionDescriptionTypes { get; }
