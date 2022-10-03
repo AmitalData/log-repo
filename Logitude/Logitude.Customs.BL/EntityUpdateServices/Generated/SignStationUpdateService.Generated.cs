@@ -1,0 +1,72 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class SignStationUpdateService:EntityUpdateService<SignStation,SignStationPM,EntityPM>
+   {
+   
+        SignStationRepository entityRepository;
+        public SignStationUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new SignStationDataMapping();
+            Repository = new SignStationRepository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public SignStationUpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public SignStationUpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(SignStationPM entityPM)
+        {
+            SignStationKeys entityKeys = new SignStationKeys() { CustomsAgentId = entityPM.CustomsAgentId, PersonId = entityPM.PersonId };
+            return entityKeys;
+        }
+
+		
+	    protected override void FillDefaultValuesOnCreate(SignStationPM entityPM)
+        {
+ 
+		}
+		protected override void FillDefaultValuesOnUpdate(SignStationPM entityPM)
+		{
+ 
+		}
+		
+		 
+	 
+   }
+   
+}
+	 

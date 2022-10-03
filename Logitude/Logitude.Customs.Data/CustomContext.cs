@@ -698,6 +698,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
+            modelBuilder.Configurations.Add(new SignStationMap());
+	
             modelBuilder.Configurations.Add(new SiteLookupMap());
 	
             modelBuilder.Configurations.Add(new SiteTypeMap());
@@ -3228,6 +3230,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SignatureType> SignatureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SignStation> SignStations 
 	 {
 	      get; set;
 	 
