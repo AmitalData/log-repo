@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalDashboardController : ApiController
     {
-        [HttpGet]
+        [HttpPost]
         [Route("DigitalDashboardController/GetInvoicesGroupedByPaidStatus")]
         public IHttpActionResult GetInvoicesGroupedByPaidStatus(GeneralFilters newFilters)
         {
@@ -51,6 +51,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+        [HttpPost]
         [Route("DigitalDashboardController/GetShipmentsGroupedByStatus")]
         public IHttpActionResult GetShipmentsGroupedByStatus(GeneralFilters newFilters)
         {
@@ -70,6 +71,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+        [HttpPost]
         [Route("DigitalDashboardController/GetDashboardSummary")]
         public IHttpActionResult GetDashboardSummary(GeneralFilters newFilters)
         {
