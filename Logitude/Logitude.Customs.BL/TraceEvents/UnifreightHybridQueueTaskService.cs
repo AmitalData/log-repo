@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.TraceEvents
             {
 
                 myMainObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
-                myMainObject = myMainObject.Replace("<", "&lt;").Replace(">", "&gt;");
+                
 
 
             }
