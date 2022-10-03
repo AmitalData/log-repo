@@ -41,7 +41,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var invoices = GetFilteredInvoicesList(newFilters, authToken.Tenant);
-                var invoicesGroupedByStatus = invoices?.Where(r => !string.IsNullOrEmpty(r.PaidStatus)).GroupBy(r => r.PaidStatus).ToList().ToDictionary(t => t.Key, t => t.Key.Count());
+                var invoicesGroupedByStatus = invoices.Where(r => !string.IsNullOrEmpty(r.PaidStatus))
+                                                      .GroupBy(r => r.PaidStatus)
+                                                      .ToDictionary(t => t.Key, t => t.Count());
 
                 return Ok(invoicesGroupedByStatus);
             }
@@ -61,7 +63,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var shipments = GetFilteredShipmentList(newFilters, authToken.Tenant);
-                var shipmentsGroupedByStatus = shipments?.Where(r => !string.IsNullOrEmpty(r.StatusCode)).GroupBy(r => r.StatusCode).ToList().ToDictionary(t => t.Key, t => t.Key.Count());
+                var shipmentsGroupedByStatus = shipments.Where(r => !string.IsNullOrEmpty(r.StatusCode))
+                                                        .GroupBy(r => r.StatusCode)
+                                                        .ToDictionary(t => t.Key, t => t.Count());
 
                 return Ok(shipmentsGroupedByStatus);
             }
@@ -82,12 +86,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
 
                 var dashboardSummary = new DigitalDashboardSummary();
-                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
-                DateTime? currentWeek = currentDateTime.Value.AddDays(7).Date;
+                var currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
+                var currentWeek = currentDateTime.AddDays(7).Date;
                 var shipments = GetFilteredShipmentList(newFilters, authToken.Tenant);
-                dashboardSummary.TotalShipmentsByETACount = shipments.Where(d=> d.MainCarriageETA >= currentDateTime && d.MainCarriageETA <= currentWeek).Count();
+
+                dashboardSummary.TotalShipmentsByETACount = shipments.Where(d=> d.MainCarriageETA >= currentDateTime
+                                                                                && d.MainCarriageETA <= currentWeek)
+                                                                     .Count();
+
                 var invoices = GetFilteredInvoicesList(newFilters, authToken.Tenant);
-                dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime && d.DueDate <= currentWeek).Count();
+                dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime 
+                                                                                    && d.DueDate <= currentWeek)
+                                                                       .Count();
                
                 return Ok(dashboardSummary);
             }
@@ -143,24 +153,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
-
-            foreach (var filter in newFilters.AdditionalFilters)
-            {
-                var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-
-                if (field != null)
-                {
-                    string valuestring1 = filter.FieldValue?.ToString();
-                    object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                    string valuestring2 = filter.FieldValue2?.ToString();
-                    object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                    queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                }
-                else
-                {
-                    queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                }
-            }
 
             ShipmentAPiHelper.AddFilters(queryOperations, tenant);
             var shipmentRepository = new ShipmentRepository(tenant);
@@ -227,27 +219,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant);
-
-            if (newFilters.AdditionalFilters.Any())
-            {
-                foreach (var filter in newFilters.AdditionalFilters)
-                {
-                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-
-                    if (field != null)
-                    {
-                        string valuestring1 = filter.FieldValue?.ToString();
-                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                        string valuestring2 = filter.FieldValue2?.ToString();
-                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                    }
-                    else
-                    {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                    }
-                }
-            }
 
             ARInvoiceAPiHelper.AddFilters(queryOperations, tenant);
             var genericFilter = new GenericFilter();
