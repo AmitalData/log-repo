@@ -100,11 +100,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                                 entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                             }
 
-                            if(entityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData != null)
-                            {
-                                string x = LogitudeXmlSerializer.SerializeObjectToXmlString(entityPM.SchedulerDetailsData.ReportDetails.DWQueryFilterData);
-                            }
-
                             entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
                             
                             System.Type type1 = typeof(FTPSchedulerDetails);

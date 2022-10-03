@@ -373,7 +373,6 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
     private newValueinDateFormat: Date;
-
     SchedulerDetails: SchedulerDetails;
     ReportSchedulerDetails: ReportSchedulerDetails;
     FTPDetails: FTPSchedulerDetails;
