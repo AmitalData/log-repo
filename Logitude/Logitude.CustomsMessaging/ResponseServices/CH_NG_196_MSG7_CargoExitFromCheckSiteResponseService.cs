@@ -261,6 +261,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
+                string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+                if (dirtyDeclarationPM.TransportModeId != "A")
+                {
+                    primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+                }
 
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
@@ -276,7 +281,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
                         entname = "BFIFILE",
-                        // primary_number = primary_number,
+                        primary_number = primary_number,
                         status = "new",
                         xml_status = "new",
                         status_id = status_id,
