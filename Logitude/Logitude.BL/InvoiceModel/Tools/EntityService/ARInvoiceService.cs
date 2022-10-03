@@ -659,7 +659,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
 
                 this.BuildSearchFields();
-                entityAutomationService.RunAutomation();
+                if (!entityPM.IsFromAutomation)
+                {
+                    entityAutomationService.RunAutomation();
+                }
             }
 
 

@@ -55,6 +55,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                   select a).FirstOrDefault();
             return d;
         }
+        public DocumentsFiling GetSingleWithIncludeDocumentType(string id, int tenant)
+        {
+            DocumentsFiling d = (from a in context.DocumentsFilings.Include("DocumentType")
+                                 where a.Id == id && a.Tenant == tenant
+                                 select a).FirstOrDefault();
+            return d;
+        }
 
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId(string entityId, int tenant)

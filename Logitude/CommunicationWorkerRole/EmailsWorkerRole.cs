@@ -39,6 +39,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.CToolWorkflows;
+using WebFreight.Web.Helpers.CallBack;
 
 namespace CommunicationWorkerRole
 {
@@ -53,6 +54,7 @@ namespace CommunicationWorkerRole
         private string toPartner;
         private string queueName;
         private const int AttachmentsBytesMaximumSize = 20;
+        private string callBackDetails = string.Empty;
         public EmailsWorkerRole(string communicationLogTypeCode, string toPartner)
         {
             this.communicationLogTypeCode = communicationLogTypeCode;
@@ -124,6 +126,7 @@ namespace CommunicationWorkerRole
                             {
                                 string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+                                callBackDetails = response.MessageValues.ContainsKey("CallBackDetails") ? response.MessageValues["CallBackDetails"] : "";
                                 context = CommonDataContext.GetContext(tenant);
                                 CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
                                 CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
@@ -770,6 +773,11 @@ namespace CommunicationWorkerRole
             currentLog.LastStatusDateUTC = DateTime.UtcNow;
             commLogrepository.Update(currentLog);
             commLogrepository.SubmitChanges();
+
+            if (!string.IsNullOrEmpty(callBackDetails))
+            {
+                CallBackService.Notifiy(callBackDetails, null);
+            }
         }
 
         private string GetSentByUserName(CommunicationLog currentLog, EmailParameters emailParameters)

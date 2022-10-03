@@ -13,17 +13,17 @@ namespace WebFreight.Web.Helpers.CallBack
   public  class CallBackService
     {
 
-        public void Notifiy(string callBackDetailsXml , object result)
+        public static void Notifiy(string callBackDetailsXml , object result)
         {
 
             Parallel.Invoke(() => Execute(callBackDetailsXml , result));
         }
 
 
-        private void Execute(string callBackDetailsXml, object result)
+        private static void Execute(string callBackDetailsXml, object result)
         {
 
-            var callBackDetails = LogitudeXmlSerializer.DeserializeObject<CallBackDetails>(LogitudeXmlSerializer.SerializeObjectToXmlString(callBackDetailsXml, true));
+            var callBackDetails = LogitudeXmlSerializer.DeserializeObject<CallBackDetails>(callBackDetailsXml);
             IHandlerService handlerService = HandlerServiceFactory.Create(callBackDetails.HandlerServiceName);
             handlerService.Handel(callBackDetails.HandlerArgs, result);
         }
@@ -38,6 +38,6 @@ namespace WebFreight.Web.Helpers.CallBack
         [DataMember]
         public string HandlerServiceName { get; set; }
         [DataMember]
-        public object HandlerArgs { get; set; }
+        public string HandlerArgs { get; set; }
     }
 }
