@@ -429,6 +429,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
+        this.entityPM.IsDirty = false;
         this.containerizationExtendedListService.ConnectedDeclarations = "";
         this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
