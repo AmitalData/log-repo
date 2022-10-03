@@ -26,12 +26,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService
         : MessagingServiceBase<
-        GenericRequestParams,
-        INF_MSG_GenericResponseData,
+        AmendmentRequestParams,
+        ExportDeclarationAmendmentResponseData,
         DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg,
         DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg,
         DF_MSG8235_TransshipmentDeclarationAmendmentRequestService,
-        DF_NG_8237_ExportDeclerationAmendmentReplyResponseService, RequestHeader>
+        DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService, RequestHeader>
     {
 
         
@@ -42,7 +42,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return "8235";
             }
         }
-        protected override DcaReceivedController GetDcaReceivedController(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse, GenericRequestParams RequestParams)
+        protected override DcaReceivedController GetDcaReceivedController(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse, AmendmentRequestParams RequestParams)
         {
             if (customsResponse==null)
             {
@@ -59,12 +59,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return new DcaReceivedController();// { DcaAnalyzeAggregateKey = customsResponse.Response.Declaration.ID.Value };
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
+        protected override AmendmentRequestParams CreateDefaultRequestParamsFromCustomsResponse(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
         {
-            return new GenericRequestParams() {   RequestName="Should not Use !!"};
+            return new AmendmentRequestParams() {   RequestName="Should not Use !!"};
         }
 
-        protected override INF_MSG_GenericResponseData GetIIGBLExceptionFromReponseHeader(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
+        protected override ExportDeclarationAmendmentResponseData GetIIGBLExceptionFromReponseHeader(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     case UnifreightIIGFault.PlaceFaultEnum.IIGFatalException:
                     case UnifreightIIGFault.PlaceFaultEnum.IIGTechnicalError:
                         {
-                            LogMessagingUtil.Instance.AppendLine("DF_MSG10000_ExportDeclarationMessagingService: " + myUnifreightIIGFault.Detail.PlaceFault);
+                            LogMessagingUtil.Instance.AppendLine("DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService: " + myUnifreightIIGFault.Detail.PlaceFault);
                             if (myUnifreightIIGFault.Detail.PlaceFault == UnifreightIIGFault.PlaceFaultEnum.IIGBusinessError)
                             {
                                 //ITZIK+MIRT _ResponseHeader.ErrorDescription = FormattedMessage;
@@ -98,7 +98,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         }
                         break;
                     default:
-                        return new INF_MSG_GenericResponseData() { UserMessage = FormattedMessage, HasException = true };
+                        return new ExportDeclarationAmendmentResponseData() { UserMessage = FormattedMessage, HasException = true };
                 }
             }
 
@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        protected override void PreCallWS(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, GenericRequestParams requestParams)
+        protected override void PreCallWS(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, AmendmentRequestParams requestParams)
         {
             //TODO:yUVAL DELETE ...
             base.PreCallWS(customRequest, requestParams);
@@ -115,7 +115,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         
         
         protected override DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg CallWSSigned( 
-            byte[] customRequestSignedByteArry, GenericRequestParams requestParams, out string exceptionMessage)
+            byte[] customRequestSignedByteArry, AmendmentRequestParams requestParams, out string exceptionMessage)
         {
 
             exceptionMessage = null;
@@ -141,7 +141,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
         protected override DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg CallWS(
             DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest,
-            GenericRequestParams requestParams,
+            AmendmentRequestParams requestParams,
             out string exceptionMessage)
         {
             exceptionMessage = null;

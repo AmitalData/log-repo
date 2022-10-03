@@ -48,7 +48,7 @@ using UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServ
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class DF_MSG8235_TransshipmentDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, GenericRequestParams>
+    public class DF_MSG8235_TransshipmentDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, AmendmentRequestParams>
     {
         private ICustomContext _context;
         private DeclarationPM _DeclarationPM;
@@ -57,7 +57,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
          private string _userId;
-        public override void ManipulateRequestParams(GenericRequestParams requestParams)
+        public override void ManipulateRequestParams(AmendmentRequestParams requestParams)
         {
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
             {
@@ -182,7 +182,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
         }
 
-        private void CreateDeclarationPM(GenericRequestParams requestParams)
+        private void CreateDeclarationPM(AmendmentRequestParams requestParams)
         {
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
@@ -192,7 +192,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, GenericRequestParams requestParams)
+        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, AmendmentRequestParams requestParams)
         {
             if (this._context == null)
             {
@@ -200,7 +200,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
         }
  
-        public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(GenericRequestParams requestParams)
+        public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(AmendmentRequestParams requestParams)
         {
 
             
@@ -452,7 +452,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             return responseAdditionalInformation.ToArray();
          }
 
-        private void UCBatchCheckLock(GenericRequestParams requestParams, DeclarationPM declarationPM)
+        private void UCBatchCheckLock(AmendmentRequestParams requestParams, DeclarationPM declarationPM)
         {
   
             LogMessagingUtil.Instance.AppendLine("CourierMaster Send Batch===> CheckLock");
