@@ -36,7 +36,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
     public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
-    public DefaultSort = this.SortByCodes[0];
     public SortByDirections = ['asc', 'desc'];
     public GroupByQueryFilters: ApiQueryFilters;
 
@@ -49,6 +48,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.EntityPM = windowArgs['EntityPM'];
         this.DashboardPM = windowArgs['DashboardPM'];
         this.isNew = windowArgs['IsNew'];
+        this.FirstTime = this.isNew != true;
         this.DataContext = this;
         this.ComputeChartImageSrc();
         this.BuildMeasures();
@@ -195,7 +195,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     get MaximumGrouping() {
-        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 25;
+        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 10;
         return this.EntityPM.MaximumGrouping;
     }
     set MaximumGrouping(value: number) {
@@ -206,7 +206,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     get SortDirection() {
-        if (!this.EntityPM?.SortDirection) this.EntityPM.SortDirection = "asc";
         return this.EntityPM.SortDirection;
     }
     set SortDirection(value: string) {
@@ -223,7 +222,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
     set SelectedGroupField(value: AnalyticsFactsFieldsMetaDataList) {
-        if (this.selectedGroupField == value) {
+        if (this.selectedGroupField?.Id == value?.Id) {
             this.FirstTime = false;
             return;
         }
@@ -232,10 +231,23 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.FirstTime = false;
             return;
         }
+        this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
+        this.SetDefaultSortByField();
+        this.FirstTime = false;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
 
-        this.EntityPM.DateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
-        this.FirstTime = false;
+    }
+
+
+    SetDefaultSortByField() {
+        if (!this.selectedGroupField) return;
+        if (this.selectedGroupField.DataTypeCode == "DateTime" || this.selectedGroupField.DataTypeCode == 'Date') {
+            this.SortBy = null;
+            this.SortDirection = "desc";
+            return;
+        }
+        this.SortBy = 1;
+        this.SortDirection = "asc";
     }
 
     CancelButtonClicked() {
