@@ -54,6 +54,7 @@
   HasApiHelper="true"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;d164&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
