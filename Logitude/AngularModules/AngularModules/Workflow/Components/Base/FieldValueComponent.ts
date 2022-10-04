@@ -42,10 +42,11 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     initialize() {
+        this.initializeDateTimeCurrentValue();
+
         if (!this.IsIntegerNumberInput) {
             this.initializeLookupTable();
             this.initializePickListTable();
-            this.initializeDateTimeCurrentValue();
         }
     }
 
@@ -62,7 +63,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     initializeDateTimeCurrentValue() {
-        if (this.isDateTimeObjectField()) {
+        if ((this.ObjectField != null && this.isDateTimeObjectField()) ||
+            (this.DataType != null && this.isDataTypeDateTime())) {
             this.setDateTimeCurrentValue();
         }
     }
