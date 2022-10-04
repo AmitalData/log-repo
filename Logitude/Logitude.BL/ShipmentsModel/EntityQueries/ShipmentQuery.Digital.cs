@@ -12,6 +12,8 @@ using System.Linq;
 using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -739,7 +741,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private TransitTime GetTransitTimeForInlandDomesticShipment(ShipmentPM shipment)
         {
-            return new TransitTime { 
+            return new TransitTime
+            {
                 DichargeDate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
                 LoadingDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD
             };
@@ -926,7 +929,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return loadingPort;
         }
-        
+
         private string GetDischargePort(ShipmentPM shipment)
         {
             if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
@@ -947,7 +950,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
             {
-                return shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode; 
+                return shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode;
             }
 
             return null;
@@ -986,7 +989,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        
+
         private DateTime? GetPortOfDischargeDate(ShipmentPM shipment)
         {
             if (shipment.OnCarriageATA != null)
@@ -1127,7 +1130,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return onCarriageLeg;
         }
-        
+
         private string GetMasterTextCode(ShipmentPM shipment)
         {
             if (shipment.TransportModeId == "A")
@@ -1321,7 +1324,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        
+
         private string GetCityForToInlandDomestic(DigitalShipmentList shipment)
         {
             if (shipment.InlandDomesticToTypeCode == "PART")
@@ -1375,7 +1378,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-       
+
         private string GetCityByPartnerId(string addressId)
         {
             if (string.IsNullOrEmpty(addressId))
@@ -1390,10 +1393,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             var city = partnerAddress.City;
-            
+
             return city;
         }
-      
+
         private string GetCountryByPartnerId(string addressId)
         {
             if (string.IsNullOrEmpty(addressId))
@@ -1415,7 +1418,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return country;
         }
-        
+
         private string GetCountryByCASLAddress(string countryId)
         {
             string myResult = "";
@@ -1483,7 +1486,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
             };
         }
-       
+
 
         private void FillPickUpTimeLine(TimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
@@ -1504,7 +1507,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             this.FillPickUpCityAndCountry(timeLineData, firstPickup, tenant);
         }
-      
+
         private void FillPickUpCityAndCountry(dynamic timeLineData, ShipmentPickUpDelivery firstPickup, int tenant)
         {
             switch (firstPickup.PickUpDeliveryFromTypeCode)
@@ -1557,7 +1560,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
             }
         }
-       
+
         private void FillDeliveryTimeLine(TimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
             var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -1577,7 +1580,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             this.FillDeliveryCityAndCountry(timeLineData, finalDelivery, tenant);
         }
-      
+
         private void FillDeliveryCityAndCountry(dynamic timeLineData, ShipmentPickUpDelivery finalDelivery, int tenant)
         {
             switch (finalDelivery.PickUpDeliveryToTypeCode)
@@ -1986,7 +1989,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-       
+
         private string GetMainCarraigeToATDDateType(ShipmentPM shipment)
         {
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
@@ -2206,7 +2209,130 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion Shipment Vertical TimeLine
 
-        public Tuple <string, int> GetShipmentIdBySecurityKey(string key)
+        #region Transport & Subtypes 
+
+        public List<DigitalTransportModes> GetTransportModesWithSubTypes(int tenant)
+        {
+            var digitalTransportModes = new List<DigitalTransportModes>();
+            var shipmentSubTypes = GetShipmentTypes(tenant);
+
+            // Air 
+            digitalTransportModes.Add(new DigitalTransportModes()
+            {
+                Name = "Air",
+                Code = "A",
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "Air" }, "A")
+            });
+
+            // Ocean 
+            digitalTransportModes.Add(new DigitalTransportModes()
+            {
+                Name = "Ocean",
+                Code = "O",
+                Children = GetOceanChildren(shipmentSubTypes),
+            });
+
+            // Ocean 
+            digitalTransportModes.Add(new DigitalTransportModes()
+            {
+                Name = "Inland",
+                Code = "I",
+                Children = GetInlandChildren(shipmentSubTypes)
+            });
+            return digitalTransportModes;
+        }
+
+        private List<DigitalTransportModesChild> GetOceanChildren(List<ShipmentSubType> shipmentSubTypes)
+        {
+            var oceanChildren = new List<DigitalTransportModesChild>();
+            oceanChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "O",
+                Name = "FCL",
+                Code = "FCL,FCLD",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "FCL","FCLD"}, "O")
+            });
+            oceanChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "O",
+                Name = "LCL",
+                Code = "LCL,LCLD",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "LCL", "LCLD" }, "O")
+            });
+            oceanChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "O",
+                Name = "Groupage Ocean",
+                Code = "MyGo",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGo" }, "O")
+            });
+            return oceanChildren;
+        }
+
+        private List<DigitalTransportModesChild> GetInlandChildren(List<ShipmentSubType> shipmentSubTypes)
+        {
+            var inlandChildren = new List<DigitalTransportModesChild>();
+            inlandChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "I",
+                Name = "FTL",
+                Code = "FTL",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "FTL" }, "I")
+            });
+            inlandChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "I",
+                Name = "LTL",
+                Code = "LTL",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "LTL" }, "I")
+            });
+            inlandChildren.Add(new DigitalTransportModesChild()
+            {
+                ParentCode = "I",
+                Name = "Groupage Inland",
+                Code = "MyGI",
+                DisaledOption = true,
+                Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGI" }, "I")
+            });
+            return inlandChildren;
+        }
+
+        private List<DigitalTransportModesChild> GetSubTypes(List<ShipmentSubType> shipmentSubTypes, List<string> typeCodes, string parentCode)
+        {
+            var subTypes = shipmentSubTypes.Where(a => typeCodes.Contains(a.ShipmentTypeCode) || a.ShipmentTypeCode == null).ToList();
+            if (subTypes == null)
+                return null;
+
+            var digitalSubTypes = new List<DigitalTransportModesChild>();
+            foreach (var item in subTypes)
+            {
+                digitalSubTypes.Add(new DigitalTransportModesChild()
+                {
+                    ParentCode = parentCode,
+                    Name = item.Name,
+                    Code = item.Id,
+                    DisaledOption = true,
+                });
+            }
+
+            return digitalSubTypes;
+        }
+
+        private List<ShipmentSubType> GetShipmentTypes(int tenant)
+        {
+            ShipmentSubTypeRepository shipmentSubTypeRepository = new ShipmentSubTypeRepository(repository.context);
+            IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(tenant);
+            return shipmentSubTypes.ToList();
+        }
+
+        #endregion Transport & Subtypes
+
+        public Tuple<string, int> GetShipmentIdBySecurityKey(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -2215,7 +2341,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             Shipment shipment = repository.context
                                           .Shipments
-                                          .FirstOrDefault(a=>a.SecurityKey.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+                                          .FirstOrDefault(a => a.SecurityKey.Equals(key, StringComparison.InvariantCultureIgnoreCase));
 
             if (shipment == null)
             {
@@ -2224,6 +2350,36 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return Tuple.Create(shipment.Id, shipment.Tenant);
         }
-   
     }
+
+    [JsonObject(IsReference = false, ItemIsReference = false)]
+    public class DigitalTransportModes
+    {
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+        [JsonProperty(PropertyName = "checked")]
+        public bool Checked { get; set; }
+        [JsonProperty(PropertyName = "children")]
+        public List<DigitalTransportModesChild> Children { get; set; }
+    }
+
+    [JsonObject(IsReference = false, ItemIsReference = false)]
+    public class DigitalTransportModesChild
+    {
+        [JsonProperty(PropertyName = "parentCode")]
+        public string ParentCode { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+        [JsonProperty(PropertyName = "checked")]
+        public bool Checked { get; set; }
+        [JsonProperty(PropertyName = "disaledOption")]
+        public bool DisaledOption { get; set; }
+        [JsonProperty(PropertyName = "children")]
+        public List<DigitalTransportModesChild> Children { get; set; }
+    }
+
 }
