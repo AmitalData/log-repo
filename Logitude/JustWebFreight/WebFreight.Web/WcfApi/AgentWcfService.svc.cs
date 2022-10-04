@@ -56,6 +56,7 @@ namespace WebFreight.Web.WcfApi
                     AgentService service = new AgentService(commoncontext, entityPM.Tenant);
                     CurrencyRepository currencyRepository = new CurrencyRepository(commoncontext);
                     VatTypeRepository vatTypeRepository = new VatTypeRepository(commoncontext);
+
                     if (entityPM.InvoiceCurrencyId != null)
                     {
                         Currency currency = currencyRepository.GetSingleCurrencyByCode(entityPM.InvoiceCurrencyId, entityPM.Tenant);

@@ -615,10 +615,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return results;
         }
 
-        public DWObjectField GetDWObjectFieldByDimTable(string DWDimTableCode)
+        public DWObjectField GetDWObjectFieldByDimTable(string DWDimTableCode , string dWObjectTableCode)
         {
             return (from a in repository.webFreightContext.DWObjectFields
-                    where a.DimensionTableCode == DWDimTableCode
+                    where a.DimensionTableCode == DWDimTableCode && a.DWObjectTableCode == dWObjectTableCode
                     select a).FirstOrDefault();
         }
     }
