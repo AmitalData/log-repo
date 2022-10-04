@@ -384,6 +384,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
                             if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                                 this.PaymentTermId = list.PaymentTermId;
                             }
+
+                            else {
+                                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                            }
                         }
                     }
                 });
