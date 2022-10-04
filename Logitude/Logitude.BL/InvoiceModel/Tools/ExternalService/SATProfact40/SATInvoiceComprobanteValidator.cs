@@ -271,11 +271,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             if (string.IsNullOrEmpty(claveProdServ))
             {
-                throw new Exception("Measurement on charge type is required");
-            }
-
-            if (string.IsNullOrEmpty(claveProdServ))
-            {
                 throw new Exception("SAT External Id on charge type is required");
             }
         }
