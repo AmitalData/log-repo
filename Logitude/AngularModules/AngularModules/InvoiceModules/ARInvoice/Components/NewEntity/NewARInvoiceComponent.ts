@@ -566,6 +566,10 @@ export class NewARInvoiceComponent extends BaseComponent {
                                 this.PaymentTermId = list.PaymentTermId;
                             }
 
+                            else {
+                                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                            }
+
                             if (!AppTool.IsNullOrEmpty(list.BillingAddressId)) {
                                 this.BillToAddressId = list.BillingAddressId;
                             }
