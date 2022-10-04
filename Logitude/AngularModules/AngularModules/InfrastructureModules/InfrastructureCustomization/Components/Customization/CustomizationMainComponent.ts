@@ -104,9 +104,9 @@ export class CustomizationMainComponent {
         var myTablesItems: FieldsTranslations[];
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            myTablesItems = this.allTablesItems.filter(f => f.DefaultText != null && f.DefaultText.toLowerCase().startsWith(this.SearchText.toLowerCase())
-                || f.TranslatedText != null && f.TranslatedText.toLowerCase().startsWith(this.SearchText.toLowerCase())
-                || f.TranslatedTextPlural != null && f.TranslatedTextPlural.toLowerCase().startsWith(this.SearchText.toLowerCase()));
+            myTablesItems = this.allTablesItems.filter(f => f.DefaultText != null && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) != -1
+                || f.TranslatedText != null && f.TranslatedText.toLowerCase().indexOf(this.SearchText.toLowerCase()) != -1
+                || f.TranslatedTextPlural != null && f.TranslatedTextPlural.toLowerCase().indexOf(this.SearchText.toLowerCase()) != -1);
         }
 
         else {
