@@ -18,6 +18,11 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
                         handlerService =  new AutomationDocumentHandlerService();
                         break;
                     }
+                case "EmailDocumentHandlerService":
+                    {
+                        handlerService = new EmailDocumentHandlerService();
+                        break;
+                    }
                 default:
                     {
                         break;

@@ -28,6 +28,8 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using WebFreight.Web.Helpers.AutomationModel;
+using WebFreight.Web.Helpers.CallBack;
+using WebFreight.Web.Helpers.CallBack.Handler;
 
 namespace WebFreight.Web.Helpers
 {
@@ -345,9 +347,15 @@ namespace WebFreight.Web.Helpers
             context.SaveChanges();
             if (IsAllowedToSendEmail(automationSendEmailArgs, context))
             {
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
                 DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
+
+                string callBackDetailsXml = EmailDocumentHandlerService.GetCallBackDetailsXml(new EmailDocumentHandlerArgs() {EntityId = entityId,ObjectTableId = objectTableId,Tenant = tenant, DocumentId = automation.DocumentTypeId} );
+                if (!string.IsNullOrEmpty(callBackDetailsXml))
+                {
+                    emailQueueMessage.Add("CallBackDetails", callBackDetailsXml);
+                }        
+                queueservice.Send(emailQueueMessage, tenant);
             }
             return log.Id;
         }

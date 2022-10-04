@@ -61,6 +61,8 @@ using System.Drawing;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.Interfaces;
+using WebFreight.Web.Helpers.CallBack;
+using WebFreight.Web.Helpers.CallBack.Handler;
 
 namespace WebFreight.Web.Helpers
 {
@@ -1429,9 +1431,9 @@ namespace WebFreight.Web.Helpers
             {
                 return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
             }
-           
-           return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
-        
+
+            return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
+
         }
 
         private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)
@@ -2808,10 +2810,14 @@ namespace WebFreight.Web.Helpers
             }
             try
             {
-
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
                 DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
+                string callBackDetailsXml = EmailDocumentHandlerService.GetCallBackDetailsXml(internalDocumentId, tenant);
+                if (!string.IsNullOrEmpty(callBackDetailsXml))
+                {
+                    emailQueueMessage.Add("CallBackDetails", callBackDetailsXml);
+                }
+                queueservice.Send(emailQueueMessage, tenant);
             }
             catch (Exception ex)
             {
@@ -2833,6 +2839,7 @@ namespace WebFreight.Web.Helpers
 
             return document.Id;
         }
+
 
         #region GetEntity
 

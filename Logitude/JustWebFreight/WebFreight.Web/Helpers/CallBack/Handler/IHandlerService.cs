@@ -7,6 +7,6 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
 {
     public interface IHandlerService
     {
-       void Handel(object handlerArgs, object result);
+       void Handel(string handlerArgs, object result);
     }
 }

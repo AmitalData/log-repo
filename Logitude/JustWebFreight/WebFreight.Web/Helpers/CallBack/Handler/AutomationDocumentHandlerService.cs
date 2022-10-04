@@ -9,7 +9,7 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
 {
     public class AutomationDocumentHandlerService: IHandlerService
     {
-        public void Handel(object handlerArgs , object result)
+        public void Handel(string handlerArgs , object result)
         {
             AutomationHandlerArgs automationHandlerArgs = GetAutomationHandlerArgs(handlerArgs);
             new GeneralAutomationResultService().AddAutomationQueue(automationHandlerArgs.AutomationQueueArgs);
