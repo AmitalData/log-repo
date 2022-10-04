@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Models
         public string FieldValue { get; set; }
 
         public string FieldValue2 { get; set; }
-
+        public string FieldValue3 { get; set; }
         public string Operator { get; set; }
 
         public bool IsCustom { get; set; }
