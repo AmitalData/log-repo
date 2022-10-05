@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -64,7 +64,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     public IsMenuVisible: boolean = false;
     public IsCustomDashboardFeatureOn: boolean = false;
     public ShowDashboardToolTip: boolean;
-
+    @Output() BackButtonClickedEvent = new EventEmitter();
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -77,7 +77,13 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
         this.ShowDashboardToolTip = !SessionLocator.LoggedUserPM.HideDashboardToolTip;
     }
-    
+
+    OnMoreDetailsBackButtonClicked(event) {
+        if (!AppTool.IsNullOrEmpty(event)) {
+            this.isNotMoreDetails = true;
+        }
+    }
+
     ngOnInit() {
         this.FillScreen();              
     }
