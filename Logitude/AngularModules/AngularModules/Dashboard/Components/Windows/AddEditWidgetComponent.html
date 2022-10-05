@@ -107,7 +107,7 @@
                                         </tr>
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                                <LogLabel *ngIf="!item.IsDeleteMeasureVisible" [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
                                             </td>
                                             <td>
                                                 <table>
