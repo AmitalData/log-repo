@@ -25,6 +25,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -264,24 +265,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
                 var entityStatusQuery = new EntityStatusQuery(tenant);
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY", StringComparison.InvariantCultureIgnoreCase))
-                                                                .FirstOrDefault();
-                if (deliveryStatus != null)
-                {
-                    deliveryStatus.DisplayName = "Out for Delivery";
-                }
-
-                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SHOR", StringComparison.InvariantCultureIgnoreCase))
-                                                             .FirstOrDefault();
-                if (orderStatus != null)
-                {
-                    orderStatus.DisplayName = "Created";
-                }
-
-                var res = digitalPortalActiveStatuses.OrderBy(a => a.StatusWeight)
-                                                     .ThenBy(a => a.Name)
-                                                     .ToList();
+                var res = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
+                                           .Select(a => new EntityStatusList
+                                           {
+                                               DisplayName = a.Code.Equals("SDLY")
+                                                               ? "Out for Delivery"
+                                                               : a.Code.Equals("SHOR")
+                                                               ? "Created"
+                                                               : a.DisplayName,
+                                               Id = a.Id
+                                           })
+                                           .OrderBy(a => a.StatusWeight)
+                                           .ThenBy(a => a.Name)
+                                           .ToList();
                 return Ok(res);
             }
             catch (Exception ex)
