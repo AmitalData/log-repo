@@ -29,7 +29,7 @@
         text-decoration: underline;
     }
 </style>
-
+<div #MoreDetiles></div>
 <table *ngIf="IsMenuVisible">
     <tr style="height:21px;" *ngIf="IsCustomDashboardFeatureOn">
         <td>
@@ -559,9 +559,9 @@
 
                     </table>
                 </div>
-                <div *ngIf="!isNotMoreDetails">
-                    <table>
-                    </table>
+
+                <div *ngIf="!isNotMoreDetails" style="width:100%;height:100%">
+                    <ActivityStatusDetails [Show]="!isNotMoreDetails" (BackButtonClickedEvent)="OnMoreDetailsBackButtonClicked($event)"></ActivityStatusDetails>
                 </div>
             </div>
 
