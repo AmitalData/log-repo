@@ -54,12 +54,28 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var shipmentTypesString = item.FieldValue2 as string;
                         var shipmentSubTypesString = item.FieldValue3 as string;
 
-                        List<string> transportModes = transportModesString.Split(',').ToList();
-                        List<string> shipmentTypes = shipmentTypesString.Split(',').ToList();
-                        List<string> shipmentSubTypes = shipmentSubTypesString.Split(',').ToList();
+                        List<string> transportModes = !string.IsNullOrWhiteSpace(transportModesString)
+                                                      ? transportModesString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                                          .ToList()
+                                                      : new List<string>();
 
+                        List<string> shipmentTypes = !string.IsNullOrWhiteSpace(shipmentTypesString) 
+                                                     ? shipmentTypesString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                                          .ToList()
+                                                     : new List<string>();
+
+                        List<string> shipmentSubTypes = !string.IsNullOrWhiteSpace(shipmentSubTypesString)
+                                                        ? shipmentSubTypesString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                                                .ToList()
+                                                        : new List<string>();
                         var values = new List<string>();
-                        var subTypesList = GetShipmentTypes(_tenant);
+
+                        var subTypesList = new List<ShipmentSubType>();
+
+                        if (shipmentSubTypes.Any())
+                        {
+                            subTypesList = GetShipmentTypes(_tenant);
+                        }
 
                         foreach (var tm in transportModes)
                         {
@@ -71,8 +87,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 {
                                     var airSubTypesIds = subTypesList.Where(a => airCodes
                                                                            .Contains(a.ShipmentTypeCode, StringComparer.InvariantCultureIgnoreCase))
-                                                               .Select(a => a.Id)
-                                                               .ToList();
+                                                                     .Select(a => a.Id)
+                                                                     .ToList();
 
                                     var airSubTypes = shipmentSubTypes.Where(a => airSubTypesIds
                                                                                  .Contains(a, StringComparer.InvariantCultureIgnoreCase))
@@ -165,7 +181,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             }
                         }
 
-                        queryableData = queryableData.Where(a => values.Contains(a.TransportModeId + ":" + a.ShipmentTypeId + ":" + a.ShipmentSubTypeId));
+                        queryableData = queryableData.Where(a => values.Any(v => (a.TransportModeId 
+                                                                                   + ":" 
+                                                                                   + a.ShipmentTypeId 
+                                                                                   + ":" 
+                                                                                   + a.ShipmentSubTypeId)
+                                                                                  .Contains(v)));
                     }
                 }
             }
