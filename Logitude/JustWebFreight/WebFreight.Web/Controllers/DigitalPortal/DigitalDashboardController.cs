@@ -64,7 +64,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var shipments = GetFilteredShipmentList(newFilters, authToken.Tenant);
                 var shipmentsGroupedByStatus = shipments.Where(r => !string.IsNullOrEmpty(r.StatusCode))
-                                                        .GroupBy(r => r.StatusCode)
+                                                        .GroupBy(r => r.StatusName)
                                                         .ToDictionary(t => t.Key, t => t.Count());
 
                 return Ok(shipmentsGroupedByStatus);
