@@ -51,7 +51,9 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											  StatusName = a.Status != null ? a.Status.Name : null,
 
-											  ErrorMessage = a.ErrorMessage
+											  ErrorMessage = a.ErrorMessage,
+
+											  Result = a.Result
 											});
             return query;
 		}

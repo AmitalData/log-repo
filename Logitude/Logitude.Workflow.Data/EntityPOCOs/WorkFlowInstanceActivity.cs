@@ -61,6 +61,10 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public DateTime? EndTime { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
+        [Column("Result")]
+	    public string Result { get; set; }
+        [Column("ActionType")]
+	    public string ActionType { get; set; }
     }
 }
 	 
