@@ -142,6 +142,31 @@
         </td>
     </tr>
 
+
+
+
+
+
+
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+
+                <TreeSelect [Items]="VariablesTreeItems" (ValueChanged)="variablesTreeValueChanged($event)"></TreeSelect>
+
+            </div>
+        </td>
+    </tr>
+
+
+
+
+
+
+
+
+
     <!-- Condition -->
     <tr *ngIf="EntityId != null" class="table-row">
         <td class="table-row-cell">

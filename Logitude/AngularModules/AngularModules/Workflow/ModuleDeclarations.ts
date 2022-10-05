@@ -17,6 +17,7 @@ import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
 import { FooterButtonsComponent } from "./Components/Base/FooterButtonsComponent";
+import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -38,6 +39,7 @@ export const Components = [
     FieldValueComponent,
     FooterButtonsComponent,
     WorkflowInstanceActivityComponent,
+    TreeSelectComponent
 ];
 
 export class ModuleDeclarations {
@@ -63,6 +65,7 @@ export class ModuleDeclarations {
             case "FieldValueComponent": { result = FieldValueComponent; break; }
             case "FooterButtonsComponent": { result = FooterButtonsComponent; break; }
             case "WorkflowInstanceActivityComponent": { result = WorkflowInstanceActivityComponent; break; }
+            case "TreeSelectComponent": { result = TreeSelectComponent; break; }
         }
         return result;
     }

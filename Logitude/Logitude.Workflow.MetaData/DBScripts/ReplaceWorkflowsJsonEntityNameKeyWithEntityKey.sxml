@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="1">
+    <![CDATA[
+    
+    update WorkFlows set FlowJson = REPLACE(FlowJson, 'entityName', 'entity') where FlowJson like '%entityName%';
+    
+    ]]>
+  </Sql>
+</Script>

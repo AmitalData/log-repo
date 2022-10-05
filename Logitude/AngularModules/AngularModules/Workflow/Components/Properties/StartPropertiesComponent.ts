@@ -15,6 +15,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public Entity: string = null;
     public EntityId: string = null;
     public Trigger: string = null;
     public Conditions: Condition[];
@@ -31,17 +32,18 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.EntityId = this.Data["entityId"] || null;
+        this.Entity = this.Data["entity"] || null;
         this.Trigger = this.Data["trigger"] || null;
 
         this.Conditions = this.Data["conditions"] || [];
         this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
+        this.EntityId = this.getEntityId(this.Entity);
         this.setUIProperties();
     }
 
     initializeCondition() {
-        if (this.EntityId) {
+        if (this.Entity) {
             let condition = new Condition();
             this.Conditions.push(condition);
         }
@@ -73,13 +75,13 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
-        if (this.Data["entityId"] !== entity?.Id) {
+        if (this.Data["entity"] !== entity?.Name) {
             this.Conditions = [];
         }
 
-        this.Data["entityId"] = entity ? entity.Id : null;
         this.Data["entity"] = entity ? entity.Name : null;
-        this.EntityId = entity ? entity.Id : null;
+        this.Entity = entity ? entity.Name : null;
+        this.EntityId = this.getEntityId(entity.Name);
         this.setUIProperties();
     }
 
@@ -95,7 +97,7 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     setUIProperties() {
-        this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.EntityId));
+        this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.Entity));
         this.UIProperties.SetRequired("Trigger", null, AppTool.IsNullOrEmpty(this.Trigger));
     }
 
@@ -115,5 +117,13 @@ export class StartPropertiesComponent extends BaseComponent {
                 this.resetConditionsOperatorAndValue(condition.conditions);
             }
         }
+    }
+
+    getEntityId(entity: string) {
+        if (entity) {
+            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
     }
 }

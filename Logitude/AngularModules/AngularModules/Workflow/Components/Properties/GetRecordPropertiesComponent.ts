@@ -4,8 +4,10 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { GetRecordsLimit} from "Workflow/Constants/GetRecordsLimit";
+import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
 import { Condition } from "Workflow/Models/Condition";
+import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -14,10 +16,11 @@ import { Condition } from "Workflow/Models/Condition";
 export class GetRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
+    public CurrentNodeId: string;
     public Data: any;
     public Name: string = null;
+    public Entity: string = null;
     public EntityId: string = null;
-    public EntityName: string = null;
     public RecordsLimit: string = null;
     public Conditions: Condition[];
     public ConditionsOperation: string;
@@ -25,18 +28,27 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
 
+    public FlowObject: any;
+    public VariablesTreeItems: TreeSelectItem[];
+
     public CurrentSession = SessionLocator.SelectedSession;
+
+
+    variablesTreeValueChanged(value: string) {
+        console.log(value);
+    }
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+        this.FlowObject = args.FlowObject ? args.FlowObject : null;
+        this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.initialize();
+        this.initializeVariablesTreeItems();
     }
 
     initialize() {
-
         this.Name = this.Data["name"] || null;
-        this.EntityId = this.Data["entityId"] || null;
-        this.EntityName = this.Data["entityName"] || null;
+        this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordsLimit.FirstRecord
 
         this.Conditions = this.Data["conditions"] || [];
@@ -47,9 +59,67 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             let condition = new Condition();
             this.Conditions.push(condition);
         }
-        this.Data["recordsLimit"] = this.RecordsLimit ;
-        
+
+        this.Data["recordsLimit"] = this.RecordsLimit;
+
+        this.EntityId = this.getEntityId(this.Entity);
+
         this.setUIProperties();
+    }
+
+    initializeVariablesTreeItems() {
+
+        // let variablesTreeItems = [
+        //     {
+        //         title: "Records Variables",
+        //         key: "1",
+        //         selectable: false,
+        //         expanded: true,
+        //         disabled: true,
+        //         children: [
+        //             {
+        //                 title: "Triggering record",
+        //                 key: "1.1",
+        //                 selectable: false,
+        //                 children: []
+        //             },
+        //             {
+        //                 title: "Shipment from get_single",
+        //                 key: "1.2",
+        //                 selectable: false,
+        //                 children: []
+        //             }
+        //         ]
+        //     },
+
+        //     {
+        //         title: "Declared Variables",
+        //         key: "2",
+        //         selectable: false,
+        //         expanded: true,
+        //         disabled: true,
+        //         children: [
+        //             {
+        //                 title: "ATA",
+        //                 key: "2.1",
+        //                 isLeaf: true,
+        //                 children: []
+        //             },
+        //             {
+        //                 title: "ATD",
+        //                 key: "2.2",
+        //                 isLeaf: true,
+        //                 children: []
+        //             }
+        //         ]
+        //     }
+        // ];
+
+        // this.VariablesTreeItems = variablesTreeItems;
+
+
+        this.VariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+
     }
 
     updateName(Name: any) {
@@ -60,10 +130,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
-        this.Data["entityId"] = entity ? entity.Id : null;
-        this.Data["entityName"] = entity ? entity.Name : null;
-        this.EntityId = entity ? entity.Id : null;
-        this.EntityName = entity ? entity.Name : null;
+        this.Data["entity"] = entity ? entity.Name : null;
+        this.Entity = entity ? entity.Name : null;
+        this.EntityId = this.getEntityId(entity.Name);
         this.setUIProperties();
     }
 
@@ -110,5 +179,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     setConditionsData() {
         this.Data["conditions"] = this.Conditions;
         this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
+    }
+
+    getEntityId(entity: string) {
+        if (entity) {
+            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
     }
 }

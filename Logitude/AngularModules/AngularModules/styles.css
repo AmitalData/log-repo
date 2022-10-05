@@ -23,6 +23,8 @@
 
 @import url("_Resources/css/PrimeWebComponent.css");
 
+@import url("_Resources/css/custom-ng-zorro-antd-styles.css");
+
 /* @import url("_Resources/css/PrimeWebComponent.css");
 @import "node_modules/primeng/resources/themes/saga-blue/theme.css";
 @import "node_modules/primeng/resources/primeng.min.css";
@@ -32,3 +34,4 @@
 
 
 @import "~logitude-workflow/dist/index.css";
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
