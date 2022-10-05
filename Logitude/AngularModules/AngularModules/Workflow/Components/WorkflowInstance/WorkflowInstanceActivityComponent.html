@@ -29,7 +29,7 @@
                     </log-row-details>
 
                     <!-- Sequence -->
-                    <log-column [width]="'185'" [header]="'Sequence'" [SortFieldName]="'Sequence'">
+                    <log-column [width]="'100'" [header]="'Sequence'" [SortFieldName]="'Sequence'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 {{item.Sequence}}
@@ -38,7 +38,7 @@
                     </log-column>
 
                     <!-- ActionName -->
-                    <log-column [width]="'185'" [header]="'ActionName'">
+                    <log-column [width]="'155'" [header]="'ActionName'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 {{item.ActionName}}
@@ -47,16 +47,16 @@
                     </log-column>
 
                     <!-- StartTime -->
-                    <log-column [width]="'185'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
+                    <log-column [width]="'155'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                {{item.StartTime}}
+                                {{ item.StartTime | DateTimePipe:'SD' }}
                             </log-cell-template>
                         </ng-template>
                     </log-column>
 
                     <!-- Duration -->
-                    <log-column [width]="'185'" [header]="'Duration'" [SortFieldName]="'Duration'">
+                    <log-column [width]="'155'" [header]="'Duration'" [SortFieldName]="'Duration'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 {{item.Duration}}
@@ -66,13 +66,22 @@
 
 
                     <!-- StatusName -->
-                    <log-column [width]="'185'" [header]="'StatusName'">
+                    <log-column [width]="'155'" [header]="'StatusName'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 <div
                                     [ngStyle]="{'color': (item.StatusCode == 'FAED') ? 'red' : (item.StatusCode == 'STED') ? '#4f4ff9' :''}">
                                     {{item.StatusName}}
                                 </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                      <!-- Result -->
+                      <log-column [width]="'210'" [header]="'Result'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Result}}
                             </log-cell-template>
                         </ng-template>
                     </log-column>

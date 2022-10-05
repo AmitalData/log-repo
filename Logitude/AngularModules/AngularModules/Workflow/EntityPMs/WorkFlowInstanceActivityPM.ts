@@ -104,6 +104,11 @@ export class WorkFlowInstanceActivityPM {
     public set ErrorMessage(newValue: string) { if (this.errorMessage != newValue) { this.errorMessage = newValue; this.MarkAsDirty("ErrorMessage"); } }
        
 	 
+    private result: string;
+    public get Result() { return this.result; }
+    public set Result(newValue: string) { if (this.result != newValue) { this.result = newValue; this.MarkAsDirty("Result"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstanceActivityPM;
 		
