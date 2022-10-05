@@ -39,10 +39,7 @@
                     {{SelectedDashboardName}}
                 </td>
 
-                <td style="width:20px;">
-                    <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
-                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
-                </td>
+                
 
                 <td>
                     <div></div>
@@ -90,6 +87,10 @@
 
                 <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
+                </td>
+                <td style="width:20px;">
+                    <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
+                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
                 </td>
             </tr>
         </table>
