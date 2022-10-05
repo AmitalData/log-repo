@@ -21,7 +21,7 @@ namespace Logitude.BL.CommonDataModel
         public string URLprivateCargoTracking { get; set; }
         public string BrandingURL { get; set; }
         public string BrandingURLButton { get; set; }
-
+        public string ResetPasswordButton { get; set; }
     }
 }
    
