@@ -1212,17 +1212,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipment.TransportModeId == "A")
             {
-                return "Flight";
+                return "Flight no";
             }
 
             if (shipment.TransportModeId == "O")
             {
-                return "Voyage";
+                return "Voyage no";
             }
 
             if (shipment.TransportModeId == "I")
             {
-                return "Trucker";
+                return "Trucker no";
             }
 
             return null;
