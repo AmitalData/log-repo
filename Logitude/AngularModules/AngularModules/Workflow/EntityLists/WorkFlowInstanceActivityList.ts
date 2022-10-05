@@ -24,6 +24,8 @@ export class WorkFlowInstanceActivityList {
 	WorkflowInstanceId: string;
 	EndTime: Date;
 	ErrorMessage: string;
+	Result: string;
+	ActionType: string;
 	
 }
  

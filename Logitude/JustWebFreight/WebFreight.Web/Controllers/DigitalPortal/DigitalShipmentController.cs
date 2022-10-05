@@ -126,11 +126,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
                         string valuestring2 = filter.FieldValue2?.ToString();
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        string valuestring3 = filter.FieldValue3?.ToString();
+                        object value3 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
                         queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                     }
                     else
                     {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.FieldValue3, filter.DisplayInList);
                     }
                 }
 

@@ -64,7 +64,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var shipments = GetFilteredShipmentList(newFilters, authToken.Tenant);
                 var shipmentsGroupedByStatus = shipments.Where(r => !string.IsNullOrEmpty(r.StatusCode))
-                                                        .GroupBy(r => r.StatusCode)
+                                                        .Select(a => new {
+                                                            ExactStatusName = a.StatusCode.Equals("SDLY") 
+                                                                              ? "Out for Delivery" 
+                                                                              : a.StatusCode.Equals("SHOR") 
+                                                                                ? "Created" 
+                                                                                : a.ExactStatusName
+                                                        })
+                                                        .GroupBy(r => r.ExactStatusName)
                                                         .ToDictionary(t => t.Key, t => t.Count());
 
                 return Ok(shipmentsGroupedByStatus);
@@ -153,7 +160,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
 
             ShipmentAPiHelper.AddFilters(queryOperations, tenant);
             var shipmentRepository = new ShipmentRepository(tenant);
