@@ -140,7 +140,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 }
                                 else
                                 {
-                                    orderedOccen.ForEach(a => values.Add($"O:{a}"));
+                                    if (orderedOccen.Any())
+                                    {
+                                        orderedOccen.ForEach(a => values.Add($"O:{a}"));
+                                    }
+                                    else
+                                    {
+                                        oceanCodes.ForEach(a => values.Add($"O:{a}"));
+                                    }
                                 }
 
                             }
@@ -176,7 +183,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 }
                                 else
                                 {
-                                    orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+                                    if (orderedInlnad.Any())
+                                    {
+                                        orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+                                    }
+                                    else
+                                    {
+                                        inlandCodes.ForEach(a => values.Add($"I:{a}"));
+                                    }
                                 }
                             }
                         }
