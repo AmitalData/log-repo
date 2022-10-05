@@ -1215,17 +1215,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipment.TransportModeId == "A")
             {
-                return "Flight";
+                return "Flight no";
             }
 
             if (shipment.TransportModeId == "O")
             {
-                return "Voyage";
+                return "Voyage no";
             }
 
             if (shipment.TransportModeId == "I")
             {
-                return "Trucker";
+                return "Trucker no";
             }
 
             return null;
@@ -2239,6 +2239,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Code = "I",
                 Children = GetInlandChildren(shipmentSubTypes)
             });
+
             return digitalTransportModes;
         }
 
@@ -2269,6 +2270,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DisaledOption = true,
                 Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGo" }, "O")
             });
+
             return oceanChildren;
         }
 
@@ -2299,6 +2301,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DisaledOption = true,
                 Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGI" }, "I")
             });
+
             return inlandChildren;
         }
 
