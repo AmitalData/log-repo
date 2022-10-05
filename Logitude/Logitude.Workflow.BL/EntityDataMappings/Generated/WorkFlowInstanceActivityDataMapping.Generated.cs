@@ -36,7 +36,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusCode, 
 	         WorkflowInstanceId, 
 	         EndTime, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         Result, 
+	         ActionType,
 	      }
 
 
@@ -58,7 +60,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusName, 
 	         WorkflowInstanceId, 
 	         EndTime, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         Result,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -135,6 +138,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
 				entityPOCO.ErrorMessage = entityPM.ErrorMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Result))
+            {
+				entityPOCO.Result = entityPM.Result;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -218,6 +226,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.ErrorMessage = entityPOCO.ErrorMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Result))
+            {
+					entityPM.Result = entityPOCO.Result;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowInstanceActivityPM entityPM, WorkFlowInstanceActivityPM oldEntityPM)
@@ -292,6 +305,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
                 oldEntityPM.ErrorMessage = entityPM.ErrorMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Result))
+            {
+                oldEntityPM.Result = entityPM.Result;
             }
 			
 		}

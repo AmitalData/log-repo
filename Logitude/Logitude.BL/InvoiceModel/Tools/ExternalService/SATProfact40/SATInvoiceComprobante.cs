@@ -15,6 +15,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private List<VatTypePercentagePM> allVatPercentages;
         private List<VATTypesGroup> allVatGroups;
         private List<ChargesType> allChargesTypes;
+        private List<ShipmentReceivable> allExpenseShipmentReceivables;
         private ComputingPartnerTranslationHelper computingPartnerHelper;
         private SATInterfaceSetting satSetting;
         private string invoiceCurrencyCode;
@@ -59,6 +62,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             allVatPercentages = GetAllVatPercentages();
             allVatGroups = GetAllVatGroups();
             allChargesTypes = GetAllChargesTypes();
+            allExpenseShipmentReceivables = GetAllExpenseShipmentReceivables();
             invoiceCurrencyCode = GetInvoiceCurrencyCode();
         }
 
@@ -108,6 +112,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(commonContext);
             return chargesTypeRepository.GetChargesTypes(tenant).ToList();
+        }
+
+        private List<ShipmentReceivable> GetAllExpenseShipmentReceivables()
+        {
+            List<ShipmentReceivable> allExpenseShipmentReceivables = new List<ShipmentReceivable>();
+            List<string> expenseShipmentReceivablesIds = arInvoicePM.InvoiceLines.Where(x => x.IsExpense).Select(a => a.ReceivableId).ToList();
+            if (expenseShipmentReceivablesIds.Count == 0) return allExpenseShipmentReceivables;
+
+            ShipmentReceivableRepository shipmentReceivableRepository = new ShipmentReceivableRepository(arInvoicePM.Tenant);
+            allExpenseShipmentReceivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(expenseShipmentReceivablesIds, arInvoicePM.Tenant);
+            return allExpenseShipmentReceivables;
         }
 
         public Comprobante BuildNewInvoiceComprobante()
@@ -481,12 +496,19 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<ComprobanteConcepto> conceptosList = new List<ComprobanteConcepto>();
             foreach (ARInvoiceLinePM line in arInvoicePM.InvoiceLines)
             {
-                conceptosList.Add(GetNewConcepto(allMeasurements, line));
+                AddNewComprobanteConcepto(allMeasurements, conceptosList, line);
             }
 
             return conceptosList;
         }
 
+        private void AddNewComprobanteConcepto(List<Measurement> allMeasurements, List<ComprobanteConcepto> conceptosList, ARInvoiceLinePM line)
+        {
+            ComprobanteConcepto comprobanteConcepto = GetNewConcepto(allMeasurements, line);
+            if (comprobanteConcepto != null) { 
+                conceptosList.Add(comprobanteConcepto); 
+            }
+        }
         private ComprobanteConcepto GetNewConcepto(List<Measurement> allMeasurements, ARInvoiceLinePM line)
         {
             decimal conceptoCantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0));
@@ -508,6 +530,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 ClaveProdServ = conceptoClaveProdServ
             };
 
+            if (IsExpenseLineWithoutPayableVendor(line)) return null;
             var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
             if (lineMeasurement != null)
             {
@@ -519,6 +542,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return concepto;
         }
 
+        private bool IsExpenseLineWithoutPayableVendor(ARInvoiceLinePM line)
+        {
+            return allExpenseShipmentReceivables.Where(receivable => receivable.Id == line.ReceivableId && string.IsNullOrEmpty(receivable.PayableVendorId)).Any();
+        }
+
         private ComprobanteConceptoACuentaTerceros GetComprobanteConceptoACuentaTerceros(ARInvoiceLinePM line)
         {
             if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense) { return null; }
@@ -526,6 +554,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
             ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
             CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM);
+
+            if (payableVendorPM == null)
+            {
+                return null;
+            }
 
             return new ComprobanteConceptoACuentaTerceros
             {
@@ -540,16 +573,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             if (shipmentReceivablePM == null || string.IsNullOrEmpty(shipmentReceivablePM.PayableVendorId))
             {
-                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
+                return null;
             }
 
             CardQuery cardQuery = new CardQuery(arInvoicePM.Tenant);
             CardPM payableVendorPM = cardQuery.GetSinglePM(shipmentReceivablePM.PayableVendorId, arInvoicePM.Tenant);
-            if (payableVendorPM == null)
-            {
-                throw new ApplicationException("Payable Vendor of Expense Charges is required.");
-            }
-
+            
             return payableVendorPM;
         }
 
@@ -880,7 +909,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private List<ARInvoiceTotalVATPM> CalculateTotalVats()
         {
             List<ARInvoiceTotalVATPM> totalVats = new List<ARInvoiceTotalVATPM>();
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !IsExpenseLineWithoutPayableVendor(d) && d.VatTypeId != null).ToList();
             if (myDataLines.Count <= 0) return totalVats;
 
 
@@ -1027,7 +1056,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             double subtotal = 0;
-            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => d.VatTypeId != null).ToList();
+            List<ARInvoiceLinePM> myDataLines = arInvoicePM.InvoiceLines.Where(d => !IsExpenseLineWithoutPayableVendor(d) && d.VatTypeId != null).ToList();
             foreach (var line in myDataLines)
             {
                 subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
@@ -1257,7 +1286,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Base = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0)), invoiceCurrencyCode),
                 TipoFactor = _totaltipoFactor,
             };
-            if (totalVat.VatTypeCode != "EXMPT")
+            if (totalVat.VatTypeCode != "EXMPT" && _totaltipoFactor != "Exento")
             {
                 traslado.Importe = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)), invoiceCurrencyCode);
                 traslado.TasaOCuota = total_tasaOCuota;

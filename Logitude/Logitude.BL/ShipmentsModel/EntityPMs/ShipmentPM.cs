@@ -2994,6 +2994,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string SalesmanEmail { get; set; }
         public bool IsPartiallyInvoiced { get; set; }
         public bool IsFullInvoiced { get; set; }
+        public bool IsCustomerArchived { get; set; }
     }
 
     public class TransshipmentLeg

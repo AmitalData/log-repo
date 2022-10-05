@@ -17,8 +17,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public Data: any;
     public WorkflowEntity: string;
 
-    public ConditionTitle: string = null;
-    public DecisionLabel:  string = null;
+    public Name: string = null;
+    public ConditionLabel:  string = null;
     public Conditions: Condition[];
     public ConditionsOperation: string;
     public IsValidConditions: boolean = true;
@@ -40,8 +40,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
         if (this.WorkflowEntity) {
             this.setWorkflowEntityTable();
 
-            this.ConditionTitle = this.Data["ConditionTitle"] || null;
-            this.DecisionLabel = this.Data["DecisionLabel"] || null;
+            this.Name = this.Data["name"] || null;
+            this.ConditionLabel = this.Data["conditionLabel"] || null;
     
             this.Conditions = this.Data["conditions"] || [];
             this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
@@ -56,7 +56,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
         }
         else {
             this.ValidationErrorsList = [];
-            this.ValidationErrorsList.push("No woekflow entity selected in start event");
+            this.ValidationErrorsList.push("No workflow entity selected in start event");
         }
     }
 
@@ -64,20 +64,20 @@ export class ConditionPropertiesComponent extends BaseComponent {
         this.WorkflowEntityTable = (window as any).ObjectTables.filter((o: any) => o.Name === this.WorkflowEntity)[0];
         if (!this.WorkflowEntityTable) {
             this.WorkflowEntity = null;
-            this.ValidationErrorsList.push("No woekflow entity selected in start event");
+            this.ValidationErrorsList.push("No workflow entity selected in start event");
         }
     }
 
-    updateConditionTitle(conditionTitle: any) {
-        this.Data["ConditionTitle"] = conditionTitle;
-        this.ConditionTitle = conditionTitle;
+    updateName(name: string) {
+        this.Data["name"] = name;
+        this.Name = name;
 
         this.setUIProperties();
     }
 
-    updateDecisionLabel(decisionLabel: any) {
-        this.Data["DecisionLabel"] = decisionLabel;
-        this.DecisionLabel = decisionLabel;
+    updateConditionLabel(conditionLabel: string) {
+        this.Data["conditionLabel"] = conditionLabel;
+        this.ConditionLabel = conditionLabel;
 
         this.setUIProperties();
     }
@@ -87,8 +87,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     setUIProperties() {
-        this.UIProperties.SetRequired("ConditionTitle", null, AppTool.IsNullOrEmpty(this.ConditionTitle));
-        this.UIProperties.SetRequired("DecisionLabel", null, AppTool.IsNullOrEmpty(this.DecisionLabel));
+        this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
+        this.UIProperties.SetRequired("ConditionLabel", null, AppTool.IsNullOrEmpty(this.ConditionLabel));
     }
 
     cancelButtonClicked() {

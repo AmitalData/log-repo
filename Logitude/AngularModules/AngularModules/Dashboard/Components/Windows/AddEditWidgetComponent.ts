@@ -31,11 +31,11 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
+    public RootFilter: WidgetFilterItem;
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
-    public SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }, { Code: 2, Text: 'Measure 2' }];
+    public SortByCodes = [];
     public SortByDirections = ['asc', 'desc'];
     public GroupByQueryFilters: ApiQueryFilters;
 
@@ -126,7 +126,16 @@ export class AddEditWidgetComponent extends BaseComponent {
             isAddVisible = false;
         }
 
+        this.BuildSortCodes();
         this.IsAddNewMeasureVisible = isAddVisible;
+    }
+
+    private BuildSortCodes() {
+        this.SortByCodes = [{ Text: 'Group' }, { Code: 1, Text: 'Measure 1' }];
+
+        if (this.EntityPM.TypeCode != "donut" && this.EntityPM.TypeCode != "pie" && this.WidgetMeasuresList.length != 1) {
+            this.SortByCodes.push({ Code: 2, Text: 'Measure 2' });
+        }
     }
 
     get Title() { return this.EntityPM.Title }

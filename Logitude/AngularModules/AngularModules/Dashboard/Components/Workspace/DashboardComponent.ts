@@ -960,11 +960,11 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     OpenDashBoard() {
         this.isNotMoreDetails = false;
-        SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
-                        this.ActivityStatusPage = cmpRef;
-                    });
+        //SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
+        //            .then(cmpRef => {
+        //                cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
+        //                this.ActivityStatusPage = cmpRef;
+        //            });
     }
         
     FillFilters() {

@@ -2658,6 +2658,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
+            shipmentPM.IsCustomerArchived = (from a in repository.context.ShipmentDigitalDataViews
+                                             where a.Id == shipmentPM.Id && a.Tenant == tenant
+                                             select a.IsCustomerArchived).FirstOrDefault();
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
