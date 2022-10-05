@@ -35,8 +35,8 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     public CountriesDashboardLegendId: string;
     public CustomersDashboardLegendId: string;
     public DirectionAndtransportModeLegendId: string;
-
     private CurrentSession = SessionLocator.SelectedSession;
+    @Output() BackButtonClickedEvent = new EventEmitter();
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -915,12 +915,8 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
     }
 
-    @Output()
-    public logoff = new EventEmitter();
-
     BackButtonClicked() {
-        this.logoff.emit();
-
+        this.BackButtonClickedEvent.emit("back");
     }
 
     CountriesTopValueChanged(flag) {
