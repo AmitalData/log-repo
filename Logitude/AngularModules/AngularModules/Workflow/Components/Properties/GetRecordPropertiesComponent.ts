@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -16,7 +17,6 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 export class GetRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
-    public CurrentNodeId: string;
     public Data: any;
     public Name: string = null;
     public Entity: string = null;
@@ -29,6 +29,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public IsValidConditions: boolean = true;
 
     public FlowObject: any;
+    public CurrentNodeId: string;
+    public FlowObjectFields: ObjectFieldPM[];
+
     public VariablesTreeItems: TreeSelectItem[];
 
     public CurrentSession = SessionLocator.SelectedSession;
@@ -42,6 +45,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
+        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         this.initialize();
         this.initializeVariablesTreeItems();
     }
