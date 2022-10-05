@@ -70,6 +70,11 @@ export class SharedLogisticsPM {
     public set BrandingURL(newValue: string) { if (this.brandingURL != newValue) { this.brandingURL = newValue; this.MarkAsDirty("BrandingURL"); } }
        
 	 
+    private brandingURLButton: string;
+    public get BrandingURLButton() { return this.brandingURLButton; }
+    public set BrandingURLButton(newValue: string) { if (this.brandingURLButton != newValue) { this.brandingURLButton = newValue; this.MarkAsDirty("BrandingURLButton"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsPM;
 		
