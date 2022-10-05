@@ -91,13 +91,13 @@
     <tr *ngIf="WorkflowEntity != null" class="table-row">
         <td class="table-row-cell">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Title'" [ObjectFieldName]="'ConditionTitle'"
+                <LogLabel [NoObjectField]="true" [Text]="'Title'" [ObjectFieldName]="'Name'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                    [Text]="ConditionTitle" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'ConditionTitle'"
-                    (ValueChanged)="updateConditionTitle($event)" [DataCy]="'condition-title'">
+                    [Text]="Name" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'condition-title'">
                 </LogTextBox>
             </div>
         </td>
@@ -120,13 +120,13 @@
     <tr *ngIf="WorkflowEntity != null" class="table-row">
         <td class="table-row-cell">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'DecisionLabel'"
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'ConditionLabel'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                    [Text]="DecisionLabel" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'DecisionLabel'"
-                    (ValueChanged)="updateDecisionLabel($event)" [DataCy]="'decision-label'">
+                    [Text]="ConditionLabel" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'ConditionLabel'"
+                    (ValueChanged)="updateConditionLabel($event)" [DataCy]="'decision-label'">
                 </LogTextBox>
             </div>
         </td>

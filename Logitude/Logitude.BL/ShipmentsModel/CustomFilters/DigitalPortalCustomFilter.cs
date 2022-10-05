@@ -1,6 +1,7 @@
 ﻿using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -51,17 +52,45 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         var transportModesString = item.FieldValue as string;
                         var shipmentTypesString = item.FieldValue2 as string;
+                        var shipmentSubTypesString = item.FieldValue3 as string;
 
                         List<string> transportModes = transportModesString.Split(',').ToList();
                         List<string> shipmentTypes = shipmentTypesString.Split(',').ToList();
+                        List<string> shipmentSubTypes = shipmentSubTypesString.Split(',').ToList();
 
                         var values = new List<string>();
+                        var subTypesList = GetShipmentTypes(_tenant);
 
                         foreach (var tm in transportModes)
                         {
                             if (tm.Equals("a", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                values.Add($"A:Air");
+                                var airCodes = new List<string> { "Air" };
+
+                                if (shipmentSubTypes.Any())
+                                {
+                                    var airSubTypesIds = subTypesList.Where(a => airCodes
+                                                                           .Contains(a.ShipmentTypeCode, StringComparer.InvariantCultureIgnoreCase))
+                                                               .Select(a => a.Id)
+                                                               .ToList();
+
+                                    var airSubTypes = shipmentSubTypes.Where(a => airSubTypesIds
+                                                                                 .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                     .ToList();
+                                    if (airSubTypes.Any())
+                                    {
+                                        airSubTypes.ForEach(a => values.Add($"A:Air:{a}"));
+                                    }
+                                    else
+                                    {
+                                        values.Add($"A:Air");
+                                    }
+                                }
+                                else
+                                {
+                                    values.Add($"A:Air");
+                                }
+
                             }
                             else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
                             {
@@ -69,7 +98,35 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 var orderedOccen = shipmentTypes.Where(a => oceanCodes
                                                                             .Contains(a, StringComparer.InvariantCultureIgnoreCase))
                                                                 .ToList();
-                                orderedOccen.ForEach(a => values.Add($"O:{a}"));
+
+                                if (shipmentSubTypes.Any())
+                                {
+                                    var oceanSubTypesIds = subTypesList.Where(a => oceanCodes
+                                                                                .Contains(a.ShipmentTypeCode, StringComparer.InvariantCultureIgnoreCase))
+                                                                    .Select(a => a.Id)
+                                                                    .ToList();
+
+                                    var oceanSubTypes = shipmentSubTypes.Where(a => oceanSubTypesIds
+                                                                                 .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                     .ToList();
+
+                                    if (oceanSubTypes.Any())
+                                    {
+                                        foreach (var oceanSubType in oceanSubTypes)
+                                        {
+                                            orderedOccen.ForEach(a => values.Add($"O:{a}:{oceanSubType}"));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        orderedOccen.ForEach(a => values.Add($"O:{a}"));
+                                    }
+                                }
+                                else
+                                {
+                                    orderedOccen.ForEach(a => values.Add($"O:{a}"));
+                                }
+
                             }
                             else if (tm.Equals("i", StringComparison.InvariantCultureIgnoreCase))
                             {
@@ -77,11 +134,38 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 var orderedInlnad = shipmentTypes.Where(a => inlandCodes
                                                                              .Contains(a, StringComparer.InvariantCultureIgnoreCase))
                                                                  .ToList();
-                                orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+
+                                if (shipmentSubTypes.Any())
+                                {
+                                    var inlandSubTypesIds = subTypesList.Where(a => inlandCodes
+                                                                              .Contains(a.ShipmentTypeCode, StringComparer.InvariantCultureIgnoreCase))
+                                                                  .Select(a => a.Id)
+                                                                  .ToList();
+
+                                    var inlandSubTypes = shipmentSubTypes.Where(a => inlandSubTypesIds
+                                                                                 .Contains(a, StringComparer.InvariantCultureIgnoreCase))
+                                                                     .ToList();
+                                    if (inlandSubTypes.Any())
+                                    {
+                                        foreach (var inlandSubtype in inlandSubTypes)
+                                        {
+                                            orderedInlnad.ForEach(a => values.Add($"I:{a}:{inlandSubtype}"));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+                                    }
+
+                                }
+                                else
+                                {
+                                    orderedInlnad.ForEach(a => values.Add($"I:{a}"));
+                                }
                             }
                         }
 
-                        queryableData = queryableData.Where(a => values.Contains(a.TransportModeId + ":" + a.ShipmentTypeId));
+                        queryableData = queryableData.Where(a => values.Contains(a.TransportModeId + ":" + a.ShipmentTypeId + ":" + a.ShipmentSubTypeId));
                     }
                 }
             }
@@ -137,6 +221,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                       || d.MainCarriageCarrierName.StartsWith(digitalPortalSearchFields));
 
             return queryableData;
+        }
+
+        private static List<ShipmentSubType> GetShipmentTypes(int tenant)
+        {
+            IShipmentsContext context = ShipmentsContext.GetContext(tenant);
+            ShipmentSubTypeRepository shipmentSubTypeRepository = new ShipmentSubTypeRepository(context);
+            IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(tenant);
+            return shipmentSubTypes?.ToList();
         }
     }
 }

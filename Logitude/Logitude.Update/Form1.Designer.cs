@@ -3092,6 +3092,16 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
+            // EmptyMap
+            // 
+            this.EmptyMap.AutoSize = true;
+            this.EmptyMap.Location = new System.Drawing.Point(68, 49);
+            this.EmptyMap.Name = "EmptyMap";
+            this.EmptyMap.Size = new System.Drawing.Size(115, 17);
+            this.EmptyMap.TabIndex = 5;
+            this.EmptyMap.Text = "Map Empty Return";
+            this.EmptyMap.UseVisualStyleBackColor = true;
+            // 
             // updateDashboardLabel
             // 
             this.updateDashboardLabel.AutoSize = true;
@@ -3363,10 +3373,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label updateWorkflowLabel;
-        private System.Windows.Forms.Button updateWorkflowButton;
-        private System.Windows.Forms.Label updateDashboardLabel;
-        private System.Windows.Forms.Button updateDashboardButton;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox OI_textBox;
         private System.Windows.Forms.Button UpdateEntity;
@@ -3457,6 +3463,11 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox vizionTenantTextBox;
         private System.Windows.Forms.CheckBox EmptyMap;
+        private System.Windows.Forms.Label updateWorkflowLabel;
+        private System.Windows.Forms.Button updateWorkflowButton;
+        private System.Windows.Forms.Label updateDashboardLabel;
+        private System.Windows.Forms.Button updateDashboardButton;
+        
     }
 }
 

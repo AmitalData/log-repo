@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 
             var creditJournalLines = externalJournal.JournalLines
                 .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
-                .Where(r => r.DueDate >= AccountingActivationDate);
+                .Where(r => r.DueDate >= AccountingActivationDate && r.LocalAmount !=0);
             var CreditAccountIdS = creditJournalLines
                 .Select(r => r.CreditAccountId)
                 .Distinct()

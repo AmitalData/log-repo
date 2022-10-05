@@ -25,6 +25,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -126,11 +127,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
                         string valuestring2 = filter.FieldValue2?.ToString();
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        string valuestring3 = filter.FieldValue3?.ToString();
+                        object value3 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
                         queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                     }
                     else
                     {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.FieldValue3, filter.DisplayInList);
                     }
                 }
 
@@ -262,24 +265,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
                 var entityStatusQuery = new EntityStatusQuery(tenant);
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
-                var deliveryStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SDLY", StringComparison.InvariantCultureIgnoreCase))
-                                                                .FirstOrDefault();
-                if (deliveryStatus != null)
-                {
-                    deliveryStatus.DisplayName = "Out for Delivery";
-                }
-
-                var orderStatus = digitalPortalActiveStatuses.Where(c => c.Code.Equals("SHOR", StringComparison.InvariantCultureIgnoreCase))
-                                                             .FirstOrDefault();
-                if (orderStatus != null)
-                {
-                    orderStatus.DisplayName = "Created";
-                }
-
-                var res = digitalPortalActiveStatuses.OrderBy(a => a.StatusWeight)
-                                                     .ThenBy(a => a.Name)
-                                                     .ToList();
+                var res = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
+                                           .Select(a => new EntityStatusList
+                                           {
+                                               DisplayName = a.Code.Equals("SDLY")
+                                                               ? "Out for Delivery"
+                                                               : a.Code.Equals("SHOR")
+                                                               ? "Created"
+                                                               : a.DisplayName,
+                                               Id = a.Id
+                                           })
+                                           .OrderBy(a => a.StatusWeight)
+                                           .ThenBy(a => a.Name)
+                                           .ToList();
                 return Ok(res);
             }
             catch (Exception ex)
@@ -352,6 +350,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 shipmentDigitalFieldRepository.Update(shipmentDigitalField);
                 shipmentDigitalFieldRepository.SubmitChanges();
                 return Ok(shipmentDigitalField);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalShipment/GetShipmentDigitalTransports")]
+        public IHttpActionResult GetShipmentDigitalTransports(string cardId)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                var routingLegs = shipmentQuery.GetTransportModesWithSubTypes(authToken.Tenant);
+                return Ok(routingLegs);
             }
             catch (Exception ex)
             {

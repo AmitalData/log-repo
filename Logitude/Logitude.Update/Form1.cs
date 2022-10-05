@@ -163,11 +163,11 @@ namespace Logitude.Update
             string storageServiceMode = "fs";
             string queueServiceMode = "azure";
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
-         
+
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
@@ -5824,7 +5824,6 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
-    
 
         private void uploadContactsButton_Click(object sender, EventArgs e)
         {
@@ -6046,9 +6045,11 @@ User/Pass",
             {
                 Thread thread = new Thread(() => this.GetVizionContainers());
                 thread.IsBackground = true;
+                thread.IsBackground = true;
                 thread.Start();
             }
         }
+
         private void GetVizionContainers()
         {
             getContainersListView.Items.Clear();
@@ -6119,7 +6120,7 @@ User/Pass",
                         arr[7] = container.PODLocation;
                         arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
                         arr[9] = container.ActualEmptyReturn?.ToString();
-                        arr[10] = visionContainerStatus.payload?.milestones.Find(e=>e.description == "Gate in empty return" && e.planned)?.timestamp.ToString();
+                        arr[10] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && e.planned)?.timestamp.ToString();
                         arr[11] = container.EstimatedEmptyReturn?.ToString();
                         arr[12] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp.ToString();
 
@@ -6214,7 +6215,7 @@ User/Pass",
                     MapPreCarriage(item);
                     MapOnCarriage(item);
                 }
-                
+
 
                 containerRepository.Update(item.Key);
             }

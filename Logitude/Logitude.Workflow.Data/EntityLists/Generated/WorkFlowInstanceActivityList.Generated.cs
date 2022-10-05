@@ -46,6 +46,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public DateTime? EndTime  { get; set; }
        [DataMember]
        public string ErrorMessage  { get; set; }
+       [DataMember]
+       public string Result  { get; set; }
+       [DataMember]
+       public string ActionType  { get; set; }
    }
 
 }
