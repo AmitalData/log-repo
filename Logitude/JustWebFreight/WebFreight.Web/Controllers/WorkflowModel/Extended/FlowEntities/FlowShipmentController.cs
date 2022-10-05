@@ -17,6 +17,7 @@ using WebFreight.Web.Controllers.WorkflowModel.Models;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 {
@@ -49,7 +50,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 shipmentsQuery = shipmentsQuery.Skip(0);
                 shipmentsQuery = shipmentsQuery.Take(apiQueryTreeFilters.PageSize);
 
-                List<Shipment> shipments = shipmentsQuery.ToList();
+               var shipments = shipmentsQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = shipments;
