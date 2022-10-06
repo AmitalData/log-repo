@@ -184,19 +184,11 @@ namespace WebFreight.Web.WcfApi
                 , GetStopLogAt());
                 try
                 {
-                    SignQueue.Instance.UpsertMySubscribeSignServerList(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
-                    var dSignCertificateClass = SignCertificateClass.Get(exportReqSignData.CurrentSignCertificate);
-                    SignQueue.Instance.UpsertSignStationStatus(
-                        new SignStationStatus()
-                        {
-                            CurrentSignCertificate = exportReqSignData.CurrentSignCertificate,
-                            isCompanySignOn = exportReqSignData.isCompanySignOn,
-                            isPersonalSignOn = exportReqSignData.isPersonalSignOn,
-                            VersionByFeatures = dSignCertificateClass.SignServerVersionByFeature,
-                            Status = dSignCertificateClass.SignServerStatus,
-                            MachineName = dSignCertificateClass.MachineName,
-                            UserName = dSignCertificateClass.UserName,
-                        });
+
+                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    dbSignQueueService.UpsertSignStation(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
+
+
                 }
                 catch 
                 {
