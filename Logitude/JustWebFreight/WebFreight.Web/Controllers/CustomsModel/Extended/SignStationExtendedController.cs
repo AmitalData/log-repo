@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class SignStationExtendedController : ApiController
     {
 
-        
+
 
         public HttpResponseMessage GetSignStationGroupByStatus(string searchfields)
         {
@@ -48,12 +48,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
 
-                List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
+                List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
+                //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+                if (CloudExportDbSignQueueService.IsCloudExport(tenant))
+                {
+                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+                }
+                else
+                {
+                    entityLists = GetAllStation(searchfields, tenant);
+                }
                 var q = (from a in entityLists
                          group a by a.Status into gStatus
                          select new { gStatus.Key, Total = gStatus.Count() }
 
-                    );
+                );
 
                 var response = q.ToList();
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -72,7 +82,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
 
-        public HttpResponseMessage GetSignStations(int skip , int take, string sortingCol, string sortingDir, string searchfields,string FilterByStatus)
+        public HttpResponseMessage GetSignStations(int skip, int take, string sortingCol, string sortingDir, string searchfields, string FilterByStatus)
         {
             try
             {
@@ -82,8 +92,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
-
+                //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
+                List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
+                //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+                if (CloudExportDbSignQueueService.IsCloudExport(tenant))
+                {
+                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+                }
+                else
+                {
+                    entityLists = GetAllStation(searchfields, tenant);
+                }
                 if (!String.IsNullOrWhiteSpace(FilterByStatus))
                 {
                     entityLists = entityLists.Where(r => r.Status.Trim().ToString().Equals(FilterByStatus.Trim(), StringComparison.OrdinalIgnoreCase)).ToList();
@@ -125,7 +145,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             mySubscribeSignServerList.ForEach(
                 s =>
                 {
-                    entityLists.Add(new Extended.SignStationList()
+                    entityLists.Add(new SignStationList()
                     {
                         PersonId = s.MySignCertificateClass.PersonId,
                         SignerName = s.MySignCertificateClass.SignerName,
@@ -175,7 +195,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             LastSignAt = stsRow.LastSuccessSignningAt,
                             IsOk = stsRow.IsOk,
                             VersionByFeatures = stsRow.VersionByFeatures,
-                });
+                        });
                     }
                 }
                 );
@@ -235,7 +255,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         break;
                 }
             }
-        
+
 
             //if (!queryOperations.GetAll)
             {
@@ -250,19 +270,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
     }
 
-    class SignStationList
-    {
-        public string PersonId{ get; set; }
-        public string SignerName{ get; set; }
-        public string CustomsAgentId{ get; set; }
-        public string MachineName{ get; set; }
-        public string MachineUser{ get; set; }
-
-        public bool IsPersonalSignOn { get; set; }
-        public bool IsCompanySignOn { get; set; }
-        public string Status { get; internal set; }
-        public DateTime? LastSignAt { get; set; }
-        public bool? IsOk { get; internal set; }
-        public string VersionByFeatures { get; internal set; }
-    }
+    
 }

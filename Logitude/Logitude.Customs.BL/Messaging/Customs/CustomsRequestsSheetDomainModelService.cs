@@ -170,10 +170,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         )
                         )
                     {
-                        //requestParams.ForcePersonalSign= true
-                        requestVIA = requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                        requestParams.RequestVIAChangeDue =
-                            requestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                        if (CloudExportDbSignQueueService.IsCloudExport(requestParams.Tenant))
+                        {
+                            //requestParams.ForcePersonalSign= true
+                            requestVIA = requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                            requestParams.RequestVIAChangeDue =
+                                requestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                        }
                     }
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
@@ -522,9 +525,20 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     this.CalcSignByFromStep(OverrideSignStepName);
             personId = SignQueue.Instance.GetUserPersonID(_RequestParams.LoggingUserId, _RequestParams.Tenant);
 
-            availableSignServer = SignQueue.Instance.
-                GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+            //if (!CustomsSettingQueryService.GetSettingByTenant(RequestParams.Tenant).IsConnectedToUniFreight)
+            if (CloudExportDbSignQueueService.IsCloudExport(_RequestParams.Tenant))
+            {
+                var dbSignQueueService = new CloudExportDbSignQueueService();
+                availableSignServer = dbSignQueueService
+                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
 
+            }
+            else
+            {
+                availableSignServer = SignQueue.Instance.
+                    GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+
+            }
             if (string.IsNullOrWhiteSpace(availableSignServer))
             {
                 noAvailableSignServerErrorText = GetNoAvailableSignServerErrorText(personId, SignatureBy, RequestParams.InterfaceTypeCode);
