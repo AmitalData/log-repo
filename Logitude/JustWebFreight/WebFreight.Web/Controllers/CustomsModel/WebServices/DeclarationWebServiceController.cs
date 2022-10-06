@@ -547,7 +547,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 INF_MSG_GenericResponseData responseData;
-                if (requestParamsData.RequestName.StartsWith("Export"))
+                if (requestParamsData.RequestName.StartsWith("Transshipment"))
+                {
+                    var serializedParent = JsonConvert.SerializeObject(requestParamsData);
+                    AmendmentRequestParams requestParams = JsonConvert.DeserializeObject<AmendmentRequestParams>(serializedParent);
+
+                    var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
+                    responseData = messagingService.Send(requestParams);
+                }
+                else if (requestParamsData.RequestName.StartsWith("Export"))
                 {
                     //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                     var serializedParent = JsonConvert.SerializeObject(requestParamsData);

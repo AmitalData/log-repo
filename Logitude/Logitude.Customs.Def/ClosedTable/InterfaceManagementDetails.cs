@@ -590,6 +590,20 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false,
             });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8237T",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מענה לבקשה לתיקון הצהרה שטעון",
+                DcaPrefixName = "SendDF_MSG8237_TransshipmentDeclarationAmendmentReplyMsg_EX_Out.",
+                DcaPrefixName2 = "SendDF_MSG8237_TransshipmentDeclarationAmendmentReplyMsg_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
             //DCAInCH_NG_196_MSG7_CargoExitFromCheckSiteMassageService
             all.Add(
             new InterfaceManagementDetails()
@@ -2117,6 +2131,19 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "8237",
                 //   NeedSignature = false,
                 //     SignatureTypeCode = "C"
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8235T",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר תקן/בטל שטעון",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "8237T",
             });
             all.Add(new InterfaceManagementDetails()
             {

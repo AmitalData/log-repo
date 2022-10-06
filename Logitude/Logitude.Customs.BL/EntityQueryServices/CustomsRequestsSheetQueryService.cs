@@ -188,6 +188,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCACSIFF", // יצירת חשבון ספק מאקסל
 "DCAInUCBApproveAllPending",//אישור PENDING
 "CourierMastersConnected", // קישור הצהרות לטיסה
+"8235T", // תיקון שטעון
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -340,7 +341,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCADPE", // add multi pending
 "DCAInUCBApproveAllPending",//אישור PENDING
 "CourierMastersConnected", // קישור הצהרות לטיסה
-
+"UCADPE", // add multi pending
+"8235T", // תיקון שטעון
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -475,6 +477,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAInUCBApproveAllPending",//אישור PENDING
 //"8302" //בקשה לטופס הצהרה
 "CourierMastersConnected", // קישור הצהרות לטיסה
+"8235T", // תיקון שטעון
 };
 
 

@@ -871,8 +871,9 @@ export class SendDeclarationService implements OnDestroy {
         searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
         searchParams.LoggingObjectTableId = this.ObjectTable.Id;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        
         if (this.EntityPM.Direction == "E")
-            searchParams.RequestName = "Export Amendment Declaration Request";
+            searchParams.RequestName = (this.EntityPM.DeclarationTypeCode === '3' ? 'Transshipment' : 'Export') + " Amendment Declaration Request";
         else
             searchParams.RequestName = "Amendment Declaration Request";
         searchParams.ResponseName = "Amendment Declaration Response";
