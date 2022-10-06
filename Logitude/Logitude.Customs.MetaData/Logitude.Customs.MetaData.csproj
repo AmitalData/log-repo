@@ -481,6 +481,7 @@
     <None Include="DBTables\SeizureFactorType.dxml" />
     <None Include="DBTables\SeizureMethodType.dxml" />
     <None Include="DBTables\SignatureType.dxml" />
+    <None Include="DBTables\SignStation.dxml" />
     <None Include="DBTables\SiteLookup.dxml" />
     <None Include="DBTables\SiteType.dxml" />
     <None Include="DBTables\SpecialActionDescriptionType.dxml" />
