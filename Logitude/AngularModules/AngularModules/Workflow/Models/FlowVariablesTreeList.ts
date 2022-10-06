@@ -1,16 +1,19 @@
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { TreeSelectItem } from "./TreeSelectItem";
 
 export class FlowVariablesTreeList {
+    private FlowObjectFields: ObjectFieldPM[];
     private FlowObject: any;
     private CurrentNodeId: string;
     public Items: TreeSelectItem[] = [];
 
-    constructor(flowObject: any, currentNodeId: string) {
-        this.initialize(flowObject, currentNodeId);
+    constructor(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
+        this.initialize(flowObjectFields, flowObject, currentNodeId);
         this.setVariablesTreeItems();
     }
 
-    private initialize(flowObject: any, currentNodeId: string) {
+    private initialize(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
+        this.FlowObjectFields = flowObjectFields;
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
     }
@@ -19,21 +22,27 @@ export class FlowVariablesTreeList {
         let recordsVariablesItemChildren = this.getRecordsVariablesItemChildren();
         let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
 
-        let recordsVariablesItem = new TreeSelectItem("records_variables", "Records Variables", false, false, true, true, recordsVariablesItemChildren);
-        let declaredVariablesItem = new TreeSelectItem("declared_variables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
+        let recordsVariablesItem = new TreeSelectItem("recordsvariables", "Records Variables", false, false, true, true, recordsVariablesItemChildren);
+        let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
 
         this.Items.push(recordsVariablesItem);
         this.Items.push(declaredVariablesItem);
     }
 
     private getRecordsVariablesItemChildren() {
+        let triggeringRecordEntity = this.getTriggeringRecordEntity();
+        let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity);
+
         let recordsVariablesItemChildren = [
-            new TreeSelectItem("triggering_record", "Triggering record", false, false, false, false, [])
+            new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordItemChildren)
         ];
 
         this.getGetRecordNodesWithFirstRecordOption().forEach((node: any) => {
-            recordsVariablesItemChildren
-                .push(new TreeSelectItem(node.id, node.data["name"], false, false, false, false, []));
+            let treeSelectItemName = node.data["name"];
+            let treeSelectItemKey = treeSelectItemName ? treeSelectItemName.replaceAll(" ", "").toLowerCase() : "";
+            //let test = this.getObjectFieldsItems("xxxxx", node.data["entity"]);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, []);
+            recordsVariablesItemChildren.push(treeSelectItem);
         });
 
         return recordsVariablesItemChildren;
@@ -43,8 +52,10 @@ export class FlowVariablesTreeList {
         let declaredVariablesItemChildren = [];
 
         this.getDeclareVariableNodes().forEach((node: any) => {
-            declaredVariablesItemChildren
-                .push(new TreeSelectItem((node.id + "." + node.data["VariableCode"]), node.data["VariableName"], true, true, false, false, []));
+            let treeSelectItemName = node.data["VariableName"];
+            let treeSelectItemKey = node.data["VariableCode"];
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            declaredVariablesItemChildren.push(treeSelectItem);
         });
 
         return declaredVariablesItemChildren;
@@ -64,5 +75,37 @@ export class FlowVariablesTreeList {
                 .filter((n: any) => n.type === "declareVariableNode");
         }
         return [];
+    }
+
+    private getObjectFieldsItems(itemsKeyPrefix: string, entity: string) {
+        let entityId = this.getEntityId(entity);
+        let objectFields = this.FlowObjectFields.filter(o => o.ObjectTableId === entityId);
+        let objectFieldsItems = [];
+
+        objectFields.forEach((objectField: ObjectFieldPM) => {
+            let treeSelectItemName = objectField.FullNameTextCodeDefaultText;
+            let treeSelectItemKey = itemsKeyPrefix + "." + objectField.FieldName;
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            objectFieldsItems.push(treeSelectItem);
+        });
+
+        return objectFieldsItems;
+    }
+
+    private getEntityId(entity: string) {
+        if (entity) {
+            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
+    }
+
+    private getTriggeringRecordEntity() {
+        if (this.FlowObject && this.FlowObject.nodes) {
+            let startNode = this.FlowObject.nodes.filter((n: any) => n.type === "startNode")[0];
+            let startNodeEntity = startNode ? startNode.data["entity"] : null;
+            return startNodeEntity ? startNodeEntity : null;
+        }
+        return null;
     }
 }

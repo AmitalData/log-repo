@@ -34,7 +34,9 @@
 
         <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
             [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
-            [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition" ></ConditionGroups>
+            [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
+            [ShowFlowVariablesTree]="ShowFlowVariablesTree" [FlowObject]="FlowObject"
+            [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"></ConditionGroups>
 
     </div>
 

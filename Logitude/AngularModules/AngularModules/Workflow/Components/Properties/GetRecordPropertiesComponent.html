@@ -142,31 +142,6 @@
         </td>
     </tr>
 
-
-
-
-
-
-
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-
-                <TreeSelect [Items]="VariablesTreeItems" (ValueChanged)="variablesTreeValueChanged($event)"></TreeSelect>
-
-            </div>
-        </td>
-    </tr>
-
-
-
-
-
-
-
-
-
     <!-- Condition -->
     <tr *ngIf="EntityId != null" class="table-row">
         <td class="table-row-cell">
@@ -184,7 +159,9 @@
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                     (IsValidConditionsChange)="UpdateIsValidConditions($event)"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions">
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
+                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
+                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </Conditions>
             </div>
         </td>

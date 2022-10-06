@@ -7,8 +7,6 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
 import { Condition } from "Workflow/Models/Condition";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -32,14 +30,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldPM[];
 
-    public VariablesTreeItems: TreeSelectItem[];
-
     public CurrentSession = SessionLocator.SelectedSession;
 
-
-    variablesTreeValueChanged(value: string) {
-        console.log(value);
-    }
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -47,7 +39,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         this.initialize();
-        this.initializeVariablesTreeItems();
     }
 
     initialize() {
@@ -69,61 +60,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.EntityId = this.getEntityId(this.Entity);
 
         this.setUIProperties();
-    }
-
-    initializeVariablesTreeItems() {
-
-        // let variablesTreeItems = [
-        //     {
-        //         title: "Records Variables",
-        //         key: "1",
-        //         selectable: false,
-        //         expanded: true,
-        //         disabled: true,
-        //         children: [
-        //             {
-        //                 title: "Triggering record",
-        //                 key: "1.1",
-        //                 selectable: false,
-        //                 children: []
-        //             },
-        //             {
-        //                 title: "Shipment from get_single",
-        //                 key: "1.2",
-        //                 selectable: false,
-        //                 children: []
-        //             }
-        //         ]
-        //     },
-
-        //     {
-        //         title: "Declared Variables",
-        //         key: "2",
-        //         selectable: false,
-        //         expanded: true,
-        //         disabled: true,
-        //         children: [
-        //             {
-        //                 title: "ATA",
-        //                 key: "2.1",
-        //                 isLeaf: true,
-        //                 children: []
-        //             },
-        //             {
-        //                 title: "ATD",
-        //                 key: "2.2",
-        //                 isLeaf: true,
-        //                 children: []
-        //             }
-        //         ]
-        //     }
-        // ];
-
-        // this.VariablesTreeItems = variablesTreeItems;
-
-
-        this.VariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId).Items;
-
     }
 
     updateName(Name: any) {
@@ -169,6 +105,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0 && this.IsValidConditions) {
             this.setConditionsData();
+
+            //console.log(this.Conditions);
 
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {

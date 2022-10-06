@@ -200,7 +200,8 @@
 
                     </div>
 
-                    <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator)" class="condition-value-container">
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator) && !ShowFlowVariablesTree"
+                        class="condition-value-container">
 
                         <LogLov *ngIf="Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
                             [NoObjectField]="true" [ObjectFieldName]="'ConditionFieldValue_' + Condition.id"
@@ -225,14 +226,21 @@
                         </LogLov>
                     </div>
 
-                    <div *ngIf="isNoValueOperator(Condition.operator)" class="condition-value-container">
+                    <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator) && ShowFlowVariablesTree"
+                        class="condition-value-container">
+                        <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                                [Value]="Condition.value" (ValueChanged)="updateConditionValue($event, conditionIndex)">
+                            </TreeSelect>
+                        </div>
+                    </div>
 
+                    <div *ngIf="isNoValueOperator(Condition.operator)" class="condition-value-container">
                         <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'"
                             [SelectedItem]="ListItem(Condition.value)"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
                             [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
-
                     </div>
 
                 </div>
@@ -241,7 +249,8 @@
                     [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator"
                     [(Conditions)]="Condition.conditions" [IsValidConditions]="IsValidConditions"
                     [IsRootConditions]="false" (ConditionsChangedEvent)="emitConditionsChanged($event)"
-                    [ConditionsCounter]="ConditionsCounter">
+                    [ConditionsCounter]="ConditionsCounter" [ShowFlowVariablesTree]="ShowFlowVariablesTree"
+                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </ConditionGroups>
 
                 <div *ngIf="Condition.isGroup" class="add-buttons-container">
