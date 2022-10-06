@@ -94,7 +94,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
                 List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
-                if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+                //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+                if (CloudExportDbSignQueueService.IsCloudExport(tenant))
                 {
                     var dbSignQueueService = new CloudExportDbSignQueueService();
                     entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
