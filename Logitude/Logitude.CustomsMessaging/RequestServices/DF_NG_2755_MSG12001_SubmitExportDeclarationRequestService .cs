@@ -270,8 +270,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
             myDF_NG_2755_MSG12001_SubmitDeclaration.AnswerForCollateralRequest = GetSubmitDeclarationCollateralAnswer(declarationPaymentsPM);
 
-            //Raise event PHF- Declaration Payment Sent
-            SendPHF(declarationPaymentsPM, requestParams.LoggingUserId);
 
             return myDF_NG_2755_MSG12001_SubmitDeclaration;
         }
@@ -401,46 +399,6 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-
-        private void SendPHF(DeclarationPaymentPM declarationPaymentPM, string loggingUserId)
-        {
-            try
-            {
-                var declarationQueryService = new DeclarationQueryService(this.dbContext);
-                DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
-                if (connectedDeclarationPM.IsCourierDeclaration) return;
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                {
-                    Tenant = declarationPaymentPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = "PHF",
-                    notes = "Declaration Payment Sent",
-                    CommunicationLoggingEntityReference = connectedDeclarationPM.DeclarationNumber,
-                    EntityId = declarationPaymentPM.DeclarationId,
-                    UserId = loggingUserId,
-
-                    CommunicationSubject = "FU Status PHF from logitude ",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                    {
-                        entname = "CFIFILEM",
-                        primary_number = connectedDeclarationPM.CustomFileNo,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = "PHF",
-                        status_DateTime = DateTime.Now,
-                        //status_place = "FRA",
-                        //status_save = "no_fail",
-                        comments = "Declaration Payment:" + connectedDeclarationPM.DeclarationNumber + ", Payment Date:" + declarationPaymentPM.PaymentDate,
-                    }
-                };
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-            }
-            catch (System.Exception)
-            {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
-                throw;
-            }
-        }
 
         public override void PostGetRequest(DF_NG_2755_MSG12001_SubmitDeclaration customRequest, GenericRequestParams requestParams)
         {
