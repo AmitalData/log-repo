@@ -396,12 +396,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
                 # endregion
             }
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
-
             ObjectFieldValidating.Validate(theEntityPm);
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+
+            
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
             if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
@@ -565,11 +566,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
                 # endregion
             }
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
 
             ObjectFieldValidating.Validate(theEntityPm);
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
+
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+    
 
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
             if (IsMetConditionsToSendCToolMessage(theEntityPm))

@@ -49,6 +49,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             excludedFieldDataTypes.Add("Raw");
             excludedFieldDataTypes.Add("Binary");
             excludedFieldDataTypes.Add("Text");
+            excludedFieldDataTypes.Add("Integer");
+            excludedFieldDataTypes.Add("Double");
+            excludedFieldDataTypes.Add("BigInteger");
             return excludedFieldDataTypes;
         }
 

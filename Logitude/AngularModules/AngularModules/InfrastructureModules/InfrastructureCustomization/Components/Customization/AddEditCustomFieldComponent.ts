@@ -107,7 +107,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         }
         else {
-            this.ClearTextMaxLength();
+            this.ClearCustomFieldMaxLength();
             this.DataTypeSelectionMethod({ Code: this.objectField.DataTypeCode });
             //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
@@ -255,6 +255,20 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
     public set MaxLength(value: number) {
         this.objectField.MaxLength = value;
+    }
+
+    public get NumberOfDigits() {
+        return this.objectField.NumberOfDigits;
+    }
+    public set NumberOfDigits(value: number) {
+        this.objectField.NumberOfDigits = value;
+    }
+
+    public get DigitsAfterPoint() {
+        return this.objectField.DigitsAfterPoint;
+    }
+    public set DigitsAfterPoint(value: number) {
+        this.objectField.DigitsAfterPoint = value;
     }
 
     public get IsMultiline() {
@@ -540,7 +554,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
-        this.ValidateTextObjectField();
+        this.ValidateObjectFields();
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
@@ -550,13 +564,13 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
-            this.SetTextMaxMinLengths();
+            this.SetCustomFieldsLengths();
             if (this.IsNew == true) {
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
-                        this.ClearTextMaxLength();
+                        this.ClearCustomFieldMaxLength();
                     }
                     else {
                         CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
@@ -587,7 +601,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
-                        this.ClearTextMaxLength();
+                        this.ClearCustomFieldMaxLength();
                     }
                     else {
                         CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
@@ -619,6 +633,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    private ValidateObjectFields() {
+        this.ValidateTextObjectField();
+        this.ValidateNumberObjectField();
+    }
+
     private ValidateTextObjectField() {
         if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
 
@@ -647,6 +666,32 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    private ValidateNumberObjectField() {
+        if (this.objectField.DataTypeCode != "Decimal") return;
+
+        if (this.objectField.NumberOfDigits > 12) {
+            this.ValidationErrorsList.push("Maximum length of the Number is 12");
+        }
+        if (this.objectField.NumberOfDigits == 0) {
+            this.ValidationErrorsList.push("Length of the Number shouldn't be 0");
+        }
+        if (!AppTool.IsNullOrEmpty(this.objectField.NumberOfDigits) && this.objectField.NumberOfDigits < 0) {
+            this.ValidationErrorsList.push("Length of the Number shouldn't be less than 0");
+        }
+        if (this.objectField.DigitsAfterPoint > 3) {
+            this.ValidationErrorsList.push("Maximum decimal digits is 3");
+        }
+        if (!AppTool.IsNullOrEmpty(this.objectField.DigitsAfterPoint) && this.objectField.DigitsAfterPoint < 0) {
+            this.ValidationErrorsList.push("Decimal digits of the Number shouldn't be less than 0");
+        }
+
+    }
+
+    private SetCustomFieldsLengths() {
+        this.SetTextMaxMinLengths();
+        this.SetNumberLengthAndDecimalDigits();
+    }
+
     private SetTextMaxMinLengths() {
         if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
 
@@ -654,10 +699,28 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.objectField.MinLength = AppTool.IsNullOrEmpty(this.objectField.MinLength) ? 0 : this.objectField.MinLength;
     }
 
+    private SetNumberLengthAndDecimalDigits() {
+        if (this.objectField.DataTypeCode != "Decimal") return;
+
+        this.objectField.NumberOfDigits = AppTool.IsNullOrEmpty(this.objectField.NumberOfDigits) ? 0 : this.objectField.NumberOfDigits;
+        this.objectField.DigitsAfterPoint = AppTool.IsNullOrEmpty(this.objectField.DigitsAfterPoint) ? 0 : this.objectField.DigitsAfterPoint;
+    }
+
+    private ClearCustomFieldMaxLength() {
+        this.ClearTextMaxLength();
+        this.ClearNumberOfDigitsLength();
+    }
+
     private ClearTextMaxLength() {
         if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
 
         if (this.objectField.MaxLength == 0) this.objectField.MaxLength = null;
+    }
+
+    private ClearNumberOfDigitsLength() {
+        if (this.objectField.DataTypeCode != "Decimal") return;
+
+        if (this.objectField.NumberOfDigits == 0) this.objectField.NumberOfDigits = null;
     }
 
     CancelButtonClicked() {

@@ -109,6 +109,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DefaultAdditionalFilters = objectFieldPM.DefaultAdditionalFilters;
             objectField.ForMetaDataOnly = objectFieldPM.ForMetaDataOnly;
             objectField.IsListFilter = objectFieldPM.IsListFilter;
+            objectField.NumberOfDigits = objectFieldPM.NumberOfDigits;
+            objectField.DigitsAfterPoint = objectFieldPM.DigitsAfterPoint;
 
             if (objectFieldModification != null)
             {

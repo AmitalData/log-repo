@@ -46,7 +46,15 @@
                                     </label>
                                 </td>
                             </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Decimal'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Length
+                                    </label>
+                                </td>
+                            </tr>
 
+                            
 
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
                                 <td style="height: 22px;">
@@ -143,7 +151,7 @@
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
                                     <div style="position:absolute;width: 364px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
-                                        <LogTextBox [ObjectFieldName]="'Code'" [DataContext]="DataContext"  [Text]="Code"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Code'" [DataContext]="DataContext" [Text]="Code"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
@@ -155,12 +163,44 @@
                                 </td>
                             </tr>
 
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Decimal'">
 
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width:95px">
+                                                <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'NumberOfDigits'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div>
+                                                    <HelpIcon [HideHeader]="true" [Text]="'Number of digits to the left of the decimal points'" [IconSize]="14"></HelpIcon>
+                                                </div>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    Decimal Digits: 
+                                                </label>
+                                            </td>
+                                            <td style="width:95px">
+                                                <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'DigitsAfterPoint'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div>
+                                                    <HelpIcon [HideHeader]="true" [Text]="'Number of digits to the right of the decimal points'" [IconSize]="14"></HelpIcon>
+                                                </div>
+                                            </td>
+                                            <td style="width:35px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
 
 
 
-                                <td style="height: 22px;" >
+                                <td style="height: 22px;">
                                     <table>
                                         <tr>
                                             <td style="width: 20px;">
@@ -184,10 +224,10 @@
                                 <td style="height: 22px;">
                                     <LogTextBox [ObjectFieldName]="'HelpText'" [DataContext]="DataContext"></LogTextBox>
                                     <!--<LogLov [RunToggleMode]="true"
-                                            [ObjectFieldName]="'ForwarderPartnerId'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'HybridPartner'">
-                                    </LogLov>-->
+                    [ObjectFieldName]="'ForwarderPartnerId'"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'HybridPartner'">
+            </LogLov>-->
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
