@@ -97,7 +97,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.IsCustomerCare = true//SessionLocator.LoggedUserPM.IsCustomerCare;
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
 
         this.EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("JournalReconcile").subscribe((response: any) => {
