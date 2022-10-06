@@ -854,6 +854,7 @@
     <Compile Include="EntityDataMappings\Generated\SeizureFactorTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SeizureMethodTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SignStationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SpecialActionDescriptionTypeDataMapping.Generated.cs" />
@@ -1031,6 +1032,7 @@
     <Compile Include="EntityDataMappings\SeizureFactorTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SeizureMethodTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SignStationDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SpecialActionDescriptionTypeDataMapping.cs" />
@@ -1107,6 +1109,7 @@
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientsTapagQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SignStationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
@@ -1627,6 +1630,7 @@
     <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticPermitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SignStationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StorageStatusTableUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogisticActionRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestTypeUpdateService.Generated.cs" />
@@ -2195,6 +2199,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelServiceException.cs" />
+    <Compile Include="Messaging\Customs\CloudExportDbSignQueueService.cs" />
     <Compile Include="Messaging\Customs\DocumentExt.cs" />
     <Compile Include="Messaging\Customs\IMessageController.cs" />
     <Compile Include="Messaging\Customs\IMessagingServiceInterfaceType.cs" />

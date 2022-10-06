@@ -230,6 +230,7 @@
     <Compile Include="EntityKeys\SecurityClearenceTypeCodeKeys.cs" />
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
+    <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
     <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
@@ -666,6 +667,7 @@
     <Compile Include="EntityLists\Generated\SecurityClearenceTypeCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SignStationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StatusFieldTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StorageStatusTableList.Generated.cs" />
@@ -811,6 +813,7 @@
     <Compile Include="EntityMapping\SecurityClearenceTypeCodeMap.cs" />
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
+    <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
     <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
@@ -957,6 +960,7 @@
     <Compile Include="EntityPOCOs\SecurityClearenceTypeCode.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
+    <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
     <Compile Include="EntityPOCOs\StorageStatusTable.cs" />
@@ -1191,6 +1195,7 @@
     <Compile Include="Repsitories\Generated\SecurityClearenceTypeCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StorageStatusTableRepository.Generated.cs" />
@@ -1245,6 +1250,7 @@
     <Compile Include="Repsitories\SecurityClearenceTypeCodeRepository.cs" />
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
+    <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
     <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
