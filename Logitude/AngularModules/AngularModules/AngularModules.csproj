@@ -303,6 +303,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationPayment\DeclarationPaymentExportComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\ExportStorageDecleration\ExportStorageDeclerationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\FiltersMenu\DeclarationFiltersMenuComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\LoadExcelSupplierInvoice\LoadExcelSupplierInvoicesComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.html" />
@@ -492,6 +493,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationPayment\DeclarationPaymentExportComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\ExportStorageDecleration\ExportStorageDeclerationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\FiltersMenu\DeclarationFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\LoadExcelSupplierInvoice\LoadExcelSupplierInvoicesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
