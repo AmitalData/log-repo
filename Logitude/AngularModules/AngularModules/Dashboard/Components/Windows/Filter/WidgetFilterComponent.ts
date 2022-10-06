@@ -37,7 +37,7 @@ export class WidgetFilterComponent extends BaseComponent implements OnInit {
     }
 
     get FilterItems(): WidgetFilterItem[] {
-        return this.DataSource.QueryFilterItems;
+        return this.DataSource?.QueryFilterItems;
     }
 
     AddEmptyFilter() {

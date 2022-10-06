@@ -28,7 +28,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         internal AnalyticsFactsMetaData _Entity;
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
         private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
-
+        private string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
             this._Widget = widget;
@@ -69,8 +69,60 @@ namespace Logitude.DashboardModule.BL.DataProviders
             string querys = CreateQuery(measure, groupBy, measureField, resultQueryable);
             var conterxt = DashboardContext.GetContext(0);
             var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
+            var results = resultQueryables.ToList();
+            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
+            {
+                UpdateDateString(results);
+            }
+            return results;
+        }
 
-            return resultQueryables.ToList();
+        private void UpdateDateString(List<SeriesMeasureVulue> results)
+        {
+            foreach (var item in results)
+            {
+                switch (_Widget.DateGroupCode)
+                {
+                    case "Day":
+                        item.Label = GetDayFormat(item.Label);
+                        break;
+                    case "Month":
+                        item.Label = GetMonthFormat(item.Label);
+                        break;
+                    case "Year":
+                        item.Label = GetYearFormat(item.Label);
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+        }
+
+        private string GetDayFormat(string label)
+        {
+            var dateparts = label.Split('/');
+            var month = GetMonthName(dateparts[1]);
+
+            return $"{dateparts[0]}/{month}/{dateparts[2]}";
+        }
+        private string GetMonthFormat(string label)
+        {
+            var dateparts = label.Split('/');
+            var month = GetMonthName(dateparts[1]);
+
+            return $"{dateparts[0]}/{month}";
+        }
+        private string GetYearFormat(string label)
+        {
+            var dateparts = label.Split('/');
+            return $"{dateparts[0]}";
+        }
+
+        private string GetMonthName(string v)
+        {
+            var month = int.Parse(v);
+            return Months[month-1];
         }
 
         private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
@@ -129,15 +181,15 @@ namespace Logitude.DashboardModule.BL.DataProviders
             switch (_Widget.DateGroupCode)
             {
                 case "Day":
-                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ),'/' ,CAST(DAY(Data.{groupBy.FieldCode}) as varchar(3) ))";
+                    return $"convert(varchar, Data.{groupBy.FieldCode}, 111)";
                 case "Month":
-                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/',DATENAME(MONTH,Data.{groupBy.FieldCode} ))";
+                    return $"CONVERT(varchar,DateAdd(Month, DateDiff(Month, 0, Data.{groupBy.FieldCode}), 0),111)";
                 case "Year":
-                    return $"CAST(YEAR(Data.{groupBy.FieldCode}) as varchar(20))";
+                    return $"CONVERT(varchar,DateAdd(yy, DateDiff(yy, 0, Data.{groupBy.FieldCode}), 0),111)";
                 case "Quarter":
                     return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/Q',MONTH(data.{groupBy.FieldCode})/4+1)";
                 default:
-                    return $"convert(varchar, Data.{groupBy.FieldCode}, 105)";
+                    return $"convert(varchar, Data.{groupBy.FieldCode}, 111)";
             }
         }
 
