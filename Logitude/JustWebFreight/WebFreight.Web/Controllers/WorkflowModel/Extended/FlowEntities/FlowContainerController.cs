@@ -1,8 +1,9 @@
-﻿using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -20,7 +21,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 {
-    public class FlowShipmentController : ApiController
+    public class FlowContainerController : ApiController
     {
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
@@ -31,27 +32,27 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-                IQueryable<ShipmentList> shipmentsQuery = shipmentQuery.GetAllShipmentListTenant(tenant);
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(authToken.Tenant);
+                ContainerRepository containerRepository = new ContainerRepository(shipmentsContext);
+                IQueryable<Container> containerQuery = containerRepository.GetContainers(authToken.Tenant);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                 {
                     AdditionalTreeFilter = javaScriptSerializer.Serialize(apiQueryTreeFilters.QueryFilterItem),
-                    ObjectTableName = "Shipment",
+                    ObjectTableName = "Container",
                     Tenant = tenant,
                 };
 
-                shipmentsQuery = new TreeFilterQueryService().Apply(shipmentsQuery, treeFilterQueryArgs);
-                shipmentsQuery = shipmentsQuery.OrderBy(string.IsNullOrEmpty(apiQueryTreeFilters.OrderBy) ? "Id" : apiQueryTreeFilters.OrderBy);
-                shipmentsQuery = shipmentsQuery.Skip(0);
-                shipmentsQuery = shipmentsQuery.Take(apiQueryTreeFilters.PageSize);
+                containerQuery = new TreeFilterQueryService().Apply(containerQuery, treeFilterQueryArgs);
+                containerQuery = containerQuery.OrderBy(string.IsNullOrEmpty(apiQueryTreeFilters.OrderBy) ? "Id" : apiQueryTreeFilters.OrderBy);
+                containerQuery = containerQuery.Skip(0);
+                containerQuery = containerQuery.Take(apiQueryTreeFilters.PageSize);
 
-               var shipments = shipmentsQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
+                var containers = containerQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
 
                 ServiceResponse response = new ServiceResponse();
-                response.Result = shipments;
+                response.Result = containers;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
