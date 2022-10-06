@@ -140,7 +140,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedNotes, 
 	         InvoicedExceptionReason, 
 	         SHOHouse, 
-	         ChargeableWeightInKG,
+	         ChargeableWeightInKG, 
+	         ChargeableWeight, 
+	         ChargeableWeightUnitCode,
 	      }
 
 
@@ -283,7 +285,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedExceptionReason, 
 	         ApprovedByUserName, 
 	         SHOHouse, 
-	         ChargeableWeightInKG,
+	         ChargeableWeightInKG, 
+	         ChargeableWeight, 
+	         ChargeableWeightUnitCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -870,6 +874,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightInKG))
             {
 				entityPOCO.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeight))
+            {
+				entityPOCO.ChargeableWeight = entityPM.ChargeableWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
+            {
+				entityPOCO.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
 			}
 			}
 
@@ -1461,6 +1475,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ChargeableWeightInKG = entityPOCO.ChargeableWeightInKG;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChargeableWeight))
+            {
+					entityPM.ChargeableWeight = entityPOCO.ChargeableWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChargeableWeightUnitCode))
+            {
+					entityPM.ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -2045,6 +2069,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightInKG))
             {
                 oldEntityPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeight))
+            {
+                oldEntityPM.ChargeableWeight = entityPM.ChargeableWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
+            {
+                oldEntityPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
             }
 			
 		}
