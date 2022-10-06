@@ -95,15 +95,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                 updateService.Update(entity, true);
-                MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                MyRequestSheetParam.EntityId2 = entity.DeclarationId;
-                MyRequestSheetParam.EntityId1 = entity.Id;
+                MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                MyRequestSheetParam.EntityId1 = entity.DeclarationId;
+                MyRequestSheetParam.EntityId2 = entity.Id;
+                MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             }
 
-            MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
-            
+
             MyResponseData = new INF_MSG_GenericResponseData();
             MyResponseData.Succeeded = true;
             MyResponseData.UserMessage = "";
