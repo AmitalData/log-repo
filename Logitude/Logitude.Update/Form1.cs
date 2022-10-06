@@ -5664,13 +5664,13 @@ User/Pass",
                 (a.Shipment.ShipmentLevelCode == "C" && a.Shipment.ShipmentTypeId == "MyGO") || (a.Shipment.ShipmentLevelCode != "C" && a.Shipment.ShipmentTypeId == "FCLD")
                 && a.Shipment.IsOperationalClosed == false 
                 && a.Shipment.NumberOfContainers > 0
-                && a.Shipment.CreateDateTime >= fromDate.Date 
-                && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
+                && a.Shipment.CreateDateTime >= fromDate.Date
+                && a.Shipment.CreateDateTime <= ToDate.Date && a.Shipment.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
 
             var shipmentsIds = shipmentsContext.ShipmentPackages
                 .Where(a => a.Shipment.ShipmentLevelCode != "C" && (a.Shipment.ShipmentTypeId == "FCLD" || a.Shipment.ShipmentTypeId == "MyGO") && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
-                && a.Shipment.CreateDateTime >= fromDate.Date && a.Shipment.CreateDateTime <= ToDate.Date && a.Tenant == tenant
+                && a.Shipment.CreateDateTime >= fromDate.Date && a.Shipment.CreateDateTime <= ToDate.Date && a.Shipment.Tenant == tenant
                 && a.ContainerEntityId == null && a.ContainerNumber != null).GroupBy(a => a.Shipment.Id).Select(e => e.Key).ToList();
 
 
