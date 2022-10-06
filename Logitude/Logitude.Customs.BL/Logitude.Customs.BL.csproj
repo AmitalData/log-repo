@@ -2199,6 +2199,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelServiceException.cs" />
+    <Compile Include="Messaging\Customs\CloudExportDbSignQueueService.cs" />
     <Compile Include="Messaging\Customs\DocumentExt.cs" />
     <Compile Include="Messaging\Customs\IMessageController.cs" />
     <Compile Include="Messaging\Customs\IMessagingServiceInterfaceType.cs" />

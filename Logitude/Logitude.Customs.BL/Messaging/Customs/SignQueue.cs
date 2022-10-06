@@ -478,7 +478,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //userPersonID = "049028392";//yaron c;
             return userPersonID;
         }
-        public List<int> GetTenantListOfPersonID(string userPersonID, int seedDbTenant)
+        public static List<int> GetTenantListOfPersonID(string userPersonID, int seedDbTenant)
         {
             var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(seedDbTenant);
             List<int> myPersonTenantList = userRep.GetPersonTenantList(userPersonID) ?? new List<int>();
@@ -520,7 +520,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             tenantCommaDelimitedList = string.Join(",", intLIst.Select(t => t.ToString()));
             return tenantCommaDelimitedList;
         }
-        private string GetCustomsAgentIdFromTenant(int tenant)
+        public static string GetCustomsAgentIdFromTenant(int tenant)
         {
             var customsSettingQueryService = new CustomsSettingQueryService(0);
             var pm = customsSettingQueryService.GetSettingByTenantN(tenant);
