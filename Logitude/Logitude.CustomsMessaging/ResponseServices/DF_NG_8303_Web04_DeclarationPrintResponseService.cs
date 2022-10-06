@@ -243,7 +243,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(requestParams.Tenant));
+            GDMFILINGQueryService uniGDMFILINGQueryService = null;
+            if (CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight)
+            {
+                uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(requestParams.Tenant));
+            }
             //Check if file already exists
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEC", requestParams.Tenant);
@@ -252,12 +256,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (documentItem.DocumentTypeId == documentType?.Id)
                 {
-
-                    var gdmfiling = uniGDMFILINGQueryService.GetSingle(documentItem.Id, true);
-                    if (gdmfiling?.DELETED == "T")
+                    if (uniGDMFILINGQueryService != null)
                     {
-                        // uniface deleted!!
-                        continue;
+                        var gdmfiling = uniGDMFILINGQueryService.GetSingle(documentItem.Id, true);
+                        if (gdmfiling?.DELETED == "T")
+                        {
+                            // uniface deleted!!
+                            continue;
+                        }
                     }
                     documentsFilingPM = documentItem;
                     break;
