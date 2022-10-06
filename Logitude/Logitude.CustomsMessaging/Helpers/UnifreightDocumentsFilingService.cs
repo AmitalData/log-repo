@@ -33,13 +33,13 @@ namespace Logitude.CustomsMessaging.Helpers
         {
 
             
-            var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(theEntityPm.Tenant));
             
             var IsUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant,
                 "docsin" //-- must call from CostomMessage that create "docsin" !!!
                 );
             if (FeatureIsOn && IsUnifreightFillingMode )
             {
+                var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(theEntityPm.Tenant));
 
                 var gdmfiling = uniGDMFILINGQueryService.GetSingle(theEntityPm.Id, true);
                 if (gdmfiling != null)
