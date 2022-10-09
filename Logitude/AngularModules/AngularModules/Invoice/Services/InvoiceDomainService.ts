@@ -1418,4 +1418,6 @@ export class AccountReceivablesSummary {
     public  ARInvoicesFailedCount: number;
     public  ARPaymentFailedCount: number;
     public  ARInvoicesSATVoidedNotTransferredCount: number;
+    public  ARInvoiceSATWaitingCancellationCount: number;
+    public  ARPaymentSATWaitingCancellationCount: number;
 }
