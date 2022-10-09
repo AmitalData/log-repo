@@ -45,7 +45,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 		private IQueryable<WorkFlowInstanceVariable> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<WorkFlowInstanceVariable> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<WorkFlowInstanceVariable> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<WorkFlowInstanceVariable> iQueryable, int tenant)
         {
