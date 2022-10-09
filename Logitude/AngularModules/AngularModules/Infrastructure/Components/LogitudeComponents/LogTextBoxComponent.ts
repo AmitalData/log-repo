@@ -1262,13 +1262,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
-                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
+                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
                                         this.TextValue = val.toFixed(4);
                                     }
+                                    else if (this.ObjectField.IsCustom && this.ObjectField.DataTypeCode == "Decimal") {
+                                        this.TextValue = val + "";
+                                    }
                                     else {
-                                       this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
-                                       // this.TextValue = val.toFixed(this.DigitsAfterPoint);
-                                       
+                                        this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
                                     }
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
                                         this.TextValue = this.TextValue.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
@@ -1556,8 +1557,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 if (isok) {
                                     if (this.ObjectField && this.ObjectField.IsCustom) {
                                         var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                                        let fieldValidator = new FieldValidator();
                                         if (customFieldClass != null && customFieldClass != undefined) {
-                                            customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);// this.TextValue;
+                                            this.ValidateNumberCustomField(customFieldClass, fieldValidator);// this.TextValue;
+                                            
                                         }
                                         else {
                                             console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
@@ -1650,6 +1653,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             this.ValidateField();
             this.ValueChanged.emit(this.TextValue);
         }
+    }
+
+    private ValidateNumberCustomField(customFieldClass: CustomFieldClass, fieldValidator: FieldValidator) {
+        customFieldClass.IsNotValid = !fieldValidator.IsValidCustomNumberValue(this.ObjectField, this.TextValue);
+        customFieldClass.Value = customFieldClass.IsNotValid ? this.TextValue : customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);
     }
 
     DataContextValueChanges(res: any) {
@@ -1988,6 +1996,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     RemoveThousandsSeparator(value: string) {
+        if (AppTool.IsNullOrEmpty(value)) return value;
+        value = value + "";
         if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
             value = value.split(this.thousandsSeparator).join('');
         }

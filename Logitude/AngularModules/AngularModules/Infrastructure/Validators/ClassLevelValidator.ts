@@ -101,34 +101,67 @@ export class ClassLevelValidator {
                             }
                     }
                 }
-
-                if (entityPM[objectfield.FieldName]) {
-                    if (objectfield.DataTypeCode === "Text" || objectfield.DataTypeCode === "nText") {
-                        if (objectfield.MaxLength !== 0 || objectfield.MinLength !== 0) {
-                            if (entityPM[objectfield.FieldName]) {
-                                var fieldvalue = "";
-                                if (objectfield.IsCustom === true) {
-                                    fieldvalue = entityPM[objectfield.FieldName].Value;
-                                }
-                                else
-                                    fieldvalue = entityPM[objectfield.FieldName];
-
-                                if (fieldvalue == null || fieldvalue == undefined) {
-                                    fieldvalue = "";
-                                }
-
-                                var fieldValidator: FieldValidator = new FieldValidator();
-                                if (!fieldValidator.IsValidTextValue(objectfield, fieldvalue)) {
-                                    errorsArray.push(fieldValidator.GetMinMaxErrorMessage(objectfield, fieldvalue));
-                                }
-                            }
-                        }
-                    }
-                }
+                
+                
+                this.validateTextAndNumberDataTypes(entityPM, objectfield, errorsArray);
             }
         });
             
         return errorsArray;
+    }
+
+    private validateTextAndNumberDataTypes(entityPM: any, objectfield: any, errorsArray: any[]) {
+        if (!entityPM[objectfield.FieldName]) return;
+        
+        this.validateTextDataType(objectfield, entityPM, errorsArray);
+        this.validateNumberDataType(objectfield, entityPM, errorsArray);
+        
+    }
+
+    private validateNumberDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Decimal") return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        let isNotValid = this.GetIsNotValidValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, isNotValid)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+    }
+
+    private validateTextDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Text" && objectfield.DataTypeCode !== "nText") return;
+        if (objectfield.MaxLength === 0 && objectfield.MinLength === 0) return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, false)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+
+    }
+
+    private GetIsNotValidValue(entityPM: any, objectfield: any) {
+        if (entityPM[objectfield.FieldName] && objectfield.IsCustom) {
+            return entityPM[objectfield.FieldName].IsNotValid;
+        }
+        return false;
+    }
+
+    private GetFieldValue(entityPM: any, objectfield: any) {
+        if (entityPM[objectfield.FieldName]) {
+            var fieldvalue = "";
+            if (objectfield.IsCustom === true) {
+                fieldvalue = entityPM[objectfield.FieldName].Value;
+            }
+
+            else
+                fieldvalue = entityPM[objectfield.FieldName];
+
+            if (fieldvalue == null || fieldvalue == undefined) {
+                fieldvalue = "";
+            }
+
+        }
+        return fieldvalue;
     }
 
     public IsValid(entityPM) {

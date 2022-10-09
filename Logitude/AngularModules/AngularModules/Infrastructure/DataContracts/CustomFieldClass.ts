@@ -2,9 +2,16 @@ declare var window: any;
 import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {ObjectTablePM} from '../EntityPMs/ObjectTablePM';
 import {AppTool, DateTool} from '../Tools';
+import { FieldValidator } from '../Validators/FieldValidator';
 export class CustomFieldClass {
 
     constructor(public Value: string, public FieldName: string, public TableName: string) {
+    }
+
+    private isNotValid: boolean;
+    public get IsNotValid() { return this.isNotValid; }
+    public set IsNotValid(newValue: boolean) {
+        this.isNotValid = newValue;
     }
 
     private resolvedValue: any;
@@ -130,10 +137,11 @@ export class CustomFieldClass {
 
     }
 
-    public ConvertDoubleOrDecimalToString(d: number, signed: boolean) {
+    public ConvertDoubleOrDecimalToString(value: number, signed: boolean) {
         //string fmt = "000000000000.000";
-        var dString: string = this.ApplyDoublePadding(d + ""); //d.ToString(fmt);
-        var originalString: string = d + "";
+        var originalString: string = value + "";
+        let valueWithoutSign = (value + "").replace("-", "");
+        var dString: string = this.ApplyDoublePadding(valueWithoutSign); //d.ToString(fmt);
         dString = dString.replace("+", "").replace("-", "").replace(".", "").replace(",", "");
 
         if (signed) {
