@@ -273,7 +273,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                : a.Code.Equals("SHOR")
                                                                ? "Created"
                                                                : a.DisplayName,
-                                               Id = a.Id
+                                               Id = a.Id,
+                                               StatusWeight = a.StatusWeight,
+                                               Name = a.Name
                                            })
                                            .OrderBy(a => a.StatusWeight)
                                            .ThenBy(a => a.Name)
