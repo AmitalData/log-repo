@@ -310,6 +310,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string SHOHouse  { get; set; }
        [DataMember]
        public double? ChargeableWeightInKG  { get; set; }
+       [DataMember]
+       public double? ChargeableWeight  { get; set; }
+       [DataMember]
+       public string ChargeableWeightUnitCode  { get; set; }
    }
 
 }
