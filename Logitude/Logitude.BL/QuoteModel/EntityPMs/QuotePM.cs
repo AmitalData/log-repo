@@ -213,6 +213,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public string ActionType { get; set; }
         public string EventNote { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteClosingReasonNotes { get; set; }
 
         public string SaleCurrencyId { get; set; }
         public double? ExchangeRate { get; set; }

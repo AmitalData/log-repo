@@ -248,5 +248,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ValidByTypeCode { get; set; }
         public string ValidByTypeName { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
+        public string QuoteClosingReasonNotes { get; set; }
+
     }
 }

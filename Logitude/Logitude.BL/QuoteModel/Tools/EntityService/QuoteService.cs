@@ -392,7 +392,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 quoteStatus.Stage.Id = stage.Id;
                                 quoteStatus.Stage.Name = stage.Name;
                                 quoteStatus.Stage.StageDate = entityPM.LastStageDate;
-                                if (stage.Code == "QTAC") quoteStatus.QuoteAcceptNote = entityPM.EventNote;
+                                if (stage.Code == "QTAC")
+                                {
+                                    quoteStatus.QuoteAcceptNote = entityPM.EventNote;
+                                }
+                                    
                                 if (stage.Code == "QTDC")
                                 {
                                     QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
@@ -404,8 +408,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         quoteStatus.QuoteDeclineReason.Note = entityPM.EventNote;
                                     }
                                 }
-
-
                             }
                         }
 

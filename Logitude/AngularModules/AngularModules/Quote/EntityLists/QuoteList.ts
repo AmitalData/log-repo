@@ -222,5 +222,6 @@ export class QuoteList {
 		ValidByTypeCode: string;
 		ValidByTypeName: string;
 		ConnectedToOpportunity: boolean;
+		QuoteClosingReasonNotes: string;
 	
 }
