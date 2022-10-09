@@ -1635,6 +1635,7 @@ export class MaintenanceComponent {
         logWindow.Title = "Object Names";
         logWindow.IsShowCloseButton = true;
         logWindow.Width = 800;
+        logWindow.IsHideHeader = true;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
         return { logWindow, windowArgs };
     }
