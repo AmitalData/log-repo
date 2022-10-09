@@ -56,6 +56,7 @@ import { DocumentCopiesViewModel } from '../../../../InfrastructureModules/Infra
 import { AutomationCreateTask } from '../../../DataContracts/AutomationCreateTask';
 import { QuoteTemplateListService } from '../../../../Quote/Services/StandardLists/QuoteTemplateListService';
 import { AutomationEvent } from 'Infrastructure/DataContracts/AutomationEvent';
+import { FieldValidator } from '../../../Validators/FieldValidator';
 
 
 @Component({
@@ -2068,20 +2069,36 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
             return;
         }
+        
+        this.ValidateSetText(item);
+        this.ValidateSetNumber(item);
+    }
+
+
+    private ValidateSetText(item: AutomationSetValueViewModel) {
         if (item.SelectedCustomField.DataTypeCode != "Text" && item.SelectedCustomField.DataTypeCode != "nText")
             return;
-        if (this.IsNotValidAutomationSetValue(item)) {
+        if (this.IsNotValidAutomationSetValueText(item)) {
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
             return;
         }
-        if (this.IsNotValidAutomationSetField(item)) {
+        if (this.IsNotValidAutomationSetFieldText(item)) {
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
             return;
         }
     }
 
+    private ValidateSetNumber(item: AutomationSetValueViewModel) {
+        if (!(item.SelectedCustomField.DataTypeCode == "Decimal" && item.SelectedCustomField.IsCustom))
+            return;
+        if (this.IsNotValidAutomationSetValueNumber(item) || this.IsNotValidAutomationSetFieldNumber(item)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " Length must be between 1 and " + item.SelectedCustomField.NumberOfDigits + ", and Decimal Digits must be between 0 and " + item.SelectedCustomField.DigitsAfterPoint);
+            return;
+        }
 
-    private IsNotValidAutomationSetField(item: AutomationSetValueViewModel) {
+    }
+
+    private IsNotValidAutomationSetFieldText(item: AutomationSetValueViewModel) {
         if (item.SelectedOperator.Code != "SF")
             return false;
 
@@ -2092,7 +2109,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         return false;
     }
 
-    private IsNotValidAutomationSetValue(item: AutomationSetValueViewModel) {
+    private IsNotValidAutomationSetValueText(item: AutomationSetValueViewModel) {
         if (item.SelectedOperator.Code != "SV")
             return false;
 
@@ -2100,6 +2117,24 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             return true;
 
         return false;
+    }
+
+    private IsNotValidAutomationSetFieldNumber(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SF")
+            return false;
+
+        if (item.AutomationHelper.ConditionNumberLength > item.SelectedCustomField.NumberOfDigits || item.AutomationHelper.ConditionDecimalDigits > item.SelectedCustomField.DigitsAfterPoint)
+            return true;
+
+
+        return false;
+    }
+
+    private IsNotValidAutomationSetValueNumber(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SV")
+            return false;
+        var fieldValidator = new FieldValidator();
+        return !fieldValidator.IsValidCustomNumberValue(item.SelectedCustomField, item.CurrentEntityPM.Value);
     }
 
     private IsEntityConditionsChanged(isFollowUp) {

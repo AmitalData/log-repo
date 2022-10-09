@@ -253,7 +253,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsForeignKey = a.IsForeignKey,
                                                      ForeignEntity = a.ForeignEntity,
                                                      NavigationPropertyName = a.NavigationPropertyName,
-
+                                                     NumberOfDigits = a.NumberOfDigits,
+                                                     DigitsAfterPoint = a.DigitsAfterPoint
                                                  };
             return result;
         }
