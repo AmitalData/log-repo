@@ -106,7 +106,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (notValidUIProperties.length === 0 && this.IsValidConditions) {
             this.setConditionsData();
 
-            //console.log(this.Conditions);
+            //console.log(this.Data);
 
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {

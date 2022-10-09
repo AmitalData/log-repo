@@ -66,3 +66,7 @@
     -moz-border-radius: 3px !important;
     -webkit-border-radius: 3px !important;
 }
+
+.ant-select-clear {
+    right: 20px !important;
+}

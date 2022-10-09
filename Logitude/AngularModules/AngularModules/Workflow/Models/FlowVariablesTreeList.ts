@@ -39,9 +39,9 @@ export class FlowVariablesTreeList {
 
         this.getGetRecordNodesWithFirstRecordOption().forEach((node: any) => {
             let treeSelectItemName = node.data["name"];
-            let treeSelectItemKey = treeSelectItemName ? treeSelectItemName.replaceAll(" ", "").toLowerCase() : "";
-            //let test = this.getObjectFieldsItems("xxxxx", node.data["entity"]);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, []);
+            let treeSelectItemKey = treeSelectItemName ? treeSelectItemName.replace(/\ /gi, "").toLowerCase() : "";
+            let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, node.data["entity"]);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, treeSelectItemChildren);
             recordsVariablesItemChildren.push(treeSelectItem);
         });
 
@@ -58,7 +58,13 @@ export class FlowVariablesTreeList {
             declaredVariablesItemChildren.push(treeSelectItem);
         });
 
-        return declaredVariablesItemChildren;
+        let sortedDeclaredVariablesItemChildren = declaredVariablesItemChildren.sort((a, b) => {
+            let textA = a.title.toLowerCase();
+            let textB = b.title.toLowerCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        return sortedDeclaredVariablesItemChildren;
     }
 
     private getGetRecordNodesWithFirstRecordOption() {
@@ -83,13 +89,19 @@ export class FlowVariablesTreeList {
         let objectFieldsItems = [];
 
         objectFields.forEach((objectField: ObjectFieldPM) => {
-            let treeSelectItemName = objectField.FullNameTextCodeDefaultText;
+            let treeSelectItemName = objectField.FullNameTextCodeDefaultText.trim();
             let treeSelectItemKey = itemsKeyPrefix + "." + objectField.FieldName;
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
             objectFieldsItems.push(treeSelectItem);
         });
 
-        return objectFieldsItems;
+        let sortedObjectFieldsItems = objectFieldsItems.sort((a, b) => {
+            let textA = a.title.toLowerCase();
+            let textB = b.title.toLowerCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        return sortedObjectFieldsItems;
     }
 
     private getEntityId(entity: string) {
