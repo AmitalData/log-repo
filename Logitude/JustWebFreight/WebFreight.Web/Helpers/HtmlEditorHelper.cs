@@ -5921,9 +5921,12 @@ namespace WebFreight.Web.Helpers
             string pageLink;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
 
+            
+
             if (sharedTenant.IsDigitalPortalAccessActivated == true)
             {
-                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key;
+                var isDisplayDocumentsAndEvents = (sharedTenant != null && sharedTenant.DisplayDocumentsAndEvents);
+                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + "&additionalSetting=" + isDisplayDocumentsAndEvents;
             }
             else if (sharedTenant.IsCargoTrackWebAccessActivated == true)
             {
