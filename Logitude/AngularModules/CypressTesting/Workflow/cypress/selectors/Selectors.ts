@@ -34,6 +34,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowRootOperation = "[data-cy^='ConditionsOperation']";
     public static readonly WorkflowDescription = "#WorkFlow_Description";
     public static readonly WorkflowOwner = "#WorkFlow_OwnerId";
+    public static readonly RunHistoryRefreshButton = "#Refresh_1";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";

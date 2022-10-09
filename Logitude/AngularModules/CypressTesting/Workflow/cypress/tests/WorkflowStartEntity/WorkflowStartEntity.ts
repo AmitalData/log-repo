@@ -1,6 +1,6 @@
 import * as Actions from "../../actions/Actions"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import * as Assists from "../../.../../../../Base/cypress/assists/Assists";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { StartNodeDetails } from "../../models/StartNodeDetails";
 import { WorkflowDetails } from "../../models/WorkflowDetails";
 import { ConditionDetails } from "../../models/ConditionDetails";
@@ -8,7 +8,7 @@ import { ConditionDetails } from "../../models/ConditionDetails";
 let secondGroupSelector = 0;
 
 Given("the user logged in and navigates to automation workspace", () => {
-    cy.Login(true);
+    cy.Login();
     Actions.NavigatesToAutomationsWorkspace();
 });
 
@@ -29,27 +29,6 @@ Then("the flow should create successfully", () => {
     Actions.AssertCreateWorkflow();
 });
 
-Given("edit workflow general inforamtion with following details", (dataTable) => {
-    let workflowDetails = Assists.CreateInstance<WorkflowDetails>(dataTable, true);
-    Actions.FillUpdateWorkflowDetails(workflowDetails);
-});
-
-When("save workflow", () => {
-    Actions.UpdateNewWorkflow();
-});
-
-Then("the workflow should update successfully", () => {
-    Actions.AssertUpdateWorkflow();
-});
-
-When("open run history", () => {
-    Actions.OpenFlowRunHistory();
-});
-
-Then("the instances should appear successfully", () => {
-    Actions.AssertOpenFlowRunHistory();
-});
-
 Given("edit start configration with following details", (dataTable) => {
     let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
     Actions.FillEditFlowStartNodeDetails(startNodeDetails);
@@ -59,7 +38,6 @@ Given("add condition group met with {string} with the following details", (Group
     let groupRootConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
     Actions.FillRootConditionsDetails(GroupOperation, groupRootConditionDetailsList);
     secondGroupSelector = secondGroupSelector + groupRootConditionDetailsList.length;
-
 });
 
 When("save flow", () => {

@@ -11,16 +11,6 @@ Feature: Workflow node
         When create workflow
         Then the flow should create successfully
 
-    Scenario: edit workflow general inforamtion
-        Given edit workflow general inforamtion with following details
-            | Name | random |
-        When save workflow
-        Then the workflow should update successfully
-
-    Scenario: open workflow run history
-        When open run history
-        Then the instances should appear successfully
-
     Scenario: edit start configration
         Given edit start configration with following details
             | Object           | Shipment            |

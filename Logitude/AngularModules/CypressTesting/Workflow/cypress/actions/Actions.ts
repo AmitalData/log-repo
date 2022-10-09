@@ -87,7 +87,7 @@ export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName)
     cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner,workflowDetails.Owner)
+    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function OpenEditStartNode() {
@@ -107,6 +107,8 @@ export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
     let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName);
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
+    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function CreateNewWorkflow() {
@@ -128,13 +130,13 @@ export function CloseEditStartNodeWindow() {
 }
 
 export function OpenFlowRunHistory() {
+    cy.Click(WorkflowSelectors.FlowEditButton, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetWorkflowInstance);
     cy.Click(WorkflowSelectors.FlowRunHistory, null);
 }
 
 export function AssertOpenFlowRunHistory() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowInstance, 200);
-    cy.Click(WorkflowSelectors.WorkflowGeneralBackButton, null);
 }
 
 export function SaveWorkflow() {
@@ -169,7 +171,6 @@ export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: 
     }
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-
     FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
     ConditionGroupButton = ConditionCounter;
 }
@@ -179,7 +180,6 @@ export function FillNestedGroupConditionDetails(secondGroupSelector: number, gro
     cy.Click(WorkflowSelectors.WorkflowGroupButton(secondGroupSelector), null)
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-
     FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
     ConditionGroupButton = ConditionCounter;
 }
@@ -199,6 +199,26 @@ export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], Is
             cy.Click(WorkflowSelectors.WorkflowAddConditionButton(ConditionGroupButton), null);
         }
     }
+}
+
+export function RefreshRunHistory() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetWorkflowInstance);
+    cy.Click(WorkflowSelectors.RunHistoryRefreshButton, null)
+}
+
+export function AssertRefreshRunHistory() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowInstance, 200);
+}
+
+export function SearchInstanceByBusinessKey() {
+    GetFirstFlowName()
+}
+
+function GetFirstFlowName() {
+    cy.get('.cdk-virtual-scroll-content-wrapper').find('list-template > span > div').first()
+}
+export function AssertSearchInstanceByBusinessKey() {
+
 }
 
 function FillConditionValue(selector: string, value: string, condition: string) {

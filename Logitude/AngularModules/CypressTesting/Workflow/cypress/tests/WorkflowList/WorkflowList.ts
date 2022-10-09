@@ -2,7 +2,7 @@ import * as Actions from "../../actions/Actions"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 
 Given("the user logged in and navigates to automation workspace", () => {
-    cy.Login(true)
+    cy.Login();
     Actions.NavigatesToAutomationsWorkspace();
 });
 
