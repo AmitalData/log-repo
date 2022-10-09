@@ -2329,8 +2329,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private List<ShipmentSubType> GetShipmentTypes(int tenant)
         {
             ShipmentSubTypeRepository shipmentSubTypeRepository = new ShipmentSubTypeRepository(repository.context);
-            IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(tenant);
-            return shipmentSubTypes.ToList();
+            IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypesWithoutIncludes(tenant);
+            return shipmentSubTypes.Where(a => !a.Inactive).ToList();
         }
 
         #endregion Transport & Subtypes
