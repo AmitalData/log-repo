@@ -38,7 +38,10 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					                          UpdatedByUserId = a.UpdatedByUserId,
 					
 					                          SearchFields = a.SearchFields,
-					
+											  Name = a.Name,
+											  Type = a.Type , 
+											  Value = a.Value,
+											  WorkflowInstanceId = a.WorkflowInstanceId
 		                    	            });
             return query;
 		}
