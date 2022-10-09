@@ -314,12 +314,11 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         filters.addAdditionalFilter("InterestEntityTypeCode", journalEntityId, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("EntityId", EntityPMId, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
         return this.interestTransactionListService.getByFilters(filters)
             .subscribe(r => {
                 //this.LedgerTransactionList = new ObservableCollection([]);
                 let res: InterestTransactionList[] = r.Result;
-
+                res = res.filter(x => x.JournalNumber == this.EntityPM.JournalNumber);
 
                 this.InterestTransactionList.InsertCollection(res);
             });

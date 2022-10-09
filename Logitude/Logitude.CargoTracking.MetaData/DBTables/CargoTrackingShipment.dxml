@@ -770,6 +770,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChargeableWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargeableWeightUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

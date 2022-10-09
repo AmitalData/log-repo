@@ -45,6 +45,7 @@ using System.Web.Configuration;
 using System.Collections.Specialized;
 using System.Collections;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -175,7 +176,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
                 List<Milestone> shipmentMilestones = cargoTrackingMilestoneBuilder.BuildShipmentMilstones(shipment, milestone);
                 cargoTrackingShipmentQueryService.SetMilestonesStatus(shipment, shipmentMilestones);
-
+                shipment.ChargeableWeightInKG = ShipmentMapping.GetWeightInKG(shipment.ChargeableWeightUnitCode, shipment.ChargeableWeight);
 
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {

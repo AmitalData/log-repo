@@ -263,6 +263,10 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string SHOHouse { get; set; }
         [Column("ChargeableWeightInKG")]
 	    public double? ChargeableWeightInKG { get; set; }
+        [Column("ChargeableWeight")]
+	    public double? ChargeableWeight { get; set; }
+        [Column("ChargeableWeightUnitCode")]
+	    public string ChargeableWeightUnitCode { get; set; }
     }
 }
 	 

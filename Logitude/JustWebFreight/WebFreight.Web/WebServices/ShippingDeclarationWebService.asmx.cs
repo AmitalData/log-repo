@@ -960,14 +960,14 @@ namespace WebFreight.Web.WebServices
                 {
                     Card customAgentImport = (from a in commonContext.Cards
                                               where a.Id == shipment.CustomAgentImportId
-                                              select a).FirstOrDefault();
-                    myDataProvider.CustomsAgent = customAgentImport.EnglishName;
-                    myDataProvider.Broker = customAgentImport != null ? customAgentImport.EnglishName : "";
-                    myDataProvider.BrokerName = customAgentImport != null ? customAgentImport.EnglishName : "";
+                                              select a).FirstOrDefault();                   
+                    
                     if (customAgentImport != null)
                     {
+                        myDataProvider.CustomsAgent = customAgentImport.EnglishName;
+                        myDataProvider.Broker = customAgentImport != null ? customAgentImport.EnglishName : "";
+                        myDataProvider.BrokerName = customAgentImport != null ? customAgentImport.EnglishName : "";
                         myDataProvider.TotalPayablesForCustomsAgent = shipment.ShipmentPayables.Where(s => s.VendorId == customAgentImport.Id).Sum(p => p.OpenAmountInLocalCurrency);
-
                     }
 
                     if (shipment.CustomAgentImportAddressId != null)
@@ -989,17 +989,19 @@ namespace WebFreight.Web.WebServices
                             {
                                 myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber) ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
                             }
+
+                            myDataProvider.CustomsAgentAddress = DataProviders.General.GetAddress(customAgentImportAddress);
                         }
                     }
 
                     if (!string.IsNullOrEmpty(shipment.CustomAgentImportContactId))
                     {
                         Contact customAgentImportContact = contactRepository.GetSingleContact(shipment.CustomAgentImportContactId, tenant);
-
                         if (customAgentImportContact != null)
                         {
                             myDataProvider.BrokerEmail = customAgentImportContact.Email;
-                        }
+                            myDataProvider.CustomsAgentContactDetails = this.BuildContactDetails(customAgentImportContact);                            
+                        }                        
                     }
                 }
                 #endregion
@@ -1010,14 +1012,24 @@ namespace WebFreight.Web.WebServices
                     Card customAgentExport = (from a in commonContext.Cards
                                               where a.Id == shipment.CustomAgentExportId
                                               select a).FirstOrDefault();
-
-                    myDataProvider.CustomsAgent = customAgentExport.EnglishName + "";
+                    
                     if (customAgentExport != null)
                     {
-                        //myDataProvider.TotalPayablesForCustomsAgent = shipment.ShipmentPayables.Where(s => s.VendorId == customAgentExport.Id).Sum(p => p.OpenAmountInLocalCurrency) + shipment.ShipmentPayables.Where(s => s.VendorId == customAgentExport.Id).Sum(p => p.AccountedAmountInLocalCurrency);
+                        myDataProvider.CustomsAgent = customAgentExport.EnglishName + "";
                         myDataProvider.TotalPayablesForCustomsAgent = shipment.ShipmentPayables.Where(s => s.VendorId == customAgentExport.Id).Sum(p => p.OpenAmountInLocalCurrency + p.AccountedAmountInLocalCurrency);
                     }
 
+                    if (shipment.CustomAgentExportAddressId != null)
+                    {
+                        Address customAgentExportAddress = addressRepository.GetSingleAddress(shipment.CustomAgentExportAddressId, tenant);
+                        myDataProvider.CustomsAgentAddress = DataProviders.General.GetAddress(customAgentExportAddress);                        
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.CustomAgentExportContactId))
+                    {
+                        Contact customAgentExportContact = contactRepository.GetSingleContact(shipment.CustomAgentExportContactId, tenant);
+                        myDataProvider.CustomsAgentContactDetails = this.BuildContactDetails(customAgentExportContact);                        
+                    }
                 }
                 #endregion
 
@@ -5015,6 +5027,38 @@ namespace WebFreight.Web.WebServices
             shippingDeclarationDataProvider.OnCarriageETD = routingDataProvider.OnCarriageETD;
             shippingDeclarationDataProvider.OnCarriageATD = routingDataProvider.OnCarriageATD;
             shippingDeclarationDataProvider.OnCarriageATA = routingDataProvider.OnCarriageATA;
+        }
+
+        private string BuildContactDetails(Contact contact)
+        {
+            if (contact == null) return "";
+
+            string myResult = contact.EnglishName;
+
+            if (!string.IsNullOrEmpty(contact.BusinessPhone))
+            {
+                myResult = myResult + Environment.NewLine + "Ph: " + contact.BusinessPhone;
+
+                if (!string.IsNullOrEmpty(contact.Fax))
+                {
+                    myResult = myResult + " - Fx: " + contact.Fax;
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(contact.Fax))
+                {
+                    myResult = myResult + Environment.NewLine + "Fx: " + contact.Fax;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(contact.Email))
+            {
+                myResult = myResult + Environment.NewLine + "Email: " + contact.Email;
+            }
+
+            return myResult;
         }
     }
 }

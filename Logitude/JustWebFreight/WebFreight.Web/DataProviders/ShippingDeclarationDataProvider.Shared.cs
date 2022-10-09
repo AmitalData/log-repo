@@ -354,6 +354,8 @@ namespace WebFreight.Web.DataProviders
         public string UserMobileNumber { get; set; }
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
+        public string CustomsAgentAddress { get; set; }
+        public string CustomsAgentContactDetails { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }
         public double? TotalPayablesForCustomsAgent { get; set; }
         public double? TotalPayablesForAgent { get; set; }
