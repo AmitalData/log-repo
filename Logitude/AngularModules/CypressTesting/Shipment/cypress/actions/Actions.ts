@@ -175,6 +175,7 @@ export function openHouseShipment(Housenumberopen: any) {
     cy.get("hyperlink").contains(parseInt(Housenumberopen, 10)).click({ force: true })
 }
 export function OpenShipment(shipmentNumber: string) {
+    cy.wait(2000)
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
 
     var quickSearchDetails = {
