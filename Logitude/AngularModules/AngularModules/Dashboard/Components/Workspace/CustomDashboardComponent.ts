@@ -166,7 +166,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked", DashboardId: this.SelectedDashboard?.Id });
         this.HasChanges = false;
         this.IsEditLayoutButtonVisible = false;
-        this.IsEditDashboardButtonVisible = true;
+        this.IsEditDashboardButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditLayoutModeActive = true;
         var cloneWidgets:WidgetPM[] = []
         for (const item of this.SelectedDashboard.Widgets) {
