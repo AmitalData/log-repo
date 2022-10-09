@@ -957,6 +957,17 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                 }
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(tenant);
+<#+ 
+                if(tableName == "Activity")
+{
+#>              
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = <#= contextName #>.GetSecContext(tenant);
+                }
+<#+
+}#>
 				<#= tableName #>ListQueryService <#= queryName #> = new <#= tableName #>ListQueryService(MyContext);
 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
