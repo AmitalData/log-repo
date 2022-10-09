@@ -25,7 +25,10 @@ using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
@@ -56,6 +59,10 @@ namespace WebFreight.Web.Helpers
         private DigitalExportResult AddQueryExportExecutionLog(GeneralFilters queryFilters)
         {
             int tenant = (int)queryFilters.Tenant;
+
+            var myTenantRepository = new TenantRepository(tenant);
+            var tenantData = myTenantRepository.GetSingleTenantWithOutIncluded(tenant);
+            
             var reportExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
             var logId = IdCounter.GetNumber("QueryExportExecutionLog", tenant);
             var loggedEmail = SecurityUtility.GetAuthenticatedUser();
@@ -74,33 +81,72 @@ namespace WebFreight.Web.Helpers
             reportExecutionLogRepository.SubmitChanges();
 
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
-            string fileName = GetOutpuFileName(ObjectTableName);
 
+            string mappedFile = "";
+
+            if (ObjectTableName.Equals("DigitalShipmentsView", StringComparison.InvariantCultureIgnoreCase))
+            {
+                mappedFile = $"DigitalPortal_{tenantData.Company}_ShipmentList";
+            }
+            else if (ObjectTableName.Equals("DigitalInvoice", StringComparison.InvariantCultureIgnoreCase))
+            {
+                mappedFile = $"DigitalPortal_{tenantData.Company}_InvoiceList";
+            }
+
+            string fileName = GetOutpuFileName(mappedFile);
 
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DigitalPortalQueryExportExecutionQueue", executionLog.Tenant);
 
             queueservice.Send(new Dictionary<string, string>() {
-                    { "LogId", executionLog.Id },
-                    { "Tenant", executionLog.Tenant.ToString() },
+                    { "LogId", executionLog.Id},
+                    { "Tenant", executionLog.Tenant.ToString()},
                     { "FileName", fileName },
-                    { "LoggedUserEmail", loggedEmail },
+                    { "LoggedUserEmail", loggedEmail},
                 }, tenant, null, null, null, null);
 
             return new DigitalExportResult() { ExecutionLogId = logId, FileName = fileName, IsWorkerRole = true };
         }
 
-        private static string GetOutpuFileName(string ObjectTableName)
+        private static string GetOutpuFileName(string mappedFileName)
         {
-            return ObjectTableName + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
+            return mappedFileName + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
         }
 
         private byte[] DigitalPortalShipmentExportToExcel(List<DigitalShipmentList> digitalShipmentLists)
         {
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Name = "Shipments";
+
+            sheet1.Range["A1:D1"].Merge();
+            sheet1.Range["A2:D2"].Merge();
+            sheet1.Range["E1:S1"].Merge();
+            sheet1.Range["E2:S2"].Merge();
+            sheet1.Range["E1"].CellStyle.Font.Bold = true;
+            sheet1.Range["E1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["E1"].VerticalAlignment = ExcelVAlign.VAlignTop;
+            sheet1.Range["E1"].Text = "Shipments List";
+            sheet1.Range["E1"].CellStyle.Font.Size = 14;
+
+            sheet1.Range["E2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["E2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["E2"].CellStyle.Font.Size = 12;
+
+            sheet1.Range["A3:S3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:S3"].CellStyle.Font.Bold = true;
+            sheet1.Range["A3:S3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A3:S3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["A3:S3"].CellStyle.Font.Size = 11;
+            sheet1.Range["A3:S3"].Borders[ExcelBordersIndex.EdgeLeft].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:S3"].Borders[ExcelBordersIndex.EdgeRight].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:S3"].Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:S3"].Borders[ExcelBordersIndex.EdgeBottom].LineStyle = ExcelLineStyle.Thin;
+
+            sheet1.Range["A3:S3"].AutofitRows();
+            sheet1.Range["A3:S3"].AutofitColumns();
 
             // Build excel headers 
             var table = new DataTable();
@@ -124,43 +170,83 @@ namespace WebFreight.Web.Helpers
             table.Columns.Add("Goods Description");
             table.Columns.Add("Goods Value");
 
+            var index = 4;
             foreach (var item in digitalShipmentLists)
             {
+                sheet1.Range[$"A{index}:S{index}"].CellStyle.Font.Size = 10;
+                sheet1.Range[$"A{index}:S{index}"].ColumnWidth = 25;
+                sheet1.Range[$"A{index}:S{index}"].WrapText = true;
+                sheet1.Range[$"A{index}:S{index}"].AutofitRows();       
+                sheet1.Range[$"A{index}:S{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                sheet1.Range[$"A{index}:S{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+
                 DataRow row = table.NewRow();
                 row[0] = item.ShipmentNumber;
                 row[1] = item.TransportModeName;
                 row[2] = item.DirectionName;
                 row[3] = item.MainCarriageFromPortName;
                 row[4] = item.MainCarriageToPortName;
-                row[5] = item.MainCarriageATD.HasValue ? item.MainCarriageATD : null;
-                row[6] = item.MainCarriageATA.HasValue ? item.MainCarriageATA : null;
+                row[5] = item.MainCarriageATD;
+                row[6] = item.MainCarriageATA;
                 row[7] = item.Master;
                 row[8] = item.ShipperName;
                 row[9] = item.ConsigneeName;
                 row[10] = item.ShipmentTypeName;
                 row[11] = item.StatusName;
-                row[12] = item.NumberOfPackages.HasValue ? item.NumberOfPackages : 0;
+                row[12] = item.NumberOfPackages;
                 row[13] = item.GrossWeight;
-                row[14] = item.ChargeableWeight.HasValue ? item.NumberOfPackages : 0;
+                row[14] = item.NumberOfPackages;
                 row[15] = item.IncotermCode ;
-                row[16] = item.Volume.HasValue ? item.Volume : 0;
+                row[16] = item.Volume;
                 row[17] = item.DescriptionOfGoods;
-                row[18] = item.ValueOfGoods.HasValue ? item.ValueOfGoods : 0;
+                row[18] = item.ValueOfGoods;
+
                 table.Rows.Add(row);
+                index++;
             }
 
-            sheet1.ImportDataTable(table, true, 1, 1);
+            sheet1.Range["A4"].FreezePanes();
+            sheet1.ImportDataTable(table, true, 3, 1);
             workbook.Version = ExcelVersion.Excel2007;
+            MemoryStream memory = new MemoryStream();
             workbook.SaveAs(memory);
+            workbook.Close();
+            excelEngine.Dispose();
             return memory.ToArray();
         }
 
         private byte[] DigitalPortalInvoiceExportToExcel(List<ARInvoiceList> invoices)
         {
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
+
+            sheet1.Name = "Invoices";
+            sheet1.Range["A1:L1"].Merge();
+            sheet1.Range["A2:L2"].Merge();
+            sheet1.Range["A1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range["A1"].VerticalAlignment = ExcelVAlign.VAlignTop;
+            sheet1.Range["A1"].Text = "Invoices List";
+            sheet1.Range["A1"].CellStyle.Font.Size = 14;
+
+            sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range["A2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["A2"].CellStyle.Font.Size = 12;
+
+            sheet1.Range["A3:L3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:L3"].CellStyle.Font.Bold = true;
+            sheet1.Range["A3:L3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A3:L3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["A3:L3"].CellStyle.Font.Size = 11;
+            sheet1.Range["A3:L3"].Borders[ExcelBordersIndex.EdgeLeft].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:L3"].Borders[ExcelBordersIndex.EdgeRight].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:L3"].Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:L3"].Borders[ExcelBordersIndex.EdgeBottom].LineStyle = ExcelLineStyle.Thin;
+
+            sheet1.Range["A3:L3"].AutofitRows();
+            sheet1.Range["A3:L3"].AutofitColumns();
 
             // Build excel headers 
             var table = new DataTable();
@@ -177,9 +263,19 @@ namespace WebFreight.Web.Helpers
             table.Columns.Add("Due Date");
             table.Columns.Add("Print Notes");
 
+            var index = 4;
+
             foreach (var item in invoices)
             {
+                sheet1.Range[$"A{index}:L{index}"].CellStyle.Font.Size = 10;
+                sheet1.Range[$"A{index}:L{index}"].ColumnWidth = 25;
+                sheet1.Range[$"A{index}:L{index}"].WrapText = true;
+                sheet1.Range[$"A{index}:L{index}"].AutofitRows();
+                sheet1.Range[$"A{index}:L{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                sheet1.Range[$"A{index}:L{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+
                 DataRow row = table.NewRow();
+
                 row[0] = item.InvoiceNumber;
                 row[1] = item.ARInvoiceTypeName;
                 row[2] = item.MainEntityReference;
@@ -193,11 +289,16 @@ namespace WebFreight.Web.Helpers
                 row[10] = item.DueDate;
                 row[11] = item.PrintNotes;
                 table.Rows.Add(row);
+                index++;
             }
 
-            sheet1.ImportDataTable(table, true, 1, 1);
+            sheet1.Range["A4"].FreezePanes();
+            sheet1.ImportDataTable(table, true, 3, 1);
             workbook.Version = ExcelVersion.Excel2007;
+            MemoryStream memory = new MemoryStream();
             workbook.SaveAs(memory);
+            workbook.Close();
+            excelEngine.Dispose();
             return memory.ToArray();
         }
 
@@ -239,7 +340,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
             }
 
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", newFilters.Tenant.Value);
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", newFilters.Tenant.Value);
 
             if (newFilters.AdditionalFilters.Any())
             {
@@ -401,7 +502,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
@@ -448,68 +549,7 @@ namespace WebFreight.Web.Helpers
             var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, tenant);
             entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-            {
-                var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
-                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
-
-                var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
-
-                if (objectField != null)
-                {
-                    var sortClass = new GenericSort();
-
-                    if (!objectField.IsCustom)
-                    {
-                        switch (objectField.DataTypeCode.ToLower())
-                        {
-                            case "text":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "double":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, double>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "datetime":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, DateTime>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "integer":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, int>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "lookup":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "boolean":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, bool>(queryOperations, entityLists);
-                                    break;
-                                }
-                            default:
-                                {
-                                    entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
-                                    break;
-                                }
-                        }
-                    }
-                    else
-                    {
-                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
-                    }
-                }
-            }
-            else
-            {
-                entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
-            }
+            entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
 
             return entityLists?.ToList();
         }
