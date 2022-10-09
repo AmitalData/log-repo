@@ -60,7 +60,6 @@ export class NewBIReportFolderComponent extends BaseComponent {
                 }
                 else {
                     this.EntityPM = myResponse.Result;
-                    this.EntityPM.PermissionForAll = true;
                     this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                     this.IsReady = true;
                     this.SetShareFolderDetails();
