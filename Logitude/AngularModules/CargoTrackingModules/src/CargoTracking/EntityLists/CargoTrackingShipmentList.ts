@@ -156,6 +156,8 @@ export class CargoTrackingShipmentList {
 	InvoicedExceptionReason: string;
 	SHOHouse: string;
 	ChargeableWeightInKG: number;
+	ChargeableWeight: number;
+	ChargeableWeightUnitCode: string;
 	
 }
  

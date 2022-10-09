@@ -709,6 +709,16 @@ export class CargoTrackingShipmentPM {
     public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
        
 	 
+    private chargeableWeight: number;
+    public get ChargeableWeight() { return this.chargeableWeight; }
+    public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
+       
+	 
+    private chargeableWeightUnitCode: string;
+    public get ChargeableWeightUnitCode() { return this.chargeableWeightUnitCode; }
+    public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

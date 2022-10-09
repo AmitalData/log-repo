@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,13 +12,13 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.CargoTracking.Data.Repositories
 {
-   public partial class CargoTrackingShipmentRepository:IRepository<CargoTrackingShipment>
-   {
-        
-		public List<CargoTrackingShipment> GetMulti(EntityKeyFields entityKeys)
+    public partial class CargoTrackingShipmentRepository:IRepository<CargoTrackingShipment>
+    {
+
+        public List<CargoTrackingShipment> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public IQueryable<CargoTrackingShipment> GetByShipmentIds(List<string> ShipmentIds, int tenant)
@@ -32,17 +32,17 @@ namespace Logitude.CargoTracking.Data.Repositories
         private IQueryable<CargoTrackingShipment> GetFilteredShipments(int tenant)
         {
             var shipments = (from shipment in currentContext.CargoTrackingShipments
-                             where shipment.Tenant == tenant 
+                             where shipment.Tenant == tenant
                                     && shipment.IsMainRecord == true
-                              select shipment);
+                             select shipment);
             return shipments;
         }
 
         public IQueryable<CargoTrackingShipment> GetFilteredShipmentsByIds(List<string> ShipmentIds, int tenant)
         {
             var shipments = (from shipment in currentContext.CargoTrackingShipments
-                             where  ShipmentIds.Contains(shipment.EntityId) 
-                                    && shipment.Tenant == tenant 
+                             where  ShipmentIds.Contains(shipment.EntityId)
+                                    && shipment.Tenant == tenant
                                     && shipment.IsMainRecord == true
 
                              select shipment);
@@ -76,11 +76,11 @@ namespace Logitude.CargoTracking.Data.Repositories
         public List<string> GetPublicReferencesForShipment(string shipmentId, int tenant)
         {
             List<string> shipment = (from _shipment in currentContext.CargoTrackingShipmentSearches
-                                              where
-                                                    _shipment.Tenant == tenant
-                                                 && _shipment.ShipmentId == shipmentId
-                                                 && _shipment.IsPublic == true
-                                              select _shipment.SearchFields).ToList();
+                                     where
+                                           _shipment.Tenant == tenant
+                                        && _shipment.ShipmentId == shipmentId
+                                        && _shipment.IsPublic == true
+                                     select _shipment.SearchFields).ToList();
 
             return shipment;
         }
@@ -95,4 +95,3 @@ namespace Logitude.CargoTracking.Data.Repositories
     }
 
 }
-   

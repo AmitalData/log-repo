@@ -17,6 +17,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.ShipmentOrderModule.BL.EntityDataMappings;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -45,6 +46,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             SetTenantFields();
             SetShipmentCloudDataFields();
             SetSharedLogisticsSettings();
+            this.cargoShipmentPM.ChargeableWeightInKG = ShipmentMapping.GetWeightInKG(this.cargoShipmentPM.ChargeableWeightUnitCode, this.cargoShipmentPM.ChargeableWeight);
         }
 
 

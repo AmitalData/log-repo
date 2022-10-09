@@ -260,6 +260,10 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.SHOHouse).HasColumnName("SHOHouse").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
+
+            this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
+
+            this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }
