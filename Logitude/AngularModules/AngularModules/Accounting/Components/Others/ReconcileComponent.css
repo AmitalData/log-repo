@@ -423,7 +423,9 @@
 
 
 /*end remark tooltip styles*/
-
+.fixed {
+    position: initial !important;
+}
 ul.horizontal-list.fixed{
     height: 30px;
 }
