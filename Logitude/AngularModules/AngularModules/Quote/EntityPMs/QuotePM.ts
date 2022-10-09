@@ -696,8 +696,12 @@ export class QuotePM {
     private eventNote: string;
     public get EventNote() { return this.eventNote; }
     public set EventNote(newValue: string) { if (this.eventNote != newValue) { this.eventNote = newValue; this.MarkAsDirty("EventNote"); } }
-       
-	 
+
+    private quoteClosingReasonNotes: string;
+    public get QuoteClosingReasonNotes() { return this.quoteClosingReasonNotes; }
+    public set QuoteClosingReasonNotes(newValue: string) { if (this.quoteClosingReasonNotes != newValue) { this.quoteClosingReasonNotes = newValue; this.MarkAsDirty("QuoteClosingReasonNotes"); } }
+
+
     private saleCurrencyId: string;
     public get SaleCurrencyId() { return this.saleCurrencyId; }
     public set SaleCurrencyId(newValue: string) { if (this.saleCurrencyId != newValue) { this.saleCurrencyId = newValue; this.MarkAsDirty("SaleCurrencyId"); } }

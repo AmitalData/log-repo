@@ -923,6 +923,7 @@ export class QuoteMenuButtonsHandler {
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
+            args.ShowClosingReasonNotes = true;
             logWindow.Width = 450;
             logWindow.Height = 300;
             logWindow.Title = TextCodeTranslator.Translate("Quote.B.Accept");
@@ -947,7 +948,7 @@ export class QuoteMenuButtonsHandler {
             args.EntityPM = this.EntityPM;
             args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
             args.ShowClosingReason = true;
-
+            args.ShowClosingReasonNotes = true;
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;

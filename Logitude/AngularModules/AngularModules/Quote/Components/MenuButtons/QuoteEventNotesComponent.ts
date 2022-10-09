@@ -18,6 +18,8 @@ export class QuoteEventNotesComponent extends BaseComponent {
     public ShowClosingReason: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsConvertQuoteType: boolean = false;
+    public ShowClosingReasonNotes: boolean = false;
+
     constructor() {
         super();
     }
@@ -27,6 +29,7 @@ export class QuoteEventNotesComponent extends BaseComponent {
         this.NotesHeader = args.NotesHeader;
         this.ShowClosingReason = args.ShowClosingReason;
         this.IsConvertQuoteType = args.IsConvertQuoteType;
+        this.ShowClosingReasonNotes = args.ShowClosingReasonNotes;
         this.EventNote = null;
         this.Clone();
     }
@@ -46,6 +49,14 @@ export class QuoteEventNotesComponent extends BaseComponent {
         }
     }
 
+    get QuoteClosingReasonNotes() { return this.EntityPM.QuoteClosingReasonNotes; }
+    set QuoteClosingReasonNotes(value: string) {
+        if (this.EntityPM.QuoteClosingReasonNotes != value) {
+            this.EntityPM.QuoteClosingReasonNotes = value;
+            this.EntityPM.EventNote = value;
+        }
+    }
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -59,6 +70,7 @@ export class QuoteEventNotesComponent extends BaseComponent {
     private Clone() {
         this.myCloner = new Cloner(this.EntityPM);
         this.myCloner.AddField('EventNote');
+        this.myCloner.AddField('QuoteClosingReasonNotes');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
