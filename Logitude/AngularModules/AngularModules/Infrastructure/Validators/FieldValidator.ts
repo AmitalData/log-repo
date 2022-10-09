@@ -128,11 +128,11 @@ export class FieldValidator {
     }
 
     private GetNotValidNumberOfDigitsInNumberCustomFieldErrorMessage(objectfield: ObjectFieldPM) {
-        return "Length of the Number must be " + (objectfield.NumberOfDigits != 1 ? "between 1 and " : "") + (objectfield.NumberOfDigits == 0 ? "12" : objectfield.NumberOfDigits);
+        return "Length of the Number must be " + (objectfield.NumberOfDigits != 1 ? "between 1 and " : "") + objectfield.NumberOfDigits;
     }
 
     private GetNotValidNumberOfDigitsAndDecimalDigitsInNumberCustomFieldErrorMessage(objectfield: ObjectFieldPM) {
-        return "Length of the Number must be " + (objectfield.NumberOfDigits != 1 ? "between 1 and " : "") + (objectfield.NumberOfDigits == 0 ? "12" : objectfield.NumberOfDigits) + ", Length of Decimal digits must be " + (objectfield.DigitsAfterPoint == 0 ? "0" : ("less than or equal " + objectfield.DigitsAfterPoint));
+        return "Length of the Number must be " + (objectfield.NumberOfDigits != 1 ? "between 1 and " : "") + objectfield.NumberOfDigits + ", Length of Decimal digits must be " + (objectfield.DigitsAfterPoint == 0 ? "0" : ("less than or equal " + objectfield.DigitsAfterPoint));
     }
 
     private GetNumbersBeforeAndAfterPoint(value: any) {

@@ -31,8 +31,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
             {
                 throw new ApplicationException("Max length number shouldn't be less than 0");
             }
-
-            if (entityPM.MinLength > entityPM.MaxLength && entityPM.MaxLength != 0)
+            if (entityPM.MaxLength == 0)
+            {
+                throw new ApplicationException("Max length Field is Required");
+            }
+            if (entityPM.MinLength > entityPM.MaxLength)
             {
                 throw new ApplicationException("Min length number shouldn't be more than Max length number");
             }
@@ -55,6 +58,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
             if (entityPM.NumberOfDigits < 0)
             {
                 throw new ApplicationException("Length of the Number shouldn't be less than 0");
+            }
+            if(entityPM.NumberOfDigits == 0)
+            {
+                throw new ApplicationException("Length Field is Required");
             }
             if (entityPM.DigitsAfterPoint > 3)
             {

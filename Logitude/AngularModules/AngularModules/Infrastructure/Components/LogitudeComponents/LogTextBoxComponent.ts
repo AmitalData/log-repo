@@ -1559,8 +1559,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                         var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
                                         let fieldValidator = new FieldValidator();
                                         if (customFieldClass != null && customFieldClass != undefined) {
-                                            customFieldClass.IsNotValid = !fieldValidator.IsValidCustomNumberValue(this.ObjectField, this.TextValue)
-                                            customFieldClass.Value = customFieldClass.IsNotValid ? this.TextValue : customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);// this.TextValue;
+                                            this.ValidateNumberCustomField(customFieldClass, fieldValidator);// this.TextValue;
                                             
                                         }
                                         else {
@@ -1654,6 +1653,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             this.ValidateField();
             this.ValueChanged.emit(this.TextValue);
         }
+    }
+
+    private ValidateNumberCustomField(customFieldClass: CustomFieldClass, fieldValidator: FieldValidator) {
+        customFieldClass.IsNotValid = !fieldValidator.IsValidCustomNumberValue(this.ObjectField, this.TextValue);
+        customFieldClass.Value = customFieldClass.IsNotValid ? this.TextValue : customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);
     }
 
     DataContextValueChanges(res: any) {

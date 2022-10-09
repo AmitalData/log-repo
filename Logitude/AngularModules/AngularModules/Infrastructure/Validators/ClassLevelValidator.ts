@@ -101,29 +101,42 @@ export class ClassLevelValidator {
                             }
                     }
                 }
-                var fieldValidator: FieldValidator = new FieldValidator();
                 
-                if (entityPM[objectfield.FieldName]) {
-                    if (objectfield.DataTypeCode === "Text" || objectfield.DataTypeCode === "nText") {
-                        if (objectfield.MaxLength !== 0 || objectfield.MinLength !== 0) {
-                            var fieldvalue = this.GetFieldValue(entityPM, objectfield);
-                            if (!fieldValidator.IsValidValue(objectfield, fieldvalue, false)) {
-                                errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
-                            }
-                        }
-                    }
-                    if (objectfield.DataTypeCode === "Decimal") {
-                        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
-                        let isNotValid = this.GetIsNotValidValue(entityPM, objectfield);
-                        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, isNotValid)) {
-                            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
-                        }
-                    }
-                }
+                
+                this.validateTextAndNumberDataTypes(entityPM, objectfield, errorsArray);
             }
         });
             
         return errorsArray;
+    }
+
+    private validateTextAndNumberDataTypes(entityPM: any, objectfield: any, errorsArray: any[]) {
+        if (!entityPM[objectfield.FieldName]) return;
+        
+        this.validateTextDataType(objectfield, entityPM, errorsArray);
+        this.validateNumberDataType(objectfield, entityPM, errorsArray);
+        
+    }
+
+    private validateNumberDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Decimal") return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        let isNotValid = this.GetIsNotValidValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, isNotValid)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+    }
+
+    private validateTextDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Text" && objectfield.DataTypeCode !== "nText") return;
+        if (objectfield.MaxLength === 0 && objectfield.MinLength === 0) return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, false)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+
     }
 
     private GetIsNotValidValue(entityPM: any, objectfield: any) {
