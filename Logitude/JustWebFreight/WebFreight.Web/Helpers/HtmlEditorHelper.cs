@@ -5919,7 +5919,7 @@ namespace WebFreight.Web.Helpers
             if (sharedTenant.IsDigitalPortalAccessActivated == true)
             {
                 var isDisplayDocumentsAndEvents = (sharedTenant != null && sharedTenant.DisplayDocumentsAndEvents);
-                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + ":" + isDisplayDocumentsAndEvents;
+                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + "&additionalSetting=" + isDisplayDocumentsAndEvents;
             }
             else if (sharedTenant.IsCargoTrackWebAccessActivated == true)
             {
