@@ -5918,8 +5918,8 @@ namespace WebFreight.Web.Helpers
 
             if (sharedTenant.IsDigitalPortalAccessActivated == true)
             {
-                var isSharedLogisticsMessageLink = (sharedTenant != null && sharedTenant.SharedLogisticsMessageLink);
-                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + ":" + isSharedLogisticsMessageLink;
+                var isDisplayDocumentsAndEvents = (sharedTenant != null && sharedTenant.DisplayDocumentsAndEvents);
+                pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + ":" + isDisplayDocumentsAndEvents;
             }
             else if (sharedTenant.IsCargoTrackWebAccessActivated == true)
             {

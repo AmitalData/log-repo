@@ -291,7 +291,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         public IHttpActionResult GetEntityEvents(string entityId, string objectTableName, string cardType, string cardId)
         {
             var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId);
+            var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true, true);
             entityId = shipmentIdAndTenant.Item1;
             var tenant = shipmentIdAndTenant.Item2;
             var result = new List<TraceEventPM>();

@@ -16,21 +16,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             return shipmentIdAndTenant;
         }
 
-        public Tuple<string, int> AuthenticateResponse(string cardId, string entityId, bool blockAccess = false)
+        public Tuple<string, int> AuthenticateResponse(string cardId, string entityId, bool blockAccess = false, bool isEventOrDocument = false)
         {
             string securityKey = HttpContext.Current.Request.Headers["securitykey"];
             var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             int tenant;
 
-            if (securityKey != null && (!blockAccess || authToken != null))
+            if (securityKey != null && (!blockAccess || authToken != null || isEventOrDocument))
             {
                 var shipmentIdAndTenant = GetShipmentBySecurityKey(securityKey);
                 if (shipmentIdAndTenant == null)
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
+
                 entityId = shipmentIdAndTenant.Item1;
                 tenant = shipmentIdAndTenant.Item2;
+
+                if (isEventOrDocument)
+                {
+                    CheckAutenticationOfEventsOrDocuments(tenant);
+                }
+
                 return Tuple.Create(entityId, tenant);
             }
             else if (authToken != null)
@@ -41,6 +48,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             }
 
             throw new AutenticationException("Sorry! this user is not authorized!");
+        }
+
+        private void CheckAutenticationOfEventsOrDocuments(int tenant)
+        {
+            var myTenantRepository = new TenantRepository(tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(tenant);
+            if (!myTenant.DisplayDocumentsAndEvents)
+            {
+                throw new AutenticationException("Sorry! this user is not authorized!");
+            }
         }
 
         public void CheckSecurityByToken(int tenant, string cardId)
