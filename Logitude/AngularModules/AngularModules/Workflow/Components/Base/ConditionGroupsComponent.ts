@@ -102,6 +102,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             let valueExpression = this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null;
             this.updateConditionValueExpression(valueExpression, conditionIndex, false);
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+        }else if (!this.isNoValueOperator(operatorCode) && this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)){
+            this.Conditions[conditionIndex].value = null;
+            this.Conditions[conditionIndex].valueCode = null;
         }
 
         this.Conditions[conditionIndex].operator = operatorCode;
