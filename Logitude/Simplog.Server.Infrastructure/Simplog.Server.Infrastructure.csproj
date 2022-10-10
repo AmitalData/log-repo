@@ -182,7 +182,10 @@
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="DataContracts\Models\DigitalDashboardSummary.cs" />
     <Compile Include="DataContracts\Models\GeneralFilters.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\GlobalSearchResult.cs" />
     <Compile Include="DataContracts\Models\Partner.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\InvoiceSearchResult.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\ShipmentSearchResult.cs" />
     <Compile Include="DataContracts\TreeFilterQueryArgs.cs" />
     <Compile Include="DataContracts\AmitalRestrictOwnerModel.cs" />
     <Compile Include="DataContracts\ApiQueryFilters.cs" />

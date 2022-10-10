@@ -18,6 +18,10 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Logitude.BL.InvoiceModel.CustomFilters;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -83,7 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     InvoiceNumber = a.InvoiceNumber,
                     Tenant = a.Tenant,
                 }).FirstOrDefault();
-            if (entityPM!=null)
+            if (entityPM != null)
             {
                 entityPM = SetJournalFields(entityPM);
 
@@ -120,13 +124,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public bool CheckARInvoiceByExternalAccountingEnityId(string externalEntityId, int tenant)
         {
 
-          return
-                (from a in repository.context.ARInvoices
-                 where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
-                 select a).Any();
+            return
+                  (from a in repository.context.ARInvoices
+                   where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
+                   select a).Any();
 
 
-         
+
         }
         public ARInvoicePM GetSingleInvoiceByInvoiceNumber(string invoiceNumber, int tenant)
         {
@@ -173,7 +177,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
-        public List<MoneyStatusClass> GetMoneyStatusForTenant(string type,int lastMonths, int lastDays, int tenant, int selectedIndex, int currencyindex)
+        public List<MoneyStatusClass> GetMoneyStatusForTenant(string type, int lastMonths, int lastDays, int tenant, int selectedIndex, int currencyindex)
         {
             int months = 0;
             DateTime lastDate;
@@ -193,7 +197,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
                                                       where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
-                                                     && !a.IsConstituentInvoice 
+                                                     && !a.IsConstituentInvoice
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -442,7 +446,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return datalist2;
         }
 
-        public List<MoneyStatusClass> GetMoneyStatusForTenantCustom(string type, DateTime? ToDate , DateTime? FromDate, int tenant)
+        public List<MoneyStatusClass> GetMoneyStatusForTenantCustom(string type, DateTime? ToDate, DateTime? FromDate, int tenant)
         {
             bool AddYearFlag = false;
             if (FromDate.Value.Year != ToDate.Value.Year)
@@ -470,7 +474,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                           year = inv.Key.Year,
                                                           TotalAmount = currencyindex == 1 ? inv.Sum(d => d.AmountInLocalCurrency) : inv.Sum(d => d.AmountInProfitCurrency),
                                                           DataType = "Invoices",
-                                                          FullDate=inv.Key.InvoiceDate,
+                                                          FullDate = inv.Key.InvoiceDate,
 
                                                       }
                                                  ).ToList();
@@ -513,7 +517,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 dates.Add(dt);
                 string DatePeriod = dt.Value.Day + "/" + dt.Value.Month + (AddYearFlag == true ? "/" + dt.Value.Year + "" : "");
-              
+
                 if (iteration != 0)
                 {
                     var oldDate = dates[iteration - 1].Value.Day + "/" + dates[iteration - 1].Value.Month + (AddYearFlag == true ? "/" + dates[iteration - 1].Value.Year + "" : ""); ;
@@ -525,14 +529,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     Entity1.FullDate = dt;
                     Entity1.DateRange = newDate;
                     Entity1.DataType = "Invoices";
-                    Listt.Add(newDate+"I", Entity1);
+                    Listt.Add(newDate + "I", Entity1);
                     var Entity2 = new MoneyStatusClass();
                     Entity2.linePrimary = 0;
                     Entity2.TotalAmount = 0;
                     Entity2.FullDate = dt;
                     Entity2.DateRange = newDate;
                     Entity2.DataType = "Payments";
-                    Listt.Add(newDate+"P", Entity2);
+                    Listt.Add(newDate + "P", Entity2);
 
                 }
 
@@ -578,7 +582,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     {
                         Listt[NewDatePeriod].TotalAmount += d.TotalAmount;
                         Listt[NewDatePeriod].DataType = d.DataType;
-                       }
+                    }
                 }
 
                 else if (count >= 2 ? d.FullDate <= dates[1] : false)
@@ -1229,7 +1233,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
                 return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
             else
-                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);            
+                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);
         }
         private List<DebtorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
         {
@@ -1351,12 +1355,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             List<string> allowedStatuses = new List<string>() { "AD", "PP", "NT" };
             invoiceList = invoiceList.Where(a => a.BillToId == customerid && a.Tenant == tenant && allowedStatuses.Contains(a.StatusCode) && a.DueDate < nowdate && !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled);
 
-            double ? invoicedue = (from a in invoiceList
-                                   where a.ARInvoiceTypeCode != "CD"
+            double? invoicedue = (from a in invoiceList
+                                  where a.ARInvoiceTypeCode != "CD"
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? autoCredit = (from a in invoiceList
-                                  where  a.ARInvoiceTypeCode == "CD"
+                                  where a.ARInvoiceTypeCode == "CD"
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? result = invoicedue != null ? invoicedue : 0;
@@ -1460,8 +1464,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BankAccountLiteId = a.BankAccountLiteId,
                             IsMultiCurrency = a.IsMultiCurrency,
                             TotalAmountForTaxReport = a.TotalAmountForTaxReport,
-                            TotalVAT =a.TotalVAT,
-                            TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
+                            TotalVAT = a.TotalVAT,
+                            TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
                             SATApprovalDate = a.SATApprovalDate,
                             IsFullAccounting = a.IsFullAccounting,
                             ARInvoiceStockId = a.ARInvoiceStockId,
@@ -1469,11 +1473,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CreatedByPartner = a.CreatedByPartner,
                             RegionalTaxId = a.RegionalTaxId,
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
-                            PaidDate  = a.PaidDate,
+                            PaidDate = a.PaidDate,
                             PaidStatus = a.PaidStatus,
                             PartnerId = a.PartnerId,
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
-                            PaymentReferences=a.PaymentReferences,
+                            PaymentReferences = a.PaymentReferences,
                             SATCancelReasonCode = a.SATCancelReasonCode,
                         };
 
@@ -1575,7 +1579,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
                              PaymentTermExternalId = entity.PaymentTermExternalId,
                              MainEntityId = entity.MainEntityId,
-                             MasterEntityId= entity.MainEntityId,
+                             MasterEntityId = entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
@@ -1621,7 +1625,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
                              PaidStatus = entity.PaidStatus,
-                             IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
+                             IsFromInterestBatchInvoice = entity.IsFromInterestBatchInvoice,
                              PartnerId = entity.PartnerId,
                              ShipmentsNumbers = entity.ShipmentsNumbers,
                              MasterNumbers = entity.MasterNumbers,
@@ -1761,12 +1765,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return invoices;
         }
 
-  
+
         private ARInvoicePM GetSingleMappedEntityPM(ARInvoice entityPOCO, bool withComposition)
         {
             ARInvoicePM entityPM = null;
             ARInvoicePM securedEntityPM = null;
-          
+
             if (entityPOCO != null)
             {
                 int tenant = entityPOCO.Tenant;
@@ -2004,7 +2008,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         var ids = entityPM.ConstituentInvoices
                                           .Select(a => a.Id)
                                           .ToList();
-    
+
                         var totalValts = myTotalVATQuery
                                          .GetTotalVATsByInvoicesIds(ids, tenant)
                                          .GroupBy(a => a.ARInvoiceId)
@@ -2013,7 +2017,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         foreach (var item in entityPM.ConstituentInvoices)
                         {
-                            item.TotalVATs = totalValts.ContainsKey(item.Id) 
+                            item.TotalVATs = totalValts.ContainsKey(item.Id)
                                              ? totalValts[item.Id]
                                              : 0.00;
                         }
@@ -2081,7 +2085,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     var rep = new JournalRepository(tenant);
 
                     var journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id, "2", tenant);
-                    
+
                     if (journal != null)
                     {
                         entityPM.JournalId = journal.JournalId;
@@ -2138,9 +2142,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return tenantPoco.AccountingActivated;
         }
 
-        public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate,bool ShowPrintedInvoice, int tenant)
+        public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate, bool ShowPrintedInvoice, int tenant)
         {
-            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
+            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate select a);
             if (!ShowPrintedInvoice)
             {
                 result = result.Where(s => s.IsPrinted == false);
@@ -2148,10 +2152,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return result;
         }
 
-        public List<string> GetInterestInvoiceNumbersByIds( List<string> ARInvoiceIds, int tenant)
+        public List<string> GetInterestInvoiceNumbersByIds(List<string> ARInvoiceIds, int tenant)
         {
             var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && ARInvoiceIds.Contains(a.Id) select a.InvoiceNumber).ToList();
- 
+
             return result;
         }
         public IQueryable<ARInvoiceList> GetInvoiceListByTenant(int tenant)
@@ -2313,12 +2317,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 if (invoiceId == null)
                 {
                     sumOfAmountDue = (from d in myContext.ARInvoices
-                                              where d.Tenant == tenant
-                                              && d.BillToId == myCustomerId
-                                              && d.StatusCode != "VD"
-                                              && d.StatusCode != "AR"
-                                              && d.StatusCode != "LL"
-                                              select d).Sum(s => s.AmountDueInLocalCurrency);
+                                      where d.Tenant == tenant
+                                      && d.BillToId == myCustomerId
+                                      && d.StatusCode != "VD"
+                                      && d.StatusCode != "AR"
+                                      && d.StatusCode != "LL"
+                                      select d).Sum(s => s.AmountDueInLocalCurrency);
                 }
 
                 else
@@ -2381,9 +2385,174 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public string GetARinvoiceTypeCode(string id, int tenant)
         {
             ARInvoice invoice = (from a in repository.context.ARInvoices
-                                 where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+                                 where a.Id == id && a.Tenant == tenant
+                                 select a).FirstOrDefault();
             return invoice != null ? invoice.ARInvoiceTypeCode : null;
         }
 
+
+        #region Digital Portal 
+
+        public IQueryable<ARInvoiceList> GetByFilters(GeneralFilters newFilters)
+        {
+            var tenant = newFilters.Tenant;
+            var myTenantRepository = new TenantRepository(tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(tenant);
+
+            var filters = new ApiQueryFilters()
+            {
+                Filter1Value = newFilters.CardId,
+                Filter2Value = newFilters.CardType
+            };
+
+            var queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "ARInvoice",
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
+                QuerySection = "ARInvoices",
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection
+            };
+
+            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+            queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
+
+            var cardFilterValues = newFilters.CardId;
+            if (!string.IsNullOrWhiteSpace(cardFilterValues))
+            {
+                var cardBillToId = GetCardBillToId(newFilters.CardId, tenant);
+                if (!string.IsNullOrWhiteSpace(cardBillToId))
+                {
+                    cardFilterValues = cardFilterValues + "," + cardBillToId;
+                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                }
+
+                queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
+            }
+
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant);
+
+            if (newFilters.AdditionalFilters.Any())
+            {
+                foreach (var filter in newFilters.AdditionalFilters)
+                {
+                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue?.ToString();
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        string valuestring2 = filter.FieldValue2?.ToString();
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
+            var genericFilter = new GenericFilter();
+            var MyContext = InvoiceContext.GetContext(tenant);
+
+            var nonListQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+            };
+
+            var listQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+            };
+
+            var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
+            var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+
+            var entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
+
+            entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
+
+            var customfilters = new ARInvoiceCustomFilter(tenant);
+            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+            entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+
+            var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+            if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
+            {
+                ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
+
+                if (objectField != null)
+                {
+                    var sortClass = new GenericSort();
+
+                    if (!objectField.IsCustom)
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "text":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "double":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "datetime":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "integer":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "lookup":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, entityLists);
+                                    break;
+                                }
+                            default:
+                                {
+                                    entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                    }
+                }
+            }
+            else
+            {
+                entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
+            }
+
+            return entityLists;
+
+        }
+
+        private string GetCardBillToId(string cardId, int tenant)
+        {
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToId;
+        }
+
+        #endregion Digital Portal 
     }
 }
