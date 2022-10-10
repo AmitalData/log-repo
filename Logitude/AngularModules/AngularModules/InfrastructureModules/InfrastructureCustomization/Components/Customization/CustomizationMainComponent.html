@@ -12,22 +12,22 @@
                         <table>
                             <tr><td></td></tr>
                             <tr style="height: 70px;">
-                                <td style="width: 60px">
+                                <td style="width: 60px; height:70px">
                                     <img src="./Images/Customization/CustomizationIcon.png" class="CenterCenter" style="height: 60px; width: 60px" />
                                 </td>
                                 <td>
-                                    
 
-                                    <table style="width: 130px">
+
+                                    <table style="width: 130px; height:50px">
                                         <tr>
-                                            <td><label style="padding-left: 10px; color: black; font-size: 15px; font-weight: bold; font-family: system-ui">Customization</label></td>
+                                            <td><label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 17px; font-weight: bold; font-family: system-ui ">Customization</label></td>
 
                                         </tr>
                                         <tr>
                                             <td>
                                                 <div>
-                                                    <label style="padding-left: 10px; padding-right: 10px; color: black; font-size: 20px; font-weight: bold; font-family: system-ui ">Manager</label>
-                                                    <img src="./Images/Customization/4U.png" class="CenterCenter" style="height:20px; left:35px; top:5px" />
+                                                    <label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 22px; font-weight: bold; font-family: system-ui ">Manager</label>
+                                                    <img src="./Images/Customization/4U.png" class="CenterCenter" style="height:30px; left:103px; top:2px" />
 
                                                 </div>
                                             </td>
@@ -37,8 +37,23 @@
 
                                     </table>
                                 </td>
-                            </tr>
+                                <td><div></div></td>
+                                <td style="width:300px">
+                                    <div style="display:inline-flex">
+                                        <SearchBox style="width:140px; margin-right:5px" [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                        <button class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()">New Custom Entity</button>
 
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <label style="padding-left:10px">{{NumberOfItems}} Items</label>
+                                </td>
+                            </tr>
                             <tr><td></td></tr>
                         </table>
                     </td>
