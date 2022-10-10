@@ -229,6 +229,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.InsuranceValue = entityPM.InsuranceValue;
             entityPoco.ValidByTypeCode = entityPM.ValidByTypeCode;
             entityPoco.ConnectedToOpportunity = entityPM.ConnectedToOpportunity;
+            entityPoco.QuoteClosingReasonNotes = entityPM.QuoteClosingReasonNotes;
 
             if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
             {
@@ -258,6 +259,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.QuoteNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Subject);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Notes);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.QuoteClosingReasonNotes);
 
             #region Ports
             QueryHelper.AddPortToSearchFields(ref mySearchFields, tenant, entityPM.FromPortId);
