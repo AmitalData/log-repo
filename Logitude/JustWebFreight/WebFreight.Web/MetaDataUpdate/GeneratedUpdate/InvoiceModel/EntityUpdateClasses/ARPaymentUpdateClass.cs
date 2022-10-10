@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "882cf77900226f94d772620873ec2f85";
+		public const string HashString = "7b89a7b5c213e7dbdc46ecef09f03c1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7878,6 +7878,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			   TextCode ARPaymentTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.ErrorInTransfer", DefaultText = @"Error In Transfer",LocalDefaultText = "Error In Transfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARPaymentFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPayment.Q.ErrorInTransfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentFeatures.ErrorInTransfer", NameTextCodeDefaultText = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARPaymentTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.SATPaymentsWaitingCancellation", DefaultText = @"SAT Waiting for Cancellation",LocalDefaultText = "SAT Waiting for Cancellation", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARPaymentFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPayment.Q.SATPaymentsWaitingCancellation", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentFeatures.SATPaymentsWaitingCancellation", NameTextCodeDefaultText = "SATPaymentsWaitingCancellation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -8075,6 +8079,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 
              AdvancedQueryFilter ErrorInTransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "SM",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+  
+	      
+
+			  Query SATPaymentsWaitingCancellationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_7.Id, NameTextCodeCode = ARPaymentTextCode_7.Code, ObjectTableName = "ARPayment", Code = "SATPaymentsWaitingCancellation",  QueryGroupCode = "ARPT", IndexOrder = 7, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARPaymentFeature_7.Id,FeatureUniqeCode= ARPaymentFeature_7.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARPayment.PaymentNo" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARPayment.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARPayment.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARPayment.BillToName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARPayment.RegisterDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARPayment.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPayment.AmountInPaymentCurrency" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATPaymentsWaitingCancellationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPayment.OpenAmount" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter SATPaymentsWaitingCancellationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "CS",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATPaymentsWaitingCancellationQuery.Id,QueryCode = SATPaymentsWaitingCancellationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

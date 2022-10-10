@@ -45,6 +45,8 @@ export class AccountReceivablesComponent implements OnInit {
     public ARInvoiceErrorInTransferVisibility: boolean = false;
     public ARPaymentErrorInTransferVisibility: boolean = false;
     public SATVoidedNotTransferredVisibility: boolean = false;
+    public ARInvoiceSATWaitingCancellationVisibility: boolean = false;
+    public ARPaymentSATWaitingCancellationVisibility: boolean = false;
 
     @Output() ReloadUserQueries = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -71,6 +73,8 @@ export class AccountReceivablesComponent implements OnInit {
 
         this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoice.Q.ErrorInTransfer")) ? true : false;
         this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ARPayment.Q.ErrorInTransfer")) ? true : false;
+        this.ARInvoiceSATWaitingCancellationVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoice.Q.SATInvoicesWaitingCancellation")) ? true : false;
+        this.ARPaymentSATWaitingCancellationVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ARPayment.Q.SATPaymentsWaitingCancellation")) ? true : false;
     }
 
     FillFilters() {
@@ -364,6 +368,9 @@ export class AccountReceivablesComponent implements OnInit {
     public ARPaymentsSATFailedCount: string;
     public ARInvoiceErrorInTransferCount: string
     public ARPaymentErrorInTransferCount: string;
+    public ARInvoiceSATWaitingCancellationCount: string;
+    public ARPaymentSATWaitingCancellationCount: string;
+
     private invoiceDomainService: InvoiceDomainService;
     LoadQueriesCounts() {
         if (this.invoiceDomainService == null) {
@@ -384,6 +391,8 @@ export class AccountReceivablesComponent implements OnInit {
                     this.ARPaymentsSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsSATFailedCount.toString();
                     this.ARInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.ARInvoicesFailedCount.toString();
                     this.ARPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.ARPaymentFailedCount.toString();
+                    this.ARInvoiceSATWaitingCancellationCount = myResult.ARInvoiceSATWaitingCancellationCount > 1000 ? "1000+" : myResult.ARInvoiceSATWaitingCancellationCount.toString();
+                    this.ARPaymentSATWaitingCancellationCount = myResult.ARPaymentSATWaitingCancellationCount > 1000 ? "1000+" : myResult.ARPaymentSATWaitingCancellationCount.toString();
                 }
             }
         });

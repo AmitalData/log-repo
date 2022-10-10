@@ -112,6 +112,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 result.ARInvoicesSATFailedCount = iQueryable_Data.Where(d => d.SATTransferStatusCode == "TE").Count();
                 result.ARInvoicesFailedCount = iQueryable_Data2.Where(d => d.TransferStatusCode == "ET").Count();
                 result.ARInvoicesSATVoidedNotTransferredCount = iQueryable_Data2.Where(d => d.StatusCode == "VD" && d.SATTransferStatusCode == "NT").Count();
+                result.ARInvoiceSATWaitingCancellationCount = iQueryable_Data2.Where(d => d.SATTransferStatusCode == "CS").Count();
 
 
             }
@@ -127,6 +128,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 result.ARPaymentsOpenedCount = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.IsClosed == false).Count();
                 result.ARPaymentsSATFailedCount = iQueryable_Data.Where(d => d.SATTransferStatusCode == "TE").Count();
                 result.ARPaymentFailedCount = iQueryable_Data2.Where(d => d.TransferStatusCode == "ET").Count();
+                result.ARPaymentSATWaitingCancellationCount = iQueryable_Data2.Where(d => d.SATTransferStatusCode == "CS").Count();
 
 
             }
