@@ -135,7 +135,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return analyticData;
         }
 
-        private static IEnumerable<dynamic> DynamicListFromSql(string Sql)
+        protected static IEnumerable<dynamic> DynamicListFromSql(string Sql)
         {
             var context = DashboardContext.GetContext(0);
             var db = context.GetActiveDbContext().Database;

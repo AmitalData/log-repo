@@ -1,15 +1,13 @@
 ﻿using Logitude.DashboardModule.BL.APIDataContract;
+using Logitude.DashboardModule.BL.DataProviders.Models;
 using Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders;
 using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 {
@@ -48,6 +46,15 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
             {
                 "ShipmentNumber"
             };
+        }
+
+        public override KpiChart GetKpiData()
+        {
+            IShipmentsContext MyContext = ShipmentsContext.GetContext(_Widget.Tenant);
+            ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
+            var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
+            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
+            return new KpiDataProviderService(_Widget, _Entity).GetData(shipmentAnalyticIQueryable);
         }
     }
 }
