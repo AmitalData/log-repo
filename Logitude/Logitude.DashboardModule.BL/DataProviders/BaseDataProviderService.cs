@@ -30,7 +30,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             FillEntityFields();
         }
 
-        
+
         private void FillEntityFields()
         {
             var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
@@ -135,7 +135,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return analyticData;
         }
 
-        private static IEnumerable<dynamic> DynamicListFromSql(string Sql)
+        protected static IEnumerable<dynamic> DynamicListFromSql(string Sql)
         {
             var context = DashboardContext.GetContext(0);
             var db = context.GetActiveDbContext().Database;
@@ -163,8 +163,11 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             var columns = new List<AnalyticsFactsFieldsMetaData>();
 
-            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
-            columns.Add(groupBy);
+            if (!string.IsNullOrEmpty(_Widget.GroupById))
+            {
+                var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+                columns.Add(groupBy);
+            }
 
             if (!string.IsNullOrEmpty(widgetPartArguments.MeasureFieldId))
             {
@@ -182,43 +185,46 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
-            var groupByField = _EntityFields[_Widget.GroupById];
+            AnalyticsFactsFieldsMetaData groupByField = null;
+            if (_Widget.GroupById != null) groupByField = _EntityFields[_Widget.GroupById];
             return $@"select {BuildAnalyticTableFieldsSelectQuery(columns, groupByField)}
                      From ({resultQueryable.ToQueryStringWithParameter()}) as data 
                      {BuildQueryJoins(groupByField)}
-                     Where {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
+                     {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
         }
 
         private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)
         {
+            if (groupBy == null) return "";
+            var query = "Where ";
 
-            var fieldCode = _EntityFields[_Widget.GroupById].FieldCode;
-            if (groupByValue == null) return $@"{fieldCode} IS NULL";
-            if (groupBy.DataTypeCode == "LookUp") return $@"{fieldCode} = '{groupByValue}'";
+            var fieldCode = groupBy.FieldCode;
+            if (groupByValue == null) return $@"{query} {fieldCode} IS NULL";
+            if (groupBy.DataTypeCode == "LookUp") return $@"{query} {fieldCode} = '{groupByValue}'";
 
             var dateParts = groupByValue.Split('/');
-            string date = "";
+            string date;
             switch (_Widget.DateGroupCode)
             {
                 case "Day":
                     date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-{ dateParts[2]}";
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
+                    return $"{query} {fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
 
                 case "Month":
                     int daysInMonth = DateTime.DaysInMonth(int.Parse(dateParts[0]), DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month);
                     date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-";
-                    return $"{fieldCode} >= '{date}01' and {fieldCode} <='{date}{daysInMonth} 23:59:59.999'";
+                    return $"{query} {fieldCode} >= '{date}01' and {fieldCode} <='{date}{daysInMonth} 23:59:59.999'";
 
                 case "Year":
                     date = $@"{dateParts[0]}-";
-                    return $"{fieldCode} >= '{date}01-31' and {fieldCode} <='{date}12-31 23:59:59.999'";
+                    return $"{query} {fieldCode} >= '{date}01-31' and {fieldCode} <='{date}12-31 23:59:59.999'";
 
                 case "Quarter":
-                    return GetQuarterGroupStatment(fieldCode, dateParts);
+                    return query + GetQuarterGroupStatment(fieldCode, dateParts);
 
                 default:
                     date = $@"{dateParts[0]}-{DateTime.ParseExact(dateParts[1], "MMMM", CultureInfo.CurrentCulture).Month}-{ dateParts[2]}";
-                    return $"{fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
+                    return $"{query} {fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
             }
 
         }
@@ -239,12 +245,18 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string BuildQueryJoins(AnalyticsFactsFieldsMetaData groupByField)
         {
+            if (groupByField == null) return "";
             if (groupByField.DataTypeCode != "LookUp") return "";
             return $@"left join {groupByField.JoinedTableDBName} as jt on jt.{groupByField.JoinedTableKey} =  {groupByField.FieldCode}";
         }
 
         private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields, AnalyticsFactsFieldsMetaData groupByField)
         {
+            if (groupByField == null)
+            {
+                var fields = analyticTableFields.Select(x => x.FieldCode).ToList();
+                return string.Join(",", fields);
+            }
             var query = string.Join(",", analyticTableFields.Select(x => x.FieldCode).Where(x => x != groupByField.FieldCode).ToList());
             if (groupByField.DataTypeCode == "LookUp") query = $@"{query}, jt.{groupByField.JoinedTableDisplayField} as {groupByField.FieldCode} ";
             else query = $@"{query},{groupByField.FieldCode} ";

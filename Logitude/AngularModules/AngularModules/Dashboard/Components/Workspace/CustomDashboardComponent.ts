@@ -128,10 +128,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             }
 
             this.SetEmptyDashboardVisibility();
-        });        
+        });
     }
-    
-    applyWDashboard(){
+
+    applyWDashboard() {
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
         this.SelectedDashboardName = this.SelectedDashboard.Name;
@@ -277,11 +277,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             });
             return subject;
         }
+
+        if (myWidget.TypeCode == "kpi") {
+            var behaviorSubject = new BehaviorSubject<{ StartPotistion: string, EndPosition: string }>(this.GetPosition(2, 2));
+            return behaviorSubject;
+        }
+
         var behaviorSubject = new BehaviorSubject<{ StartPotistion: string, EndPosition: string }>(this.GetDefaultPosition());
         return behaviorSubject;
-
-
-
     }
 
     GetDefaultPosition() {
@@ -300,7 +303,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 return this.GetPosition(5, 5);
             return this.GetPosition(this.newWidgetWidth, this.newWidgetHeight);
         }
-        if(myWidget.TypeCode == "bar"){
+        if (myWidget.TypeCode == "bar") {
             if (numberOfGroup > 30)
                 return this.GetPosition(5, 23);
             if (numberOfGroup > 25)

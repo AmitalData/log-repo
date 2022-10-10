@@ -62,6 +62,7 @@
     <Compile Include="DataProviders\DataProviderFactory.cs" />
     <Compile Include="DataProviders\BaseDataProviderService.cs" />
     <Compile Include="DataProviders\BaseTablesDataProvider.cs" />
+    <Compile Include="DataProviders\Models\KpiChart.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ShipmentDataProviderService.cs" />
     <Compile Include="DataProviders\WidgetDataSource.cs" />
     <Compile Include="DataProviders\WidgetsDataProviders\ChartDataProviderService.cs" />
