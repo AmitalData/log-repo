@@ -21,7 +21,7 @@ import { Guid } from 'Infrastructure/Utilities/Guid';
 
 export class AddEditWidgetComponent extends BaseComponent {
     public EntityPM: WidgetPM;
-    public DashboardPM: DashboardPM;
+    public DashboardPM: DashboardPM = null;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
@@ -31,13 +31,17 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem;
+    //public RootFilter: WidgetFilterItem;
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
     public SortByCodes = [];
     public SortByDirections = ['asc', 'desc'];
     public GroupByQueryFilters: ApiQueryFilters;
+    public isGroupByVisible: boolean = true;
+    public isSortByVisible: boolean = true;
+    public isMaximumGroupingVisible: boolean = true;
 
     constructor() {
         super();
@@ -56,6 +60,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.Clone();
         this.GetFilters();
         this.BuildQueryFilters();
+        this.InitView();
     }
 
     BuildQueryFilters() {
@@ -117,7 +122,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public CheckMeasureAddVisiblity() {
         var isAddVisible: boolean = true;
 
-        if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie") {
+        if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie" || this.EntityPM.TypeCode == "kpi") {
             isAddVisible = false;
             if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList.splice(1, 1);
         }
@@ -161,7 +166,26 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.TypeCode = value;
             this.ComputeChartImageSrc();
             this.CheckMeasureAddVisiblity();
+            this.InitView();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+    InitView() {
+        this.isGroupByVisible = this.TypeCode != "kpi";
+        this.isSortByVisible = this.TypeCode != "kpi";
+        this.isMaximumGroupingVisible = this.TypeCode != "kpi";
+
+        if (!this.isGroupByVisible) {
+            this.GroupById = null;
+            this.DateGroupCode = null;
+        }
+        if (!this.isSortByVisible) {
+            this.SortBy = null;
+            this.SortDirection = null;
+        }
+        if (!this.isMaximumGroupingVisible) {
+            this.MaximumGrouping = null;
         }
     }
 
@@ -293,12 +317,29 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     ValidateInputs(errors: string[]) {
+        if (this.isGroupByVisible && !this.GroupById) {
+            errors.push("Group By Field is Required");
+        }
+        if (this.GroupByDateIsNotValid()) {
+            errors.push("Date Group Type Field is Required");
+        }
+        if (this.isMaximumGroupingVisible && !this.MaximumGrouping) {
+            errors.push("Group By Field is Required");
+        }
+        if (this.isSortByVisible && !this.SortDirection) {
+            errors.push("Sort By Direction Field is Required");
+        }
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
-        if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter)
+        if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
+    }
+
+    GroupByDateIsNotValid(){
+        return this.isGroupByVisible && this.SelectedGroupField && (this.SelectedGroupField.DataTypeCode == 'DateTime' || this.SelectedGroupField?.DataTypeCode == 'Date') && !this.DateGroupCode;
     }
 
     ValidateSort(errors: string[]) {
+        if (!this.isSortByVisible) return;
         if (this.WidgetMeasuresList.length <= 1 && this.SortBy == 2) errors.push("Invalid Sort On Measure 2");
     }
 

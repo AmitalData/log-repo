@@ -5,20 +5,13 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.TreeFilterQuery;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DashboardModule.BL.DataProviders
 {
@@ -37,47 +30,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
             FillEntityFields();
         }
 
-        public abstract List<SeriesMeasure> GetWidgetData();
-        public abstract AnalyticData GetWidgetDataPart(WidgetArguments widgetPartArguments);
-
-        public List<SeriesMeasure> GetData<T>(IQueryable<T> query)
+        
+        private void FillEntityFields()
         {
-
-            var seriesMeasures = new List<SeriesMeasure>();
-            foreach (var measure in _Widget.WidgetMeasures)
-            {
-                var seriesMeasure = new SeriesMeasure();
-                seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
-                seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
-                seriesMeasures.Add(seriesMeasure);
-            }
-
-
-            return seriesMeasures;
+            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
+            _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
 
-        private List<SeriesMeasureVulue> GetSeriesMeasureVulues<T>(IQueryable<T> query, WidgetMeasurePM measure)
-        {
-
-            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
-            AnalyticsFactsFieldsMetaData measureField = null;
-            if (measure.MeasureFieldId != null)
-                measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
-
-            TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
-            var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
-            string querys = CreateQuery(measure, groupBy, measureField, resultQueryable);
-            var conterxt = DashboardContext.GetContext(0);
-            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
-            var results = resultQueryables.ToList();
-            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
-            {
-                UpdateDateString(results);
-            }
-            return results;
-        }
-
-        private void UpdateDateString(List<SeriesMeasureVulue> results)
+        protected void UpdateDateString(List<SeriesMeasureVulue> results)
         {
             foreach (var item in results)
             {
@@ -95,7 +55,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
                     default:
                         break;
                 }
-                
+
             }
         }
 
@@ -122,52 +82,17 @@ namespace Logitude.DashboardModule.BL.DataProviders
         private string GetMonthName(string v)
         {
             var month = int.Parse(v);
-            return Months[month-1];
+            return Months[month - 1];
         }
 
-        private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        protected string GetValueQuery(string measureCode, AnalyticsFactsFieldsMetaData measureField)
         {
-            var groupByField = $"{groupBy.FieldCode}";
-            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
-            {
-                groupByField = ConverDateByDateGroupCode(groupBy);
-            }
-            var Label = groupByField;
-            var join = "";
-            if (groupBy.DataTypeCode == "LookUp")
-            {
-                join = $" left join {groupBy.JoinedTableDBName} as JoinedTable on JoinedTable.{groupBy.JoinedTableKey} = {groupByField} ";
-                Label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
-            }
-            var sortBy = CreateSortBy();
-            var top = "";
-            if (_Widget.MaximumGrouping.HasValue)
-                top = $"top({ _Widget.MaximumGrouping})";
-
-            var value = GetValueQuery(measure.MeasureCode, measureField);
-            return $@"select  {top}
-                            {Label} as Label,
-                            {groupByField} as GroupById,
-                            {value} as Value From 
-                            ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            {join}
-                            group by {Label},{groupByField} {sortBy}";
-        }
-
-        private string GetValueQuery(string measureCode, AnalyticsFactsFieldsMetaData measureField)
-        {
-
-            if (measureCode != "Count")
-                return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
+            if (measureCode != "Count") return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
             var key = "Id";
             return $"CAST({measureCode}(data.{key}) AS DECIMAL(32, 2))";
-
-
-
-
         }
 
-        private object CreateSortBy()
+        protected object CreateSortBy()
         {
             if (_Widget.SortBy == null)
             {
@@ -176,7 +101,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return $" order by Value {_Widget.SortDirection}";
         }
 
-        private string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy)
+        protected string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy)
         {
             switch (_Widget.DateGroupCode)
             {
@@ -193,14 +118,9 @@ namespace Logitude.DashboardModule.BL.DataProviders
             }
         }
 
-        private void FillEntityFields()
-        {
-            var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
-            _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
-        }
 
 
-        internal AnalyticData GetDataPart<T>(IQueryable<T> query, List<string> analyticTableFields, WidgetArguments widgetPartArguments)
+        public AnalyticData GetDataPart<T>(IQueryable<T> query, List<string> analyticTableFields, WidgetArguments widgetPartArguments)
         {
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             query = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });

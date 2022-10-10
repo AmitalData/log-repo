@@ -22,6 +22,7 @@ import { Guid } from 'Infrastructure/Utilities/Guid';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { LastFilterClass } from '../../../Infrastructure/Utilities/LastFilterClass';
 import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DashboardAnalyticsService } from 'DashboardModule/Services/DashboardAnalyticsService';
 
 @Component({
@@ -45,11 +46,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     @Input('Show') Show;
     private filterName_SelectedDashboard: string = "SelectedDashboard";
     private filterControlNameSpace: string = "Workspace.CustomDashboard";
+    public IsEmptyDashboardVisible: boolean = true;
+    public IsPermissionMessageVisible: boolean = false;
     constructor() {
         super();
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.SelectedDashboard = new DashboardPM();
+        this.IsPermissionMessageVisible = !FeatureLocator.HasFeaturePermession("Dashboard", "UPDATE");
     }
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -122,9 +126,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                     this.SelectedDashboardName = null;
                 }
             }
-        });
+
+            this.SetEmptyDashboardVisibility();
+        });        
     }
-    applyWDashboard() {
+    
+    applyWDashboard(){
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
         this.SelectedDashboardName = this.SelectedDashboard.Name;
@@ -244,6 +251,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                         comp.EntityPM.StartPotistion = e.StartPotistion;
                         comp.EntityPM.EndPosition = e.EndPosition;
                         this.AddWidgetToReactLayout(comp.EntityPM);
+                        this.SetEmptyDashboardVisibility();
                     });
 
                 }
@@ -423,6 +431,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         });
     }
     private GoBack(reject: boolean) {
+        this.SetEmptyDashboardVisibility();
         this.ResetFlags();
 
         if (reject) {
@@ -474,7 +483,16 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
     }
 
+    SetEmptyDashboardVisibility() {
+        this.IsEmptyDashboardVisible = true;
+        if (this.SelectedDashboard && this.SelectedDashboard.Widgets.length > 0) {
+            this.IsEmptyDashboardVisible = false;
+        }
+    }
+
+    HereClicked() {
+        this.IsEmptyDashboardVisible = false;
+        this.EditLayoutClicked();
+        this.AddWidgetClicked();
+    }
 }
-
-
-
