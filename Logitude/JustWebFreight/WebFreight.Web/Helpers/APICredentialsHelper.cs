@@ -33,6 +33,10 @@ namespace WebFreight.Web.Helpers
                 if (Partner.Tenant == 0)
                 {
                     customerCare = true;
+                    if (Key.Tenant != 0)
+                    {
+                        userData.Tenant = Key.Tenant;
+                    }
                 }
 
                 //if (customerCare)

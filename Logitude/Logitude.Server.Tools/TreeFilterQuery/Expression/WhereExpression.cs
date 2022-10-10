@@ -27,6 +27,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
 
         public static readonly MethodInfo ContainsMethod = StringType.GetRuntimeMethod("Contains", new[] { StringType });
         public static readonly MethodInfo StartsMethod = StringType.GetRuntimeMethod("StartsWith", new[] { StringType });
+        public static readonly MethodInfo EndsMethod = StringType.GetRuntimeMethod("EndsWith", new[] { StringType });
         public static readonly MethodInfo CompareToMethod = StringType.GetRuntimeMethod("CompareTo", new[] { StringType });
 
         private static readonly Type[] AvailableCastTypes =
@@ -132,6 +133,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
                 case "IsNotNull": return new IsNotEmpty().CreateExpression(expression, item);
                 case "PartnerEntityExpression": return new PartnerEntityExpression().CreateExpression(expression, item);
                 case "StartsWith": return new StartsWith().CreateExpression(expression, item);
+                case "EndsWith": return new EndsWith().CreateExpression(expression, item);
                 case "InList": return new InList().CreateExpression(expression, item);
                 case "InListExact": return new InList().CreateExpression(expression, item);
                 case "Exclude": return new Exclude().CreateExpression(expression, item);
