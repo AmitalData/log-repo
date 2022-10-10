@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
-                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true);
+                var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, entityId, true, true);
                 entityId = shipmentIdAndTenant.Item1;
                 var tenant = shipmentIdAndTenant.Item2;
 
