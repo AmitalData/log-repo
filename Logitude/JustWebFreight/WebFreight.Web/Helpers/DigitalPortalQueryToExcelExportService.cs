@@ -1,12 +1,9 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.CustomFilters;
+﻿using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Extensions;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -28,9 +25,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
@@ -304,8 +298,8 @@ namespace WebFreight.Web.Helpers
 
         private List<ARInvoiceList> GetInvoicesByFilters(GeneralFilters newFilters)
         {
-            var myTenantRepository = new TenantRepository(newFilters.Tenant.Value);
-            var myTenant = myTenantRepository.GetSingleTenant(newFilters.Tenant.Value);
+            var myTenantRepository = new TenantRepository(newFilters.Tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(newFilters.Tenant);
 
             var filters = new ApiQueryFilters()
             {
@@ -330,7 +324,7 @@ namespace WebFreight.Web.Helpers
 
             if (!string.IsNullOrWhiteSpace(cardFilterValues))
             {
-                var cardBillToId = GetCardBillToId(newFilters.CardId, newFilters.Tenant.Value);
+                var cardBillToId = GetCardBillToId(newFilters.CardId, newFilters.Tenant);
                 if (!string.IsNullOrWhiteSpace(cardBillToId))
                 {
                     cardFilterValues = cardFilterValues + "," + cardBillToId;
@@ -340,7 +334,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
             }
 
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", newFilters.Tenant.Value);
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", newFilters.Tenant);
 
             if (newFilters.AdditionalFilters.Any())
             {
@@ -363,9 +357,9 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            ARInvoiceAPiHelper.AddFilters(queryOperations, newFilters.Tenant.Value);
+            ARInvoiceAPiHelper.AddFilters(queryOperations, newFilters.Tenant);
             var genericFilter = new GenericFilter();
-            var MyContext = InvoiceContext.GetContext(newFilters.Tenant.Value);
+            var MyContext = InvoiceContext.GetContext(newFilters.Tenant);
 
             var nonListQueryOperation = new QueryOperations
             {
@@ -380,13 +374,13 @@ namespace WebFreight.Web.Helpers
             var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
             var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
 
-            var entityPocos = aRInvoiceRepository.GetARInvoices(newFilters.Tenant.Value);
+            var entityPocos = aRInvoiceRepository.GetARInvoices(newFilters.Tenant);
 
             entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
 
-            var customfilters = new ARInvoiceCustomFilter(newFilters.Tenant.Value);
+            var customfilters = new ARInvoiceCustomFilter(newFilters.Tenant);
             entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-            entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, newFilters.Tenant.Value);
+            entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, newFilters.Tenant);
             entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
 
             var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
@@ -576,11 +570,13 @@ namespace WebFreight.Web.Helpers
             switch (ObjectTableName)
             {
                 case "DigitalShipmentsView":
-                    var shipmentData = GetShipmentsByFilter(args.QueryFilters, args.QueryFilters.Tenant.Value);
+                    var shipmentQuery = new ShipmentQuery(args.QueryFilters.Tenant);
+                    var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters).ToList();
                     data = DigitalPortalShipmentExportToExcel(shipmentData);
                     break;
                 case "DigitalInvoice":
-                    var invoiceData = GetInvoicesByFilters(args.QueryFilters);
+                    var aRInvoiceQuery = new ARInvoiceQuery(args.QueryFilters.Tenant);
+                    var invoiceData = aRInvoiceQuery.GetByFilters(args.QueryFilters).ToList();
                     data = DigitalPortalInvoiceExportToExcel(invoiceData);
                     break;
                 default:

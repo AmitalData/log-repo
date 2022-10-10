@@ -291,7 +291,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
                 }
 
-                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
+                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", authToken.Tenant);
 
                 if (newFilters.AdditionalFilters.Any())
                 {
