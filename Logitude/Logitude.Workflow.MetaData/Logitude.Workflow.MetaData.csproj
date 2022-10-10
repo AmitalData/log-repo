@@ -58,6 +58,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
     <None Include="DBTables\WorkFlow.dxml" />
     <None Include="DBTables\WorkFlowInstance.dxml" />

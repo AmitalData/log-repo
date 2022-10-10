@@ -1,0 +1,8 @@
+<div #treeSelect>
+
+    <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
+        [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Data'" [nzAllowClear]="AllowClear"
+        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisplayWith]="displayItem">
+    </nz-tree-select>
+
+</div>

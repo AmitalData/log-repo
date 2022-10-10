@@ -159,7 +159,9 @@
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                     (IsValidConditionsChange)="UpdateIsValidConditions($event)"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions">
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
+                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
+                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </Conditions>
             </div>
         </td>

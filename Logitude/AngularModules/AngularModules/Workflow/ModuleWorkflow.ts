@@ -3,8 +3,10 @@ import { InfrastructureModule } from '../Infrastructure/Module_INFR';
 import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleProviders } from './ModuleProviders';
 
+import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+
 @NgModule({
-    imports: [InfrastructureModule],
+    imports: [InfrastructureModule, NzTreeSelectModule],
     declarations: [...Components],
     entryComponents: [...Components],
 })

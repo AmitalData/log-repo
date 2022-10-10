@@ -9,6 +9,9 @@ import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMServi
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -22,7 +25,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public ReactFlowInstance: any = null;
     public EntityPM: WorkFlowPM = null;
-    public EntityId: string;
+    public WorkflowId: string;
     public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
@@ -32,6 +35,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ValidationErrorsList: string[] = [];
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
+
+    public FlowObjectFields: ObjectFieldPM[] = [];
 
     public WorkFlowPMService: WorkFlowPMService;
 
@@ -45,7 +50,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public Run(args: any) {
         this.initializeServices();
-        this.EntityId = args['EntityId'];
+        this.WorkflowId = args['EntityId'];
     }
 
     ngOnInit() {
@@ -61,9 +66,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     loadWorkflow() {
-        if (this.EntityId) {
+        if (this.WorkflowId) {
             this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse); });
+            this.WorkFlowPMService.get(this.WorkflowId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse); });
         }
     }
 
@@ -73,7 +78,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             this.WorkflowName = this.EntityPM.Name;
             this.WorkflowEntity = this.EntityPM.Entity;
             this.renderReactFlowModeler();
-            this.stopBusyIndicator();
+            this.loadFlowObjectFields();
         }
     }
 
@@ -89,7 +94,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     renderReactFlowModeler() {
         if (this.EntityPM) {
-            let flowObject = this.EntityPM.FlowJson && this.EntityPM.FlowJson !== "" ? JSON.parse(this.EntityPM.FlowJson) : null;
+            let flowObject = this.getEntityFlowObject();
             let props = {
                 flow: flowObject,
                 flowChangedEvent: this.flowChangedEvent,
@@ -100,6 +105,38 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
         }
+    }
+
+    loadFlowObjectFields() {
+        let flowObject = this.getEntityFlowObject();
+        if (flowObject) {
+            let objectFieldListService = new ObjectFieldListService();
+            let apiQueryFilters = new ApiQueryFilters(true);
+            apiQueryFilters.addAdditionalFilter("ObjectTableId", this.getWorkflowEntitiesIds(flowObject), null, null, "InListExact", false, false, false, "string");
+            objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+                if (!serviceResponse.HasError) {
+                    this.FlowObjectFields = serviceResponse.Result;
+                }
+
+                this.stopBusyIndicator();
+            });
+        }
+    }
+
+    getWorkflowEntitiesIds(flowObject: any) {
+        let entitiesIds = [];
+        if (flowObject) {
+            flowObject.nodes.forEach((node: any) => {
+                let entity = node.data["entity"];
+                if (entity) {
+                    let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+                    if (entityObjectTable) {
+                        entitiesIds.push(entityObjectTable.Id);
+                    }
+                }
+            });
+        }
+        return entitiesIds.filter((v, i, a) => a.indexOf(v) === i).join(",");
     }
 
     flowChangedEvent = () => {
@@ -121,7 +158,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (propertiesComponentPath) {
             let propertiesWindow = this.buildPropertiesWindow(openPropertiesEventObject);
             propertiesWindow.Show(propertiesComponentPath);
-            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data); });
+            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data, openPropertiesEventObject.nodeType); });
         }
     }
 
@@ -135,7 +172,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let propertiesWindow = new LogitudeWindow();
         let propertiesWindowArgs: any = {
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
-            WorkflowEntity: this.WorkflowEntity
+            WorkflowEntity: this.WorkflowEntity,
+            FlowObject: this.getCurrentFlowObject(),
+            CurrentNodeId: openPropertiesEventObject.nodeId,
+            FlowObjectFields: this.FlowObjectFields
         };
         if (openPropertiesEventObject.nodeType == "declareVariableNode") {
             propertiesWindow.Height = 320;
@@ -163,9 +203,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         return editWindow;
     }
 
-    handlePropertiesWindowClosed = (data: any) => {
+    handlePropertiesWindowClosed = (data: any, nodeType: string) => {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
+            if (nodeType === "startNode") {
+                let dataEntity = data["entity"];
+                if (dataEntity) {
+                    this.WorkflowEntity = dataEntity;
+                }
+            }
             this.HasChanges = true;
         }
     }
@@ -239,15 +285,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             });
     }
 
-    handleEditWindowClosed(entityPM: WorkFlowPM) {
-        if (entityPM) {
-            this.EntityPM = entityPM;
-            this.WorkflowName = entityPM.Name;
-        }
-    }
-
     saveWorkflow(backAfterSave: boolean = false) {
-        let flowObject = this.ReactFlowInstance ? this.ReactFlowInstance.toObject() : null;
+        let flowObject = this.getCurrentFlowObject();
         if (flowObject) {
             let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
             this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
@@ -270,7 +309,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     handleSaveWorkflowResponse(workflowPM: WorkFlowPM) {
         this.EntityPM = workflowPM;
-        this.EntityId = workflowPM.Id;
+        this.WorkflowId = workflowPM.Id;
         this.HasChanges = false;
+    }
+
+    getCurrentFlowObject() {
+        return this.ReactFlowInstance ? this.ReactFlowInstance.toObject() : null;
+    }
+
+    getEntityFlowObject() {
+        return this.EntityPM.FlowJson && this.EntityPM.FlowJson !== "" ? JSON.parse(this.EntityPM.FlowJson) : null;
     }
 }

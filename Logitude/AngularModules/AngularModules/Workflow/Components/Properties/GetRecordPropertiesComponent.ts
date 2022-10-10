@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { GetRecordsLimit} from "Workflow/Constants/GetRecordsLimit";
+import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
 import { Condition } from "Workflow/Models/Condition";
 
 @Component({
@@ -16,8 +17,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public DataContext: any = this;
     public Data: any;
     public Name: string = null;
+    public Entity: string = null;
     public EntityId: string = null;
-    public EntityName: string = null;
     public RecordsLimit: string = null;
     public Conditions: Condition[];
     public ConditionsOperation: string;
@@ -25,18 +26,24 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
 
+    public FlowObject: any;
+    public CurrentNodeId: string;
+    public FlowObjectFields: ObjectFieldPM[];
+
     public CurrentSession = SessionLocator.SelectedSession;
+
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+        this.FlowObject = args.FlowObject ? args.FlowObject : null;
+        this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
+        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         this.initialize();
     }
 
     initialize() {
-
         this.Name = this.Data["name"] || null;
-        this.EntityId = this.Data["entityId"] || null;
-        this.EntityName = this.Data["entityName"] || null;
+        this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordsLimit.FirstRecord
 
         this.Conditions = this.Data["conditions"] || [];
@@ -47,8 +54,11 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             let condition = new Condition();
             this.Conditions.push(condition);
         }
-        this.Data["recordsLimit"] = this.RecordsLimit ;
-        
+
+        this.Data["recordsLimit"] = this.RecordsLimit;
+
+        this.EntityId = this.getEntityId(this.Entity);
+
         this.setUIProperties();
     }
 
@@ -60,10 +70,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
-        this.Data["entityId"] = entity ? entity.Id : null;
-        this.Data["entityName"] = entity ? entity.Name : null;
-        this.EntityId = entity ? entity.Id : null;
-        this.EntityName = entity ? entity.Name : null;
+        this.Data["entity"] = entity ? entity.Name : null;
+        this.Entity = entity ? entity.Name : null;
+        this.EntityId = this.getEntityId(entity.Name);
         this.setUIProperties();
     }
 
@@ -97,6 +106,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (notValidUIProperties.length === 0 && this.IsValidConditions) {
             this.setConditionsData();
 
+            //console.log(this.Data);
+
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
@@ -110,5 +121,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     setConditionsData() {
         this.Data["conditions"] = this.Conditions;
         this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
+    }
+
+    getEntityId(entity: string) {
+        if (entity) {
+            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
     }
 }

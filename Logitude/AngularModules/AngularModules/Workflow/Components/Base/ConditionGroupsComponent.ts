@@ -11,7 +11,9 @@ import { Condition } from "Workflow/Models/Condition";
 import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
 import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
 import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
+import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
     selector: "ConditionGroups",
@@ -28,11 +30,18 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() ConditionsCounter: number = 1;
     @Input() AtLeastOneCondition: boolean;
 
+    @Input() ShowFlowVariablesTree: boolean = false;
+    @Input() FlowObject: any;
+    @Input() FlowObjectFields: ObjectFieldPM[];
+    @Input() CurrentNodeId: string;
+
     @Output() ConditionsChangedEvent = new EventEmitter();
 
     public DataContext: any = this;
     public ObjectFieldsDictionary: any = {};
     public DateTimeValueExpressions = DateTimeValueExpressions;
+
+    public FlowVariablesTreeItems: TreeSelectItem[];
 
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
@@ -46,11 +55,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     ngOnInit() {
-
+        this.initializeFlowVariablesTreeItems();
     }
 
     ngOnChanges() {
         this.ConditionOperatorsItemsDictionary = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ItemsDictionary;
+    }
+
+    initializeFlowVariablesTreeItems() {
+        if (this.ShowFlowVariablesTree) {
+            this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId).Items;
+        }
     }
 
     updateConditionGroupOperation(operationCode: string, conditionIndex: number) {
@@ -95,8 +110,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.updateConditionValueExpression(valueExpression, conditionIndex, false);
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
         }
-        else if ((this.isFieldCompareOperator(operatorCode) && !this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator)) || 
-                 (!this.isFieldCompareOperator(operatorCode) && this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator))) {
+        else if ((this.isFieldCompareOperator(operatorCode) && !this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator)) ||
+            (!this.isFieldCompareOperator(operatorCode) && this.isFieldCompareOperator(this.Conditions[conditionIndex]?.operator))) {
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].valueCode = null;
             let valueExpression = this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null;
