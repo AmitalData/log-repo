@@ -28,14 +28,6 @@ export class CustomizationMainComponent {
     private myService: GeneralDomainService;
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
-
-    public IsShowStandardFields: boolean = false;
-    public IsShowLabels: boolean = false;
-    public IsShowScreensLayout: boolean = false;
-    public IsShowCustomFields: boolean = false;
-    public IsShowRules: boolean = false;
-    public IsShowTabs: boolean = false;
-
     public NumberOfItems: number = 0;
 
     constructor() {
@@ -43,19 +35,7 @@ export class CustomizationMainComponent {
         this.entityResourceService = new EntityResourceService();
         this.LoadTableTranslations();
         this.LoadPermessions();
-
-        this.SetCustomizationFeaturesPermission();
     }
-
-    SetCustomizationFeaturesPermission() {
-        this.IsShowStandardFields = FeatureLocator.HasFeaturePermession("General", "StandardFieldsCustomization");
-        this.IsShowLabels = FeatureLocator.HasFeaturePermession("General", "LabelsCustomization");
-        this.IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
-        this.IsShowCustomFields = FeatureLocator.HasFeaturePermession("General", "CustomFieldsCustomization");
-        this.IsShowRules = FeatureLocator.HasFeaturePermession("General", "RulesCustomization");
-        this.IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
-    }
-
     SetWindowArgs(args: any) {
         this.IsCustomFieldsMenue = args.IsCustomFieldsMenue;
     }
@@ -175,98 +155,16 @@ export class CustomizationMainComponent {
     Selecting(fieldsTranslations: FieldsTranslations) {
 
         this.selectedRow = fieldsTranslations;
-        if (fieldsTranslations == null) {
-            this.IsButtonEnabled = false;
-            return;
-        }
-        this.IsButtonEnabled = true;
-
-    }
-
-    StandardFieldsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-        if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Standard Fields: " + this.selectedRow.DefaultText;
-                logWindow.IsFillScreen_115 = true;
-                logWindow.WindowArgs = { ObjectTableId: this.selectedRow.ObjectTableID };
-                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/StandardFieldsComponent');
+        SessionLocator.DynamicLoader.Load("./InfrastructureCustomization/Components/Customization/CustomizationEditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Title = table.Name;
+                cmpRef.instance.IsCustomFieldsMenue = this.IsCustomFieldsMenue;
+                cmpRef.inctance.IsObjectTableFilterEnabled = this.IsObjectTableFilterEnabled;
+                //    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
             });
-        }
     }
-
-    LabelsClicked() {
-        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-
-        if (table == null) return;
-
-        this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.IsFillScreen = true;
-            logitudeWindow.Title = "Translate Labels: " + this.selectedRow.DefaultText;
-            let windowArgs: any = {};
-            windowArgs.TranslationLanguageCode = this.selectedRow.TranslationLanguageCode;
-            windowArgs.ObjectTableId = this.selectedRow.ObjectTableID;
-            logitudeWindow.WindowArgs = windowArgs;
-            logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/TranslateLabelsComponent');
-        });
-    }
-
-
-    ScreensLayoutClicked() {
-        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-
-        if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Screens Layout: " + this.selectedRow.DefaultText;
-                logWindow.IsFillScreen = true;
-                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID, IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled, IsTabsCustomizationEnabled: this.IsShowTabs };
-                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/ScreenLayoutComponent');
-            });
-        }
-    }
-    OpenTabs() {
-        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-
-        if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Tabs: " + this.selectedRow.DefaultText;
-                logWindow.IsFillScreen = true;
-                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID };
-                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationTabsComponent');
-            });
-        }
-    }
-    CustomFieldsClicked() {
-        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-
-        if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Custom Fields: " + this.selectedRow.DefaultText;
-                logWindow.IsFillScreen_115 = true;
-                logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name, MaxNumberOfCustomFields: table.MaxNumberOfCustomFields, IsCustomFieldsMenue: this.IsCustomFieldsMenue}; //this.selectedRow.ObjectTableID;
-                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent');
-            });
-        }
-    }
-
-    RulesClicked() {
-        //RulesMainComponent
-        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-
-        if (table != null) {
-            var logWindow = new LogitudeWindow();
-            logWindow.Title = "Object Rules: " + this.selectedRow.DefaultText;
-            logWindow.IsFillScreen = true;
-            logWindow.WindowArgs = this.selectedRow;
-            logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/RulesComponents/RulesMainComponent');
-        }
-    }
-
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
