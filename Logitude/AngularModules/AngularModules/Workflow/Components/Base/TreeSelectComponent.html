@@ -1,20 +1,8 @@
 <div #treeSelect>
 
     <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
-        [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Data'" [nzAllowClear]="AllowClear"
-        [nzDropdownStyle]="{ 'max-height': '300px' }" [(ngModel)]="Value"
-        (ngModelChange)="treeSelectValueChanged($event)">
+        [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Data'" [nzAllowClear]="AllowClear"
+        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisplayWith]="displayItem">
     </nz-tree-select>
-
-
-    <!-- <nz-tree-select *ngIf="true" #SelectTreeElemant style="width: 250px" [nzNodes]="nodes" nzShowSearch
-        nzPlaceHolder="Please select" nzVirtualHeight="300px"></nz-tree-select>
-    
-    [nzDropdownStyle]="{ 'max-height': '300px' }"
-    [nzVirtualHeight]="'300px'"
-    
-    -->
-
-
 
 </div>

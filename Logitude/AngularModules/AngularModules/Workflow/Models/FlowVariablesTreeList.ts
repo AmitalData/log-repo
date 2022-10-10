@@ -52,18 +52,13 @@ export class FlowVariablesTreeList {
         let declaredVariablesItemChildren = [];
 
         this.getDeclareVariableNodes().forEach((node: any) => {
-            let treeSelectItemName = node.data["VariableName"];
-            let treeSelectItemKey = node.data["VariableCode"];
+            let treeSelectItemName = node.data["variableName"];
+            let treeSelectItemKey = node.data["variableCode"];
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
             declaredVariablesItemChildren.push(treeSelectItem);
         });
 
-        let sortedDeclaredVariablesItemChildren = declaredVariablesItemChildren.sort((a, b) => {
-            let textA = a.title.toLowerCase();
-            let textB = b.title.toLowerCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
-
+        let sortedDeclaredVariablesItemChildren = this.sortTreeSelectItems(declaredVariablesItemChildren);
         return sortedDeclaredVariablesItemChildren;
     }
 
@@ -95,12 +90,7 @@ export class FlowVariablesTreeList {
             objectFieldsItems.push(treeSelectItem);
         });
 
-        let sortedObjectFieldsItems = objectFieldsItems.sort((a, b) => {
-            let textA = a.title.toLowerCase();
-            let textB = b.title.toLowerCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
-
+        let sortedObjectFieldsItems = this.sortTreeSelectItems(objectFieldsItems);
         return sortedObjectFieldsItems;
     }
 
@@ -119,5 +109,17 @@ export class FlowVariablesTreeList {
             return startNodeEntity ? startNodeEntity : null;
         }
         return null;
+    }
+
+    private sortTreeSelectItems(items: any) {
+        if (items) {
+            let sortedItems = items.sort((a: any, b: any) => {
+                let textA = a.title.toLowerCase();
+                let textB = b.title.toLowerCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            return sortedItems;
+        }
+        return items;
     }
 }

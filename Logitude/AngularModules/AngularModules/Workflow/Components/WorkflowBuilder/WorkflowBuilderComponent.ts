@@ -79,7 +79,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             this.WorkflowEntity = this.EntityPM.Entity;
             this.renderReactFlowModeler();
             this.loadFlowObjectFields();
-            //this.stopBusyIndicator();
         }
     }
 
@@ -285,13 +284,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 });
             });
     }
-
-    // handleEditWindowClosed(entityPM: WorkFlowPM) {
-    //     if (entityPM) {
-    //         this.EntityPM = entityPM;
-    //         this.WorkflowName = entityPM.Name;
-    //     }
-    // }
 
     saveWorkflow(backAfterSave: boolean = false) {
         let flowObject = this.getCurrentFlowObject();
