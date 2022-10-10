@@ -210,6 +210,14 @@ td {
     margin: auto;
 }
 
+.TopCenter {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    margin: auto;
+}
+
 /*FireFox*/
 @media screen and (-moz-images-in-menus:0) {
 }

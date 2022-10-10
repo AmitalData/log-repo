@@ -21,7 +21,7 @@ import { Guid } from 'Infrastructure/Utilities/Guid';
 
 export class AddEditWidgetComponent extends BaseComponent {
     public EntityPM: WidgetPM;
-    public DashboardPM: DashboardPM;
+    public DashboardPM: DashboardPM = null;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditWidgetComponent;
     private isNew: boolean = false;
@@ -31,7 +31,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    public RootFilter: WidgetFilterItem;
+    //public RootFilter: WidgetFilterItem;
+    public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
