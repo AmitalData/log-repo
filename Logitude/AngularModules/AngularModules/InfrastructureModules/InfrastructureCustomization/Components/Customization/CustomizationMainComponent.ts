@@ -183,6 +183,10 @@ export class CustomizationMainComponent {
 
     }
 
+    NewCustomEntityClicked() {
+
+    }
+
     StandardFieldsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
         if (table != null) {
