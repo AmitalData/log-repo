@@ -1,4 +1,5 @@
-﻿using Logitude.DashboardModule.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.DataProviders.TablesDataProviders;
+using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using System;
@@ -12,7 +13,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
     public class DataProviderFactory
     {
         const string ShipmentAnalyticsMetaData = "ShipmentAnalytics";
-        public BaseDataProviderService GetDataProviderService(WidgetPM widget)
+        public BaseTablesDataProvider GetDataProviderService(WidgetPM widget)
         {
             var entity = GetEntity(widget.EntityId);
             switch (entity.TableName)

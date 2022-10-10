@@ -323,6 +323,9 @@
     <Content Include="Images\Buttons\minus.png" />
     <Content Include="Images\Charts\BarChart.png" />
     <Content Include="Images\Charts\DonutChart.png" />
+    <Content Include="Images\Charts\Empty-Dashboard.png" />
+    <Content Include="Images\Charts\Empty-Dashboard2.png" />
+    <Content Include="Images\Charts\EmptyDashboard.png" />
     <Content Include="Images\Charts\LineChart.png" />
     <Content Include="Images\Charts\PieChart.png" />
     <Content Include="Images\Customization\4U.png" />

@@ -67,7 +67,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="isGroupByVisible">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'GroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -148,7 +148,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="isSortByVisible">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'SortBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -179,7 +179,7 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -207,7 +207,7 @@
                                 </td>
 
                                 <td style="vertical-align:top">
-                                    <img width="180" [attr.src]="ChartImageSrc" />
+                                    <img width="150" [attr.src]="ChartImageSrc" />
                                 </td>
                             </tr>
                 
