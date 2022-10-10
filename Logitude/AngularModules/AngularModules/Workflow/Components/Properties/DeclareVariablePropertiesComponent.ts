@@ -36,36 +36,36 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.VariableName = this.Data["VariableName"] || null;
-        this.VariableType = this.Data["VariableType"] || null;
-        this.VariableValue = this.Data["VariableValue"] || null;
-        this.IsNew = this.Data["VariableType"] ? false : true;
+        this.VariableName = this.Data["variableName"] || null;
+        this.VariableType = this.Data["variableType"] || null;
+        this.VariableValue = this.Data["variableValue"] || null;
+        this.IsNew = this.Data["variableType"] ? false : true;
 
         this.setUIProperties();
     }
 
     updateVariableName(variableName: string) {
-        this.Data["VariableName"] = variableName;
+        this.Data["variableName"] = variableName;
         this.VariableName = variableName;
 
         if (variableName) {
-            this.Data["VariableCode"] = variableName.replace(/\s/g, '').trim().toLowerCase();
+            this.Data["variableCode"] = variableName.replace(/\s/g, '').trim().toLowerCase();
         }
         this.setUIProperties();
     }
 
     updateVariableType(VariableType: any) {
-        this.Data["VariableType"] = VariableType;
+        this.Data["variableType"] = VariableType;
         this.VariableType = VariableType;
 
-        this.Data["VariableValue"] = "";
+        this.Data["variableValue"] = "";
         this.VariableValue = "";
 
         this.setUIProperties();
     }
 
     updateVariableValue(VariableValue: any) {
-        this.Data["VariableValue"] = VariableValue;
+        this.Data["variableValue"] = VariableValue;
         this.VariableValue = VariableValue;
 
         this.setUIProperties();
