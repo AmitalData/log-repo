@@ -1445,6 +1445,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteClosingReasonNotes"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1787,8 +1794,8 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
-	Columns="Tenant,IsCancelled"
-	Include="SearchFields" />
+    Columns="Tenant,IsCancelled"
+    Include="SearchFields" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
 </Table>

@@ -23,6 +23,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastVersionNumber).IsRequired();
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.QuoteClosingReasonNotes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(true);
          
             //#if ORACLE_DB
@@ -361,6 +362,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShipperNotExporterAddressId).HasColumnName("ShipperNotExporterAddressId");
             this.Property(t => t.ShipperNotExporterContactId).HasColumnName("ShipperNotExporterContactId");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
+            this.Property(t => t.QuoteClosingReasonNotes).HasColumnName("QuoteClosingReasonNotes");
 
 
             // Relationships

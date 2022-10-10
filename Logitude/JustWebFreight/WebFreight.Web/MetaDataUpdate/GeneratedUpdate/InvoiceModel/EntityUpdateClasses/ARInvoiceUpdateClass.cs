@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "1aab3fa9d432f7b22fb90a1805435352";
+		public const string HashString = "cc147b368981cec3a3c623e6e078ac74";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13696,6 +13696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalEquation",
 					  						ListPropertyPath =  "TotalEquation",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13808,6 +13809,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			   TextCode ARInvoiceTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.SATVoidedNotTransferred", DefaultText = @"SAT Voided Not Transferred",LocalDefaultText = "SAT Voided Not Transferred", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARInvoiceFeature_13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.SATVoidedNotTransferred", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.SATVoidedNotTransferred", NameTextCodeDefaultText = "SATVoidedNotTransferred", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARInvoiceTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.SATInvoicesWaitingCancellation", DefaultText = @"SAT Waiting for Cancellation",LocalDefaultText = "SAT Waiting for Cancellation", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARInvoiceFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.SATInvoicesWaitingCancellation", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.SATInvoicesWaitingCancellation", NameTextCodeDefaultText = "SATInvoicesWaitingCancellation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -14214,6 +14219,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 
              AdvancedQueryFilter SATVoidedNotTransferredQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.StatusName", PredefinedValue = "Void",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query SATInvoicesWaitingCancellationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_14.Id, NameTextCodeCode = ARInvoiceTextCode_14.Code, ObjectTableName = "ARInvoice", Code = "SATInvoicesWaitingCancellation",  QueryGroupCode = "INVC", IndexOrder = 14, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_14.Id,FeatureUniqeCode= ARInvoiceFeature_14.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARInvoice.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARInvoice.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARInvoice.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARInvoice.ARInvoiceTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARInvoice.BillToName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARInvoice.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARInvoice.DueDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARInvoice.InvoiceCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ARInvoice.AmountInInvoiceCurrency" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ARInvoice.AmountDue" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter SATInvoicesWaitingCancellationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.SATTransferStatusCode", PredefinedValue = "CS",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

@@ -254,7 +254,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
             {
                 if (entityPM.ActionType == "Accept")
                 {
-                    string traceEventNotes = entityPM.EventNote;
+                    string traceEventNotes = entityPM.QuoteClosingReasonNotes;
                     if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
@@ -295,7 +295,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
 
                 else if (entityPM.ActionType == "Decline")
                 {
-                    string traceEventNotes = entityPM.EventNote;
+                    string traceEventNotes = entityPM.QuoteClosingReasonNotes;
                     if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);

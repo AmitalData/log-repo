@@ -77,17 +77,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             if (arPaymentPM.PaymentCurrencyCode == arInvoiceCode) return 1;
 
             if (arPaymentPM.PaymentCurrencyExchangeRate == null) return 0;
-
+            decimal extraExchangeRate = 0.000001M;
             if (currentTenant?.Currency?.Code == arInvoiceCode && invoice.InvoiceCurrencyExchangeRate != null)
             {
-                return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value));
+                return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value)) + extraExchangeRate;
             }
 
             double? invoiceCurrencyExchangeRate = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id).ExchangeRate;
 
             if (invoiceCurrencyExchangeRate == null) return 0;
 
-            return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoiceCurrencyExchangeRate));
+            return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoiceCurrencyExchangeRate)) + extraExchangeRate;
         }
 
         private static string GetPagosPagoDoctoRelacionadoIdDocumento(XmlElement[] comprobanteComplementoAnyXmlElements)
