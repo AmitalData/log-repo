@@ -36,6 +36,8 @@ export class CustomizationMainComponent {
     public IsShowRules: boolean = false;
     public IsShowTabs: boolean = false;
 
+    public NumberOfItems: number = 0;
+
     constructor() {
         this.myService = new GeneralDomainService();
         this.entityResourceService = new EntityResourceService();
@@ -130,6 +132,7 @@ export class CustomizationMainComponent {
             this.ShowPackageMessage();
         }
         this.IsReady = true;
+        this.NumberOfItems = this.ItemsSource1.length + this.ItemsSource2.length;
     }
 
     HasEntityPermessions(objectTable) {
