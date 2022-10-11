@@ -261,7 +261,10 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
                         if (myQuoteClosingReason != null)
                         {
-                            traceEventNotes = myQuoteClosingReason.Name;
+                            traceEventNotes = "";
+                            traceEventNotes +=  myQuoteClosingReason.Name;
+                            traceEventNotes += "\n";
+                            traceEventNotes += entityPM.QuoteClosingReasonNotes;
                         }
                     }
 
@@ -302,7 +305,10 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
                         if (myQuoteClosingReason != null)
                         {
-                            traceEventNotes = myQuoteClosingReason.Name;
+                            traceEventNotes = "";
+                            traceEventNotes += myQuoteClosingReason.Name;
+                            traceEventNotes += "\n";
+                            traceEventNotes += entityPM.QuoteClosingReasonNotes;
                         }
                     }
 

@@ -257,6 +257,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+
                 newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
