@@ -38,6 +38,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public FlowObjectFields: ObjectFieldPM[] = [];
 
+    public LoadedObjectFieldsEntities: string[] = [];
+
     public WorkFlowPMService: WorkFlowPMService;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -112,15 +114,32 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (flowObject) {
             let objectFieldListService = new ObjectFieldListService();
             let apiQueryFilters = new ApiQueryFilters(true);
-            apiQueryFilters.addAdditionalFilter("ObjectTableId", this.getWorkflowEntitiesIds(flowObject), null, null, "InListExact", false, false, false, "string");
+            let workflowEntitiesIds = this.getWorkflowEntitiesIds(flowObject);
+            apiQueryFilters.addAdditionalFilter("ObjectTableId", workflowEntitiesIds, null, null, "InListExact", false, false, false, "string");
             objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
                 if (!serviceResponse.HasError) {
                     this.FlowObjectFields = serviceResponse.Result;
+                    this.LoadedObjectFieldsEntities = workflowEntitiesIds.split(",");
                 }
-
                 this.stopBusyIndicator();
             });
+        } else {
+            this.stopBusyIndicator();
         }
+    }
+
+    loadEntityObjectFields(entityId: string) {
+        this.startBusyIndicator("Loading ...");
+        let objectFieldListService = new ObjectFieldListService();
+        let apiQueryFilters = new ApiQueryFilters(true);
+        apiQueryFilters.addAdditionalFilter("ObjectTableId", entityId, null, null, "Equals", false, false, false, "string");
+        objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                this.FlowObjectFields = serviceResponse.Result;
+                this.LoadedObjectFieldsEntities.push(entityId);
+            }
+            this.stopBusyIndicator();
+        });
     }
 
     getWorkflowEntitiesIds(flowObject: any) {
@@ -139,8 +158,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         return entitiesIds.filter((v, i, a) => a.indexOf(v) === i).join(",");
     }
 
-    flowChangedEvent = () => {
-        this.HasChanges = true;
+    flowChangedEvent = (event: any) => {
+        if (event.status === "success") {
+            this.HasChanges = true;
+        }
     }
 
     openPropertiesEvent = (openPropertiesEventObject: any) => {
@@ -206,12 +227,23 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     handlePropertiesWindowClosed = (data: any, nodeType: string) => {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
-            if (nodeType === "startNode") {
-                let dataEntity = data["entity"];
-                if (dataEntity) {
-                    this.WorkflowEntity = dataEntity;
+
+            let entity = data["entity"];
+            if (entity) {
+
+                if (nodeType === "startNode") {
+                    this.WorkflowEntity = entity;
                 }
+
+                let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+                let entityId = entityObjectTable ? entityObjectTable.Id : null;
+
+                if (entityId && this.LoadedObjectFieldsEntities.indexOf(entityId) === -1) {
+                    this.loadEntityObjectFields(entityId);
+                }
+
             }
+
             this.HasChanges = true;
         }
     }
