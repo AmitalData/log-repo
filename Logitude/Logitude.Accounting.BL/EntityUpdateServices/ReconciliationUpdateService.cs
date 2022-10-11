@@ -269,32 +269,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new ApplicationException("Updating Reconciliation allowed only to cancell");
                 }
             }
-            if (_CancelledAction == true)
-            {
-                //get journal of reconciliation - WI39779
-                JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
-                JournalPM journal = journalQuery
-                    //.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                //10  התאמה Adjustment
-                .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
-                if (journal != null && 
-                    (journal.StatusCode != ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
-                    && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
-                {
-                    // Void it!
-                    var tenant = entityPM.Tenant;
-                    IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                    var service = new JournalVoidUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                    var StornoOverrideM = new StornoOverrideM()
-                    {
-                        AccountingEntityCode = journal.AccountingEntityCode,
-                        AccountingEntityId = journal.AccountingEntityId,
-                        AccountingEntityReference = journal.AccountingEntityReference,
-                    };
-                    service.VoidJournal(journal.Id, tenant, StornoOverrideM);
-                    //Voided
-                }
-            }
+            //if (_CancelledAction == true)
+            //{
+            //    JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
+            //    JournalPM journal = journalQuery
+            //    .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
+            //    if (journal != null && 
+            //        (journal.StatusCode != ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
+            //        && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
+            //    {
+            //        var tenant = entityPM.Tenant;
+            //        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            //        var service = new JournalVoidUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            //        var StornoOverrideM = new StornoOverrideM()
+            //        {
+            //            AccountingEntityCode = journal.AccountingEntityCode,
+            //            AccountingEntityId = journal.AccountingEntityId,
+            //            AccountingEntityReference = journal.AccountingEntityReference,
+            //        };
+            //        service.VoidJournal(journal.Id, tenant, StornoOverrideM);
+            //    }
+            //}
             this.GLAccountRecocileDataUpSert(_CancelledAction, entityPM);
             base.OnUpdating(entityPM, entityPOCO);
         }
