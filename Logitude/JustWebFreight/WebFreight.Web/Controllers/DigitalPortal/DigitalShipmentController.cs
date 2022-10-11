@@ -110,7 +110,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 int tenant = authToken.Tenant;
-                SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
                 var entityStatusQuery = new EntityStatusQuery(tenant);
                 var res = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
                                            .Select(a => new EntityStatusList
