@@ -21,25 +21,26 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<PhysicalCheckCodeList> GetIqueryableList(IQueryable<PhysicalCheckCode> iQueryable)
         {
-		IQueryable<PhysicalCheckCodeList> query = (from a in iQueryable
-                                            select new PhysicalCheckCodeList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+			IQueryable<PhysicalCheckCodeList> query = (from a in iQueryable
+													   select new PhysicalCheckCodeList()
+													   {
+
+														   Code = a.Code == "N" ? null : a.Code,
+
+
+                                                           Name = a.Name,
+
+														   SearchFields = a.SearchFields,
+
+													   }) ;
             return query;
 		}
 
 		private IQueryable<PhysicalCheckCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PhysicalCheckCode> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-			}
+	}
 
 
 }

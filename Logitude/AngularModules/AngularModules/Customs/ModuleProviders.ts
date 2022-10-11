@@ -255,6 +255,7 @@ import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLis
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
+import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 
 
 //#endregion
@@ -749,8 +750,7 @@ export class ModuleProviders {
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
             case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
-
-                
+            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }            
              //#endregion                
 
             //#region StandardPMs
