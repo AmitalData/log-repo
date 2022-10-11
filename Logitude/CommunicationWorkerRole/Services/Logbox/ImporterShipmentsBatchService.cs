@@ -80,19 +80,27 @@ namespace CommunicationWorkerRole.Services.Logbox
             customerTenantAccessCard = customerTenantAccessInfo.CustomerTenantAccessCards.Where(a => a.CustomerId == CustomerId && a.CustomerTenantAccessId == CustomerTenantAccessId).FirstOrDefault();
             CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
             customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetSinglePM(CustomerId, CustomerTenantAccessId, BatchNumber, tenant);
-
-            const string inProgressStatusCode = "IP";
-            UpdateCustomerTenantAccessCard(inProgressStatusCode);
         }
 
         public void Build()
         {
-            if (customerTenantAccessCard == null) return;
+            if (customerTenantAccessCard == null)
+            {
+                queueservice.Complete();
+                return;
+            }
             List<Shipment> Shipments = importerBuilderShipmentsBatchService.GetAllShipmentsFromToDate();
             List<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> ShipmentsOrders = importerBuilderShipmentsOrderBatchService.GetAllShipmentsOrderFromToDate();
-            if ((Shipments == null || Shipments.Count() == 0) && (ShipmentsOrders == null || ShipmentsOrders.Count() == 0)) return;
+            if ((Shipments == null || Shipments.Count() == 0) && (ShipmentsOrders == null || ShipmentsOrders.Count() == 0))
+            {
+                queueservice.Complete();
+                return;
+            }
 
-            UpdateCustomerTenantAccessCardsBatchService();
+
+            const string inProgressStatusCode = "IP";
+            UpdateCustomerTenantAccessCard(inProgressStatusCode);
+
             List<Shipment> allowedShipments = new List<Shipment>();
             List<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> allowedShipmentsOrder = new List<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder>();
             if (Shipments != null && Shipments.Count() > 0)
@@ -105,7 +113,7 @@ namespace CommunicationWorkerRole.Services.Logbox
                 allowedShipmentsOrder = importerBuilderShipmentsOrderBatchService.Run();
             }
 
-            customerTenantAccessCardsBatch.Status = allowedShipments.Count() == 0 && allowedShipmentsOrder.Count() == 0 ? "Done" : "Build Queue";
+            customerTenantAccessCardsBatch.Status = "In Progress";
             customerTenantAccessCardsBatch.TotalShipment = allowedShipments.Count() + allowedShipmentsOrder.Count();
             UpdateCustomerTenantAccessCardsBatchService();
 

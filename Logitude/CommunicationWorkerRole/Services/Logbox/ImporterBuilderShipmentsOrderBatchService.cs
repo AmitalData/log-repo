@@ -91,7 +91,7 @@ namespace CommunicationWorkerRole.Services.Logbox
             IQueueService queueService = new DbQueueService();
             queueService.InitializeQueue("ImporterShipmentOrderQueue", 0);
             queueService.Send(
-                new Dictionary<string, string>() { { "ShipmentOrderId", ShipmentOrder.Id }, { "Tenant", ShipmentOrder.Tenant.ToString() }, { "BatchNumber", importerShipmentsBatchService.BatchNumber }, { "CustomerId", importerShipmentsBatchService.CustomerId } }, ShipmentOrder.Tenant);
+                new Dictionary<string, string>() { { "ShipmentOrderId", ShipmentOrder.Id }, { "Tenant", ShipmentOrder.Tenant.ToString() }, { "BatchNumber", importerShipmentsBatchService.BatchNumber }, { "CustomerId", importerShipmentsBatchService.CustomerId } }, ShipmentOrder.Tenant, null, importerShipmentsBatchService.CustomerId, importerShipmentsBatchService.BatchNumber);
         }
     }
 }

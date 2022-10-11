@@ -53,8 +53,14 @@ namespace CommunicationWorkerRole.Services.Logbox
 
         public void Build()
         {
-
-            List<DocumentsFilingPM> DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(shipmentId, "I", tenant);
+            string entityId = !string.IsNullOrEmpty(shipmentOrderId) ? shipmentOrderId : shipmentId;
+            const string inDocumentFilingCode = "I";
+            if (!documentsFilingQuery.HaveDocumentsFilingPMsByEntityIdAndDirectionCode(entityId, inDocumentFilingCode, tenant))
+            {
+                queueservice.Complete();
+                return;
+            }
+            List<DocumentsFilingPM> DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, inDocumentFilingCode, tenant);
             if (DocumentFilingPMs == null || DocumentFilingPMs.Count == 0)
             {
                 queueservice.Complete();

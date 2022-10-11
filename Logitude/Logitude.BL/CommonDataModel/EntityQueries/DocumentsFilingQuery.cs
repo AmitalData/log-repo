@@ -1565,6 +1565,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalDocumentPMs;
         }
 
+        public bool HaveDocumentsFilingPMsByEntityIdAndDirectionCode(string entityId, string directionCode, int tenant)
+        {
+            return (from a in repository.context.DocumentsFilings
+                   where a.Tenant == tenant && a.EntityId == entityId && a.DirectionCode == directionCode && a.IsDeleted == false
+                   select a).Any();
+        }
 
         public IQueryable<DocumentsFilingList> GetIQueryableEntityList(IQueryable<DocumentsFilingsView> iQueryable)
         {
