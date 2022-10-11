@@ -66,7 +66,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        EventTypeLocalName = a.EventType.LocalName,
                                                        EventTypeCode = a.EventType.Code,
                                                        IsManualEntry = a.EventType.IsManualEntry,
-                                                       //EventTypeCategoryCode = a.EventType.EventTypeCategory != null ? a.EventType.EventTypeCategory.Code : null,
                                                        IsAgentView = a.EventType.IsAgentView,
                                                        IsCustomerView = a.EventType.IsCustomerView,
                                                        ExternalId = a.ExternalId,
@@ -74,6 +73,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
 
 
@@ -132,7 +133,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
-
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
 
 
@@ -188,7 +190,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                                        Location = a.Location,
                                                                        PartnerName = a.PartnerName,
-
+                                                                       ChildEntityId = a.ChildEntityId,
+                                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                                    };
 
                         }
@@ -226,6 +229,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
             foreach (TraceEventPM trace in traceEvents)
             {
@@ -263,6 +268,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
                                       Location = a.Location,
                                       PartnerName = a.PartnerName,
+                                      ChildEntityId = a.ChildEntityId,
+                                      ChildObjectTableId = a.ChildObjectTableId,
                                   }).FirstOrDefault();
 
             Contact contact = ContactRepository.GetSingleContact(trace.UserId, trace.Tenant, true);
@@ -297,6 +304,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
                                       Location = a.Location,
                                       PartnerName = a.PartnerName,
+                                      ChildEntityId = a.ChildEntityId,
+                                      ChildObjectTableId = a.ChildObjectTableId,
                                   }).FirstOrDefault();
 
             Contact contact = ContactRepository.GetSingleContact(trace.UserId, trace.Tenant, true);
@@ -334,6 +343,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
 
                                                    };
             return traceEvents.FirstOrDefault();
@@ -407,7 +418,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
-
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
             return traceEvents.FirstOrDefault();
         }

@@ -2718,6 +2718,13 @@ export class ShipmentPackageItem extends BaseComponent {
         }
     }
 
+    get ContainerStrippedDate() { return this.EntityPM.ContainerStrippedDate; }
+    set ContainerStrippedDate(newValue: Date) {
+        if (this.EntityPM.ContainerStrippedDate != newValue) {
+            this.EntityPM.ContainerStrippedDate = newValue;
+        }
+    }
+
     get PackageTypeName() { return this.EntityPM.PackageTypeName; }
     set PackageTypeName(newValue: string) {
         if (this.EntityPM.PackageTypeName != newValue) {

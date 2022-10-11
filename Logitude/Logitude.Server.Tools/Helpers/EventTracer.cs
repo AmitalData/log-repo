@@ -35,6 +35,7 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
                     ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, 0, true);
+                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
 
                     #region User
                     string myUserId = null;
@@ -150,6 +151,8 @@ namespace Logitude.Server.Tools.Helpers
                         CustomerCareUserEmail = myCustomerCareUserEmail,
                         Notes = myNotes,
                         Location = null,
+                        ChildEntityId = args.ChildEntityId,
+                        ChildObjectTableId = childObjectTable?.Id,
                     };
 
                     TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
@@ -161,7 +164,6 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
                     }
-
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
@@ -358,6 +360,8 @@ namespace Logitude.Server.Tools.Helpers
         public string NewStatusId { get; set; }
         public string CurrentStatusId { get; set; }
         public object Entity { get; set; }
+        public string ChildEntityId { get; set; }
+        public string ChildObjectTableName { get; set; }
     }
 
     public class UpdateEventCustomFieldArgs

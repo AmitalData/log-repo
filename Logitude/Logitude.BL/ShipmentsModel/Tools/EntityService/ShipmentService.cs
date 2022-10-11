@@ -4757,6 +4757,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.UpdateShipmentDeliveryFromPackage(itemPM, itemPoco);
 
+            if (!entityPM.IsHybrid)
+            {
+                shipmentTracing.TracePackage(itemPM, itemPoco, entityPM);
+            }
+
             ShipmentMapping.MapPcakge(itemPM, itemPoco, true, this.loggedTenant);
             shipmentPackageRepository.Add(itemPoco);
 
@@ -4815,6 +4820,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
 
             this.UpdateShipmentDeliveryFromPackage(itemPM, itemPoco);
+
+            if (!entityPM.IsHybrid)
+            {
+                shipmentTracing.TracePackage(itemPM, itemPoco, entityPM);
+            }
 
             ShipmentMapping.MapPcakge(itemPM, itemPoco, false, this.loggedTenant);
             shipmentPackageRepository.Update(itemPoco);
@@ -4955,6 +4965,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (itemPoco != null)
             {
+                if (!entityPM.IsHybrid)
+                {
+                    shipmentTracing.TraceDeletedPackage(itemPM, itemPoco, entityPM);
+                }
+
                 List<ShipmentContainerStatus> shipmentContainerStatuses = shipmentContainerStatusRepository.GetShipmentContainerStatusByContainerId(itemPoco.Id, itemPoco.Tenant).ToList();
                 if (shipmentContainerStatuses != null)
                 {

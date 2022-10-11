@@ -21,7 +21,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CustomerCareUserEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.Location).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.PartnerName).HasMaxLength(70).IsUnicode(false);
-
+            this.Property(t => t.ChildEntityId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ChildObjectTableId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("TraceEvents");
@@ -38,7 +39,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CustomerCareUserEmail).HasColumnName("CustomerCareUserEmail");
             this.Property(t => t.Location).HasColumnName("Location");
             this.Property(t => t.PartnerName).HasColumnName("PartnerName");
-
+            this.Property(t => t.ChildEntityId).HasColumnName("ChildEntityId");
+            this.Property(t => t.ChildObjectTableId).HasColumnName("ChildObjectTableId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -63,7 +65,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 //#endif
 
             this.HasOptional(t => t.User).WithMany().HasForeignKey(d => d.UserId).WillCascadeOnDelete(false);
-
         }
     }
 }
