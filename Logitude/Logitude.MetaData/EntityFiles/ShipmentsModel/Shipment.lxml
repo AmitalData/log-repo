@@ -108047,6 +108047,20 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;COST&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Container Stripped&quot;"
+      LocalName="&quot;Container Stripped&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;COST&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
