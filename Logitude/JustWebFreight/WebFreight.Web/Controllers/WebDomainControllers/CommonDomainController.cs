@@ -1721,27 +1721,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerTenantAccess", "READ", tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).OrderByDescending(d => d.CreateDateTime).Skip(0).Take(100).ToList();
                 foreach (var item in myResult)
                 {
-                    var queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
-                    var AllQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue");
-                    item.TotalFailed = AllQueues.Where(a => a.Status == -1).Count();
-                    item.Totalsucceeded = AllQueues.Where(a => a.Status == 1).Count();
-                    item.TotalShipment = AllQueues.Count();
-                    if (item.TotalFailed > 0)
-                    {
-                        item.Status = "Failed";
-                    }
-                    else if (item.TotalShipment == (item.TotalFailed + item.Totalsucceeded))
-                    {
-                        item.Status = "Done";
-                    }
-                    else if (item.TotalShipment != (item.TotalFailed + item.Totalsucceeded))
-                    {
-                        item.Status = "In Progress";
-                    }
+                    UpdateCustomerTenantAccessCardsBatch(item, tenant, commonContext);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1750,6 +1735,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private static void UpdateCustomerTenantAccessCardsBatch(CustomerTenantAccessCardsBatchPM item, int tenant, ICommonDataContext commonContext)
+        {
+            if (item.Status != "In Progress") return;
+
+            QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
+            var allImporterShipmentsQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImporterShipmentOrderQueue");
+            const int failedStatusCode = -1;
+            const int doneStatusCode = -1;
+            item.TotalFailed = allImporterShipmentsQueues.Where(a => a.Status == failedStatusCode).Count();
+            item.Totalsucceeded = allImporterShipmentsQueues.Where(a => a.Status == doneStatusCode).Count();
+
+            item.Status = item.TotalShipment == (item.TotalFailed + item.Totalsucceeded) ? "Done" : "In Progress";
+            if (item.Status == "In Progress") return;
+
+            if (item.TotalFailed > 0)
+            {
+                item.Status = "Failed";
+            }
+
+            item.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            CustomerTenantAccessCardsBatchService customerTenantAccessCardsBatchService = new CustomerTenantAccessCardsBatchService(commonContext, tenant, item);
+            customerTenantAccessCardsBatchService.Update();
         }
 
         public HttpResponseMessage GetSingleVatTypeByCode(string Code)
