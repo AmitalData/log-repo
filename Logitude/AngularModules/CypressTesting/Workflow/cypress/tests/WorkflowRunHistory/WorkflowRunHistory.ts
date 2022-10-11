@@ -34,7 +34,7 @@ When("search instance in run history", () => {
     Actions.SearchInstanceByBusinessKey();
 });
 
-Then("the instances should refresh successfully", () => {
+Then("the result instances should appear successfully", () => {
     Actions.AssertSearchInstanceByBusinessKey();
 });
 

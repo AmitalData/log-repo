@@ -14,4 +14,4 @@ Feature: Workflow run history
 
     Scenario: search run history
         When search instance in run history
-        Then the instances should appear successfully
+        Then the result instances should appear successfully

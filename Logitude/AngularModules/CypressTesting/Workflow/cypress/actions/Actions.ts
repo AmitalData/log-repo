@@ -8,10 +8,13 @@ import { WorkflowDetails } from "../models/WorkflowDetails";
 import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms';
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { ConditionDetails } from "../models/ConditionDetails";
+import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/WorkflowRunHistoryFixturePath'
 
 let ConditionCounter = 1;
 let ConditionGroupButton = 1;
 let workflowName;
+let InstanceBusinessKey;
+let SearchInstanceBusinessKey;
 
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
@@ -30,7 +33,7 @@ export function SearchFlowByName() {
     cy.FillLogTextBox(WorkflowSelectors.WorkflowSearchBox, workflowName);
 }
 
-export function RefreshWorkflowLisr() {
+export function RefreshWorkflowList() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews);
     cy.Click(WorkflowSelectors.WorkflowListRefreshButton, null)
 }
@@ -129,16 +132,6 @@ export function CloseEditStartNodeWindow() {
     cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true);
 }
 
-export function OpenFlowRunHistory() {
-    cy.Click(WorkflowSelectors.FlowEditButton, null);
-    cy.DefineRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetWorkflowInstance);
-    cy.Click(WorkflowSelectors.FlowRunHistory, null);
-}
-
-export function AssertOpenFlowRunHistory() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowInstance, 200);
-}
-
 export function SaveWorkflow() {
     CloseEditStartNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
@@ -201,24 +194,41 @@ export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], Is
     }
 }
 
+export function OpenFlowRunHistory() {
+    cy.Click(WorkflowSelectors.FlowEditButton, null);
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
+        InstanceBusinessKey = response.Result[0].BusinessKey
+    });
+    cy.Click(WorkflowSelectors.FlowRunHistory, null);
+}
+
+export function AssertOpenFlowRunHistory() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
+}
+
 export function RefreshRunHistory() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetWorkflowInstance);
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
+    });
     cy.Click(WorkflowSelectors.RunHistoryRefreshButton, null)
 }
 
 export function AssertRefreshRunHistory() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowInstance, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
 }
 
 export function SearchInstanceByBusinessKey() {
-    GetFirstFlowName()
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowSingleInstace).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowSingleInstance, response);
+        SearchInstanceBusinessKey = response.Result[0].BusinessKey;
+    });
+    cy.FillLogTextBox(WorkflowSelectors.RunHistorySearchBox, InstanceBusinessKey)
 }
 
-function GetFirstFlowName() {
-    cy.get('.cdk-virtual-scroll-content-wrapper').find('list-template > span > div').first()
-}
 export function AssertSearchInstanceByBusinessKey() {
-
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowSingleInstance, 200)
+    BaseAssertion.AssertElementContain(WorkflowSelectors.FirstWorkflowInstanceBusinessKey, SearchInstanceBusinessKey)
 }
 
 function FillConditionValue(selector: string, value: string, condition: string) {

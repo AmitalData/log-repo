@@ -1,0 +1,24 @@
+{
+    "$id": "1",
+    "Result": [
+      {
+        "$id": "2",
+        "Id": "1-8777",
+        "Tenant": 951,
+        "CreateDate": "2022-10-09T15:06:12.847",
+        "CreatedByUserId": "1-1",
+        "UpdateDate": "2022-10-09T15:06:12.847",
+        "UpdatedByUserId": "1-1",
+        "SearchFields": null,
+        "WorkflowId": "1-723",
+        "StatusCode": "COED",
+        "StartTime": "2022-10-09T15:06:12.847",
+        "EndTime": null,
+        "BusinessKey": "IMEX2100000123",
+        "Duration": 6.45,
+        "StatusName": "Completed"
+      }
+    ],
+    "Count": 0,
+    "TookMS": 0
+  }
