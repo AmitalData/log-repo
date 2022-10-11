@@ -182,6 +182,7 @@
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="DataContracts\Models\DigitalDashboardSummary.cs" />
     <Compile Include="DataContracts\Models\GeneralFilters.cs" />
+    <Compile Include="DataContracts\Models\InvoicesCounter.cs" />
     <Compile Include="DataContracts\Models\SearchModel\GlobalSearchResult.cs" />
     <Compile Include="DataContracts\Models\Partner.cs" />
     <Compile Include="DataContracts\Models\SearchModel\InvoiceSearchResult.cs" />
