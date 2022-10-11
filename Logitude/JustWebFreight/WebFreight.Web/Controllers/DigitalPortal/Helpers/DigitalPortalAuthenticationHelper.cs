@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 entityId = shipmentIdAndTenant.Item1;
                 tenant = shipmentIdAndTenant.Item2;
 
-                if (isEventOrDocument)
+                if (isEventOrDocument && authToken == null)
                 {
                     CheckAutenticationOfEventsOrDocuments(tenant);
                 }
