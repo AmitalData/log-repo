@@ -15,15 +15,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalTotangoController/Post")]
         public void Post(TotangoActivityInfo activityInfo)
         {
-            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, activityInfo.CardId);
-
-            var myTenant = GetTenant(authToken.Tenant);
+            var myTenant = GetTenant(activityInfo.Tenant);
             activityInfo.IsSharedLogisticsContact = true;
-            activityInfo.OrganizationId = authToken.Tenant.ToString();
+            activityInfo.OrganizationId = activityInfo.Tenant.ToString();
             activityInfo.OrgDisplayName = myTenant.Company + (myTenant.CountryName != null ? ("-" + myTenant.CountryName.Trim()) : "");
-            activityInfo.Tenant = authToken.Tenant;
             ActivityLog.AddContactActivityWithTotango(activityInfo.OrganizationId, activityInfo.OrgDisplayName, activityInfo.UserName, activityInfo.Module,
                activityInfo.Activity, activityInfo.ContactId, activityInfo.Tenant, activityInfo.IsSharedLogisticsContact, activityInfo.CardId, activityInfo.PartnerTypeId, null);
         }

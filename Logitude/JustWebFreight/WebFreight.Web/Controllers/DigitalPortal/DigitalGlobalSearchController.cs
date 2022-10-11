@@ -91,7 +91,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     Id = item.Id,
                     InvoiceNumber = item.InvoiceNumber,
-                    Reference = item.MainEntityReference
+                    Reference = item.MainEntityReference,
+                    Type = item.ARInvoiceTypeName
                 });
             });
 
