@@ -88,7 +88,15 @@ namespace Simplog.Data.CommonDataModel
 
             return context;
         }
-
+        public static ICommonDataContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            CommonDataContext context = new CommonDataContext(connection);
+            return context;
+        }
         public static CommonDataContext GetContextByDBId(string dbId)
         {
             GlobalDB currentDb;
