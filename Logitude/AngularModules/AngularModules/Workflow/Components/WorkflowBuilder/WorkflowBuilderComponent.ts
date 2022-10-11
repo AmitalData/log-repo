@@ -201,7 +201,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (openPropertiesEventObject.nodeType == "declareVariableNode") {
             propertiesWindow.Height = 320;
         } else {
-            propertiesWindow.Height = 760;
+            propertiesWindow.Height = 850;
         }
         propertiesWindow.Width = 960;
         propertiesWindow.RTL = false;
