@@ -62,7 +62,7 @@ BEGIN
     AND object_id = OBJECT_ID('[dw_Shipments]'))
   begin
   
-  CREATE NONCLUSTERED INDEX [IX_Shipment_ShipmentLevelCode_IsStandalonePickupDelivery] ON [dbo].[dw_Shipments] ([IsStandalonePickupDelivery] , [ShipmentLevelCode],[AutomaticLastUpdateDate])
+  CREATE NONCLUSTERED INDEX [IX_Shipment_IsStandalonePickupDelivery_ShipmentLevelCode_AutomaticLastUpdateDate] ON [dbo].[dw_Shipments] ([IsStandalonePickupDelivery] , [ShipmentLevelCode],[AutomaticLastUpdateDate])
   INCLUDE([ComputedStatusId],[FromPortId],[ToPortId],[IsOperationalClosed],[IsAccountingClosed],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[CreatedByUserId],[CreateDateTime],[DepartmentId],[ShipmentTypeId],[CustomerId],[ShipperId],[ConsigneeId],[AgentComputed],[Routing],[DirectionId],[TransportModeId],[VolumeUnitCode],[AgentReference2],[AgentReference1],[GrossWeightUnitCode],[ChargeableWeightUnitCode],[VolumetricWeight],[GrossWeightInKG],[NumberOfPackages],[VolumeInCBM],[BookingNumberOfPackages],[OrderGrossWeight],[BookingVolume],[SpecialServicesTypeId],[CustomerReference1],[CustomerReference2],[AccountManagerUserId],[OperationalCloseDate],[AccountingCloseDate],[OperationalDate],[MasterShipmentDataId],[RegistryDate],[GrossWeightPerTon],[FirstOperationalCloseDate],[ProjectNumber],[HousesOpenPayablesInLocal],[HousesOpenPayablesInProfit],[HousesACCTPayablesInLocal],[HousesACCTPayablesInProfit],[HousesOpenReceivablesInLocal],[HousesOpenReceivablesInProfit],[HousesACCTReceivablesInLocal],[HousesACCTReceivablesInProfit],[PlannedCargoReadyDate],[ApprovedCargoReadyDate],[HandlerUserId],[Notify1Reference2],[Id],[Tenant]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
   end
@@ -109,7 +109,7 @@ end
 IF (OBJECT_ID ('dw_ShipmentReceivables', 'U')  IS NOT NULL)
 BEGIN
 
-  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ShipmentReceivables_ShipmentId' 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ShipmentReceivables_ShipmentId' 
     AND object_id = OBJECT_ID('[dbo].[dw_ShipmentReceivables]'))
   begin 
   
@@ -124,7 +124,7 @@ end
 IF (OBJECT_ID ('dw_PayableProratedAmounts', 'U')  IS NOT NULL)
 BEGIN
 
-  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_PayableProratedAmounts_InvoiceId_ShipmentId' 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_PayableProratedAmounts_ShipmentId' 
     AND object_id = OBJECT_ID('[dbo].[dw_PayableProratedAmounts]'))
   begin 
   
@@ -143,7 +143,7 @@ end
 IF (OBJECT_ID ('dw_ShipmentPayables', 'U')  IS NOT NULL)
 BEGIN
 
-  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ShipmentPayables_ShipmentId' 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ShipmentPayables_ShipmentId' 
     AND object_id = OBJECT_ID('[dbo].[dw_ShipmentPayables]'))
   begin 
   
@@ -157,11 +157,11 @@ end
 IF (OBJECT_ID ('dw_APInvoiceLines', 'U')  IS NOT NULL)
 BEGIN
 
-  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_APInvoiceLines_EntityPayableId' 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_APInvoiceLines_EntityPayableId' 
     AND object_id = OBJECT_ID('[dbo].[dw_APInvoiceLines]'))
   begin 
   
-  CREATE NONCLUSTERED INDEX [XI_APInvoiceLines_EntityPayableId] ON[dbo].[dw_APInvoiceLines]([EntityPayableId])
+  CREATE NONCLUSTERED INDEX [IX_APInvoiceLines_EntityPayableId] ON[dbo].[dw_APInvoiceLines]([EntityPayableId])
 INCLUDE([APInvoiceId],[LocalCurrencyAmount],[ProfitCurrencyAmount],[ForiegnCurrencyAmount],[ForiegnCurrencyId],[Notes])
 
   end
@@ -173,11 +173,11 @@ end
 IF (OBJECT_ID ('dw_ARInvoiceLines', 'U')  IS NOT NULL)
 BEGIN
 
-  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='XI_ARInvoiceLines_ReceivableId' 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ARInvoiceLines_ReceivableId' 
     AND object_id = OBJECT_ID('[dbo].[dw_ARInvoiceLines]'))
   begin 
   
-  CREATE NONCLUSTERED INDEX [XI_ARInvoiceLines_ReceivableId] ON[dbo].[dw_ARInvoiceLines]([ReceivableId])
+  CREATE NONCLUSTERED INDEX [IX_ARInvoiceLines_ReceivableId] ON[dbo].[dw_ARInvoiceLines]([ReceivableId])
     INCLUDE ([ARInvoiceId],[LocalCurrencyAmount],[ProfitCurrencyAmount],[ForiegnCurrencyAmount],[ForiegnCurrencyId],[Notes],[Description] , [LocalDescription])					  -- ,
 
   end

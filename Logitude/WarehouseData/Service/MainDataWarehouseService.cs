@@ -20,7 +20,8 @@ namespace WarehouseData.Helper
         FactWarehouseService factWarehouseService;
         WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         DWDataWarehouseService dWDataWarehouseService;
-
+        public int RetryNumber = 0;
+        public int MaxRetriesNumber =5;
         public MainDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug") :base(applicationName, applicationMode)
         {
 
@@ -29,7 +30,8 @@ namespace WarehouseData.Helper
 
         private void InitializeDataWarehouseServices()
         {
-            finalDataWarehouseService = new FinalDataWarehouseService();
+
+            finalDataWarehouseService = new FinalDataWarehouseService(ApplicationName, ApplicationMode);
             customFieldWarehouseService = new CustomFieldWarehouseService();
             dimensionWarehouseService = new DimensionWarehouseService(ApplicationName, ApplicationMode);
             factWarehouseService = new FactWarehouseService(ApplicationName, ApplicationMode);
@@ -128,9 +130,23 @@ namespace WarehouseData.Helper
 
         public void FinishBuildingDataWarehouse(string connectionString ,string destinationConnectionString, List<TableClass> tableLists)
         {
-        
+            try
+            {
+                TryFinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+            }
+            catch (Exception exception)
+            {
+                if(RetryNumber > MaxRetriesNumber) throw exception;
+                FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+            }
+
+        }
+
+        private void TryFinishBuildingDataWarehouse(string connectionString, string destinationConnectionString, List<TableClass> tableLists)
+        {
+            RetryNumber += 1;
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
-            ExecuteScript("Others", "AddAdditionalIndexesToFactTables", destinationConnectionString);
+
 
         }
 
@@ -141,10 +157,6 @@ namespace WarehouseData.Helper
 
             finalDataWarehouseService.FinishUpdatingDataWarehouse(destinationConnectionString);
         }
-
-
-
-
 
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)
         {
@@ -213,8 +225,7 @@ namespace WarehouseData.Helper
                 this.BuildFactTable(destinationConnectionString, table);
             });
 
-
-            FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
+          new MainDataWarehouseService(ApplicationName, ApplicationMode).FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
         }
 
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
