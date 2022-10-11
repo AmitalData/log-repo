@@ -2388,7 +2388,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
