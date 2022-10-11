@@ -135,7 +135,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         apiQueryFilters.addAdditionalFilter("ObjectTableId", entityId, null, null, "Equals", false, false, false, "string");
         objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
-                this.FlowObjectFields = serviceResponse.Result;
+                this.FlowObjectFields = this.FlowObjectFields.concat(serviceResponse.Result);
                 this.LoadedObjectFieldsEntities.push(entityId);
             }
             this.stopBusyIndicator();
