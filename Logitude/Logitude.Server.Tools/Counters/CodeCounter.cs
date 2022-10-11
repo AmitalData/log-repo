@@ -9,6 +9,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
+using System.Collections.Generic;
 
 namespace Logitude.Server.Tools.Counters
 {
@@ -80,6 +81,11 @@ namespace Logitude.Server.Tools.Counters
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
                             SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                            var myTenants = new List<int>() { 1, 42, 2889 };
+                            if (myTenants.Contains(tenant))
+                            {
+                                cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                            }
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
@@ -265,6 +271,11 @@ namespace Logitude.Server.Tools.Counters
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                    var myTenants = new List<int>() { 1, 42, 2889 };
+                    if (myTenants.Contains(tenant))
+                    {
+                        cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                    }
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
