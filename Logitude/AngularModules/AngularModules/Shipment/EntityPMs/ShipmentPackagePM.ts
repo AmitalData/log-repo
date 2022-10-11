@@ -485,6 +485,10 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
         }
     }
 
+    private containerStrippedDate: Date;
+    public get ContainerStrippedDate() { return this.containerStrippedDate; }
+    public set ContainerStrippedDate(newValue: Date) { if (this.containerStrippedDate != newValue) { this.containerStrippedDate = newValue; this.MarkAsDirty("ContainerStrippedDate"); } }
+
 	private insideShipmentPackages: InsideShipmentPackagePM[];
     get  InsideShipmentPackages() {
         if (this.insideShipmentPackages == null) {
@@ -498,6 +502,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
             this.insideShipmentPackages = newValue;
         }
     }
+
     public AddInsideShipmentPackagePM(item: InsideShipmentPackagePM) {
         if (item != null) {
             var index = this.InsideShipmentPackages.indexOf(item);

@@ -42,6 +42,12 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
             return id;
         }
 
+        public IQueryable<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> GetIQueryableShipmentsOrderByTenantAndCreateDate(int tenant, DateTime startDate, DateTime endDate)
+        {
+            IQueryable<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> shipmentsOrder = context.ShipmentOrders.Where(a => a.Tenant == tenant && (a.CreateDate >= startDate && a.CreateDate < endDate));
+
+            return shipmentsOrder;
+        }
 
     }
 }

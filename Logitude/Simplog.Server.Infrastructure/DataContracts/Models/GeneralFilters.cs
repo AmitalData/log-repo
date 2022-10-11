@@ -21,10 +21,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Models
 
         public bool DontApplyVirtualization { get; set; }
 
-        public int? Tenant { get; set; }
+        public int Tenant { get; set; }
 
         public string CardId { get; set; }
-
+        public string SearchText { get; set; }
         public string CardType { get; set; }
         public string ObjectTableName { get; set; }
         public List<AdditionalFilters> AdditionalFilters { get; set; }

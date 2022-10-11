@@ -615,10 +615,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                 "CN"
             };
 
-            var filteredInvoices = invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
-
-            return filteredInvoices;
+            return invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
         }
-
     }
 }

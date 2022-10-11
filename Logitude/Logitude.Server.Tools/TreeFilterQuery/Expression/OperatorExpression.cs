@@ -188,6 +188,15 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
         }
     }
 
+    public class EndsWith : OperatorExpression
+    {
+        public override System.Linq.Expressions.Expression Build()
+        {
+            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
+            return System.Linq.Expressions.Expression.Call(field, WhereExpression.EndsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue));
+        }
+    }
+
     public class InList : OperatorExpression
     {
         public override System.Linq.Expressions.Expression  Build()

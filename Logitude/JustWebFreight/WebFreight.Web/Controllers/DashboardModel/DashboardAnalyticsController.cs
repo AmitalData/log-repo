@@ -22,8 +22,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var dataProvicer = new DataProviderFactory().GetDataProviderService(widget);
-                var result = dataProvicer.GetWidgetData();
+                var dataProvider = new DataProviderFactory().GetDataProviderService(widget);
+                var result = dataProvider.GetChartData();
                 return Request.CreateResponse(result);
             }
             catch (Exception ex)
@@ -34,12 +34,29 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         public HttpResponseMessage PostGetDataAnalyticPart(WidgetPartArguments widgetPartArguments)
         {
             try
+            { 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var dataProvider = new DataProviderFactory().GetDataProviderService(widgetPartArguments.Widget);
+                var result = dataProvider.GeChartDataPart(widgetPartArguments);
+                return Request.CreateResponse(result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostGetKpiData(WidgetPM widget)
+        {
+            try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var dataProvicer = new DataProviderFactory().GetDataProviderService(widgetPartArguments.Widget);
-                var result = dataProvicer.GetWidgetDataPart(widgetPartArguments);
+                var dataProvider = new DataProviderFactory().GetDataProviderService(widget);
+                var result = dataProvider.GetKpiData();
                 return Request.CreateResponse(result);
             }
             catch (Exception ex)

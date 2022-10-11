@@ -3,21 +3,62 @@
     <tr>
         <td>
             <table *ngIf="IsReady">
-                <tr style="height: 1px;">
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 90px; ">
                     <td>
                         <table>
-                            <tr>
-                                <td style="width: 200px;">
-                                    <SearchBox [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                            <tr><td></td></tr>
+                            <tr style="height: 70px;">
+                                <td style="width: 60px; height:70px">
+                                    <img src="./Images/Customization/CustomizationIcon.png" class="CenterCenter" style="height: 60px; width: 60px" />
+                                </td>
+                                <td>
+
+
+                                    <table style="width: 130px; height:50px">
+                                        <tr>
+                                            <td><label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 17px; font-weight: bold; font-family: system-ui ">Customization</label></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 22px; font-weight: bold; font-family: system-ui ">Manager</label>
+                                                    <img src="./Images/Customization/4U.png" class="CenterCenter" style="height:30px; left:103px; top:2px" />
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+
+                                    </table>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width:300px">
+                                    <div style="display:inline-flex">
+                                        <SearchBox style="width:140px; margin-right:5px" [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                        <button class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()">New Custom Entity</button>
+
+                                    </div>
+
                                 </td>
 
+                            </tr>
+                            <tr>
+                                <td></td>
                                 <td>
-                                    <div></div>
+                                    <label style="padding-left:10px">{{NumberOfItems}} Items</label>
                                 </td>
                             </tr>
+                            <tr><td></td></tr>
                         </table>
                     </td>
                 </tr>
+
 
                 <tr style="height: 5px;">
                     <td></td>
@@ -254,43 +295,7 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-
-
-                    <td *ngIf=" (!IsObjectTableFilterEnabled || IsShowStandardFields) && !IsCustomFieldsMenue" style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="StandardFieldsClicked()">Standard Fields</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td *ngIf="(!IsObjectTableFilterEnabled || IsShowLabels) && !IsCustomFieldsMenue" style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="LabelsClicked()">Labels</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td *ngIf="(!IsObjectTableFilterEnabled || IsShowScreensLayout) && !IsCustomFieldsMenue" style="width: 57px;">
-                        <button [attr.data-cy]="'ScreenLayoutId'" class="Button" [disabled]="!IsButtonEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-                    <td *ngIf="!IsObjectTableFilterEnabled ||  IsShowCustomFields || IsCustomFieldsMenue" style="width: 57px;">
-                        <button [attr.data-cy]="'CustomFieldtId'" class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td *ngIf=" (!IsObjectTableFilterEnabled || IsShowRules) && !IsCustomFieldsMenue" style="width: 57px;">
-                        <button [attr.data-cy]="'Rules'" class="Button" [disabled]="!IsButtonEnabled" (click)="RulesClicked()">Rules</button>
-                    </td>
-
-                    <td *ngIf="(!IsObjectTableFilterEnabled || IsShowTabs) && !IsCustomFieldsMenue" style="width: 5px;"><div></div></td>
-
-                    <td *ngIf=" (!IsObjectTableFilterEnabled || IsShowTabs) && !IsCustomFieldsMenue" style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="OpenTabs()">Tabs</button>
-                    </td>
-
                     <td><div></div></td>
-
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="CloseClicked()">Close</button>
                     </td>

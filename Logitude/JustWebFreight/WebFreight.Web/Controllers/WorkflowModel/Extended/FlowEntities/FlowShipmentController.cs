@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -22,6 +23,26 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 {
     public class FlowShipmentController : ApiController
     {
+        public HttpResponseMessage GetSingle(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
             try

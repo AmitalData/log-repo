@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Widget Type&quot;"
-  Code="&quot;bea2&quot;"
+  Code="&quot;a3b4&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -341,6 +341,10 @@
       Code="&quot;donut&quot;"
       Name="&quot;Donut&quot;"
       SearchFields="&quot;Donut&quot;" />
+    <Record
+      Code="&quot;kpi&quot;"
+      Name="&quot;KPI&quot;"
+      SearchFields="&quot;Kpi&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

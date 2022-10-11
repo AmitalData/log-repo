@@ -13,7 +13,11 @@ using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Newtonsoft.Json;
-using System.Xml.Serialization;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2334,6 +2338,174 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         #endregion Transport & Subtypes
+
+        #region Global Search 
+        public IQueryable<DigitalShipmentList> GetByFilters(GeneralFilters newFilters)
+        {
+            var tenant = newFilters.Tenant;
+
+            var myTenantRepository = new TenantRepository(tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(tenant);
+
+            var filters = new ApiQueryFilters()
+            {
+                Filter1Value = newFilters.CardId,
+                Filter2Value = newFilters.CardType
+            };
+
+            var queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Shipment",
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
+                QuerySection = "Shipments",
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection,
+                QueryFilterItems = new List<QueryFilterItem>(),
+            };
+
+            string partnerTypeName = string.Empty;
+            string shipmentLevelCodeValue = string.Empty;
+
+            if (newFilters.CardType == "CS")
+            {
+                shipmentLevelCodeValue = "D,H,A";
+                partnerTypeName = "CustomerId";
+            }
+            else if (newFilters.CardType == "AG")
+            {
+                shipmentLevelCodeValue = "D,C";
+                partnerTypeName = "AgentId";
+            }
+
+            if (!string.IsNullOrEmpty(newFilters.CardId))
+            {
+                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "Equals", null, false);
+            }
+
+            if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
+            {
+                queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
+            }
+
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+
+            foreach (var filter in newFilters.AdditionalFilters)
+            {
+                var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                if (field != null)
+                {
+                    string valuestring1 = filter.FieldValue?.ToString();
+                    object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                    string valuestring2 = filter.FieldValue2?.ToString();
+                    object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                    string valuestring3 = filter.FieldValue3?.ToString();
+                    object value3 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
+                    queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                }
+                else
+                {
+                    queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.FieldValue3, filter.DisplayInList);
+                }
+            }
+
+            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
+            ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
+
+            var shipmentRepository = new ShipmentRepository(tenant);
+
+            var customfilters = new ShipmentCustomFilter(tenant);
+
+            IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(tenant);
+
+            shipments = DigitalPortalCustomFilter.GetDigtalFilteredQuery(queryOperations, shipments, shipmentRepository, tenant);
+
+            var nonListQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+            };
+
+            var listQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+            };
+
+            var genericFilter = new Simplog.Server.Infrastructure.Helpers.GenericFilter();
+
+            shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
+
+            var myShipmentQuery = new ShipmentQuery(shipmentRepository);
+            var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, tenant);
+            entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
+                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+
+                var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
+
+                if (objectField != null)
+                {
+                    var sortClass = new Simplog.Server.Infrastructure.Helpers.GenericSort();
+
+                    if (!objectField.IsCustom)
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "text":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "double":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, double>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "datetime":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, DateTime>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "integer":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, int>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "lookup":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<DigitalShipmentList, bool>(queryOperations, entityLists);
+                                    break;
+                                }
+                            default:
+                                {
+                                    entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        entityLists = sortClass.GetSorterQuery<DigitalShipmentList, string>(queryOperations, entityLists);
+                    }
+                }
+            }
+            else
+            {
+                entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
+            }
+
+            return entityLists;
+        }
+
+        #endregion
 
         public Tuple<string, int> GetShipmentIdBySecurityKey(string key)
         {

@@ -283,7 +283,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                && a.IsDigitalPortal
                                                && a.ObjectTable.Name.Equals("Shipment")
                                                && !blockedStatus.Contains(a.Code))
-                                   .Select(a =>  new EntityStatusList()
+                                   .Select(a => new EntityStatusList()
                                    {
                                        Id = a.Id,
                                        Name = a.Name,
@@ -298,6 +298,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                        AllowPartial = a.AllowPartial
                                    })
                                    .ToList();
+
+            result = result.Select(a => new EntityStatusList
+            {
+                DisplayName = a.Code.Equals("SDLY")
+                                ? "Out for Delivery"
+                                : a.Code.Equals("SHOR")
+                                ? "Created"
+                                : a.DisplayName,
+                Id = a.Id,
+                StatusWeight = a.StatusWeight,
+                Name = a.Name
+            })
+            .OrderBy(a => a.StatusWeight)
+            .ThenBy(a => a.Name)
+            .ToList();
+
             return result;
         }
     }

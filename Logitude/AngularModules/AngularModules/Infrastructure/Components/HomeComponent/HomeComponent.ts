@@ -1024,7 +1024,9 @@ export class HomeComponent implements OnDestroy{
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Object Names";
         logWindow.IsShowCloseButton = true;
-        logWindow.Width = 800;
+        logWindow.Width = 900;
+        logWindow.Height = 550;
+        logWindow.IsHideHeader = true;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
     }
     TranslateLabelsClicked() {

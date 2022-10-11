@@ -29,7 +29,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.Title).HasColumnName("Title").IsRequired().HasMaxLength(300).IsUnicode(true);
 
-            this.Property(t => t.GroupById).HasColumnName("GroupById").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.GroupById).HasColumnName("GroupById").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.DashboardId).HasColumnName("DashboardId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

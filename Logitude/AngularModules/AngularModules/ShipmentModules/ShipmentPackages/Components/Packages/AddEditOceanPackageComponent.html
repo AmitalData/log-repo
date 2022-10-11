@@ -45,7 +45,7 @@
                             <tr>
                                 <td style="width: 350px;">
                                     <table>
-                                        <tr>
+                                        <tr style="height:1px;">
                                             <td>
                                                 <table>
                                                     <!-- PackageTypeId -->
@@ -196,6 +196,7 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!--HorseId-->
                                                     <tr class="FormFieldRow" *ngIf="(DataContext.HorseFieldIsVisible && !IsFCLEntity)">
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'HorseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -210,6 +211,23 @@
                                                                     (SelectedItemChanged)="DataContext.Horse = $event"
                                                                     [DisplayMemberPath]="'Name'">
                                                             </LogLov>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!--ContainerStrippedDate-->
+                                                    <tr class="FormFieldRow" *ngIf="IsMYGOEntity">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'ContainerStrippedDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 185px;">
+                                                            <LogDatePicker [ObjectFieldName]="'ContainerStrippedDate'" [SelectedDateValue]="DataContext.ContainerStrippedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td colspan="2">
+                                                            <div></div>
                                                         </td>
                                                     </tr>
 
@@ -291,7 +309,7 @@
                                                                         <LogLabel [ObjectFieldName]="'IsDangerous'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogCheckBox [ObjectFieldName]="'IsDangerous'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsDangerous"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
@@ -302,7 +320,7 @@
                                                                         <LogLabel [ObjectFieldName]="'ClassNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogTextBox [ObjectFieldName]="'ClassNumber'" [Text]="DataContext.ClassNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                     </td>
                                                                 </tr>
@@ -313,7 +331,7 @@
                                                                         <LogLabel [ObjectFieldName]="'UnNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogTextBox [ObjectFieldName]="'UnNumber'" [Text]="DataContext.UnNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                     </td>
                                                                 </tr>
@@ -324,7 +342,7 @@
                                                                         <LogLabel [ObjectFieldName]="'PackagingGroup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogTextBox [ObjectFieldName]="'PackagingGroup'" [Text]="DataContext.PackagingGroup" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                     </td>
                                                                 </tr>
@@ -335,7 +353,7 @@
                                                                         <LogLabel [ObjectFieldName]="'IMDGCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogTextBox [ObjectFieldName]="'IMDGCode'" [Text]="DataContext.IMDGCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                     </td>
                                                                 </tr>
@@ -346,7 +364,7 @@
                                                                         <LogLabel [ObjectFieldName]="'FlashPoint'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
@@ -381,7 +399,7 @@
                                                                         <LogLabel [ObjectFieldName]="'MaterialDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td width="185px;">
+                                                                    <td style="width:185px;">
                                                                         <LogTextBox [ObjectFieldName]="'MaterialDescription'" [Text]="DataContext.MaterialDescription" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                     </td>
                                                                 </tr>
@@ -390,6 +408,10 @@
                                                     </tr>
                                                 </table>
                                             </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><div></div></td>
                                         </tr>
                                     </table>
                                 </td>

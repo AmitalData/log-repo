@@ -30,6 +30,7 @@ using Logitude.Extensions;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -309,7 +310,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                         else
                         {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                            var isParsedSuccess = bool.TryParse(filter.FieldValue, out bool parsedBool);
+
+                            if (isParsedSuccess)
+                            {
+                                queryOperations.SetFilter(filter.FieldName, parsedBool, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+
+                            }
+                            else
+                            {
+                                queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                            }
                         }
                     }
                 }
@@ -404,6 +415,128 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var res = entityLists.GetPaged(queryOperations.PageIndex, queryOperations.PageSize);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalInvoice/GetByInvoicesCounters")]
+        public IHttpActionResult GetByInvoicesCounters(GeneralFilters newFilters)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+                var myTenantRepository = new TenantRepository(authToken.Tenant);
+                var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
+
+                var filters = new ApiQueryFilters()
+                {
+                    Filter1Value = newFilters.CardId,
+                    Filter2Value = newFilters.CardType
+                };
+
+                var queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "ARInvoice",
+                    PageIndex = newFilters.PageIndex,
+                    PageSize = newFilters.PageSize,
+                    QuerySection = "ARInvoices",
+                    SortByColumnName = newFilters.SortBy,
+                    SortDirectin = newFilters.SortDirection
+                };
+
+                queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+                queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
+
+                var cardFilterValues = newFilters.CardId;
+                if (!string.IsNullOrWhiteSpace(cardFilterValues))
+                {
+                    var cardBillToId = GetCardBillToId(newFilters.CardId, authToken.Tenant);
+                    if (!string.IsNullOrWhiteSpace(cardBillToId))
+                    {
+                        cardFilterValues = cardFilterValues + "," + cardBillToId;
+                        queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                    }
+
+                    queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
+                }
+
+                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
+
+                if (newFilters.AdditionalFilters.Any())
+                {
+                    foreach (var filter in newFilters.AdditionalFilters)
+                    {
+                        var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue?.ToString();
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                            string valuestring2 = filter.FieldValue2?.ToString();
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
+                        else
+                        {
+                            var isParsedSuccess = bool.TryParse(filter.FieldValue, out bool parsedBool);
+
+                            if (isParsedSuccess)
+                            {
+                                queryOperations.SetFilter(filter.FieldName, parsedBool, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+
+                            }
+                            else
+                            {
+                                queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                            }
+                        }
+                    }
+                }
+
+                ARInvoiceAPiHelper.AddFilters(queryOperations, authToken.Tenant);
+                var genericFilter = new GenericFilter();
+                var MyContext = InvoiceContext.GetContext(authToken.Tenant);
+
+                var nonListQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+                };
+
+                var listQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+                };
+
+                var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
+                var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+
+                var entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
+
+                entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
+
+                var customfilters = new ARInvoiceCustomFilter(authToken.Tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, authToken.Tenant);
+                entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+
+                var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+                entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+                var res = new InvoicesCounter
+                {
+                    MaxOpenAmount = entityLists.Max(a => a.AmountDue),
+                    MinOpenAmount = entityLists.Min(a => a.AmountDue),
+                    MaxTotalAmount = entityLists.Max(a => a.AmountInInvoiceCurrency),
+                    MinTotalAmount = entityLists.Min(a => a.AmountInInvoiceCurrency),
+                };
+
                 return Ok(res);
             }
             catch (Exception ex)

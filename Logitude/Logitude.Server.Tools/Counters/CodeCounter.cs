@@ -9,6 +9,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
+using System.Collections.Generic;
 
 namespace Logitude.Server.Tools.Counters
 {
@@ -73,13 +74,18 @@ namespace Logitude.Server.Tools.Counters
                 else
                 {
 
-                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         //{
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
                             SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                            var myTenants = new List<int>() { 1, 42, 2889 };
+                            if (myTenants.Contains(tenant))
+                            {
+                                cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                            }
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
@@ -262,33 +268,42 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
-                using (SqlConnection cn = new SqlConnection(strConnString))
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+                        SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                        var myTenants = new List<int>() { 1, 42, 2889 };
+                        if (myTenants.Contains(tenant))
+                        {
+                            cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                        }
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
-                    SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
-                    SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                        SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
+                        SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
+                        SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
 
 
-                    lastNumberPar.Direction = ParameterDirection.Output;
-                    tableNamePar.Direction = ParameterDirection.Input;
-                    tenantPar.Direction = ParameterDirection.Input;
+                        lastNumberPar.Direction = ParameterDirection.Output;
+                        tableNamePar.Direction = ParameterDirection.Input;
+                        tenantPar.Direction = ParameterDirection.Input;
 
-                    tenantPar.Value = tenant;
-                    tableNamePar.Value = tableName;
+                        tenantPar.Value = tenant;
+                        tableNamePar.Value = tableName;
 
-                    cmd.Parameters.Add(lastNumberPar);
-                    cmd.Parameters.Add(tenantPar);
-                    cmd.Parameters.Add(tableNamePar);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-                    number = (int)cmd.Parameters["@pLastNumber"].Value;
+                        cmd.Parameters.Add(lastNumberPar);
+                        cmd.Parameters.Add(tenantPar);
+                        cmd.Parameters.Add(tableNamePar);
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        number = (int)cmd.Parameters["@pLastNumber"].Value;
 
+                    }
+                    scope.Complete();
                 }
-
+                
                 return number;
 
             }

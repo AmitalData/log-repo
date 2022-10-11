@@ -63,8 +63,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CommodityId = a.CommodityId,
                                                     NumberOfInsidePackages = a.NumberOfInsidePackages,
                                                     NumberOfInsidePackagesDetails = a.NumberOfInsidePackagesDetails,
-                                                    
-
                                                  }).ToList();
 
             return myResult;
@@ -195,6 +193,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
+                       ContainerStrippedDate = a.ContainerStrippedDate,
                    }).FirstOrDefault();
 
            
@@ -331,6 +330,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
+                       ContainerStrippedDate = a.ContainerStrippedDate,
                    }).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
@@ -530,6 +530,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 LCLContainerTypeId = a.LCLContainerTypeId,
                                 ContainerEntityId = a.ContainerEntityId,
                                 ContainerStatusSourceCode = a.ContainerStatusSourceCode,
+                                ContainerStrippedDate = a.ContainerStrippedDate,
                             }).ToList();
             }
 
