@@ -63,13 +63,13 @@
         width: 80px;
     }
 
-    .start-conditions-container {
+    .get-records-conditions-container {
         overflow: auto;
         width: 936px;
         height: 220px;
     }
 
-    .min-start-conditions-container {
+    .min-get-records-conditions-container {
         height: 220px;
     }
 
@@ -217,8 +217,8 @@
 
     <tr *ngIf="EntityId != null" class="table-row">
         <td>
-            <div class="table-row-cell-block start-conditions-container"
-                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+            <div class="table-row-cell-block get-records-conditions-container"
+                [ngClass]="{'min-get-records-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
