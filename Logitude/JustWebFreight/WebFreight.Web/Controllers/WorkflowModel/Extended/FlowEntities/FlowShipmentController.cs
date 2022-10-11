@@ -54,7 +54,8 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-                IQueryable<ShipmentList> shipmentsQuery = shipmentQuery.GetAllShipmentListTenant(tenant);
+                //IQueryable<ShipmentList> shipmentsQuery = shipmentQuery.GetAllShipmentListTenant(tenant);
+                var shipmentsQuery = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
