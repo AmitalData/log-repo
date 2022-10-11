@@ -195,6 +195,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
+              
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = CRMContext.GetSecContext(tenant);
+                }
 				ActivityListQueryService activityQuery = new ActivityListQueryService(MyContext);
 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()

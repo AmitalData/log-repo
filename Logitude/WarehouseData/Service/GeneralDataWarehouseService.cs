@@ -21,7 +21,7 @@ namespace WarehouseData.Helper
         public string ApplicationMode = string.Empty;
         public long timeOut = 10000000000000000;
         ObjectFieldDataWarehouseService objectFieldDataWarehouseService;
-
+    
         public GeneralDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug")
         {
             this.ApplicationName = applicationName;
@@ -122,16 +122,45 @@ namespace WarehouseData.Helper
 
             if (!string.IsNullOrEmpty(sqlString))
             {
-                using (SqlConnection cn = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    SqlCommand sqlCommand = new SqlCommand(sqlString, cn);
-                    sqlCommand.CommandTimeout = (int)timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
+                    SqlCommand command = GetNewSqlCommand(sqlString, connection);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
                 }
             }
         }
+
+
+        public void ExecuteSqlTransaction(string sqlString, string connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = GetNewSqlCommand(sqlString, connection);
+                SqlTransaction transaction = connection.BeginTransaction();
+                command.Transaction = transaction;
+                try
+                {
+                    command.ExecuteNonQuery();
+                    transaction.Commit();
+                }
+                catch (Exception exception)
+                {
+                    transaction.Rollback();
+                    throw exception;
+                }
+            }
+        }
+
+        private SqlCommand GetNewSqlCommand(string sqlString, SqlConnection connection)
+        {
+            SqlCommand command = new SqlCommand(sqlString, connection);
+            command.CommandTimeout = (int)timeOut;
+            return command;
+        }
+
         public DataTable GetDataTableFromSql(string connectionString, string sqlString)
         {
             var result = new DataTable();
