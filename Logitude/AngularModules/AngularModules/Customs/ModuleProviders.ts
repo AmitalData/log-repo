@@ -254,6 +254,7 @@ import { ContainerizationHataraStatusListService } from './Services/StandardList
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
+import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 
 
 //#endregion
@@ -746,7 +747,7 @@ export class ModuleProviders {
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
-
+            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
                 
              //#endregion                
 
