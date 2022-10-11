@@ -116,7 +116,7 @@
                                                 <div style="width:20px"></div>
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
-                                                    [IsEnabled]="!item.WasApproved"
+                                                    [IsEnabled]="!item.WasApproved && item.Status=='A'"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
                                                     *ngIf="!item.CourierPendingRequireApr"></span>
@@ -125,7 +125,7 @@
                                                 *ngIf="logcelltemplate.IsEditMode">
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
-                                                    [IsEnabled]="!item.WasApproved"
+                                                    [IsEnabled]="!item.WasApproved && item.Status=='A'"
                                                     (Checked)="item.itemApproved(item , $event)"></CheckBox>
                                                 <span
                                                     *ngIf="!item.CourierPendingRequireApr"></span>
