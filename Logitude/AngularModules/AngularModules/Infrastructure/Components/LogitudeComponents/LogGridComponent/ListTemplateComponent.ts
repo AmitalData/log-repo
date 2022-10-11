@@ -1,13 +1,13 @@
-import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
-import {SessionLocator} from '../../../Utilities/SessionLocator';
-import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
+import { Component, ElementRef, OnInit, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
+import { SessionLocator } from '../../../Utilities/SessionLocator';
+import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
 
 @Component({
     selector: 'list-template',
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
                <span>
-                 <div style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
+                 <div [attr.data-cy]="DataCy +'_Text'" style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
                      <!--<span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent"> 
                            {{rowData[fieldName]}} 
                     </span>-->
@@ -17,9 +17,9 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
              </div>
 
 `,
-    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom', 'SearchTerm', 'EntityChangedData']
+    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom', 'SearchTerm', 'EntityChangedData', 'DataCy']
 })
- 
+
 export class ListTemplateComponent implements OnInit {
 
     public rowData: any;
@@ -63,7 +63,7 @@ export class ListTemplateComponent implements OnInit {
         else {
             this.noComponent = true;
         }
-        
+
         //this.CD.detectChanges();
     }
 
@@ -81,5 +81,5 @@ export class ListTemplateComponent implements OnInit {
             this.LoadedComponent.setVariables(this.rowData, this.fieldName, this.AdditionalData, this.AdditionalDataCustom);
         }
     }
-    
+
 }

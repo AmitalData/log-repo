@@ -8,10 +8,10 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'SearchTextBox',
-    template: `<input type="text" [disabled]="IsDisabled" [id]="SearchFieldsId" placeholder="{{PlaceHolder}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [ngStyle]="textValueStyle" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-color: white;background-position: right center;font-style: italic;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}" />
+    template: `<input [attr.data-cy]="DataCy" type="text" [disabled]="IsDisabled" [id]="SearchFieldsId" placeholder="{{PlaceHolder}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [ngStyle]="textValueStyle" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-color: white;background-position: right center;font-style: italic;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}" />
                <img *ngIf="SearchText" [className]="LayoutDirection == 'rtl' ? 'DeleteButton LeftCenter' : 'DeleteButton RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '15px'} : {'right': '15px'}" src="Images/RedX.png" (click)="OnDeleteValue()" />
               `,
-    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled'],
+    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled', 'DataCy'],
 })
 
 export class SearchTextBox implements OnInit {

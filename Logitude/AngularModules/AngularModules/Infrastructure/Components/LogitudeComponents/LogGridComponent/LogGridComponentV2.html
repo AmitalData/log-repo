@@ -214,7 +214,7 @@
                 <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
                 <div [ngStyle]="headerStyle" *ngIf="HasPermition == true">
                     <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
-                        <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
+                        <div *ngIf="row" [attr.data-cy]="DataCy + '_' +rowIndex" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
                              [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : (((row.FirstRowSelected && !SelectedRow) || (SelectedRow == row.rowData))? '#DFECF7':'transparent')"
                              [attr.SIndex]="row.rowIndex" [class.Selected]="(SelectFirstRow && FirstRowIndex == rowIndex && SelectedRow != row.rowData && onFirstRowSelected(row)) || (SelectedRow == row.rowData)"
                              (ondblclick)="onRowSelected(1, 1, row.rowData, row.rowIndex)"
@@ -250,7 +250,8 @@
                                                        [fieldName]="col.FieldName"
                                                        [htmlListComponentName]="col.HtmlListComponentName"
                                                        [htmlListComponentUrl]="col.HtmlListComponentUrl"
-                                                       [AdditionalDataCustom]="col.AdditionalDataCustom">
+                                                       [AdditionalDataCustom]="col.AdditionalDataCustom"
+                                                       [DataCy]="DataCy + '_' + rowIndex">
                                         </list-template>
                                     </div>
                                 </div>

@@ -318,5 +318,6 @@ export class RequestAliases {
     public static readonly GetObjectFieldViews = 'GetObjectFieldViews';
     public static readonly GetBackToWorkflowViews = 'GetBackToWorkflowViews';
     public static readonly GetQueryExportExecution = 'GetQueryExportExecution';
-    public static readonly GetWorkflowInstance = 'GetWorkflowInstance';
+    public static readonly GetMockWorkflowInstances = 'GetMockWorkflowInstances';
+    public static readonly GetMockWorkflowSingleInstance = 'GetMockWorkflowSingleInstance';
 }
