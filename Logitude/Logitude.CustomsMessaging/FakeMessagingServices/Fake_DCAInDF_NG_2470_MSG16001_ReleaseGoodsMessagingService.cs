@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
         public void SetGeneralData(GenericRequestParams requestParamsData)
         {
+            dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
             _generalData = new DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageGeneralData();
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsData.Tenant);
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
@@ -64,6 +66,12 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _generalData.type = "1";
             _generalData.governmentProcedureType = 4000001;
             _generalData.ReleaseMessageCode = 1;
+            if (!string.IsNullOrEmpty(data.ReleaseMessageCode.ToString()))
+            {
+                int releaseMessageCode = 1;
+                int.TryParse(data.ReleaseMessageCode.ToString(), out releaseMessageCode);
+                _generalData.ReleaseMessageCode = releaseMessageCode;
+            }
             _generalData.currentDate = DateTime.Now;
             _generalData.releaseDateSpecified = true;
             _generalData.releaseDate = DateTime.Now;
