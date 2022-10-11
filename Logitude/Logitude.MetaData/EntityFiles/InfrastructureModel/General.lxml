@@ -9,7 +9,6 @@
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -36,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a114&quot;"
+  Code="&quot;5497&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -52,7 +51,6 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5168,6 +5166,12 @@
       DefaultText="&quot;%FieldName Field length must equal %Equallength&quot;"
       LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות שווה %Equallength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ReconcCancelWarning&quot;"
+      DefaultText="&quot;The reconciliation will be canceled but the adjusted journal will not be voided.&quot;"
+      LocalDefaultText="&quot;ההתאמה תבוטל אך פקודת ההפרש לא תבוטל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
