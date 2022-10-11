@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (Exception ex)
             {
-
+                throw;
             }
             finally
             {

@@ -176,7 +176,7 @@ MainInterfaceCode ="5002"
                     Name = "מסר התרה",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{""MasterLevel"":""true"",""CourierLevel"":""false""}",
+                    Param1= @"{""MasterLevel"":""true"",""CourierLevel"":""false"",""ReleaseMessageCode"":""1""}",
                     Param2= @"{}",
                     MainInterfaceCode="2470",
                 },
