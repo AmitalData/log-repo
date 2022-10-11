@@ -465,6 +465,10 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; set; }
         public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; set; }
 
+        public IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics { get; set; }
+
+        public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
+
         public void DetectChanges()
         {
             ChangeTracker.DetectChanges();

@@ -103,7 +103,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public bool IsInvoiceNumberExists(string invoiceNumber, int tenent)
         {
-            return context.ARInvoices.Where(d => d.InvoiceNumber == invoiceNumber && d.Tenant == tenent).Any();
+            return context.APInvoices.Where(d => d.InvoiceNumber == invoiceNumber && d.Tenant == tenent).Any();
         }
 
         public IQueryable<APAgingReportDataView> GetAgingReportAPInvoiceDataView(int tenant, int index)
@@ -227,6 +227,32 @@ namespace Simplog.Data.InvoiceModel.Repositories
         public void Add(APInvoice entity)
         {
             context.APInvoices.Add(entity);
+        }
+        public void AddFromAPInvoice(APInvoice entity)
+        {
+            var apInvoiceAnalytic = Map<APInvoiceAnalytic>(entity);
+            context.APInvoiceAnalytics.Add(apInvoiceAnalytic);
+        }
+        internal void UpdateFromAPInvoice(APInvoice entity)
+        {
+            var apInvoiceAnalytic = Map<APInvoiceAnalytic>(entity);
+            if (context.APInvoiceAnalytics.Any(e => e.Id == apInvoiceAnalytic.Id)) context.APInvoiceAnalytics.Attach(apInvoiceAnalytic);
+            else AddFromAPInvoice(entity);
+        }
+        private T Map<T>(APInvoice from) where T : new()
+        {
+
+            var toPropes = typeof(T).GetProperties();
+            var fromPropes = from.GetType().GetProperties().ToDictionary(e => e.Name, e => e);
+            var to = new T();
+            foreach (var item in toPropes)
+            {
+                if (fromPropes.ContainsKey(item.Name))
+                {
+                    item.SetValue(to, fromPropes[item.Name].GetValue(from));
+                }
+            }
+            return to;
         }
 
         public void Remove(APInvoice entity)

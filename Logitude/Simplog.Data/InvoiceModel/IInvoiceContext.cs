@@ -8,6 +8,8 @@ namespace Simplog.Data.InvoiceModel
     public interface IInvoiceContext : IContext
     {
         IDbSet<ARInvoice> ARInvoices { get; }
+        IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics { get; }
+        IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; }
         IDbSet<ARInvoiceLine> ARInvoiceLines { get; }
         IDbSet<ARInvoiceType> ARInvoiceTypes { get; }
         IDbSet<ARInvoiceStatus> ARInvoiceStatuses { get; }

@@ -679,7 +679,9 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceAnalytic.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceChargesConstraint.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStockLine.cs" />

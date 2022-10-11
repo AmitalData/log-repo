@@ -1,0 +1,100 @@
+﻿<Script DBType="Main" Module="Dashboard" AOT="true" TargetTableName="APInvoices" BatchSize="10000" Env="Logitude,local,test">
+  <Sql Version="2">
+    <![CDATA[
+
+    
+
+        INSERT INTO APInvoiceAnalytics 
+        (
+        Id
+,Tenant
+,InternalNumber
+,InvoiceNumber
+,VendorId
+,VATNumber
+,InvoiceDate
+,PaymentTermId
+,DueDate
+,InvoiceCurrencyExchangeRate
+,ExchangeRateDate
+,InvoiceCurrencyId
+,LocalCurrencyId
+,SubTotalInLocalCurrency
+,SubTotalInInvoiceCurrency
+,AmountInInvoiceCurrency
+,AmountInLocalCurrency
+,StatusCode
+,CreateDate
+,CreatedByUserId
+,IsClosed
+,ProfitCurrencyId
+,ProfitCurrencyExchangeRate
+,AmountInProfitCurrency
+,UpdatedByUserId
+,UpdateDate
+,MainEntityReference
+,AmountDue
+,AmountDueInLocalCurrency
+,AmountDueInProfitCurrency
+,BranchId
+,IsTransferStarted
+,TransferStatusCode
+,IsMultipleEntities
+,ApprovedDate
+,ApprovedByUserId
+,OperationalDate
+,FirstApproveDate
+,TotalVATOnly
+,PaidDate
+        )
+
+        SELECT
+APInvoices.Id
+,APInvoices.Tenant
+,APInvoices.InternalNumber
+,APInvoices.InvoiceNumber
+,APInvoices.VendorId
+,APInvoices.VATNumber
+,APInvoices.InvoiceDate
+,APInvoices.PaymentTermId
+,APInvoices.DueDate
+,APInvoices.InvoiceCurrencyExchangeRate
+,APInvoices.ExchangeRateDate
+,APInvoices.InvoiceCurrencyId
+,APInvoices.LocalCurrencyId
+,APInvoices.SubTotalInLocalCurrency
+,APInvoices.SubTotalInInvoiceCurrency
+,APInvoices.AmountInInvoiceCurrency
+,APInvoices.AmountInLocalCurrency
+,APInvoices.StatusCode
+,APInvoices.CreateDate
+,APInvoices.CreatedByUserId
+,APInvoices.IsClosed
+,APInvoices.ProfitCurrencyId
+,APInvoices.ProfitCurrencyExchangeRate
+,APInvoices.AmountInProfitCurrency
+,APInvoices.UpdatedByUserId
+,APInvoices.UpdateDate
+,APInvoices.MainEntityReference
+,APInvoices.AmountDue
+,APInvoices.AmountDueInLocalCurrency
+,APInvoices.AmountDueInProfitCurrency
+,APInvoices.BranchId
+,APInvoices.IsTransferStarted
+,APInvoices.TransferStatusCode
+,APInvoices.IsMultipleEntities
+,APInvoices.ApprovedDate
+,APInvoices.ApprovedByUserId
+,APInvoices.OperationalDate
+,APInvoices.FirstApproveDate
+,APInvoices.TotalVATOnly
+,APInvoices.PaidDate
+
+        FROM APInvoices
+        
+		
+		WHERE $LastCounterWhere$
+
+    ]]>
+  </Sql>
+</Script>

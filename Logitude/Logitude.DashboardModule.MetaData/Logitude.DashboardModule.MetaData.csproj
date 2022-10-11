@@ -60,7 +60,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardClassesGenerator.tt</DependentUpon>
     </Compile>
-    <None Include="DBScripts\202209010934_AddShipmentAnalyticsColumnStoreIndex - Copy.sxml" />
+    <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
+    <None Include="AnalyticsEntityFiles\ARInvoiceAnalytics.ljson" />
+    <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />
+    <None Include="DBScripts\202209010934_FillAPInvoiceAnalytics.sxml" />
     <None Include="DBScripts\202209270207_DeleteWrongMetaDataFields.sxml" />
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="DBTables\APInvoiceAnalytic.dxml" />

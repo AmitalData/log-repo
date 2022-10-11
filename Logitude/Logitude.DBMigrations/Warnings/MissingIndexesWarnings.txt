@@ -1,0 +1,1 @@
+Warning: Missing Index In DXML File Quote.dxml, The Found Index On DB Is IX_Quotes_QuoteClosingReasonCode, The Index Should Added To The DXML File

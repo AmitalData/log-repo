@@ -18,20 +18,10 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="RefundAmount"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  
- 
-  <Column
-    Name="IsGeneralInvoice"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
+
+
+
+
   <Column
     Name="InternalNumber"
     Type="varchar"
@@ -105,13 +95,7 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="InternalNotes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
   <Column
     Name="SubTotalInLocalCurrency"
     Type="float">
@@ -194,13 +178,7 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="MainEntityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
   <Column
     Name="MainEntityReference"
     Type="varchar"
@@ -208,13 +186,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
   <Column
     Name="AmountDue"
     Type="float">
@@ -240,34 +212,8 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="HouseNumber"
-    Type="nvarchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MasterNumber"
-    Type="nvarchar"
-    Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TransferTries"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TransferError"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
+
   <Column
     Name="IsTransferStarted"
     Type="bit">
@@ -281,20 +227,8 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="AccountingExternalCode"
-    Type="nvarchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreditAccount"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
+
   <Column
     Name="IsMultipleEntities"
     Type="bit">
@@ -320,121 +254,17 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="VendorGLAccountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AccountingDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsExternalEntity"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExternalAccountingEntityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
+
   <Column
     Name="FirstApproveDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CreatedByPartner"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field1"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field2"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field3"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field4"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field5"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field6"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field7"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field8"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field9"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field10"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AutomaticLastUpdateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
+
+
+
   <Column
     Name="TotalVATOnly"
     Type="bit">
@@ -447,137 +277,8 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ShipmentsNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MasterNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MasterShipmentNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HouseNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="GlobalTaxCalculation"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConcurrencyGUID"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsEquipment"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ConnectedPaymentsNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TotalEquation"
-    Type="varchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="VendorId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PaymentTermId"
-    ReferencedTable="PaymentTerms"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="InvoiceCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="LocalCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="StatusCode"
-    ReferencedTable="APInvoiceStatus"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ProfitCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BranchId"
-    ReferencedTable="Branches"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="TransferStatusCode"
-    ReferencedTable="APInvoiceTransferStatus"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ApprovedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="GlobalTaxCalculation"
-    ReferencedTable="QBOGlobalTaxCalculations"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Index
-    Columns="Tenant,StatusCode" />
-  <Index
-    Columns="VendorGLAccountId" />
-  <Index
-    Columns="AutomaticLastUpdateDate" />
-  <Index
-    Columns="Tenant,IsClosed" />
-  <Index
-    Columns="Tenant"
-    Include="SearchFields" />
+
+
+
+
 </Table>
