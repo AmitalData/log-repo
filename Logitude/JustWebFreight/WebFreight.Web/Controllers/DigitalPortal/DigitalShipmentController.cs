@@ -112,21 +112,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckDigitalUserAuthentication(tenant, cardId);
                 var entityStatusQuery = new EntityStatusQuery(tenant);
-                var res = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
-                                           .Select(a => new EntityStatusList
-                                           {
-                                               DisplayName = a.Code.Equals("SDLY")
-                                                               ? "Out for Delivery"
-                                                               : a.Code.Equals("SHOR")
-                                                               ? "Created"
-                                                               : a.DisplayName,
-                                               Id = a.Id,
-                                               StatusWeight = a.StatusWeight,
-                                               Name = a.Name
-                                           })
-                                           .OrderBy(a => a.StatusWeight)
-                                           .ThenBy(a => a.Name)
-                                           .ToList();
+                var res = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
+                                           
                 return Ok(res);
             }
             catch (Exception ex)
