@@ -292,7 +292,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
                 }
 
-                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", authToken.Tenant);
+                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
 
                 if (newFilters.AdditionalFilters.Any())
                 {
@@ -467,7 +467,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
                 }
 
-                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", authToken.Tenant);
+                var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", authToken.Tenant);
 
                 if (newFilters.AdditionalFilters.Any())
                 {

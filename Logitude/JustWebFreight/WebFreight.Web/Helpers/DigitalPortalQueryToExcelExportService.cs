@@ -334,7 +334,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
             }
 
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", newFilters.Tenant);
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", newFilters.Tenant);
 
             if (newFilters.AdditionalFilters.Any())
             {
@@ -496,7 +496,7 @@ namespace WebFreight.Web.Helpers
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
