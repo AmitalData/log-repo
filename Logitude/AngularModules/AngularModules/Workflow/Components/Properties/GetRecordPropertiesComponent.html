@@ -66,11 +66,75 @@
     .start-conditions-container {
         overflow: auto;
         width: 936px;
-        height: 370px;
+        height: 220px;
     }
 
     .min-start-conditions-container {
-        height: 285px;
+        height: 220px;
+    }
+
+    .selected-field-container {
+        display: table;
+        vertical-align: middle;
+        width: 334px;
+        padding-right: 5px;
+    }
+
+    .LogLov-selected-field-container {
+        display: table-cell;
+        width: 320px;
+    }
+
+    .selected-coulmn-container {
+        margin-top: 10px;
+    }
+
+    .selected-coulmn-list {
+        overflow: auto;
+        max-height: 100px;
+        margin-top: 0px !important;
+    }
+
+    .padding-bottom-0 {
+        padding-bottom: 0px !important;
+    }
+
+    .entity-id-container {
+        position: relative;
+        width: 325px;
+        height: 22px;
+    }
+
+    .entity-id {
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #aaaaaa;
+        box-shadow: inset 0 0 3px #aaaaaa;
+        border: none;
+        max-height: unset;
+        min-height: unset;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        right: 0;
+        opacity: 1 !important;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-top: 2px;
+    }
+
+    .delete-coulmn-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 18px;
+    }
+
+    .delete-coulmn-button {
+        display: block;
+        cursor: pointer;
+        margin-left: 5px;
+        margin-bottom: 3px;
     }
 </style>
 
@@ -160,8 +224,8 @@
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                     (IsValidConditionsChange)="UpdateIsValidConditions($event)"
                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
-                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields"
+                    [CurrentNodeId]="CurrentNodeId">
                 </Conditions>
             </div>
         </td>
@@ -202,6 +266,61 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell padding-bottom-0">
+            <div class="table-row-cell-block">
+                <div class="select-get-record-label">Select Fields To Store</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row">
+        <td class="table-row-cell padding-bottom-0">
+            <div class="entity-id-container">
+                <label class="entity-id">Id</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId != null" class="table-row ">
+        <td class="table-row-cell">
+            <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
+                <li *ngFor="let returnedColumn of ReturnedColumns; let columnIndex = index"
+                    class="selected-coulmn-container">
+                    <div class="selected-field-container">
+                        <div class="LogLov-selected-field-container">
+                            <LogLov [NoObjectField]="true" [ObjectFieldName]="'SelectedCoulmn_' + returnedColumn"
+                                [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsValueQueryFilters()"
+                                [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                                [SelectedValue]="returnedColumn" [HideColumns]="true"
+                                [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                (SelectedItemChanged)="updateSelectedColumn($event, columnIndex)"
+                                [DataCy]="'SelectedCoulmn_' + returnedColumn">
+                            </LogLov>
+                        </div>
+                        <div class="delete-coulmn-container">
+                            <img *ngIf="!(ReturnedColumns.length == 1)" class="delete-coulmn-button" src="./Images/Trash-can.png"
+                                (click)="deletecoulmn(columnIndex)"
+                                [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedColumn" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="add-buttons-container table-row-cell-block margin-left-0">
+                <span class="link-button add-condition-button" (click)="addEmptyColumn()"
+                    [attr.data-cy]="'AddFieldToStore'" [ngClass]="{'disabled': !IsValidSelectedCoulmns}">
+                    <span class="plus-sign">+</span><span>Add Field</span>
+                </span>
             </div>
         </td>
     </tr>

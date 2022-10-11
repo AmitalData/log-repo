@@ -20,11 +20,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public Entity: string = null;
     public EntityId: string = null;
     public RecordsLimit: string = null;
+    public ReturnedColumns: string[];
     public Conditions: Condition[];
     public ConditionsOperation: string;
 
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
+    public IsValidSelectedCoulmns: boolean = true;
 
     public FlowObject: any;
     public CurrentNodeId: string;
@@ -53,6 +55,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.IsValidConditions = false;
             let condition = new Condition();
             this.Conditions.push(condition);
+        }
+
+        this.ReturnedColumns = this.Data["returnedColumns"] || [];
+        
+        if (this.ReturnedColumns.length == 0) {
+            this.IsValidSelectedCoulmns = false;
+            this.ReturnedColumns.push(null);
         }
 
         this.Data["recordsLimit"] = this.RecordsLimit;
@@ -103,8 +112,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions) {
+        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidSelectedCoulmns) {
             this.setConditionsData();
+            this.Data["returnedColumns"] = this.ReturnedColumns;
 
             //console.log(this.Data);
 
@@ -115,6 +125,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
             if (!this.IsValidConditions)
                 this.ValidationErrorsList.push("Invalid Conditions");
+
+            if (!this.IsValidSelectedCoulmns)
+                this.ValidationErrorsList.push("Invalid Selected Fields");
         }
     }
 
@@ -129,5 +142,28 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             return entityObjectTable ? entityObjectTable.Id : null;
         }
         return null;
+    }
+
+    getObjectFieldsValueQueryFilters() {
+        let apiQueryFilters = new ApiQueryFilters();
+        apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
+        return apiQueryFilters;
+    }
+
+    updateSelectedColumn(selectedColumn: ObjectFieldPM, index: number) {
+        this.ReturnedColumns[index] = selectedColumn ? selectedColumn.FieldCode : null;
+        this.IsValidSelectedCoulmns = !this.ReturnedColumns.includes(null);
+    }
+
+    addEmptyColumn() {
+        if (this.IsValidSelectedCoulmns) {
+            this.ReturnedColumns.push(null);
+            this.IsValidSelectedCoulmns = false;
+        }
+    }
+
+    deletecoulmn(index: number) {
+        this.ReturnedColumns.splice(index, 1);
+        this.IsValidSelectedCoulmns = !this.ReturnedColumns.includes(null);
     }
 }
