@@ -70,7 +70,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
                                 }
                             }
-                            if(declarationPending.Approval != true && courierPendingReason.RequiresApproval == true)
+                            if(declarationPending.Status == "A" && declarationPending.Approval != true && courierPendingReason.RequiresApproval == true)
                             {
                                 if (entityPM.NotApprovedPendingList == null)
                                 {
