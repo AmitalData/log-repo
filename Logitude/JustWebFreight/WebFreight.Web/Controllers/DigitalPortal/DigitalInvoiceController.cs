@@ -385,6 +385,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     MinTotalAmount = entityLists.Min(a => a.AmountInInvoiceCurrency),
                 };
 
+
                 return Ok(res);
             }
             catch (Exception ex)
