@@ -78,7 +78,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             string courierMasterId = (from a in context.CourierDeclarations
                                    where a.DeclarationId == declarationId && a.Tenant == tenant
-                                   select a).FirstOrDefault().CourierMasterId;
+                                   select a).FirstOrDefault()?.CourierMasterId;
             return courierMasterId;
         }
         public List<string> GetDeclarationIdsByCourierMasterID(string courierMasterId, int tenant)
