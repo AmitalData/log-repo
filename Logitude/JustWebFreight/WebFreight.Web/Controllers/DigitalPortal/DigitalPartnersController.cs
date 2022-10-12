@@ -59,8 +59,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                     || (cardType.Equals("CS")
                                                         ? a.CustomerId.Equals(cardId)
                                                         : a.AgentId.Equals(cardId)))
-                                                &&(a.ConsigneeName.StartsWith(searchText) 
-                                                   || a.ShipperName.StartsWith(searchText)))
+                                                &&(a.ConsigneeName.Trim().StartsWith(searchText) 
+                                                   || a.ShipperName.Trim().StartsWith(searchText)))
                                     .Take(100)
                                     .SelectMany(a => new List<Partner> 
                                     {
