@@ -1,4 +1,4 @@
-@release @stable @smoke @smoke3
+@release @stable @smoke @smokeAfterSwap
 Feature: Opportunity Actions
     The user creates an Opportunity, close it as won, reopen, close it as lost and copy
 
