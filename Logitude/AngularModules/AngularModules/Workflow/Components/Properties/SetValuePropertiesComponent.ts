@@ -136,14 +136,14 @@ export class SetValuePropertiesComponent extends BaseComponent {
 
     fillObjectFieldDictionary(field: string) {
         if (field && this.isObjectField(field)) {
-            let objectfieldCode = field.split('.')[1]
+            let objectfieldCode = field.split('_')[1]
             this.saveInObjectFieldsDictionary(objectfieldCode)
         }
     }
 
     saveInObjectFieldsDictionary(objectfieldCode: string) {
         if (!this.ObjectFieldsDictionary[objectfieldCode]) {
-            var objectfield = this.FlowObjectFields.find(e => e.Code == objectfieldCode)
+            var objectfield = this.FlowObjectFields.find(e => e.FieldCode == objectfieldCode)
             this.ObjectFieldsDictionary[objectfieldCode] = objectfield;
         }
     }
@@ -175,7 +175,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     getObjectFieldCode(field: string) {
-        let objectfieldCode = field.split('.')[1];
+        let objectfieldCode = field.split('_')[1];
         return objectfieldCode;
     }
 

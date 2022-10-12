@@ -5,10 +5,10 @@ export class SetValueOperatorsList {
     public Items: ListItem[] = [];
 
     constructor() {
-        this.setConditionOperators();
+        this.setSetValueOperators();
     }
 
-    private setConditionOperators() {
+    private setSetValueOperators() {
         this.Items = [
             new ListItem(SetValueOperators.Equals),
             new ListItem(SetValueOperators.EqualsField),
