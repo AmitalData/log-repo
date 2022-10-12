@@ -64,7 +64,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
     _DeclarationExportRecipientPM: DeclarationExportRecipientPM[] = [];
-    RecipientList: any;
+    RecipientList: DeclarationExportRecipientModel[];
     AddRecipientEnabled: boolean;
     public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
     private CurrentSession = SessionLocator.SelectedSession;
@@ -491,6 +491,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
 
+        this.RecipientList.forEach(element => {
+            element.SetScreenFieldsEditability();
+        });
+        
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
         this.IsTransferImporterEnabled = !this.IsDisplayOnly;
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
@@ -1651,6 +1655,12 @@ export class DeclarationExportRecipientModel extends BaseComponent {
             });
         });
 
+
+    }
+    public SetScreenFieldsEditability():void{
+        this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);
 
     }
 
