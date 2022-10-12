@@ -109,6 +109,7 @@ export class StringToColorPipe {
             case "Delivery":
             case "Delivered":
             case "Partially Delivered":
+            case "Out for Delivery":
                 {
                     color = "#2BB673";
                     break;

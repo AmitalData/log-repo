@@ -3119,6 +3119,7 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\SpecialServicesTypeService.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.cs" />
+    <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.Package.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.PickUpDeliveryTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />

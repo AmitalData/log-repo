@@ -20,7 +20,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             traceEvent.IsAddedManually = traceEventPM.IsAddedManually;
             traceEvent.Location = traceEventPM.Location;
             traceEvent.PartnerName = traceEventPM.PartnerName;
-     
-    }
+            traceEvent.ChildEntityId = traceEventPM.ChildEntityId;
+            traceEvent.ChildObjectTableId = traceEventPM.ChildObjectTableId;
+        }
     }
 }

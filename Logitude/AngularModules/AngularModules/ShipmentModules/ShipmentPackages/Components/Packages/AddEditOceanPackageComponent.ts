@@ -31,6 +31,7 @@ export class AddEditOceanPackageComponent {
     public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    public IsMYGOEntity: boolean = false;
     constructor() {
         this.RunComponent();
     }
@@ -72,6 +73,7 @@ export class AddEditOceanPackageComponent {
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
         this.IsLCLEntity = dataContext.IsLCLEntity;
+        this.IsMYGOEntity = dataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo";
         this.IsFromStandAloneScreen = dataContext.IsFromStandAloneScreen;
         this.SetLabels();
         this.Clone();

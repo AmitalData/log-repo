@@ -68,188 +68,178 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         public void BeginTracing(bool isEventAddedManually = false)
         {
-            if (!entityPM.IsHybrid)
+            if (entityPM.IsHybrid)
+                return;
+
+            if (isNewEntity)
             {
-                if (isNewEntity)
+                this.TraceNewShipment();
+            }
+
+            else
+            {
+                this.TraceTariffDisconnected();
+
+                if (entityPM.PackagesDeleted)
+                {
+                    this.CreateTraceEvent("PADL", entityPM.EventNote);
+                }
+
+                if (entityPM.IsDeletingAllPayables)
+                {
+                    this.CreateTraceEvent("DLAP", entityPM.EventNote);
+                    entityPM.IsDeletingAllPayables = false;
+                }
+
+                if (entityPM.ShipmentDirectionConverted)
+                {
+                    this.TraceChangingShipmentDirection();
+                }
+
+                if (entityPM.ConvertFromDirectToHouse)
+                {
+                    if (entityMasterData != null)
+                    {
+                        this.CreateTraceEvent("CSDH", entityPM.EventNote);
+                    }
+                }
+
+                if (entityPM.ConvertFromHouseToDirect)
+                {
+                    this.CreateTraceEvent("CSHD", entityPM.EventNote);
+                }
+
+                if (entityPM.ConvertShipmentToLCL)
+                {
+                    this.CreateTraceEvent("CNFL", entityPM.EventNote);
+                }
+
+                else if (entityPM.ConvertShipmentToFCL)
+                {
+                    this.CreateTraceEvent("CNLF", entityPM.EventNote);
+                }
+
+                if (entityPM.ConvertShipmentToLTL)
+                {
+                    this.CreateTraceEvent("CNFT", entityPM.EventNote);
+                }
+
+                else if (entityPM.ConvertShipmentToFTL)
+                {
+                    this.CreateTraceEvent("CNLT", entityPM.EventNote);
+                }
+
+                if (!entityPM.MarkFollowUpsAsDone)
                 {
                     string notes = null;
-                    if (entityPM.IsStandalonePickupDelivery)
+                    if (!entityPoco.IsStandalonePickupDelivery && entityPM.IsStandalonePickupDelivery)
                     {
-                        notes = this.GetStandaloneShipmentNotes("Created from ");
+                        notes = this.GetStandaloneShipmentNotes("Conncted To ");
                     }
-
-                    this.CreateTraceEvent("ORDR", notes);
-
-                    if (entityPM.IsCopyFromShipment)
-                    {
-                        this.CreateTraceEvent("CFAS", "Copied from shipment number: " + entityPM.BaseShipmentNumber);
-
-                        if (entityPM.ShipmentPayables.Count > 0 || entityPM.ShipmentReceivables.Count > 0)
-                        {
-                            this.CreateTraceEvent("RPCP", "From Shipment: " + entityPM.BaseShipmentNumber);
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(entityPM.SplitFromShipmentNo))
-                    {
-                        this.CreateTraceEvent("SPLT", "Split From Shipment: " + entityPM.SplitFromShipmentNo);
-                    }
+                    this.CreateTraceEvent("USHI", notes);
                 }
 
-                else
+                if (entityPM.SalesmanUserId != entityPoco.SalesmanUserId)
                 {
-                    if (entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff).Any())
+                    UserRepository myUserRepository = new UserRepository(tenant);
+                    string oldSalesman = "empty";
+                    string newSalesman = "empty";
+
+                    if (entityPM.SalesmanUserId != null)
                     {
-                        string eventNote = "";
-                        foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff))
+                        Contact myContact = ContactRepository.GetSingleContact(entityPM.SalesmanUserId, tenant, true);
+                        if (myContact != null)
                         {
-                            if (string.IsNullOrEmpty(eventNote))
-                            {
-                                eventNote = payable.ChargesTypeName;
-                            }
-
-                            else
-                            {
-                                eventNote = eventNote + ", " + payable.ChargesTypeName;
-                            }
-
-                            payable.PayablesDisconnectedFromTariff = false;
-                        }
-
-                        this.CreateTraceEvent("PDFT", eventNote);
-                    }
-
-                    if (entityPM.PackagesDeleted)
-                    {
-                        this.CreateTraceEvent("PADL", entityPM.EventNote);
-                    }
-
-                    if (entityPM.IsDeletingAllPayables)
-                    {
-                        this.CreateTraceEvent("DLAP", entityPM.EventNote);
-                        entityPM.IsDeletingAllPayables = false;
-                    }
-
-                    if (entityPM.ShipmentDirectionConverted)
-                    {
-                        this.TraceChangingShipmentDirection();
-                    }
-
-                    if (entityPM.ConvertFromDirectToHouse)
-                    {
-                        if (entityMasterData != null)
-                        {
-                            this.CreateTraceEvent("CSDH", entityPM.EventNote);
+                            newSalesman = myContact.EnglishName;
                         }
                     }
 
-                    if (entityPM.ConvertFromHouseToDirect)
+                    if (entityPoco.SalesmanUserId != null)
                     {
-                        this.CreateTraceEvent("CSHD", entityPM.EventNote);
-                    }
-
-                    if (entityPM.ConvertShipmentToLCL)
-                    {
-                        this.CreateTraceEvent("CNFL", entityPM.EventNote);
-                    }
-
-                    else if (entityPM.ConvertShipmentToFCL)
-                    {
-                        this.CreateTraceEvent("CNLF", entityPM.EventNote);
-                    }
-
-                    if (entityPM.ConvertShipmentToLTL)
-                    {
-                        this.CreateTraceEvent("CNFT", entityPM.EventNote);
-                    }
-
-                    else if (entityPM.ConvertShipmentToFTL)
-                    {
-                        this.CreateTraceEvent("CNLT", entityPM.EventNote);
-                    }
-
-                    if (!entityPM.MarkFollowUpsAsDone)
-                    {
-                        string notes = null;
-                        if (!entityPoco.IsStandalonePickupDelivery && entityPM.IsStandalonePickupDelivery)
+                        Contact myContact = ContactRepository.GetSingleContact(entityPoco.SalesmanUserId, tenant, true);
+                        if (myContact != null)
                         {
-                            notes = this.GetStandaloneShipmentNotes("Conncted To ");
+                            oldSalesman = myContact.EnglishName;
                         }
-                        this.CreateTraceEvent("USHI", notes);
                     }
 
-                    if (entityPM.SalesmanUserId != entityPoco.SalesmanUserId)
-                    {
-                        UserRepository myUserRepository = new UserRepository(tenant);
-                        string oldSalesman = "empty";
-                        string newSalesman = "empty";
-
-                        if (entityPM.SalesmanUserId != null)
-                        {
-                            Contact myContact = ContactRepository.GetSingleContact(entityPM.SalesmanUserId, tenant, true);
-                            if (myContact != null)
-                            {
-                                newSalesman = myContact.EnglishName;
-                            }
-                        }
-
-                        if (entityPoco.SalesmanUserId != null)
-                        {
-                            Contact myContact = ContactRepository.GetSingleContact(entityPoco.SalesmanUserId, tenant, true);
-                            if (myContact != null)
-                            {
-                                oldSalesman = myContact.EnglishName;
-                            }
-                        }
-
-                        string remarks = "Salesman changed from " + oldSalesman + " to " + newSalesman;
-                        this.CreateTraceEvent("SLCN", remarks);
-                    }
-
-                    if (entityPM.IncotermId != entityPoco.IncotermId)
-                    {
-                        this.CreateTraceEvent("UPIC", entityPM.EventNote);
-                    }
-
-                    if (entityPM.IsUpdatedOceanInsightsAnalyzer && entityPM.IsUpdatedOceanInsightsMainCarriageDates)
-                    {
-                        string notes = this.BuildContainerTrackingEventNotes();
-                        this.CreateTraceEvent("OISU", notes);
-                    }
-                    if (entityPM.IsUpdatedVizionAnalyzer && entityPM.IsUpdatedVizionMainCarriageDates)
-                    {
-                        string notes = this.BuildContainerTrackingEventNotes();
-                        this.CreateTraceEvent("VZSU", notes);
-                    }
-
-                    if (entityPM.PlannedCargoReadyDate != entityPoco.PlannedCargoReadyDate)
-                    {
-                        this.CreateTraceEvent("ECRD", entityPM.EventNote);
-                    }
-                    if (entityPM.ApprovedCargoReadyDate != entityPoco.ApprovedCargoReadyDate)
-                    {
-                        this.CreateTraceEvent("ACRD", entityPM.EventNote);
-                    }
-                    if (entityPM.HandlerUserId != entityPoco.HandlerUserId)
-                    {
-                        this.CreateTraceEvent("HAUI", entityPM.EventNote);
-                    }
-
-                    this.AddDisconnectingStandaloneShipment();
+                    string remarks = "Salesman changed from " + oldSalesman + " to " + newSalesman;
+                    this.CreateTraceEvent("SLCN", remarks);
                 }
 
-                this.TraceOtherData();
-                this.TraceMasterData();
-                this.TraceRoutingData();
-                this.TraceCustomsData();
-                this.TraceTerminalData();
-                this.TraceAccruals();
-                this.TraceBookingArrangement();
-                this.TraceFollowUpDates();
-                if (!isEventAddedManually) this.TracePODReceived();
+                if (entityPM.IncotermId != entityPoco.IncotermId)
+                {
+                    this.CreateTraceEvent("UPIC", entityPM.EventNote);
+                }
+
+                if (entityPM.IsUpdatedOceanInsightsAnalyzer && entityPM.IsUpdatedOceanInsightsMainCarriageDates)
+                {
+                    string notes = this.BuildContainerTrackingEventNotes();
+                    this.CreateTraceEvent("OISU", notes);
+                }
+
+                if (entityPM.IsUpdatedVizionAnalyzer && entityPM.IsUpdatedVizionMainCarriageDates)
+                {
+                    string notes = this.BuildContainerTrackingEventNotes();
+                    this.CreateTraceEvent("VZSU", notes);
+                }
+
+                if (entityPM.PlannedCargoReadyDate != entityPoco.PlannedCargoReadyDate)
+                {
+                    this.CreateTraceEvent("ECRD", entityPM.EventNote);
+                }
+
+                if (entityPM.ApprovedCargoReadyDate != entityPoco.ApprovedCargoReadyDate)
+                {
+                    this.CreateTraceEvent("ACRD", entityPM.EventNote);
+                }
+
+                if (entityPM.HandlerUserId != entityPoco.HandlerUserId)
+                {
+                    this.CreateTraceEvent("HAUI", entityPM.EventNote);
+                }
+
+                this.AddDisconnectingStandaloneShipment();
             }
+
+            this.TraceOtherData();
+            this.TraceMasterData();
+            this.TraceRoutingData();
+            this.TraceCustomsData();
+            this.TraceTerminalData();
+            this.TraceAccruals();
+            this.TraceBookingArrangement();
+            this.TraceFollowUpDates();
+
+            if (!isEventAddedManually) 
+                this.TracePODReceived();
         }
 
+        private void TraceNewShipment()
+        {
+            string notes = null;
+            if (entityPM.IsStandalonePickupDelivery)
+            {
+                notes = this.GetStandaloneShipmentNotes("Created from ");
+            }
+
+            this.CreateTraceEvent("ORDR", notes);
+
+            if (entityPM.IsCopyFromShipment)
+            {
+                this.CreateTraceEvent("CFAS", "Copied from shipment number: " + entityPM.BaseShipmentNumber);
+
+                if (entityPM.ShipmentPayables.Count > 0 || entityPM.ShipmentReceivables.Count > 0)
+                {
+                    this.CreateTraceEvent("RPCP", "From Shipment: " + entityPM.BaseShipmentNumber);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.SplitFromShipmentNo))
+            {
+                this.CreateTraceEvent("SPLT", "Split From Shipment: " + entityPM.SplitFromShipmentNo);
+            }
+        }
         private void AddDisconnectingStandaloneShipment()
         {
             if (entityPoco.IsStandalonePickupDelivery && !entityPM.IsStandalonePickupDelivery)
@@ -265,7 +255,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 });
             }
         }
-
         private string GetStandaloneShipmentNotes(string msg)
         {
             string eventNotes = null;
@@ -275,7 +264,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             return eventNotes;
         }
-
         private string BuildContainerTrackingEventNotes()
         {
             string notes = "";
@@ -340,7 +328,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("CCPP", entityPM.EventNote);
             }
         }
-
         private void TraceBookingArrangement()
         {
             if (entityMasterData != null && entityMasterData.MainCarriageETD == null && entityPM.MainCarriageETD != null)
@@ -393,7 +380,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("AMSU", entityPM.AMSClosingDate);
             }
         }
-
         private void TraceCustomsData()
         {
             if ((entityPoco.CustomsClearanceDate == null || entityPoco.FreightRelease == null || entityPoco.TerminalAvailable == null) && (entityPM.CustomsClearanceDate != null && entityPM.FreightRelease != null && entityPM.TerminalAvailable != null))
@@ -513,7 +499,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceCargoReadyForPickup();
 
         }
-
         private void TraceMasterData()
         {
             if ((entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C") && entityMasterData != null)
@@ -772,7 +757,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
             }
         }
-
         private bool IsShipmentHaveCustomsClearanceDate()
         {
             if (entityPM.CustomsClearanceDate != null)
@@ -781,7 +765,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             return false;
         }
-
         private bool IsDirectionChangedFromImportOrDropToExport()
         {
             string exportDirectionId = "E", importDirectionId = "I", dropDirectionId = "R";
@@ -796,7 +779,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             return true;
         }
-
         private bool IsDirectionChangedFromExportToImportOrDrop()
         {
             string exportDirectionId = "E", importDirectionId = "I", dropDirectionId = "R";
@@ -811,7 +793,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             return true;
         }
-
         private DateTime? GetFinalETA()
         {
             //DateTime? myResult = entityPM.MainCarriageETA;
@@ -848,7 +829,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return myResult;
         }
-
         public void TraceShipmentOnCreateDoneFollowUp(FollowUp followUp)
         {
             if (!entityPM.IsHybrid)
@@ -881,7 +861,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-
         private void CreateTraceEvent(string eventTypeCode)
         {
             this.CreateTraceEvent(new EventStatusTracerArgs()
@@ -984,6 +963,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 Notes = notes,
             });
         }
+        private void CreateTraceEvent(string eventTypeCode, DateTime? eventDateTime, ShipmentPackagePM myPackage)
+        {
+            string notes = String.Format("{0:dd/MM/yyyy}", myPackage.ContainerStrippedDate);
+
+            if (!string.IsNullOrEmpty(myPackage.ContainerNumber))
+            {
+                notes = myPackage.ContainerNumber + ": " + String.Format("{0:dd/MM/yyyy}", myPackage.ContainerStrippedDate);
+            }
+
+            this.CreateTraceEvent(new EventStatusTracerArgs()
+            {
+                Tenant = tenant,
+                UserId = loggedContactId,
+                EntityId = entityPM.Id,
+                ObjectTableName = objectTableName,
+                OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
+                EventTypeCode = eventTypeCode,
+                EventDateTime = eventDateTime,
+                Notes = notes,
+                ChildEntityId = myPackage.Id,
+                ChildObjectTableName = "ShipmentPackage",
+            });
+        }
         public void CreateTraceEvent(EventStatusTracerArgs args)
         {
             if (!string.IsNullOrEmpty(args.EventTypeCode))
@@ -999,6 +1002,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         ObjectTableName = args.ObjectTableName,
                         Notes = args.Notes,
                         Entity = entityPM,
+                        ChildEntityId = args.ChildEntityId,
+                        ChildObjectTableName = args.ChildObjectTableName,
                     });
                 }
 
@@ -1098,6 +1103,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         }
                         #endregion
 
+                        ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
+
                         TraceEvent myTraceEvent = new TraceEvent()
                         {
                             Id = Guid.NewGuid().ToString(),
@@ -1113,6 +1120,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             CustomerCareUserEmail = myCustomerCareUserEmail,
                             Notes = args.Notes,
                             Location = args.StatusLocation,
+                            ChildEntityId = args.ChildEntityId,
+                            ChildObjectTableId = childObjectTable?.Id,
                         };
 
                         this.traceEventRepository.Add(myTraceEvent);
@@ -1133,7 +1142,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-
         private bool IsHigherStatusWeight(string eventTypeCode, string oldStatusId)
         {
             if (oldStatusId == null)
@@ -1151,8 +1159,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return true;
         }
-
-        private void DeleteTraceEvent(string eventTypeCode, string pickupDeliveryIndex = null, DateTime? eventDateTime = null)
+        private void DeleteTraceEvent(string eventTypeCode, string childEntityIndex = null, DateTime? eventDateTime = null)
         {
             if (!string.IsNullOrEmpty(eventTypeCode))
             {
@@ -1162,9 +1169,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).ToList();
 
-                    if (!string.IsNullOrEmpty(pickupDeliveryIndex) && (eventTypeCode == "PIAR" || eventTypeCode == "DEAR" || eventTypeCode== "PICD"))
+                    if (!string.IsNullOrEmpty(childEntityIndex))
                     {
-                        AllEventTraces = AllEventTraces.Where(d => d.Notes == pickupDeliveryIndex).ToList();
+                        if (eventTypeCode == "PIAR" || eventTypeCode == "DEAR" || eventTypeCode == "PICD")
+                        {
+                            AllEventTraces = AllEventTraces.Where(d => d.Notes == childEntityIndex).ToList();
+                        }
+
+                        else if (eventTypeCode == "COST")
+                        {
+                            AllEventTraces = AllEventTraces.Where(d => d.ChildEntityId == childEntityIndex).ToList();
+                        }
                     }
 
                     if (IsGetTraceEventsByEventDateAndType(eventDateTime, eventTypeCode))
@@ -1349,7 +1364,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-
         private bool IsEventTypeConnectedToMulitStatuses(EventType eventType, EntityStatus currentEventEntityStatus)
         {
             if (eventType.Code == pickedUpEventCode && currentEventEntityStatus.Code == partialPickupStatus)
@@ -1364,7 +1378,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return false;
         }
-
         private bool IsGetTraceEventsByEventDateAndType(DateTime? eventDateTime, string eventTypeCode)
         {
             if (eventDateTime == null)
@@ -1379,7 +1392,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return true;
         }
-
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
             EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
@@ -1825,7 +1837,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return myResult;
         }
-
         private string GetStatusLocationForInlandDomestic(dynamic args)
         {
             string statusLocation = "";
@@ -2245,7 +2256,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-
         private void TraceOriginWarehouse()
         {
             if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
@@ -2284,7 +2294,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("WHRD", entityPM.WarehouseLeg2ActualReleaseDate);
             }
         }
-
         private static void ComputeLastSharedEvent(ShipmentPM entityPM)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
@@ -2316,7 +2325,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 entityPM.LastSharedEventName = null;
             }
         }
-
         private void UpdateLocation(string eventTypeCode)
         {
             if (!string.IsNullOrEmpty(eventTypeCode))
@@ -2393,7 +2401,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             //}
         }
-
         private void TraceCargoReadyForPickup()
         {
             if (this.IsApprovedCargoReadyDateAdded())
@@ -2423,10 +2430,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return (entityPoco.ApprovedCargoReadyDate != null && entityPM.ApprovedCargoReadyDate != null
                 && entityPoco.ApprovedCargoReadyDate != entityPM.ApprovedCargoReadyDate);
         }
-    }
+        private void TraceTariffDisconnected()
+        {
+            if (entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff).Any())
+            {
+                string eventNote = "";
+                foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff))
+                {
+                    if (string.IsNullOrEmpty(eventNote))
+                    {
+                        eventNote = payable.ChargesTypeName;
+                    }
 
+                    else
+                    {
+                        eventNote = eventNote + ", " + payable.ChargesTypeName;
+                    }
 
-    
+                    payable.PayablesDisconnectedFromTariff = false;
+                }
+
+                this.CreateTraceEvent("PDFT", eventNote);
+            }
+        }        
+    }    
 
     public class EventStatusTracerArgs
     {
@@ -2447,6 +2474,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         public ShipmentPickUpPM PickUp { get; set; }
         public ShipmentDeliveryPM Delivery { get; set; }
         public bool IsFromShipmentAPI { get; set; }
+        public string ChildEntityId { get; set; }
+        public string ChildObjectTableName { get; set; }
     }
 
     public class RoutingDate

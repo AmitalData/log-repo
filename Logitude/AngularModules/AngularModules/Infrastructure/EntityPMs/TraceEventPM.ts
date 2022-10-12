@@ -150,6 +150,16 @@ export class TraceEventPM {
     public set Location(newValue: string) { if (this.location != newValue) { this.location = newValue; this.MarkAsDirty("Location"); } }
        
 	 
+    private childEntityId: string;
+    public get ChildEntityId() { return this.childEntityId; }
+    public set ChildEntityId(newValue: string) { if (this.childEntityId != newValue) { this.childEntityId = newValue; this.MarkAsDirty("ChildEntityId"); } }
+       
+	 
+    private childObjectTableId: string;
+    public get ChildObjectTableId() { return this.childObjectTableId; }
+    public set ChildObjectTableId(newValue: string) { if (this.childObjectTableId != newValue) { this.childObjectTableId = newValue; this.MarkAsDirty("ChildObjectTableId"); } }
+       
+	 
 
     public OldEntityPM: TraceEventPM;
 		
