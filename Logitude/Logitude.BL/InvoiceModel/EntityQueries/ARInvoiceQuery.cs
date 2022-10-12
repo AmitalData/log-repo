@@ -1237,6 +1237,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
         private List<DebtorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
         {
+            var currentDate = DateTime.Now.AddMonths(-3);
+            if (!repository.context.ARPayments.Any(x => x.CreateDate >= currentDate)) return new List<DebtorsClass>();
+
             List<string> allowedBranchesIds = new List<string>();
             if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
 

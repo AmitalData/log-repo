@@ -965,11 +965,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void CreateTraceEvent(string eventTypeCode, DateTime? eventDateTime, ShipmentPackagePM myPackage)
         {
-            string notes = String.Format("{0:dd MM yyyy}", myPackage.ContainerStrippedDate);
+            string notes = String.Format("{0:dd/MM/yyyy}", myPackage.ContainerStrippedDate);
 
             if (!string.IsNullOrEmpty(myPackage.ContainerNumber))
             {
-                notes = myPackage.ContainerNumber + ": " + String.Format("{0:dd MM yyyy}", myPackage.ContainerStrippedDate);
+                notes = myPackage.ContainerNumber + ": " + String.Format("{0:dd/MM/yyyy}", myPackage.ContainerStrippedDate);
             }
 
             this.CreateTraceEvent(new EventStatusTracerArgs()
