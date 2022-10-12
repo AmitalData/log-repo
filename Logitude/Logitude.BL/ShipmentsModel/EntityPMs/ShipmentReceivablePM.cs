@@ -38,6 +38,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
+        public string CurrencyName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? Quantity { get; set; }

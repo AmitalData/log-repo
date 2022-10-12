@@ -1165,14 +1165,13 @@ namespace WebFreight.Web.WebServices
 
                 #region Charge Types
 
-                List<ReceivablesCharges> shipmentReceivables = (from a in shipmentsContext.ShipmentReceivables.Include("ChargesType").Include("Currency")
-                                                                where a.Tenant == tenant && a.ShipmentId == shipment.Id
+                List<ReceivablesCharges> shipmentReceivables = (from a in shipment.ShipmentReceivables
                                                                 group a by new { a.ChargesTypeId, a.PrepaidCollectId, a.Notes, a.CurrencyId } into g
                                                                 where ((g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" || g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C") && (g.Sum(s => s.TotalAmount) != 0 && g.Sum(s => s.TotalAmount) != null))
                                                                 select new ReceivablesCharges
                                                                 {
-                                                                    ChargeTypeEnglish = g.Select(s => s.ChargesType.EnglishName).FirstOrDefault(),
-                                                                    ChargeTypeLocal = g.Select(s => s.ChargesType.EnglishName).FirstOrDefault(),
+                                                                    ChargeTypeEnglish = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
+                                                                    ChargeTypeLocal = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
                                                                     PrepaidChargeAmount = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.TotalAmount) : 0,
                                                                     PrepaidChargeAmountInProfitCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.AmountInProfitCurrency) : 0,
                                                                     PrepaidChargeAmountInLocalCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "P" ? g.Sum(s => s.TotalAmountLocal) : 0,
@@ -1180,8 +1179,8 @@ namespace WebFreight.Web.WebServices
                                                                     CollectChargeAmountInProfitCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C" ? g.Sum(s => s.AmountInProfitCurrency) : 0,
                                                                     CollectChargeAmountInLocalCurrency = g.Select(s => s.PrepaidCollectId).FirstOrDefault() == "C" ? g.Sum(s => s.TotalAmountLocal) : 0,
                                                                     Remark = g.Select(s => s.Notes).FirstOrDefault(),
-                                                                    CurrencyCode = g.Select(s => s.Currency.Code).FirstOrDefault(),
-                                                                    CurrencyName = g.Select(s => s.Currency.EnglishName).FirstOrDefault(),
+                                                                    CurrencyCode = g.Select(s => s.CurrencyCode).FirstOrDefault(),
+                                                                    CurrencyName = g.Select(s => s.CurrencyName).FirstOrDefault(),
                                                                 }).ToList();
 
 
