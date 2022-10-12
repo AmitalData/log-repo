@@ -16,6 +16,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 export class SearchTextBox implements OnInit {
     //SearchFields//HelpTextDefaultText
+    DataCy: string;
     SearchFieldsId: string;
     PlaceHolder: string;
     ObjectTableName: string;

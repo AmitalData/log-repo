@@ -39,6 +39,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     ReloadData: boolean = false;
     DontApplyVirtualization: boolean = false;
     CheckboxProp: string;
+    public DataCy: string;
     public PassAdditionalDataToTemplates: boolean = false;
     public RowBackGroundColor: string = "";
     public HighLightSelectedRow: boolean = true;
