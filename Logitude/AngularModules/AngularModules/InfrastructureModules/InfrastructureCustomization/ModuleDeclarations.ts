@@ -23,6 +23,8 @@ import { CustomizationTabsComponent } from './Components/Customization/Customiza
 import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
 import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
 import { QueryFilterTreeComponent } from './Components/Customization/QueryFilterTreeComponent';
+import { CustomizationEditComponent } from './Components/Customization/CustomizationEditComponent';
+import { SubEntitiesComponent } from './Components/Customization/SubEntitiesComponent';
 
 export const Components =
     [
@@ -50,7 +52,8 @@ export const Components =
         ClassicScreenComponent,
         LighteningScreenComponent,
         QueryFilterTreeComponent,
-
+        CustomizationEditComponent,
+        SubEntitiesComponent
     ];
 export const ControlsComponents =
     [
@@ -92,8 +95,8 @@ export class ModuleDeclarations {
             case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
             case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
             case "QueryFilterTreeComponent": { myResult = QueryFilterTreeComponent; break; }
-
-
+            case "CustomizationEditComponent": { myResult = CustomizationEditComponent; break; }
+            case "SubEntitiesComponent": { myResult = SubEntitiesComponent; break; }
         }
 
         return myResult;

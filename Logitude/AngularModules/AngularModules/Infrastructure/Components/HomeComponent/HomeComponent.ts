@@ -1022,11 +1022,10 @@ export class HomeComponent implements OnDestroy{
     // App Header Commands
     CustomizationClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Object Names";
-        logWindow.IsShowCloseButton = true;
+        logWindow.Title = "";
         logWindow.Width = 900;
         logWindow.Height = 550;
-        logWindow.IsHideHeader = true;
+        logWindow.IsShowCloseButton = false;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
     }
     TranslateLabelsClicked() {
