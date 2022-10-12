@@ -38,8 +38,8 @@ Given("the user open the quote", () => {
   QuotesActions.OpenQuote(quoteDetails.QuoteNumber);
 });
 
-When("{string} action with {string} note", (action, note) => {
-  QuotesActions.OpenQuoteAction(action, note);
+When("{string} action with {string} notes", (action, note) => {
+  QuotesActions.QuoteActionAcceptDecline(action, note);
 });
 
 Then("quote stage status should be {string}", (stageStatus) => {

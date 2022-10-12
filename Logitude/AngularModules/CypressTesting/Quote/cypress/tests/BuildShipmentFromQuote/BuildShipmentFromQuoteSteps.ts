@@ -46,8 +46,8 @@ Given("the user open the quote", () => {
 });
 
 //#region Accept quote
-When("{string} action with {string} note", (action, note) => {
-  QuotesActions.OpenQuoteAction(action, note);
+When("{string} action with {string} notes", (action, note) => {
+  QuotesActions.QuoteActionAcceptDecline(action, note);
 });
 
 Then("quote stage status should be {string}", (stageStatus) => {
