@@ -580,8 +580,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<ObjectField> GetObjectFieldsFromTenanZeroAndMyTenant(int tenant)
+        public IQueryable<ObjectField> GetObjectFieldsFromTenanZeroAndMyTenant(int tenant,bool IncludeMetaDataFields = false)
         {
+            if (IncludeMetaDataFields)
+            {
+                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode").Where(t => (t.Tenant == tenant || t.Tenant == 0) && t.FieldName.ToLower() != "tenant");
+            }
             return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode").Where(t => t.Tenant == tenant || t.Tenant == 0);
         }
 

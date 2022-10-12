@@ -66,7 +66,7 @@
     .start-conditions-container {
         overflow: auto;
         width: 936px;
-        height: 370px;
+        height: 337px;
     }
 
     .min-start-conditions-container {
@@ -75,136 +75,145 @@
 </style>
 
 <table>
-
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+    <tr>
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
-
-    <tr class="first-split-table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-                <div class="select-entity-label">Select Object</div>
-                <div>Select the object whose records trigger the flow when they're created or updated</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
-                    [DataContext]="DataContext"></LogLabel>
-            </div>
-            <div class="table-row-cell-block entity-list-container">
-                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
-                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
-                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
-                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
-                    [DataCy]="'start-entity'">
-                </LogLov>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-                <div class="select-trigger-label">Configure Trigger</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Trigger the flow when'" [ObjectFieldName]="'Trigger'"
-                    [DataContext]="DataContext"></LogLabel>
-            </div>
-            <div class="table-row-cell-block trigger-radios-container">
+            <div style="height:calc(100% - 35px); overflow: auto;">
                 <table>
-                    <tr>
-                        <td class="trigger-radio-cell">
-                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'create'"
-                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5"
-                                [DataCy]="'CreateTrigger'">
-                            </RadioButton>
+
+                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+                        <td>
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="trigger-radio-cell">
-                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'update'"
-                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5"
-                                [DataCy]="'UpdateTrigger'">
-                            </RadioButton>
+                
+                    <tr class="first-split-table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="trigger-radio-cell">
-                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'createOrUpdate'"
-                                (Checked)="updateTrigger('createOrUpdate')" [Text]="'A record is created or updated'"
-                                [Top]="5" [DataCy]="'CreateOrUpdateTrigger'"></RadioButton>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-entity-label">Select Object</div>
+                                <div>Select the object whose records trigger the flow when they're created or updated</div>
+                            </div>
                         </td>
                     </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
+                            <div class="table-row-cell-block entity-list-container">
+                                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
+                                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
+                                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
+                                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
+                                    [DataCy]="'start-entity'">
+                                </LogLov>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-trigger-label">Configure Trigger</div>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Trigger the flow when'" [ObjectFieldName]="'Trigger'"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
+                            <div class="table-row-cell-block trigger-radios-container">
+                                <table>
+                                    <tr>
+                                        <td class="trigger-radio-cell">
+                                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'create'"
+                                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5"
+                                                [DataCy]="'CreateTrigger'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="trigger-radio-cell">
+                                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'update'"
+                                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5"
+                                                [DataCy]="'UpdateTrigger'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="trigger-radio-cell">
+                                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'createOrUpdate'"
+                                                (Checked)="updateTrigger('createOrUpdate')" [Text]="'A record is created or updated'"
+                                                [Top]="5" [DataCy]="'CreateOrUpdateTrigger'"></RadioButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="set-conditions-label">Set Conditions</div>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr class="table-row">
+                        <td>
+                            <div class="table-row-cell-block start-conditions-container"
+                                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+                
+                                <div *ngIf="Conditions && Conditions.length === 0">
+                                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()"
+                                        [attr.data-cy]="'AddConditionButton'">
+                                        <span class="plus-sign">+</span><span>Add Condition</span>
+                                    </span>
+                                </div>
+                
+                                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId" [AtLeastOneCondition]="false"
+                                    [ShowChangedOperator]="Trigger !== CreateTrigger" [(ConditionsOperation)]="ConditionsOperation"
+                                    [(Conditions)]="Conditions"></Conditions>
+                
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr> 
+                
                 </table>
             </div>
         </td>
     </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-                <div class="set-conditions-label">Set Conditions</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-            <div class="table-row-cell-block start-conditions-container"
-                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
-
-                <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()"
-                        [attr.data-cy]="'AddConditionButton'">
-                        <span class="plus-sign">+</span><span>Add Condition</span>
-                    </span>
-                </div>
-
-                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId" [AtLeastOneCondition]="false"
-                    [ShowChangedOperator]="Trigger !== CreateTrigger" [(ConditionsOperation)]="ConditionsOperation"
-                    [(Conditions)]="Conditions"></Conditions>
-
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
+  
+    <tr class="table-row"  style="height: 35px;">
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
@@ -213,5 +222,4 @@
 
         </td>
     </tr>
-
-</table>
+</table> 
