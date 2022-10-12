@@ -171,11 +171,15 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
-
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
                 myDataProvider.TotalPrepaidReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmount);
+
+                myDataProvider.TotalWeightInKG = shipment.GrossWeightInKG;
+               // myDataProvider.TotalWeightInLBS = shipment.MainCarriageCarrierNumber;
+                myDataProvider.TotalVolumeINCBM = shipment.VolumeInCBM;
+                //myDataProvider.TotalVolumeINCBF = shipment.MainCarriageCarrierNumber;
 
                 this.FillINTTRADocumentProperties(myDataProvider);
 
