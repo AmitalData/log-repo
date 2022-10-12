@@ -1,4 +1,4 @@
-@smoke1 @release
+@smokeAfterSwap @release
 Feature: Bank Account Create, Search and Edit from Maintenance
     The user creates a Bank Account, searches for and edits it from the Maintenance Module.
 
