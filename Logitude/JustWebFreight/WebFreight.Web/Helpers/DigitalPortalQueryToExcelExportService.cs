@@ -126,10 +126,11 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["E2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["E2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow.ToString("dd:MMM:yyyy")}";
             sheet1.Range["E2"].CellStyle.Font.Size = 12;
 
-            sheet1.Range["A3:S3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:S3"].CellStyle.Color = Color.FromArgb(217, 217, 217, 255);
+
             sheet1.Range["A3:S3"].CellStyle.Font.Bold = true;
             sheet1.Range["A3:S3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["A3:S3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -180,8 +181,8 @@ namespace WebFreight.Web.Helpers
                 row[2] = item.DirectionName;
                 row[3] = item.MainCarriageFromPortName;
                 row[4] = item.MainCarriageToPortName;
-                row[5] = item.MainCarriageATD;
-                row[6] = item.MainCarriageATA;
+                row[5] = item.MainCarriageATD?.ToString("dd:MMM:yyyy");
+                row[6] = item.MainCarriageATA?.ToString("dd:MMM:yyyy");
                 row[7] = item.Master;
                 row[8] = item.ShipperName;
                 row[9] = item.ConsigneeName;
@@ -226,10 +227,10 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Range["A2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow.ToString("dd:MMM:yyyy")}";
             sheet1.Range["A2"].CellStyle.Font.Size = 12;
 
-            sheet1.Range["A3:L3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:L3"].CellStyle.Color = Color.FromArgb(217, 217, 217, 255);
             sheet1.Range["A3:L3"].CellStyle.Font.Bold = true;
             sheet1.Range["A3:L3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["A3:L3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -274,13 +275,13 @@ namespace WebFreight.Web.Helpers
                 row[1] = item.ARInvoiceTypeName;
                 row[2] = item.MainEntityReference;
                 row[3] = item.CustomerRef;
-                row[4] = item.CreateDate;
+                row[4] = item.CreateDate?.ToString("dd:MMM:yyyy");
                 row[5] = item.StatusName;
                 row[6] = item.PaymentTermName;
                 row[7] = item.InvoiceCurrencyCode;
                 row[8] = item.AmountInInvoiceCurrency;
                 row[9] = item.AmountDue;
-                row[10] = item.DueDate;
+                row[10] = item.DueDate?.ToString("dd:MMM:yyyy");
                 row[11] = item.PrintNotes;
                 table.Rows.Add(row);
                 index++;
