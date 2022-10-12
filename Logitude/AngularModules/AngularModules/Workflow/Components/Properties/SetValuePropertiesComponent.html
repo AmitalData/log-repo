@@ -40,7 +40,7 @@
         padding-right: 10px;
     }
 
-    .entity-list-container {
+    .name-container {
         height: 30px;
         width: 320px;
     }
@@ -50,7 +50,7 @@
         margin-top: 10px;
     }
 
-    .table-container{
+    .table-container {
         overflow: auto;
         height: 515px;
     }
@@ -137,18 +137,17 @@
         </td>
     </tr>
 
-    <!-- Label -->
+    <!-- Name -->
     <tr class="table-row">
         <td class="table-row-cell">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'Label'"
-                    [DataContext]="DataContext">
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
                 </LogLabel>
             </div>
-            <div class="table-row-cell-block entity-list-container">
-                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Label"
-                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Label'"
-                    (ValueChanged)="updateLabel($event)" [DataCy]="'label'">
+            <div class="table-row-cell-block name-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'name'">
                 </LogTextBox>
             </div>
         </td>
@@ -164,7 +163,7 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div class="select-get-record-label">Set Variable Values</div>
+                <div class="set-variable-values">Set Variable Values</div>
             </div>
         </td>
     </tr>
@@ -205,9 +204,8 @@
                                     </LogLabel>
                                 </div>
                                 <div class="setValue-operator-container">
-                                    <ComboBox
-                                        [ItemsSource]="SetValuesOperatorsItemsDictionary[setValue.field?'all':'default']"
-                                        [Binding]="'Name'" [SelectedItem]="ListItem(setValue.operator)"
+                                    <ComboBox [ItemsSource]="SetValuesOperatorsItems" [Binding]="'Name'"
+                                        [SelectedItem]="ListItem(setValue.operator)"
                                         (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)"
                                         [ListType]="''" [CyData]="'setValueOperator'">
                                     </ComboBox>

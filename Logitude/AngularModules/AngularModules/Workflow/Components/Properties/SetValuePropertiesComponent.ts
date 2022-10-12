@@ -8,7 +8,7 @@ import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
 import { SetValue } from "Workflow/Models/SetValue";
-import { SetValueOperatorsListDictionary } from "Workflow/Models/SetValueOperatorsListDictionary";
+import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 
@@ -18,7 +18,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class SetValuePropertiesComponent extends BaseComponent {
     public DataContext: any = this;
-    public Label: string = null;
+    public Name: string = null;
     public SetValues: SetValue[];
     public ObjectFieldsDictionary: any = {};
 
@@ -32,7 +32,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
 
     public FlowVariablesTreeItems: TreeSelectItem[];
-    public SetValuesOperatorsItemsDictionary = new SetValueOperatorsListDictionary().ItemsDictionary;
+    public SetValuesOperatorsItems = new SetValueOperatorsList().Items;
 
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
@@ -54,11 +54,11 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     ngOnChanges() {
-        this.SetValuesOperatorsItemsDictionary = new SetValueOperatorsListDictionary().ItemsDictionary;
+        this.SetValuesOperatorsItems = new SetValueOperatorsList().Items;
     }
 
     initialize() {
-        this.Label = this.Data["label"] || null;
+        this.Name = this.Data["name"] || null;
         this.SetValues = this.Data["setValues"] || [];
 
         this.initializeObjectFieldDictionary();
@@ -87,9 +87,9 @@ export class SetValuePropertiesComponent extends BaseComponent {
         }
     }
 
-    updateLabel(label: any) {
-        this.Data["label"] = label;
-        this.Label = label;
+    updateName(name: any) {
+        this.Data["name"] = name;
+        this.Name = name;
         this.setUIProperties();
     }
 
@@ -180,7 +180,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     setUIProperties() {
-        this.UIProperties.SetRequired("Label", null, AppTool.IsNullOrEmpty(this.Label));
+        this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
     }
 
     cancelButtonClicked() {
