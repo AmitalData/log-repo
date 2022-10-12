@@ -2,7 +2,7 @@
 <table>
     <tr>
         <td>
-            <table *ngIf="IsReady">
+            <table *ngIf="IsReady" style="margin-top:-35px">
                 <tr style="height: 5px;">
                     <td></td>
                 </tr>
@@ -41,7 +41,7 @@
                                 <td style="width:300px">
                                     <div style="display:inline-flex">
                                         <SearchBox style="width:140px; margin-right:5px" [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
-                                        <button class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()">New Custom Entity</button>
+                                        <button class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()" disabled>New Custom Entity</button>
 
                                     </div>
 
@@ -121,7 +121,7 @@
                                                 </table>
                                             </td>
                                         </tr>
-                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="Selecting(item)" *ngFor="let item of ItemsSource1" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource1Hidden || item == null">
+                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="OpenCustomizationEditComponent(item)" *ngFor="let item of ItemsSource1" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource1Hidden || item == null">
                                             <td style="height: 25px;">
                                                 <table style="height: 25px;">
                                                     <tr>
@@ -212,7 +212,7 @@
                                                 </table>
                                             </td>
                                         </tr>
-                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="Selecting(item)" *ngFor="let item of ItemsSource2" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource2Hidden || item == null">
+                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="OpenCustomizationEditComponent(item)" *ngFor="let item of ItemsSource2" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource2Hidden || item == null">
                                             <td style="height: 25px;">
                                                 <table style="height: 25px;">
                                                     <tr>
