@@ -18,11 +18,11 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class SetValuePropertiesComponent extends BaseComponent {
     public DataContext: any = this;
-    public Data: any;
     public Label: string = null;
-    public SetValuesCounter: number = 1;
     public SetValues: SetValue[];
+    public ObjectFieldsDictionary: any = {};
 
+    public Data: any;
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldPM[];
@@ -61,23 +61,35 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.Label = this.Data["label"] || null;
         this.SetValues = this.Data["setValues"] || [];
 
-        if (this.SetValues.length == 0) {
-            this.IsValidSetValue = false;
-            let setValue = new SetValue();
-            this.SetValues.push(setValue);
-        }
+        this.initializeObjectFieldDictionary();
+        this.initializeSetValue();
 
         this.setUIProperties();
     }
 
     initializeFlowVariablesTreeItems() {
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, "").Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId).Items;
+    }
+
+    initializeObjectFieldDictionary() {
+        if (this.SetValues.length > 0) {
+            this.SetValues.forEach(setvalue => {
+                this.fillObjectFieldDictionary(setvalue.field);
+            });
+        }
+    }
+
+    initializeSetValue() {
+        if (this.SetValues.length == 0) {
+            this.IsValidSetValue = false;
+            let setValue = new SetValue();
+            this.SetValues.push(setValue);
+        }
     }
 
     updateLabel(label: any) {
         this.Data["label"] = label;
         this.Label = label;
-
         this.setUIProperties();
     }
 
@@ -85,7 +97,8 @@ export class SetValuePropertiesComponent extends BaseComponent {
         if (field !== this.SetValues[setValueIndex]?.value) {
             this.SetValues[setValueIndex].field = field ? field.toString() : null;
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
-
+            this.SetValues[setValueIndex].value = null;
+            this.fillObjectFieldDictionary(field);
         }
         this.IsValidSetValue = this.isValidSetValue();
     }
@@ -93,6 +106,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     updateSetValueOperator(operatorCode: string, setValueIndex: number) {
         if (operatorCode !== this.SetValues[setValueIndex]?.operator) {
             this.SetValues[setValueIndex].operator = operatorCode;
+            this.SetValues[setValueIndex].value = null;
         }
         this.IsValidSetValue = this.isValidSetValue();
     }
@@ -107,7 +121,6 @@ export class SetValuePropertiesComponent extends BaseComponent {
     addSetValue() {
         if (this.IsValidSetValue) {
             let setvalue = new SetValue();
-            setvalue.id = this.SetValuesCounter;
             this.SetValues.push(setvalue);
         }
         this.IsValidSetValue = this.isValidSetValue();
@@ -121,6 +134,29 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.IsValidSetValue = this.isValidSetValue();
     }
 
+    fillObjectFieldDictionary(field: string) {
+        if (field && this.isObjectField(field)) {
+            let objectfieldCode = field.split('.')[1]
+            this.saveInObjectFieldsDictionary(objectfieldCode)
+        }
+    }
+
+    saveInObjectFieldsDictionary(objectfieldCode: string) {
+        if (!this.ObjectFieldsDictionary[objectfieldCode]) {
+            var objectfield = this.FlowObjectFields.find(e => e.Code == objectfieldCode)
+            this.ObjectFieldsDictionary[objectfieldCode] = objectfield;
+        }
+    }
+
+    isFieldCompareOperator(operatorCode: string) {
+        return operatorCode && operatorCode.endsWith("<field>");
+    }
+
+    isObjectField(field: string) {
+        let parent = field.split('_')[0]
+        return parent != 'declaredvariables';
+    }
+
     isValidSetValue() {
         let result = true;
         for (let setValues of (this.SetValues)) {
@@ -132,29 +168,19 @@ export class SetValuePropertiesComponent extends BaseComponent {
         return result;
     }
 
+    getDeclareVariableType(field: string) {
+        let fieldName = field.split('_')![1];
+        let node = this.FlowObject.nodes.find(n => n.type == "declareVariableNode" && n.data['variableCode'] == fieldName);
+        return node.data['variableType'];
+    }
+
+    getObjectFieldCode(field: string) {
+        let objectfieldCode = field.split('.')[1];
+        return objectfieldCode;
+    }
+
     setUIProperties() {
         this.UIProperties.SetRequired("Label", null, AppTool.IsNullOrEmpty(this.Label));
-    }
-
-    isFieldCompareOperator(operatorCode: string) {
-        return operatorCode && operatorCode.endsWith("<field>");
-    }
-
-    isObjectField(setValueField: string,index :number) {
-        let idk = setValueField.split('.')
-        if(idk[0] == 'triggeringrecord'){
-            let objectfield = this.FlowObjectFields.find(e=>e.Code == idk[1] )
-            this.SetValues[index].fieldObjectField = objectfield
-            return true
-        }else{
-            let node = this.FlowObject.nodes.find(n=>n.type == "declareVariableNode" && n.data['variableCode'] == idk[0])
-            this.SetValues[index].fieldType = node.data['variableType']
-            return false
-        }
-    }
-
-    isDateTimeField(objectField: ObjectFieldPM) {
-        return objectField && (objectField.DataTypeCode === FieldTypes.DateTime || objectField.DataTypeCode === FieldTypes.Date);
     }
 
     cancelButtonClicked() {
