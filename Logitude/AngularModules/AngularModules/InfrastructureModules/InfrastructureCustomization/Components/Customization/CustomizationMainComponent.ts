@@ -137,21 +137,7 @@ export class CustomizationMainComponent {
         return false;
     }
 
-    HaveFieldsCustomization(objectTableName: string): boolean {
-        return FeatureLocator.HasFeaturePermession(objectTableName, "FIELDSCUSTOMIZATION");
-    }
-
-    HaveRulesCustomization(objectTableName: string): boolean {
-        return FeatureLocator.HasFeaturePermession(objectTableName, "RULESCUSTOMIZATION");
-    }
-
-    HaveTabsCustomization(objectTableName: string): boolean {
-        return FeatureLocator.HasFeaturePermession(objectTableName, "TABSCUSTOMIZATION");
-    }
-
     public selectedRow: FieldsTranslations;
-
-
     OpenCustomizationEditComponent(fieldsTranslations: FieldsTranslations) {
 
         this.selectedRow = fieldsTranslations;
