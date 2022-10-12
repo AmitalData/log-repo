@@ -203,7 +203,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         } else {
             propertiesWindow.Height = 850;
         }
-        propertiesWindow.Width = 960;
+        propertiesWindow.Width = 970;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
