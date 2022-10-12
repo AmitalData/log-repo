@@ -47,8 +47,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                            .Take(10);
                 }
 
-                aRInvoices = aRInvoices.Take(5);
-                shipments = shipments.Take(10 - aRInvoices.Count());
+                var invoicesCount = aRInvoices.Count();
+                var shipmentsCount = shipments.Count();
+
+                if(invoicesCount >= 5 && shipmentsCount >= 5)
+                {
+                    aRInvoices = aRInvoices.Take(5);
+                    shipments = shipments.Take(5);
+                }
+
+                else if (invoicesCount >= shipmentsCount)
+                {
+                    shipments = shipments.Take(shipmentsCount);
+                    aRInvoices = aRInvoices.Take(10 - shipmentsCount);
+                } 
+
+                else if (shipmentsCount >= invoicesCount)
+                {
+                    aRInvoices = aRInvoices.Take(invoicesCount);
+                    shipments  = shipments.Take(10 - invoicesCount);
+                }
 
                 var dictionary = new Dictionary<string, List<GlobalSearchResult>> {
                     { "Shipments", GetShipmentsGlobalSearch(shipments.ToList())},
