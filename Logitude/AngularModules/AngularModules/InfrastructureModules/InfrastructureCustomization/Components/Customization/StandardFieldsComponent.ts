@@ -24,10 +24,14 @@ declare var window: any;
 
 export class StandardFieldsComponent {
     private myService: GeneralDomainService;
-    public  ObjecttableId: string;
+    private  ObjecttableId: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         this.myService = new GeneralDomainService();
+    }
+
+    SetWindowArgs(args: any) {
+        this.ObjecttableId = args['ObjectTableId'];
         this.BuildTabsItemsSource();
     }
 

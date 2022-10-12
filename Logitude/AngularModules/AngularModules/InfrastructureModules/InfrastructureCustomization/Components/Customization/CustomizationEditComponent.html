@@ -123,10 +123,7 @@
                                                             <!-- Tab Body -->
                                                             <td>
                                                                 <div *ngIf="SelectedMenu" class="MediaFill">
-                                                                    <!--<div class="MediaFillAbsolute MarginAbsolute10">
-        <div #Child LocationDirective Code="CustomizationMainMenuContainer"></div>
-    </div>-->
-
+                                                                    
                                                                     <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'CUSTOMFIELD'">
                                                                         <div  LocationDirective Code="CUSTOMFIELD"></div>
                                                                     </div>
