@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                          .Take(10);
                 }
 
-                newFilters.SortBy = "InvoiceDate";
+                newFilters.SortBy = "UpdateDate";
                 newFilters.SortDirection = "Descending";
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var aRInvoices = aRInvoiceQuery.GetByFilters(newFilters);
