@@ -23,5 +23,5 @@
 @import url("_Resources/css/PrimeWebComponent.css");
 @import url("_Resources/css/logitude-workflow-styles.css");
 @import url("_Resources/css/custom-ng-zorro-antd-styles.css");
-@import "~logitude-workflow/dist/index.css";
-@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+@import "~logitude-workflow/dist/index.css"; 
+@import "~ng-zorro-antd/tree-select/style/index.min.css"; 
