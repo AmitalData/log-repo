@@ -22,6 +22,7 @@ import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
 
 export class ListTemplateComponent implements OnInit {
 
+    public DataCy: string;
     public rowData: any;
     public fieldName: any;
     public htmlListComponentUrl: string;
