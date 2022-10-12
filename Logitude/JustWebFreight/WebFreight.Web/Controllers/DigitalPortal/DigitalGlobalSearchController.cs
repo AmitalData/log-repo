@@ -35,7 +35,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipments = shipmentQuery.GetByFilters(newFilters);
                 if (!string.IsNullOrWhiteSpace(searchFields))
                 {
-                    shipments = shipments.Where(d => d.ShipmentNumber.ToLower().Contains(searchFields.ToLower()))
+                    shipments = shipments.Where(d => d.ShipmentNumber.Contains(searchFields))
                                          .Take(10);
                 }
 
@@ -43,7 +43,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var aRInvoices = aRInvoiceQuery.GetByFilters(newFilters);
                 if (!string.IsNullOrWhiteSpace(searchFields))
                 {
-                    aRInvoices = aRInvoices.Where(d => d.InvoiceNumber.ToLower().Contains(searchFields.ToLower()))
+                    aRInvoices = aRInvoices.Where(d => d.InvoiceNumber.Contains(searchFields))
                                            .Take(10);
                 }
 
