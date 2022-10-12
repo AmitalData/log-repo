@@ -5599,7 +5599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DontIncludeInDeductionReport",
 					  						DefaultText =  "Dont Include In Deduction Report",
-					  						FullLocalDefaultText =  "לא לכלול בדוח ניכוי במקור",
+					  						FullLocalDefaultText = "הביטול לא יכלל בדוח ניכוי במקור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
