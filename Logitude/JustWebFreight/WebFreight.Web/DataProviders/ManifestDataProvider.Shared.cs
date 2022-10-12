@@ -182,7 +182,6 @@ namespace WebFreight.Web.DataProviders
         public string MasterPreCarriageVesselName { get; set; }
         public string MasterPreCarriageFromPortName { get; set; }
         #endregion
-
         public string ShipmentType { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
@@ -210,6 +209,12 @@ namespace WebFreight.Web.DataProviders
 
         public string DeparturePortName { get; set; }//(Same as DeparturePortCode but shows name instead of code)
         public string DestinationPortName { get; set; }//(Same as DestinationPortCode but shows name instead of code)
+
+        public double? TotalChargeableWeight { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transshipment1VoyageNumber { get; set; }
+        public string Transshipment2VoyageNumber { get; set; }
     }
 
     public class ManifestDetailsClass
@@ -363,6 +368,10 @@ namespace WebFreight.Web.DataProviders
         public string ShipperContactPhone { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
         public string CustomerName { get; set; }
+        public string FirstPickupDriver { get; set; }
+        public string LastDeliveryDriver { get; set; }
+        public string FirstPickupTruckNumber { get; set; }
+        public string LastDeliveryTruckNumber { get; set; }
     }
 
     public class NewManifestDetailsClass
@@ -531,10 +540,19 @@ namespace WebFreight.Web.DataProviders
         public string ShipperContactPhone { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
         public string CustomerName { get; set; }
+        public string FirstPickupDriver { get; set; }
+        public string LastDeliveryDriver { get; set; }
+        public string FirstPickupTruckNumber { get; set; }
+        public string LastDeliveryTruckNumber { get; set; }
     }
 
     public class PackageDetails
     {
+        public PackageDetails()
+        {
+            this.InsidePackagesLines = new List<InsidePackageLine>();
+        }
+
         public string MarksAndNumbers { get; set; }
         public string PackageKind { get; set; }
         public string Quantity { get; set; }
@@ -563,6 +581,8 @@ namespace WebFreight.Web.DataProviders
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
         public string Dimensions { get; set; }
+        public double? Ventilation { get; set; }
+        public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 
     public class GroupedContainersClass

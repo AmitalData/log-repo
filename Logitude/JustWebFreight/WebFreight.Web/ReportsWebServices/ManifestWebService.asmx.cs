@@ -83,6 +83,7 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
         }
 
+        private InsideShipmentPackageRepository insideShipmentPackageRepository;
         public ManifestDataProvider GetManifestDataProvider(string masterId, int tenant)
         {
             ManifestDataProvider manifestDataProvider = new ManifestDataProvider();
@@ -96,6 +97,7 @@ namespace WebFreight.Web.ReportsWebServices
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(shipmentsContext);
             ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
+            insideShipmentPackageRepository = new InsideShipmentPackageRepository(shipmentsContext);
             this.tenant = tenant;
             if (master != null)
             {
@@ -133,7 +135,12 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
                 manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
                 manifestDataProvider.HousesNumbers = master.HousesNumbers;
-                                
+
+                manifestDataProvider.Transshipment1VesselName = master.Transshipment1VesselName;
+                manifestDataProvider.Transshipment2VesselName = master.Transshipment2VesselName;
+                manifestDataProvider.Transshipment1VoyageNumber = master.Transshipment1CarrierNumber;
+                manifestDataProvider.Transshipment2VoyageNumber = master.Transshipment2CarrierNumber;
+
                 if (master.BranchId != null)
                 {
                     Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == master.BranchId select d).FirstOrDefault();
@@ -522,6 +529,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 List<ShipmentDataView> connectedShipments = shipmentRepository.GetShipmentViewsByTenantAndMasterId(masterId, tenant).ToList();
                 manifestDataProvider.NumberOfHBLs = connectedShipments.Count;
+                manifestDataProvider.TotalChargeableWeight = connectedShipments.Sum(s => s.ChargeableWeight);
 
                 #region manifest details region
 
@@ -770,6 +778,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (myFirstPickup != null)
                     {
+                        detail.FirstPickupDriver = newDetail.FirstPickupDriver = myFirstPickup.Driver;
+                        detail.FirstPickupTruckNumber = newDetail.FirstPickupTruckNumber = myFirstPickup.TruckNumber;
+
                         PlaceOfReceiptData data = myServiceHelper.GetPlaceOfReceiptData(myFirstPickup);
                         if (data != null)
                         {
@@ -893,6 +904,9 @@ namespace WebFreight.Web.ReportsWebServices
                                                            select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                     if (lastDelivery != null)
                     {
+                        detail.LastDeliveryDriver = newDetail.LastDeliveryDriver = lastDelivery.Driver;
+                        detail.LastDeliveryTruckNumber = newDetail.LastDeliveryTruckNumber = lastDelivery.TruckNumber;
+
                         PickUpAndDeliveriesArguments lastDeliveryArguments = new PickUpAndDeliveriesArguments();
                         lastDeliveryArguments.TypeCode = lastDelivery.PickUpDeliveryToTypeCode;
                         lastDeliveryArguments.AddressId = lastDelivery.ToAddressId;
@@ -1496,6 +1510,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 PackageDetails packageDetail = new PackageDetails();
 
+                this.MapInsidePackages(package.Id, tenant, packageDetail);
+
                 packageDetail.DescriptionOfGoods = !string.IsNullOrEmpty(package.Description) ? package.Description : "";
 
                 if (!string.IsNullOrEmpty(package.Harmonize))
@@ -1616,6 +1632,7 @@ namespace WebFreight.Web.ReportsWebServices
                 packageDetail.Notes = package.Notes;
                 packageDetail.Harmonize = package.Harmonize;
                 packageDetail.Tare = package.Tare;
+                packageDetail.Ventilation = package.Ventilation;
 
                 if (!string.IsNullOrEmpty(package.HorseId))
                 {
@@ -1797,7 +1814,37 @@ namespace WebFreight.Web.ReportsWebServices
                 //newDetail.DescriptionOfGoods += desc.ToString();
                 #endregion
             }
+        }
 
+        private void MapInsidePackages(string shipmentPackageId, int tenant, PackageDetails packageDetail)
+        {
+            IQueryable<InsideShipmentPackage> insidePackages = insideShipmentPackageRepository.GetInsidePackagesByShipmentPackageId(shipmentPackageId, tenant); 
+            foreach (InsideShipmentPackage insideItem in insidePackages)
+            {
+                PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                                 where pa.Id == insideItem.PackageTypeId
+                                                 select pa).FirstOrDefault();
+
+                InsidePackageLine insidePackage = new InsidePackageLine();
+
+                insidePackage.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+                insidePackage.Quantity = insideItem.Quantity;
+
+                if (insideItem.Length != null && insideItem.Width != null && insideItem.Height != null)
+                {
+                    insidePackage.Dimensions = insideItem.Length + "x" + insideItem.Width + "x" + insideItem.Height;
+                }
+
+                insidePackage.Volume = insideItem.Volume;
+                insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
+                insidePackage.Weight = insideItem.Weight;
+                insidePackage.Description = insideItem.Description;
+                insidePackage.Reference1 = insideItem.Reference1;
+                insidePackage.Reference2 = insideItem.Reference2;
+                insidePackage.Reference3 = insideItem.Reference3;
+                insidePackage.CommodityNumber = insideItem.CommodityNumber;
+                packageDetail.InsidePackagesLines.Add(insidePackage);
+            }
         }
 
         private string BuildDescriptionOfGoods()
