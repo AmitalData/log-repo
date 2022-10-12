@@ -31,6 +31,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var searchFields = newFilters.SearchText;
                 newFilters.Tenant = authToken.Tenant;
                 newFilters.SortBy = "StatusDate";
+                newFilters.SortDirection = "Descending";
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters);
                 if (!string.IsNullOrWhiteSpace(searchFields))
@@ -39,6 +40,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                          .Take(10);
                 }
 
+                newFilters.SortBy = "InvoiceDate";
+                newFilters.SortDirection = "Descending";
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var aRInvoices = aRInvoiceQuery.GetByFilters(newFilters);
                 if (!string.IsNullOrWhiteSpace(searchFields))
