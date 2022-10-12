@@ -13,6 +13,10 @@ export class SubEntitiesComponent {
 
     }
 
+    SetWindowArgs(args: any) {
+
+    }
+
    
 }
 
