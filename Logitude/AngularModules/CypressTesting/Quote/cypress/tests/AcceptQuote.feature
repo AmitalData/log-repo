@@ -15,7 +15,7 @@ Feature: Cancel Quote
 
     Scenario: Accept quote
         Given the user open the quote
-        When "Accept" action with "Accept the quote" note
+        When "Accept" action with "Accept the quote" notes
         Then quote stage status should be "Accepted"
         And following event should appear in events tab
             | Event          | Notes            |

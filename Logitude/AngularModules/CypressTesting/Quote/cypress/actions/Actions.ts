@@ -174,11 +174,17 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
 export function OpenQuoteAction(action: string, note: string) {
     cy.Click(BaseSelectors.MenuButtons, null, true);
     cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
-    FillActionNote(note)
+    FillActionNote(QuoteSelectors.QuoteEventNote,note)
 }
 
-function FillActionNote(note: string) {
-    cy.FillLogTextBox(QuoteSelectors.QuoteEventNote, note)
+export function QuoteActionAcceptDecline(action: string, note: string) {
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+    FillActionNote(QuoteSelectors.QuoteClosingReasonNotes,note)
+}
+
+function FillActionNote(noteselector: string,note: string) {
+    cy.FillLogTextBox(noteselector, note)
     UpdateQuote(BaseSelectors.ConfrimApproved)
 }
 

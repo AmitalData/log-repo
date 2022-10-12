@@ -15,7 +15,7 @@ Feature: Decline Quote
 
     Scenario: Decline quote
         Given the user open the quote
-        When "Decline" action with "Decline the quote" note
+        When "Decline" action with "Decline the quote" notes
         Then quote stage status should be "Declined"
         And following event should appear in events tab
             | Event          |
