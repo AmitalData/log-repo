@@ -163,7 +163,6 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ShipmentRouting = shipment.Routing;
                 myDataProvider.IncotermCode = shipment.IncotermCode;
                 myDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipment.ShipmentLevelCode, shipment.SecurityKey, tenant);
-
                 myDataProvider.DangerousClassNumber = shipment.DangerousClassNumber;
                 myDataProvider.DangerousUnNumber = shipment.DangerousUnNumber;
                 myDataProvider.DangerousPackagingGroup = shipment.DangerousPackagingGroup;
@@ -171,6 +170,13 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousIMDGCode = shipment.DangerousIMDGCode;
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
+                myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
+
+                myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
+                myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
+                myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
+                myDataProvider.TotalPrepaidReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmount);
+
                 this.FillINTTRADocumentProperties(myDataProvider);
 
                 if (shipment.DocumentsClosingDate != null)

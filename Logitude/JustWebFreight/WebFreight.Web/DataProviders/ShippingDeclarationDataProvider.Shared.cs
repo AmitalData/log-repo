@@ -586,5 +586,11 @@ namespace WebFreight.Web.DataProviders
         public string DangerousIMDGCode { get; set; }
         public string DangerousFlashPoint { get; set; }
         public string DangerousMaterialDescription { get; set; }
+
+        public string MainCarriageTruckNumber { get; set; } //.To print out the truck number in the main carriage for inland shipments
+        public double? TotalCollectReceivablesLocal { get; set; } //, to show the summation of collected receivables
+        public double? TotalPrepaidReceivablesLocal { get; set; } //, to show the summation of prepaid receivables
+        public double? TotalCollectReceivablesProfit { get; set; } //, to show the summation of collected receivables
+        public double? TotalPrepaidReceivablesProfit { get; set; } //, to show the summation of prepaid receivables
     }
 }
