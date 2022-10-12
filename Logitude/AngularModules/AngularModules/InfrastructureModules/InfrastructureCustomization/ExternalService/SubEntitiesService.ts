@@ -6,13 +6,14 @@ declare var window: any;
 
 export class SubEntitiesService implements ICustomizationService {
 
-    private IsShowSubEntities: boolean;
     private customizationMainMenuItem: CustomizationMainMenuItem;
     private objectTableId: string;
 
     LoadCustomizationMenuItem(args: any) {
-        this.GetFeaturePermission();
-        if (!((!args.IsObjectTableFilterEnabled || this.IsShowSubEntities) && !args.IsCustomFieldsMenue)) return null;
+
+        if (args.IsCustomFieldsMenue) return null;
+        if (!this.GetFeaturePermission(args)) return null;
+
         this.objectTableId = args.ObjectTableId;
         this.customizationMainMenuItem = new CustomizationMainMenuItem("subEntities");
         this.customizationMainMenuItem.TextCode = "Sub Entities";
@@ -25,8 +26,8 @@ export class SubEntitiesService implements ICustomizationService {
         }
         return this.customizationMainMenuItem;
     }
-
-    GetFeaturePermission() {
-        this.IsShowSubEntities = true; //to be updated later
+    GetFeaturePermission(args: any): boolean {
+        let IsShowSubEntities = true; //to be updated later
+        return !args.IsObjectTableFilterEnabled || IsShowSubEntities;
     }
 }

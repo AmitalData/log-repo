@@ -208,11 +208,7 @@ export class CustomizationEditComponent {
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)
             .then(cmpRef => {
                 this.SelectedMenu.Page = cmpRef.instance;
-                
-                if (this.SelectedMenu.Code == "STANDARDFIELD") {
-                    cmpRef.instance.ObjecttableId = this.ObjectTableId;
-                    cmpRef.instance.BuildTabsItemsSource();
-                }
+                cmpRef.instance.SetWindowArgs(this.SelectedMenu.args);
             });
     }
     
