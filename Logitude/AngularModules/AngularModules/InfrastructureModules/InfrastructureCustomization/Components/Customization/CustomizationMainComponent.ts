@@ -152,19 +152,27 @@ export class CustomizationMainComponent {
     public selectedRow: FieldsTranslations;
 
 
-    Selecting(fieldsTranslations: FieldsTranslations) {
+    OpenCustomizationEditComponent(fieldsTranslations: FieldsTranslations) {
 
         this.selectedRow = fieldsTranslations;
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-        SessionLocator.DynamicLoader.Load("./InfrastructureCustomization/Components/Customization/CustomizationEditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Title = table.Name;
-                cmpRef.instance.IsCustomFieldsMenue = this.IsCustomFieldsMenue;
-                cmpRef.inctance.IsObjectTableFilterEnabled = this.IsObjectTableFilterEnabled;
-                //    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
-            });
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen = true;
+        logWindow.IsShowCloseButton = false;
+        logWindow.Title = "";
+        logWindow.WindowArgs = {
+            Title: this.selectedRow.DefaultText,
+            IsCustomFieldsMenue: this.IsCustomFieldsMenue,
+            IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled,
+            ObjectTableId: table.Id
+        };
+        logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
+
+    NewCustomEntityClicked() {
+
+    }
+
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

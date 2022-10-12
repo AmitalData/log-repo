@@ -1632,11 +1632,10 @@ export class MaintenanceComponent {
         var windowArgs: any = {};
         windowArgs.IsCustomFieldsMenue = true;
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = "Object Names";
-        logWindow.IsShowCloseButton = true;
+        logWindow.Title = "";
         logWindow.Width = 900;
         logWindow.Height = 550;
-        logWindow.IsHideHeader = true;
+        logWindow.IsShowCloseButton = false;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
         return { logWindow, windowArgs };
     }
