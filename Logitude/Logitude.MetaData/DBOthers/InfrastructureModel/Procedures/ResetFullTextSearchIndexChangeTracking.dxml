@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="ResetFullTextSearchIndexChangeTracking"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript>
+  <![CDATA[
+create procedure [dbo].[ResetFullTextSearchIndexChangeTracking]
+as
+
+begin
+
+  declare @FullTextSearchIndexChangeTrackingCommand as varchar(2000)
+
+  set @FullTextSearchIndexChangeTrackingCommand = (SELECT TOP(1)(CASE WHEN (([fi].[crawl_end_date] < ISNULL([ius].[last_user_update], [ius].[last_user_seek]) AND [fi].[crawl_end_date] < dateadd(minute, -5, getdate()))) THEN 'ALTER FULLTEXT INDEX ON ['+[t].[name]+'] SET CHANGE_TRACKING MANUAL; ALTER FULLTEXT INDEX ON ['+[t].[name]+'] SET CHANGE_TRACKING AUTO' ELSE '' END) [Command]
+  FROM [sys].[fulltext_indexes] [fi]
+  INNER JOIN [sys].[indexes] [i] ON [i].[index_id] = [fi].[unique_index_id] AND [i].[object_id] = [fi].[object_id]
+  INNER JOIN [sys].[tables] [t] ON [t].[object_id] = [fi].[object_id]
+  LEFT JOIN [sys].[dm_db_index_usage_stats] [ius] ON [ius].[index_id] = [fi].[unique_index_id] AND [ius].[object_id] = [fi].[object_id] AND [ius].[database_id] = DB_ID())
+
+
+  IF(@FullTextSearchIndexChangeTrackingCommand Is Not Null AND @FullTextSearchIndexChangeTrackingCommand <> '')
+  BEGIN
+    EXEC(@FullTextSearchIndexChangeTrackingCommand)
+  End
+  
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>
