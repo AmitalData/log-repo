@@ -110,9 +110,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
-            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
-            var allDigitalEntityStatus = allStatuses.Where(a => a.IsDigitalPortal).ToList();
             var blockedStatus = new List<string> { "PSDL", "PODR" };
+            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
+            var allDigitalEntityStatus = allStatuses.Where(a => a.IsDigitalPortal && !blockedStatus.Contains(a.Code)).ToList();
             var digitalEntityStatusCodes = allStatuses.Where(a => a.IsDigitalPortal && !blockedStatus.Contains(a.Code)).Select(a => a.Code).ToList();
             var allStatusesCodes = allStatuses.Select(a => a.Code);
             var othersStatuses = allStatusesCodes.Except(digitalEntityStatusCodes).ToList();
