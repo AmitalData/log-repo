@@ -87,7 +87,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalPartners/GetFromToDestinationFiltersFilters")]
-        public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string SearchType, string searchText = "")
+        public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
         {
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -105,6 +105,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
 
             var Results = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                &&(cardType.Equals("CS")
+                                                    ? a.CustomerId.Equals(cardId)
+                                                    : a.AgentId.Equals(cardId))
                                                 && (isFrom
                                                     ? a.From.Trim().StartsWith(searchText) 
                                                     : a.To.Trim().StartsWith(searchText)))
