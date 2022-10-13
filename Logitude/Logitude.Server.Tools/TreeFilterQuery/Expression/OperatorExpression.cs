@@ -146,7 +146,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
                 return System.Linq.Expressions.Expression.Call(LeftExpression, WhereExpression.ContainsMethod, RightExpression);
             }
 
-            return System.Linq.Expressions.Expression.Call(LeftExpression, WhereExpression.ContainsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType));
+            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
+            return System.Linq.Expressions.Expression.Call(field, WhereExpression.ContainsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType));
 
         }
     }
@@ -161,7 +162,8 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
                 return System.Linq.Expressions.Expression.Not(System.Linq.Expressions.Expression.Call(LeftExpression, WhereExpression.ContainsMethod, RightExpression));
             }
 
-            return System.Linq.Expressions.Expression.Not(System.Linq.Expressions.Expression.Call(LeftExpression, WhereExpression.ContainsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType)));
+            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
+            return System.Linq.Expressions.Expression.Not(System.Linq.Expressions.Expression.Call(field, WhereExpression.ContainsMethod, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType)));
 
         }
     }
