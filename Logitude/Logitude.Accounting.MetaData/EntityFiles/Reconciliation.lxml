@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;Reconciliation&quot;"
-  Code="&quot;0387&quot;"
+  Code="&quot;f801&quot;"
   Name="&quot;Reconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -55,6 +55,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;cff7&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1359,6 +1360,12 @@
       DefaultText="&quot;Adjust in split journal&quot;"
       LocalDefaultText="&quot;פקודת יומן מפוצלת כמספר השורות המסומנות&quot;"
       TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.M.LedgerTransactionAlreadyReconciled&quot;"
+      DefaultText="&quot; ledgerTransaction already Reconciled  ?? ? TransactionId=&quot;"
+      LocalDefaultText="&quot; התנועות שהינך מנסה להתאים כבר מסומנות בבסיס הנתונים כתנועות מותאמות, מזהה תנועה=&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
