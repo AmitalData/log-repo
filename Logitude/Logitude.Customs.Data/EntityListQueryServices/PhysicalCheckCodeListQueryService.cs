@@ -25,7 +25,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 													   select new PhysicalCheckCodeList()
 													   {
 
-														   Code = a.Code == "N" ? null : a.Code,
+														   Code = a.Code,
 
 
                                                            Name = a.Name,
