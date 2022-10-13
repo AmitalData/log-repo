@@ -1,12 +1,13 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
+import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { Condition } from "Workflow/Models/Condition";
+import { ReturnedField } from "Workflow/Models/ReturnedField";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -20,17 +21,19 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public Entity: string = null;
     public EntityId: string = null;
     public RecordsLimit: string = null;
-    public ReturnedColumns: string[];
+    public ReturnedFields: ReturnedField[];
     public Conditions: Condition[];
     public ConditionsOperation: string;
 
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
-    public IsValidSelectedCoulmns: boolean = true;
+    public IsValidReturnedFields: boolean = true;
 
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldPM[];
+
+    //public PrimaryObjectFieldCode: string | null = null;
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -47,28 +50,47 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Name = this.Data["name"] || null;
         this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordsLimit.FirstRecord
-
         this.Conditions = this.Data["conditions"] || [];
         this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
-
-        if (this.Conditions.length == 0) {
-            this.IsValidConditions = false;
-            let condition = new Condition();
-            this.Conditions.push(condition);
-        }
-
-        this.ReturnedColumns = this.Data["returnedColumns"] || [];
-        
-        if (this.ReturnedColumns.length == 0) {
-            this.IsValidSelectedCoulmns = false;
-            this.ReturnedColumns.push(null);
-        }
+        this.ReturnedFields = this.Data["returnedFields"] || [];
 
         this.Data["recordsLimit"] = this.RecordsLimit;
 
         this.EntityId = this.getEntityId(this.Entity);
 
+        this.initializeConditions();
+        this.initializeReturnedFields();
+
         this.setUIProperties();
+    }
+
+    initializeConditions(reset: boolean = false) {
+        if (reset) {
+            this.Conditions = [];
+            this.ConditionsOperation = ConditionOperations.And;
+        }
+        if (this.Conditions.length === 0) {
+            let condition = new Condition();
+            this.Conditions.push(condition);
+            this.IsValidConditions = false;
+        }
+    }
+
+    initializeReturnedFields(reset: boolean = false) {
+        if (reset) {
+            this.ReturnedFields = [];
+        }
+        if (this.EntityId && this.ReturnedFields.length === 0) {
+            let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === "Id");
+            if (primaryObjectField) {
+                let field = new ReturnedField();
+                field.fieldCode = primaryObjectField.FieldCode;
+                field.type = primaryObjectField.DataTypeCode;
+                this.ReturnedFields.push(field);
+            }
+            this.ReturnedFields.push(new ReturnedField());
+            this.IsValidReturnedFields = false;
+        }
     }
 
     updateName(Name: any) {
@@ -79,9 +101,16 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateEntity(entity: any) {
+        let isEntityChanged = this.Data["entity"] !== entity?.Name;
         this.Data["entity"] = entity ? entity.Name : null;
         this.Entity = entity ? entity.Name : null;
-        this.EntityId = this.getEntityId(entity.Name);
+        this.EntityId = this.getEntityId(entity ? entity.Name : null);
+
+        if (isEntityChanged) {
+            this.initializeConditions(true);
+            this.initializeReturnedFields(true);
+        }
+
         this.setUIProperties();
     }
 
@@ -91,9 +120,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     getObjectTablesQueryFilters() {
-        let apiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.addAdditionalFilter("Name", "Shipment", null, null, "Equals", false, false, false, "Text");
-        return apiQueryFilters;
+        return ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters("Shipment");
     }
 
     UpdateIsValidConditions(isValidConditions: boolean) {
@@ -112,9 +139,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidSelectedCoulmns) {
-            this.setConditionsData();
-            this.Data["returnedColumns"] = this.ReturnedColumns;
+        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields) {
+            this.setData();
 
             //console.log(this.Data);
 
@@ -126,14 +152,15 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             if (!this.IsValidConditions)
                 this.ValidationErrorsList.push("Invalid Conditions");
 
-            if (!this.IsValidSelectedCoulmns)
+            if (!this.IsValidReturnedFields)
                 this.ValidationErrorsList.push("Invalid Selected Fields");
         }
     }
 
-    setConditionsData() {
+    setData() {
         this.Data["conditions"] = this.Conditions;
         this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
+        this.Data["returnedFields"] = this.ReturnedFields;
     }
 
     getEntityId(entity: string) {
@@ -144,26 +171,25 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         return null;
     }
 
-    getObjectFieldsValueQueryFilters() {
-        let apiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
-        return apiQueryFilters;
+    getObjectFieldsQueryFilters() {
+        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
     }
 
-    updateSelectedColumn(selectedColumn: ObjectFieldPM, index: number) {
-        this.ReturnedColumns[index] = selectedColumn ? selectedColumn.FieldCode : null;
-        this.IsValidSelectedCoulmns = !this.ReturnedColumns.includes(null);
+    updateSelectedField(selectedField: ObjectFieldPM, index: number) {
+        this.ReturnedFields[index].fieldCode = selectedField ? selectedField.FieldCode : null;
+        this.ReturnedFields[index].type = selectedField ? selectedField.DataTypeCode : null;
+        this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
     }
 
-    addEmptyColumn() {
-        if (this.IsValidSelectedCoulmns) {
-            this.ReturnedColumns.push(null);
-            this.IsValidSelectedCoulmns = false;
+    addEmptyField() {
+        if (this.IsValidReturnedFields) {
+            this.ReturnedFields.push(new ReturnedField());
+            this.IsValidReturnedFields = false;
         }
     }
 
-    deletecoulmn(index: number) {
-        this.ReturnedColumns.splice(index, 1);
-        this.IsValidSelectedCoulmns = !this.ReturnedColumns.includes(null);
+    deleteField(index: number) {
+        this.ReturnedFields.splice(index, 1);
+        this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
     }
 }

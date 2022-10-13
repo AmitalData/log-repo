@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from "@angular/core";
 
 @Component({
     selector: "TreeSelect",
     templateUrl: "./TreeSelectComponent.html"
 })
 
-export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TreeSelectComponent implements OnInit, AfterViewInit {
 
     @Input() Items: any = [];
     @Input() Value: string;
@@ -15,11 +15,12 @@ export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Output() ValueChanged = new EventEmitter();
 
-    @ViewChild("treeSelect") TreeSelect: any;
     @ViewChild("nzTreeSelect") NzTreeSelect: any;
 
     public TreeItems: any = [];
     public FilteredTreeItems: any = [];
+
+    public SearchTerm: string = "";
 
     ngOnInit() {
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
@@ -28,29 +29,35 @@ export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.NzTreeSelect.nzSelectSearchComponent.onValueChange = (searchTerm: string) => {
-            this.NzTreeSelect.nzPlaceHolder = "";
-            this.NzTreeSelect.inputValue = "";
-            this.NzTreeSelect.value = [];
-
-            this.ValueChanged.emit(null);
-            this.Value = null;
-
-            this.setFilteredTreeItems((searchTerm ? searchTerm : ""));
+            this.onTreeSelectSearchChange(searchTerm);
         }
 
-        this.NzTreeSelect.onChange = (value: any) => {
-            this.NzTreeSelect.nzPlaceHolder = "";
-            this.NzTreeSelect.nzSelectSearchComponent.inputElement.nativeElement.value = "";
-
-            this.ValueChanged.emit(value);
-            this.Value = value;
-
-            this.setFilteredTreeItems("");
+        this.NzTreeSelect.onChange = (value: string) => {
+            this.onTreeSelectValueChange(value);
         };
     }
 
-    ngOnDestroy() {
+    onTreeSelectSearchChange(searchTerm: string) {
+        this.SearchTerm = searchTerm ? searchTerm : "";
+        this.NzTreeSelect.nzPlaceHolder = "";
+        this.NzTreeSelect.inputValue = "";
+        this.NzTreeSelect.value = [];
 
+        this.Value = null;
+        this.ValueChanged.emit(null);
+
+        this.setFilteredTreeItems((searchTerm ? searchTerm : ""));
+    }
+
+    onTreeSelectValueChange(value: string) {
+        this.SearchTerm = "";
+        this.NzTreeSelect.nzPlaceHolder = "";
+        this.NzTreeSelect.nzSelectSearchComponent.inputElement.nativeElement.value = "";
+
+        this.Value = value;
+        this.ValueChanged.emit(value);
+
+        this.setFilteredTreeItems("");
     }
 
     setFilteredTreeItems(searchTerm: string) {
@@ -64,9 +71,9 @@ export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
             if (item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 || (this.Value && item.key.toLowerCase() === this.Value.toLowerCase())) {
                 filteredTreeItems.push(item);
             } else {
-                let childResults = this.getFilteredTreeItems(searchTerm, item.children);
-                if (childResults.length) {
-                    filteredTreeItems.push(Object.assign({}, item, { children: childResults }));
+                let childrenFilteredTreeItems = this.getFilteredTreeItems(searchTerm, item.children);
+                if (childrenFilteredTreeItems.length) {
+                    filteredTreeItems.push(Object.assign({}, item, { children: childrenFilteredTreeItems }));
                 }
             }
         });
@@ -76,9 +83,8 @@ export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     limitFilteredTreeItems(items: any = null) {
         for (let item of (items || this.FilteredTreeItems)) {
             if (item.children && item.children.length > 10) {
-
+                let exactMatchItems = item.children.filter((i: any) => i.title.toLowerCase() === this.SearchTerm.toLowerCase());
                 let limitedItems = item.children.slice(0, 10);
-
                 if (this.Value) {
                     let selectedItem = item.children.filter((i: any) => i.key.toLowerCase() === this.Value.toLowerCase())[0];
                     let isSelectedItemInLimitedItems = limitedItems.filter((i: any) => i.key.toLowerCase() === this.Value.toLowerCase()).length > 0;
@@ -90,6 +96,15 @@ export class TreeSelectComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 } else {
                     item.children = limitedItems;
+                }
+
+                if (exactMatchItems.length > 0) {
+                    exactMatchItems.forEach((exactMatchItem: any) => {
+                        let isExactMatchItemInChildrenItems = item.children.filter((i: any) => i.key.toLowerCase() === exactMatchItem.key.toLowerCase()).length > 0;
+                        if (!isExactMatchItemInChildrenItems) {
+                            item.children.unshift(exactMatchItem);
+                        }
+                    });
                 }
             }
 

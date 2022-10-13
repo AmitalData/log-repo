@@ -1,7 +1,7 @@
-<div #treeSelect>
+<div>
 
     <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
-        [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Data'" [nzAllowClear]="AllowClear"
+        [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Results Found'" [nzAllowClear]="AllowClear"
         [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisplayWith]="displayItem">
     </nz-tree-select>
 

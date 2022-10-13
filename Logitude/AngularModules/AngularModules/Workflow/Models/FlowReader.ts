@@ -41,4 +41,31 @@ export class FlowReader {
         return [];
     }
 
+    static getStartNode(flowObject: any) {
+        if (flowObject) {
+            let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
+            return startNode ? startNode : null;
+        }
+        return null;
+    }
+
+    static getStartNodeEntity(flowObject: any) {
+        if (flowObject) {
+            let startNode = this.getStartNode(flowObject);
+            let startNodeEntity = startNode ? startNode.data["entity"] : null;
+            return startNodeEntity ? startNodeEntity : null;
+        }
+        return null;
+    }
+
+    static getNodes(flowObject: any, type: string | null = null) {
+        if (flowObject) {
+            if (type) {
+                return flowObject.nodes.filter((n: any) => n.type === type);
+            }
+            return flowObject.nodes;
+        }
+        return [];
+    }
+
 }

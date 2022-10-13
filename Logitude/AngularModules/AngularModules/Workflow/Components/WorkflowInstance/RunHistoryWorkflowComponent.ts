@@ -6,6 +6,7 @@ import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
+import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
 
 const SearchBoxDelayTime = 700;
@@ -69,15 +70,9 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        var filters = new ApiQueryFilters;
-        var searchValue = null;
 
-        filters.addAdditionalFilter("WorkflowId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
-        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            searchValue = AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText;
-            filters.addAdditionalFilter("BusinessKey", searchValue, null, null, "Contains", false, false, false, "string");
-        }
+        let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
+        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesApiQueryFilters(this.EntityPM.Id, businessKeyFilterValue);
 
         filters.PageSize = take;
         filters.PageIndex = skip;

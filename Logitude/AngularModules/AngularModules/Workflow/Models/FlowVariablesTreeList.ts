@@ -32,7 +32,7 @@ export class FlowVariablesTreeList {
     }
 
     private getRecordsVariablesItemChildren() {
-        let triggeringRecordEntity = this.getTriggeringRecordEntity();
+        let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
         let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity);
 
         let recordsVariablesItemChildren = [
@@ -99,15 +99,6 @@ export class FlowVariablesTreeList {
         if (entity) {
             let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
             return entityObjectTable ? entityObjectTable.Id : null;
-        }
-        return null;
-    }
-
-    private getTriggeringRecordEntity() {
-        if (this.FlowObject) {
-            let startNode = this.FlowObject.nodes.filter((n: any) => n.type === "startNode")[0];
-            let startNodeEntity = startNode ? startNode.data["entity"] : null;
-            return startNodeEntity ? startNodeEntity : null;
         }
         return null;
     }

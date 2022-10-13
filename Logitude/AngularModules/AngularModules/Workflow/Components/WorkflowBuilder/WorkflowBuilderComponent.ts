@@ -10,8 +10,9 @@ import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
-import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
+import { FlowReader } from "Workflow/Models/FlowReader";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -113,9 +114,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let flowObject = this.getEntityFlowObject();
         if (flowObject) {
             let objectFieldListService = new ObjectFieldListService();
-            let apiQueryFilters = new ApiQueryFilters(true);
             let workflowEntitiesIds = this.getWorkflowEntitiesIds(flowObject);
-            apiQueryFilters.addAdditionalFilter("ObjectTableId", workflowEntitiesIds, null, null, "InListExact", false, false, false, "string");
+            let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(workflowEntitiesIds, null, null, true);
             objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
                 if (!serviceResponse.HasError) {
                     this.FlowObjectFields = serviceResponse.Result;
@@ -131,8 +131,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     loadEntityObjectFields(entityId: string) {
         this.startBusyIndicator("Loading ...");
         let objectFieldListService = new ObjectFieldListService();
-        let apiQueryFilters = new ApiQueryFilters(true);
-        apiQueryFilters.addAdditionalFilter("ObjectTableId", entityId, null, null, "Equals", false, false, false, "string");
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(entityId, null, null, true);
         objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 this.FlowObjectFields = this.FlowObjectFields.concat(serviceResponse.Result);
@@ -145,7 +144,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     getWorkflowEntitiesIds(flowObject: any) {
         let entitiesIds = [];
         if (flowObject) {
-            flowObject.nodes.forEach((node: any) => {
+            FlowReader.getNodes(flowObject).forEach((node: any) => {
                 let entity = node.data["entity"];
                 if (entity) {
                     let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
@@ -320,7 +319,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     saveWorkflow(backAfterSave: boolean = false) {
         let flowObject = this.getCurrentFlowObject();
         if (flowObject) {
-            let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
+            let startNode = FlowReader.getStartNode(flowObject);
             this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
             this.EntityPM.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
             this.EntityPM.FlowJson = JSON.stringify(flowObject);

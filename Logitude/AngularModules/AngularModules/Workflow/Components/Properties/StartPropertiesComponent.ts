@@ -5,6 +5,7 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { Condition } from "Workflow/Models/Condition";
 
 @Component({
@@ -77,11 +78,12 @@ export class StartPropertiesComponent extends BaseComponent {
     updateEntity(entity: any) {
         if (this.Data["entity"] !== entity?.Name) {
             this.Conditions = [];
+            this.ConditionsOperation = ConditionOperations.And;
         }
 
         this.Data["entity"] = entity ? entity.Name : null;
         this.Entity = entity ? entity.Name : null;
-        this.EntityId = this.getEntityId(entity.Name);
+        this.EntityId = this.getEntityId(entity ? entity.Name : null);
         this.setUIProperties();
     }
 
@@ -102,9 +104,7 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     getObjectTablesQueryFilters() {
-        let apiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.addAdditionalFilter("Name", "Shipment", null, null, "Equals", false, false, false, "Text");
-        return apiQueryFilters;
+        return ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters("Shipment");
     }
 
     resetConditionsOperatorAndValue(conditions: Condition[] | null = null) {
