@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
+import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceActivityListService';
 
 @Component({
@@ -40,9 +40,8 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     LoadData() {
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("WorkflowInstanceId", this.EntityId, null, null, "Equals", false, false, false, "string");
-
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        
         this.WorkFlowInstanceActivityListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {

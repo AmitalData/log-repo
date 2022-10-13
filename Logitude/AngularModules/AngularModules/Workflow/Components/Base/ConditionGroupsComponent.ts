@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
 import { Condition } from "Workflow/Models/Condition";
 import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
@@ -188,19 +188,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     getObjectFieldsQueryFilters() {
-        let apiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
-        return apiQueryFilters;
+        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
     }
 
     getObjectFieldsValueQueryFilters(objectField: ObjectFieldPM) {
-        let apiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.addAdditionalFilter("ObjectTableId", this.EntityId, null, null, "Equals", false, false, false, "Text");
-        apiQueryFilters.addAdditionalFilter("DataTypeCode", objectField.DataTypeCode, null, null, "Equals", false, false, false, "Text");
-        if (objectField && objectField.DataTypeCode === FieldTypes.LookUp) {
-            apiQueryFilters.addAdditionalFilter("LookUpTableId", objectField.LookUpTableId, null, null, "Equals", false, false, false, "Text");
-        }
-        return apiQueryFilters;
+        let lookupTableIdFilterValue = (objectField && objectField.DataTypeCode === FieldTypes.LookUp) ? objectField.LookUpTableId : null;
+        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, objectField.DataTypeCode, lookupTableIdFilterValue);
     }
 
     isFieldCompareOperator(operatorCode: string) {

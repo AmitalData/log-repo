@@ -24,13 +24,13 @@ export class ObjectFieldListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/objectfieldviews';  
     }
 
-    getSingle(id: string) {
+    getSingle(id: string, includeMetaDataFields: boolean = false) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id + '&includeMetaDataFields=' + includeMetaDataFields, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
                         var list = response.body;
