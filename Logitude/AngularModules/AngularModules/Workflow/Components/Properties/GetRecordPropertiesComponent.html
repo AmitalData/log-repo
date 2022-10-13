@@ -136,209 +136,276 @@
         margin-left: 5px;
         margin-bottom: 3px;
     }
+
+    .sort_container {
+        display: flex;
+    }
+    .orderBy_container{
+        width: 350px;
+    }
+    .orderBy_label{
+        margin-bottom: 4px;
+    }
+
 </style>
-<table> 
+<table>
     <tr>
         <td>
-          <div style="height:calc(100% - 35px); overflow: auto;">
-            <table>
-                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
-                    <td>
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                    </td>
-                </tr>
-                <tr class="first-split-table-row">
-                    <td class="table-row-cell">
-                        <div class="split-block"></div>
-                    </td>
-                </tr>
+            <div style="height:calc(100% - 35px); overflow: auto;">
+                <table>
+                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+                        <td>
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                        </td>
+                    </tr>
+                    <tr class="first-split-table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
 
-                <!-- Name -->
-                <tr class="table-row">
-                    <td class="table-row-cell">
-                        <div>
-                            <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'"
-                                [DataContext]="DataContext">
-                            </LogLabel>
-                        </div>
-                        <div class="table-row-cell-block entity-list-container">
-                            <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                                [Text]="Name" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
-                                (ValueChanged)="updateName($event)" [DataCy]="'record-name'">
-                            </LogTextBox>
-                        </div>
-                    </td>
-                </tr>
+                    <!-- Name -->
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'"
+                                    [DataContext]="DataContext">
+                                </LogLabel>
+                            </div>
+                            <div class="table-row-cell-block entity-list-container">
+                                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                                    [Text]="Name" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                                    (ValueChanged)="updateName($event)" [DataCy]="'record-name'">
+                                </LogTextBox>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr class="table-row">
-                    <td class="table-row-cell">
-                        <div class="split-block"></div>
-                    </td>
-                </tr>
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
 
-                <!-- Object -->
-                <tr class="table-row">
-                    <td class="table-row-cell">
-                        <div class="table-row-cell-block">
-                            <div class="select-get-record-label">Get Records Of This Oject</div>
-                        </div>
-                    </td>
-                </tr>
+                    <!-- Object -->
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">Get Records Of This Oject</div>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr class="table-row">
-                    <td class="table-row-cell">
-                        <div>
-                            <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
-                                [DataContext]="DataContext"></LogLabel>
-                        </div>
-                        <div class="table-row-cell-block entity-list-container">
-                            <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
-                                [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
-                                [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId"
-                                [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
-                                (SelectedItemChanged)="updateEntity($event)" [DataCy]="'ff'">
-                            </LogLov>
-                        </div>
-                    </td>
-                </tr>
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
+                            <div class="table-row-cell-block entity-list-container">
+                                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
+                                    [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
+                                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId"
+                                    [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
+                                    (SelectedItemChanged)="updateEntity($event)" [DataCy]="'ff'">
+                                </LogLov>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr class="table-row">
-                    <td class="table-row-cell">
-                        <div class="split-block"></div>
-                    </td>
-                </tr>
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
 
-                <!-- Condition -->
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell">
-                        <div class="table-row-cell-block">
-                            <div class="select-get-record-label">Filter {{Entity}} Records</div>
-                        </div>
-                    </td>
-                </tr>
+                    <!-- Condition -->
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">Filter {{Entity}} Records</div>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td>
-                        <div class="table-row-cell-block get-records-conditions-container"
-                            [ngClass]="{'min-get-records-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td>
+                            <div class="table-row-cell-block get-records-conditions-container"
+                                [ngClass]="{'min-get-records-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
-                            <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
-                                [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
-                                (IsValidConditionsChange)="UpdateIsValidConditions($event)"
-                                [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                                [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
-                                [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
-                            </Conditions>
-                        </div>
-                    </td>
-                </tr>
+                                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                                    (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
+                                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
+                                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                                </Conditions>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell">
-                        <div class="split-block"></div>
-                    </td>
-                </tr>
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell">
-                        <div class="table-row-cell-block">
-                            <div class="select-get-record-label">How Many Records To Store</div>
-                        </div>
-                    </td>
-                </tr>
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">How Many Records To Store</div>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell">
-                        <div class="table-row-cell-block recordsLimit-radios-container">
-                            <table>
-                                <tr>
-                                    <td class="recordsLimit-radio-cell">
-                                        <RadioButton [Name]="'RecordsLimitRadio'"
-                                            [IsChecked]="RecordsLimit === 'FirstRecord'"
-                                            (Checked)="updateRecordsLimit('FirstRecord')"
-                                            [Text]="'Only the first record'" [Top]="5" [DataCy]="'record-limit-first'">
-                                        </RadioButton>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="recordsLimit-radio-cell">
-                                        <RadioButton [Name]="'RecordsLimitRadio'"
-                                            [IsChecked]="RecordsLimit === 'AllRecords'"
-                                            (Checked)="updateRecordsLimit('AllRecords')" [Text]="'All records'"
-                                            [Top]="5" [DataCy]="'record-limit-all'">
-                                        </RadioButton>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block recordsLimit-radios-container">
+                                <table>
+                                    <tr>
+                                        <td class="recordsLimit-radio-cell">
+                                            <RadioButton [Name]="'RecordsLimitRadio'"
+                                                [IsChecked]="RecordsLimit === 'FirstRecord'"
+                                                (Checked)="updateRecordsLimit('FirstRecord')"
+                                                [Text]="'Only the first record'" [Top]="5"
+                                                [DataCy]="'record-limit-first'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="recordsLimit-radio-cell">
+                                            <RadioButton [Name]="'RecordsLimitRadio'"
+                                                [IsChecked]="RecordsLimit === 'AllRecords'"
+                                                (Checked)="updateRecordsLimit('AllRecords')" [Text]="'All records'"
+                                                [Top]="5" [DataCy]="'record-limit-all'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell">
-                        <div class="split-block"></div>
-                    </td>
-                </tr>
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell padding-bottom-0">
-                        <div class="table-row-cell-block">
-                            <div class="select-get-record-label">Select Fields To Store</div>
-                        </div>
-                    </td>
-                </tr>
+                    <div *ngIf="isAllRecords()" class="div">
+                        <tr *ngIf="EntityId != null" class="table-row">
+                            <td class="table-row-cell">
+                                <div class="table-row-cell-block">
+                                    <div class="select-get-record-label">Sort {{Entity}} Records</div>
+                                </div>
+                            </td>
+                        </tr>
 
-                <tr *ngIf="EntityId != null" class="table-row">
-                    <td class="table-row-cell padding-bottom-0">
-                        <div class="entity-id-container">
-                            <label class="entity-id">Id</label>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr *ngIf="EntityId != null" class="table-row ">
-                    <td class="table-row-cell">
-                        <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
-                            <li *ngFor="let returnedColumn of ReturnedColumns; let columnIndex = index"
-                                class="selected-coulmn-container">
-                                <div class="selected-field-container">
-                                    <div class="LogLov-selected-field-container">
-                                        <LogLov [NoObjectField]="true"
-                                            [ObjectFieldName]="'SelectedCoulmn_' + returnedColumn"
-                                            [DataContext]="DataContext"
-                                            [QueryFilterItems]="getObjectFieldsValueQueryFilters()" [IsFreeText]="true"
-                                            [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                                            [SelectedValue]="returnedColumn" [HideColumns]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                                            (SelectedItemChanged)="updateSelectedColumn($event, columnIndex)"
-                                            [DataCy]="'SelectedCoulmn_' + returnedColumn">
-                                        </LogLov>
+                        <tr class="table-row">
+                            <td class="table-row-cell sort_container">
+                                <div class="orderBy_container">
+                                    <div class="orderBy_label">
+                                        <LogLabel [NoObjectField]="true" [Text]="'Order'" [ObjectFieldName]="'Order'"
+                                            [DataContext]="DataContext"></LogLabel>
                                     </div>
-                                    <div class="delete-coulmn-container">
-                                        <img *ngIf="!(ReturnedColumns.length == 1)" class="delete-coulmn-button"
-                                            src="./Images/Trash-can.png" (click)="deletecoulmn(columnIndex)"
-                                            [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedColumn" />
+                                    <div class="table-row-cell-block entity-list-container">
+                                        <ComboBox [ItemsSource]="SortDirectionListItems" [Binding]="'Name'"
+                                            [SelectedItem]="ListItem(OrderBy)"
+                                            (SelectedItemChanged)="updateOrderBy($event.Code)" [ListType]="''"
+                                            [CyData]="'orderby'">
+                                        </ComboBox>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
-                        <div class="add-buttons-container table-row-cell-block margin-left-0">
-                            <span class="link-button add-condition-button" (click)="addEmptyColumn()"
-                                [attr.data-cy]="'AddFieldToStore'" [ngClass]="{'disabled': !IsValidSelectedCoulmns}">
-                                <span class="plus-sign">+</span><span>Add Field</span>
-                            </span>
-                        </div>
-                    </td>
-                </tr>
 
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                                <div *ngIf="isOrderBy()" class="sortBy_container">
+                                    <div>
+                                        <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </div>
+                                    <div class="table-row-cell-block entity-list-container">
+                                        <LogLov [NoObjectField]="true"
+                                            [ObjectFieldName]="'SortBy'"
+                                            [DataContext]="DataContext"
+                                            [QueryFilterItems]="getObjectFieldsValueQueryFilters()" [IsFreeText]="true"
+                                            [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
+                                            [SelectedValue]="SortBy" 
+                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                            (SelectedItemChanged)="updateSortBy($event)"
+                                            [DataCy]="'SortBy'">
+                                        </LogLov>
+                                    </div>
+                                </div>
 
-            </table>
-          </div>
+                            </td>
+                        </tr>
+                    </div>
+
+                    <tr *ngIf="EntityId != null && isAllRecords()" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell padding-bottom-0">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">Select Fields To Store</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId != null" class="table-row">
+                        <td class="table-row-cell padding-bottom-0">
+                            <div class="entity-id-container">
+                                <label class="entity-id">Id</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId != null" class="table-row ">
+                        <td class="table-row-cell">
+                            <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
+                                <li *ngFor="let returnedColumn of ReturnedColumns; let columnIndex = index"
+                                    class="selected-coulmn-container">
+                                    <div class="selected-field-container">
+                                        <div class="LogLov-selected-field-container">
+                                            <LogLov [NoObjectField]="true"
+                                                [ObjectFieldName]="'SelectedCoulmn_' + returnedColumn"
+                                                [DataContext]="DataContext"
+                                                [QueryFilterItems]="getObjectFieldsValueQueryFilters()"
+                                                [IsFreeText]="true" [LookUpTableName]="'ObjectField'"
+                                                [NoValidation]="true" [SelectedValue]="returnedColumn"
+                                                [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                                (SelectedItemChanged)="updateSelectedColumn($event, columnIndex)"
+                                                [DataCy]="'SelectedCoulmn_' + returnedColumn">
+                                            </LogLov>
+                                        </div>
+                                        <div class="delete-coulmn-container">
+                                            <img *ngIf="!(ReturnedColumns.length == 1)" class="delete-coulmn-button"
+                                                src="./Images/Trash-can.png" (click)="deletecoulmn(columnIndex)"
+                                                [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedColumn" />
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="add-buttons-container table-row-cell-block margin-left-0">
+                                <span class="link-button add-condition-button" (click)="addEmptyColumn()"
+                                    [attr.data-cy]="'AddFieldToStore'"
+                                    [ngClass]="{'disabled': !IsValidSelectedCoulmns}">
+                                    <span class="plus-sign">+</span><span>Add Field</span>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
         </td>
     </tr>
     <tr class="table-row" style="height: 35px;">
