@@ -2,6 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -258,20 +260,41 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 ValidateARInvoiceLine(allChargesTypes, allMeasurements, line);
             }
         }
+        private CardPM GetPayableVendorPM(ShipmentReceivablePM shipmentReceivablePM)
+        {
+            if (shipmentReceivablePM == null || string.IsNullOrEmpty(shipmentReceivablePM.PayableVendorId))
+            {
+                return null;
+            }
+
+            CardQuery cardQuery = new CardQuery(arInvoicePM.Tenant);
+            CardPM payableVendorPM = cardQuery.GetSinglePM(shipmentReceivablePM.PayableVendorId, arInvoicePM.Tenant);
+
+            return payableVendorPM;
+        }
 
         private void ValidateARInvoiceLine(List<ChargesType> allChargesTypes, List<Measurement> allMeasurements, ARInvoiceLinePM line)
         {
-            string claveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
+            ChargesType lineChargeType = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId);
             var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
-
+           
             if (lineMeasurement != null && string.IsNullOrEmpty(computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement")))
             {
                 throw new Exception("Measurement Code is required");
             }
 
-            if (string.IsNullOrEmpty(claveProdServ))
+            if (lineChargeType != null && !string.IsNullOrEmpty(lineChargeType.SATExternalId))
             {
-                throw new Exception("SAT External Id on charge type is required");
+                return;
+            }
+
+            ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
+            ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
+            CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM); 
+
+            if (!shipmentReceivablePM.IsExpense || (shipmentReceivablePM.IsExpense && payableVendorPM != null))
+            {
+                throw new Exception("SAT External Id on charge type(" + lineChargeType?.Code + ") is required");
             }
         }
     }
