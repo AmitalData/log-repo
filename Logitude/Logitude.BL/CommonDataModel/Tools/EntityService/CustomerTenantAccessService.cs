@@ -445,7 +445,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
             IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
             const string waitingStatusCode = "W";
-            CustomerTenantAccesses = CustomerTenantAccesses.Where(CustomerTenantAccess => CustomerTenantAccess.Status == waitingStatusCode);
+            const string acceptedStatusCode = "A";
+            CustomerTenantAccesses = CustomerTenantAccesses.Where(CustomerTenantAccess => CustomerTenantAccess.Status == waitingStatusCode || CustomerTenantAccess.Status == acceptedStatusCode);
             foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
             {
                 customerTenantAccess.IsPrivateLabelCustomer = (bool)customerTenantAccessUpdaterAM.IsPrivateLabel;
