@@ -84,7 +84,7 @@ export class ReconciliationMenuButtonsHandler {
             case "CancelReco":
                 {
                     var confirmWindow = new ConfirmWindow();
-                    var msg = TextCodeTranslator.Translate("Accounting.General.O.ReconcCancelWarning");
+                    var msg = TextCodeTranslator.Translate("Accounting.General.O.WantToCancelCurrentReconciliation");
                     confirmWindow.Show(msg);
                     confirmWindow.WindowClosed.subscribe((event: any) =>
                     {
@@ -102,9 +102,6 @@ export class ReconciliationMenuButtonsHandler {
                 }
 
         }  
-
-
-        
     }
 
     private StartBusyIndicator(message: string) {
