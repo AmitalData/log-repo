@@ -1565,6 +1565,101 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalDocumentPMs;
         }
 
+        public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityIdWithoutCustomsDetails(string entityId, string directionCode, int tenant)
+        {
+
+            List<DocumentsFilingPM> externalDocumentPMs = new List<DocumentsFilingPM>();
+            externalDocumentPMs = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+                                   where a.Tenant == tenant && a.EntityId == entityId && a.DirectionCode == directionCode && a.IsDeleted == false
+                                   select new DocumentsFilingPM()
+                                   {
+                                       Id = a.Id,
+                                       DocumentId = a.DocumentId,
+                                       Code = a.Code,
+                                       DirectionCode = a.DirectionCode,
+                                       Description = a.Description,
+                                       CreatedByUserId = a.CreatedByUserId,
+                                       CreateDate = a.CreateDate,
+                                       ObjectTableId = a.ObjectTableId,
+                                       ChildEntityId = a.ChildEntityId,
+                                       ChildObjectTableId = a.ChildObjectTableId,
+                                       ChildEntityReference = a.ChildEntityReference,
+                                       DocumentTypeId = a.DocumentTypeId,
+                                       EntityId = a.EntityId,
+                                       HasCopies = a.HasCopies,
+                                       Notes = a.Notes,
+                                       OwnerId = a.OwnerId,
+                                       SearchFields = a.SearchFields,
+                                       Tenant = a.Tenant,
+                                       FileExtension = a.Document != null ? a.Document.Extension : null,
+                                       HasFile = a.Document != null ? a.Document.HasFile : false,
+                                       FileName = a.Document != null ? a.Document.FileName : null,
+                                       FileSize = a.Document != null ? a.Document.FileSize : null,
+                                       Folder = a.Document != null ? a.Document.Folder : null,
+                                       DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                                       DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                                       DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
+                                       IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
+                                       IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
+                                       CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                       Received = a.Received,
+                                       ReceivedDate = a.ReceivedDate,
+                                       ReceivedByUserId = a.ReceivedByUserId,
+                                       Name = a.DocumentType != null ? a.DocumentType.Name : null,
+                                       StatusCode = a.StatusCode,
+                                       UpdateDate = a.UpdateDate,
+                                       UpdatedByUserId = a.UpdatedByUserId,
+                                       CustomsDocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                                       CustomsDocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+
+                                       EntityReference = a.EntityReference,
+                                       ExternalEntityName = a.ExternalEntityName,
+                                       ExternalEntityReference = a.ExternalEntityReference,
+                                       DepartmentId = a.DepartmentId,
+                                       BranchId = a.BranchId,
+                                       FolderId = a.FolderId,
+                                       IsDeleted = a.IsDeleted,
+                                       DeleteDateTime = a.DeleteDateTime,
+                                       DeletedByUserId = a.DeletedByUserId,
+                                       IsDigitallySigned = a.IsDigitallySigned,
+                                       SignersList = a.SignersList,
+                                       IsSharedWithCustomer = a.IsSharedWithCustomer,
+                                       IsSharedWithForwarder = a.IsSharedWithForwarder,
+                                       CustomerDocumentId = a.CustomerDocumentId,
+                                       ForwarderDocumentId = a.ForwarderDocumentId,
+                                       SecurityId = a.SecurityId,
+
+                                       LastVersion = a.LastVersion,
+                                       CustomerTenantNumber = a.CustomerTenantNumber,
+                                       IsRequested = a.IsRequested,
+                                       ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+                                       SignRequestByUserEmail = a.SignRequestByUserEmail,
+                                       CancellSignRequest = a.CancellSignRequest,
+                                       OrigionalDocumentId = a.OrigionalDocumentId,
+                                       LastShareDate = a.LastShareDate,
+                                       IsSharedIn = a.IsSharedIn,
+                                       IsSharedOut = a.IsSharedOut,
+                                       SignDueDate = a.SignDueDate,
+                                       IsDigitalSignRequired = a.IsDigitalSignRequired,
+                                       BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                   }).ToList();
+
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
+            DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
+
+            foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
+            {
+                extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
+            }
+
+            return externalDocumentPMs;
+        }
+
         public bool HaveDocumentsFilingPMsByEntityIdAndDirectionCode(string entityId, string directionCode, int tenant)
         {
             return (from a in repository.context.DocumentsFilings
