@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string ExchangeRateUpdateTask = "ExchangeRateUpdateTask";  
        public const string ContainerAutomaticallyClosingTask = "ContainerAutomaticallyClosingTask";  
        public const string RecalculateCashbooksTotalsTask = "RecalculateCashbooksTotalsTask";  
+       public const string ResetFullTextSearchIndexChangeTrackingTask = "ResetFullTextSearchIndexChangeTrackingTask";  
     }
 }
 

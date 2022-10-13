@@ -108,6 +108,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
