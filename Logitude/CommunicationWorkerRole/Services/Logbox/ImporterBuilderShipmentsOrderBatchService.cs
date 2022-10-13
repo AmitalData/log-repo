@@ -36,8 +36,9 @@ namespace CommunicationWorkerRole.Services.Logbox
         public List<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> Run()
         {
             APILogsPM LogPM = importerShipmentsBatchService.GetNewLogPM();
-            importerShipmentsBatchService.CreateAPILog(shipmentsOrders.Select(shipmentOrder => shipmentOrder.Id).ToList(), LogPM, "ShipmentOrder");
             List<Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder> allowedShipmentsOrder = GetAllowedShipmentsOrderForLogBox();
+            importerShipmentsBatchService.CreateAPILog(allowedShipmentsOrder.Select(shipmentOrder => shipmentOrder.Id).ToList(), LogPM, "ShipmentOrder");
+
             APILogsUtility.UpdateAPILogStatus(LogPM.Id, importerShipmentsBatchService.tenant, "D", allowedShipmentsOrder.Count(), DateTime.Now, DateTime.UtcNow, "Sending Schedual Shipments Orders Done Successfully", null, null, null, "");
 
             return allowedShipmentsOrder;
