@@ -275,20 +275,26 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private void ValidateARInvoiceLine(List<ChargesType> allChargesTypes, List<Measurement> allMeasurements, ARInvoiceLinePM line)
         {
-            string claveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
+            ChargesType lineChargeType = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId);
             var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
            
-            ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
-            ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
-            CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM);   
             if (lineMeasurement != null && string.IsNullOrEmpty(computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement")))
             {
                 throw new Exception("Measurement Code is required");
             }
 
-            if (string.IsNullOrEmpty(claveProdServ) && payableVendorPM != null)
+            if (lineChargeType != null && !string.IsNullOrEmpty(lineChargeType.SATExternalId))
             {
-                throw new Exception("SAT External Id on charge type is required");
+                return;
+            }
+
+            ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(arInvoicePM.Tenant);
+            ShipmentReceivablePM shipmentReceivablePM = shipmentReceivableQuery.GetSinglePM(line.ReceivableId, arInvoicePM.Tenant);
+            CardPM payableVendorPM = GetPayableVendorPM(shipmentReceivablePM); 
+
+            if (!shipmentReceivablePM.IsExpense || (shipmentReceivablePM.IsExpense && payableVendorPM != null))
+            {
+                throw new Exception("SAT External Id on charge type(" + lineChargeType?.Code + ") is required");
             }
         }
     }
