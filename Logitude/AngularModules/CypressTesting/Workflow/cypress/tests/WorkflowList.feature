@@ -1,3 +1,4 @@
+@devTest
 Feature: Workflow list
   The user open workflow list, and open flow builder.
 

@@ -1,3 +1,4 @@
+@devTest
 Feature: Workflow run history
     The user open workflow list, open a flow, and open run history.
 

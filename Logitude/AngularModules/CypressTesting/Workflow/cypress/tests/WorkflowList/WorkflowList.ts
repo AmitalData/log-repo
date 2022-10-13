@@ -27,7 +27,7 @@ Then("the flow should appear successfully", () => {
 });
 
 When("refresh workflow list", () => {
-    Actions.RefreshWorkflowLisr();
+    Actions.RefreshWorkflowList();
 });
 
 Then("the list should refresh successfully", () => {

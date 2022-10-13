@@ -285,7 +285,7 @@
                                                         <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                                                     </button>
 
-                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
+                                                    <button [attr.data-cy]="'Edit'+ObjectTableName+'_Save'" id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
                                                         <img src="./Images/Buttons/Save.Red.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
                                                         <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                                                     </button>
