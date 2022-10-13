@@ -60,7 +60,7 @@ namespace CommunicationWorkerRole.Services.Logbox
                 queueservice.Complete();
                 return;
             }
-            List<DocumentsFilingPM> DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, inDocumentFilingCode, tenant);
+            List<DocumentsFilingPM> DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdWithoutCustomsDetails(entityId, inDocumentFilingCode, tenant);
             if (DocumentFilingPMs == null || DocumentFilingPMs.Count == 0)
             {
                 queueservice.Complete();

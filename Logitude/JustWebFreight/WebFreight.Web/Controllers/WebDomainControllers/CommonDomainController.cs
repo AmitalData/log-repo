@@ -1739,12 +1739,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private static void UpdateCustomerTenantAccessCardsBatch(CustomerTenantAccessCardsBatchPM item, int tenant, ICommonDataContext commonContext)
         {
-            if (item.Status != "In Progress") return;
+            if (item.Status == "Done" || item.Status == "Failed") return;
 
             QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
             var allImporterShipmentsQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImporterShipmentOrderQueue");
             const int failedStatusCode = -1;
-            const int doneStatusCode = -1;
+            const int doneStatusCode = 1;
             item.TotalFailed = allImporterShipmentsQueues.Where(a => a.Status == failedStatusCode).Count();
             item.Totalsucceeded = allImporterShipmentsQueues.Where(a => a.Status == doneStatusCode).Count();
 

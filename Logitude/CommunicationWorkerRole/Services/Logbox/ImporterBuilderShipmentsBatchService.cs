@@ -40,8 +40,8 @@ namespace CommunicationWorkerRole.Services.Logbox
         public List<Shipment> Run()
         {
             APILogsPM LogPM = importerShipmentsBatchService.GetNewLogPM();
-            importerShipmentsBatchService.CreateAPILog(shipments.Select(shipment => shipment.Id).ToList(), LogPM, "Shipment");
             List<Shipment> allowedShipments = GetAllowedShipmentsForLogBox();
+            importerShipmentsBatchService.CreateAPILog(allowedShipments.Select(shipment => shipment.Id).ToList(), LogPM, "Shipment");
 
             APILogsUtility.UpdateAPILogStatus(LogPM.Id, importerShipmentsBatchService.tenant, "D", allowedShipments.Count(), DateTime.Now, DateTime.UtcNow, "Sending Schedual Shipments Done Successfully", null, null, null, "");
             
