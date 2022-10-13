@@ -38,8 +38,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldPM[];
 
-    //public PrimaryObjectFieldCode: string | null = null;
-
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
@@ -134,10 +132,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["recordsLimit"] = recordsLimit;
         this.RecordsLimit = recordsLimit;
         if (recordsLimit == GetRecordsLimit.FirstRecord) {
-            this.updateOrderBy(null)
-            this.updateSortBy(null)
+            this.updateOrderBy(null);
+            this.updateSortBy(null);
         } else {
-            this.updateOrderBy(SortDirections.NotSorted)
+            this.updateOrderBy(SortDirections.NotSorted);
         }
     }
 
@@ -145,7 +143,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["orderBy"] = orderValue;
         this.OrderBy = orderValue;
         if (!this.isOrderBy()) {
-            this.updateSortBy(null)
+            this.updateSortBy(null);
         }
         this.setUIProperties();
     }
@@ -157,11 +155,11 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     isAllRecords() {
-        return this.RecordsLimit == GetRecordsLimit.AllRecords
+        return this.RecordsLimit == GetRecordsLimit.AllRecords;
     }
 
     isOrderBy() {
-        return this.OrderBy && this.OrderBy != SortDirections.NotSorted
+        return this.OrderBy && this.OrderBy != SortDirections.NotSorted;
     }
 
     getObjectTablesQueryFilters() {
