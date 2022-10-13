@@ -3,14 +3,13 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
+import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-
 
 @Component({
     templateUrl: "./SetValuePropertiesComponent.html"
@@ -154,7 +153,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
 
     isObjectField(field: string) {
         let parent = field.split('_')[0]
-        return parent != 'declaredvariables';
+        return parent != "declaredvariables";
     }
 
     isValidSetValue() {
@@ -169,9 +168,9 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     getDeclareVariableType(field: string) {
-        let fieldName = field.split('_')![1];
-        let node = this.FlowObject.nodes.find(n => n.type == "declareVariableNode" && n.data['variableCode'] == fieldName);
-        return node.data['variableType'];
+        let fieldCode = field.split('_')[1];
+        let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
+        return declareVariableNode ? declareVariableNode.data["variableType"] : null;
     }
 
     getObjectFieldCode(field: string) {

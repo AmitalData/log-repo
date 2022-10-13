@@ -1,3 +1,5 @@
+import { NodeType } from "./Types";
+
 export class FlowReader {
 
     static getAllPreviousNodes(flowObject: any, nodeId: string, previousNodesType: string | null = null) {
@@ -58,10 +60,10 @@ export class FlowReader {
         return null;
     }
 
-    static getNodes(flowObject: any, type: string | null = null) {
+    static getNodes(flowObject: any, nodeType: NodeType = null) {
         if (flowObject) {
-            if (type) {
-                return flowObject.nodes.filter((n: any) => n.type === type);
+            if (nodeType) {
+                return flowObject.nodes.filter((n: any) => n.type === nodeType);
             }
             return flowObject.nodes;
         }
