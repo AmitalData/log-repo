@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "4e1b5ec58d1f4be5f108f4adfa7fd9a4";
+		public const string HashString = "ac3b75705b7b3c575fa86c62e5d92106";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "0387",
+			      				    Code =  "f801",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1304,6 +1304,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationBAdjustInOneJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.B.AdjustInOneJournal", DefaultText = "Adjust in one journal",LocalDefaultText = @"פקודת יומן בשורה אחת", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationBAdjustInSplitJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.B.AdjustInSplitJournal", DefaultText = "Adjust in split journal",LocalDefaultText = @"פקודת יומן מפוצלת כמספר השורות המסומנות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationMLedgerTransactionAlreadyReconciled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.M.LedgerTransactionAlreadyReconciled", DefaultText = " ledgerTransaction already Reconciled  ?? ? TransactionId=",LocalDefaultText = @" התנועות שהינך מנסה להתאים כבר מסומנות בבסיס הנתונים כתנועות מותאמות, מזהה תנועה=", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

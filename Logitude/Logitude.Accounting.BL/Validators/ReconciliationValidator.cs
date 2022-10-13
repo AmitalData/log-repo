@@ -32,7 +32,7 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_reconciliationLineTransactionIdIsnull = "String.IsNullOrWhiteSpace(reconciliationLine.TransactionId) line ";
 
         public const string M_TransactionIdNotinDB = " TransactionId Not in DB";
-        public const string M_ledgerTransactionalreadyReconciled = " ledgerTransaction already Reconciled  ?? ? TransactionId=";
+        public const string M_ledgerTransactionalreadyReconciled = /*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/"Reconciliation.M.LedgerTransactionAlreadyReconciled";
         public const string M_OpenAmountCurrencyIdDiffreconciliationLineCurrencyId = "(ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)";
         public const string M_InsertledgerTransactionbutIsnotReconciled = "Insert ledger Transaction but Is not Reconciled ";
 
@@ -318,7 +318,9 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         if (ledgerTransactionPM.IsReconciled)
                         {
-                            AddError(errorsList, M_ledgerTransactionalreadyReconciled /*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/ + reconciliationLine.TransactionId);
+                            bool useLocal_inner = true;
+                            string txt_M_ledgerTransactionalreadyReconciled = TranslateMyTextCode(/*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/M_ledgerTransactionalreadyReconciled, 0, useLocal_inner);
+                            AddError(errorsList, txt_M_ledgerTransactionalreadyReconciled + reconciliationLine.TransactionId);
                         }
                         if (ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)
                         {
