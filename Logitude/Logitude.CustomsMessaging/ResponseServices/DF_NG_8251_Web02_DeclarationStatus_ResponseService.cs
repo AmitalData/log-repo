@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                "2","4","22","23","26","35","40","41","42","45","47","48","49"
             };
             DeclarationStatusTypePM declarationStatusTypePM = null;
-            AmitalContext _AmitalContext = AmitalContext.GetContext(requestParams.Tenant);
+            //AmitalContext _AmitalContext = AmitalContext.GetContext(requestParams.Tenant);
 
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
