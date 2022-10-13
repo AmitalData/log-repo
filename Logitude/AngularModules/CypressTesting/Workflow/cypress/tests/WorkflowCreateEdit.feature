@@ -1,3 +1,4 @@
+@devTest
 Feature: Workflow Create and Edit
     The user open workflow list, create and edit a flow .
 

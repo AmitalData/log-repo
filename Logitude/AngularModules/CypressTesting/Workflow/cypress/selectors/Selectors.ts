@@ -27,7 +27,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowLinkButton = "span[class^='linkbtn']";
     public static readonly FlowEditButton = "#Edit";
     public static readonly FlowRunHistory = "#WorkFlowTHRunHistory";
-    public static readonly WorkflowGeneralSaveButton = "#WorkFlow-Save";
+    public static readonly WorkflowGeneralSaveButton = "[data-cy^='EditWorkFlow_Save']";
     public static readonly WorkflowGeneralBackButton = "#BackButton";
     public static readonly WorkflowFirstAddCondition = "[data-cy^='AddConditionButton']";
     public static readonly WorkflowAddRootCondition = "[data-cy^='AddRootConditionButton']";

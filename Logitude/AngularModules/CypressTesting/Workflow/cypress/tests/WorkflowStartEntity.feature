@@ -1,3 +1,4 @@
+@devTest
 Feature: Workflow node
     The user open workflow list, open a flow, edit start configration, and save.
 
