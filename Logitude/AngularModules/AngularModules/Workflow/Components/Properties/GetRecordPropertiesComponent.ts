@@ -11,6 +11,8 @@ import { ListItem } from "Workflow/Models/ListItem";
 import { SortDirectionList } from "Workflow/Models/SortDirectionList";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { ReturnedField } from "Workflow/Models/ReturnedField";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -40,6 +42,11 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
+
+    public EntitiesTreeItems: TreeSelectItem[];
+
+    public IsPrimaryObjectFieldExists: boolean = false;
+
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     SetWindowArgs(args: any) {
@@ -48,6 +55,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         this.initialize();
+        this.initializeEntitiesTreeItems();
     }
 
     ngOnChanges() {
@@ -95,16 +103,24 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.ReturnedFields = [];
         }
         if (this.EntityId && this.ReturnedFields.length === 0) {
-            let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === "Id");
+            let entityKeyPropertyPath = this.getEntityKeyPropertyPath(this.Entity);
+            let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
             if (primaryObjectField) {
                 let field = new ReturnedField();
                 field.fieldCode = primaryObjectField.FieldCode;
                 field.type = primaryObjectField.DataTypeCode;
                 this.ReturnedFields.push(field);
+                this.IsPrimaryObjectFieldExists = true;
+            } else {
+                this.IsPrimaryObjectFieldExists = false;
             }
             this.ReturnedFields.push(new ReturnedField());
             this.IsValidReturnedFields = false;
         }
+    }
+
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeItems = new EntitiesTreeList().Items;
     }
 
     updateName(Name: any) {
@@ -114,11 +130,25 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateEntity(entity: any) {
-        let isEntityChanged = this.Data["entity"] !== entity?.Name;
-        this.Data["entity"] = entity ? entity.Name : null;
-        this.Entity = entity ? entity.Name : null;
-        this.EntityId = this.getEntityId(entity ? entity.Name : null);
+    // updateEntity(entity: any) {
+    //     let isEntityChanged = this.Data["entity"] !== entity?.Name;
+    //     this.Data["entity"] = entity ? entity.Name : null;
+    //     this.Entity = entity ? entity.Name : null;
+    //     this.EntityId = this.getEntityId(entity ? entity.Name : null);
+
+    //     if (isEntityChanged) {
+    //         this.initializeConditions(true);
+    //         this.initializeReturnedFields(true);
+    //     }
+
+    //     this.setUIProperties();
+    // }
+
+    updateEntity(entity: string) {
+        let isEntityChanged = this.Data["entity"] !== entity;
+        this.Data["entity"] = entity;
+        this.Entity = entity;
+        this.EntityId = this.getEntityId(entity);
 
         if (isEntityChanged) {
             this.initializeConditions(true);
@@ -175,7 +205,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.EntityId));
         if (this.isOrderBy()) {
             this.UIProperties.SetRequired("SortBy", null, AppTool.IsNullOrEmpty(this.SortBy));
-        }else{
+        } else {
             this.UIProperties.SetRequired("SortBy", null, false);
         }
     }
@@ -215,6 +245,14 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (entity) {
             let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
             return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
+    }
+
+    getEntityKeyPropertyPath(entity: string) {
+        if (entity) {
+            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
         }
         return null;
     }

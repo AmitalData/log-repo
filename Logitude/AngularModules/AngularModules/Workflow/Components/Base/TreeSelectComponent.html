@@ -1,4 +1,4 @@
-<div>
+<div [attr.data-cy]="DataCy">
 
     <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
         [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Results Found'" [nzAllowClear]="AllowClear"

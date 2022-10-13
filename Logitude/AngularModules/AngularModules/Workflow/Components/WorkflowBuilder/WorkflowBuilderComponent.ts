@@ -39,7 +39,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public FlowObjectFields: ObjectFieldPM[] = [];
 
-    public LoadedObjectFieldsEntities: string[] = [];
+    //public LoadedObjectFieldsEntities: string[] = [];
 
     public WorkFlowPMService: WorkFlowPMService;
 
@@ -114,12 +114,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let flowObject = this.getEntityFlowObject();
         if (flowObject) {
             let objectFieldListService = new ObjectFieldListService();
-            let workflowEntitiesIds = this.getWorkflowEntitiesIds(flowObject);
-            let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(workflowEntitiesIds, null, null, true);
+            //let workflowEntitiesIds = this.getWorkflowEntitiesIds(flowObject);
+            //let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(workflowEntitiesIds, null, null, true);
+            let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true);
             objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
                 if (!serviceResponse.HasError) {
                     this.FlowObjectFields = serviceResponse.Result;
-                    this.LoadedObjectFieldsEntities = workflowEntitiesIds.split(",");
+                    //this.LoadedObjectFieldsEntities = workflowEntitiesIds.split(",");
                 }
                 this.stopBusyIndicator();
             });
@@ -128,18 +129,18 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    loadEntityObjectFields(entityId: string) {
-        this.startBusyIndicator("Loading ...");
-        let objectFieldListService = new ObjectFieldListService();
-        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(entityId, null, null, true);
-        objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
-            if (!serviceResponse.HasError) {
-                this.FlowObjectFields = this.FlowObjectFields.concat(serviceResponse.Result);
-                this.LoadedObjectFieldsEntities.push(entityId);
-            }
-            this.stopBusyIndicator();
-        });
-    }
+    // loadEntityObjectFields(entityId: string) {
+    //     this.startBusyIndicator("Loading ...");
+    //     let objectFieldListService = new ObjectFieldListService();
+    //     let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(entityId, null, null, true);
+    //     objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+    //         if (!serviceResponse.HasError) {
+    //             this.FlowObjectFields = this.FlowObjectFields.concat(serviceResponse.Result);
+    //             this.LoadedObjectFieldsEntities.push(entityId);
+    //         }
+    //         this.stopBusyIndicator();
+    //     });
+    // }
 
     getWorkflowEntitiesIds(flowObject: any) {
         let entitiesIds = [];
@@ -202,7 +203,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         } else {
             propertiesWindow.Height = 850;
         }
-        propertiesWindow.Width = 970;
+        propertiesWindow.Width = 985;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
@@ -234,12 +235,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     this.WorkflowEntity = entity;
                 }
 
-                let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
-                let entityId = entityObjectTable ? entityObjectTable.Id : null;
+                //let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+                //let entityId = entityObjectTable ? entityObjectTable.Id : null;
 
-                if (entityId && this.LoadedObjectFieldsEntities.indexOf(entityId) === -1) {
-                    this.loadEntityObjectFields(entityId);
-                }
+                // if (entityId && this.LoadedObjectFieldsEntities.indexOf(entityId) === -1) {
+                //     this.loadEntityObjectFields(entityId);
+                // }
 
             }
 

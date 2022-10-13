@@ -141,16 +141,18 @@
     .sort_container {
         display: flex;
     }
-    .orderBy_container{
+
+    .orderBy_container {
         width: 350px;
     }
-    .orderBy_label{
+
+    .orderBy_label {
         margin-bottom: 4px;
     }
+
     .add-buttons-container {
         margin-top: 5px;
     }
-
 </style>
 <table>
     <tr>
@@ -207,12 +209,21 @@
                                     [DataContext]="DataContext"></LogLabel>
                             </div>
                             <div class="table-row-cell-block entity-list-container">
-                                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
+
+
+                                <!-- <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
                                     [QueryFilterItems]="getObjectTablesQueryFilters()" [LookUpTableName]="'ObjectTable'"
                                     [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId"
                                     [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
                                     (SelectedItemChanged)="updateEntity($event)" [DataCy]="'ff'">
-                                </LogLov>
+                                </LogLov> -->
+
+
+                                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'320px'" [Value]="Entity"
+                                    (ValueChanged)="updateEntity($event)">
+                                </TreeSelect>
+
+
                             </div>
                         </td>
                     </tr>
@@ -224,7 +235,7 @@
                     </tr>
 
                     <!-- Condition -->
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">Filter {{Entity}} Records</div>
@@ -232,7 +243,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td>
                             <div class="table-row-cell-block get-records-conditions-container"
                                 [ngClass]="{'min-get-records-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
@@ -248,13 +259,13 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">How Many Records To Store</div>
@@ -262,7 +273,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block recordsLimit-radios-container">
                                 <table>
@@ -290,68 +301,62 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId != null" class="table-row">
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
                     </tr>
 
-                    <div *ngIf="isAllRecords()" class="div">
-                        <tr *ngIf="EntityId != null" class="table-row">
-                            <td class="table-row-cell">
-                                <div class="table-row-cell-block">
-                                    <div class="select-get-record-label">Sort {{Entity}} Records</div>
+                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">Sort {{Entity}} Records</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
+                        <td class="table-row-cell sort_container">
+                            <div class="orderBy_container">
+                                <div class="orderBy_label">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Order'" [ObjectFieldName]="'Order'"
+                                        [DataContext]="DataContext"></LogLabel>
                                 </div>
-                            </td>
-                        </tr>
-
-                        <tr class="table-row">
-                            <td class="table-row-cell sort_container">
-                                <div class="orderBy_container">
-                                    <div class="orderBy_label">
-                                        <LogLabel [NoObjectField]="true" [Text]="'Order'" [ObjectFieldName]="'Order'"
-                                            [DataContext]="DataContext"></LogLabel>
-                                    </div>
-                                    <div class="table-row-cell-block entity-list-container">
-                                        <ComboBox [ItemsSource]="SortDirectionListItems" [Binding]="'Name'"
-                                            [SelectedItem]="ListItem(OrderBy)"
-                                            (SelectedItemChanged)="updateOrderBy($event.Code)" [ListType]="''"
-                                            [CyData]="'orderby'">
-                                        </ComboBox>
-                                    </div>
+                                <div class="table-row-cell-block entity-list-container">
+                                    <ComboBox [ItemsSource]="SortDirectionListItems" [Binding]="'Name'"
+                                        [SelectedItem]="ListItem(OrderBy)"
+                                        (SelectedItemChanged)="updateOrderBy($event.Code)" [ListType]="''"
+                                        [CyData]="'orderby'">
+                                    </ComboBox>
                                 </div>
+                            </div>
 
-                                <div *ngIf="isOrderBy()" class="sortBy_container">
-                                    <div>
-                                        <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
-                                            [DataContext]="DataContext"></LogLabel>
-                                    </div>
-                                    <div class="table-row-cell-block entity-list-container">
-                                        <LogLov [NoObjectField]="true"
-                                            [ObjectFieldName]="'SortBy'"
-                                            [DataContext]="DataContext"
-                                            [QueryFilterItems]="getObjectFieldsQueryFilters()" [IsFreeText]="true"
-                                            [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
-                                            [SelectedValue]="SortBy" 
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                                            (SelectedItemChanged)="updateSortBy($event)"
-                                            [DataCy]="'SortBy'">
-                                        </LogLov>
-                                    </div>
+                            <div *ngIf="isOrderBy()" class="sortBy_container">
+                                <div>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
+                                        [DataContext]="DataContext"></LogLabel>
                                 </div>
+                                <div class="table-row-cell-block entity-list-container">
+                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
+                                        [DataContext]="DataContext"
+                                        [QueryFilterItems]="getObjectFieldsQueryFilters()" [IsFreeText]="true"
+                                        [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
+                                        [SelectedValue]="SortBy" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                        (SelectedItemChanged)="updateSortBy($event)" [DataCy]="'SortBy'">
+                                    </LogLov>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                            </td>
-                        </tr>
-                    </div>
-
-                    <tr *ngIf="EntityId != null && isAllRecords()" class="table-row">
+                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
                     </tr>
 
-                   
-                    <tr *ngIf="EntityId != null" class="table-row">
+
+                    <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">Select Fields To Store</div>
@@ -359,7 +364,7 @@
                         </td>
                     </tr>
 
-                    <!-- <tr *ngIf="EntityId != null" class="table-row">
+                    <!-- <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell padding-bottom-0">
                             <div class="entity-id-container">
                                 <label class="entity-id">Id</label>
@@ -368,7 +373,7 @@
 
                     </tr> -->
 
-                    <tr *ngIf="EntityId != null" class="table-row ">
+                    <tr *ngIf="EntityId" class="table-row ">
                         <td class="table-row-cell">
                             <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
                                 <li *ngFor="let returnedField of ReturnedFields; let fieldIndex = index"
@@ -383,13 +388,14 @@
                                                 [SelectedValue]="returnedField.fieldCode" [HideColumns]="true"
                                                 [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                                                 (SelectedItemChanged)="updateSelectedField($event, fieldIndex)"
-                                                [ForceDisabled]="fieldIndex === 0"
+                                                [ForceDisabled]="IsPrimaryObjectFieldExists && fieldIndex === 0"
                                                 [DataCy]="'SelectedCoulmn_' + fieldIndex">
                                             </LogLov>
                                         </div>
                                         <div class="delete-coulmn-container">
-                                            <img *ngIf="fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0)" class="delete-coulmn-button"
-                                                src="./Images/Trash-can.png" (click)="deleteField(fieldIndex)"
+                                            <img *ngIf="(IsPrimaryObjectFieldExists && (fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0))) || (!IsPrimaryObjectFieldExists && fieldIndex > 0)"
+                                                class="delete-coulmn-button" src="./Images/Trash-can.png"
+                                                (click)="deleteField(fieldIndex)"
                                                 [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedField" />
                                         </div>
                                     </div>
