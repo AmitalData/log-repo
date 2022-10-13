@@ -1,5 +1,5 @@
 {
-  "HashString": "752386e938f243c8832689464baf0553",
+  "HashString": "f40762ca76b546ec838e52ce7f561e93",
   "Name": "APInvoice Analytic",
   "TableName": "APInvoiceAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -167,8 +167,8 @@
       "FieldCode": "CreatedByUserId",
       "DisplayName": "Created By User",
       "DisplayNamePlural": "CreatedByUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -232,8 +232,8 @@
       "FieldCode": "UpdatedByUserId",
       "DisplayName": "Updated By User",
       "DisplayNamePlural": "Updated By User",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -375,8 +375,8 @@
       "FieldCode": "ApprovedByUserId",
       "DisplayName": "Approved By User Id",
       "DisplayNamePlural": "ApprovedByUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },

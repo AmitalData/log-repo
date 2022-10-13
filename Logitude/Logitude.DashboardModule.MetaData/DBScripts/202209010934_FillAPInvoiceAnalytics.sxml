@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" AOT="true" TargetTableName="APInvoices" BatchSize="10000" Env="Logitude,local,test">
-  <Sql Version="2">
+  <Sql Version="1">
     <![CDATA[
 
     

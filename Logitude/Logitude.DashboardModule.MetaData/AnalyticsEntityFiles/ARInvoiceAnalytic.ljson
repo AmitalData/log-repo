@@ -1,5 +1,5 @@
 {
-  "HashString": "d326b81ce0684e498480a4ca59c401e6",
+  "HashString": "052398033a8445b9a0ba4ebc2f78287a",
   "Name": "ARInvoice Analytic",
   "TableName": "ARInvoiceAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -167,8 +167,8 @@
       "FieldCode": "CreatedByUserId",
       "DisplayName": "Created By User",
       "DisplayNamePlural": "CreatedByUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -232,8 +232,8 @@
       "FieldCode": "UpdatedByUserId",
       "DisplayName": "Updated By User",
       "DisplayNamePlural": "Updated By User",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -388,8 +388,8 @@
       "FieldCode": "ApprovedByUserId",
       "DisplayName": "Approved By User Id",
       "DisplayNamePlural": "ApprovedByUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -505,8 +505,8 @@
       "FieldCode": "PrintByUserId",
       "DisplayName": "Print By User",
       "DisplayNamePlural": "PrintByUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
@@ -609,8 +609,8 @@
       "FieldCode": "SalesmanUserId",
       "DisplayName": "Salesman User Id",
       "DisplayNamePlural": "SalesmanUserId",
-      "JoinedTableName": "User",
-      "JoinedTableDBName": "Users",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
     },
