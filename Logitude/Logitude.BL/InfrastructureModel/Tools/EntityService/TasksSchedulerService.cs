@@ -117,7 +117,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private void ConnectDocumentTypeTemplateToScheduler()
         {
-            if (this.entityPM.DocumentTypeTemplateIds == null & this.entityPM.DocumentTypeTemplateIds.Count <= 0) return;
+            if (this.entityPM.DocumentTypeTemplateIds == null || this.entityPM.DocumentTypeTemplateIds.Count <= 0) return;
             DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPM.Tenant);
             List<DocumentTypeTemplate> documentTypeTemplates = documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPM.DocumentTypeTemplateIds, this.entityPM.Tenant).ToList();
             string objectTableId = ObjectTableRepository.GetObjectTableByName("TasksScheduler");

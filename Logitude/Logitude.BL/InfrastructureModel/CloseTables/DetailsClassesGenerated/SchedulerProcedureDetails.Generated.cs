@@ -196,6 +196,15 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "RecalculateCashbooksTotalsTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ResetFullTextSearchIndexChangeTrackingTask", 
+                Name = "ResetFullTextSearchIndexChangeTrackingTask", 
+                SearchFields = "ResetFullTextSearchIndexChangeTrackingTask", 
+                Description = "ResetFullTextSearchIndexChangeTrackingTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

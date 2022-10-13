@@ -406,6 +406,7 @@
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
+    <Compile Include="Tasks\ResetFullTextSearchIndexChangeTracking.cs" />
     <Compile Include="UpdateContainerStatusWorkerRole.cs" />
     <Compile Include="CreateRequestContainerStatusWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
