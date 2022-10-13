@@ -61,7 +61,7 @@
       <DependentUpon>DashboardClassesGenerator.tt</DependentUpon>
     </Compile>
     <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
-    <None Include="AnalyticsEntityFiles\ARInvoiceAnalytics.ljson" />
+    <None Include="AnalyticsEntityFiles\ARInvoiceAnalytic.ljson" />
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />

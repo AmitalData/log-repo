@@ -1,7 +1,7 @@
 {
-  "HashString": "752386e938f243c8832689464baf0552",
-  "Name": "APInvoiceAnalytic",
-  "TableName": "APInvoice Analytic",
+  "HashString": "752386e938f243c8832689464baf0553",
+  "Name": "APInvoice Analytic",
+  "TableName": "APInvoiceAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
     {
       "HashString": "1894c97ca98b44b5a324659ae02eaee7",
