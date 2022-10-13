@@ -170,7 +170,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     getDeclareVariableType(field: string) {
         let fieldCode = field.split('_')[1];
         let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
-        return declareVariableNode ? declareVariableNode.data['variableType'] : null;
+        return declareVariableNode ? declareVariableNode.data["variableType"] : null;
     }
 
     getObjectFieldCode(field: string) {
