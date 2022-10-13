@@ -240,7 +240,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.QuoteLastDate = quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate).Max(s => s.OpenDate);
+                        tenantManagement.QuoteLastDate = (DateTime?)quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate).Max(s => s.OpenDate);
                     }
 
                     tenantManagement.QuoteTotalLastWeek = quotes.Where(s => s.OpenDate >= lastweek).Count();
