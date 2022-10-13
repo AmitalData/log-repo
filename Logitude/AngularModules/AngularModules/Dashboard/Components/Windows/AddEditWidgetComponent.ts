@@ -37,7 +37,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public MaximumGroupings = [5, 10, 25, 30, 50];
     public SortByCodes = [];
-    public SortByDirections = ['asc', 'desc'];
+    public SortByDirections = [{name:'Ascending',code:'asc'},{name:'Descending',code: 'desc'}];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
@@ -250,6 +250,9 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     public GetSelectedSort() {
         return this.SortByCodes.find(x => x.Code == this.SortBy);
+    }
+    public GetSelectedSortDirection() {
+        return this.SortByDirections.find(x => x.code == this.SortDirection);
     }
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;

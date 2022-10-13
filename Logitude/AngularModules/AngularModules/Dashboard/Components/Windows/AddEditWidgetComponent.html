@@ -166,9 +166,11 @@
                                                             <div></div>
                                                         </td>
                                                         <td>
-                                                            <ComboBox (SelectedItemChanged)="SortDirection = $event"
+                                                            <ComboBox (SelectedItemChanged)="SortDirection = $event.code"
                                                                       [ItemsSource]="SortByDirections"
-                                                                      [SelectedItem]="SortDirection">
+                                                                      [SelectedItem]="GetSelectedSortDirection()"
+                                                                      [Binding]="'name'">
+                                                                      >
                                                             </ComboBox>
                                                         </td>
                                                     </tr>
