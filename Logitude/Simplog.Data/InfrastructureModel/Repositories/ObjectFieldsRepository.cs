@@ -539,8 +539,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-        public ObjectField GetSingleObjectFieldById(string id, int tenant)
+        public ObjectField GetSingleObjectFieldById(string id, int tenant, bool includeMetaDataFields = false)
         {
+            if (includeMetaDataFields)
+            {
+                var myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                             where a.Id == id
+                             select a).FirstOrDefault();
+                if (myField == null)
+                    myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                             where a.FieldCode == id
+                             select a).FirstOrDefault();
+
+                return myField;
+            }
             var field = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                          where a.Id == id
                          select a).FirstOrDefault();
