@@ -57,6 +57,7 @@ export class QuoteSelectors {
      public static readonly SendToCustomer = '#SendToCustomer';
      public static readonly SendMessageButton = '#SendMessagebtn';
      public static readonly QuoteEventNote = '#Quote_EventNote';
+     public static readonly QuoteClosingReasonNotes='[id="Quote_QuoteClosingReasonNotes"]'
      //#endregion
 
      //#region Copied page

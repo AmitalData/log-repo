@@ -27,6 +27,7 @@ export class CustomFieldsComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private MaxNumberOfCustomFields: number;
     public IsCustomFieldsMenue: boolean = false;
+    public AllowCustomFields: boolean = false;
     constructor() {
         this.myService = new GeneralDomainService();
         this.CustomFieldsCollection = new ObservableCollection([]);
@@ -37,10 +38,13 @@ export class CustomFieldsComponent {
     private ObjectTableName: string;
     SetWindowArgs(args: any) {
 
+        this.IsCustomFieldsMenue = args['IsCustomFieldsMenue'];
+        this.AllowCustomFields = args['AllowCustomFields'];
+        if (!this.AllowCustomFields) return;
+
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTableName = args['ObjectTableName'];
         this.MaxNumberOfCustomFields = args['MaxNumberOfCustomFields'];
-        this.IsCustomFieldsMenue = args['IsCustomFieldsMenue'];
 
         this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
@@ -68,32 +72,6 @@ export class CustomFieldsComponent {
         var fieldsCount = this.GetCustomFieldsCount();
         this.IsAddButtonEnabled = this.CustomFieldsCollection.Length < fieldsCount ? true : false;
 
-        //var objectTablePM: ObjectTablePM;
-        //var tableName: string;
-        //this.Tabs = [];
-
-        //objectTablePM = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
-        //if (objectTablePM != null) {
-        //    this.Tabs.push(new TabItem(objectTablePM));
-        //}
-
-        //var tableIds: string[] = [];
-        //var mulityList: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && d.IsMulti);
-
-        //mulityList.forEach((item) => {
-        //    var index = tableIds.indexOf(item.MultiTableId);
-
-        //    if (index == -1) {
-        //        tableIds.push(item.MultiTableId);
-
-        //        objectTablePM = window.ObjectTables.filter(d => d.Id == item.MultiTableId)[0];
-        //        if (objectTablePM != null) {
-        //            this.Tabs.push(new TabItem(objectTablePM));
-        //        }
-        //    }
-        //});
-
-        //this.SelectedTabItem = this.Tabs[0];
     }
 
     GetCustomFieldsCount(): number {
@@ -185,10 +163,6 @@ export class CustomFieldsComponent {
                 });
             }
         });
-    }
-
-    CancelClicked() {
-        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

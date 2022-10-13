@@ -17,7 +17,7 @@
                                     <div></div>
                                 </td>
                                 <td *ngIf="!this.IsCustomFieldsMenue" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
-                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowCustomFields" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
                                 </td>
                             </tr>
                         </table>
@@ -28,7 +28,7 @@
                 </tr>
 
                 <tr>
-                    <td style="height: 100%;">
+                    <td [style.height]="AllowCustomFields? '100%': '80px'">
                         <div class="MediaFill" style="overflow-x: hidden;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomFieldsCollection">
 
@@ -79,20 +79,13 @@
                         </div>
                     </td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button [attr.data-cy]="'CustomFieldsClose'"  class="Button" (click)="CancelClicked()">Close</button>
+                <tr *ngIf="!AllowCustomFields">
+                    <td style="vertical-align: top">
+                        <div style="display: table; margin: 0 auto">
+                            <label >
+                                This Entity still doesn't support adding custom fields
+                            </label>
+                        </div>
                     </td>
                 </tr>
             </table>

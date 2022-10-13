@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
@@ -122,7 +123,7 @@ namespace WebFreight.Web.Helpers
 
         private byte[] DigitalPortalShipmentExportToExcel(List<DigitalShipmentList> digitalShipmentLists)
         {
-            ExcelEngine excelEngine = new ExcelEngine();
+            var excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
             sheet1.Name = "Shipments";
@@ -139,10 +140,12 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["E2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["E2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
             sheet1.Range["E2"].CellStyle.Font.Size = 12;
 
-            sheet1.Range["A3:S3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:S3"].CellStyle.Color = Color.LightGray;
+            sheet1.Range["A3:S3"].RowHeight = 25;
+
             sheet1.Range["A3:S3"].CellStyle.Font.Bold = true;
             sheet1.Range["A3:S3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["A3:S3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -183,9 +186,11 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range[$"A{index}:S{index}"].CellStyle.Font.Size = 10;
                 sheet1.Range[$"A{index}:S{index}"].ColumnWidth = 25;
                 sheet1.Range[$"A{index}:S{index}"].WrapText = true;
-                sheet1.Range[$"A{index}:S{index}"].AutofitRows();       
+                sheet1.Range[$"A{index}:S{index}"].AutofitRows();
                 sheet1.Range[$"A{index}:S{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
                 sheet1.Range[$"A{index}:S{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+
+                sheet1.Range[$"F{index}:G{index}"].NumberFormat = "dd MMM yyyy";
 
                 DataRow row = table.NewRow();
                 row[0] = item.ShipmentNumber;
@@ -193,8 +198,8 @@ namespace WebFreight.Web.Helpers
                 row[2] = item.DirectionName;
                 row[3] = item.MainCarriageFromPortName;
                 row[4] = item.MainCarriageToPortName;
-                row[5] = item.MainCarriageATD;
-                row[6] = item.MainCarriageATA;
+                row[5] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
+                row[6] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
                 row[7] = item.Master;
                 row[8] = item.ShipperName;
                 row[9] = item.ConsigneeName;
@@ -239,10 +244,12 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Range["A2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow.ToShortDateString()}";
+            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
             sheet1.Range["A2"].CellStyle.Font.Size = 12;
 
-            sheet1.Range["A3:L3"].CellStyle.Color = Color.Gray;
+            sheet1.Range["A3:L3"].CellStyle.Color = Color.LightGray;
+            sheet1.Range["A3:S3"].RowHeight = 25;
+
             sheet1.Range["A3:L3"].CellStyle.Font.Bold = true;
             sheet1.Range["A3:L3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["A3:L3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -281,19 +288,22 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range[$"A{index}:L{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
                 sheet1.Range[$"A{index}:L{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
+                sheet1.Range[$"E{index}:E{index}"].NumberFormat = "dd MMM yyyy";
+                sheet1.Range[$"K{index}:K{index}"].NumberFormat = "dd MMM yyyy";
+
                 DataRow row = table.NewRow();
 
                 row[0] = item.InvoiceNumber;
                 row[1] = item.ARInvoiceTypeName;
                 row[2] = item.MainEntityReference;
                 row[3] = item.CustomerRef;
-                row[4] = item.CreateDate;
+                row[4] = $"{item.CreateDate?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture)}";
                 row[5] = item.StatusName;
                 row[6] = item.PaymentTermName;
                 row[7] = item.InvoiceCurrencyCode;
                 row[8] = item.AmountInInvoiceCurrency;
                 row[9] = item.AmountDue;
-                row[10] = item.DueDate;
+                row[10] = $"{item.DueDate?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture)}";
                 row[11] = item.PrintNotes;
                 table.Rows.Add(row);
                 index++;

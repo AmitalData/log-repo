@@ -34,18 +34,28 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Expression
         }
         private void SetCustomFieldLeftRightExpressions()
         {
-            MethodInfo methodInfo = typeof(String).GetMethod("CompareTo", new Type[] { typeof(String) });
-            RightExpression = System.Linq.Expressions.Expression.Constant(0, typeof(int));
-            if (QueryFilterItem.FieldValue == null || string.IsNullOrEmpty(QueryFilterItem.FieldValue.ToString())) return;
-
-            if (IsValueTypeField())
+            if (QueryFilterItem.Operator == "IsEmpty" || QueryFilterItem.Operator == "IsNotEmpty")
             {
-                LeftExpression = System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, System.Linq.Expressions.Expression.PropertyOrField(Expression, GetFieldName(QueryFilterItem.FieldValue)));
+                QueryFilterItem.FieldValue = null;
+                LeftExpression = System.Linq.Expressions.Expression.Property(Expression, WhereExpression.GetDeclaringProperty(Expression, QueryFilterItem.FieldName));
+                RightExpression = GetRightExpression();
             }
             else
             {
-                LeftExpression = System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue));
+                MethodInfo methodInfo = typeof(String).GetMethod("CompareTo", new Type[] { typeof(String) });
+                RightExpression = System.Linq.Expressions.Expression.Constant(0, typeof(int));
+                if (QueryFilterItem.FieldValue == null || string.IsNullOrEmpty(QueryFilterItem.FieldValue.ToString())) return;
+
+                if (IsValueTypeField())
+                {
+                    LeftExpression = System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, System.Linq.Expressions.Expression.PropertyOrField(Expression, GetFieldName(QueryFilterItem.FieldValue)));
+                }
+                else
+                {
+                    LeftExpression = System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, System.Linq.Expressions.Expression.Constant(QueryFilterItem.FieldValue));
+                }
             }
+           
 
         }
         private System.Linq.Expressions.Expression GetRightExpression()

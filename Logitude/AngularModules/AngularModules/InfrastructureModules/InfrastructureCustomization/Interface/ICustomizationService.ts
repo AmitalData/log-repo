@@ -2,5 +2,5 @@
 
 export interface ICustomizationService {
     LoadCustomizationMenuItem(args: any);
-    GetFeaturePermission();
+    GetFeaturePermission(args: any);
 }

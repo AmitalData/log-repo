@@ -1,4 +1,4 @@
-@release @smoke @smoke3
+@release @smoke @smokeAfterSwap
 Feature: Quote Conversion
     The user creates a quote, convert quote transport mode and Convert FCL To LCL
 

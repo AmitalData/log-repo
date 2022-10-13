@@ -7,13 +7,14 @@ declare var window: any;
 
 export class ScreenLayoutService implements ICustomizationService {
 
-    private IsShowScreensLayout: boolean;
     private customizationMainMenuItem: CustomizationMainMenuItem;
     private objectTableId: string;
 
     LoadCustomizationMenuItem(args: any) {
-        this.GetFeaturePermission();
-        if (!((!args.IsObjectTableFilterEnabled || this.IsShowScreensLayout) && !args.IsCustomFieldsMenue)) return null;
+
+        if (args.IsCustomFieldsMenue) return null;
+        if (!this.GetFeaturePermission(args)) return null;
+
         this.objectTableId = args.ObjectTableId;
         this.customizationMainMenuItem = new CustomizationMainMenuItem("screenLayout");
         this.customizationMainMenuItem.TextCode = "Screen Layout";
@@ -27,7 +28,8 @@ export class ScreenLayoutService implements ICustomizationService {
         return this.customizationMainMenuItem;
     }
 
-    GetFeaturePermission() {
-        this.IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
+    GetFeaturePermission(args: any): boolean {
+        let IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
+        return !args.IsObjectTableFilterEnabled || IsShowScreensLayout;
     }
 }
