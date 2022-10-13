@@ -11,6 +11,7 @@ import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMServi
 import { EditShipmentLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/EditShipmentLinkRendererComponent';
 import * as moment from 'moment';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -21,6 +22,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
     public ComponentRef: ComponentRef<DashboardListComponent>;
     public DataPointSelection: DataPointSelection;
+    public Dashboard: DashboardPM;
     public ValidationErrorsList: string[] = [];
     public context = { componentParent: this };
     public columns: any[] = [];
