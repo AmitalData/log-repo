@@ -1,0 +1,136 @@
+﻿<Script DBType="Main" Module="Dashboard" AOT="true" TargetTableName="ARInvoices" BatchSize="10000" Env="Logitude,local,test">
+  <Sql Version="1">
+    <![CDATA[
+
+    
+
+        INSERT INTO ARInvoiceAnalytics 
+        (
+        Id
+,Tenant
+,IsClosed
+,AmountInProfitCurrency
+,ProfitCurrencyExchangeRate
+,ProfitCurrencyId
+,PrepaidCollectId
+,IssuedByUserId
+,ExchangeRateDate
+,DraftNumber
+,MainEntityReference
+,AmountDue
+,InvoiceNumber
+,ARInvoiceTypeCode
+,PaymentTermId
+,AmountDueInLocalCurrency
+,AmountDueInProfitCurrency
+,BillToId
+,BillToAddressId
+,VatNumber
+,CreateDate
+,InvoiceDate
+,CreatedByUserId
+,PrintByUserId
+,InvoiceCurrencyId
+,IsPrinted
+,UpdateDate
+,UpdatedByUserId
+,LocalCurrencyId
+,InvoiceCurrencyExchangeRate
+,SubTotalInLocalCurrency
+,SubTotalInInvoiceCurrency
+,AmountInLocalCurrency
+,AmountInInvoiceCurrency
+,StatusCode
+,IsAutoCredit
+,IsCancelled
+,DueDate
+,PrintDate
+,IsInvoiceNumberManuallySet
+,Sent
+,TransferError
+,TransferStatusCode
+,BranchId
+,IsConstituentInvoice
+,IsConsolidationInvoice
+,IsTransferStarted
+,ApprovedDate
+,ApprovedByUserId
+,OperationalDate
+,IsMultiCurrency
+,SalesmanUserId
+,Intercompany
+,BankAccountLiteId
+,RegionalTaxId
+,RegionalTaxPercentage
+,PaidDate
+,PartnerId
+        )
+
+        SELECT
+ARInvoices.Id
+,ARInvoices.Tenant
+,ARInvoices.IsClosed
+,ARInvoices.AmountInProfitCurrency
+,ARInvoices.ProfitCurrencyExchangeRate
+,ARInvoices.ProfitCurrencyId
+,ARInvoices.PrepaidCollectId
+,ARInvoices.IssuedByUserId
+,ARInvoices.ExchangeRateDate
+,ARInvoices.DraftNumber
+,ARInvoices.MainEntityReference
+,ARInvoices.AmountDue
+,ARInvoices.InvoiceNumber
+,ARInvoices.ARInvoiceTypeCode
+,ARInvoices.PaymentTermId
+,ARInvoices.AmountDueInLocalCurrency
+,ARInvoices.AmountDueInProfitCurrency
+,ARInvoices.BillToId
+,ARInvoices.BillToAddressId
+,ARInvoices.VatNumber
+,ARInvoices.CreateDate
+,ARInvoices.InvoiceDate
+,ARInvoices.CreatedByUserId
+,ARInvoices.PrintByUserId
+,ARInvoices.InvoiceCurrencyId
+,ARInvoices.IsPrinted
+,ARInvoices.UpdateDate
+,ARInvoices.UpdatedByUserId
+,ARInvoices.LocalCurrencyId
+,ARInvoices.InvoiceCurrencyExchangeRate
+,ARInvoices.SubTotalInLocalCurrency
+,ARInvoices.SubTotalInInvoiceCurrency
+,ARInvoices.AmountInLocalCurrency
+,ARInvoices.AmountInInvoiceCurrency
+,ARInvoices.StatusCode
+,ARInvoices.IsAutoCredit
+,ARInvoices.IsCancelled
+,ARInvoices.DueDate
+,ARInvoices.PrintDate
+,ARInvoices.IsInvoiceNumberManuallySet
+,ARInvoices.Sent
+,ARInvoices.TransferError
+,ARInvoices.TransferStatusCode
+,ARInvoices.BranchId
+,ARInvoices.IsConstituentInvoice
+,ARInvoices.IsConsolidationInvoice
+,ARInvoices.IsTransferStarted
+,ARInvoices.ApprovedDate
+,ARInvoices.ApprovedByUserId
+,ARInvoices.OperationalDate
+,ARInvoices.IsMultiCurrency
+,ARInvoices.SalesmanUserId
+,ARInvoices.Intercompany
+,ARInvoices.BankAccountLiteId
+,ARInvoices.RegionalTaxId
+,ARInvoices.RegionalTaxPercentage
+,ARInvoices.PaidDate
+,ARInvoices.PartnerId
+
+        FROM ARInvoices
+        
+		
+		WHERE $LastCounterWhere$
+
+    ]]>
+  </Sql>
+</Script>

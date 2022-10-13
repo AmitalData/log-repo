@@ -524,7 +524,34 @@ namespace Simplog.Data.InvoiceModel.Repositories
         }
         public void Add(ARInvoice entity)
         {
+            AddFromARInvoice(entity);
             context.ARInvoices.Add(entity);
+        }
+        public void AddFromARInvoice(ARInvoice entity)
+        {
+            var arInvoiceAnalytic = Map<ARInvoiceAnalytic>(entity);
+            context.ARInvoiceAnalytics.Add(arInvoiceAnalytic);
+        }
+        internal void UpdateFromARInvoice(ARInvoice entity)
+        {
+            var arInvoiceAnalytic = Map<ARInvoiceAnalytic>(entity);
+            if (context.ARInvoiceAnalytics.Any(e => e.Id == arInvoiceAnalytic.Id)) context.ARInvoiceAnalytics.Attach(arInvoiceAnalytic);
+            else AddFromARInvoice(entity);
+        }
+        private T Map<T>(ARInvoice from) where T : new()
+        {
+
+            var toPropes = typeof(T).GetProperties();
+            var fromPropes = from.GetType().GetProperties().ToDictionary(e => e.Name, e => e);
+            var to = new T();
+            foreach (var item in toPropes)
+            {
+                if (fromPropes.ContainsKey(item.Name))
+                {
+                    item.SetValue(to, fromPropes[item.Name].GetValue(from));
+                }
+            }
+            return to;
         }
 
         public void Remove(ARInvoice entity)
@@ -537,6 +564,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             try
             {
+                UpdateFromARInvoice(entity);
                 context.ARInvoices.Attach(entity);
             }
             catch { }
