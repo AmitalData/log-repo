@@ -203,7 +203,12 @@ export class CustomizationEditComponent {
     ChangeScreen() {
         if (!this.SelectedMenu || !this.isLoaderReady) return;
         if (this.SelectedMenu.ComponentPath == null || this.SelectedMenu.Page) return;
-
+        
+        this.ShowCustomizationMenuItemComponent();
+        
+    }
+    
+    private ShowCustomizationMenuItemComponent() {
         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedMenu.Code)[0];
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)
             .then(cmpRef => {
@@ -211,12 +216,12 @@ export class CustomizationEditComponent {
                 cmpRef.instance.SetWindowArgs(this.SelectedMenu.args);
             });
     }
-    
+
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+
     }
     SaveChangesAndClose() {
         this.CurrentSession.CloseCurrentWindow();

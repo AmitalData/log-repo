@@ -29,6 +29,7 @@ export class CustomizationMainComponent {
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
     public NumberOfItems: number = 0;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor() {
         this.myService = new GeneralDomainService();
@@ -143,6 +144,16 @@ export class CustomizationMainComponent {
         this.selectedRow = fieldsTranslations;
 
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
+        this.CurrentSession.StartBusyIndicator("Loading " + this.selectedRow.DefaultText + " ...");
+        this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response: any) => {
+            if (!response.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+                this.ShowCustomizationEditComponent(table.Id);
+            }
+        });
+    }
+
+    private ShowCustomizationEditComponent(objectTableId: string) {
         var logWindow = new LogitudeWindow();
         logWindow.IsFillScreen = true;
         logWindow.IsShowCloseButton = false;
@@ -151,7 +162,7 @@ export class CustomizationMainComponent {
             Title: this.selectedRow.DefaultText,
             IsCustomFieldsMenue: this.IsCustomFieldsMenue,
             IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled,
-            ObjectTableId: table.Id
+            ObjectTableId: objectTableId
         };
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
