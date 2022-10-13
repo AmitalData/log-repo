@@ -517,8 +517,8 @@ namespace CustomsWorkerRole
                             if (response == null || (response != null && response.MessageId == null))
                             {
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
-                                Thread.Sleep(TimeSpan.FromSeconds(5));
-                                //Thread.Sleep(TimeSpan.FromMilliseconds(300));
+                                Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+
                                 break;
                             }
                             PerformanceM.EnqueueLastInstance();

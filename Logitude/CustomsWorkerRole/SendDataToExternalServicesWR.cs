@@ -437,7 +437,8 @@ namespace CustomsWorkerRole
                         {
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
-                            Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            //Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
                             break;
                         }
 
