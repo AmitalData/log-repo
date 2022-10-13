@@ -88,6 +88,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
         public string ClassNumber { get; set; }
+        public DateTime? ContainerStrippedDate { get; set; }
         public double? PackageGrossWeightInKG { get; set; }
         public double? PackageGrossWeightInLBS { get; set; }
         public double? PackageVolumeInCBM { get; set; }

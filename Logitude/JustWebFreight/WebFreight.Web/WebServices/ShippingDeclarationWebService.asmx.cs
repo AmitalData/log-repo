@@ -177,9 +177,9 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TotalPrepaidReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmount);
 
                 myDataProvider.TotalWeightInKG = shipment.GrossWeightInKG;
-               // myDataProvider.TotalWeightInLBS = shipment.MainCarriageCarrierNumber;
+                myDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInLBS(shipment.GrossWeight, shipment.GrossWeightUnitCode);
                 myDataProvider.TotalVolumeINCBM = shipment.VolumeInCBM;
-                //myDataProvider.TotalVolumeINCBF = shipment.MainCarriageCarrierNumber;
+                myDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInCBF(shipment.Volume, shipment.VolumeUnitCode);
 
                 this.FillINTTRADocumentProperties(myDataProvider);
 
@@ -3093,6 +3093,12 @@ namespace WebFreight.Web.WebServices
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
                     packageline.Temperature = package.Temperature;
+                    packageline.ContainerStrippedDate = package.ContainerStrippedDate;
+
+                    packageline.PackageGrossWeightInKG = package.Weight;
+                    packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInLBS(package.Weight, shipment.GrossWeightUnitCode);
+                    packageline.PackageVolumeInCBM = package.Volume;
+                    packageline.PackageVolumeInCBF = DataProviders.General.ComputeVolumeInCBF(package.Volume, shipment.VolumeUnitCode);
 
                     #region Car Details
                     packageline.Make = package.Make;
@@ -3911,7 +3917,6 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
-
         private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
         {
             if (string.IsNullOrEmpty(emergencyContactId)) return null;
@@ -5069,6 +5074,6 @@ namespace WebFreight.Web.WebServices
             }
 
             return myResult;
-        }
+        }        
     }
 }

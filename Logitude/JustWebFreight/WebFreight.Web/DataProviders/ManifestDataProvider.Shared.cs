@@ -215,6 +215,10 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment2VesselName { get; set; }
         public string Transshipment1VoyageNumber { get; set; }
         public string Transshipment2VoyageNumber { get; set; }
+        public double? TotalWeightInKG { get; set; }
+        public double? TotalWeightInLBS { get; set; }
+        public double? TotalVolumeINCBM { get; set; }
+        public double? TotalVolumeINCBF { get; set; }
     }
 
     public class ManifestDetailsClass
@@ -223,7 +227,7 @@ namespace WebFreight.Web.DataProviders
         public string AMSBL { get; set; }
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
-        public string ShipperName { get; set; }        
+        public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
@@ -381,7 +385,7 @@ namespace WebFreight.Web.DataProviders
         public string OnForwardingToPort { get; set; }
         public string OnForwardingFromPort { get; set; }
         public string OnCarriageToPort { get; set; }
-        public string OnCarriageFromPort{get; set;}
+        public string OnCarriageFromPort { get; set; }
         public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
@@ -412,7 +416,7 @@ namespace WebFreight.Web.DataProviders
         public string PlaceOfReceipt { get; set; }
         public int? Quantity { get; set; }
         public double? Volume { get; set; }
-        public double? Weight { get; set; }        
+        public double? Weight { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string SpecialServicesType { get; set; }
 
@@ -582,6 +586,10 @@ namespace WebFreight.Web.DataProviders
         public string HorseRemarks { get; set; }
         public string Dimensions { get; set; }
         public double? Ventilation { get; set; }
+        public double? WeightInKG { get; set; }
+        public double? WeightInLBS { get; set; }
+        public double? VolumeInCBM { get; set; }
+        public double? VolumeInCBF { get; set; }
         public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 
@@ -622,4 +630,10 @@ namespace WebFreight.Web.DataProviders
         public double? Volume { get; set; }
         public string ContainerNumber { get; set; }
     }
+
+
+    //3 - Total Weight in KG: { ManifestDataProvider.TotalWeightInKG}
+    //4 - Total Weight in LBS: { ManifestDataProvider.TotalWeightInLBS}
+    //7 - Total Volume in CBM:{ ManifestDataProvider.TotalVolumeINCBM}
+    // 8 - Total Volume in CBF: { ManifestDataProvider.TotalVolumeINCBF}
 }

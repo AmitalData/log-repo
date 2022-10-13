@@ -399,5 +399,23 @@ namespace WebFreight.Web.DataProviders
 
             return myUrl;
         }
+
+        public static double? ComputeWeightInLBS(double? grossWeight, string grossWeightUnitCode)
+        {    
+            if (grossWeight == null || string.IsNullOrEmpty(grossWeightUnitCode)) return null;
+            else if (grossWeightUnitCode != "LB") return null;
+
+            double factorOfConvert = 0.45359237;
+            return grossWeight * factorOfConvert;
+        }
+
+        public static double? ComputeVolumeInCBF(double? volume, string volumeUnitCode)
+        {
+            if (volume == null || string.IsNullOrEmpty(volumeUnitCode)) return null;
+            else if(volumeUnitCode != "CBF") return null;
+
+            double factorOfConvert = 35.315;
+            return volume * factorOfConvert;
+        }
     }
 }

@@ -305,6 +305,14 @@ namespace WebFreight.Web.DataProviders
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrecny { get; set; }
         public string ARInvoices { get; set; }
+
+        public string OriginAgentTel { get; set; }
+        public string DestinationAgentTel { get; set; }
+        public string LastLegATA { get; set; }
+        public string LastLegVessel { get; set; }
+        public string LastLegVoyageNumber { get; set; }
+        public string AMSBL { get; set; }
+        public string HousesNumber { get; set; }
     }
 
     public class Packages
