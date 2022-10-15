@@ -13,6 +13,7 @@ import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { ReturnedField } from "Workflow/Models/ReturnedField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -243,7 +244,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     getEntityId(entity: string) {
         if (entity) {
-            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.Id : null;
         }
         return null;
@@ -251,7 +252,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     getEntityKeyPropertyPath(entity: string) {
         if (entity) {
-            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
         }
         return null;

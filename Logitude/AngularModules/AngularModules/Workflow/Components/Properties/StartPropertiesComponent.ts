@@ -7,6 +7,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { Condition } from "Workflow/Models/Condition";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 @Component({
     templateUrl: "./StartPropertiesComponent.html"
@@ -121,7 +122,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
     getEntityId(entity: string) {
         if (entity) {
-            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.Id : null;
         }
         return null;

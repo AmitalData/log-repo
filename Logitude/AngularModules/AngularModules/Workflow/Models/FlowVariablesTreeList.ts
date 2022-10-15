@@ -1,5 +1,6 @@
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FlowReader } from "./FlowReader";
+import { ObjectTables } from "./ObjectTables";
 import { TreeSelectItem } from "./TreeSelectItem";
 
 export class FlowVariablesTreeList {
@@ -97,7 +98,7 @@ export class FlowVariablesTreeList {
 
     private getEntityId(entity: string) {
         if (entity) {
-            let entityObjectTable = (window as any).ObjectTables.filter((o: any) => o.Name === entity)[0];
+            let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.Id : null;
         }
         return null;
