@@ -26,11 +26,41 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             foreach (var measure in _Widget.WidgetMeasures)
             {
                 var seriesMeasure = new SeriesMeasure();
+
+                seriesMeasure.Name = GetSeriesName(measure) ;
                 seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
             }
             return seriesMeasures;
+        }
+
+        private string GetSeriesName(WidgetMeasurePM measure)
+        {
+            AnalyticsFactsFieldsMetaData measureField = null;
+
+            if (measure.MeasureFieldId != null)
+                measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
+            var measureCodeName = GetMeasureCodeName(measure.MeasureCode);
+            if (measureField != null)
+                return $"{measureCodeName} of {measureField.DisplayName}";
+
+
+            return $"{measureCodeName} of {_Entity.Name}";
+
+        }
+
+        private string GetMeasureCodeName(string measureCode)
+        {
+            switch (measureCode)
+            {
+                case "Avg": return "Average";
+                case "Count": return "Count";
+                case "Max": return "Max";
+                case "Min": return "Min";
+                case "Sum": return "Sum";
+            }
+            return measureCode;
         }
 
         private List<SeriesMeasureVulue> GetSeriesMeasureVulues<T>(IQueryable<T> query, WidgetMeasurePM measure)
