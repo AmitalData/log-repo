@@ -1577,7 +1577,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                         Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, payment.SATXML);
-                        if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
+                        if (resultadoConsultaEstatusSAT?.EstadoComprobante == "Cancelado")
                         {
                             payment.SATXML = null;
                             payment.SATTransferStatusCode = "TD";
@@ -1645,7 +1645,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ARInvoice entity = arInvoiceRepository.GetSingleInvoice(invoiceId);
 
                         Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entity.SATXML);
-                        if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
+                        if (resultadoConsultaEstatusSAT?.EstadoComprobante == "Cancelado")
                         {
                             entity.SATTransferStatusCode = "TD";
                             arInvoiceRepository.Update(entity);

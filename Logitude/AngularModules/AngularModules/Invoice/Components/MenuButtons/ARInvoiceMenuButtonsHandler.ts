@@ -252,7 +252,7 @@ export class ARInvoiceMenuButtonsHandler {
                             else {
                                 myButtonIsDisabled = true;
                             }
-                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || AppTool.IsNullOrEmpty(this.EntityPM.SATXML)) {
                                 button.IsHidden = true;
                             }
 

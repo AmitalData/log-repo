@@ -2268,6 +2268,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public static Profact.TimbraCFDI.ResultadoConsultaEstatusSAT GetSATStatus(int tenant, string entitySATXML)
         {
+            if (string.IsNullOrEmpty(entitySATXML)) return null;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
             if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
