@@ -419,45 +419,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return code;
         }
 
-        private bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant)
-        {
-            if (tenant != 0)
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                bool exists = false;
-                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
-                {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
-
-                    ContactRepository contactrep = new ContactRepository(commonDataContext);
-                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-
-                    if (contact != null)
-                    {
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
-                        if (cardContact != null)
-                        {
-                            exists = true;
-                        }
-                    }
-                }
-
-                if (!exists)
-                {
-                    throw new AutenticationException("Sorry! you are not authorized to read data!");
-                }
-
-                return exists;
-            }
-
-            return true;
-        }
-
         private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
         {
             bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;

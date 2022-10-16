@@ -5,5 +5,6 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models.SearchModel
     {
         public string InvoiceNumber { get; set; }
         public string Type { get; set; }
+        public bool IsConsolidationInvoice { get; set; }
     }
 }

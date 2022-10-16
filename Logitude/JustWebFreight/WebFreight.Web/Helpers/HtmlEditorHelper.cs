@@ -5927,6 +5927,11 @@ namespace WebFreight.Web.Helpers
             {
                 var isDisplayDocumentsAndEvents = (sharedTenant != null && sharedTenant.DisplayDocumentsAndEvents);
                 pageLink = (myUrl).ToLower() + "/online-view?securitykey=" + sharedLinkHTMLArgs.Key + "&additionalSetting=" + isDisplayDocumentsAndEvents;
+
+                if (sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
+                {
+                    pageLink = (myUrl).ToLower() + "/shared-master-documents?securitykey=" + sharedLinkHTMLArgs.Key;
+                }
             }
             else if (sharedTenant.IsCargoTrackWebAccessActivated == true)
             {

@@ -96,7 +96,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     ShipmentNumber = item.ShipmentNumber,
                     Direction = item.DirectionId,
                     TransportMode = item.TransportModeId,
-                    Reference = item.CustomerName
+                    Reference = item.DirectionId == "I" ? item.ShipperName : item.ConsigneeName
                 });
             });
 
@@ -113,7 +113,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     Id = item.Id,
                     InvoiceNumber = item.InvoiceNumber,
                     Reference = item.MainEntityReference,
-                    Type = item.ARInvoiceTypeName
+                    Type = item.ARInvoiceTypeName,
+                    IsConsolidationInvoice = item.IsConsolidationInvoice
                 });
             });
 
