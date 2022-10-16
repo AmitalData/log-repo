@@ -211,7 +211,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.IsShowActivateWebAccessArea = true;
         }
 
-        if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK") || this.SharedTitleType == "DigitalPortal") {
+        if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK")) {
             this.SharedLogisticsMasterMessageLinkEnable = false;
         }
 

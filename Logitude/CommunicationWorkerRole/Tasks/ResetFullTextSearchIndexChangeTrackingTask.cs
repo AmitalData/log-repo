@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole.Tasks
 {
-    public class ResetFullTextSearchIndexChangeTracking : TaskManagerBase
+    public class ResetFullTextSearchIndexChangeTrackingTask : TaskManagerBase
     {
-        public ResetFullTextSearchIndexChangeTracking(string Id, int tenant)
+        public ResetFullTextSearchIndexChangeTrackingTask(string Id, int tenant)
             : base(Id,tenant)
         {
 

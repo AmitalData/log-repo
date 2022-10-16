@@ -302,9 +302,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             result = result.Select(a => new EntityStatusList
             {
                 DisplayName = a.Code.Equals("SDLY")
-                                ? "Out for Delivery"
+                                ? "Delivered"
                                 : a.Code.Equals("SHOR")
                                 ? "Created"
+                                 : a.Code.Equals("SDL2")
+                                ? "Out for Delivery"
                                 : a.DisplayName,
                 Id = a.Id,
                 StatusWeight = a.StatusWeight,
