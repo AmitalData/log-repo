@@ -117,7 +117,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             let valueExpression = this.isDateTimeType(this.Conditions[conditionIndex]?.type) ? DateTimeValueExpressions.Date : null;
             this.updateConditionValueExpression(valueExpression, conditionIndex, false);
             this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
-        }else if (!this.isNoValueOperator(operatorCode) && this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)){
+        } else if (!this.isNoValueOperator(operatorCode) && this.isNoValueOperator(this.Conditions[conditionIndex]?.operator)) {
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].valueCode = null;
         }
@@ -169,18 +169,20 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     deleteCondition(conditionIndex: number, isGroup: boolean) {
         let condition = this.Conditions[conditionIndex];
-        if (isGroup && condition.conditions.length > 0) {
-            let firstChildCondition = condition.conditions[0];
-            if (!firstChildCondition.isGroup) {
-                firstChildCondition.isGroup = true;
-                firstChildCondition.groupOperation = condition.groupOperation;
-                firstChildCondition.conditions = condition.conditions.slice(1);
+        if (!condition.isDisabled) {
+            if (isGroup && condition.conditions.length > 0) {
+                let firstChildCondition = condition.conditions[0];
+                if (!firstChildCondition.isGroup) {
+                    firstChildCondition.isGroup = true;
+                    firstChildCondition.groupOperation = condition.groupOperation;
+                    firstChildCondition.conditions = condition.conditions.slice(1);
+                }
+                this.Conditions[conditionIndex] = firstChildCondition;
+            } else {
+                this.Conditions.splice(conditionIndex, 1);
             }
-            this.Conditions[conditionIndex] = firstChildCondition;
-        } else {
-            this.Conditions.splice(conditionIndex, 1);
+            this.emitConditionsChanged();
         }
-        this.emitConditionsChanged();
     }
 
     emitConditionsChanged(event: any = null) {

@@ -5,7 +5,7 @@ import { AppTool } from "Infrastructure/Tools";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
-import { ObjectTablePMService } from "Infrastructure/Services/StandardPMs/ObjectTablePMService";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -26,8 +26,6 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public WorkflowEntityTable: ObjectTablePM;
     
     public CurrentSession = SessionLocator.SelectedSession;
-    
-    public ObjectTablePMService = new ObjectTablePMService();
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -61,7 +59,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     setWorkflowEntityTable() {
-        this.WorkflowEntityTable = (window as any).ObjectTables.filter((o: any) => o.Name === this.WorkflowEntity)[0];
+        this.WorkflowEntityTable = ObjectTables.getByName(this.WorkflowEntity);
         if (!this.WorkflowEntityTable) {
             this.WorkflowEntity = null;
             this.ValidationErrorsList.push("No workflow entity selected in start event");

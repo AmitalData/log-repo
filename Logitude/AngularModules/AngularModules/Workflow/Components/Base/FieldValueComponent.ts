@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
-import { ObjectTablePMService } from "Infrastructure/Services/StandardPMs/ObjectTablePMService";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 @Component({
     selector: "FieldValue",
@@ -19,6 +19,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Input() CurrentValue: string;
     @Input() IsIntegerNumberInput: boolean = false;
     @Input() DataType: string;
+    @Input() IsDisabled: boolean = false;
 
     @Output() ValueChanged = new EventEmitter<string>();
 
@@ -26,8 +27,6 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     public LookupTable: ObjectTablePM;
     public PickListTable: ObjectTablePM;
     public DateTimeCurrentValue: Date;
-
-    public ObjectTablePMService = new ObjectTablePMService();
 
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
 
@@ -70,29 +69,11 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     setLookupTable() {
-        this.LookupTable = (window as any).ObjectTables.filter((o: any) => o.Id === this.ObjectField.LookUpTableId)[0];
-        if (!this.LookupTable) {
-            this.ObjectTablePMService.get(this.ObjectField.LookUpTableId).subscribe((response: any) => { this.handleGetLookupTableResponse(response); });
-        }
+        this.LookupTable = ObjectTables.getById(this.ObjectField.LookUpTableId);
     }
 
     setPickListTable() {
-        this.PickListTable = (window as any).ObjectTables.filter((o: any) => o.Id === this.ObjectField.ObjectTableId)[0];
-        if (!this.PickListTable) {
-            this.ObjectTablePMService.get(this.ObjectField.ObjectTableId).subscribe((response: any) => { this.handleGetPickListTableResponse(response); });
-        }
-    }
-
-    handleGetLookupTableResponse(response: any) {
-        if (!response.HasError) {
-            this.LookupTable = response.Result;
-        }
-    }
-
-    handleGetPickListTableResponse(response: any) {
-        if (!response.HasError) {
-            this.PickListTable = response.Result;
-        }
+        this.PickListTable = ObjectTables.getById(this.ObjectField.ObjectTableId);
     }
 
     setDateTimeCurrentValue() {

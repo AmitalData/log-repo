@@ -12,6 +12,8 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() Width: string = "300px";
     @Input() ShowSearch: boolean = true;
     @Input() AllowClear: boolean = true;
+    @Input() IsDisabled: boolean = false;
+    @Input() DataCy: string | null = null;
 
     @Output() ValueChanged = new EventEmitter();
 
@@ -23,6 +25,9 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     public SearchTerm: string = "";
 
     ngOnInit() {
+        if (this.IsDisabled) {
+            this.AllowClear = false;
+        }
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
         this.setFilteredTreeItems("");
     }
@@ -115,6 +120,10 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     }
 
     displayItem = (item: any) => {
-        return item.parentNode.title + " > " + item.title;
+        let itemParentNode = item.parentNode;
+        if (itemParentNode) {
+            return itemParentNode.title + " > " + item.title;
+        }
+        return item.title;
     }
 }

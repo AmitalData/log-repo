@@ -20,8 +20,8 @@ export class TreeSelectItem {
         disabled: boolean,
         children: TreeSelectItem[]
     ) {
-        this.key = key;
-        this.title = title;
+        this.key = key || "unknown";
+        this.title = title || "Unknown";
         this.icon = null;
         this.isLeaf = isLeaf;
         this.checked = false;

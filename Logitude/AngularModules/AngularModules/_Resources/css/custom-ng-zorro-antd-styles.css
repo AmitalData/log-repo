@@ -21,7 +21,7 @@
 }
 
 .ant-select-focused .ant-select-selector,
-.ant-select-selector:hover {
+.ant-tree-select:not(.ant-select-disabled) .ant-select-selector:hover {
     border: 1px solid #3BB3E2 !important;
 }
 
@@ -78,4 +78,9 @@
 .ant-select-not-found {
     display: block !important;
     text-align: center !important;
+}
+
+.ant-select-disabled .ant-select-selector {
+    background: white !important;
+    opacity: 0.6 !important;
 }

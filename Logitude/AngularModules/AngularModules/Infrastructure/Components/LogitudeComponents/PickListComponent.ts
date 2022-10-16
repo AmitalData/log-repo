@@ -40,6 +40,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() IsFreeText: boolean = false;
     @Input() IgnoreCustomFieldCheck: boolean = false;
     @Input() DataCy: string;
+    @Input() ForceDisabled: boolean = false;
     //-------------------------------------------------------
 
     @Output() OnBlurEvent: EventEmitter<any> = new EventEmitter();
@@ -197,7 +198,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.IgnoreCustomFieldCheck == true) {
             this.DataContext[this.ObjectFieldName] = this.DataContext["TextValue"];
         }
-        this.IsDisabled = !this.uiProperty.IsEnabled;
+        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled;
         this._entityResourceService.getEntityResourceByTableName('CustomPickList', 0).subscribe((res: any) => {
 
             var objectFieldAvailable: boolean = true;
@@ -294,7 +295,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
                         if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
                             if (uiPropertyArgs.property == "IsEnabled") {
                                 var isEnabled = uiPropertyArgs.newValue;
-                                this.IsDisabled = !isEnabled;
+                                this.IsDisabled = !isEnabled  || this.ForceDisabled;
                                 this.uiProperty.IsEnabled = isEnabled;
                             }
                             else if (uiPropertyArgs.property == "IsRequired") {
