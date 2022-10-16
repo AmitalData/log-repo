@@ -53,7 +53,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.SelectedDashboard = new DashboardPM();
-        this.IsPermissionMessageVisible = !FeatureLocator.HasFeaturePermession("Dashboard", "UPDATE");
     }
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -119,15 +118,15 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 this.SelectedDashboard = myResponse.Result;
                 if (this.SelectedDashboard) {
                     this.applyWDashboard();
+                    this.SetEmptyDashboardVisibility();
                 }
 
                 else {
                     this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
                     this.SelectedDashboardName = null;
+                    this.SetEmptyDashboardVisibility();
                 }
-            }
-
-            this.SetEmptyDashboardVisibility();
+            }            
         });
     }
 
@@ -487,9 +486,17 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     SetEmptyDashboardVisibility() {
-        this.IsEmptyDashboardVisible = true;
-        if (this.SelectedDashboard && this.SelectedDashboard.Widgets.length > 0) {
-            this.IsEmptyDashboardVisible = false;
+        this.IsEmptyDashboardVisible = false;
+        this.IsPermissionMessageVisible = false;
+
+        if (this.SelectedDashboard) {
+            if (this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId) {
+                this.IsPermissionMessageVisible = true;
+            }
+
+            else if (this.SelectedDashboard.Widgets.length == 0) {
+                this.IsEmptyDashboardVisible = true;
+            }
         }
     }
 
