@@ -2,7 +2,7 @@
 
     <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
         [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Results Found'" [nzAllowClear]="AllowClear"
-        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisplayWith]="displayItem">
+        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisabled]="IsDisabled" [nzDisplayWith]="displayItem">
     </nz-tree-select>
 
 </div>

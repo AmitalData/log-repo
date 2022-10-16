@@ -13,6 +13,7 @@ export class Condition {
     public valueExpression: string;
     public operator: string;
     public conditions: Condition[];
+    public isDisabled: boolean;
     public fieldChangedToggle: boolean;
 
     constructor(isGroup: boolean = false) {
@@ -27,6 +28,7 @@ export class Condition {
         this.valueExpression = null;
         this.operator = ConditionOperators.Equals;
         this.conditions = isGroup ? [] : null;
+        this.isDisabled = false;
         this.fieldChangedToggle = false;
     }
 }

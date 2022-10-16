@@ -14,6 +14,7 @@ import { ReturnedField } from "Workflow/Models/ReturnedField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -44,6 +45,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
 
+    public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
     public IsPrimaryObjectFieldExists: boolean = false;
@@ -55,12 +57,17 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
-        this.initialize();
         this.initializeEntitiesTreeItems();
+        this.initialize();
     }
 
     ngOnChanges() {
         this.SortDirectionListItems = new SortDirectionList().Items;
+    }
+
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeList = new EntitiesTreeList();
+        this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
     initialize() {
@@ -93,6 +100,25 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
         if (this.Conditions.length === 0) {
             let condition = new Condition();
+
+            let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
+            if (isChildEntity) {
+                let entities = this.Entity.split(".");
+                let parentEntity = entities[0];
+                let childEntity = entities[1];
+                let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
+                let fieldCode = childEntity + "." + childField;
+                let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
+                let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
+
+                condition.field = childField;
+                condition.fieldCode = fieldCode;
+                condition.type = objectField ? objectField.DataTypeCode : null;
+                condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
+                condition.operator = ConditionOperators.EqualsField;
+                condition.isDisabled = true;
+            }
+
             this.Conditions.push(condition);
             this.IsValidConditions = false;
         }
@@ -120,30 +146,12 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
     }
 
-    initializeEntitiesTreeItems() {
-        this.EntitiesTreeItems = new EntitiesTreeList().Items;
-    }
-
     updateName(Name: any) {
         this.Data["name"] = Name;
         this.Name = Name;
 
         this.setUIProperties();
     }
-
-    // updateEntity(entity: any) {
-    //     let isEntityChanged = this.Data["entity"] !== entity?.Name;
-    //     this.Data["entity"] = entity ? entity.Name : null;
-    //     this.Entity = entity ? entity.Name : null;
-    //     this.EntityId = this.getEntityId(entity ? entity.Name : null);
-
-    //     if (isEntityChanged) {
-    //         this.initializeConditions(true);
-    //         this.initializeReturnedFields(true);
-    //     }
-
-    //     this.setUIProperties();
-    // }
 
     updateEntity(entity: string) {
         let isEntityChanged = this.Data["entity"] !== entity;
@@ -244,6 +252,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     getEntityId(entity: string) {
         if (entity) {
+            entity = entity.indexOf(".") === -1 ? entity : entity.split(".")[1];
             let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.Id : null;
         }
@@ -252,6 +261,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     getEntityKeyPropertyPath(entity: string) {
         if (entity) {
+            entity = entity.indexOf(".") === -1 ? entity : entity.split(".")[1];
             let entityObjectTable = ObjectTables.getByName(entity);
             return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
         }

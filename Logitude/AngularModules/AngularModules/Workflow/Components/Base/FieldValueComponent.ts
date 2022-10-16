@@ -19,6 +19,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Input() CurrentValue: string;
     @Input() IsIntegerNumberInput: boolean = false;
     @Input() DataType: string;
+    @Input() IsDisabled: boolean = false;
 
     @Output() ValueChanged = new EventEmitter<string>();
 

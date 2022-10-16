@@ -210,6 +210,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     @Input() LogitudeForm: FormGroup;
     @Output() OriginalText = new EventEmitter();
     @Input() DebounceTime: number;
+    @Input() ForceDisabled: boolean = false;
 
 
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
@@ -296,7 +297,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
          this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
 
-        this.IsDisabled = !this.uiProperty.IsEnabled;
+        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled;
 
         if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
@@ -390,7 +391,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
                 if (uiPropertyArgs.property == "IsEnabled") {
                     var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
+                    this.IsDisabled = !isEnabled  || this.ForceDisabled;
                     this.uiProperty.IsEnabled = isEnabled;
                     if (this.IsDisabled) {
                         this.SetDisabled();

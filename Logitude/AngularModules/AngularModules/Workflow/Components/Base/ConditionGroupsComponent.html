@@ -125,7 +125,7 @@
                 <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
                     [SelectedItem]="ListItem(Condition.groupOperation)"
                     (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)" [ListType]="''"
-                    [CyData]="'ConditionOperation_' + Condition.id">
+                    [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
             </div>
@@ -136,7 +136,7 @@
                 <div class="condition-row">
 
                     <div *ngIf="!(AtLeastOneCondition && Conditions.length == 1)" class="delete-condition-container">
-                        <img class="delete-condition-button" src="./Images/Trash-can.png"
+                        <img *ngIf="!Condition.isDisabled" class="delete-condition-button" src="./Images/Trash-can.png"
                             (click)="deleteCondition(conditionIndex, Condition.isGroup)"
                             [attr.data-cy]="'DeleteConditionButton_' + Condition.id" />
                     </div>
@@ -149,7 +149,7 @@
                             [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionField($event, conditionIndex)"
-                            [DataCy]="'ConditionField_' + Condition.id">
+                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionField_' + Condition.id">
                         </LogLov>
 
                     </div>
@@ -160,7 +160,7 @@
                             [ItemsSource]="ConditionOperatorsItemsDictionary[Condition.type] || ConditionOperatorsItemsDictionary['default']"
                             [Binding]="'Name'" [SelectedItem]="ListItem(Condition.operator)"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
-                            [CyData]="'ConditionOperator_' + Condition.id">
+                            [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -172,7 +172,8 @@
                         <ComboBox [ItemsSource]="DateTimeValueExpressionsItems" [Binding]="'Name'"
                             [SelectedItem]="ListItem(Condition.valueExpression)"
                             (SelectedItemChanged)="updateConditionValueExpression($event.Code, conditionIndex)"
-                            [ListType]="''" [CyData]="'ConditionValueExpression_' + Condition.id">
+                            [ListType]="''" [IsDisabled]="Condition.isDisabled"
+                            [CyData]="'ConditionValueExpression_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -186,7 +187,7 @@
                             [ObjectField]="ObjectFieldsDictionary[Condition.fieldCode]"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
-                            [CurrentValue]="Condition.value"
+                            [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
@@ -194,7 +195,7 @@
                             [ObjectField]="ObjectFieldsDictionary[Condition.fieldCode]"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
-                            [CurrentValue]="Condition.value"
+                            [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
@@ -211,7 +212,7 @@
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [DataCy]="'ConditionFieldValue_' + Condition.id">
+                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionFieldValue_' + Condition.id">
                         </LogLov>
 
                         <LogLov *ngIf="!Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
@@ -222,15 +223,16 @@
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [DataCy]="'ConditionFieldValue_' + Condition.id">
+                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionFieldValue_' + Condition.id">
                         </LogLov>
                     </div>
 
                     <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator) && ShowFlowVariablesTree"
                         class="condition-value-container">
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
-                                [Value]="Condition.value" (ValueChanged)="updateConditionValue($event, conditionIndex)">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
+                                [IsDisabled]="Condition.isDisabled"
+                                (ValueChanged)="updateConditionValue($event, conditionIndex)">
                             </TreeSelect>
                         </div>
                     </div>
@@ -239,7 +241,7 @@
                         <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'"
                             [SelectedItem]="ListItem(Condition.value)"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
-                            [CyData]="'ConditionValue_' + Condition.id">
+                            [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
                     </div>
 

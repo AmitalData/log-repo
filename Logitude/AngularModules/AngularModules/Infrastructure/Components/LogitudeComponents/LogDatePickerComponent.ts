@@ -35,7 +35,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-    
+
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [
@@ -54,6 +54,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "IsDisabledWithColor",
         "DisableRules",
         "DataCy",
+        "ForceDisabled",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -88,6 +89,8 @@ export class LogDatePickerComponent
 
     public DataCy: string;
 
+    public ForceDisabled: boolean = false;
+
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
@@ -97,8 +100,11 @@ export class LogDatePickerComponent
         return this.isDisabled;
     }
     public set IsDisabled(newValue: boolean) {
-
-        this.isDisabled = this.IsFreeValue ? false: newValue;
+        if (this.ForceDisabled) {
+            this.isDisabled = true;
+        }else{
+            this.isDisabled = this.IsFreeValue ? false : newValue;
+        }
     }
 
     private isDisabledWithColor: boolean;
@@ -393,8 +399,8 @@ export class LogDatePickerComponent
             this.uiProperty.UIPropertyChanged.subscribe((value) => {
                 this.HandleUIPropertyChanged(value);
             });
-            
-            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties){
+
+            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties) {
                 const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
                 pmuiProperty?.UIPropertyChanged.subscribe((value) => {
                     this.HandleUIPropertyChanged(value);
@@ -413,7 +419,7 @@ export class LogDatePickerComponent
         this.SetParsedDateValueToDatePickerInput();
     }
     private HandleUIPropertyChanged(value: any) {
-         if (value == "datevaluechanges") {
+        if (value == "datevaluechanges") {
             if (this.ObjectField && this.ObjectField.IsCustom) {
                 var customFieldClass: CustomFieldClass = this
                     .DataContext[this.ObjectFieldName];
@@ -504,7 +510,7 @@ export class LogDatePickerComponent
             }
         }
     }
-    SetParsedDateValueToDatePickerInput(){
+    SetParsedDateValueToDatePickerInput() {
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
             var customFieldClass: CustomFieldClass = this.DataContext[
@@ -638,7 +644,7 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
-        }else {
+        } else {
             this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
@@ -2530,7 +2536,7 @@ export class LogDatePickerComponent
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
-                    
+
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };

@@ -1,37 +1,47 @@
 import { TreeSelectItem } from "./TreeSelectItem";
 
+type Entity = { Code: string, Name: string };
+type ChildEntity = { Code: string, Name: string, ParentEntityCode: string, ChildField: string };
+
 export class EntitiesTreeList {
     public Items: TreeSelectItem[] = [];
 
-    private ShipmentChildEntities: { Key: string, Title: string }[] = [
-        { Key: "Container", Title: "Container" },
-        { Key: "ShipmentPackage", Title: "Package" },
-        { Key: "ARInvoice", Title: "AR Invoice" },
-        { Key: "APInvoice", Title: "AP Invoice" }
+    private Entities: Entity[] = [
+        { Code: "Shipment", Name: "Shipment" },
+        { Code: "Customer", Name: "Customer" }
+    ];
+
+    private ChildEntities: ChildEntity[] = [
+        { Code: "Container", Name: "Container", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
+        { Code: "ShipmentPackage", Name: "Package", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
+        { Code: "ARInvoice", Name: "AR Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
+        { Code: "APInvoice", Name: "AP Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
     ];
 
     constructor() {
         this.setEntitiesTreeItems();
     }
 
-    private setEntitiesTreeItems() {
-        let shipmentItemChildren = this.getShipmentItemChildren();
-
-        let shipmentItem = new TreeSelectItem("Shipment", "Shipment", false, true, true, false, shipmentItemChildren);
-        let customerItem = new TreeSelectItem("Customer", "Customer", false, true, false, false, []);
-
-        this.Items.push(shipmentItem);
-        this.Items.push(customerItem);
+    public getChildField(parentEntityCode: string, childEntityCode: string) {
+        let childEntity = this.ChildEntities.find(e => e.ParentEntityCode === parentEntityCode && e.Code === childEntityCode);
+        return childEntity ? childEntity.ChildField : null;
     }
 
-    private getShipmentItemChildren() {
-        let shipmentItemChildren = [];
-
-        this.ShipmentChildEntities.forEach(shipmentChildEntity => {
-            let treeSelectItem = new TreeSelectItem(shipmentChildEntity.Key, shipmentChildEntity.Title, true, true, false, false, []);
-            shipmentItemChildren.push(treeSelectItem);
+    private setEntitiesTreeItems() {
+        this.Entities.forEach(entity => {
+            let childrenItems = this.getChildrenItems(entity.Code);
+            let entityItem = new TreeSelectItem(entity.Code, entity.Name, false, true, true, false, childrenItems);
+            this.Items.push(entityItem);
         });
+    }
 
-        return shipmentItemChildren;
+    private getChildrenItems(parentEntityCode: string) {
+        let childrenItems = [];
+        let childEntities = this.ChildEntities.filter(e => e.ParentEntityCode === parentEntityCode);
+        childEntities.forEach(childEntity => {
+            let childrenItem = new TreeSelectItem(parentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
+            childrenItems.push(childrenItem);
+        });
+        return childrenItems;
     }
 }
