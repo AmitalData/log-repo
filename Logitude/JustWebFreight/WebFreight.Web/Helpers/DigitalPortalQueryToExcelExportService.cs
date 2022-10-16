@@ -152,8 +152,8 @@ namespace WebFreight.Web.Helpers
             table.Columns.Add("Direction Name");
             table.Columns.Add("Org");
             table.Columns.Add("Dest");
-            table.Columns.Add("ATD");
-            table.Columns.Add("ATA");
+            table.Columns.Add("MainCarriage ATD");
+            table.Columns.Add("MainCarriage ATA");
             table.Columns.Add("Master Number");
             table.Columns.Add("Shipper");
             table.Columns.Add("Consignee");
@@ -194,8 +194,8 @@ namespace WebFreight.Web.Helpers
                 row[11] = item.StatusName;
                 row[12] = item.NumberOfPackages;
                 row[13] = item.GrossWeight;
-                row[14] = item.NumberOfPackages;
-                row[15] = item.IncotermCode ;
+                row[14] = item.ChargeableWeight;
+                row[15] = item.IncotermCode;
                 row[16] = item.Volume;
                 row[17] = item.DescriptionOfGoods;
                 row[18] = item.ValueOfGoods;
