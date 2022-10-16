@@ -219,6 +219,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (destinationPort != null)
                 {
                     crossDockEntryDataProvider.DestinationCountryName = destinationPort.Country == null ? "" : destinationPort.Country.EnglishName;
+                    crossDockEntryDataProvider.DestinationCountryCode = destinationPort.Country == null ? "" : destinationPort.Country.Code;
+                    crossDockEntryDataProvider.DestinationPortCode = destinationPort.Code;
                 }
             }
         }

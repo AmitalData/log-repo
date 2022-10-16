@@ -400,22 +400,36 @@ namespace WebFreight.Web.DataProviders
             return myUrl;
         }
 
-        public static double? ComputeWeightInLBS(double? grossWeight, string grossWeightUnitCode)
-        {    
+        public static double? ComputeWeightInSelectedUnit(double? grossWeight, string grossWeightUnitCode)
+        {
             if (grossWeight == null || string.IsNullOrEmpty(grossWeightUnitCode)) return null;
-            else if (grossWeightUnitCode != "LB") return null;
 
-            double factorOfConvert = 0.45359237;
+            double factorOfConvert = 1;
+
+            switch (grossWeightUnitCode.ToUpper())
+            {
+                case "KG": { factorOfConvert = 1; break; }
+                case "LB": { factorOfConvert = 0.45359237; break; }
+                case "MT": { factorOfConvert = 1000; break; }
+            }
+
             return grossWeight * factorOfConvert;
         }
 
-        public static double? ComputeVolumeInCBF(double? volume, string volumeUnitCode)
+        public static double? ComputeVolumeInSelectedUnit(double? volume, string volumeUnitCode)
         {
             if (volume == null || string.IsNullOrEmpty(volumeUnitCode)) return null;
-            else if(volumeUnitCode != "CBF") return null;
 
-            double factorOfConvert = 35.315;
+            double factorOfConvert = 1;
+
+            switch (volumeUnitCode.ToUpper())
+            {
+                case "CBM": { factorOfConvert = 1; break; }
+                case "CBI": { factorOfConvert = 61024; break; }
+                case "CBF": { factorOfConvert = 35.315; break; }
+            }
+
             return volume * factorOfConvert;
-        }
+        }     
     }
 }

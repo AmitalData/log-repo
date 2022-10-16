@@ -630,10 +630,4 @@ namespace WebFreight.Web.DataProviders
         public double? Volume { get; set; }
         public string ContainerNumber { get; set; }
     }
-
-
-    //3 - Total Weight in KG: { ManifestDataProvider.TotalWeightInKG}
-    //4 - Total Weight in LBS: { ManifestDataProvider.TotalWeightInLBS}
-    //7 - Total Volume in CBM:{ ManifestDataProvider.TotalVolumeINCBM}
-    // 8 - Total Volume in CBF: { ManifestDataProvider.TotalVolumeINCBF}
 }
