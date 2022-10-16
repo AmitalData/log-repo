@@ -3031,6 +3031,7 @@
     <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
+    <Compile Include="InfrastructureModel\DomainServices\InfrastructureDomainService.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
