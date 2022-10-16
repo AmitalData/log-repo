@@ -19,7 +19,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data; 
 using Logitude.DashboardModule.Data.EntityMapping;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.DashboardModule.Data
 {
@@ -419,8 +418,8 @@ namespace Logitude.DashboardModule.Data
 	      get; set;
 	 
 	 }
-
-    }
+	  
+ }
 
 
 }

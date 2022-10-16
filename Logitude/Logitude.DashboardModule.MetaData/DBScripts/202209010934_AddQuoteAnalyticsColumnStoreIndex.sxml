@@ -1,0 +1,101 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+  <Sql Version="1">
+    <![CDATA[
+      BEGIN
+          IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_QuoteAnalytics_ColumnStore' AND object_id = OBJECT_ID('[QuoteAnalytics]'))
+          BEGIN
+				DROP INDEX IX_QuoteAnalytics_ColumnStore ON QuoteAnalytics;
+          END
+		  CREATE COLUMNSTORE INDEX IX_QuoteAnalytics_ColumnStore ON QuoteAnalytics (
+      
+Id
+,Tenant
+,LastStageDate
+,IsSaleCurrencySameAsCost
+,EstimateProfit
+,IsFixedPrice
+,SaleCurrencyId
+,ExchangeRate
+,IsCancelled
+,QuoteNumber
+,MainCarriageCarrierId
+,DirectionId
+,TransportModeId
+,DepartmentId
+,BranchId
+,ShipmentTypeId
+,CustomerId
+,ShipperId
+,ConsigneeId
+,FromPortId
+,ToPortId
+,IncotermId
+,SalesmanUserId
+,CreatedByUserId
+,OpenDate
+,ChargeableWeight
+,GrossWeight
+,IsClosed
+,Volume
+,NumberOfPackages
+,NumberOfContainers
+,IsDangerous
+,ExpirationDays
+,ExpirationDate
+,QuoteTypeCode
+,IncludePickUp
+,IncludeDelivery
+,SentDate
+,AcceptedDate
+,DeclinedDate
+,UsageCount
+,LastUsageDate
+,BusinessUnitId
+,Subject
+,StageId
+,StageDueDate
+,RatingCode
+,IsAutomaticallyClosed
+,AutomaticallyCloseDate
+,UpdatedByUserId
+,UpdateDate
+,AutomaticallyCloseDays
+,TransitTime
+,ETD
+,ETA
+,AgentId
+,MoveTypeId
+,TEU
+,ValueOfGoods
+,ValueOfGoodsCurrencyId
+,IsChargesByVAT
+,GrossWeightInKG
+,GrossWeightPerTon
+,NotifyId
+,ConsigneeNotImporterId
+,ChargeableWeightInKG
+,VolumeInCBM
+,StartDate
+,EstimatedProfitInLocal
+,EstimatedProfitInProfit
+,ProfitCurrencyId
+,ProfitExchangeRate
+,QuoteClosingReasonId
+,ShipmentSubTypeId
+,RegionalTaxId
+,RegionalTaxPercentage
+,IsMultiCurrency
+,PackagesQuantity
+,SpecialServicesTypeId
+,ValidByTypeCode
+,ConnectedToOpportunity
+,ShipperNotExporterId
+
+
+                
+                );
+      END
+
+    ]]>       
+  </Sql>
+</Script>

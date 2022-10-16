@@ -720,6 +720,7 @@
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATTransferStatusRepository.cs" />
+    <Compile Include="QuoteModel\EntityPOCOs\QuoteAnalytic.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteComputedField.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\ValidByType.cs" />

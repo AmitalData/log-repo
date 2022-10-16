@@ -273,6 +273,8 @@ namespace Simplog.Data.QuoteModel.Mocks
             get { throw new NotImplementedException(); }
         }
 
+        public IDbSet<QuoteAnalytic> QuoteAnalytics => throw new NotImplementedException();
+
         public System.Data.Common.DbConnection GetConnection()
         {
             throw new NotImplementedException();
