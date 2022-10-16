@@ -53,9 +53,9 @@
         }
     .text-with-dots {
         display: inline-block;
-        max-width: 145px;
-        min-width: 145px;
-        width: 145px;
+        max-width: 130px;
+        min-width: 130px;
+        width: 130px;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
@@ -83,12 +83,12 @@
                 </tr>
                 <tr>
                     <!-- Left Sidebar -->
-                    <td style="width: 230px; border: solid 1px silver">
+                    <td style="width: 155px; border: solid 1px silver">
                         <div class="SimpleGridView MediaFillAbsolute">
                             <div class="SimpleGridViewHeader">
                                 <table>
                                     <tr>
-                                        <td style="width: 198px; min-width: 198px; max-width: 198px;">Screen Name</td>
+                                        <td style="width: 135px; min-width: 135px; max-width: 135px; ">Screen Name</td>
 
                                     </tr>
                                 </table>
@@ -99,11 +99,11 @@
                                     <tr class="SimpleGridViewRow" *ngFor="let item of TableScreensCollection" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
                                         <td [attr.data-cy]="item.Name">
 
-                                            <div [attr.title]="item.Name" *ngIf="!item.Inactive" class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
+                                            <div [attr.title]="item.Name" *ngIf="!item.Inactive" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px; font-size: 11px ">
                                                 {{item.Name}}
                                             </div>
 
-                                            <div [attr.title]="item.Name" class="text-with-dots GridViewCell" *ngIf="item.Inactive">
+                                            <div [attr.title]="item.Name" class="text-with-dots GridViewCell" *ngIf="item.Inactive" style="font-size: 11px">
                                                 {{item.Name}}
                                             </div>
 
@@ -172,19 +172,19 @@
                                                 <div attr.data-cy="{{'Column_ ' + item.FieldName}}">
                                                     <table>
                                                         <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
-                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; font-size: 11px">
                                                                 {{item != null ? item.FullNameTextCodeDefaultText : ''}}
                                                             </td>
                                                         </tr>
                                                         <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
-                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                <span > ({{item != null ? item.PMPropertyPath : ''}})</span>
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; ">
+                                                                <span style="font-size: 11px"> ({{item != null ? item.PMPropertyPath : ''}})</span>
                                                             </td>
                                                         </tr>
 
                                                         <tr *ngIf="IsLineSpaceField(item.DataTypeCode)"style="height:1px;text-align:center">
                                                             <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                <span style="color:ivory;font-style:italic">Insert Space</span>
+                                                                <span style="color: ivory; font-style: italic; font-size: 11px">Insert Space</span>
                                                             </td>
                                                         </tr>
 
@@ -195,9 +195,7 @@
                                                     </table>
                                                 </div>
                                             </td>
-                                            <!--<td style="width:30px;height:60px;">
-                                <img class="DeleteButton RightCenter" style="right: 4px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
-                            </td>-->
+
                                         </tr>
                                     </table>
                                 </div>

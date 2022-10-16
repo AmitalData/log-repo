@@ -238,11 +238,11 @@ export class CustomizationEditComponent {
         confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.SelectedMenu.Page.SaveClicked();
+                this.SelectedMenu.Page.Save();
                 return;
             }
             if (confirmWindow.No) {
-                this.SelectedMenu.Page.CancelClicked();
+                this.SelectedMenu.Page.Cancel();
                 return;
             }
         });
@@ -253,11 +253,11 @@ export class CustomizationEditComponent {
     }
     OkButtonClicked() {
         this.NewSelectedMenu = null;
-        this.SelectedMenu.Page.SaveClicked();
+        this.SelectedMenu.Page.Save();
     }
     SaveChangesAndClose() {
         this.NewSelectedMenu = null;
-        this.SelectedMenu.Page.SaveClicked();
+        this.SelectedMenu.Page.Save();
         this.CurrentSession.CloseCurrentWindow();
     }
 
