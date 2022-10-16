@@ -68,6 +68,7 @@ namespace CommunicationWorkerRole.Services.Logbox
 
         private bool IsAllowedShipmentOrderForLogBox(Logitude.ShipmentOrderModule.Data.EntityPOCOs.ShipmentOrder shipmentOrder)
         {
+            if (importerShipmentsBatchService.customerTenantAccessCard.LastMappingDateTime != null && shipmentOrder.CreateDate <= importerShipmentsBatchService.customerTenantAccessCard.LastMappingDateTime) return false;
             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(shipmentOrder.Tenant);
             CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(shipmentOrder.Tenant, shipmentOrder.ShipperId);
 
@@ -76,6 +77,7 @@ namespace CommunicationWorkerRole.Services.Logbox
             if (!customerTenantAccessInfo.IsExportActivated) return false;
             if (customerTenantAccessInfo.CustomerTenant == 0) return false;
             if (string.IsNullOrEmpty(shipmentOrder.CustomerTenantNumber?.ToString())) return false;
+            if (shipmentOrder.CustomerTenantNumber != customerTenantAccessInfo.CustomerTenant) return false;
             if (string.IsNullOrEmpty(shipmentOrder.CustomerShipmentNumber)) return false;
 
             const string oceanTransportModeId = "O";
