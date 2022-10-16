@@ -199,6 +199,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return consoles;
         }
 
+        public IQueryable<Shipment> GetDigitalPortalHouseShipmentsForMaster(string masterId, int tenant)
+        {
+            var consoles = context.Shipments
+                                  .Where(s => s.Tenant == tenant
+                                               && s.Id != masterId
+                                               && s.MasterShipmentDataId == masterId).OrderByDescending(d => d.CreateDateTime);
+            return consoles;
+        }
+
         public IQueryable<Shipment> GetShipments(int tenant)
         {
             return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.Tenant == tenant select record);
