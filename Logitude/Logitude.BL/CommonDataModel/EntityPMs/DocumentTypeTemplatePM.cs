@@ -78,6 +78,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public List<DocumentDefultAttachment> DocumentDefultAttachments { get; set; }
         public string EntityId { get; set; }
 
+        public string DocumentOutId { get; set; }
+
+        
+
         //         this.Property(t => t.CountryCode).IsFixedLength().IsUnicode(false).HasMaxLength(2);
 
         // this.Property(t => t.InActive)

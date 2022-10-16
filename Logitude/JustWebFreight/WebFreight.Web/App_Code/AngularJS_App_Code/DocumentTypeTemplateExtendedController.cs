@@ -388,11 +388,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                         indexnode += 1;
                                     }
 
-                                    newNodestring = "<Item" + indexnode.ToString() + "  Ref=\"" + indexnode.ToString() + "\" type=\"Stimulsoft.Report.StiEditableItem\" isKey=\"true\">\r\n      <ComponentName>" + field.FieldName + "</ComponentName>\r\n <PageIndex>" + index + "</PageIndex>\r\n  <Position>" + field.FieldPosition + "</Position>\r\n <TextValue>" + "</TextValue>\r\n    </Item" + indexnode.ToString() + ">\r\n ";
+                                    string xmlFieldValueChange = GetXmlFieldValueChange(field);
+
+                                    newNodestring = "<Item" + indexnode.ToString() + "  Ref=\"" + indexnode.ToString() + "\" type=\"Stimulsoft.Report.StiEditableItem\" isKey=\"true\">\r\n      <ComponentName>" + field.FieldName + "</ComponentName>\r\n <PageIndex>" + index + "</PageIndex>\r\n  <Position>" + field.FieldPosition + "</Position>" + xmlFieldValueChange + " \r\n    </Item" + indexnode.ToString() + ">\r\n ";
                                     AddedNode += newNodestring;
                                     XmlTextReader textReader = new XmlTextReader(new StringReader(newNodestring));
                                     XmlNode newNode = messageDoc.ReadNode(textReader);
-                                    newNode["TextValue"].InnerText = field.NewValue;
+
+                                    SetFieldValueChange(field, newNode);
+
                                     ItemsList[0].AppendChild(newNode);
 
                                     countList += 1;
@@ -433,6 +437,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 return result;
            
+        }
+
+        private  void SetFieldValueChange(EditableFieldPosition field, XmlNode newNode)
+        {
+            if (field.IsTextValueChange)
+            {
+                newNode["TextValue"].InnerText = field.NewValue;
+            }
+            if (field.IsFontSizeChange)
+            {
+                newNode["FontSize"].InnerText = field.NewFontSize.ToString();
+            }
+        }
+
+        private static string GetXmlFieldValueChange(EditableFieldPosition field)
+        {
+            string valuesChange = "";
+            if (field.IsTextValueChange)
+            {
+                valuesChange = "\r\n<TextValue>" + "</TextValue>";
+            }
+            if (field.IsFontSizeChange)
+            {
+                valuesChange += "\r\n<FontSize>" + "</FontSize>";
+            }
+
+            return valuesChange;
         }
 
         public static IEnumerable<T> Shim<T>(System.Collections.IEnumerable enumerable)
