@@ -1,12 +1,10 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using Simplog.Data.ShipmentsModel;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
-using Simplog.Data.ShipmentsModel.Repositories;
 using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Extensions;
@@ -30,18 +28,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
                 var housesShipments = shipmentConsoleShipmentQuery.GetDigitalPortalMasterConnectedHouseShipments(shipmentId, tenant).GetPaged(page, pageSize);
+                
                 DigitalPortalDocumentHelper digitalPortalDocumentHelper = new DigitalPortalDocumentHelper();
+                
                 List<DigitalMasterHouse> results = new List<DigitalMasterHouse>();
 
-                results.Add(MapMasterData(shipmentId, tenant, partnerType));
+                DigitalMasterHouseResponse response = new DigitalMasterHouseResponse
+                {
+                    Master = MapMasterData(shipmentId, tenant, partnerType),
+                };
 
                 housesShipments.Data.ForEach(item =>
                 {
                     var documentArgs = new
                     {
-                        Id = item.Id,
-                        ShipmentLevelCode = item.ShipmentLevelCode,
-                        CustomerId = item.CustomerId,
+                        item.Id,
+                        item.ShipmentLevelCode,
+                        item.CustomerId,
                         Tenant = tenant,
                         PartnerType = partnerType
                     };
@@ -58,7 +61,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     });
                 });
 
-                return Ok(results);
+                response.Houses = new PagedResult<DigitalMasterHouse>();
+                response.Houses.Data = results;
+                response.Houses.Pagination = housesShipments.Pagination;
+                
+                return Ok(response);
             }
 
             catch (Exception ex)

@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
-                var shipmentsGroupedByStatus =  GetDigitalStatusesWithCount(shipments, authToken.Tenant);
+                var shipmentsGroupedByStatus = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
                 return Ok(shipmentsGroupedByStatus);
             }
@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters);
 
-                dashboardSummary.TotalShipmentsByETACount = shipments.Where(d=> d.MainCarriageETA >= currentDateTime
+                dashboardSummary.TotalShipmentsByETACount = shipments.Where(d => d.MainCarriageETA >= currentDateTime
                                                                                 && d.MainCarriageETA <= currentWeek)
                                                                      .Count();
 
@@ -92,10 +92,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
-                dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime 
+                dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime
                                                                                     && d.DueDate <= currentWeek)
                                                                        .Count();
-               
+
                 return Ok(dashboardSummary);
             }
             catch (Exception ex)
@@ -130,9 +130,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return shipmentsGroupedByStatus;
         }
 
-        private string GetDigitalStatusName (string code, string exactStatusName)
+        private string GetDigitalStatusName(string code, string exactStatusName)
         {
             if (code.Equals("SDLY", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "Delivered";
+            }
+
+            if (code.Equals("SDL2", StringComparison.InvariantCultureIgnoreCase))
             {
                 return "Out for Delivery";
             }
