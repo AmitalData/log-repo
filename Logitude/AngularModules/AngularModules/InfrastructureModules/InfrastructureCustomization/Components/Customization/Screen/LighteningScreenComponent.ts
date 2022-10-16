@@ -20,7 +20,7 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
 {
     public ScreenLayoutComponent: ScreenLayoutComponent;
     public lighteningScreenWidth: string;
-    private screenLayoutwidth = 500;
+    private screenLayoutwidth = 700;
     constructor()
     {
         super();

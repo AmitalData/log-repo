@@ -25,6 +25,7 @@ import { ClassicScreenLayoutService } from '../../ExternalService/ClassicScreenL
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 
 
@@ -57,11 +58,18 @@ export class ScreenLayoutComponent extends BaseComponent {
     loginService: LoginService;
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
-    Modified: boolean = false;
+    private modified: boolean = false;
+    set Modified(value: boolean) {
+        this.modified = value;
+        this.customizationEditComponent.IsDirty = value;
+    }
+    get Modified() { return this.modified }
     public IsObjectTableFilterEnabled: boolean = false;
     public IsTabsCustomizationEnabled: boolean = false;
     private screenLayoutService: IScreenLayoutService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+
+    public customizationEditComponent: CustomizationEditComponent;
 
     constructor() {
         super();
@@ -102,7 +110,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs: any) {
-        this.ObjecttableId = windowArgs.ObjectTableID;
+        this.ObjecttableId = windowArgs.ObjectTableId;
         this.IsObjectTableFilterEnabled = windowArgs.IsObjectTableFilterEnabled;
         this.IsTabsCustomizationEnabled = windowArgs.IsTabsCustomizationEnabled;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjecttableId)[0];
@@ -294,7 +302,6 @@ export class ScreenLayoutComponent extends BaseComponent {
         //});
     }
 
-    CancelClicked() { this.CurrentSession.CloseCurrentWindow(); }
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
 
@@ -336,6 +343,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                 });
             });
         });
+
     }
 
 
@@ -767,6 +775,20 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
     }
 
+    Save() {
+        this.OkClicked(false);
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
+    }
+    Cancel() {
+        this.GetFields();
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
+    }
 
 }
 

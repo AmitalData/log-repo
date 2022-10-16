@@ -20,10 +20,9 @@ export class RulesService implements ICustomizationService {
         this.customizationMainMenuItem.TextCode = "Rules";
         this.customizationMainMenuItem.Code = "RULES";
         this.customizationMainMenuItem.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/RulesComponents/RulesMainComponent";
-        let objectTable = window.ObjectTables.filter(d => d.Id === this.objectTableId)[0];
 
         this.customizationMainMenuItem.args = {
-
+            ObjectTableId: this.objectTableId
         }
         return this.customizationMainMenuItem;
     }

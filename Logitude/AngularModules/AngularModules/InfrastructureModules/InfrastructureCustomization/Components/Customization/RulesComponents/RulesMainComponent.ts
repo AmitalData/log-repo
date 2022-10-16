@@ -16,6 +16,7 @@ import {RuleConditionFieldPM} from '../../../../../Infrastructure/EntityPMs/Rule
 import {ObjectTableRuleFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectTableRuleFieldPM';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { CustomizationEditComponent } from '../CustomizationEditComponent';
 declare var window: any;
 
 @Component({
@@ -33,6 +34,9 @@ export class RulesMainComponent {
     public AllTableRules: ObjectTableRulePM[] = [];
     private entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public customizationEditComponent: CustomizationEditComponent;
+
     constructor() {
         //        window.ObjectTableRules = [];
 
@@ -40,7 +44,7 @@ export class RulesMainComponent {
     }
 
     SetWindowArgs(windowArgs: any) {
-        this.ObjectTableId = windowArgs.ObjectTableID;
+        this.ObjectTableId = windowArgs.ObjectTableId;
 
         //this.AllTableRules = window.ObjectTableRules.filter(r => r.ObjectTableId === this.ObjectTableId && r.Internal === false);
         //this.TableRulesItems = this.AllTableRules;
@@ -185,5 +189,12 @@ export class RulesMainComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    
+
+    Save() {
+
+    }
+    Cancel() {
+
+    }
+
 }

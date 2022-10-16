@@ -20,10 +20,9 @@ export class TabsService implements ICustomizationService {
         this.customizationMainMenuItem.TextCode = "Tabs";
         this.customizationMainMenuItem.Code = "TABS";
         this.customizationMainMenuItem.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationTabsComponent";
-        let objectTable = window.ObjectTables.filter(d => d.Id === this.objectTableId)[0];
 
         this.customizationMainMenuItem.args = {
-
+            ObjectTableId: this.objectTableId,
         }
         return this.customizationMainMenuItem;
     }

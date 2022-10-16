@@ -10,6 +10,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 declare var window: any;
 
@@ -28,6 +29,9 @@ export class CustomFieldsComponent {
     private MaxNumberOfCustomFields: number;
     public IsCustomFieldsMenue: boolean = false;
     public AllowCustomFields: boolean = false;
+
+    public customizationEditComponent: CustomizationEditComponent;
+
     constructor() {
         this.myService = new GeneralDomainService();
         this.CustomFieldsCollection = new ObservableCollection([]);
@@ -45,7 +49,11 @@ export class CustomFieldsComponent {
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTableName = args['ObjectTableName'];
         this.MaxNumberOfCustomFields = args['MaxNumberOfCustomFields'];
-
+        this.LoadCustomFields();
+        
+        //this.BuildItemsSource();
+    }
+    public LoadCustomFields() {
         this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
@@ -57,7 +65,6 @@ export class CustomFieldsComponent {
                 }
             }
         });
-        //this.BuildItemsSource();
     }
 
     private filterPickListCustomFields() {
@@ -165,4 +172,10 @@ export class CustomFieldsComponent {
         });
     }
 
+    Save() {
+
+    }
+    Cancel() {
+
+    }
 }

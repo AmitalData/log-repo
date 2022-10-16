@@ -13,6 +13,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 
 declare var window: any;
@@ -26,6 +27,9 @@ export class StandardFieldsComponent {
     private myService: GeneralDomainService;
     private  ObjecttableId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public customizationEditComponent: CustomizationEditComponent;
+
     constructor(private _entityListService: EntityListService) {
         this.myService = new GeneralDomainService();
     }
@@ -58,22 +62,6 @@ export class StandardFieldsComponent {
         if (objectTablePM != null) {
             this.Tabs.push(new TabItem(objectTablePM, this));
         }
-
-        var tableIds: string[] = [];
-        var mulityList: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && d.IsMulti);
-
-        mulityList.forEach((item) => {
-            var index = tableIds.indexOf(item.MultiTableId);
-
-            if (index == -1) {
-                tableIds.push(item.MultiTableId);
-
-                objectTablePM = window.ObjectTables.filter(d => d.Id == item.MultiTableId)[0];
-                if (objectTablePM != null) {
-                    this.Tabs.push(new TabItem(objectTablePM, this));
-                }
-            }
-        });
 
         this.SelectedTabItem = this.Tabs[0];
     }
@@ -128,6 +116,7 @@ export class TabItem {
             if (!myResponse.HasError) {
 
                 this.loadedFields = myResponse.Result;
+                //this.BuildItemsSource();
                 if (this.loadedFields != null) {
                     this.LoadTranslationsForMultiEntity();
                 }
@@ -225,6 +214,13 @@ export class StandardFieldItem {
         }
 
         return result;
+    }
+
+    Save() {
+
+    }
+    Cancel() {
+
     }
 
     //private LoadObjects() {

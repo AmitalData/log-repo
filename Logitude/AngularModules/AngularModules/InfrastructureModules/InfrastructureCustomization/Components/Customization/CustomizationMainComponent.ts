@@ -144,7 +144,7 @@ export class CustomizationMainComponent {
         this.selectedRow = fieldsTranslations;
 
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-        this.CurrentSession.StartBusyIndicator("Loading " + this.selectedRow.DefaultText + " ...");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response: any) => {
             if (!response.HasError) {
                 this.CurrentSession.StopBusyIndicator();

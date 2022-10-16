@@ -15,7 +15,7 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 import { ViewChild } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 import { newArray } from '@angular/compiler/src/util';
-import { forEach } from 'cypress/types/lodash';
+import { extend, forEach } from 'cypress/types/lodash';
 import { ICustomizationService } from '../../Interface/ICustomizationService';
 import { CustomFieldsService } from '../../ExternalService/CustomFieldsService';
 import { StandardFieldsService } from '../../ExternalService/StandardFieldsService';
@@ -23,6 +23,7 @@ import { ScreenLayoutService } from '../../ExternalService/ScreenLayoutService';
 import { TabsService } from '../../ExternalService/TabsService';
 import { RulesService } from '../../ExternalService/RulesService';
 import { SubEntitiesService } from '../../ExternalService/SubEntitiesService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var window: any;
 
 @Component({
@@ -71,6 +72,8 @@ export class CustomizationEditComponent {
         background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.MainTabHighlightColor : "",
     }
 
+    public IsDirty: boolean = false;
+    public NewSelectedMenu: CustomizationMainMenuItem;
     private selectedMenu: CustomizationMainMenuItem;
     public get SelectedMenu() {
         return this.selectedMenu;
@@ -81,6 +84,11 @@ export class CustomizationEditComponent {
     }
     public SelectionChanged(item: any) {
         if (this.SelectedMenu == item) return;
+        if (this.IsDirty) {
+            this.NewSelectedMenu = item;
+            this.OpenConfirmWindow();
+            return;
+        }
         this.SelectedMenu = item;
     }
 
@@ -213,17 +221,43 @@ export class CustomizationEditComponent {
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)
             .then(cmpRef => {
                 this.SelectedMenu.Page = cmpRef.instance;
+                cmpRef.instance.customizationEditComponent = this;
                 cmpRef.instance.SetWindowArgs(this.SelectedMenu.args);
             });
+    }
+
+    OpenConfirmWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.NoButtonText = "Don't Save";
+        confirmWindow.YesButtonText = "Save ";
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.SelectedMenu.Page.SaveClicked();
+                return;
+            }
+            if (confirmWindow.No) {
+                this.SelectedMenu.Page.CancelClicked();
+                return;
+            }
+        });
     }
 
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
+        this.NewSelectedMenu = null;
+        this.SelectedMenu.Page.SaveClicked();
     }
     SaveChangesAndClose() {
+        this.NewSelectedMenu = null;
+        this.SelectedMenu.Page.SaveClicked();
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -240,7 +274,7 @@ export class CustomizationMainMenuItem {
     public ComponentPath: string;
     public Page: any = null;
     public args: any = {};
-
+    
     constructor(myIcon: string) {
         this.IconCode = myIcon;
         this.IconSource = "./Images/Customization/" + myIcon + ".png";
