@@ -126,8 +126,8 @@ export class StimulsoftViewerComponent implements OnInit {
 
     FillFontSizeLists() {
 
-        var fontSizeString = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
-        fontSizeString.split(',').forEach((fontsize) => {
+        let fontSizes = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
+        fontSizes.split(',').forEach((fontsize) => {
             this.FontSizeLists.push(Number(fontsize));
         });
 
@@ -490,10 +490,9 @@ export class StimulsoftViewerComponent implements OnInit {
         return this.selectTextBoxElement;
     }
     set SelectTextBoxElement(value: HTMLElement) {
-        if (value != this.selectTextBoxElement) {
-            this.selectTextBoxElement = value ;
-            this.SetSelectedFontSize();
-        }
+        if (value == this.selectTextBoxElement) return;
+        this.selectTextBoxElement = value;
+        this.SetSelectedFontSize();
     }
 
 

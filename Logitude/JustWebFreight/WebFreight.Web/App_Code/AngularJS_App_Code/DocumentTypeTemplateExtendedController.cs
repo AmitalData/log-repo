@@ -451,19 +451,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-        private static string GetXmlFieldValueChange(EditableFieldPosition field)
+        private  string GetXmlFieldValueChange(EditableFieldPosition field)
         {
-            string valuesChange = "";
+            string result = "";
             if (field.IsTextValueChange)
             {
-                valuesChange = "\r\n<TextValue>" + "</TextValue>";
+                result = "\r\n<TextValue>" + "</TextValue>";
             }
             if (field.IsFontSizeChange)
             {
-                valuesChange += "\r\n<FontSize>" + "</FontSize>";
+                result += "\r\n<FontSize>" + "</FontSize>";
             }
 
-            return valuesChange;
+            return result;
         }
 
         public static IEnumerable<T> Shim<T>(System.Collections.IEnumerable enumerable)
