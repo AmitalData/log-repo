@@ -86,10 +86,10 @@
                 <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
                 </td>
-                
-                <td  style="width:20px;">
-                    <IconButton *ngIf="IsEditLayoutButtonVisible"  [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
-                    
+
+                <td style="width:20px;">
+                    <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
+
                 </td>
             </tr>
         </table>
@@ -101,11 +101,16 @@
 
     <div *ngIf="IsEmptyDashboardVisible" class="MediaFillRelative">
         <table>
-            <tr style="height:80px;"><td><div></div></td></tr>
+            <tr style="height:80px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
 
-            <!--*ngIf="!IsPermissionMessageVisible"-->
-            <tr style="height:25px;">
-                <td><div></div></td>
+            <tr style="height:25px;" *ngIf="!IsPermissionMessageVisible">
+                <td>
+                    <div></div>
+                </td>
                 <td>
                     <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
                         <span style="margin-left: 3px; font-size: 13px;">Click </span>
@@ -113,26 +118,33 @@
                         <span style="margin-left: 3px; font-size: 13px;"> to add widgets to your dashboard.</span>
                     </div>
                 </td>
-                <td><div></div></td>
+                <td>
+                    <div></div>
+                </td>
             </tr>
 
-            <!--<tr style="height:25px;" *ngIf="IsPermissionMessageVisible">
-        <td><div></div></td>
-        <td>
-            <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
-                <span style="margin-left: 3px;">Sorry, you have no permissions</span>
-            </div>
-        </td>
-        <td><div></div></td>
-    </tr>-->
+            <tr style="height:25px;" *ngIf="IsPermissionMessageVisible">
+                <td>
+                    <div></div>
+                </td>
+                <td>
+                    <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
+                        <span style="margin-left: 3px;">Sorry, you have no permissions</span>
+                    </div>
+                </td>
+                <td>
+                    <div></div>
+                </td>
+            </tr>
 
             <tr>
                 <td colspan="3">
                     <img class="TopCenter" src="./Images/Charts/Empty-Dashboard2.png" />
                 </td>
             </tr>
+
         </table>
-            
+
     </div>
 </div>
 
