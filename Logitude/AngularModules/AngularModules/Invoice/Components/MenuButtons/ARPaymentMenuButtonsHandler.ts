@@ -220,7 +220,7 @@ export class ARPaymentMenuButtonsHandler {
                             else {
                                 button.IsDisabled = true;
                             }
-                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || AppTool.IsNullOrEmpty(this.EntityPM.SATXML)) {
                                 button.IsHidden = true;
                             }
 
