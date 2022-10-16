@@ -104,6 +104,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
         SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         .then((cmpRef : any) => {
             cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Dashboard = this.SelectedDashboard;
             cmpRef.instance.Run(dataPointSelection);
         });
     }
