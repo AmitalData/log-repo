@@ -1,6 +1,6 @@
 ﻿namespace WebFreight.Web.Controllers.DigitalPortal.Models
 {
-    public class Partner
+    public class FilterSearchResponse
     {
         public string Id { get; set; }
 

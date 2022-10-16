@@ -46,7 +46,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
             {
-                return Ok(new List<Partner>());
+                return Ok(new List<FilterSearchResponse>());
             }
 
             var shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -62,14 +62,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                 &&(a.ConsigneeName.Trim().StartsWith(searchText) 
                                                    || a.ShipperName.Trim().StartsWith(searchText)))
                                     .Take(100)
-                                    .SelectMany(a => new List<Partner> 
+                                    .SelectMany(a => new List<FilterSearchResponse> 
                                     {
-                                        new Partner
+                                        new FilterSearchResponse
                                         { 
                                             Id = a.ConsigneeId,
                                             Name = a.ConsigneeName
                                         },
-                                        new Partner
+                                        new FilterSearchResponse
                                         { 
                                             Id = a.ShipperId,
                                             Name = a.ShipperName
@@ -83,6 +83,48 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                     .ToList();
 
             return Ok(partners);
+        }
+
+        [HttpGet]
+        [Route("DigitalPartners/GetFromToDestinationFiltersFilters")]
+        public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
+        {
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+            {
+                return Ok(new List<FilterSearchResponse>());
+            }
+
+            var shipmentRepository = new ShipmentRepository(authToken.Tenant);
+
+            IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+
+            bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
+
+            var Results = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                &&(cardType.Equals("CS")
+                                                    ? a.CustomerId.Equals(cardId)
+                                                    : a.AgentId.Equals(cardId))
+                                                && (isFrom
+                                                    ? a.From.Trim().StartsWith(searchText) 
+                                                    : a.To.Trim().StartsWith(searchText)))
+                                    .SelectMany(a => new List<FilterSearchResponse> 
+                                    {
+                                        new FilterSearchResponse
+                                        { 
+                                            Id = isFrom ? a.From : a.To,
+                                            Name = isFrom ? a.From : a.To
+                                        }
+                                    })
+                                    .DistinctBy(a => a.Name)
+                                    .OrderBy(x => x.Name)
+                                    .Take(10)
+                                    .ToList();
+
+            return Ok(Results);
         }
 
         [HttpGet]
