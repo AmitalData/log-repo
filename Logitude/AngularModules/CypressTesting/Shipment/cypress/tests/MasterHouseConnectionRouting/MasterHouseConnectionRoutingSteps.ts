@@ -68,6 +68,7 @@ Then("the house should create successfully", () => {
 
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
+    cy.wait(5000)
     Actions.ValidateCheckHouseCheckBox();
     cy.wait(5000)
 });
