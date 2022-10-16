@@ -444,16 +444,54 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
             IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
+            CustomerTenantAccessCardRepository customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(customerTenantAccessUpdaterAM.Tenant);
+            CustomerRepository customerRepository = new CustomerRepository(customerTenantAccessUpdaterAM.Tenant);
+
             const string waitingStatusCode = "W";
             const string acceptedStatusCode = "A";
             CustomerTenantAccesses = CustomerTenantAccesses.Where(CustomerTenantAccess => CustomerTenantAccess.Status == waitingStatusCode || CustomerTenantAccess.Status == acceptedStatusCode);
             foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
             {
-                customerTenantAccess.IsPrivateLabelCustomer = (bool)customerTenantAccessUpdaterAM.IsPrivateLabel;
-                CustomerTenantAccessRepository.Update(customerTenantAccess);
+                UpdateCustomerTenantAccessAndCustomers(new CustomerTenantAccessUpdaterArgs {
+                    CustomerTenantAccessUpdaterAM = customerTenantAccessUpdaterAM,
+                    CustomerTenantAccessRepository = CustomerTenantAccessRepository, 
+                    CustomerTenantAccessCardRepository = customerTenantAccessCardRepository, 
+                    CustomerRepository = customerRepository, 
+                    CustomerTenantAccess = customerTenantAccess
+                });
             }
 
             CustomerTenantAccessRepository.SubmitChanges();
+            customerRepository.SubmitChanges();
         }
+
+        private static void UpdateCustomerTenantAccessAndCustomers(CustomerTenantAccessUpdaterArgs customerTenantAccessUpdaterArgs)
+        {
+            customerTenantAccessUpdaterArgs.CustomerTenantAccess.IsPrivateLabelCustomer = (bool)customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.IsPrivateLabel;
+            customerTenantAccessUpdaterArgs.CustomerTenantAccessRepository.Update(customerTenantAccessUpdaterArgs.CustomerTenantAccess);
+
+            IQueryable<CustomerTenantAccessCard> allCustomerTenantAccessCards = customerTenantAccessUpdaterArgs.CustomerTenantAccessCardRepository.GetAllCustomerTenantAccessCardByCustomerTenantAccessId(customerTenantAccessUpdaterArgs.CustomerTenantAccess.Id, customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.Tenant);
+            List<string> allCustomersIds = allCustomerTenantAccessCards.Select(customerTenantAccessCard => customerTenantAccessCard.CustomerId).ToList();
+            List<Customer> customers = customerTenantAccessUpdaterArgs.CustomerRepository.GetCustomersByCardsIds(allCustomersIds, customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.Tenant);
+            foreach (Customer customer in customers)
+            {
+                UpdateIsPrivateLabelCustomerOrLogbox(customerTenantAccessUpdaterArgs, customer);
+            }
+        }
+
+        private static void UpdateIsPrivateLabelCustomerOrLogbox(CustomerTenantAccessUpdaterArgs customerTenantAccessUpdaterArgs, Customer customer)
+        {
+            customer.IsPrivateLabelCustomer = customerTenantAccessUpdaterArgs.CustomerTenantAccess.IsPrivateLabelCustomer;
+            customer.LogBoxActivated = !customer.IsPrivateLabelCustomer;
+            customerTenantAccessUpdaterArgs.CustomerRepository.Update(customer);
+        }
+    }
+    class CustomerTenantAccessUpdaterArgs
+    {
+        public CustomerTenantAccessUpdaterAM CustomerTenantAccessUpdaterAM { get; set; }
+        public CustomerTenantAccessRepository CustomerTenantAccessRepository { get; set; }
+        public CustomerTenantAccessCardRepository CustomerTenantAccessCardRepository { get; set; }
+        public CustomerRepository CustomerRepository { get; set; }
+        public CustomerTenantAccess CustomerTenantAccess { get; set; }
     }
 }
