@@ -8,6 +8,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
 {
     public class SeriesMeasure
     {
+        public string Name { get; set; }
         public string MeasureFieldId { get; set; }
         public List<SeriesMeasureVulue> SeriesMeasureVulues = new List<SeriesMeasureVulue>();
     }

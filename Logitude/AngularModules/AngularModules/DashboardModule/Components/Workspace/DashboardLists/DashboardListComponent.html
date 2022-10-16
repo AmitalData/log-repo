@@ -8,7 +8,7 @@
             <BackButton [Text]="Dashboard?.Name?.substring(0,13)" (click)="BackButtonClicked()"></BackButton>
           </div>
           <div class="TabTitleRow TextTrimming" style="margin: 0px 10px;padding-top: 3px;">
-            {{DataPointSelection?.Widget?.Title}} </div>
+            {{rowData?.length}} {{DataPointSelection?.Widget?.Title}} </div>
         </div>
 
         <ValidationSummary *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
