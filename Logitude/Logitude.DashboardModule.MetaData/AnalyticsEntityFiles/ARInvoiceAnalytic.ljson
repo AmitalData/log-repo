@@ -1,5 +1,5 @@
 {
-  "HashString": "052398033a8445b9a0ba4ebc2f78287a",
+  "HashString": "bedb180980434a96b39892a5393e78b8",
   "Name": "ARInvoice Analytic",
   "TableName": "ARInvoiceAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -386,7 +386,7 @@
       "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ApprovedByUserId",
-      "DisplayName": "Approved By User Id",
+      "DisplayName": "Approved By User",
       "DisplayNamePlural": "ApprovedByUserId",
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
@@ -607,7 +607,7 @@
       "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "SalesmanUserId",
-      "DisplayName": "Salesman User Id",
+      "DisplayName": "Salesman User",
       "DisplayNamePlural": "SalesmanUserId",
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
@@ -633,7 +633,7 @@
       "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "BankAccountLiteId",
-      "DisplayName": "Bank Account Lite Id",
+      "DisplayName": "Bank Account Lite",
       "DisplayNamePlural": "BankAccountLiteId",
       "JoinedTableName": "BankAccountLite",
       "JoinedTableDBName": "BankAccountLites",
