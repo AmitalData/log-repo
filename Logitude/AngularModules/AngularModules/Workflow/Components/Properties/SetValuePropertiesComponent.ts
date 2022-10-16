@@ -98,6 +98,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
             this.SetValues[setValueIndex].value = null;
             this.fillObjectFieldDictionary(field);
+            this.SetValues[setValueIndex].type = field ? this.getFieldType(field) : null;
         }
         this.IsValidSetValue = this.isValidSetValue();
     }
@@ -176,6 +177,15 @@ export class SetValuePropertiesComponent extends BaseComponent {
     getObjectFieldCode(field: string) {
         let objectfieldCode = field.split('_')[1];
         return objectfieldCode;
+    }
+
+    getFieldType(field: string) {
+        if (this.isObjectField(field)) {
+            let object: ObjectFieldPM = this.ObjectFieldsDictionary[this.getObjectFieldCode(field)]
+            return object.DataTypeCode
+        } else {
+            return this.getDeclareVariableType(field);
+        }
     }
 
     setUIProperties() {
