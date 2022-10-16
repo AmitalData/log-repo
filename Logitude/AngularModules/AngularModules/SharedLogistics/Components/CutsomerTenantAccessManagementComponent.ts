@@ -64,6 +64,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     AcceptedCountEnabled: boolean;
     InProgressCountEnabled: boolean;
     InactiveCountEnabled: boolean;
+    IsCreateLogboxTenantVisibile: boolean;
     public ItemsSource: ObservableCollection;
    
 
@@ -90,6 +91,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     LoadData() {
         this.LoadCurrentTenant();
         this.LoadLastCustomerRequest();
+        this.IsCreateLogboxTenantVisibile = FeatureLocator.HasFeaturePermession("CustomerTenantAccess", "CreateNewTenant");
     }
 
 
@@ -194,6 +196,16 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     }
 
+    CreateLogboxTenantLinkClick() {
+        let windowArgs: any = {};
+        windowArgs.IsCreateLogboxTenantFromCloud = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 750;
+        logWindow.Height = 500;
+        logWindow.Title = "Create Tenant";
+        logWindow.Show("./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent");
+    }
 
 
 

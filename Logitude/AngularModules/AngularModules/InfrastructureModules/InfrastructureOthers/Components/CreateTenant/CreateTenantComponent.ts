@@ -1,4 +1,3 @@
-
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -10,41 +9,69 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {SignUpInfoClass} from '../../../../InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantPackageSelectionComponent';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
+import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
 
 @Component({
     selector: 'CreateTenantComponent',
     templateUrl: './CreateTenantComponent.html',
 })
 
-
 export class CreateTenantComponent extends BaseComponent implements OnInit {
-
     DataContext: CreateTenantComponent = this;
     Email: string;
     ContactName: string;
     Phone: string;
     CompanyName: string;
+    City: string;
+    VatNumber: string;
+    TimeZone: string;
+    IsCreateLogboxTenantFromCloud: boolean;
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     signUpService: SignUpService;
-
     public IsStardLoadPage: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-
         this.signUpService = new SignUpService();
-
     }
 
-    ngOnInit(
-
-
-    ) {
+    ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("Package").subscribe(response => {
-            this.IsStardLoadPage = true;
-
+            this.FillDetails();
         });
+    }
+
+    private FillDetails() {
+        if (!this.IsCreateLogboxTenantFromCloud) {
+            this.IsStardLoadPage = true;
+            return;
+        }
+        this.FillLogboxTenantDetails();
+    }
+
+    private FillLogboxTenantDetails() {
+        if (!this.IsCreateLogboxTenantFromCloud) return;
+        var countryListService: CountryListService = new CountryListService();
+        countryListService.getAllFromCache().subscribe((result: any) => {
+            this.SetLogboxCountryDetails(result);
+            this.IsStardLoadPage = true;
+        });
+        let logboxPackageCode = "IMPO";
+        this.PackageCode = logboxPackageCode;
+        let telivivCity = "Tel Aviv";
+        this.City = telivivCity;
+        this.TimeZone = "";//
+    }
+
+    private SetLogboxCountryDetails(result: any) {
+        let israelCountryCode = "IL";
+        let israelCountry: CountryList = result.Result.filter(d => d.Tenant == SessionLocator.Tenant && d.Code == israelCountryCode)[0];
+        this.Country = israelCountry != null ? israelCountry : this.Country;
+    }
+
+    SetWindowArgs(args: any) {
+        this.IsCreateLogboxTenantFromCloud = args.IsCreateLogboxTenantFromCloud;
     }
 
     CountryId: string;
@@ -58,8 +85,6 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
             this.packageCode = newValue;
         }
     }
-
-
 
     private country: CountryList = null;
     get Country() { return this.country; }
@@ -85,32 +110,18 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
 
     }
 
-
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-
-
-
-
-
     SaveButtonClicked() {
-
         this.ValidationErrorsList = [];
-
         this.ValidationFields();
 
        if( this.ValidationErrorsList.length == 0) this.Buildtenant();
-
     }
 
-
-
     ValidationFields() {
-
-
         if (AppTool.IsNullOrEmpty(this.Email)) {
             this.ValidationErrorsList.push("Email field is required");
         } else if (!this.CheckIsValidEmail(this.Email)) {
@@ -138,12 +149,14 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("Package Code field is required");
         }
 
+        if (this.IsCreateLogboxTenantFromCloud && AppTool.IsNullOrEmpty(this.VatNumber)) {
+            this.ValidationErrorsList.push("Vat Number field is required");
+        }
 
-     
-
+        if (this.IsCreateLogboxTenantFromCloud && AppTool.IsNullOrEmpty(this.CountryCode)) {
+            this.ValidationErrorsList.push("Country field is required");
+        }
     }
-
-
 
     CheckIsValidEmail(email: string) {
 
@@ -165,9 +178,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         return IsOk;
     }
 
-
     Buildtenant() {
-
         this.CurrentSession.StartBusyIndicatorSaving();
         
         var SignUpInfo: SignUpInfoClass = new SignUpInfoClass();
@@ -179,28 +190,22 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         SignUpInfo.CountryName = this.CountryName;
         SignUpInfo.CountryCode = this.CountryCode;
         SignUpInfo.Tenant = SessionLocator.Tenant;
+        SignUpInfo.VatNumber = this.VatNumber;
+        SignUpInfo.TimeZone = this.TimeZone;
+        SignUpInfo.City = this.City;
       
         this.signUpService.CreateTenant(SignUpInfo).subscribe((myResponse: ServiceResponse) => {
-
             this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-
                 this.CurrentSession.CloseCurrentWindow();
             }
             else {
-   
                 if (myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
                     var messageWindow: MessageWindow = new MessageWindow();
                     messageWindow.Title = "Logitude Message";
                     messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
-            
             }
         });
-
     }
-
-
 }
-
-

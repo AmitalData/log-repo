@@ -51,6 +51,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;a5dd&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2064,6 +2065,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;CustomerTenantAccess.Features.EXCEL&quot;"
       FeatureDefaultText="&quot;Download to Excel&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CreateNewTenant&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;CustomerTenantAccess.Features.CreateNewTenant&quot;"
+      FeatureDefaultText="&quot;Create new tenant&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessUpdateClass
    {  		
-		public const string HashString = "4a5b3a782a75fa8be1a41c784f3b6868";
+		public const string HashString = "9c88496eff7f13b5a5cc944939cb0ba0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1758,6 +1758,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CustomerTenantAccessFeature_CustomerTenantAccess_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerTenantAccess.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerTenantAccessObjectTable);
+
+		   Feature CustomerTenantAccessFeature_CreateNewTenant = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateNewTenant", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.CreateNewTenant", NameTextCodeDefaultText = @"Create new tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerTenantAccessObjectTable);
 
    
 	    

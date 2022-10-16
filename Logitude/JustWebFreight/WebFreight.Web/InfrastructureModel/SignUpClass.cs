@@ -446,6 +446,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                 tenant = CreateTenant(signUpInfo);
                 InitializeRepositories(tenant);
+                CreateNewCustomer(signUpInfo, tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffProducts(tenant);
@@ -755,6 +756,64 @@ namespace WebFreight.Web.InfrastructureModel
             }
             signUpInfo.Tenant = tenant;
             return password;
+        }
+
+        private static void CreateNewCustomer(SignUpInfoClass signUpInfoClass, int tenant)
+        {
+            if (!signUpInfoClass.IsCreateLogboxTenantFromCloud) return;
+
+            CustomerPM customerPM = new CustomerPM
+            {
+                EnglishName = signUpInfoClass.Company,
+                CustomerStatusCode = "ACT",
+                Code = "new"
+            };
+
+            customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
+            customerPM.Contacts.Add(GetNewContactPM(signUpInfoClass, tenant));
+
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            CustomerService customerService = new CustomerService(commonContext, customerPM);
+            customerService.Create();
+            signUpInfoClass.CustomerId = customerPM.Id;
+        }
+
+        private static AddressPM GetNewAddressPM(SignUpInfoClass signUpInfoClass, int tenant)
+        {
+            return new AddressPM
+            {
+                CardCode = "new",
+                AddressTypeId = "M",
+                City = signUpInfoClass.City,
+                ContactBusinessPhone = signUpInfoClass.Phone,
+                ContactEmail = signUpInfoClass.Email,
+                ContactName = signUpInfoClass.Name,
+                CountryCode = signUpInfoClass.CountryCode,
+                CountryEnglishName = signUpInfoClass.CountryName,
+                CountryName = signUpInfoClass.CountryName,
+                //CountryId = "",//
+                Description = "Main Address",
+                Name = signUpInfoClass.Name,
+                PhoneNumber = signUpInfoClass.Phone,
+                Tenant = tenant,
+                VatNumber = signUpInfoClass.VatNumber,
+                IsCreatedWithPartner = true,
+            };
+        }
+
+        private static ContactPM GetNewContactPM(SignUpInfoClass signUpInfoClass, int tenant)
+        {
+            return new ContactPM
+            {
+                BusinessPhone = signUpInfoClass.Phone,
+                CardId = "newCard",
+                Email = signUpInfoClass.Email,
+                EnglishName = signUpInfoClass.Name,
+                IsCreatedWithPartner = true,
+                LocalName = signUpInfoClass.Name,
+                SetAsPrimaryForCard = true,
+                Tenant = tenant,
+            };
         }
 
         private static void AddShipmentSubTypes(int tenant, ShipmentSubTypeRepository shipmentSubTypeRepository, List<ShipmentSubType> tenantZeroShipmentSubTypes)
