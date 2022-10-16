@@ -23,6 +23,9 @@ using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools;
+using CommunicationWorkerRole.Services.Logbox;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {
@@ -82,8 +85,15 @@ namespace CommunicationWorkerRole
                 //string company = signUpInfo.Company;
                 //string phone = signUpInfo.phone;
 
-
-                if (signUpInfo.IsCrmTenant)
+                if (signUpInfo.IsCreateLogboxTenantFromCloud && !signUpInfo.IsCreateLogboxTenantFromCloudPassed)
+                {
+                    SendQueueMessageToLogbox(signUpInfo);
+                }
+                else if (signUpInfo.IsCreateLogboxTenantFromCloud)
+                {
+                    CreateTenant(signUpInfo);
+                }
+                else if (signUpInfo.IsCrmTenant)
                 {
                     CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
                     string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
@@ -99,6 +109,33 @@ namespace CommunicationWorkerRole
                 Debug.WriteLine(e.ToString());
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
                 Thread.Sleep(10000);
+            }
+        }
+
+        private void SendQueueMessageToLogbox(SignUpInfoClass signUpInfo)
+        {
+            string URI = CustomerTenantsURLService.Get();
+            string Token = APICredentialsAuthenticationService.Authenticate(URI);
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Token", Token);
+                signUpInfo.IsCreateLogboxTenantFromCloudPassed = true;
+                var serializedObject = JsonConvert.SerializeObject(signUpInfo);
+                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                var result = client.PostAsync(URI + "SignUpController", content);
+
+                result.Wait();
+
+                if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var responseData = result.Result.Content.ReadAsStringAsync().Result;
+                    //APILOG
+                }
+                else
+                {
+                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                    //APILOG
+                }
             }
         }
 

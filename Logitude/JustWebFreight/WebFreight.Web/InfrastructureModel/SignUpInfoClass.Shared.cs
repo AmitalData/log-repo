@@ -18,6 +18,10 @@ namespace WebFreight.Web.InfrastructureModel
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
         public string ObjecttableName { get; set; }
-
+        public string VatNumber { get; set; }
+        public string TimeZone { get; set; }
+        public string City { get; set; }
+        public bool IsCreateLogboxTenantFromCloud { get; set; }
+        public bool IsCreateLogboxTenantFromCloudPassed { get; set; }
     }
 }

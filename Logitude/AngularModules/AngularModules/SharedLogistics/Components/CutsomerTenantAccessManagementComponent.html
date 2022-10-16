@@ -64,6 +64,7 @@ Test:hover {
 
                                                     <div>
                                                         <p class="QueryLink" (click)="SettingsLinkClick()">Settings</p>
+                                                        <p *ngIf="IsCreateLogboxTenantVisibile" class="QueryLink" (click)="CreateLogboxTenantLinkClick()">Create new tenant</p>
                                                     </div>
                                                 </div>                                              
                                         </div>
