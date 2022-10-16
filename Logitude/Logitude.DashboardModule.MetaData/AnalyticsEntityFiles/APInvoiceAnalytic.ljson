@@ -1,5 +1,5 @@
 {
-  "HashString": "f40762ca76b546ec838e52ce7f561e93",
+  "HashString": "7d62b46913ce47c9b5b262118070d930",
   "Name": "APInvoice Analytic",
   "TableName": "APInvoiceAnalytics",
   "AnalyticsFactsFieldsMetaDatas": [
@@ -373,7 +373,7 @@
       "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ApprovedByUserId",
-      "DisplayName": "Approved By User Id",
+      "DisplayName": "Approved By User",
       "DisplayNamePlural": "ApprovedByUserId",
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
