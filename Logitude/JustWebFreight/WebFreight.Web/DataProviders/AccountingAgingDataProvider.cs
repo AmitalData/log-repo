@@ -36,6 +36,7 @@ namespace WebFreight.Web.DataProviders
         public string AccountLocalName { get; set; }
         public string AccountName { get; set; }
         public string AccountDisplayNumber { get; set; }
+        public string AccountPhone { get; set; }
         public string AccountCurrencyCode { get; set; }
         public string CurrencyCode { get; set; }
         public string ChartOfAccountLocalName { get; set; }
@@ -45,6 +46,20 @@ namespace WebFreight.Web.DataProviders
         public decimal CustomerCreditLimit { get; set; }
         public double? InsuredCreditLimit { get; set; }
         public decimal GLAccountStandardInterestRate { get; set; }
+
+        public decimal? BalanceInLocalAccountingDate { get; set; }
+        public decimal? TotalFutureOpenCheques { get; set; }
+        public decimal? TotalOpenCheques { get; set; }
+        public decimal? TotalOpenShipments { get; set; }
+        public decimal? BalanceInLocalCurrency { get; set; }
+        public decimal? BalanceInLocalAmountFutureChecksDifference { 
+            get {
+                if (!BalanceInLocalCurrency.HasValue && !TotalFutureOpenCheques.HasValue) {
+                    return null;
+                }
+                return (BalanceInLocalCurrency.HasValue ? BalanceInLocalCurrency.Value : 0) - (TotalFutureOpenCheques.HasValue ? TotalFutureOpenCheques.Value : 0); 
+            }
+        }
 
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
