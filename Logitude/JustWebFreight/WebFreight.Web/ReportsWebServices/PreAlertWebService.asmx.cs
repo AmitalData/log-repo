@@ -249,6 +249,26 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
                 prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment3TrailerNumber;
                 prealertDataProvider.ValueOfGoods = shipmentpm.ValueOfGoods;
+                prealertDataProvider.AMSBL = shipmentpm.AMSBL;
+                prealertDataProvider.HousesNumber = shipmentpm.NumberOfHouses;
+
+                prealertDataProvider.LastLegATA =
+                    shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3ATA :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2ATA :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1ATA : 
+                    shipmentpm.MainCarriageATA));
+
+                prealertDataProvider.LastLegVessel =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3VesselName :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2VesselName :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1VesselName :
+                    shipmentpm.MainCarriageVesselName));
+
+                prealertDataProvider.LastLegVoyageNumber =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3CarrierNumber :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2CarrierNumber :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1CarrierNumber :
+                    shipmentpm.MainCarriageCarrierNumber));
 
                 if (!string.IsNullOrEmpty(shipmentpm.ValueOfGoodsCurrencyId))
                 {

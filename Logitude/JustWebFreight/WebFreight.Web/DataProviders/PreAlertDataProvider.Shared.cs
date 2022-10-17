@@ -308,11 +308,11 @@ namespace WebFreight.Web.DataProviders
 
         public string OriginAgentTel { get; set; }
         public string DestinationAgentTel { get; set; }
-        public string LastLegATA { get; set; }
+        public DateTime? LastLegATA { get; set; }
         public string LastLegVessel { get; set; }
         public string LastLegVoyageNumber { get; set; }
         public string AMSBL { get; set; }
-        public string HousesNumber { get; set; }
+        public int? HousesNumber { get; set; }
     }
 
     public class Packages
