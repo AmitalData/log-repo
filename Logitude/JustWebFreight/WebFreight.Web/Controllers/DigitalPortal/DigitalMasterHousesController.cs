@@ -92,6 +92,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var master = new DigitalMasterHouse()
             {
                 Id = masterShipment.Id,
+                Tenant = masterShipment.Tenant,
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
                 ShipperName = masterShipment.ShipperName,
                 ConsigneeName = masterShipment.ConsigneeName,
