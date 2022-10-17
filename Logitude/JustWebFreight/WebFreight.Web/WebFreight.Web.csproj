@@ -1197,6 +1197,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalInvoiceController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalMasterHousesController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPartnersController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalPortalContactController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalReportController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />

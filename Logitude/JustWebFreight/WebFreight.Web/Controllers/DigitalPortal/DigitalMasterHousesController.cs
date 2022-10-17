@@ -97,6 +97,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Id = masterShipment.Id,
                 ShipmentNumber = masterShipment.ShipmentNumber,
                 TransportModeId = masterShipment.TransportModeId,
+                Tenant = masterShipment.Tenant,
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
                 ShipperName = masterShipment.ShipperName,
                 ConsigneeName = masterShipment.ConsigneeName,

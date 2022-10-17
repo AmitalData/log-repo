@@ -7,6 +7,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
     public class DigitalMasterHouse
     {
         public string Id { get; set; }
+        public int Tenant { get; set; }
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
         public string ShipmentLevelCode { get; set; }
