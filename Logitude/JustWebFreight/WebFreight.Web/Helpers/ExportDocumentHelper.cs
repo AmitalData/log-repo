@@ -53,6 +53,7 @@ using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.AccountingModel.Reports.Interest;
 using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Helpers
 {
@@ -175,14 +176,13 @@ namespace WebFreight.Web.Helpers
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
             DocumentRepository docRepository = new DocumentRepository(tenant);
             DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(tenant);
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
             DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(tenant);
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
+            DocumentTypeTemplatePM defaulttemplate =   documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
             DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(documentTypeCopyId);
             DocumentType documentType = repository.GetSingleDocumentTypes(documentTypeId, tenant);
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
-
             if (documentType.Code == "FTDT")
             {
                 throw new Exception("This is a failure test document!");
@@ -194,11 +194,15 @@ namespace WebFreight.Web.Helpers
                 templatedata = defaulttemplate.TemplateBody;
             }
 
+
+
+
             if (templatedata != null)
             {
                 if (templatedata.Length != 0)
                 {
-                    StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId);
+                    defaulttemplate.DocumentOutId = documentOut?.Id;
+                    StiReport report = GetReportDocument(defaulttemplate, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, tenant, theT1, theT2, theA1, theA2, userId);
 
                     LoadEditableFields(documentOut, report);
 
@@ -362,13 +366,11 @@ namespace WebFreight.Web.Helpers
         private long t1;
         long t2;
 
-        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null)
+        public StiReport GetReportDocument(DocumentTypeTemplatePM defaulttemplate, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata,  int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null)
         {
 
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
-            string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
-            StiReport report = BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, userId, documentTypeCopyId);
+            StiReport report = BuildReport(defaulttemplate, entityId, entityObjectTableId, childEntityId, childObjectTableId, tenant, userId, documentTypeCopyId);
             return report;
         }
 
@@ -439,13 +441,13 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
         }
 
-        public StiReport BuildReport(string documentTypeCode, string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string defaulttemplateId, int tenant, string userId, string documentTypeCopyId)
+        public StiReport BuildReport(DocumentTypeTemplatePM defaulttemplate, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, int tenant, string userId, string documentTypeCopyId)
         {
             long theT1;
             long theT2;
+            string documentTypeCode = defaulttemplate.DocumentTypeCode;
+            string documentTypeId = defaulttemplate.DocumentTypeId;
             StiReport report = new StiReport();
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(defaulttemplateId);
             switch (documentTypeCode)
             {
                 case "EXCU":
@@ -1718,7 +1720,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             }
         }
 
-        public StiReport LoadandRender(DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, int tenant, StiBusinessObject otherstiBusinessObject = null)
+        public StiReport LoadandRender(DocumentTypeTemplatePM defaulttemplate, StiBusinessObject currentBusinessObject, int tenant, StiBusinessObject otherstiBusinessObject = null)
         {
             StiReport report = new StiReport();
             if (otherstiBusinessObject != null)
@@ -1807,7 +1809,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 AddLogo(report, logodata);
 
             }
-
+            new StimulsoftReportFontSizeService().Run(report , defaulttemplate.DocumentOutId , tenant);
             report.AutoLocalizeReportOnRun = true;
             theT1 = System.DateTime.Now.Ticks;
             report.Render(false);
@@ -1840,14 +1842,14 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(0);
             DocumentRepository docRepository = new DocumentRepository(0);
             DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(0);
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(0);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
             DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(0);
-            // DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
+            //DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
 
             DocumentTypeCopy documentTypeCopy = null;
 
 
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentTypeTemplateId);
+            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentTypeTemplateId, tenant);
 
             if (defaulttemplate != null)
             {
@@ -1866,8 +1868,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     if (templatedata.Length != 0)
                     {
 
-
-                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2);
+                        StiReport report = GetReportDocument(defaulttemplate, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, tenant, theT1, theT2, theA1, theA2);
                         theA2 = System.DateTime.Now.Ticks;
 
                         StiPdfExportSettings pdfSettings = new StiPdfExportSettings();

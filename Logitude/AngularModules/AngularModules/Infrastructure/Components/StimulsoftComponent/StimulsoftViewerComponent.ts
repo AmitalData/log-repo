@@ -91,11 +91,16 @@ export class StimulsoftViewerComponent implements OnInit {
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsEnableReportTemplateExcel: boolean = false;
 
-
-
+    SelectedFontSize: number;
+    FontSizeLists: number[] = [];
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
+
+
+        this.FillFontSizeLists();
+
 
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -116,6 +121,17 @@ export class StimulsoftViewerComponent implements OnInit {
 
         this.PreviewStimualDivId = Guid.newGuid();
         this.ViewerContentDivId = Guid.newGuid();
+    }
+
+
+    FillFontSizeLists() {
+
+        let fontSizes = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
+        fontSizes.split(',').forEach((fontsize) => {
+            this.FontSizeLists.push(Number(fontsize));
+        });
+
+        this.SelectedFontSize = this.FontSizeLists[0];
     }
     ngAfterViewInit() {
         this.SetReportTypeClickText(this.StimulsoftArgData?.TemplateType);
@@ -243,9 +259,9 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
 
-
+    EditableFieldPositions: EditableFieldPosition[]
     BuildEditableField(editableFieldPosition: EditableFieldPosition[], dataContext: any) {
-
+        this.EditableFieldPositions = editableFieldPosition;
 
         var numberofEditedfield = this.NumberofEditedfield;
         var element = document.getElementById(dataContext.ViewerContentDivId);
@@ -265,7 +281,6 @@ export class StimulsoftViewerComponent implements OnInit {
                         fontSize = (dataContext.ImageWidthNumber / perfont).toString() + "px";
                     }
                     else fontSize = item.FontSize.toString() + "px";
-
 
 
                     var Left = (item.Left * precePageWidth).toString() + "px";
@@ -320,17 +335,19 @@ export class StimulsoftViewerComponent implements OnInit {
                                     if ((fieldvalueArea.value != textarea.value) || (AppTool.IsNullOrEmpty(textarea.value))) {
                                         field.NewValue = textarea.value;
                                         field.Status = "Change";
+                                        field.IsTextValueChange = true;
                                     }
                                 }
                                 else {
-                                    if (field.FieldValue == oldValueArea.value) field.Status = "";
+                                    if (field.FieldValue == oldValueArea.value) dataContext.ResetTextValueEditableField(field);
                                     else {
                                         field.Status = "Change";
+                                        field.IsTextValueChange = true;
                                         field.NewValue = field.OldValue;
-                                        field.ReturnToOriginValue = true;
+                                        field.ReturnToOriginValue =field.IsFontSizeChange? false:true;
                                     }
 
-                                    field.IsEditedField = false;
+                                    field.IsEditedField = (field.IsFontSizeChange || field.FontSize != field.OriginalFontSize);
 
                                 }
 
@@ -346,6 +363,7 @@ export class StimulsoftViewerComponent implements OnInit {
                             textarea.style.backgroundColor = "white";
                             textarea.style.borderColor = "red";
                             textarea.style.borderRadius = "3px"
+                            dataContext.SelectTextBoxElement = textarea;
 
                             if (editableFieldPosition != null) {
 
@@ -416,18 +434,21 @@ export class StimulsoftViewerComponent implements OnInit {
                                         if (field != null) {
                                             field.NewValue = newValue;
                                             field.Status = "Change";
+                                            field.IsTextValueChange = true;
+
                                         }
                                     }
                                 }
                                 else {
                                     if (field.FieldValue == field.OldValue) {
-                                        field.Status = "";
+                                        field.Status =field.IsFontSizeChange? field.Status:"";
                                         field.NewValue = "";
                                     }
                                     else {
                                         field.Status = "Change";
+                                        field.IsTextValueChange = true;
                                         field.NewValue = field.OldValue;
-                                        field.ReturnToOriginValue = true;
+                                        field.ReturnToOriginValue =field.IsFontSizeChange? false:true;
                                     }
 
                                     field.IsEditedField = false;
@@ -459,9 +480,70 @@ export class StimulsoftViewerComponent implements OnInit {
                 selectelement.style.backgroundColor = "white";
                 selectelement.style.borderColor = "red";
                 selectelement.style.borderRadius = "3px"
+                dataContext.SelectTextBoxElement = selectelement;
                 selectelement.focus();
             }
         }
+    }
+    selectTextBoxElement: HTMLElement;
+    get SelectTextBoxElement() {
+        return this.selectTextBoxElement;
+    }
+    set SelectTextBoxElement(value: HTMLElement) {
+        if (value == this.selectTextBoxElement) return;
+        this.selectTextBoxElement = value;
+        this.SetSelectedFontSize();
+    }
+
+
+    
+    SetSelectedFontSize() {
+
+        if (!this.SelectTextBoxElement) return;
+        if (!this.EditableFieldPositions || this.EditableFieldPositions.length == 0) return;
+        let elementKey = this.SelectTextBoxElement.id;
+        let editableField = this.EditableFieldPositions.filter(d => d.Key == elementKey)[0];
+        if (!editableField) return;
+        let fontSize = editableField.Status == "Change" && editableField.IsFontSizeChange ? editableField.NewFontSize : editableField.FontSize;
+
+        this.SelectedFontSize  = this.FontSizeLists.reduce(function (prev, curr) {
+            return (Math.abs(curr - fontSize) < Math.abs(prev - fontSize) ? curr : prev);
+        });
+
+
+    }
+
+    FontSizeSelectedItemChanged(fontSize: number) {
+        this.SelectedFontSize = fontSize;
+        if (!this.SelectTextBoxElement) return;
+        let elementKey = this.SelectTextBoxElement.id;
+        let editableField = this.EditableFieldPositions.filter(d => d.Key == elementKey)[0];
+        if (!editableField) return;
+        if (editableField.NewFontSize == fontSize) return;
+        editableField.NewFontSize = fontSize;
+        editableField.Status = "Change";
+        editableField.IsFontSizeChange = true;
+
+        if (!editableField.NewValue) {
+            editableField.NewValue = editableField.FieldValue;
+        }
+        editableField.IsTextValueChange = true;
+        editableField.IsEditedField = true;
+        editableField.ReturnToOriginValue = false;
+        this.SetElementFontSize(fontSize , this.SelectTextBoxElement);
+
+    }
+
+
+
+    CalculateFontSizeDependedOnScreenSize(fontSize: number) {
+
+        if (AppTool.IsNullOrEmpty(this.OrginalImageWidth)) return fontSize;
+        return (this.ImageWidthNumber / (Number(this.OrginalImageWidth) / fontSize));
+    }
+  
+    SetElementFontSize(fontSize: number, element: HTMLElement) {
+        element.style.fontSize = (this.CalculateFontSizeDependedOnScreenSize(fontSize) + "px");
     }
 
     SetScreenWidthAndHeight(screenWidth: number, screenHeight: number) {
@@ -681,6 +763,24 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
+    public IsEditableFieldChanged(field: EditableFieldPosition) {
+        return field.FieldValue != field.NewValue || field.FontSize != field.NewFontSize
+    }
+
+ResetEditableField(field: EditableFieldPosition){
+                            field.Status = "";
+                           field.IsFontSizeChange = false;
+                           field.IsTextValueChange = false;
+}
+
+    ResetTextValueEditableField(field: EditableFieldPosition) {
+        if (field.IsFontSizeChange) return;
+        field.Status = "";
+        field.IsTextValueChange = false;
+    }
+
+
+
     GoToPage(numberOfPage: number, processName: string) {
 
         this.SaveShift();
@@ -695,8 +795,9 @@ export class StimulsoftViewerComponent implements OnInit {
             filter.PageIndex = numberOfPage;
             filter.EditableFieldLists = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
+
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (field.FieldValue != field.NewValue) {
+                    if (this.IsEditableFieldChanged(field) ) {
                         filter.EditableFieldLists.push(field);
                     }
                 });
@@ -711,8 +812,10 @@ export class StimulsoftViewerComponent implements OnInit {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
-                        this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                            field.Status = "";
+                        this.EditableField.filter(d => d.Status == "Change" ).forEach((field) => {
+
+                           this.ResetEditableField(field);  
+    
                         });
 
                         if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -1101,6 +1204,9 @@ export class StimulsoftViewerComponent implements OnInit {
                         element.style.borderColor = "#808080";
                         element.style.borderRadius = "0px";
                         SetNewValue(element, item.OldValue, item.ControlType);
+                        this.SetElementFontSize(item.OriginalFontSize, element);
+
+
                     }
                     else {
 
@@ -1112,9 +1218,11 @@ export class StimulsoftViewerComponent implements OnInit {
                 }
 
                 item.IsEditedField = false;
-                item.Status = "";
                 item.FieldValue = item.OldValue;
                 item.NewValue = "";
+                item.FontSize = item.OriginalFontSize;
+                item.NewFontSize = null;
+                this.ResetEditableField(item);
 
             });
 
@@ -1150,7 +1258,7 @@ export class StimulsoftViewerComponent implements OnInit {
             var editableFieldLists: any[] = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (field.FieldValue != field.NewValue) {
+                    if (this.IsEditableFieldChanged(field)) {
                         editableFieldLists.push(field);
                     }
                 });
@@ -1199,7 +1307,7 @@ export class StimulsoftViewerComponent implements OnInit {
             filter.EditableFieldLists = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (field.FieldValue != field.NewValue) {
+                    if (this.IsEditableFieldChanged(field)) {
                         filter.EditableFieldLists.push(field);
                     }
                 });
@@ -1209,8 +1317,8 @@ export class StimulsoftViewerComponent implements OnInit {
                 this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
-                        this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                            field.Status = "";
+                        this.EditableField.filter(d => d.Status == "Change" ).forEach((field) => {
+                            this.ResetEditableField(field);
                         });
 
                         if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {

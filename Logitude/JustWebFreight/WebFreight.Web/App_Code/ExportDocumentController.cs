@@ -214,27 +214,27 @@ namespace WebFreight.Web.App_Code
                 {
 
                     Byte[] templatedata = null;
-                    DocumentTypeRepository repository = new DocumentTypeRepository(filter.Tenant);
 
                     DocumentRepository docRepository = new DocumentRepository(filter.Tenant);
                     DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(filter.Tenant);
-                    DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(filter.Tenant);
+                    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(filter.Tenant);
                     DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(filter.Tenant);
 
-                    DocumentTypeTemplate template = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(filter.DocumentTypeTemplateId);
-
+                    DocumentTypeTemplatePM template = documentTypeTemplateQuery.GetById(filter.DocumentTypeTemplateId , filter.Tenant);
                     DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(filter.DocumentTypeCopyId);
-                    DocumentType documentType = repository.GetSingleDocumentTypes(template.DocumentTypeId, filter.Tenant);
                     DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(filter.Tenant);
 
                     if (template != null) templatedata = template.TemplateBody;
+
+
+                    if (template != null && documentOut != null && filter.IsDisplayOnly) template.DocumentOutId = documentOut.Id;
 
                     if (templatedata != null)
                     {
                         if (templatedata.Length != 0)
                         {
+                            StiReport report = exportDocumentHelper.GetReportDocument(template, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy, templatedata, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
 
-                            StiReport report = exportDocumentHelper.GetReportDocument(documentType, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy, templatedata, template, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
 
                             string mdc = report.SaveDocumentToString();
 
@@ -489,6 +489,8 @@ namespace WebFreight.Web.App_Code
 
                             string fontFamily = "Arial";
                             double fontSize = 17;
+                            double originalFontSize = 17;
+
                             string textColor = "Black";
                             string floatText = "left";
                             string textAligh = "left";
@@ -543,19 +545,21 @@ namespace WebFreight.Web.App_Code
 
                             //  Replace FieldValue width  EditableFields
 
+                            XmlNode field = null;
+
                             if (childFieldNodes != null)
                             {
-                                XmlNode field = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(childFieldNodes))).Where(d => (d["ComponentName"] != null ? d["ComponentName"].InnerText : "").ToLower() == fieldName.ToLower() && (d["PageIndex"] != null ? d["PageIndex"].InnerText : "") == (pagenumber - 1).ToString() && (d["Position"] != null ? d["Position"].InnerText : "").ToLower() == fieldPosition.ToString()).FirstOrDefault();
+                                field = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(childFieldNodes))).Where(d => (d["ComponentName"] != null ? d["ComponentName"].InnerText : "").ToLower() == fieldName.ToLower() && (d["PageIndex"] != null ? d["PageIndex"].InnerText : "") == (pagenumber - 1).ToString() && (d["Position"] != null ? d["Position"].InnerText : "").ToLower() == fieldPosition.ToString()).FirstOrDefault();
+                            }
 
-                                if (field != null)
+                            if (field != null)
+                            {
+                                var value = field["TextValue"] != null ? field["TextValue"].InnerText : "";
+                                if (fieldValue != value && field["TextValue"] != null)
                                 {
-                                    var value = field["TextValue"] != null ? field["TextValue"].InnerText : "";
-                                    if (fieldValue != value)
-                                    {
-                                        fieldValue = value;
-                                        isEditedField = true;
-                                        numberOfEditedField += 1;
-                                    }
+                                    fieldValue = value;
+                                    isEditedField = true;
+                                    numberOfEditedField += 1;
                                 }
                             }
 
@@ -578,7 +582,7 @@ namespace WebFreight.Web.App_Code
                                 }
 
                                 if (fontInfo.Length > 0) fontFamily = !string.IsNullOrEmpty(fontInfo[0]) ? fontInfo[0] : "Arial";
-                                if (fontInfo.Length > 1) fontSize = !string.IsNullOrEmpty(fontInfo[1]) ? ConvertFromPointToPixel(Double.Parse(fontInfo[1])) : 17;
+                                if (fontInfo.Length > 1) fontSize = originalFontSize = !string.IsNullOrEmpty(fontInfo[1]) ? ConvertFromPointToPixel(Double.Parse(fontInfo[1])) : 17;
                                 if (fontInfo.Length > 2) fontweight = !string.IsNullOrEmpty(fontInfo[2]) ? fontInfo[2] : "";
 
 
@@ -622,8 +626,7 @@ namespace WebFreight.Web.App_Code
                             }
 
 
-
-
+                            fontSize = GetEditiableTextFontSize(fontSize, field);
 
                             if (reportUnit == "Millimeters")
                             {
@@ -661,6 +664,7 @@ namespace WebFreight.Web.App_Code
                             //  image 200 / 2.54 dp
                             double perc = 200 / 2.54;
 
+                            numberOfEditedField = GetNumberOfEditedField(numberOfEditedField, (fontSize !=originalFontSize) , isEditedField);
 
                             editableFieldPosition = new EditableFieldPosition()
                             {
@@ -682,10 +686,13 @@ namespace WebFreight.Web.App_Code
                                 HeightPagePrecentage = customPageHeight * perc,
                                 PageFieldIndex = (PageNumber - 1),
                                 FieldPosition = fieldPosition.ToString(),
-                                IsEditedField = isEditedField,
+                                IsEditedField = !isEditedField ? (fontSize!=originalFontSize): isEditedField,
                                 ControlType = controltype,
                                 OldValue = oldValue,
+                                OriginalFontSize = originalFontSize
                             };
+
+
 
                             editableFieldPositionLists.Add(editableFieldPosition);
                         }
@@ -701,6 +708,20 @@ namespace WebFreight.Web.App_Code
 
         }
 
+        private  int GetNumberOfEditedField(int numberOfEditedField, bool isfontSizeChange,  bool isEditedField)
+        {
+            numberOfEditedField = !isEditedField && isfontSizeChange ? (numberOfEditedField + 1) : numberOfEditedField;
+            return numberOfEditedField;
+        }
+
+        private double GetEditiableTextFontSize(double fontSize,  XmlNode field)
+        {
+            if (field == null) return fontSize;
+            var fontSizeValue = field["FontSize"] != null ? field["FontSize"].InnerText : "";
+            if (string.IsNullOrEmpty(fontSizeValue)) return fontSize;
+            return double.Parse(fontSizeValue);
+
+        }
 
         private static IEnumerable<T> Shim<T>(System.Collections.IEnumerable enumerable)
         {

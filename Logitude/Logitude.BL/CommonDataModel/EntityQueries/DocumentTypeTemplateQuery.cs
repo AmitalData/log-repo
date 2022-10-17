@@ -416,8 +416,63 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-    
 
+
+
+
+        public DocumentTypeTemplatePM GetById(string id , int tenant)
+        {
+            return  (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+                                          where a.Id == id && a.Tenant == tenant
+                     select new DocumentTypeTemplatePM()
+                                          {
+                                              Description = a.Description,
+                                              DocumentTypeId = a.DocumentTypeId,
+                                              Id = a.Id,
+                                              LastUpdateDate = a.LastUpdateDate,
+                                              LastUpdatedByUserId = a.LastUpdatedByUserId,
+                                              IsDefault = a.DocumentType != null ? a.DocumentType.DocumentTypeDefaultReportTemplateId == a.Id || a.DocumentType.DocumentTypeDefaultHTMLTemplateId == a.Id ? true : false : false,
+                                              TemplateBody = a.TemplateBody,
+                                              TemplateBodyHtml = a.TemplateBodyHtml,
+                                              TemplateType = a.TemplateType,
+                                              Tenant = a.Tenant,
+                                              LastUpdateByUserName = a.LastUpdatedByUser.Contact.EnglishName,
+                                              InActive = a.InActive,
+                                              EditorTool = a.EditorTool,
+                                              HorizontalShift = a.HorizontalShift,
+                                              VerticalShift = a.VerticalShift,
+                                              Subject = a.Subject,
+                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                              CountryCode = a.CountryCode,
+                                              TemplateBodyjson = a.TemplateBodyjson,
+                                              InternalRemarks = a.InternalRemarks,
+                                              Language = a.Language,
+                                              OriginalTemplateId = a.OriginalTemplateId,
+                                              OriginalTemplateName = a.OriginalTemplate.Description,
+                                              From = a.From,
+                                              ReplyTo = a.ReplyTo,
+                                              ObjectTableId = a.DocumentType != null ? a.DocumentType.ObjectTableId : "",
+                                              TemplateFooterHtml = a.TemplateFooterHtml,
+                                              TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                              TemplateFooterHeight = a.TemplateFooterHeight,
+                                              TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                              TemplateTechnologyCode = a.TemplateTechnologyCode,
+                                              CC = a.CC,
+                                              BCC = a.BCC,
+                                              DefultAttachmentsXML = a.DefultAttachmentsXML,
+                                              To = a.To,
+                                              AutomationId = a.AutomationId,
+                                              AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                              IsSystem = a.IsSystem,
+                                              EntityId = a.EntityId,
+                                              DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : "",
+                                              DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : "",
+                                              
+                                              
+
+                     }).FirstOrDefault();
+        }
 
 
         public DocumentTypeTemplatePM GetSinglePM(string id,int tenant)
