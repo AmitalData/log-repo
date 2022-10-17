@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
@@ -147,25 +148,25 @@ namespace WebFreight.Web.Helpers
 
             // Build excel headers 
             var table = new DataTable();
-            table.Columns.Add("Shipment Number");
-            table.Columns.Add("Transport Mode Name");
-            table.Columns.Add("Direction Name");
-            table.Columns.Add("Org");
-            table.Columns.Add("Dest");
+            table.Columns.Add("Shipment No.");
+            table.Columns.Add("Transport Mode");
+            table.Columns.Add("Direction");
+            table.Columns.Add("Routing");
             table.Columns.Add("MainCarriage ATD");
             table.Columns.Add("MainCarriage ATA");
-            table.Columns.Add("Master Number");
+            table.Columns.Add("Master No.");
             table.Columns.Add("Shipper");
             table.Columns.Add("Consignee");
             table.Columns.Add("Shipment Type");
             table.Columns.Add("Status");
-            table.Columns.Add("Nof Package");
-            table.Columns.Add("G. Weight");
-            table.Columns.Add("CH. Weight");
+            table.Columns.Add("TruckContainer Numbers");
+            table.Columns.Add("No of Package");
+            table.Columns.Add("Gross Weight");
+            table.Columns.Add("Chargable Weight");
             table.Columns.Add("Incoterm");
             table.Columns.Add("Volume");
-            table.Columns.Add("Goods Description");
             table.Columns.Add("Goods Value");
+            table.Columns.Add("Goods Description");
 
             var index = 4;
             foreach (var item in digitalShipmentLists)
@@ -177,28 +178,28 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range[$"A{index}:S{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
                 sheet1.Range[$"A{index}:S{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
-                sheet1.Range[$"F{index}:G{index}"].NumberFormat = "dd MMM yyyy";
+                sheet1.Range[$"E{index}:F{index}"].NumberFormat = "dd MMM yyyy";
 
                 DataRow row = table.NewRow();
                 row[0] = item.ShipmentNumber;
                 row[1] = item.TransportModeName;
                 row[2] = item.DirectionName;
-                row[3] = item.MainCarriageFromPortName;
-                row[4] = item.MainCarriageToPortName;
-                row[5] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                row[6] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                row[7] = item.Master;
-                row[8] = item.ShipperName;
-                row[9] = item.ConsigneeName;
-                row[10] = item.ShipmentTypeName;
-                row[11] = item.StatusName;
+                row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
+                row[4] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
+                row[5] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
+                row[6] = item.Master;
+                row[7] = item.ShipperName;
+                row[8] = item.ConsigneeName;
+                row[9] = item.ShipmentTypeName;
+                row[10] = item.StatusName;
+                row[11] = item.TruckContainerNumber;
                 row[12] = item.NumberOfPackages;
                 row[13] = item.GrossWeight;
                 row[14] = item.ChargeableWeight;
                 row[15] = item.IncotermCode;
                 row[16] = item.Volume;
-                row[17] = item.DescriptionOfGoods;
-                row[18] = item.ValueOfGoods;
+                row[17] = item.ValueOfGoods;
+                row[18] = item.DescriptionOfGoods;
 
                 table.Rows.Add(row);
                 index++;
@@ -582,6 +583,7 @@ namespace WebFreight.Web.Helpers
                 case "DigitalShipmentsView":
                     var shipmentQuery = new ShipmentQuery(args.QueryFilters.Tenant);
                     var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters).ToList();
+                    FillContainerNumbers(shipmentData);
                     data = DigitalPortalShipmentExportToExcel(shipmentData);
                     break;
                 case "DigitalInvoice":
@@ -607,6 +609,22 @@ namespace WebFreight.Web.Helpers
                 BlobFileInfo = fileInfo,
                 Data = data
             };
+        }
+
+        private void FillContainerNumbers(List<DigitalShipmentList> listQuery)
+        {
+            listQuery.ForEach(shipment =>
+            {
+                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
+                {
+                    shipment.TruckContainerNumber = shipment.TransportModeId == "O"
+                                                    ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "")
+                                                    : isInlandDomesticShipment
+                                                        ? shipment.TruckNumber
+                                                        : shipment.CarrierNumber;
+                }
+            });
         }
 
         #endregion private

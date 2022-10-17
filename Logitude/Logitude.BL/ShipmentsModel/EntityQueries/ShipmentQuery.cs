@@ -13324,6 +13324,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ChargeableWeight = f.ChargeableWeight,
                                GrossWeight = f.GrossWeight,
                                ValueOfGoods = f.ValueOfGoods,
+                               TruckNumber = f.TruckNumber,
+                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                                Volume = f.Volume,
                                NumberOfPackages = f.NumberOfPackages,
                                LastUpdateDate = f.LastUpdateDate,
