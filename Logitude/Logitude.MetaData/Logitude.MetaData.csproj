@@ -111,6 +111,7 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
+    <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
     <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />

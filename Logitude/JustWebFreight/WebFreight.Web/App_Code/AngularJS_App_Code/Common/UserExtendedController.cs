@@ -121,17 +121,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     {
                         myRecord.BlockEditUser = true;
                     }
+                    myRecord.LastAccessDate = item.LoginDateTime;
+                    myRecord.IP = item.IP;
 
-                    UserLoginLog myLog = (from d in allLoginLogs
-                                          where d.Tenant == tenant && d.UserId == item.Id
-                                          orderby d.LocalDateTime descending
-                                          select d).FirstOrDefault();
-
-                    if (myLog != null)
-                    {
-                        myRecord.IP = myLog.IP;
-                        myRecord.LastAccessDate = myLog.LocalDateTime;
-                    }
+                   
 
                     myResult.Add(myRecord);
                 }
