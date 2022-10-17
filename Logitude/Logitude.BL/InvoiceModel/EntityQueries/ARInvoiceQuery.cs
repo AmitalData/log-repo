@@ -2445,9 +2445,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     if (field != null)
                     {
                         string valuestring1 = filter.FieldValue?.ToString();
-                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        object value1 = FieldValueResolver.GetFieldDataValue(field, valuestring1);
                         string valuestring2 = filter.FieldValue2?.ToString();
-                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        object value2 = FieldValueResolver.GetFieldDataValue(field, valuestring2);
                         queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                     }
                     else
@@ -2546,7 +2546,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
 
             return entityLists;
-
         }
 
         private string GetCardBillToId(string cardId, int tenant)

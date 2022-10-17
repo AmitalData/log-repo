@@ -174,6 +174,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
+            this.Property(t => t.TruckNumber).HasColumnName("TruckNumber");
             this.Property(t => t.IncotermId).HasColumnName("IncotermId");
             this.Property(t => t.House).HasColumnName("House");
             this.Property(t => t.ConsigneeReference2).HasColumnName("ConsigneeReference2");
@@ -182,6 +183,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageToPortCode).HasColumnName("MainCarriageToPortCode");
             this.Property(t => t.MainCarriageToPortName).HasColumnName("MainCarriageToPortName");
             this.Property(t => t.MainCarriageFromPortName).HasColumnName("MainCarriageFromPortName");
+            this.Property(t => t.ContainersNumbersandTypesArray).HasColumnName("ContainersNumbersandTypesArray");
             this.Property(t => t.CustomerName).HasColumnName("CustomerName");
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
             this.Property(t => t.ShipperCountryCode).HasColumnName("ShipperCountryCode");

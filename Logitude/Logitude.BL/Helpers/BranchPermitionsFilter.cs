@@ -44,9 +44,9 @@ namespace Logitude.BL.Helpers
             {
                 ContactQuery contactRep = new ContactQuery(tenant);
                 UserQuery userQuery = new UserQuery(tenant);
-
                 ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
                 UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
+                
                 if (user != null && user.IsBranchRestricted)
                 {
                     string values = "";
