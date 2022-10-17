@@ -12,6 +12,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { MessageWindow } from "Controls/Windows/MessageWindow";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -161,6 +162,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     flowChangedEvent = (event: any) => {
         if (event.status === "success") {
             this.HasChanges = true;
+        }else{
+            let messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show(event.message ? event.message : "error");
         }
     }
 
