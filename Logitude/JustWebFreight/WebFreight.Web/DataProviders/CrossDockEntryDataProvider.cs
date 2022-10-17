@@ -39,6 +39,8 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string EntryNumber { get; set; }
         public string DestinationCountryName { get; set; }
+        public string DestinationCountryCode { get; set; }
+        public string DestinationPortCode { get; set; }
         public string Trucker { get; set; }
         public string BarCode { get; set; }
         public List<EntryPackage> EntryPackages { get; set; }

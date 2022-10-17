@@ -592,5 +592,9 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPrepaidReceivablesLocal { get; set; } //, to show the summation of prepaid receivables
         public double? TotalCollectReceivablesProfit { get; set; } //, to show the summation of collected receivables
         public double? TotalPrepaidReceivablesProfit { get; set; } //, to show the summation of prepaid receivables
+        public double? TotalWeightInKG { get; set; }
+        public double? TotalWeightInLBS { get; set; }
+        public double? TotalVolumeINCBM { get; set; }
+        public double? TotalVolumeINCBF { get; set; }
     }
 }
