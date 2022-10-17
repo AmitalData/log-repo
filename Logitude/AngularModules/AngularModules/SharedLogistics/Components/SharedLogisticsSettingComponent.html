@@ -153,8 +153,12 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="3" style="vertical-align:top">
+                                                    <td *ngIf="!IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
                                                         <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each email message sent to the partners, that will enable shipment viewing.</div>
+                                                    </td>
+
+                                                    <td *ngIf="IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each email message sent to the partners, that will enable shipment viewing. Email templates must have the Shipment number field.</div>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -182,18 +186,18 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="3" style="vertical-align:top">
+                                                    <td *ngIf="!IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
 
                                                         <div></div>
                                                     </td>
+
+                                                    <td *ngIf="IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Use this setting to show / hide the documents and events records from view online link sent by enabling "Send Link in email messages to your partners" feature.</div>
+                                                    </td>
                                                 </tr>
                                             </table>
-
-
                                         </td>
-
                                     </tr>
-
 
                                     <!--Send Master Link in email messages to your partners.-->
                                     <tr *ngIf="SharedLogisticsMasterMessageLinkEnable" style="height:100px;vertical-align:top">
