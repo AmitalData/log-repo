@@ -47,20 +47,4 @@ export class OverviewSelectors {
     public static readonly MessageTxt = "[data-cy='MessageTxt']"
     public static readonly EmailSearch =  ('.LogitudeEmailSearchDropDown')
     public static readonly SendButton = "[data-cy='SendButton']"
-
-    
-
-    
-
-    
-    
-
-
-     
-
-
-    
-
-
-
 }
