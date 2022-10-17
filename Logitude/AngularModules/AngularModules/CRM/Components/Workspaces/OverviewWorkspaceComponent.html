@@ -1,575 +1,575 @@
-﻿
-<style type="text/css">
-    .SpotLightLink {
-        cursor: pointer;
-        font-size: large;
-        font-weight: bold;
-        width: 1px;
-        white-space: nowrap;
-        background: transparent;
-    }
 
-        .SpotLightLink:hover {
+    <style type="text/css">
+        .SpotLightLink {
             cursor: pointer;
-            text-decoration: underline;
+            font-size: large;
+            font-weight: bold;
+            width: 1px;
+            white-space: nowrap;
+            background: transparent;
         }
 
-    .SpotLightLinkDisabled {
-        pointer-events: none;
-    }
-</style>
+            .SpotLightLink:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
 
-<table>
-    <tr style="height: 1px;">
-        <td>
-            <table>
-                <tr>
-                    <td style="width: 21px; vertical-align:middle;">
-                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                    </td>
+        .SpotLightLinkDisabled {
+            pointer-events: none;
+        }
+    </style>
 
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <!--<td style="width:150px;">
-                        <ComboBox [ItemsSource]="RecordsTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedRecordsTypeFilter" (SelectedItemChanged)="SelectedRecordsTypeFilter = $event"></ComboBox>
-                    </td>
-
-                    <td style="width:2px;">
-                        <div></div>
-                    </td>-->
-
-                    <td style="width: 1px;">
-
-                        <!-- Salesmen -->
-                        <table>
-                            <tr>
-                                <td style="width:150px; min-width: 150px;">
-                                    <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
-                                </td>
-
-                                <td style="width:2px; min-width: 2px;">
-                                    <div></div>
-                                </td>
-
-
-                                <td style="width: 200px; min-width: 200px;">
-                                    <ComboBox *ngIf="IsBusinessUnitUsers" [ItemsSource]="BusinessUnitUsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
-                                    <LogLov *ngIf="!IsBusinessUnitUsers"
-                                            [ObjectTableName]="'CRM_UsersFilter'"
-                                            [ObjectFieldName]="'ListOfValuesUserId'"
-                                            [SelectedValue]="ListOfValuesUserId"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'User'"
-                                            [HideColumns]="true"
-                                            [NoObjectField]="true">
-                                    </LogLov>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- Creator -->
-                        <!--<table *ngIf="RecordsTypeFilterCode == 'C'">
-                            <tr>
-                                <td style="width:150px; min-width: 150px;">
-                                    <ComboBox [ItemsSource]="CreatedByTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedCreatedByTypeFilter" (SelectedItemChanged)="SelectedCreatedByTypeFilter = $event"></ComboBox>
-                                </td>
-
-                                <td style="width:2px; min-width: 2px;">
-                                    <div></div>
-                                </td>
-
-                                <td style="width: 200px; min-width: 200px;">
-                                    <LogLov [ObjectTableName]="'CRM_UsersFilter'"
-                                            [ObjectFieldName]="'ListOfValuesUserId'"
-                                            [SelectedValue]="ListOfValuesUserId"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'User'"
-                                            [HideColumns]="true"
-                                            [NoObjectField]="true">
-                                    </LogLov>
-                                </td>
-                            </tr>
-                        </table>-->
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 5px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="MediaFill">
-
+    <table>
+        <tr style="height: 1px;">
+            <td>
                 <table>
                     <tr>
-                        <td style="width:325px;">
-                            <table>
-
-                                <!-- Upcoming Activities -->
-                                <tr style="height: 230px;">
-                                    <td>
-                                        <div class="MediaFill">
-                                            <SectionBox [Scrolling]="true">
-                                                <SectionHead>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="color: #45494A; font-size: 14px;">
-                                                                {{UpcomingActivitiesCount}} Upcoming Activities
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width:57px;">
-                                                                <div tabindex="0" class="ToggleButton">
-                                                                    <label>New</label>
-                                                                    <img src="./Images/ToggleIcon.png" />
-
-                                                                    <div class="ToggleButtonMenu" style="right: -45px;">
-                                                                        <button (click)="NewActivityClicked('TS')">Task</button>
-                                                                        <button (click)="NewActivityClicked('CL')">Phone Call</button>
-                                                                        <button (click)="NewActivityClicked('AP')">Appointment</button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </SectionHead>
-                                                <SectionBody>
-                                                    <ul>
-                                                        <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of UpcomingActivitiesList" [ngStyle]="{background: item.CompletedBackground}">
-                                                            <table (mousedown)="EditActivity(item.entityList)">
-                                                                <tr>
-                                                                    <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.PriorityName" [ngStyle]="{background: item.PriorityCode | StringToColorPipe:'ActivityPriorityCode'}">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:5px;" rowspan="2">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:20px;" rowspan="2">
-                                                                        <img class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" [attr.src]="item.ImageSrc" />
-                                                                    </td>
-
-                                                                    <td style="width:7px; height: 100%;" rowspan="2">
-                                                                        <div style="width:1px; height: calc(100% - 5px); background: #D1D1D1; margin:auto;"></div>
-                                                                    </td>
-
-                                                                    <td style="width:5px;" rowspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                    <td style="color:#282E30; width:180px; max-width:180px;" class="TextTrimming">{{item.Subject}}</td>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width: 75px; font-size: 10px;" [ngStyle]="{color: item.UpcomingDate | DateTimeToColorPipe}">{{item.UpcomingDate | DateTimeToDatePipe}}</td>
-                                                                                <td style="width:2px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                                <td style="width: 30px; font-size: 10px;" [ngStyle]="{color: item.UpcomingDate | DateTimeToColorPipe}">{{item.UpcomingDate | DateTimeToTimePipe}}</td>
-                                                                                <td>
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <div style="position: absolute; top: 3px; right: 3px;">
-                                                                <button style="width:75px;height:22px;" *ngIf="item.IsCompleteVisible" class="Button" (click)="item.CompleteClicked()">Complete</button>
-                                                                <button style="width:75px;height:22px;" *ngIf="item.IsReopenVisible" class="Button" (click)="item.ReopenClicked()">Incomplete</button>
-                                                            </div>
-
-                                                            <div *ngIf="item.IsCompleteToggleVisible" style="position: absolute; top: 3px; right: 3px;">
-                                                                <MettingSummary [Text]="item.MeetingSummary" [IsChecked]="item.PostToFollowers" [EntityId]="item.EntityId" [IsToRight]="true" (Updated)="Updated($event)"></MettingSummary>
-                                                            </div>
-
-                                                        </li>
-                                                    </ul>
-
-                                                    <div *ngIf="UpcomingActivitiesList == null || UpcomingActivitiesList.length == 0" class="NoDataText" style="top:5px;">No Upcoming Activities</div>
-                                                </SectionBody>
-                                            </SectionBox>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr style="height: 10px;">
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <!-- Daily Spotlight -->
-                                <tr>
-                                    <td>
-                                        <div class="MediaFill">
-                                            <SectionBox [Scrolling]="true">
-                                                <SectionHead>{{'General.O.DashBoard.DailySpotlight' | TextCodeTranslationPipe}}</SectionHead>
-                                                <SectionBody>
-                                                    <table>
-                                                        <tr style="height:1px">
-                                                            <td style="width:120px;">
-                                                                <div></div>
-                                                            </td>
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="text-align:center;background-color:#E8F7FF;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#45494A;">
-                                                                {{'General.O.DashBoard.Today' | TextCodeTranslationPipe}}
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="text-align:center;background-color:#EBEBEB;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#6E7172;">
-                                                                {{'General.O.DashBoard.Yesterday' | TextCodeTranslationPipe}}
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="text-align:center;background-color:#EBEBEB;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#6E7172;">
-                                                                {{'General.O.DashBoard.LastWeek' | TextCodeTranslationPipe}}
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Quotes -->
-                                                        <tr style="height:45px; border-bottom:dashed 0.05px #EAEAEA;">
-                                                            <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Quotes</td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_TodayIsEnabled" (click)="DailySpotLightClicked('QT_TD')">{{Quotes_Today}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_YesterdayIsEnabled" (click)="DailySpotLightClicked('QT_YS')">{{Quotes_Yesterday}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_LastWeekIsEnabled" (click)="DailySpotLightClicked('QT_LW')">{{Quotes_LastWeek}}</span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Potentials -->
-                                                        <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
-                                                            <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Potentials</td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_TodayIsEnabled" (click)="DailySpotLightClicked('PO_TD')">{{Potentials_Today}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_YesterdayIsEnabled" (click)="DailySpotLightClicked('PO_YS')">{{Potentials_Yesterday}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_LastWeekIsEnabled" (click)="DailySpotLightClicked('PO_LW')">{{Potentials_LastWeek}}</span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Customers -->
-                                                        <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
-                                                            <td style="vertical-align:middle; text-align:left; font-size:12px; color:#6E7172;">New Customers</td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_TodayIsEnabled" (click)="DailySpotLightClicked('CS_TD')">{{Customers_Today}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_YesterdayIsEnabled" (click)="DailySpotLightClicked('CS_YS')">{{Customers_Yesterday}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_LastWeekIsEnabled" (click)="DailySpotLightClicked('CS_LW')">{{Customers_LastWeek}}</span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Activities -->
-                                                        <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
-                                                            <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Activities</td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_TodayIsEnabled" (click)="DailySpotLightClicked('AC_TD')">{{Activities_Today}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center ;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_YesterdayIsEnabled" (click)="DailySpotLightClicked('AC_YS')">{{Activities_Yesterday}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_LastWeekIsEnabled" (click)="DailySpotLightClicked('AC_LW')">{{Activities_LastWeek}}</span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Opportunities -->
-                                                        <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
-                                                            <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Opportunities</td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF; border-bottom-left-radius:4px;border-bottom-right-radius:4px;">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_TodayIsEnabled" (click)="DailySpotLightClicked('OP_TD')">{{Opportunities_Today}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center ;background-color:#EBEBEB; color:black; border-bottom-left-radius:4px;border-bottom-right-radius:4px">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_YesterdayIsEnabled" (click)="DailySpotLightClicked('OP_YS')">{{Opportunities_Yesterday}}</span>
-                                                            </td>
-
-                                                            <td style="width:10px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black; border-bottom-left-radius:4px;border-bottom-right-radius:4px">
-                                                                <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_LastWeekIsEnabled" (click)="DailySpotLightClicked('OP_LW')">{{Opportunities_LastWeek}}</span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td colspan="6"></td>
-                                                        </tr>
-                                                    </table>
-                                                </SectionBody>
-                                            </SectionBox>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td style="width: 21px; vertical-align:middle;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
 
-                        <td style="width:10px;">
+                        <td>
                             <div></div>
                         </td>
 
-                        <td style="width:325px;">
+                        <!--<td style="width:150px;">
+                            <ComboBox [ItemsSource]="RecordsTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedRecordsTypeFilter" (SelectedItemChanged)="SelectedRecordsTypeFilter = $event"></ComboBox>
+                        </td>
+
+                        <td style="width:2px;">
+                            <div></div>
+                        </td>-->
+
+                        <td style="width: 1px;">
+
+                            <!-- Salesmen -->
                             <table>
-
-                                <!-- Sales Funnel -->
-                                <tr style="height: 230px;">
-                                    <td>
-                                        <div class="MediaFill">
-                                            <SectionBox>
-                                                <SectionHead>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="color: #45494A; font-size: 14px;">
-                                                                Sales Funnel
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td class="Label" style="width:10px; font-size:11px;">By:</td>
-
-                                                            <td style="width:5px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width:130px;">
-                                                                <ComboBox [ItemsSource]="FunneFilterList" [Binding]="'Name'" [SelectedItem]="SelectedFunnelFilter" (SelectedItemChanged)="SelectedFunnelFilter = $event"></ComboBox>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </SectionHead>
-                                                <SectionBody>
-                                                    <div class="MediaFill" style="border:solid;border-color:lightgrey;border-width:1px;">
-                                                        <div class="MediaFill" [attr.id]="SalesFunnelId" (click)="FunnelClick()"></div>
-                                                    </div>
-                                                </SectionBody>
-                                            </SectionBox>
-                                        </div>
+                                <tr>
+                                    <td style="width:150px; min-width: 150px;">
+                                        <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
                                     </td>
-                                </tr>
 
-                                <tr style="height: 10px;">
-                                    <td>
+                                    <td style="width:2px; min-width: 2px;">
                                         <div></div>
                                     </td>
-                                </tr>
 
-                                <!--  Top Opportunities -->
-                                <tr>
-                                    <td>
-                                        <div class="MediaFill">
-                                            <SectionBox [Scrolling]="true">
-                                                <SectionHead>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="color: #45494A; font-size: 14px;">
-                                                                Top Opportunities
-                                                            </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td class="Label" style="width:10px; font-size:11px;">By:</td>
-
-                                                            <td style="width:5px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width:130px;">
-                                                                <ComboBox [ItemsSource]="TopOpportunitiesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedTopOpportunitiesFilter" (SelectedItemChanged)="SelectedTopOpportunitiesFilter = $event"></ComboBox>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </SectionHead>
-                                                <SectionBody>
-                                                    <ul>
-                                                        <li class="RecentEntityItem" *ngFor="let item of TopOpportunitiesList" (click)="EditOpportunity(item)">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.RatingName" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'OpportunityRatingCode'}">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:5px;" rowspan="2">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="max-width:180px; font-size:11px; color:#282E30;" class="TextTrimming">{{item.Topic}}</td>
-
-                                                                    <td style="width:70px; font-size:10px; text-align:right;" [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}">{{item.StageName}}</td>
-
-                                                                    <td style="width:60px; text-align:right; color:#282E30; font-size:10px;">
-                                                                        <table>
-                                                                            <tr *ngIf="item.StageAge">
-                                                                                <td style="width:30px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                                <td style="width:2px;">(</td>
-                                                                                <td style="width:auto; text-align:center;" [title]="item.StageAge | StageAgePipe">{{item.StageAge | StageAgePipe :'1'}}</td>
-                                                                                <td style="width:2px;">)</td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-
-                                                                    <td style="width:5px;" rowspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td style="max-width:180px; font-size:10px; color:#1B90CB;" class="TextTrimming">{{item.CustomerName}}</td>
-
-                                                                    <td style="font-size: 10px; color: #282E30; font-size: 14px; text-align: right;" colspan="2">{{item.FilterValue}}</td>
-
-                                                                </tr>
-                                                            </table>
-                                                        </li>
-                                                    </ul>
-
-                                                    <div *ngIf="TopOpportunitiesList == null || TopOpportunitiesList.length == 0" class="NoDataText" style="top:5px;">No Top Opportunities</div>
-                                                </SectionBody>
-                                            </SectionBox>
-                                        </div>
+                                    <td style="width: 200px; min-width: 200px;">
+                                        <ComboBox *ngIf="IsBusinessUnitUsers" [ItemsSource]="BusinessUnitUsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                                        <LogLov *ngIf="!IsBusinessUnitUsers"
+                                                [ObjectTableName]="'CRM_UsersFilter'"
+                                                [ObjectFieldName]="'ListOfValuesUserId'"
+                                                [SelectedValue]="ListOfValuesUserId"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'User'"
+                                                [HideColumns]="true"
+                                                [NoObjectField]="true">
+                                        </LogLov>
                                     </td>
                                 </tr>
                             </table>
-                        </td>
 
-                        <td style="width:10px;">
-                            <div></div>
-                        </td>
+                            <!-- Creator -->
+                            <!--<table *ngIf="RecordsTypeFilterCode == 'C'">
+                                <tr>
+                                    <td style="width:150px; min-width: 150px;">
+                                        <ComboBox [ItemsSource]="CreatedByTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedCreatedByTypeFilter" (SelectedItemChanged)="SelectedCreatedByTypeFilter = $event"></ComboBox>
+                                    </td>
 
-                        <!-- Social -->
+                                    <td style="width:2px; min-width: 2px;">
+                                        <div></div>
+                                    </td>
 
-
-                        <td style="min-width:300px;">
-                            <div class="MediaFill">
-
-                                <SocialComponent [QueryName]="'Following'" [SubQueryName]="'All'" [IsEntityMode]="true" [ScreenCode]="'CRM'"></SocialComponent>
-
-
-                            </div>
+                                    <td style="width: 200px; min-width: 200px;">
+                                        <LogLov [ObjectTableName]="'CRM_UsersFilter'"
+                                                [ObjectFieldName]="'ListOfValuesUserId'"
+                                                [SelectedValue]="ListOfValuesUserId"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'User'"
+                                                [HideColumns]="true"
+                                                [NoObjectField]="true">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+                            </table>-->
                         </td>
                     </tr>
                 </table>
+            </td>
+        </tr>
 
-            </div>
-        </td>
-    </tr>
-</table>
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+
+                    <table>
+                        <tr>
+                            <td style="width:325px;">
+                                <table>
+
+                                    <!-- Upcoming Activities -->
+                                    <tr style="height: 230px;">
+                                        <td>
+                                            <div class="MediaFill">
+                                                <SectionBox [Scrolling]="true">
+                                                    <SectionHead>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="color: #45494A; font-size: 14px;">
+                                                                    {{UpcomingActivitiesCount}} Upcoming Activities
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:57px;">
+                                                                    <div tabindex="0" class="ToggleButton">
+                                                                        <label>New</label>
+                                                                      <img [attr.data-cy]="'New'" src="./Images/ToggleIcon.png" />
+
+                                                                        <div class="ToggleButtonMenu" style="right: -45px;">
+                                                                            <button [attr.data-cy]="'NewTask'" (click)="NewActivityClicked('TS')">Task</button>
+                                                                            <button (click)="NewActivityClicked('CL')">Phone Call</button>
+                                                                            <button (click)="NewActivityClicked('AP')">Appointment</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </SectionHead>
+                                                    <SectionBody>
+                                                        <ul>
+                                                            <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of UpcomingActivitiesList" [ngStyle]="{background: item.CompletedBackground}">
+                                                                <table (mousedown)="EditActivity(item.entityList)">
+                                                                    <tr>
+                                                                        <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.PriorityName" [ngStyle]="{background: item.PriorityCode | StringToColorPipe:'ActivityPriorityCode'}">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:20px;" rowspan="2">
+                                                                            <img class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" [attr.src]="item.ImageSrc" />
+                                                                        </td>
+
+                                                                        <td style="width:7px; height: 100%;" rowspan="2">
+                                                                            <div style="width:1px; height: calc(100% - 5px); background: #D1D1D1; margin:auto;"></div>
+                                                                        </td>
+
+                                                                        <td style="width:5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                        <td style="color:#282E30; width:180px; max-width:180px;" class="TextTrimming">{{item.Subject}}</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 75px; font-size: 10px;" [ngStyle]="{color: item.UpcomingDate | DateTimeToColorPipe}">{{item.UpcomingDate | DateTimeToDatePipe}}</td>
+                                                                                    <td style="width:2px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="width: 30px; font-size: 10px;" [ngStyle]="{color: item.UpcomingDate | DateTimeToColorPipe}">{{item.UpcomingDate | DateTimeToTimePipe}}</td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div style="position: absolute; top: 3px; right: 3px;">
+                                                                    <button style="width:75px;height:22px;" *ngIf="item.IsCompleteVisible" class="Button" (click)="item.CompleteClicked()">Complete</button>
+                                                                    <button style="width:75px;height:22px;" *ngIf="item.IsReopenVisible" class="Button" (click)="item.ReopenClicked()">Incomplete</button>
+                                                                </div>
+
+                                                                <div *ngIf="item.IsCompleteToggleVisible" style="position: absolute; top: 3px; right: 3px;">
+                                                                    <MettingSummary [Text]="item.MeetingSummary" [IsChecked]="item.PostToFollowers" [EntityId]="item.EntityId" [IsToRight]="true" (Updated)="Updated($event)"></MettingSummary>
+                                                                </div>
+
+                                                            </li>
+                                                        </ul>
+
+                                                        <div *ngIf="UpcomingActivitiesList == null || UpcomingActivitiesList.length == 0" class="NoDataText" style="top:5px;">No Upcoming Activities</div>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 10px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Daily Spotlight -->
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <SectionBox [Scrolling]="true">
+                                                    <SectionHead>{{'General.O.DashBoard.DailySpotlight' | TextCodeTranslationPipe}}</SectionHead>
+                                                    <SectionBody>
+                                                        <table>
+                                                            <tr style="height:1px">
+                                                                <td style="width:120px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="text-align:center;background-color:#E8F7FF;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#45494A;">
+                                                                    {{'General.O.DashBoard.Today' | TextCodeTranslationPipe}}
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="text-align:center;background-color:#EBEBEB;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#6E7172;">
+                                                                    {{'General.O.DashBoard.Yesterday' | TextCodeTranslationPipe}}
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="text-align:center;background-color:#EBEBEB;border-top-left-radius:4px;border-top-right-radius:4px;width:60px; font-size:10px; color:#6E7172;">
+                                                                    {{'General.O.DashBoard.LastWeek' | TextCodeTranslationPipe}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Quotes -->
+                                                            <tr style="height:45px; border-bottom:dashed 0.05px #EAEAEA;">
+                                                                <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Quotes</td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_TodayIsEnabled" (click)="DailySpotLightClicked('QT_TD')">{{Quotes_Today}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_YesterdayIsEnabled" (click)="DailySpotLightClicked('QT_YS')">{{Quotes_Yesterday}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Quotes_LastWeekIsEnabled" (click)="DailySpotLightClicked('QT_LW')">{{Quotes_LastWeek}}</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Potentials -->
+                                                            <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
+                                                                <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Potentials</td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_TodayIsEnabled" (click)="DailySpotLightClicked('PO_TD')">{{Potentials_Today}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_YesterdayIsEnabled" (click)="DailySpotLightClicked('PO_YS')">{{Potentials_Yesterday}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Potentials_LastWeekIsEnabled" (click)="DailySpotLightClicked('PO_LW')">{{Potentials_LastWeek}}</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Customers -->
+                                                            <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
+                                                                <td style="vertical-align:middle; text-align:left; font-size:12px; color:#6E7172;">New Customers</td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_TodayIsEnabled" (click)="DailySpotLightClicked('CS_TD')">{{Customers_Today}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_YesterdayIsEnabled" (click)="DailySpotLightClicked('CS_YS')">{{Customers_Yesterday}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Customers_LastWeekIsEnabled" (click)="DailySpotLightClicked('CS_LW')">{{Customers_LastWeek}}</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Activities -->
+                                                            <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
+                                                                <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Activities</td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_TodayIsEnabled" (click)="DailySpotLightClicked('AC_TD')">{{Activities_Today}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center ;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_YesterdayIsEnabled" (click)="DailySpotLightClicked('AC_YS')">{{Activities_Yesterday}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Activities_LastWeekIsEnabled" (click)="DailySpotLightClicked('AC_LW')">{{Activities_LastWeek}}</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Opportunities -->
+                                                            <tr style="height:45px;border-bottom:dashed 0.05px #EAEAEA;">
+                                                                <td style="vertical-align:middle;text-align:left; font-size:12px; color:#6E7172;">New Opportunities</td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#E8F7FF; color:#0075AF; border-bottom-left-radius:4px;border-bottom-right-radius:4px;">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_TodayIsEnabled" (click)="DailySpotLightClicked('OP_TD')">{{Opportunities_Today}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center ;background-color:#EBEBEB; color:black; border-bottom-left-radius:4px;border-bottom-right-radius:4px">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_YesterdayIsEnabled" (click)="DailySpotLightClicked('OP_YS')">{{Opportunities_Yesterday}}</span>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="vertical-align:middle;text-align:center;background-color:#EBEBEB; color:black; border-bottom-left-radius:4px;border-bottom-right-radius:4px">
+                                                                    <span class="SpotLightLink" [class.SpotLightLinkDisabled]="!Opportunities_LastWeekIsEnabled" (click)="DailySpotLightClicked('OP_LW')">{{Opportunities_LastWeek}}</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width:10px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width:325px;">
+                                <table>
+
+                                    <!-- Sales Funnel -->
+                                    <tr style="height: 230px;">
+                                        <td>
+                                            <div class="MediaFill">
+                                                <SectionBox>
+                                                    <SectionHead>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="color: #45494A; font-size: 14px;">
+                                                                    Sales Funnel
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td class="Label" style="width:10px; font-size:11px;">By:</td>
+
+                                                                <td style="width:5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:130px;">
+                                                                    <ComboBox [ItemsSource]="FunneFilterList" [Binding]="'Name'" [SelectedItem]="SelectedFunnelFilter" (SelectedItemChanged)="SelectedFunnelFilter = $event"></ComboBox>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </SectionHead>
+                                                    <SectionBody>
+                                                        <div class="MediaFill" style="border:solid;border-color:lightgrey;border-width:1px;">
+                                                            <div class="MediaFill" [attr.id]="SalesFunnelId" (click)="FunnelClick()"></div>
+                                                        </div>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 10px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!--  Top Opportunities -->
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <SectionBox [Scrolling]="true">
+                                                    <SectionHead>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="color: #45494A; font-size: 14px;">
+                                                                    Top Opportunities
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td class="Label" style="width:10px; font-size:11px;">By:</td>
+
+                                                                <td style="width:5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:130px;">
+                                                                    <ComboBox [ItemsSource]="TopOpportunitiesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedTopOpportunitiesFilter" (SelectedItemChanged)="SelectedTopOpportunitiesFilter = $event"></ComboBox>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </SectionHead>
+                                                    <SectionBody>
+                                                        <ul>
+                                                            <li class="RecentEntityItem" *ngFor="let item of TopOpportunitiesList" (click)="EditOpportunity(item)">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.RatingName" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'OpportunityRatingCode'}">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="max-width:180px; font-size:11px; color:#282E30;" class="TextTrimming">{{item.Topic}}</td>
+
+                                                                        <td style="width:70px; font-size:10px; text-align:right;" [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}">{{item.StageName}}</td>
+
+                                                                        <td style="width:60px; text-align:right; color:#282E30; font-size:10px;">
+                                                                            <table>
+                                                                                <tr *ngIf="item.StageAge">
+                                                                                    <td style="width:30px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="width:2px;">(</td>
+                                                                                    <td style="width:auto; text-align:center;" [title]="item.StageAge | StageAgePipe">{{item.StageAge | StageAgePipe :'1'}}</td>
+                                                                                    <td style="width:2px;">)</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td style="width:5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="max-width:180px; font-size:10px; color:#1B90CB;" class="TextTrimming">{{item.CustomerName}}</td>
+
+                                                                        <td style="font-size: 10px; color: #282E30; font-size: 14px; text-align: right;" colspan="2">{{item.FilterValue}}</td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div *ngIf="TopOpportunitiesList == null || TopOpportunitiesList.length == 0" class="NoDataText" style="top:5px;">No Top Opportunities</div>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width:10px;">
+                                <div></div>
+                            </td>
+
+                            <!-- Social -->
+
+
+                            <td style="min-width:300px;">
+                                <div class="MediaFill">
+
+                                    <SocialComponent [QueryName]="'Following'" [SubQueryName]="'All'" [IsEntityMode]="true" [ScreenCode]="'CRM'"></SocialComponent>
+
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </td>
+        </tr>
+    </table>
