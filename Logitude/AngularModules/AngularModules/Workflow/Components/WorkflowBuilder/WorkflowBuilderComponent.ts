@@ -15,6 +15,7 @@ import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { ObjectFields } from "Workflow/Models/ObjectFields";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
+import { MessageWindow } from "Controls/Windows/MessageWindow";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -130,6 +131,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     flowChangedEvent = (event: any) => {
         if (event.status === "success") {
             this.HasChanges = true;
+        }else{
+            let messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show(event.message ? event.message : "error");
         }
     }
 
