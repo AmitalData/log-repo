@@ -101,11 +101,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
             if (lastLoginsList.Count > 0)
             {
-                List<string> lastLoginsUserIdsList = lastLoginsList.Select(s => s.Id).ToList();
-
-                List<UserLoginLog> allLoginLogs = (from d in userLoginLogRepository.context.UserLoginLogs.Include("User")
-                                                   where d.Tenant == tenant && lastLoginsUserIdsList.Contains(d.UserId)
-                                                   select d).ToList();
 
                 foreach (UserLastLogin item in lastLoginsList)
                 {
