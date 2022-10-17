@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "c9ef2258d21fa6986f5ab316479027fe";
+		public const string HashString = "0dd60e0ce66fcdb8f91538adeb520ccd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3295,7 +3295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Card",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  25,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
@@ -7638,7 +7638,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsruedcreditLimit",
 					  						DefaultText =  "Insrued Credit Limit  ",
-					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

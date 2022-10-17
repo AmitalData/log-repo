@@ -95,11 +95,11 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ToPartnerAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FromAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FromAddressCountryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.FromAddressCity).HasMaxLength(25).IsUnicode(true);
+            this.Property(t => t.FromAddressCity).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.FromAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToAddressCountryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ToAddressCity).HasMaxLength(25).IsUnicode(true);
+            this.Property(t => t.ToAddressCity).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.ToAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteClosingReasonCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.QuoteClosingReasonId).HasMaxLength(15).IsUnicode(false);

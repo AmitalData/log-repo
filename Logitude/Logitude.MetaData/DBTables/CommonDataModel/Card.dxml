@@ -265,7 +265,7 @@
   <Column
     Name="CityName"
     Type="nvarchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

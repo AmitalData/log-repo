@@ -670,7 +670,7 @@
   <Column
     Name="FromAddressCity"
     Type="nvarchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -691,7 +691,7 @@
   <Column
     Name="ToAddressCity"
     Type="nvarchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1348,14 +1348,14 @@
   <Column
     Name="InlandDomesticFromCity"
     Type="varchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="InlandDomesticToCity"
     Type="varchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
