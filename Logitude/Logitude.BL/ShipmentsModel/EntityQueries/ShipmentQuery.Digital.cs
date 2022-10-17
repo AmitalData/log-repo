@@ -2266,14 +2266,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DisaledOption = true,
                 Children = GetSubTypes(shipmentSubTypes, new List<string> { "LCL", "LCLD" }, "O")
             });
-            oceanChildren.Add(new DigitalTransportModesChild()
-            {
-                ParentCode = "O",
-                Name = "Groupage Ocean",
-                Code = "MyGo",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGo" }, "O")
-            });
 
             return oceanChildren;
         }
@@ -2297,15 +2289,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DisaledOption = true,
                 Children = GetSubTypes(shipmentSubTypes, new List<string> { "LTL" }, "I")
             });
-            inlandChildren.Add(new DigitalTransportModesChild()
-            {
-                ParentCode = "I",
-                Name = "Groupage Inland",
-                Code = "MyGI",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "MyGI" }, "I")
-            });
-
+            
             return inlandChildren;
         }
 
