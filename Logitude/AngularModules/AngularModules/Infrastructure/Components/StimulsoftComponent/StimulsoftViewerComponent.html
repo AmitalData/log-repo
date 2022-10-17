@@ -318,10 +318,14 @@
 
 
                 <td *ngIf="IsShowShiftToolbar">
-                    <div style="width:440px;float: right;vertical-align:middle">
+                    <div style="width:570px;float: right;vertical-align:middle">
 
                         <table style="float: right;">
                             <tr>
+
+                                <td style="width:60px;"><span>Font Size:</span></td>
+                                <td style="width:60px;"><ComboBox style="width:60px;height:22px;display:inline" (SelectedItemChanged)="FontSizeSelectedItemChanged($event)" [ItemsSource]="FontSizeLists" [SelectedItem]="SelectedFontSize"></ComboBox></td>
+                                <td style="width:10px;"><span></span></td>
                                 <td style="width:25px">  <img style="margin-top:0px;width:25px;height:20px;vertical-align:middle;" src="./Images/Two_headed_arrow_Ver.png" /></td>
 
                                 <td style="width:70px;"><span>Vertical Shift</span></td>

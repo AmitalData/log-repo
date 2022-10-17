@@ -914,7 +914,7 @@ export class EditDocumentComponent implements OnInit {
 
       
     }
-
+ 
     SaveStimualField() {
         var filter = new DocumentTypeTemplateFilter();
         filter.Tenant = this.Tenant;
@@ -928,7 +928,7 @@ export class EditDocumentComponent implements OnInit {
 
             this.stimulsoftArg.StimulsoftViewerComponent.EditableField.filter(d => d.Status == "Change").forEach((field) => {
 
-                if (field.FieldValue != field.NewValue) {
+                if (this.stimulsoftArg.StimulsoftViewerComponent.IsEditableFieldChanged(field)) {
                     filter.EditableFieldLists.push(field);
                     // filter.Body += Field.FieldName + "^" + Field.NewValue + "*" + Field.PageFieldIndex;
                 }

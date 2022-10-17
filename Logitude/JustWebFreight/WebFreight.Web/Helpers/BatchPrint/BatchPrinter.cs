@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public BatchPrinterArgs _batchPrinterArgs;
         public DocumentType documentType;
         public DocumentTypeCopy documentTypeCopy;
-        public DocumentTypeTemplate template;
+        public DocumentTypeTemplatePM template;
         public User printedBy;
         public BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
         public BatchPrinter(BatchPrinterArgs batchPrinterArgs)
@@ -267,7 +267,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             }
               
             var documentOut = BuildDocumentOut(item);
-            var reportStream = CreateReportStream(item);
+            var reportStream = CreateReportStream(item , documentOut);
             var document = UploadPDFToStorage(reportStream, _batchPrinterArgs.Tenant, "docsout");
             AddDocumentOutCopy(document, item, documentOut);
             UpdateDocumentOut(documentOut);
@@ -295,13 +295,14 @@ namespace WebFreight.Web.Helpers.BatchPrint
             documentOutCopyRepository.SubmitChanges();
         }
 
-        private MemoryStream CreateReportStream(PrintEntityKeys item)
+        private MemoryStream CreateReportStream(PrintEntityKeys item, DocumentOutPM documentOut)
         {
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
             try
             {
-                StiReport report = exportDocumentHelper.GetReportDocument(documentType, item.EntityId, _batchPrinterArgs.ObjectTableId, item.EntityId,
-                _batchPrinterArgs.ObjectTableId, documentTypeCopy, template.TemplateBody, template, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
+                if (template != null) template.DocumentOutId = documentOut?.Id;
+                StiReport report = exportDocumentHelper.GetReportDocument(template, item.EntityId, _batchPrinterArgs.ObjectTableId, item.EntityId,
+                _batchPrinterArgs.ObjectTableId, documentTypeCopy, template.TemplateBody, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
                 var stream = new MemoryStream();
                 report.ExportDocument(StiExportFormat.Pdf, stream);
                 return stream;
@@ -403,11 +404,10 @@ namespace WebFreight.Web.Helpers.BatchPrint
             throw new Exception($"the user {_batchPrinterArgs.Email} not found");
         }
 
-        private DocumentTypeTemplate GetDocumentTypeTemplate()
+        private DocumentTypeTemplatePM GetDocumentTypeTemplate()
         {
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(_batchPrinterArgs.Tenant);
-            DocumentTypeTemplate template = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(_batchPrinterArgs.TemplateId);
-            return template;
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(_batchPrinterArgs.Tenant);
+            return  documentTypeTemplateQuery.GetById(_batchPrinterArgs.TemplateId , _batchPrinterArgs.Tenant);
         }
 
         private DocumentTypeCopy GetDocumentTypeCopy()

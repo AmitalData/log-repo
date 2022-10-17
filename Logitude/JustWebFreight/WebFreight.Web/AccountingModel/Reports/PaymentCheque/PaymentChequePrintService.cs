@@ -59,12 +59,12 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             //Build report
             Byte[] templatedata = null;
             StiReport report = new StiReport();
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
 
 
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
+            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
 
             if (defaulttemplate != null)
                 templatedata = defaulttemplate.TemplateBody;
@@ -74,6 +74,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             {
                 if (templatedata.Length != 0)
                 {
+                    defaulttemplate.DocumentOutId = documentOut?.Id;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     report = exportDocumentHelper.LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                 }
