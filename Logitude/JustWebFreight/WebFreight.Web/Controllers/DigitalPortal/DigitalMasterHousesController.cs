@@ -16,10 +16,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalMasterHouses/GetMasterWithConnectedHouses")]
-        public IHttpActionResult GetMasterWithConnectedHouses(string shipmentId, string cardId, string partnerType, int page = 1, int pageSize = 20)
+        public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20)
         {
             try
             {
+                string shipmentId = null;
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
                 shipmentId = shipmentIdAndTenant.Item1;
@@ -52,6 +53,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     results.Add(new DigitalMasterHouse()
                     {
                         Id = item.Id,
+                        ShipmentNumber = item.ShipmentNumber,
+                        TransportModeId = item.TransportModeId,
                         ShipmentLevelCode = item.ShipmentLevelCode,
                         ShipperName = item.ShipperName,
                         ConsigneeName = item.ConsigneeName,
@@ -92,6 +95,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var master = new DigitalMasterHouse()
             {
                 Id = masterShipment.Id,
+                ShipmentNumber = masterShipment.ShipmentNumber,
+                TransportModeId = masterShipment.TransportModeId,
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
                 ShipperName = masterShipment.ShipperName,
                 ConsigneeName = masterShipment.ConsigneeName,
