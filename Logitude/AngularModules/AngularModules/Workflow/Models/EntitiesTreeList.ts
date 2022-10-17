@@ -8,7 +8,8 @@ export class EntitiesTreeList {
 
     private Entities: Entity[] = [
         { Code: "Shipment", Name: "Shipment" },
-        { Code: "Customer", Name: "Customer" }
+        { Code: "Customer", Name: "Customer" },
+        { Code: "User", Name: "User" }
     ];
 
     private ChildEntities: ChildEntity[] = [
