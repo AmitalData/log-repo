@@ -500,7 +500,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                          ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
                          ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
-
+                         AccountPhone = r.AccountPhone
 
                      }
                     ).ToList();
@@ -1077,7 +1077,7 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                                                       ChartOfAccountsTypeEnglishName = account != null ? account.ChartOfAccountsTypeEnglishName : null,
                                                       ChartOfAccountsTypeLocalName = account != null ? account.ChartOfAccountsTypeLocalName : null,
                                                       ChartOfAccountSecurityLevel = account != null ? account.ChartOfAccountSecurityLevel : null,
-
+                                                      AccountPhone = account != null ? account.AccountPhone : null,
                                                   }).ToList();
             return namedPeriods;
         }
