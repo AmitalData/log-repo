@@ -23,7 +23,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InvoiceCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.CityName).HasMaxLength(25).IsUnicode(true);
+            this.Property(t => t.CityName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.ImageDetailId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BankName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.BankAddress).HasMaxLength(100).IsUnicode(true);
