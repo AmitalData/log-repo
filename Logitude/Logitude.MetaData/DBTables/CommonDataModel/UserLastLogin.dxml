@@ -39,6 +39,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+	Name="IP"
+	Type="varchar"
+	Size="15">
+	<Constraints
+	  Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Users"

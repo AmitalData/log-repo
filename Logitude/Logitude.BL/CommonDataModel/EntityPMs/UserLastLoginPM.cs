@@ -20,5 +20,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string WorkEnvironment { get; set; }
 
         public UserPM User { get; set; }
+        public string IP { get; set; }
     }
 }

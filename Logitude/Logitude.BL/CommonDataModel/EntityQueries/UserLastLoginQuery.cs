@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           Id = a.Id,
                                           ComputerId = a.ComputerId,
                                           WorkEnvironment = a.WorkEnvironment,
+                                          IP = a.IP,
                                       }).FirstOrDefault();
             return entity;
         }
@@ -58,6 +59,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Id = a.Id,
                                                                ComputerId = a.ComputerId,
                                                                WorkEnvironment = a.WorkEnvironment,
+                                                               IP = a.IP,
                                                            };
             return userLastLoginPMs;
         }
@@ -74,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Id = a.Id,
                                                                ComputerId = a.ComputerId,
                                                                WorkEnvironment = a.WorkEnvironment,
+                                                               IP = a.IP,
                                                            };
             return userLastLoginPMs;
         }

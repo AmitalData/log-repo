@@ -14,7 +14,15 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
     {
         public static void MapEntity(UserLastLoginPM entityPM, UserLastLogin poco, bool isNewState)
         {
-
+            if (isNewState)
+            {
+                poco.Id = entityPM.Id;
+                poco.Tenant = entityPM.Tenant;
+            }
+            poco.IP = entityPM.IP;
+            poco.LoginDateTime = entityPM.LoginDateTime;
+            poco.ComputerId = entityPM.ComputerId;
+            poco.WorkEnvironment = entityPM.WorkEnvironment;
         }
     }
 }

@@ -2244,13 +2244,14 @@ namespace WebFreight.Web
                                     Tenant = tenant,
                                     ComputerId = computerId,
                                     WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
+                                    IP = AuthenticationUtil.GetIP4Address(),
                                 };
 
                                 commonDataContext.UserLastLogins.Add(lastLogin);
                             }
 
                             user.LastLoginDateTime = lastLogin.LoginDateTime;
-
+                            lastLogin.IP = AuthenticationUtil.GetIP4Address();
                             lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                             lastLogin.Tenant = tenant;
                             commonDataContext.UserLoginLogs.Add(userLog);
