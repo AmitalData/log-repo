@@ -16,6 +16,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
         public string MainCarriageCarrierName { get; set; }
         public string From { get; set; }
         public string To{ get; set; }
+        public string ShipmentNumber { get; set; }
+        public string TransportModeId { get; set; }
         public List<SharedLogisticDocumentPM> Documents { get; set; }
     }
 }
