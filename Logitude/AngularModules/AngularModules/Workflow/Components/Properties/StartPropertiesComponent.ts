@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -25,10 +26,13 @@ export class StartPropertiesComponent extends BaseComponent {
     public CreateTrigger: string = "create";
     public ValidationErrorsList: string[];
 
+    public FlowObjectFields: ObjectFieldPM[];
+
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
 
         this.initialize();
     }
@@ -40,7 +44,7 @@ export class StartPropertiesComponent extends BaseComponent {
         this.Conditions = this.Data["conditions"] || [];
         this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
-        this.EntityId = this.getEntityId(this.Entity);
+        this.EntityId = ObjectTables.getIdByName(this.Entity);
         this.setUIProperties();
     }
 
@@ -84,7 +88,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
         this.Data["entity"] = entity ? entity.Name : null;
         this.Entity = entity ? entity.Name : null;
-        this.EntityId = this.getEntityId(entity ? entity.Name : null);
+        this.EntityId = ObjectTables.getIdByName(entity ? entity.Name : null);
         this.setUIProperties();
     }
 
@@ -118,13 +122,5 @@ export class StartPropertiesComponent extends BaseComponent {
                 this.resetConditionsOperatorAndValue(condition.conditions);
             }
         }
-    }
-
-    getEntityId(entity: string) {
-        if (entity) {
-            let entityObjectTable = ObjectTables.getByName(entity);
-            return entityObjectTable ? entityObjectTable.Id : null;
-        }
-        return null;
     }
 }

@@ -38,7 +38,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Output() ConditionsChangedEvent = new EventEmitter();
 
     public DataContext: any = this;
-    public ObjectFieldsDictionary: any = {};
+    //public ObjectFieldsDictionary: any = {};
     public DateTimeValueExpressions = DateTimeValueExpressions;
 
     public FlowVariablesTreeItems: TreeSelectItem[];
@@ -76,7 +76,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     updateConditionField(objectField: ObjectFieldPM, conditionIndex: number) {
-        this.saveInObjectFieldsDictionary(objectField);
+        //this.saveInObjectFieldsDictionary(objectField);
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.fieldCode) {
             this.Conditions[conditionIndex].fieldCode = objectField ? objectField.FieldCode : null;
             this.Conditions[conditionIndex].field = objectField ? objectField.FieldName : null;
@@ -90,11 +90,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    saveInObjectFieldsDictionary(objectField: ObjectFieldPM) {
-        if (objectField) {
-            this.ObjectFieldsDictionary[objectField.FieldCode] = objectField;
-        }
-    }
+    // saveInObjectFieldsDictionary(objectField: ObjectFieldPM) {
+    //     if (objectField) {
+    //         this.ObjectFieldsDictionary[objectField.FieldCode] = objectField;
+    //     }
+    // }
 
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
@@ -134,7 +134,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     updateConditionFieldValue(objectField: ObjectFieldPM, conditionIndex: number) {
-        this.saveInObjectFieldsDictionary(objectField);
+        //this.saveInObjectFieldsDictionary(objectField);
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.valueCode) {
             this.Conditions[conditionIndex].value = objectField ? objectField.FieldName : null;
             this.Conditions[conditionIndex].valueCode = objectField ? objectField.FieldCode : null;
@@ -207,11 +207,16 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     isDateTimeField(fieldCode: string) {
-        let objectField = this.ObjectFieldsDictionary[fieldCode];
+        //let objectField = this.ObjectFieldsDictionary[fieldCode];
+        let objectField = this.getObjectField(fieldCode);
         return objectField && (objectField.DataTypeCode === FieldTypes.DateTime || objectField.DataTypeCode === FieldTypes.Date);
     }
 
     isDateTimeType(fieldType: string) {
         return fieldType && (fieldType === FieldTypes.DateTime || fieldType === FieldTypes.Date);
+    }
+
+    getObjectField(fieldCode: string) {
+        return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
     }
 }

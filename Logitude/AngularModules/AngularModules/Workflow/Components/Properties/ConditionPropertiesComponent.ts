@@ -6,6 +6,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -24,13 +25,16 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public IsValidConditions: boolean = true;
     public ValidationErrorsList: string[];
     public WorkflowEntityTable: ObjectTablePM;
+
+    public FlowObjectFields: ObjectFieldPM[];
     
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
-
+        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+        
         this.initialize();
     }
 

@@ -66,7 +66,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList();
+        this.EntitiesTreeList = new EntitiesTreeList(["Opportunity"]);
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -85,7 +85,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["orderBy"] = this.OrderBy;
         this.Data["sortBy"] = this.SortBy;
 
-        this.EntityId = this.getEntityId(this.Entity);
+        this.EntityId = ObjectTables.getIdByName(this.Entity);
 
         this.initializeConditions();
         this.initializeReturnedFields();
@@ -130,7 +130,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.ReturnedFields = [];
         }
         if (this.EntityId && this.ReturnedFields.length === 0) {
-            let entityKeyPropertyPath = this.getEntityKeyPropertyPath(this.Entity);
+            let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
             let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
             if (primaryObjectField) {
                 let field = new ReturnedField();
@@ -157,7 +157,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         let isEntityChanged = this.Data["entity"] !== entity;
         this.Data["entity"] = entity;
         this.Entity = entity;
-        this.EntityId = this.getEntityId(entity);
+        this.EntityId = ObjectTables.getIdByName(entity);
 
         if (isEntityChanged) {
             this.initializeConditions(true);
@@ -248,24 +248,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["conditions"] = this.Conditions;
         this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
         this.Data["returnedFields"] = this.ReturnedFields;
-    }
-
-    getEntityId(entity: string) {
-        if (entity) {
-            entity = entity.indexOf(".") === -1 ? entity : entity.split(".")[1];
-            let entityObjectTable = ObjectTables.getByName(entity);
-            return entityObjectTable ? entityObjectTable.Id : null;
-        }
-        return null;
-    }
-
-    getEntityKeyPropertyPath(entity: string) {
-        if (entity) {
-            entity = entity.indexOf(".") === -1 ? entity : entity.split(".")[1];
-            let entityObjectTable = ObjectTables.getByName(entity);
-            return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
-        }
-        return null;
     }
 
     getObjectFieldsQueryFilters() {

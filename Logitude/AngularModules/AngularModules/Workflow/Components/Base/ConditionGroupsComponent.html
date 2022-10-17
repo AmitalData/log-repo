@@ -183,16 +183,16 @@
                         class="condition-value-container"
                         [ngClass]="{'condition-date-value-container': isDateTimeField(Condition.fieldCode)}">
 
-                        <FieldValue *ngIf="Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
-                            [ObjectField]="ObjectFieldsDictionary[Condition.fieldCode]"
+                        <FieldValue *ngIf="Condition.fieldChangedToggle && getObjectField(Condition.fieldCode)"
+                            [ObjectField]="getObjectField(Condition.fieldCode)"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
-                        <FieldValue *ngIf="!Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
-                            [ObjectField]="ObjectFieldsDictionary[Condition.fieldCode]"
+                        <FieldValue *ngIf="!Condition.fieldChangedToggle && getObjectField(Condition.fieldCode)"
+                            [ObjectField]="getObjectField(Condition.fieldCode)"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="isDateTimeField(Condition.fieldCode) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
@@ -204,10 +204,10 @@
                     <div *ngIf="!isNoValueOperator(Condition.operator) && isFieldCompareOperator(Condition.operator) && !ShowFlowVariablesTree"
                         class="condition-value-container">
 
-                        <LogLov *ngIf="Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
+                        <LogLov *ngIf="Condition.fieldChangedToggle && getObjectField(Condition.fieldCode)"
                             [NoObjectField]="true" [ObjectFieldName]="'ConditionFieldValue_' + Condition.id"
                             [DataContext]="DataContext"
-                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(ObjectFieldsDictionary[Condition.fieldCode])"
+                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(getObjectField(Condition.fieldCode))"
                             [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -215,10 +215,10 @@
                             [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionFieldValue_' + Condition.id">
                         </LogLov>
 
-                        <LogLov *ngIf="!Condition.fieldChangedToggle && ObjectFieldsDictionary[Condition.fieldCode]"
+                        <LogLov *ngIf="!Condition.fieldChangedToggle && getObjectField(Condition.fieldCode)"
                             [NoObjectField]="true" [ObjectFieldName]="'ConditionFieldValue_' + Condition.id"
                             [DataContext]="DataContext"
-                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(ObjectFieldsDictionary[Condition.fieldCode])"
+                            [QueryFilterItems]="getObjectFieldsValueQueryFilters(getObjectField(Condition.fieldCode))"
                             [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"

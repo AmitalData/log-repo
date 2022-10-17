@@ -147,7 +147,7 @@
 
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="this.WorkflowEntityTable.Id"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true" (IsValidConditionsChange)="UpdateIsValidConditions($event)"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions">
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [FlowObjectFields]="FlowObjectFields">
                 </Conditions>
             </div>
         </td>
