@@ -14,7 +14,6 @@ import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { ObjectFields } from "Workflow/Models/ObjectFields";
-import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 
 @Component({
@@ -202,15 +201,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
 
             if (nodeType === "startNode") {
-                let dataEntity = data["entity"];
-                if (this.WorkflowEntity !== dataEntity) {
-                    let flowObject = this.getCurrentFlowObject();
-                    FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
-                        conditionNode.data["conditions"] = [];
-                        conditionNode.data["conditionsOperation"] = ConditionOperations.And;
-                    });
-                }
-                this.WorkflowEntity = dataEntity;
+                this.WorkflowEntity = data["entity"] || null;
             }
 
             this.HasChanges = true;
