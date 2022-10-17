@@ -1,3 +1,4 @@
+@devrelease
 Feature: Overview task Create, and Edit from CRM
     The user creates a task, and complete it #, and creates a new post from the CRM Module.
 

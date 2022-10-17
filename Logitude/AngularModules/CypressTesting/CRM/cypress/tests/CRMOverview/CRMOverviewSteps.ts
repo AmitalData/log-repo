@@ -11,8 +11,7 @@ Given("the user logged in and open Overview in CRM", () => {
 });
 
 Given("navigate task wizerd and fill the following details", (dataTable) => {
-    cy.get(OverviewSelectors.OverviewNew).click()
-    cy.get(OverviewSelectors.NEWTASK).click()
+    BaseActions.NavigatesToTaskInOverview()
     let taskDetails = Assists.CreateInstance<OverviewDetails>(dataTable, true);
     BaseActions.FillTaskWizardsFields(taskDetails);
 });

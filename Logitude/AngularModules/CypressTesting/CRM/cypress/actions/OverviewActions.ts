@@ -20,6 +20,10 @@ export function NavigatesToOverviewInCRM(){
 }
 
 
+export function NavigatesToTaskInOverview() {
+    cy.get(OverviewSelectors.OverviewNew).click()
+    cy.get(OverviewSelectors.NEWTASK).click()
+}
 export function FillTaskWizardsFields(activitiesDetails: ActivitiesDetails) {
     FillSubject("Task_")
     cy.FillLogTextBox(OverviewSelectors.ActivityDescription, activitiesDetails.Description)
