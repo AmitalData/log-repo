@@ -432,9 +432,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             }
         });
     }
-    private GoBack(reject: boolean) {
-        this.SetEmptyDashboardVisibility();
+    private GoBack(reject: boolean) {        
         this.ResetFlags();
+        this.SetEmptyDashboardVisibility();
 
         if (reject) {
             this.RejectChanges();
@@ -489,12 +489,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.IsEmptyDashboardVisible = false;
         this.IsPermissionMessageVisible = false;
 
-        if (this.SelectedDashboard) {
+        if (!this.IsEditLayoutModeActive && this.SelectedDashboard) {
             if (this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId) {
                 this.IsPermissionMessageVisible = true;
             }
 
-            else if (this.SelectedDashboard.Widgets.length == 0) {
+            if (this.SelectedDashboard.Widgets.length == 0) {
                 this.IsEmptyDashboardVisible = true;
             }
         }
