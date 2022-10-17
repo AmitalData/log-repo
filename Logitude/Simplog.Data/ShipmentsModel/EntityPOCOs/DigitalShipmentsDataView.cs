@@ -14,6 +14,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? ValueOfGoods { get; set; }
         public int? NumberOfPackages { get; set; }
         public string SalesmanUserId { get; set; }
+        public string TruckNumber { get; set; }
+        public string ContainersNumbersandTypesArray { get; set; }
         public string InlandDomesticFromZipCode { get; set; }
         public string InlandDomesticToZipCode { get; set; }
         public string InlandDomesticFromCity { get; set; }

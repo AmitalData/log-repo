@@ -12,6 +12,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? ValueOfGoods { get; set; }
         public int? NumberOfPackages { get; set; }
         public string SalesmanUserId { get; set; }
+        public string TruckNumber { get; set; }
         public string InlandDomesticFromZipCode { get; set; }
         public string InlandDomesticToZipCode { get; set; }
         public string InlandDomesticFromCity { get; set; }
@@ -23,6 +24,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentLevelCode { get; set; }
         public string ShipmentLevelName { get; set; }
         public string ShipmentTypeId { get; set; }
+        public string ContainersNumbersandTypesArray { get; set; }
+        public string TruckContainerNumber { get; set; }
         public string ShipmentTypeName { get; set; }
         public DateTime? Transshipment3ATD { get; set; }
         public DateTime? Transshipment3ATA { get; set; }

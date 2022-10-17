@@ -110,6 +110,7 @@
     ShipmentMasterData.OnCarriageETA,
     ShipmentMasterData.OnCarriageATD,
     ShipmentMasterData.OnCarriageATA,
+	ShipmentMasterData.TruckNumber,
 	ShipmentMasterData.DepartureArrivalFromDate as DepartureArrivalFromDate,
     ShipmentMasterData.DepartureArrivalToDate as DepartureArrivalToDate,
 	ShipmentMasterData.MainCarriageFromAddressId, 
@@ -174,7 +175,7 @@
 	FromPorts.Code AS FromPortCode,
 	MainCarriageFromAddressCountries.Code AS MainCarriageFromCountryCode,
 	MainCarriageToAddressCountries.Code AS MainCarriageToCountryCode,
-	
+    ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray, 
 	ToPortCountries.EnglishName AS ToPortCountryName,
 	FromPortCountries.EnglishName AS FromPortCountryName,
 	CustomAgentImportCards.EnglishName AS CustomAgentImportName,
