@@ -62,14 +62,20 @@
     </Compile>
     <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\ARInvoiceAnalytic.ljson" />
+    <None Include="AnalyticsEntityFiles\QuoteAnalytic.ljson" />
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202209010934_AddQuoteAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />
     <None Include="DBScripts\202209010934_FillAPInvoiceAnalytics.sxml" />
+    <None Include="DBScripts\202209010934_FillQuoteAnalytics.sxml" />
     <None Include="DBScripts\202209270207_DeleteWrongMetaDataFields.sxml" />
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="DBTables\APInvoiceAnalytic.dxml" />
     <None Include="DBTables\ARInvoiceAnalytic.dxml" />
+    <None Include="DBTables\DashboardSharedUser.dxml" />
+    <None Include="DBTables\PermissionLevel.dxml" />
+    <None Include="DBTables\QuoteAnalytic.dxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />

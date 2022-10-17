@@ -9,6 +9,7 @@ namespace Simplog.Data.QuoteModel
     public interface IQuotesContext : IContext
     {
         IDbSet<Quote> Quotes { get; }
+        IDbSet<QuoteAnalytic> QuoteAnalytics { get; }
         IDbSet<QuoteCharge> QuoteCharges { get; }
         IDbSet<QuotePriceSteps> QuotePriceSteps { get; }
         IDbSet<QuoteType> QuoteTypes { get; }

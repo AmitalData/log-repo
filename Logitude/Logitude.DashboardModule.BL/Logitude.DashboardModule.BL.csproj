@@ -65,6 +65,7 @@
     <Compile Include="DataProviders\Models\KpiChart.cs" />
     <Compile Include="DataProviders\TablesDataProviders\APInvoiceDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ARInvoiceDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\QuoteDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ShipmentDataProviderService.cs" />
     <Compile Include="DataProviders\WidgetDataSource.cs" />
     <Compile Include="DataProviders\WidgetsDataProviders\ChartDataProviderService.cs" />

@@ -117,8 +117,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
                 if (this.SelectedDashboard) {
-                    this.applyWDashboard();
-                    this.SetEmptyDashboardVisibility();
+                    this.applyWDashboard();                    
                 }
 
                 else {
@@ -134,6 +133,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
         this.SelectedDashboardName = this.SelectedDashboard.Name;
+        this.SetEmptyDashboardVisibility();
     }
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];

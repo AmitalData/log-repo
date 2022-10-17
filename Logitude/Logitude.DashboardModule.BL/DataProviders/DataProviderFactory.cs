@@ -15,6 +15,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         const string ShipmentAnalyticsMetaData = "ShipmentAnalytics";
         const string APInvoiceAnalyticsMetaData = "APInvoiceAnalytics";
         const string ARInvoiceAnalyticMetaData = "ARInvoiceAnalytics";
+        const string QuoteAnalyticMetaData = "QuoteAnalytics";
         public BaseTablesDataProvider GetDataProviderService(WidgetPM widget)
         {
             var entity = GetEntity(widget.EntityId);
@@ -26,6 +27,8 @@ namespace Logitude.DashboardModule.BL.DataProviders
                     return new APInvoiceDataProviderService(widget, entity);
                 case ARInvoiceAnalyticMetaData:
                     return new ARInvoiceDataProviderService(widget, entity);
+                case QuoteAnalyticMetaData:
+                    return new QuoteDataProviderService(widget, entity);
                 default:
                     throw new Exception($"Meta Data Name {entity.TableName} not Provided in Data Provider Factory");
             }

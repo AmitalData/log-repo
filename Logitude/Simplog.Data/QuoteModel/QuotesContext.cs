@@ -343,6 +343,8 @@ namespace Simplog.Data.QuoteModel
         public IDbSet<QuoteTotalVAT> QuoteTotalVATs { get; set; }
         public IDbSet<QuoteSetting> QuoteSettings { get; set; }
 
+        public IDbSet<QuoteAnalytic> QuoteAnalytics { get; set; }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
