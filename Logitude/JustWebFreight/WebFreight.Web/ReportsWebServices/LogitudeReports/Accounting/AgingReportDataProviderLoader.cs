@@ -222,10 +222,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountPhone = d.First().AccountPhone + " / " + d.First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,                    
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -263,9 +269,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountPhone = d.First().AccountPhone,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -312,10 +324,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountPhone = d.First().AccountPhone + " / " + d.First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -353,10 +371,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountPhone = d.First().AccountPhone + " / " + d.First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -393,9 +417,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName ,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountPhone = d.First().AccountPhone,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -441,10 +471,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountPhone = d.First().AccountPhone + " / " + d.First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -482,9 +518,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountPhone = d.First().AccountPhone,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CustomerCreditLimit,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().CustomerPaymentTerm,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -703,9 +745,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.AccountLocalName = item.AccountLocalName + " / " + item.CurrencyCode;
                         record.CurrencyCode = item.CurrencyCode;
                         record.AccountDisplayNumber = item.AccountDisplayNumber;
+                        record.AccountPhone = item.AccountPhone;
                         record.AccountCurrencyCode = item.AccountCurrencyCode;
                         record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
                         record.InsuredCreditLimit = item.InsuredCreditLimit;
+                        record.BalanceInLocalAccountingDate = item.BalanceInLocalAccountingDate;
+                        record.TotalFutureOpenCheques = item.TotalFutureOpenCheques;
+                        record.TotalOpenCheques = item.TotalOpenCheques;
+                        record.TotalOpenShipments = item.TotalOpenShipments;
+                        record.BalanceInLocalCurrency = item.BalanceInLocalCurrency;
                         record.CustomerVatNumber = item.CustomerVatNumber;
                         record.CustomerPaymentTerm = item.AccountTermLocalName;
                         record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
@@ -751,9 +799,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.AccountEnglishName = item.AccountEnglishName;
                         record.AccountLocalName = item.AccountLocalName;
                         record.AccountDisplayNumber = item.AccountDisplayNumber;
+                        record.AccountPhone = item.AccountPhone;
                         record.AccountCurrencyCode = item.AccountCurrencyCode;
                         record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
                         record.InsuredCreditLimit = item.InsuredCreditLimit;
+                        record.BalanceInLocalAccountingDate = item.BalanceInLocalAccountingDate;
+                        record.TotalFutureOpenCheques = item.TotalFutureOpenCheques;
+                        record.TotalOpenCheques = item.TotalOpenCheques;
+                        record.TotalOpenShipments = item.TotalOpenShipments;
+                        record.BalanceInLocalCurrency = item.BalanceInLocalCurrency;
                         record.CustomerVatNumber = item.CustomerVatNumber;
                         record.CustomerPaymentTerm = item.AccountTermLocalName;
                         record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
