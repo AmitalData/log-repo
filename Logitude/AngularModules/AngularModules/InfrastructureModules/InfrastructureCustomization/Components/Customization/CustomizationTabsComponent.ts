@@ -9,6 +9,7 @@ import { ScreenPM } from 'Infrastructure/EntityPMs/ScreenPM';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
 import { LoginService } from 'Infrastructure/Services/LoginService';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 type tab = {
     Changset: 'insert' | 'update' | 'delete' | null;
@@ -39,10 +40,12 @@ export class CustomizationTabsComponent extends BaseComponent
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     tableTabsService = new TableTabService();
-    isDirty: boolean = false;
+    //private isDirty: boolean = false;
     GridDisabled: boolean = false;
     tabs: ObjectTableTabPM[] = [];
     orderedTabs = new ObservableCollection([]);
+
+    public customizationEditComponent: CustomizationEditComponent;
 
     constructor(private loginService: LoginService)
     {
@@ -69,25 +72,29 @@ export class CustomizationTabsComponent extends BaseComponent
         if (tab.IndexOrder == indexOrder) return;
         tab.IndexOrder = indexOrder;
         this.SetChangeSet(tab);
-        this.isDirty = true;
+        this.customizationEditComponent.IsDirty = true;
+        //this.isDirty = true;
 
     }
 
     SetWindowArgs(windowArgs: any)
     {
-        this.objectTableId = windowArgs.ObjectTableID;
+        this.objectTableId = windowArgs.ObjectTableId;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.objectTableId)[0];
 
+        this.LoadScreen();
+    }
+
+    GetTabs = () => this.tabs = window.ObjectTableTabs.filter(a => a.ObjectTableId == this.objectTableId) || [];
+    IsCopied = (a: any) => this.tabs.map(t => t.OriginalTabCode).includes(a.Code);
+    PushTabs = (newTableTabs: any) => this.tabs = this.tabs.concat(newTableTabs)
+
+    private LoadScreen() {
         this.GetTabs();
         this.LoadTabs();
     }
 
-    GetTabs = () => this.tabs = window.ObjectTableTabs.filter(a => a.ObjectTableId == this.objectTableId) || [];
-    CancelClicked = () => this.GetAllTabsAndCloseWindow(false);
-    IsCopied = (a: any) => this.tabs.map(t => t.OriginalTabCode).includes(a.Code);
-    PushTabs = (newTableTabs: any) => this.tabs = this.tabs.concat(newTableTabs)
-
-    GetAllTabsAndCloseWindow(isRunBusyIndicator: boolean = true)
+    GetAllTabs(isRunBusyIndicator: boolean = true)
     {
         if (isRunBusyIndicator) this.CurrentSession.StartBusyIndicatorLoading();
        
@@ -95,19 +102,23 @@ export class CustomizationTabsComponent extends BaseComponent
         this.loginService.GetObjectTableTabs().subscribe((tabs: any) =>
         {
             this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CloseCurrentWindow();
-
-            if(!tabs || tabs.length == 0)
-                return;
+            //if(!tabs || tabs.length == 0)
+            //    return;
 
             window.ObjectTableTabs = tabs;
+            this.LoadScreen();
+            this.customizationEditComponent.IsDirty = false;
+            if (this.customizationEditComponent.NewSelectedMenu) {
+                this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+            }
         });
+        
     }
 
     OkClicked()
     {
-        if(!this.isDirty || this.tabs.length == 0)
-            return this.CancelClicked();
+        if (!this.customizationEditComponent.IsDirty || this.tabs.length == 0)
+            return this.GetAllTabs(false);
 
         const tabsToUpdate = this.tabs.filter(t => t.Changeset);
 
@@ -115,10 +126,11 @@ export class CustomizationTabsComponent extends BaseComponent
         this.tableTabsService.UpdateTabs(tabsToUpdate)
             .subscribe(arg => {
                 this.CurrentSession.StopBusyIndicator();
-                this.GetAllTabsAndCloseWindow();
+                this.GetAllTabs();
             }, error=>{
                 alert("error happened!");
             });
+        
     }
 
     NewTabClicked()
@@ -140,7 +152,8 @@ export class CustomizationTabsComponent extends BaseComponent
 
     AddTab(newTab: ObjectTableTabPM){
         newTab.IndexOrder = this.tabs.length;
-        this.isDirty = true;
+        this.customizationEditComponent.IsDirty = true;
+        //this.isDirty = true;
         this.tabs.push(newTab);
         this.LoadTabs();
     }
@@ -156,8 +169,9 @@ export class CustomizationTabsComponent extends BaseComponent
         window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddTabComponent');
 
         window.WindowClosed.subscribe(data=>{
-            if(data){
-                this.isDirty = true;
+            if (data) {
+                this.customizationEditComponent.IsDirty = true;
+                //this.isDirty = true;
                 let editedTab = this.tabs.find(d=>d.Code == tab.Code);
                 editedTab = data;
                 this.LoadTabs();
@@ -169,7 +183,8 @@ export class CustomizationTabsComponent extends BaseComponent
     DeleteTab(tab: ObjectTableTabPM)
     {
         tab.Changeset = 'delete';
-        this.isDirty = true;
+        this.customizationEditComponent.IsDirty = true;
+        //this.isDirty = true;
         this.LoadTabs();
     }
 
@@ -202,5 +217,12 @@ export class CustomizationTabsComponent extends BaseComponent
     public  SetChangeSet(tab) {
         tab.Changeset = tab.Changeset == 'insert' ? 'insert' : 'update';
         
+    }
+
+    Save() {
+        this.OkClicked();
+    }
+    Cancel() {
+        this.GetAllTabs(false);     
     }
 }

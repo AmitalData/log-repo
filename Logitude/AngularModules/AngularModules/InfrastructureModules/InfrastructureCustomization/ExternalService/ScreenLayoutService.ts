@@ -20,10 +20,11 @@ export class ScreenLayoutService implements ICustomizationService {
         this.customizationMainMenuItem.TextCode = "Screen Layout";
         this.customizationMainMenuItem.Code = "SCREENLAYOUT";
         this.customizationMainMenuItem.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/ScreenLayoutComponent";
-        let objectTable = window.ObjectTables.filter(d => d.Id === this.objectTableId)[0];
 
         this.customizationMainMenuItem.args = {
-
+            ObjectTableId: this.objectTableId,
+            IsObjectTableFilterEnabled: args.IsObjectTableFilterEnabled,
+            IsTabsCustomizationEnabled: this.GetTabsFeaturePermission(args),
         }
         return this.customizationMainMenuItem;
     }
@@ -31,5 +32,9 @@ export class ScreenLayoutService implements ICustomizationService {
     GetFeaturePermission(args: any): boolean {
         let IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
         return !args.IsObjectTableFilterEnabled || IsShowScreensLayout;
+    }
+    GetTabsFeaturePermission(args: any): boolean {
+        let IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
+        return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue;
     }
 }

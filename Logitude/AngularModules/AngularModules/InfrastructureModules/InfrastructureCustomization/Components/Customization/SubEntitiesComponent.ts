@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 declare var window: any;
 
@@ -8,7 +9,9 @@ declare var window: any;
 })
 
 export class SubEntitiesComponent {
-    
+
+    public customizationEditComponent: CustomizationEditComponent;
+
     constructor() {
 
     }
@@ -17,7 +20,12 @@ export class SubEntitiesComponent {
 
     }
 
-   
+    Save() {
+
+    }
+    Cancel() {
+
+    }
 }
 
 
