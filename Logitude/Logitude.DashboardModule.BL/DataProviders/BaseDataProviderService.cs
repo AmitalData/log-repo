@@ -106,15 +106,15 @@ namespace Logitude.DashboardModule.BL.DataProviders
             switch (_Widget.DateGroupCode)
             {
                 case "Day":
-                    return $"convert(varchar, Data.{groupBy.FieldCode}, 111)";
+                    return $"convert(varchar, data.{groupBy.FieldCode}, 111)";
                 case "Month":
-                    return $"CONVERT(varchar,DateAdd(Month, DateDiff(Month, 0, Data.{groupBy.FieldCode}), 0),111)";
+                    return $"CONVERT(varchar,DateAdd(Month, DateDiff(Month, 0, data.{groupBy.FieldCode}), 0),111)";
                 case "Year":
-                    return $"CONVERT(varchar,DateAdd(yy, DateDiff(yy, 0, Data.{groupBy.FieldCode}), 0),111)";
+                    return $"CONVERT(varchar,DateAdd(yy, DateDiff(yy, 0, data.{groupBy.FieldCode}), 0),111)";
                 case "Quarter":
-                    return $"CONCAT(CAST(Year(Data.{groupBy.FieldCode}) as varchar(5)) ,'/Q',MONTH(data.{groupBy.FieldCode})/4+1)";
+                    return $"CONCAT(CAST(Year(data.{groupBy.FieldCode}) as varchar(5)) ,'/Q',MONTH(data.{groupBy.FieldCode})/4+1)";
                 default:
-                    return $"convert(varchar, Data.{groupBy.FieldCode}, 111)";
+                    return $"convert(varchar, data.{groupBy.FieldCode}, 111)";
             }
         }
 

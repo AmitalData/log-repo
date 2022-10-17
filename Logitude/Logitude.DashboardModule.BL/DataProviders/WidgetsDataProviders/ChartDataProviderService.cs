@@ -86,7 +86,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
         {
-            var groupByField = $"{groupBy.FieldCode}";
+            var groupByField = $"data.{groupBy.FieldCode}";
             if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
             {
                 groupByField = ConverDateByDateGroupCode(groupBy);
