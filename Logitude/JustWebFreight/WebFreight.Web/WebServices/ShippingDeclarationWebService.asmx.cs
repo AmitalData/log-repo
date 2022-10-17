@@ -171,11 +171,15 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
-
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
                 myDataProvider.TotalPrepaidReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmount);
+
+                myDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, "KG");
+                myDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, "LB");
+                myDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, "CBM");
+                myDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, "CBF");
 
                 this.FillINTTRADocumentProperties(myDataProvider);
 
@@ -3089,6 +3093,12 @@ namespace WebFreight.Web.WebServices
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
                     packageline.Temperature = package.Temperature;
+                    packageline.ContainerStrippedDate = package.ContainerStrippedDate;
+
+                    packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
+                    packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
+                    packageline.PackageVolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBM");
+                    packageline.PackageVolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBF");
 
                     #region Car Details
                     packageline.Make = package.Make;
@@ -3907,7 +3917,6 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
-
         private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
         {
             if (string.IsNullOrEmpty(emergencyContactId)) return null;
@@ -5065,6 +5074,6 @@ namespace WebFreight.Web.WebServices
             }
 
             return myResult;
-        }
+        }        
     }
 }

@@ -141,6 +141,11 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.Transshipment1VoyageNumber = master.Transshipment1CarrierNumber;
                 manifestDataProvider.Transshipment2VoyageNumber = master.Transshipment2CarrierNumber;
 
+                manifestDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "KG");
+                manifestDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "LB");
+                manifestDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, "CBM");
+                manifestDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, "CBF");
+
                 if (master.BranchId != null)
                 {
                     Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == master.BranchId select d).FirstOrDefault();
@@ -1633,6 +1638,11 @@ namespace WebFreight.Web.ReportsWebServices
                 packageDetail.Harmonize = package.Harmonize;
                 packageDetail.Tare = package.Tare;
                 packageDetail.Ventilation = package.Ventilation;
+
+                packageDetail.WeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
+                packageDetail.WeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
+                packageDetail.VolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBM");
+                packageDetail.VolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBF");
 
                 if (!string.IsNullOrEmpty(package.HorseId))
                 {

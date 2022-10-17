@@ -1803,6 +1803,11 @@ namespace WebFreight.Web.WebServices
                         packageline.Reference3 = package.Reference3;
                         packageline.Reference4 = package.Reference4;
 
+                        packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
+                        packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
+                        packageline.PackageVolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBM");
+                        packageline.PackageVolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBF");
+
                         #region Harmonize
                         if (package.IsMultiHarmonize)
                         {

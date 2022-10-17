@@ -249,6 +249,26 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
                 prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment3TrailerNumber;
                 prealertDataProvider.ValueOfGoods = shipmentpm.ValueOfGoods;
+                prealertDataProvider.AMSBL = shipmentpm.AMSBL;
+                prealertDataProvider.HousesNumber = shipmentpm.NumberOfHouses;
+
+                prealertDataProvider.LastLegATA =
+                    shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3ATA :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2ATA :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1ATA : 
+                    shipmentpm.MainCarriageATA));
+
+                prealertDataProvider.LastLegVessel =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3VesselName :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2VesselName :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1VesselName :
+                    shipmentpm.MainCarriageVesselName));
+
+                prealertDataProvider.LastLegVoyageNumber =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3CarrierNumber :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2CarrierNumber :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1CarrierNumber :
+                    shipmentpm.MainCarriageCarrierNumber));
 
                 if (!string.IsNullOrEmpty(shipmentpm.ValueOfGoodsCurrencyId))
                 {
@@ -274,6 +294,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Tenant Details
                 string tenantAgent = null;
+                string tenantAgentTel = null;
 
                 if (tenantpm != null)
                 {
@@ -283,6 +304,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (tenantAddress != null)
                     {
+                        tenantAgentTel = tenantAddress.PhoneNumber;
+
                         if (!string.IsNullOrEmpty(tenantAddress.City))
                         {
                             tenantAgent = tenantAgent + Environment.NewLine + tenantAddress.City;
@@ -306,6 +329,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Agent
                 string shipmentAgent = null;
+                string shipmentAgentTel = null;
                 if (!string.IsNullOrEmpty(shipmentpm.AgentId))
                 {
                     CardPM agent = cardQuery.GetSinglePM(shipmentpm.AgentId, tenant);
@@ -317,6 +341,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (agentAddress != null)
                         {
+                            shipmentAgentTel = agentAddress.PhoneNumber;
+
                             if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
                             {
                                 shipmentAgent = agent.LocalName;
@@ -331,13 +357,17 @@ namespace WebFreight.Web.ReportsWebServices
                 if (shipmentpm.DirectionId == "E")
                 {
                     prealertDataProvider.OriginAgent = tenantAgent;
+                    prealertDataProvider.OriginAgentTel = tenantAgentTel;
                     prealertDataProvider.DestinationAgent = shipmentAgent;
+                    prealertDataProvider.DestinationAgentTel = shipmentAgentTel;
                 }
 
                 else if (shipmentpm.DirectionId == "I")
                 {
                     prealertDataProvider.OriginAgent = shipmentAgent;
+                    prealertDataProvider.OriginAgentTel = shipmentAgentTel;
                     prealertDataProvider.DestinationAgent = tenantAgent;
+                    prealertDataProvider.DestinationAgentTel = tenantAgentTel;
                 }
 
                 #region CustomAgent
