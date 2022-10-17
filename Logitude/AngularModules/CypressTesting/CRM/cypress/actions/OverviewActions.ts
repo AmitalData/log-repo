@@ -5,9 +5,7 @@ import { ActivitiesDetails } from "../models/ActivitiesDetails";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { OverviewSelectors } from "../selectors/OverviewSelectors"
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
-import { Constants } from "../constants/Constants";
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
-import { lastIndexOf, over } from "cypress/types/lodash";
 
 let TaskName = ""
 
