@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .MessageScrollViewer {
         height: 100%;
         width: 100%;
@@ -61,7 +61,7 @@
                         <td style="width:100px"><div (click)="GotoInboxButtonClick()" class="Hyperlink">Go to Inbox</div></td>
                         <td></td>
                         <td style="width:60px"><div (click)="RefreshButtonClick()" class="Hyperlink">Refresh</div></td>
-                        <td style="width:70px"><div (click)="NewMessageButtonClick()" class="Hyperlink">New Message</div></td>
+                        <td style="width:70px"><div (click)="NewMessageButtonClick()" [attr.data-cy]="'NewMessage'" class="Hyperlink">New Message</div></td>
                         <td style="width:10px"><div style="width:10px"></div></td>
                     </tr>
                 </table>
@@ -76,7 +76,7 @@
                     <table>
                         <tr style="height:100%;">
 
-                            <td *ngIf="!IsNoData" style="vertical-align:top;">
+                            <td [attr.data-cy]="'MessagesAfterCreation'" *ngIf="!IsNoData" style="vertical-align:top;">
 
                                 <div *ngFor="let item of ConversationHeaderLists">
                                     <div  (mouseleave)="OnmMouseleave(item)"  (mouseover)="OnmMouseOver(item)" [style.background-color]="item.BackgroundConversationHeader" style="min-height:50px;background-color:white;border-bottom:1px solid #DDDDDD; cursor:pointer">

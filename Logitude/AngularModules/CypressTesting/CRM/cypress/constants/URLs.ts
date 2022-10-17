@@ -3,6 +3,7 @@ export class Urls {
     public static readonly PutCompleteActivity = "**/PutCompleteActivity"
     public static readonly ActivityGetSingle = "**/activities/getsingle?**"
     public static readonly GetCompleteActivity = "**/CRMDomain/GetCompleteActivity?**"
+    public static readonly GetTodayActivity = "**/activityviews/getbyfilters?**"
 
     public static readonly Opportunities = "**/opportunities"
     public static readonly OpportunitiesGetSingle = "**/opportunities/getsingle?**"
