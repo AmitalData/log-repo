@@ -94,7 +94,7 @@
                                                                             <tr>
                                                                                 <td style="vertical-align:top">
                                                                                     <ul>
-                                                                                        <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" *ngFor="let item of MainMenuItems"
+                                                                                        <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" *ngFor="let item of filterMainMenuItems()"
                                                                                             (click)="SelectionChanged(item)"
                                                                                             [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
                                                                                             [ngStyle]="(item === SelectedMenu) && hasMainTabHighlightColor? privateLabelClass : ''"
