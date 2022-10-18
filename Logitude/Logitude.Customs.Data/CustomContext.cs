@@ -694,6 +694,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
 	
+            modelBuilder.Configurations.Add(new ServersNameMap());
+	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
             modelBuilder.Configurations.Add(new SiteLookupMap());
@@ -3212,6 +3214,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SeizureMethodType> SeizureMethodTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ServersName> ServersNames 
 	 {
 	      get; set;
 	 
