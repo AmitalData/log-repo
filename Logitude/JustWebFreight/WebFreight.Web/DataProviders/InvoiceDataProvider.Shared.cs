@@ -744,6 +744,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string BillToPostalCode { get; set; }
+        public string SATForeignRFC { get; set; }
     }
 
     public class ReportConstituentInvoiceLine
