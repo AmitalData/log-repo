@@ -465,7 +465,7 @@
 
                         <td class="tbl1Col1">
 
-                            <LogTextBox [Text]="TenantPriority"
+                            <LogTextBox [Text]="TenantPriority" 
                                         [ObjectFieldName]="'TenantPriority'"
                                         [InputType]="'text'"
                                         [DataContext]="DataContext"
@@ -508,7 +508,40 @@
 
 
                         <td class="tbl1LastCol"><div></div></td>
+                        <td *ngIf="entityPM.Code=='2715'" class="tbl1Label">
+                            <div>
+                                <LogLabel [ObjectFieldName]="'SendTime'"
+                                          [ObjectTableName]="'Customs.InterfaceTenantDefinition'"
+                                          [DataContext]="DataContext">
 
+                                </LogLabel>
+                            </div>
+
+                        </td>
+
+                        <td class="tbl1Col0"></td>
+
+                        <td *ngIf="entityPM.Code=='2715'" class="tbl1Col1">
+
+                            <!-- <LogTextBox
+                                        [Text]="SendTime"
+                                        [ObjectFieldName]="'SendTime'"
+                                        [InputType]="'text'"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="'Customs.InterfaceTenantDefinition'"
+                                        [HideColumns]="true"></LogTextBox> -->
+                                        <LogDatePicker 
+                                            [ObjectFieldName]="'SendTime'" 
+                                            [SelectedDateValue]="DataContext.SendTime" 
+                                            [ObjectTableName]="ObjectTableName" 
+                                            [DataContext]="DataContext" 
+                                            [HideColumns]="true" 
+                                            [InputType]="'time'"></LogDatePicker>
+
+
+                        </td>
+
+                        
                     </tr>
 
                     <tr class="FormFieldRow">
@@ -584,16 +617,7 @@
                         <td><div></div></td>
                     </tr>
                     <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <div *ngIf="DcaRenameVisibility">
-                                <LogLabel [ObjectFieldName]="'SendTime'"
-                                          [ObjectTableName]="'Customs.InterfaceTenantDefinition'"
-                                          [DataContext]="DataContext">
-
-                                </LogLabel>
-                            </div>
-
-                        </td>
+                        
 
                     </tr>
                 </table>

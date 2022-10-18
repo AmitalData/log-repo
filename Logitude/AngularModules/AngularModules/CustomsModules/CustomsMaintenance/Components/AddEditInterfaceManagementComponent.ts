@@ -220,6 +220,9 @@ export class AddEditInterfaceManagementComponent
     get TenantSendOptionsCode() { return this.entityPM != null ? this.entityPM.TenantSendOptionsCode : null; }
     set TenantSendOptionsCode(value) { this.entityPM.TenantSendOptionsCode = value; }
 
+    get SendTime() { return this.entityPM != null ? this.entityPM.SendTime : null; }
+    set SendTime(value) { this.entityPM.SendTime = value; }
+
     //#endregion
 
 
@@ -236,7 +239,7 @@ export class AddEditInterfaceManagementComponent
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        
+       
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
             .subscribe((resp:any) => {
                 if (resp.HasError) {
