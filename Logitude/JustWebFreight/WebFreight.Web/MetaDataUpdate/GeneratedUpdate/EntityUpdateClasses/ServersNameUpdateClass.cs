@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ServersNameUpdateClass
    {  		
-		public const string HashString = "a8da3b4cca006fa6d3eba0169b9e768e";
+		public const string HashString = "c020bd14681c3c6233afc06ea6a9156e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת שרתים",
 			      				    DefaultText =  "ServersName",
-			      				    Code =  "4059",
+			      				    Code =  "98e2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -339,7 +339,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ServersNameQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "98e2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ServersNameQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0f15", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ServersNameObjectTable = objectTables.ContainsKey("Customs.ServersName") ? objectTables["Customs.ServersName"] : null;
+            if (ServersNameObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ServersNameObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ServersName" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ServersNameTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ServersName.Q.ServersNames", DefaultText = @"Servers Names",LocalDefaultText = "רשימת שרתים", ObjectTableId = ServersNameObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ServersNameFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ServersName.Q.ServersNames", ObjectTableId = ServersNameObjectTable.Id, Tenant = 0, NameTextCodeCode = "ServersNameFeatures.ServersNames", NameTextCodeDefaultText = "ServersNames", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ServersNameObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ServersNamesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ServersNameTextCode_0.Id, NameTextCodeCode = ServersNameTextCode_0.Code, ObjectTableName = "Customs.ServersName", Code = "ServersNames",  QueryGroupCode = "98e2", IndexOrder = 0, Tenant = 0, ObjectTableId = ServersNameObjectTable.Id, QuerySection = "Customs.ServersName", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ServersNameFeature_0.Id,FeatureUniqeCode= ServersNameFeature_0.FeatureUniqeCode, DefaultSortName = "ServerName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ServersNamesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ServersName.ServerName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ServersNamesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ServersName.ServiceName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
