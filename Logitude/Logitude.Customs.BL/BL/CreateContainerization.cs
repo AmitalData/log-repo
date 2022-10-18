@@ -105,8 +105,8 @@ namespace Logitude.Customs.BL.BL
                         CD.Id = "0";
                         CD.ContainerizationNumber = "0";
                         CD.Tenant = 0;
-                        ListCD.Add(CD);
-                        return ListCD;
+                        listCD.Add(CD);
+                        return listCD;
                     }
                     containerizationListKeys.Add((dec.CargoTypeCode?.ToLower() + dec.ManifestNumber?.ToLower() + dec.SecondCargoId?.ToLower() + dec.ThirdCargoId?.ToLower()).ToString());
                 }
