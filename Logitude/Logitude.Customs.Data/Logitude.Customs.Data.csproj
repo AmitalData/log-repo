@@ -229,6 +229,7 @@
     <Compile Include="EntityKeys\SecurityClearenceTypeCodeKeys.cs" />
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
+    <Compile Include="EntityKeys\ServersNameKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
@@ -460,6 +461,7 @@
     <Compile Include="EntityListQueryServices\Generated\SecurityClearenceTypeCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
@@ -514,6 +516,7 @@
     <Compile Include="EntityListQueryServices\SecurityClearenceTypeCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
@@ -659,6 +662,7 @@
     <Compile Include="EntityLists\Generated\SecurityClearenceTypeCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ServersNameList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StatusFieldTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StuffingSiteTypeList.Generated.cs" />
@@ -802,6 +806,7 @@
     <Compile Include="EntityMapping\SecurityClearenceTypeCodeMap.cs" />
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
+    <Compile Include="EntityMapping\ServersNameMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
@@ -946,6 +951,7 @@
     <Compile Include="EntityPOCOs\SecurityClearenceTypeCode.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
+    <Compile Include="EntityPOCOs\ServersName.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
     <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
@@ -1177,6 +1183,7 @@
     <Compile Include="Repsitories\Generated\SecurityClearenceTypeCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
@@ -1230,6 +1237,7 @@
     <Compile Include="Repsitories\SecurityClearenceTypeCodeRepository.cs" />
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
+    <Compile Include="Repsitories\ServersNameRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
