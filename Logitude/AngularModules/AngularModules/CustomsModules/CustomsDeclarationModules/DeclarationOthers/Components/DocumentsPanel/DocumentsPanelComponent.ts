@@ -63,7 +63,7 @@ export class DocumentsPanelComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.EntityPM.Id, null, objecttable.Id, "I", this.EntityPM.CustomFileNo, this.DocumentFilterSelectedValue, this.EntityPM.Direction)
+        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.EntityPM.Id, null, objecttable.Id, "I", this.EntityPM.CustomFileNo, this.DocumentFilterSelectedValue, this.EntityPM.Direction , this.EntityPM.ExportFile)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 this.CurrentSession.StopBusyIndicator();
