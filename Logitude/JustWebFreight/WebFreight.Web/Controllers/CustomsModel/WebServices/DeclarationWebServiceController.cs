@@ -2270,12 +2270,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        [HttpGet]
         public HttpResponseMessage SendPRIVEventPrivacyProtection(int tenant, string declarationId, string customFileNo)
         {
             try
             {
                 var privacyProtection = new PrivacyProtection();
-                privacyProtection.SendPRIVEventPrivacyProtection(tenant,declarationId, customFileNo);
+                privacyProtection.SendPRIVEventPrivacyProtectionMethod(tenant,declarationId, customFileNo);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
 

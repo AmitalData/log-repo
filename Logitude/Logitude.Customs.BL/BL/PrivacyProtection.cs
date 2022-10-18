@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.BL
 {
     public class PrivacyProtection
     {
-        public void SendPRIVEventPrivacyProtection(int tenant, string declarationId,string CustomFileNo)
+        public void SendPRIVEventPrivacyProtectionMethod(int tenant, string declarationId,string CustomFileNo)
         {
             CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(tenant);
             var courierMasterPM = courierMasterQueryService.GetByDeclarationId(declarationId, tenant);

@@ -332,6 +332,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SecurityClearenceTypeCode> SecurityClearenceTypeCodes { get; }
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
+		 IDbSet<ServersName> ServersNames { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SignStation> SignStations { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }

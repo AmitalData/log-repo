@@ -480,6 +480,7 @@
     <None Include="DBTables\SecurityClearenceTypeCode.dxml" />
     <None Include="DBTables\SeizureFactorType.dxml" />
     <None Include="DBTables\SeizureMethodType.dxml" />
+    <None Include="DBTables\ServersName.dxml" />
     <None Include="DBTables\SignatureType.dxml" />
     <None Include="DBTables\SignStation.dxml" />
     <None Include="DBTables\SiteLookup.dxml" />
@@ -588,6 +589,7 @@
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
+    <None Include="EntityFiles\ServersName.lxml" />
     <None Include="EntityFiles\StatusFieldType.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
