@@ -405,7 +405,9 @@
     <Compile Include="Services\DigitalQueryQueryExportLogExecutionService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
+    <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
+    <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />
     <Compile Include="UpdateContainerStatusWorkerRole.cs" />
     <Compile Include="CreateRequestContainerStatusWorkerRole.cs" />

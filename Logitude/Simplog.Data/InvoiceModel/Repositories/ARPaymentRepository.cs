@@ -121,7 +121,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     where a.Tenant == tenant
                     select a);
         }
-       
+
+        public IQueryable<ARPayment> GetARPayments()
+        {
+            return context.ARPayments;
+        }
+
         public bool IsARPaymentNumberExists(string arPaymentNo,int tenant)
         {
             return context.ARPayments.Where(d => d.PaymentNo == arPaymentNo && d.Tenant == tenant).Any();
