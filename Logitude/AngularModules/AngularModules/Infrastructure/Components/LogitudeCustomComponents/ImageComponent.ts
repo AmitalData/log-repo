@@ -18,7 +18,7 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
   inputs: ['EntityId', 'ImageId', "EntityName",
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
    'ImageResizeHeight', 'HideBorder', 'DisplayOnly',
-   'ConversationHeaderId','KeepOriginalSize','Extension'],
+   'ConversationHeaderId','KeepOriginalSize','Extension', 'ValidWidth', 'ValidHeight'],
   providers: [ImageLibraryService],
 })
 
@@ -43,6 +43,8 @@ export class ImageComponent implements AfterViewInit, OnInit {
   IsLoadingImage: boolean = false;
   ImageResizeWidth: number;
   ImageResizeHeight: number;
+  ValidWidth: number;
+  ValidHeight: number;
   Extension:string;
   DefultImageHeight: string = "auto";
   ImageKey: string = Guid.newGuid();
@@ -67,6 +69,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   KeepOriginalSize:boolean=false;
 
   @Output() UploadCompleted: EventEmitter<any> = new EventEmitter();
+  @Output() ImageDimensionsValid: EventEmitter<any> = new EventEmitter();
   constructor(public _imageLibraryService: ImageLibraryService, private cd: ChangeDetectorRef) {
 
     this.contactPMService = new ContactPMService();
@@ -191,7 +194,14 @@ export class ImageComponent implements AfterViewInit, OnInit {
     }
 
   }
-
+  
+  FileChanged(event: any) {
+    if(this.ValidWidth && this.ValidHeight) {
+      this.validateImageDimensions(event);
+     } else {
+      this.UploadogoFile(event)
+     }
+  }
   UploadogoFile(event: any) {
     if (this.EntityName == "Quotation") {
       this.DefultImageHeight = "auto";
@@ -200,7 +210,6 @@ export class ImageComponent implements AfterViewInit, OnInit {
     var height: number = this.ImageResizeHeight ? this.ImageResizeHeight : 150;
     var width: number = this.ImageResizeWidth ? this.ImageResizeWidth : 150;
     var file: any = UploadLogoFile(this.ImageFileHtmlId);
-
     if (file) {
       var imageType: string = file.type ? file.type.toLowerCase() : "";
 
@@ -214,7 +223,27 @@ export class ImageComponent implements AfterViewInit, OnInit {
     }
   }
 
-
+  validateImageDimensions(data: any) {
+    if (data.target.files[0]) {
+       const file = data.target.files[0];
+       const reader: any = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = (e: any) => {
+         const image = new Image();
+         image.src = e.target.result;
+         image.onload = (rs) => {
+           const width = rs.currentTarget['width'];
+           const height = rs.currentTarget['height'];
+           if(width && height && (width == this.ValidWidth && height == this.ValidHeight)) {
+            this.ImageDimensionsValid.emit(true);
+            this.UploadogoFile(data);
+           } else {
+              this.ImageDimensionsValid.emit(false);
+           }
+         };
+       };
+     }
+   }
 
   ArrayBufferToBase64(file: any, filename: any, widht: number, height: number, viewmode: any) {
 
