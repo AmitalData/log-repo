@@ -362,6 +362,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.BackgroundId = code;
         this.EntityPM.BackgroundId = code;
     }
+    AreBackgroundImageDimensionsValid(value) {
+        if(value) {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        } else {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Invalid Image Dimensions, the Valid Dimension are 1920 X 1080'];
+        }
+    }
     ComapnylogoUploadedCompleted(code) {
         this.ComapnylogoId = code;
         this.EntityPM.ComapnylogoId = code;

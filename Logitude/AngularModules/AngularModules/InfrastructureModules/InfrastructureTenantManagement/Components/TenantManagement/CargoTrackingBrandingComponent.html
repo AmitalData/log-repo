@@ -448,7 +448,8 @@
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" 
+                                [ValidWidth]="1920" [ValidHeight]="1080" (ImageDimensionsValid)="AreBackgroundImageDimensionsValid($event)" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
                                                 style="height:72px;width:72px">
                                 </ImageComponent>
                             </div>
