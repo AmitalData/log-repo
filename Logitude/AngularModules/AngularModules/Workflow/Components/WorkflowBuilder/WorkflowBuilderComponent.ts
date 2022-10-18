@@ -37,6 +37,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public WorkflowName: string;
     public ValidationErrorsList: string[] = [];
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
+    public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
 
     public FlowObjectFields: ObjectFieldPM[] = [];
@@ -100,10 +101,18 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let flowObject = this.getEntityFlowObject();
             let props = {
                 flow: flowObject,
-                flowChangedEvent: this.flowChangedEvent,
-                openPropertiesEvent: this.openPropertiesEvent,
+                flowChangedEvent: (event: any) => this.flowChangedEvent(event),
+                openPropertiesEvent: (openPropertiesEventObject: any) => this.openPropertiesEvent(openPropertiesEventObject),
+                confirmDeleteNodeEvent: (nodeToDelete: any) => this.confirmDeleteNodeEvent(nodeToDelete),
                 returnPropertiesDataEventKey: this.ReturnPropertiesDataEventKey,
-                setReactFlowInstance: this.setReactFlowInstance,
+                returnDeleteNodeConfirmationEventKey: this.returnDeleteNodeConfirmationEventKey,
+                setReactFlowInstance: (reactFlowInstance: any) => this.setReactFlowInstance(reactFlowInstance),
+                nodeExternalDataKeys: {
+                    nodeName: "name",
+                    startNodeEntity: "entity",
+                    startNodeTrigger: "trigger",
+                    conditionNodeLabel: "conditionLabel"
+                }
             };
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
@@ -127,26 +136,108 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    flowChangedEvent = (event: any) => {
-        if (event.status === "success") {
+    flowChangedEvent(event: any) {
+        if (event && event.status === "success") {
             this.HasChanges = true;
-        }else{
+        } else {
             let messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show(event.message ? event.message : "error");
+            messageWindow.Show(event.message ? event.message : "Error");
         }
     }
 
-    openPropertiesEvent = (openPropertiesEventObject: any) => {
+    openPropertiesEvent(openPropertiesEventObject: any) {
         if (openPropertiesEventObject) {
             this.handleOpenPropertiesEvent(openPropertiesEventObject);
         }
     }
 
-    setReactFlowInstance = (reactFlowInstance: any) => {
+    confirmDeleteNodeEvent(nodeToDelete: any) {
+        if (nodeToDelete) {
+            let validateNodeDelete = this.validateNodeDelete(nodeToDelete);
+            if (validateNodeDelete.isValid) {
+                document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
+            } else {
+                let nodeNameToDelete = nodeToDelete.data["name"] || nodeToDelete.id;
+                this.showDeleteNodeError(nodeNameToDelete, validateNodeDelete.usedInNodes);
+            }
+        }
+    }
+
+    showDeleteNodeError(nodeNameToDelete: string, usedInNodes: string[]) {
+        let deleteNodeErrorWindow = new LogitudeWindow();
+        let deleteNodeErrorWindowArgs: any = {
+            NodeNameToDelete: nodeNameToDelete,
+            UsedInNodes: usedInNodes
+        };
+        deleteNodeErrorWindow.Width = 460;
+        deleteNodeErrorWindow.Height = 220;
+        deleteNodeErrorWindow.RTL = false;
+        deleteNodeErrorWindow.Title = "Can't delete " + nodeNameToDelete;
+        deleteNodeErrorWindow.WindowArgs = deleteNodeErrorWindowArgs;
+
+        deleteNodeErrorWindow.Show("./Workflow/Components/Errors/DeleteNodeErrorComponent");
+        deleteNodeErrorWindow.WindowClosed.subscribe((_event: any) => { });
+    }
+
+    validateNodeDelete(nodeToDelete: any) {
+        let flowObject = this.getCurrentFlowObject();
+        if (flowObject) {
+            let isValid = true;
+            let usedInNodes: string[] = [];
+            let getRecordNodes = FlowReader.getNodes(flowObject, "getRecordNode");
+            let setValueNodes = FlowReader.getNodes(flowObject, "setValueNode");
+            let createRecordNodes = FlowReader.getNodes(flowObject, "createRecordNode");
+
+            let nodeUsedData = this.getNodeUsedData(nodeToDelete);
+            if (nodeUsedData) {
+                let getRecordStatus = this.validateNodesUsedData(getRecordNodes, "conditions", nodeUsedData);
+                let setValueStatus = this.validateNodesUsedData(setValueNodes, "setValues", nodeUsedData);
+                let createRecordStatus = this.validateNodesUsedData(createRecordNodes, "setValues", nodeUsedData);
+                usedInNodes = usedInNodes.concat(getRecordStatus.usedInNodes).concat(setValueStatus.usedInNodes).concat(createRecordStatus.usedInNodes);
+                usedInNodes = usedInNodes.filter((v, i, a) => a.indexOf(v) === i);
+                isValid = getRecordStatus.isValid && setValueStatus.isValid && createRecordStatus.isValid;
+                return { isValid, usedInNodes };
+            }
+
+            return { isValid: true, usedInNodes: [] };
+        }
+        return { isValid: false, usedInNodes: [] };
+    }
+
+    getNodeUsedData(node: any) {
+        if (node.type === "declareVariableNode") {
+            let variableCode = node.data["variableCode"];
+            return variableCode ? ("declaredvariables_" + variableCode) : null;
+        } else if (node.type === "getRecordNode") {
+            let name = node.data["name"];
+            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase() + "_") : null;
+        }
+        return null;
+    }
+
+    validateNodesUsedData(nodes: any, dataKey: string, nodeUsedData: string) {
+        let isValid = true;
+        let usedInNodes: string[] = []
+        nodes.forEach((node: any) => {
+            let nodeName = node.data["name"] || node.id;
+            let nodeDataValues = node.data[dataKey] || [];
+            nodeDataValues.forEach((dataValue: any) => {
+                let value = dataValue["value"] || null;
+                let field = dataValue["field"] || null;
+                if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
+                    isValid = false;
+                    usedInNodes.push(nodeName);
+                }
+            });
+        });
+        return { isValid, usedInNodes };
+    }
+
+    setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
     }
 
-    handleOpenPropertiesEvent = (openPropertiesEventObject: any) => {
+    handleOpenPropertiesEvent(openPropertiesEventObject: any) {
         let propertiesComponentPath = this.getPropertiesComponentPath(openPropertiesEventObject.nodeType);
         if (propertiesComponentPath) {
             let propertiesWindow = this.buildPropertiesWindow(openPropertiesEventObject);
@@ -155,13 +246,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    getPropertiesComponentPath = (nodeType: string) => {
+    getPropertiesComponentPath(nodeType: string) {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
         let propertiesComponentName = nodeType ? ((nodeType.charAt(0).toUpperCase() + nodeType.slice(1)).replace("Node", "") + "PropertiesComponent") : "";
         return (propertiesComponentPath + propertiesComponentName);
     }
 
-    buildPropertiesWindow = (openPropertiesEventObject: any) => {
+    buildPropertiesWindow(openPropertiesEventObject: any) {
         let propertiesWindow = new LogitudeWindow();
         let propertiesWindowArgs: any = {
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
@@ -178,7 +269,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         return propertiesWindow;
     }
 
-    buildEditWindow = () => {
+    buildEditWindow() {
         let editWindow = new LogitudeWindow();
         let editWindowArgs: any = {
             EntityId: this.EntityPM.Id,
@@ -192,12 +283,20 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         return editWindow;
     }
 
-    handlePropertiesWindowClosed = (data: any, nodeType: string) => {
+    handlePropertiesWindowClosed(data: any, nodeType: string) {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
 
             if (nodeType === "startNode") {
-                this.WorkflowEntity = data["entity"] || null;
+                let dataEntity = data["entity"];
+                if (this.WorkflowEntity !== dataEntity) {
+                    let flowObject = this.getCurrentFlowObject();
+                    FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
+                        conditionNode.data["conditions"] = [];
+                        conditionNode.data["conditionsOperation"] = null;
+                    });
+                }
+                this.WorkflowEntity = dataEntity;
             }
 
             this.HasChanges = true;

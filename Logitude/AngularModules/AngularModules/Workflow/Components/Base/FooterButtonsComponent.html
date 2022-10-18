@@ -18,12 +18,12 @@
             <div></div>
         </td>
 
-        <td class="footer-button-cell">
+        <td *ngIf="!ShowSaveOnly" class="footer-button-cell">
             <button class="Button" (click)="cancelButtonClicked()"
                 [attr.data-cy]="CancelButtonDataCy">{{CancelButtonLabel}}</button>
         </td>
 
-        <td class="footer-buttons-split">
+        <td *ngIf="!ShowSaveOnly" class="footer-buttons-split">
             <div></div>
         </td>
 

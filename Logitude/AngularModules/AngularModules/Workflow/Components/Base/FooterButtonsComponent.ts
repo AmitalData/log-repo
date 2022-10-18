@@ -11,6 +11,7 @@ export class FooterButtonsComponent {
     @Input() CancelButtonLabel: string = "Cancel";
     @Input() SaveButtonDataCy: string = "save-button";
     @Input() CancelButtonDataCy: string = "cancel-button";
+    @Input() ShowSaveOnly: boolean = false;
 
     @Output() SaveButtonClicked = new EventEmitter();
     @Output() CancelButtonClicked = new EventEmitter();
