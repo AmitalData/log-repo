@@ -116,6 +116,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
+                this.IsEditLayoutButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+
                 if (this.SelectedDashboard) {
                     this.applyWDashboard();                    
                 }
@@ -125,6 +127,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                     this.SelectedDashboardName = null;
                     this.SetEmptyDashboardVisibility();
                 }
+
+                
             }            
         });
     }
@@ -163,7 +167,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public IsEditLayoutModeActive: boolean = false;
     public HasChanges: boolean = false;
     private ResetFlags() {
-        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
+        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
         this.HasChanges = false;
