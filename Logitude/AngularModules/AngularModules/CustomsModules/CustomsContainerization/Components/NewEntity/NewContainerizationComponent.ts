@@ -490,7 +490,7 @@ export class NewContainerizationComponent extends BaseComponent {
         myConfirmWindow.NoButtonText = "חזור"
         myConfirmWindow.Width = 400;
         
-     if (this.entityPM.Id != null) {
+     if (this.entityPM.Id != null&&this.entityPM.ContainerizationStatus!="3") {
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.declarationWebService.GetIsConsignmentConectContainerization(
                this.entityPM.Tenant, ArrayDeclartiosId,this.entityPM.Id,this.entityPM.CargoTypeCode,this.entityPM.ManifestNumber,this.entityPM.SecondCargoID,this.entityPM.ThirdCargoID
@@ -554,28 +554,35 @@ export class NewContainerizationComponent extends BaseComponent {
                         myConfirmWindow.IsYesEnabled=false;
                          
                      }
-                     else{
-                        let confirmWindow = new ConfirmWindow();
-                        confirmWindow.Title = "המכלות שנוצרו";
-                        confirmWindow.Width = 350;
-                        confirmWindow.Height = 200;
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        confirmWindow.ShowNoButton=false;
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                
-                        if(response.Result.list.length==1){
-
-                            var ContainerizationNumber=response.Result.list[0].ContainerizationNumber;
-                            var msg = 'נוצרה סה"כ '+ response.Result.list.length +" המכלה: "+ ContainerizationNumber;
-                            
-                            confirmWindow.Show(msg);
-
-                            confirmWindow.WindowClosed.subscribe((event: any) => {
-                                 if(confirmWindow.Yes == true){
-                            this.CurrentSession.CurrentWindow.Close("0");
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
+                     else {
+                        if(response.Result.list[0].Id=="0"){
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
+                            myConfirmWindow.IsYesEnabled=false;
+                             
+                         }
+                         else {
+                            let confirmWindow = new ConfirmWindow();
+                            confirmWindow.Title = "המכלות שנוצרו";
+                            confirmWindow.Width = 350;
+                            confirmWindow.Height = 200;
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            confirmWindow.ShowNoButton=false;
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                    
+                            if(response.Result.list.length==1){
+    
+                                var ContainerizationNumber=response.Result.list[0].ContainerizationNumber;
+                                var msg = 'נוצרה סה"כ '+ response.Result.list.length +" המכלה: "+ ContainerizationNumber;
+                                
+                                confirmWindow.Show(msg);
+    
+                                confirmWindow.WindowClosed.subscribe((event: any) => {
+                                     if(confirmWindow.Yes == true){
+                                this.CurrentSession.CurrentWindow.Close("0");
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run({
 
                                         EntityId: response.Result.list[0].Id,
@@ -583,8 +590,8 @@ export class NewContainerizationComponent extends BaseComponent {
                                     });
                                 });       
                             }
-                        });
-                        }
+                           });
+                          }
                         else{
                              response.Result.list.forEach(element => {
                                 containerizationNumberList+=(element.ContainerizationNumber+",");
@@ -603,6 +610,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                });
 
                         } 
+                    }
                     }
                });
             }

@@ -52,14 +52,13 @@ namespace Logitude.Customs.BL.BL
                         counter++;
                     }
 
-                    if (dec.IsNew)
+                    if (dec.IsNew && entityPM.ContainerizationStatus!="3")
                     {
                         var ContainerizationPM = new ContainerizationPM();
-
                         
                         ContainerizationPM.AgentDeclaration = entityPM.AgentDeclaration;
                         ContainerizationPM.Tenant = entityPM.Tenant;
-                        ContainerizationPM.OperationMode = entityPM.OperationMode;
+                        ContainerizationPM.OperationMode = "1";
                         ContainerizationPM.IsChange = entityPM.IsChange;
                         ContainerizationPM.ConnectedDeclarations = dec.DeclarationId;
                         ContainerizationPM.CargoTypeCode = dec.CargoTypeCode;
@@ -72,12 +71,43 @@ namespace Logitude.Customs.BL.BL
                     }
                     else
                     {
-                        var ContainerizationPMById = containerizationQueryService.GetSingle(dec.Id, false, true);
+
+                        var ContainerizationPMById=new ContainerizationPM();
+
+
+                        if (dec.IsNew && entityPM.ContainerizationStatus == "3" )
+                        {
+                             ContainerizationPMById = containerizationQueryService.GetSingle(entityPM.Id, false, true);
+
+                            ContainerizationPMById.CargoTypeCode = dec.CargoTypeCode;
+                            ContainerizationPMById.ManifestNumber = dec.ManifestNumber;
+                            ContainerizationPMById.SecondCargoID = dec.SecondCargoId;
+                            ContainerizationPMById.ThirdCargoID = dec.ThirdCargoId;
+                            ContainerizationPMById.TransportModeId = dec.TransportModeId;
+                            ContainerizationPMById.ContainerizationStatus = null;
+                          
+                        }
+                        else
+                        {
+                             ContainerizationPMById = containerizationQueryService.GetSingle(dec.Id, false, true);
+                         
+                        }
+
+                        ContainerizationPMById.OperationMode = "2";
                         ContainerizationPMById.ConnectedDeclarations = dec.DeclarationId;
                         ContainerizationPMById.ChangeSetOp = ChangeSetOperation.Update;
                         containerizationList.Add(ContainerizationPMById);
                     }
-
+                    if (entityPM.ContainerizationStatus == "3" && (containerizationList.Count() > 2|| list.Any(x=>!x.IsNew)))
+                    {
+                        List<ContainerizationDetails> listCD = new List<ContainerizationDetails>();
+                        ContainerizationDetails CD = new ContainerizationDetails();
+                        CD.Id = "0";
+                        CD.ContainerizationNumber = "0";
+                        CD.Tenant = 0;
+                        ListCD.Add(CD);
+                        return ListCD;
+                    }
                     containerizationListKeys.Add((dec.CargoTypeCode?.ToLower() + dec.ManifestNumber?.ToLower() + dec.SecondCargoId?.ToLower() + dec.ThirdCargoId?.ToLower()).ToString());
                 }
 
