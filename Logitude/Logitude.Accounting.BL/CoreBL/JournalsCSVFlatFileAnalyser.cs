@@ -331,8 +331,8 @@ namespace Logitude.Accounting.BL.CoreBL
             long count = 1;
             foreach (JournalSrcLineDTO jLine in _JournalSrcLinesDTO)
             {
-               // if (jLine.ActionCode != "2")
-               // {
+                if (jLine.ActionCode != "2")
+                {
                     if (String.IsNullOrEmpty(jLine.CreditGLAccount))
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -364,9 +364,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.CreditGLAccountId = creditPM.Id;
                     }
-             //   }
-            //    if (jLine.ActionCode != "1")
-             //   {
+                }
+                if (jLine.ActionCode != "1")
+                {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -398,7 +398,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-            //    }
+                }
                 //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
                 //{
                 //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
