@@ -12,6 +12,7 @@ namespace WebFreight.Web.DataProviders
         public string StockStartNumberPrefix { get; set; }
         public string StockEndNumberPrefix { get; set; }
         public string ProjectNumber { get; set; }
+        public string Notify1Name { get; set; }
         public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }
