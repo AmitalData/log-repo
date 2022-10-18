@@ -1,16 +1,20 @@
-﻿using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -81,6 +85,44 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage Post(ShipmentPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+
+                        IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
+                        ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+                        service.Create();
+
+                        IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+                        ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+                        ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+                        entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
     }
