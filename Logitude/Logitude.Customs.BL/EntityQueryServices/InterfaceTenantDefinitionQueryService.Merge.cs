@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
 
                     return list;
-                });
+                }, absoluteExpiration: 1440);
             return dummyInterfaceManagementDefinition;
         }
     }
