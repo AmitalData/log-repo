@@ -10,6 +10,9 @@ namespace WebFreight.Web.DataProviders
         public string MasterAMSBL { get; set; }
         public string CopyNumber { get; set; }
         public string CopyName { get; set; }
+        public string ColoaderName { get; set; }
+        public string ColoaderAddress { get; set; }
+        public string SCACCode { get; set; }
         public string BranchSignature { get; set; }
 
         /// <summary>
@@ -20,6 +23,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperAddress_NoTel { get; set; }
         public string Messers { get; set; }
         public string ShipmentNumber { get; set; }
+        public string MainCarriageCarrierCode { get; set; }
         public string BookingNumber { get; set; }
         public string CompanyName { get; set; }
         public string UserName { get; set; }
@@ -153,6 +157,7 @@ namespace WebFreight.Web.DataProviders
         public string SubNumber { get; set; }
         public string AgentFor { get; set; }
         public string CustomerReferenceNumber { get; set; }
+        public string CustomerEORI { get; set; }
         public string TenantCity { get; set; }
         public string FinalDestination { get; set; }
         public string GeneralDescriptionOfGoods { get; set; }
