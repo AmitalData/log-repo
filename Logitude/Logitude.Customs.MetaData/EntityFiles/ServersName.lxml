@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רשימת שרתים&quot;"
   DefaultText="&quot;ServersName&quot;"
-  Code="&quot;4059&quot;"
+  Code="&quot;98e2&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -438,6 +438,34 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;ServersNames&quot;"
+    TextCode="&quot;Servers Names&quot;"
+    LocalTextCode="&quot;רשימת שרתים&quot;"
+    QueryGroupCode="&quot;98e2&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.ServersName&quot;"
+    QuerySection="&quot;Customs.ServersName&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ServerName&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ServersNames&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ServerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ServersNames&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ServiceName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.ServersHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.ServersName&quot;"
