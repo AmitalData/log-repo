@@ -60,7 +60,6 @@ namespace CommunicationWorkerRole.Services.SAT
 						communicationLogRep.Update(waitingCommLog);
 						communicationLogRep.SubmitChanges();
 
-						payment.SATXML = null;
 						payment.SATTransferStatusCode = "TD";
 						payment.TransmissionError = null;
 						arPaymentRep.Update(payment);
