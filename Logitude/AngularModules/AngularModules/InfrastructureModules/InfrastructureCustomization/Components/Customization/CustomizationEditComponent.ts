@@ -16,14 +16,14 @@ import { ViewChild } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 import { newArray } from '@angular/compiler/src/util';
 import { extend, forEach } from 'cypress/types/lodash';
-import { ICustomizationService } from '../../Interface/ICustomizationService';
-import { CustomFieldsService } from '../../ExternalService/CustomFieldsService';
-import { StandardFieldsService } from '../../ExternalService/StandardFieldsService';
-import { ScreenLayoutService } from '../../ExternalService/ScreenLayoutService';
-import { TabsService } from '../../ExternalService/TabsService';
-import { RulesService } from '../../ExternalService/RulesService';
-import { SubEntitiesService } from '../../ExternalService/SubEntitiesService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CustomizationMainMenuItem } from './CustomizationMenuItems/CustomizationMainMenuItem';
+import { CustomFieldsMainMenuItem } from './CustomizationMenuItems/CustomFieldsMainMenuItem';
+import { StandardFieldsMainMenuItem } from './CustomizationMenuItems/StandardFieldsMainMenuItem';
+import { ScreenLayoutMainMenuItem } from './CustomizationMenuItems/ScreenLayoutMainMenuItem';
+import { TabsMainMenuItem } from './CustomizationMenuItems/TabsMainMenuItem';
+import { RulesMainMenuItem } from './CustomizationMenuItems/RulesMainMenuItem';
+import { SubEntitiesMainMenuItem } from './CustomizationMenuItems/SubEntitiesMainMenuItem';
 declare var window: any;
 
 @Component({
@@ -92,7 +92,6 @@ export class CustomizationEditComponent {
         this.SelectedMenu = item;
     }
 
-    private customizationService: ICustomizationService = null;
 
     constructor() {
         this.RunComponent();
@@ -119,62 +118,24 @@ export class CustomizationEditComponent {
 
     GetCustomizationMainMenuItems(): CustomizationMainMenuItem[] {
         var myResult: CustomizationMainMenuItem[] = [];
-        this.customizationFeaturesList.forEach(item => {
-            var menuItem = this.LoadCustomizationMainMenuItem(item);
-            if (menuItem) myResult.push(menuItem);
-        })
-        return myResult;
-    }
-
-    LoadCustomizationMainMenuItem(featureName: string): CustomizationMainMenuItem {
-
-        var customizationMainMenuItem: CustomizationMainMenuItem;
-
         var args: any = {};
         args.IsObjectTableFilterEnabled = this.IsObjectTableFilterEnabled;
         args.IsCustomFieldsMenue = this.IsCustomFieldsMenue;
         args.ObjectTableId = this.ObjectTableId;
 
-        switch (featureName) {
-            case "CustomFieldsCustomization": {
-                this.customizationService = new CustomFieldsService();
-                //additional args
-                break;
-            }
-            case "StandardFieldsCustomization": {
-                this.customizationService = new StandardFieldsService();
-                //additional args
-                break;
-            }
-            case "ScreenLayoutCustomization": {
-                this.customizationService = new ScreenLayoutService();
-                //additional args
-                break;
-            }
-            case "TabsCustomization": {
-                this.customizationService = new TabsService();
-                //additional args
-                break;
-            }
-            case "RulesCustomization": {
-                this.customizationService = new RulesService();
-                //additional args
-                break;
-            }
-            case "SubEntitiesCustomization": {
-                this.customizationService = new SubEntitiesService();
-                //additional args
-                break;
-            }
-            default: {
-                break;
-            }
-        }
+        myResult.push(new CustomFieldsMainMenuItem(args));
+        myResult.push(new StandardFieldsMainMenuItem(args));
+        myResult.push(new ScreenLayoutMainMenuItem(args));
+        myResult.push(new TabsMainMenuItem(args));
+        myResult.push(new RulesMainMenuItem(args));
+        myResult.push(new SubEntitiesMainMenuItem(args));
 
-        customizationMainMenuItem = this.customizationService.LoadCustomizationMenuItem(args);
-        return customizationMainMenuItem;
+        return myResult;
     }
 
+    filterMainMenuItems() {
+        return this.MainMenuItems.filter(i => i.IsVisible)
+    }
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -263,22 +224,4 @@ export class CustomizationEditComponent {
 
 }
 
-export class CustomizationMainMenuItem {
-    public TextCode: string;
-    public Code: string;
-    public HtmlView: string;
-    public IconCode: string;
-    public IconSource: string;
-    public IconSelectedSource: string;
-    public QuerySection: string;
-    public ComponentPath: string;
-    public Page: any = null;
-    public args: any = {};
-    
-    constructor(myIcon: string) {
-        this.IconCode = myIcon;
-        this.IconSource = "./Images/Customization/" + myIcon + ".png";
-        this.IconSelectedSource = "./Images/Customization/" + myIcon + ".Selected.png";
-    }
-}
 
