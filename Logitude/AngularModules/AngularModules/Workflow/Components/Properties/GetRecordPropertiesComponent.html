@@ -128,11 +128,16 @@
     .add-buttons-container {
         margin-top: 5px;
     }
+
+    .get-record-properties-container {
+        height: calc(100% - 35px);
+        overflow: auto;
+    }
 </style>
 <table>
     <tr>
         <td>
-            <div style="height:calc(100% - 35px); overflow: auto;">
+            <div class="get-record-properties-container">
                 <table>
                     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
                         <td>
@@ -301,10 +306,10 @@
                                 </div>
                                 <div class="table-row-cell-block">
                                     <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
-                                        [DataContext]="DataContext"
-                                        [QueryFilterItems]="getObjectFieldsQueryFilters()" [IsFreeText]="true"
-                                        [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
-                                        [SelectedValue]="SortBy" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                        [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsQueryFilters()"
+                                        [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
+                                        [HideColumns]="true" [SelectedValue]="SortBy"
+                                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                                         (SelectedItemChanged)="updateSortBy($event)" [DataCy]="'SortBy'">
                                     </LogLov>
                                 </div>
@@ -356,8 +361,8 @@
                                 </li>
                             </ul>
                             <div class="add-buttons-container table-row-cell-block margin-left-0">
-                                <span class="link-button" (click)="addEmptyField()"
-                                    [attr.data-cy]="'AddFieldToStore'" [ngClass]="{'disabled': !IsValidReturnedFields}">
+                                <span class="link-button" (click)="addEmptyField()" [attr.data-cy]="'AddFieldToStore'"
+                                    [ngClass]="{'disabled': !IsValidReturnedFields}">
                                     <span class="plus-sign">+</span><span>Add Field</span>
                                 </span>
                             </div>
@@ -374,7 +379,7 @@
             </div>
         </td>
     </tr>
-    <tr class="table-row" style="height: 35px;">
+    <tr class="table-row">
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"

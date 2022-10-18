@@ -18,4 +18,22 @@ export class ObjectTables {
         return null;
     }
 
+    static getIdByName(entityName: string) {
+        if (entityName) {
+            entityName = entityName.indexOf(".") === -1 ? entityName : entityName.split(".")[1];
+            let entityObjectTable = this.getByName(entityName);
+            return entityObjectTable ? entityObjectTable.Id : null;
+        }
+        return null;
+    }
+
+    static getKeyPropertyPathByName(entityName: string) {
+        if (entityName) {
+            entityName = entityName.indexOf(".") === -1 ? entityName : entityName.split(".")[1];
+            let entityObjectTable = this.getByName(entityName);
+            return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
+        }
+        return null;
+    }
+
 }

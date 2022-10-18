@@ -81,7 +81,7 @@ export class FlowVariablesTreeList {
     }
 
     private getObjectFieldsItems(itemsKeyPrefix: string, entity: string) {
-        let entityId = this.getEntityId(entity);
+        let entityId = ObjectTables.getIdByName(entity);
         let objectFields = this.FlowObjectFields.filter(o => o.ObjectTableId === entityId);
         let objectFieldsItems = [];
 
@@ -94,14 +94,6 @@ export class FlowVariablesTreeList {
 
         let sortedObjectFieldsItems = this.sortTreeSelectItems(objectFieldsItems);
         return sortedObjectFieldsItems;
-    }
-
-    private getEntityId(entity: string) {
-        if (entity) {
-            let entityObjectTable = ObjectTables.getByName(entity);
-            return entityObjectTable ? entityObjectTable.Id : null;
-        }
-        return null;
     }
 
     private sortTreeSelectItems(items: any) {

@@ -13,6 +13,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() ShowSearch: boolean = true;
     @Input() AllowClear: boolean = true;
     @Input() IsDisabled: boolean = false;
+    @Input() ShowExpand: boolean = true;
     @Input() DataCy: string | null = null;
 
     @Output() ValueChanged = new EventEmitter();

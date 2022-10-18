@@ -1,0 +1,181 @@
+<style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
+    .set-value-container {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .set-value-row {
+        display: flex;
+    }
+
+    .set-value-row:hover .delete-set-value-button {
+        display: block;
+    }
+
+    .delete-set-value-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 18px;
+        padding-top: 3px;
+    }
+
+    .delete-set-value-button {
+        display: none;
+        cursor: pointer;
+    }
+
+    .set-value-field-row {
+        width: 220px;
+        margin-right: 5px;
+    }
+
+    .set-value-field-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 220px;
+        padding-right: 5px;
+    }
+
+    .set-value-operator-row {
+        width: 150px;
+        margin-right: 5px;
+    }
+
+    .set-value-operator-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 150px;
+        padding-right: 5px;
+    }
+
+    .set-value-value-row {
+        width: 220px;
+    }
+
+    .set-value-value-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 220px;
+    }
+
+    .add-buttons-container {
+        margin-top: 12px;
+        margin-left: 18px;
+    }
+
+    .padding-top-22 {
+        padding-top: 22px !important;
+    }
+</style>
+
+<ul class="set-value-container">
+    <li *ngFor="let setValue of SetValues; let setValueIndex = index;  let isLastSetValue = last ; let isFirstSetValue = first"
+        class="set-value-container">
+        <div class="set-value-row" [ngStyle]="{'height': isFirstSetValue ? '40px' : '25px'}">
+
+            <div class="delete-set-value-container" [ngClass]="{'padding-top-22': setValueIndex === 0}">
+                <img *ngIf="!(SetValues.length == 1)" class="delete-set-value-button" src="./Images/Trash-can.png"
+                    (click)="deleteSetValue(setValueIndex)" [attr.data-cy]="'DeleteSetValueButton'" />
+            </div>
+
+            <!-- field -->
+            <div class="set-value-field-row">
+                <div *ngIf="isFirstSetValue">
+                    <LogLabel [NoObjectField]="true" [Text]="'Field'" [HideColumns]="true" [DataContext]="DataContext">
+                    </LogLabel>
+                </div>
+                <div class="set-value-field-container">
+
+
+                    <TreeSelect *ngIf="!SetEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                        [Value]="setValue.field" (ValueChanged)="updateSetValueField($event, setValueIndex)">
+                    </TreeSelect>
+
+
+                    <LogLov *ngIf="SetEntityField" [NoObjectField]="true" [DataContext]="DataContext"
+                        [QueryFilterItems]="getObjectFieldsQueryFilters()" [IsFreeText]="true"
+                        [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
+                        [SelectedValue]="setValue.fieldCode" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                        (SelectedItemChanged)="updateSetValueEntityField($event, setValueIndex)">
+                    </LogLov>
+
+
+                </div>
+            </div>
+
+            <!-- operator -->
+            <div class="set-value-operator-row">
+                <div *ngIf="isFirstSetValue">
+                    <LogLabel [NoObjectField]="true" [Text]="'Operator'" [HideColumns]="true"
+                        [DataContext]="DataContext">
+                    </LogLabel>
+                </div>
+                <div class="set-value-operator-container">
+                    <ComboBox [ItemsSource]="SetValuesOperatorsItems" [Binding]="'Name'"
+                        [SelectedItem]="ListItem(setValue.operator)"
+                        (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''"
+                        [CyData]="'SetValueOperator'">
+                    </ComboBox>
+                </div>
+            </div>
+
+            <!-- value -->
+            <div *ngIf="setValue.field && setValue.operator" class="set-value-value-row">
+                <div *ngIf="isFirstSetValue">
+                    <LogLabel [NoObjectField]="true" [Text]="'Value'" [HideColumns]="true" [DataContext]="DataContext">
+                    </LogLabel>
+                </div>
+                <div *ngIf="isFieldCompareOperator(setValue.operator)">
+                    <div class="set-value-value-container">
+                        <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="setValue.value"
+                            (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        </TreeSelect>
+                    </div>
+                </div>
+                <div *ngIf="!isFieldCompareOperator(setValue.operator) && isObjectField(setValue.field)">
+                    <div class="set-value-value-container">
+                        <FieldValue *ngIf="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
+                            [ObjectField]="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))" [Name]="'setValue_'"
+                            [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        </FieldValue>
+                    </div>
+                </div>
+                <div *ngIf="!isFieldCompareOperator(setValue.operator) && !isObjectField(setValue.field)">
+                    <div class="set-value-value-container">
+                        <FieldValue [IsIntegerNumberInput]="false" [DataType]="getDeclareVariableType(setValue.field)"
+                            [Name]="'setValue_'" [CurrentValue]="setValue.value"
+                            (ValueChanged)="updateSetValue($event,setValueIndex)">
+                        </FieldValue>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isLastSetValue" class="add-buttons-container margin-left-0">
+            <span class="link-button" [ngClass]="{'disabled': !IsValidSetValues}" (click)="addSetValue()"
+                [attr.data-cy]="'AddSetValue'">
+                <span class="plus-sign">+</span><span>Add Field</span>
+            </span>
+        </div>
+    </li>
+</ul>

@@ -1,4 +1,4 @@
 export enum SetValueOperators {
-    Equals = "Equals",
+    Equals = "Equals <constant>",
     EqualsField = "Equals <field>"
 }
