@@ -344,72 +344,73 @@ namespace Logitude.Accounting.BL.CoreBL
             long count = 1;
             foreach (JournalSrcLineDTO_ISL jLine in _JournalSrcLinesDTO)
             {
-                // if (jLine.ActionCode != "2")
-                // {
-                if (String.IsNullOrEmpty(jLine.CreditGLAccount))
+                if (jLine.ActionCode != "2")
                 {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+                    if (String.IsNullOrEmpty(jLine.CreditGLAccount))
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        if (String.IsNullOrEmpty(text)) text = "Journal Line";
 
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
 
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
 
-                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    }
+                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
+                    if (creditPM == null)
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        if (String.IsNullOrEmpty(text)) text = "Journal Line";
+
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
+
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
+                    }
+                    else
+                    {
+                        jLine.CreditGLAccountId = creditPM.Id;
+                    }
                 }
-                GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
-                if (creditPM == null)
+                if (jLine.ActionCode != "1")
                 {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+                    if (String.IsNullOrEmpty(jLine.DebitGLAccount))
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        if (String.IsNullOrEmpty(text)) text = "Journal Line";
 
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
 
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
 
-                    this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
-                }
-                else
-                {
-                    jLine.CreditGLAccountId = creditPM.Id;
-                }
-                //   }
-                //    if (jLine.ActionCode != "1")
-                //   {
-                if (String.IsNullOrEmpty(jLine.DebitGLAccount))
-                {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    }
+                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
+                    if (debitPM == null)
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        if (String.IsNullOrEmpty(text)) text = "Journal Line";
 
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
 
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
 
-                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
-                }
-                GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
-                if (debitPM == null)
-                {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
-
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
-
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                    if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
-
-                    this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
-                }
-                else
-                {
-                    jLine.DebitGLAccountId = debitPM.Id;
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
+                    }
+                    else
+                    {
+                        jLine.DebitGLAccountId = debitPM.Id;
+                    }
                 }
                 //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
                 //{
