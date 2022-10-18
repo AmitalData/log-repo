@@ -98,7 +98,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
-
+            this.Data["name"] = this.VariableName;
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });

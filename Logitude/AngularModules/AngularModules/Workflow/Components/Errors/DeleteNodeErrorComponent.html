@@ -1,0 +1,78 @@
+<style>
+    .error-icon-cell {
+        width: 100px;
+    }
+
+    .message-container {
+        font-size: 12px;
+        white-space: break-spaces;
+        overflow: auto;
+        height: 122px;
+        width: 336px;
+        position: absolute;
+        top: 20px;
+    }
+
+    .message-container * {
+        font-size: 12px;
+        white-space: break-spaces;
+    }
+
+    .error-icon {
+        width: 95px;
+        height: 95px;
+        position: absolute;
+        top: 0;
+    }
+
+    .bold-text {
+        font-size: 13px !important;
+        font-weight: bold;
+    }
+
+    .used-by-header {
+        padding-top: 6px;
+    }
+
+    .message-row {
+        height: 150px;
+    }
+
+    .used-in-node-name {
+        padding-bottom: 6px;
+    }
+</style>
+
+<table>
+    <tr class="message-row">
+        <td class="error-icon-cell">
+            <img class="error-icon" src="./Images/ErrorIcon.png">
+        </td>
+        <td>
+            <div class="message-container">
+                <div>You can't delete <span class="bold-text">{{NodeNameToDelete}}</span> yet.</div>
+
+                <div>Remove all references for <span class="bold-text">{{NodeNameToDelete}}</span>, and try again.</div>
+
+                <div class="used-by-header">Used by:</div>
+
+                <div class="used-in-node-name" *ngFor="let UsedInNode of UsedInNodes;">
+                    <span class="bold-text">{{UsedInNode}}</span>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <FooterButtons [ShowSaveOnly]="true" [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="cancelButtonClicked()"
+                [SaveButtonDataCy]="'error-message-ok-button'"></FooterButtons>
+        </td>
+    </tr>
+</table>
