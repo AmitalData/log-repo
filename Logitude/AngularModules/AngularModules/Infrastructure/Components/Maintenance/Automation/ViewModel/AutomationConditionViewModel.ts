@@ -51,6 +51,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
    ObjectFieldCode: string = "";
     IsRefreshAutomationCondationField: boolean;
     IsValid: boolean;
+    DependencyFilter1Value: string;
 
    //IsSystemVariables: boolean = false;
     CustomObjectFieldCode: string = "";
@@ -85,11 +86,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (this.ObjectFieldPM) {
             this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldCode = this.ObjectFieldPM.FieldCode;
-
-
-
+         
             this.SelectedCustomField = this.ObjectFieldPM;
-
+            this.SetDependencyFilter1Value();
 
             this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
             this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
@@ -179,6 +178,11 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     }
 
+    SetDependencyFilter1Value() {
+        this.DependencyFilter1Value = null;
+        if (!this.SelectedCustomField || this.SelectedCustomField.ObjectTable_LookUpTableName != "EntityStatus") return;
+        this.DependencyFilter1Value = this.SelectedCustomField.ObjectTableId;
+    }
 
     FullListDate() {
         this.DateTypeList = [];
@@ -425,6 +429,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     }
 
                     this.SelectedCustomField = this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == item.FieldCode)[0];
+                    this.SetDependencyFilter1Value();
                     this.IsCustomCombox = false;
                   
                     if (this.SelectedCustomField) {
@@ -444,7 +449,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     
                     this.IsSetValue = false;
                     this.CurrentEntityPM.ObjectFieldType = this.SelectedCustomField.DataTypeCode;
-
+             
                     if (ischange) {
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
