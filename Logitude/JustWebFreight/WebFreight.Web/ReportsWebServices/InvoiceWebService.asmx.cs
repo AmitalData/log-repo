@@ -318,7 +318,6 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.DueDateAsDateFormat = currentInvoice.DueDate;
                 invoicedataprovider.ApprovedDate = currentInvoice.ApprovedDate != null ? String.Format("{0:dd.MMM.yyyy}", currentInvoice.ApprovedDate) : "";
                 invoicedataprovider.ApprovedDateAsDateFormat = currentInvoice.ApprovedDate;
-                invoicedataprovider.Notify1Name = currentInvoice.ApprovedDate;
 
                 if (currentInvoice.ApprovedByUser != null)
                 {
