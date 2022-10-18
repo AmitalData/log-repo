@@ -1568,35 +1568,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticationOnTenant(tenant);
 
-                        ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
-                        ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
-                        ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                        ARPaymentService aRPaymentService = new ARPaymentService(invoiceContext, tenant);
+                        aRPaymentService.UpdateCanceledARPaymentStatus(paymentId, tenant);
 
-                        ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
-                        ARPayment payment = aRPaymentRepository.GetSingleARPayment(paymentId, tenant);
-
-
-                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, payment.SATXML);
-                        if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
-                        {
-                            payment.SATXML = null;
-                            payment.SATTransferStatusCode = "TD";
-                            aRPaymentRepository.Update(payment);
-                            aRPaymentRepository.SubmitChanges();
-
-                            XmlElement comprobanteComplementoXMLElement = GetcomprobanteComplementoXMLElement(payment.SATXML, tenant);
-                            SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
-                            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteComplementoXMLElement, arInvoiceRepository, aRPaymentRepository);
-                        }
-                        /*
-						 * Catalog EstadoCancelacion
-						   EnProceso  
-						   SinRespuesta
-						   CanceladoSinAceptacion
-						   CanceladoConAceptacion
-						   PlazoVencido
-
-						 * */
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
                     }
@@ -1614,17 +1589,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private XmlElement GetcomprobanteComplementoXMLElement(string paymentsATXML, int tenant)
-        {
-            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
-            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
-            {
-                return  LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(paymentsATXML).Complemento.Any[0];
-            }
-            return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(paymentsATXML).Complemento.Any[0];
-        }
-
         public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1635,22 +1599,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticationOnTenant(tenant);
 
-                        ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
-                        ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
-                        ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
-                        ARInvoice entity = arInvoiceRepository.GetSingleInvoice(invoiceId);
-
-                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entity.SATXML);
-                        if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
-                        {
-                            entity.SATTransferStatusCode = "TD";
-                            arInvoiceRepository.Update(entity);
-                            arInvoiceRepository.SubmitChanges();
-                        }
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                        ARInvoiceService aRInvoiceService = new ARInvoiceService(invoiceContext, tenant);
+                        aRInvoiceService.UpdateCanceledARInvoiceStatus(invoiceId, tenant);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");

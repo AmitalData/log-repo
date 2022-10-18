@@ -246,17 +246,9 @@ export class ARInvoiceMenuButtonsHandler {
                         }
 
                         case "CheckSATStatus": {
-                            if (this.EntityPM.SATTransferStatusCode == "CS") {
-                                myButtonIsDisabled = false;
-                            }
-                            else {
-                                myButtonIsDisabled = true;
-                            }
-                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                                button.IsHidden = true;
-                            }
-
-
+                            let sATCanceledStatusCode = "CS";
+                            myButtonIsDisabled = this.EntityPM.SATTransferStatusCode != sATCanceledStatusCode;
+                            button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || AppTool.IsNullOrEmpty(this.EntityPM.SATXML);
                             break;
                         }
 
@@ -422,11 +414,11 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     CheckSATStatus() {
-        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe((response:any) => {
-
+        let invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe((response: any) => {
+            if (response.HasError) return;
+            this.entityArgs?.EditComponent?.ReloadEntityPM();
         });
-
     }
 
 

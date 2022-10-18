@@ -4854,5 +4854,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 paymentRepository.Update(aRPayment);
             }
         }
+
+        public void UpdateCanceledARInvoiceStatus(string arInvoiceId, int tenant)
+        {
+            ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+            ARInvoice aRInvoice = arInvoiceRepository.GetSingleInvoice(arInvoiceId);
+
+            Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, aRInvoice.SATXML);
+            if (resultadoConsultaEstatusSAT == null) return;
+            const string checkingStatucCode = "Cancelado";
+            if (resultadoConsultaEstatusSAT.EstadoComprobante != checkingStatucCode) return;
+
+            const string sATTransferedStatusCode = "TD";
+            aRInvoice.SATTransferStatusCode = sATTransferedStatusCode;
+            arInvoiceRepository.Update(aRInvoice);
+            arInvoiceRepository.SubmitChanges();
+
+        }
     }
 }
