@@ -777,8 +777,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
                     if (feature != null)
                     {
-                        var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
-                        cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                        try
+                        {
+                            var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                        }
+                        catch
+                        {
+
+                        }
+                       
                     }
 
                     if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
