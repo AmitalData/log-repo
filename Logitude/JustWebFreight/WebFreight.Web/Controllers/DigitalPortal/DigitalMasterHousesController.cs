@@ -16,7 +16,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalMasterHouses/GetMasterWithConnectedHouses")]
-        public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20, bool IsExternal = false)
+        public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20, bool isExternal = false)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DigitalMasterHouseResponse response = new DigitalMasterHouseResponse
                 {
-                    Master = MapMasterData(shipmentId, tenant, partnerType, IsExternal),
+                    Master = MapMasterData(shipmentId, tenant, partnerType, isExternal),
                 };
 
                 housesShipments.Data.ForEach(item =>
@@ -48,7 +48,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         item.CustomerId,
                         Tenant = tenant,
                         PartnerType = partnerType,
-                        IsExternal = IsExternal
+                        IsExternal = isExternal
                     };
 
                     results.Add(new DigitalMasterHouse()
