@@ -2188,20 +2188,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //}
         }
 
-        public void UpdateCanceledARPaymentStatus(string arPaymentId, int tenant)
+        public static void UpdateCanceledARPaymentStatus(string arPaymentId, int tenant)
         {
             ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
             ARPayment arPayment = aRPaymentRepository.GetSingleARPayment(arPaymentId, tenant);
-
-            Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, arPayment.SATXML); 
-            if (resultadoConsultaEstatusSAT == null) return;
-            const string checkingStatucCode = "Cancelado";
-            if (resultadoConsultaEstatusSAT.EstadoComprobante != checkingStatucCode) return;
-
-            const string sATTransferedStatusCode = "TD";
-            arPayment.SATTransferStatusCode = sATTransferedStatusCode;
-            aRPaymentRepository.Update(arPayment);
+            string oldARPaymentStatus = arPayment.SATTransferStatusCode;
+            TryUpdateCanceledARPaymentStatus(arPayment, tenant, aRPaymentRepository);
+            if (oldARPaymentStatus == arPayment.SATTransferStatusCode) return;
             aRPaymentRepository.SubmitChanges();
 
             XmlElement comprobanteComplementoXMLElement = GetcomprobanteComplementoXMLElement(arPayment.SATXML);
@@ -2209,8 +2203,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
         }
 
+        public static void TryUpdateCanceledARPaymentStatus(ARPayment arPayment, int tenant, ARPaymentRepository aRPaymentRepository)
+        {
+            Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, arPayment.SATXML);
+            if (resultadoConsultaEstatusSAT == null) return;
+            const string checkingStatucCode = "Cancelado";
+            if (resultadoConsultaEstatusSAT.EstadoComprobante != checkingStatucCode) return;
 
-        private XmlElement GetcomprobanteComplementoXMLElement(string paymentsATXML)
+            const string sATTransferedStatusCode = "TD";
+            arPayment.SATTransferStatusCode = sATTransferedStatusCode;
+            aRPaymentRepository.Update(arPayment);
+        }
+
+        public static XmlElement GetcomprobanteComplementoXMLElement(string paymentsATXML)
         {
             int satVersion = SATBaseProfact40Service.GetSATVersion(paymentsATXML);
 

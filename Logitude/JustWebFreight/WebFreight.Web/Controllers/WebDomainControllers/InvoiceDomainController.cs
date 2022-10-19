@@ -1568,9 +1568,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticationOnTenant(tenant);
 
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
-                        ARPaymentService aRPaymentService = new ARPaymentService(invoiceContext, tenant);
-                        aRPaymentService.UpdateCanceledARPaymentStatus(paymentId, tenant);
+                        ARPaymentService.UpdateCanceledARPaymentStatus(paymentId, tenant);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
@@ -1602,9 +1600,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticationOnTenant(tenant);
 
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
-                        ARInvoiceService aRInvoiceService = new ARInvoiceService(invoiceContext, tenant);
-                        aRInvoiceService.UpdateCanceledARInvoiceStatus(invoiceId, tenant);
+                        ARInvoiceService.UpdateCanceledARInvoiceStatus(invoiceId, tenant);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
