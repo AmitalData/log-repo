@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    templateUrl: './DeleteNodeErrorComponent.html',
+    templateUrl: './DeleteNodeWarningComponent.html',
 })
 
-export class DeleteNodeErrorComponent {
+export class DeleteNodeWarningComponent {
 
     public NodeNameToDelete: string;
     public UsedInNodes: string[];

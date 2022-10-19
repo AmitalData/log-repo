@@ -19,7 +19,7 @@ import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
 import { FooterButtonsComponent } from "./Components/Base/FooterButtonsComponent";
 import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 import { SetValuesComponent } from "./Components/Base/SetValuesComponent";
-import { DeleteNodeErrorComponent } from "./Components/Errors/DeleteNodeErrorComponent";
+import { DeleteNodeWarningComponent } from "./Components/Messages/DeleteNodeWarningComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -43,7 +43,7 @@ export const Components = [
     WorkflowInstanceActivityComponent,
     TreeSelectComponent,
     SetValuesComponent,
-    DeleteNodeErrorComponent,
+    DeleteNodeWarningComponent,
 ];
 
 export class ModuleDeclarations {
@@ -71,7 +71,7 @@ export class ModuleDeclarations {
             case "WorkflowInstanceActivityComponent": { result = WorkflowInstanceActivityComponent; break; }
             case "TreeSelectComponent": { result = TreeSelectComponent; break; }
             case "SetValuesComponent": { result = SetValuesComponent; break; }
-            case "DeleteNodeErrorComponent": { result = DeleteNodeErrorComponent; break; }
+            case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
         }
         return result;
     }
