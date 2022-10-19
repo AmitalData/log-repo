@@ -175,7 +175,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         deleteNodeErrorWindow.Title = "Can't delete " + nodeNameToDelete;
         deleteNodeErrorWindow.WindowArgs = deleteNodeErrorWindowArgs;
 
-        deleteNodeErrorWindow.Show("./Workflow/Components/Errors/DeleteNodeErrorComponent");
+        deleteNodeErrorWindow.Show("./Workflow/Components/Messages/DeleteNodeWarningComponent");
         deleteNodeErrorWindow.WindowClosed.subscribe((_event: any) => { });
     }
 
