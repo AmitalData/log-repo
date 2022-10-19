@@ -180,6 +180,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.AdditionalReference3 = containerPM.AdditionalReference3;
             container.AdditionalReference4 = containerPM.AdditionalReference4;
             container.HasTransshipments = containerPM.HasTransshipments;
+
+            container.Field11 = containerPM.Field11 != null ? containerPM.Field11.Value : null;
+            container.Field12 = containerPM.Field12 != null ? containerPM.Field12.Value : null;
+            container.Field13 = containerPM.Field13 != null ? containerPM.Field13.Value : null;
+            container.Field14 = containerPM.Field14 != null ? containerPM.Field14.Value : null;
+            container.Field15 = containerPM.Field15 != null ? containerPM.Field15.Value : null;
+            container.Field16 = containerPM.Field16 != null ? containerPM.Field16.Value : null;
+            container.Field17 = containerPM.Field17 != null ? containerPM.Field17.Value : null;
+            container.Field18 = containerPM.Field18 != null ? containerPM.Field18.Value : null;
+            container.Field19 = containerPM.Field19 != null ? containerPM.Field19.Value : null;
+            container.Field20 = containerPM.Field20 != null ? containerPM.Field20.Value : null;
+
+            container.Field21 = containerPM.Field21 != null ? containerPM.Field21.Value : null;
+            container.Field22 = containerPM.Field22 != null ? containerPM.Field22.Value : null;
+            container.Field23 = containerPM.Field23 != null ? containerPM.Field23.Value : null;
+            container.Field24 = containerPM.Field24 != null ? containerPM.Field24.Value : null;
+            container.Field25 = containerPM.Field25 != null ? containerPM.Field25.Value : null;
+            container.Field26 = containerPM.Field26 != null ? containerPM.Field26.Value : null;
+            container.Field27 = containerPM.Field27 != null ? containerPM.Field27.Value : null;
+            container.Field28 = containerPM.Field28 != null ? containerPM.Field28.Value : null;
+            container.Field29 = containerPM.Field29 != null ? containerPM.Field29.Value : null;
+            container.Field30 = containerPM.Field30 != null ? containerPM.Field30.Value : null;
+
+            container.Field31 = containerPM.Field31 != null ? containerPM.Field31.Value : null;
+            container.Field32 = containerPM.Field32 != null ? containerPM.Field32.Value : null;
+            container.Field33 = containerPM.Field33 != null ? containerPM.Field33.Value : null;
+            container.Field34 = containerPM.Field34 != null ? containerPM.Field34.Value : null;
+            container.Field35 = containerPM.Field35 != null ? containerPM.Field35.Value : null;
+            container.Field36 = containerPM.Field36 != null ? containerPM.Field36.Value : null;
+            container.Field37 = containerPM.Field37 != null ? containerPM.Field37.Value : null;
+            container.Field38 = containerPM.Field38 != null ? containerPM.Field38.Value : null;
+            container.Field39 = containerPM.Field39 != null ? containerPM.Field39.Value : null;
+            container.Field40 = containerPM.Field40 != null ? containerPM.Field40.Value : null;
         }
         private static string SetUpdatedByPartner(ContainerPM entityPM)
         {
