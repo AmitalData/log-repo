@@ -2313,16 +2313,17 @@ namespace WebFreight.Web
                                 {
                                     Id = user.Id,
                                     Tenant = tenant,
+                                    LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant)
                                 };
 
                                 commonDataContext.ContactLastLogins.Add(lastLogin);
                             }
 
+                            user.DigitalLastLoginDateTime = lastLogin.LoginDateTime;
                             lastLogin.ComputerId = computerId;
                             lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                             commonDataContext.ContactLoginLogs.Add(contactLog);
                             commonDataContext.SaveChanges();
-
 
                             // add a record to contact last login table
                         }
@@ -2388,9 +2389,7 @@ namespace WebFreight.Web
                 commonDataContext.SharedLogisticsContactLastLogins.Add(sharedContactLastLogin);
             }
 
-            user.DigitalLastLoginDateTime = sharedContactLastLogin.LoginDateTime;
             sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
-            
             commonDataContext.SaveChanges();
         }
 
