@@ -253,6 +253,7 @@ import { ContainerizationStatusCodeListService } from './Services/StandardLists/
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
+import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
 
 
 //#endregion
@@ -444,6 +445,7 @@ import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFi
 import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
+import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
 
 
 export class ModuleProviders {
@@ -812,6 +814,7 @@ export class ModuleProviders {
             case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
             case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
             case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
+            case "ServersNameListService": { myResult = new ServersNameListService(); break; }
 
             //#endregion
 
@@ -846,7 +849,7 @@ export class ModuleProviders {
             case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
             case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
             case "ExportDeclarationClosingDatasExtendPMService": { myResult = new ExportDeclarationClosingDatasExtendPMService(); break; }
-
+            case "ServersNamePMService": { myResult = new ServersNamePMService(); break; }
             //#endregion
 
             //MetaData
