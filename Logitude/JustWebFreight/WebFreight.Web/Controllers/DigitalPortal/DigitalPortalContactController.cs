@@ -20,13 +20,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalPortalContact/GetSingle")]
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string cardId)
         {
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, id);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
                 ContactPM contactPM = contactQuery.GetSinglePM(id, authToken.Tenant);
 
