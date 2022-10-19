@@ -14,7 +14,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalDocuments/GetDigitalEntityDocuments")]
-        public IHttpActionResult GetDigitalEntityDocuments(string entityId, string partnerType, string cardId)
+        public IHttpActionResult GetDigitalEntityDocuments(string entityId, string partnerType, string cardId, bool isExternal = false)
         {
             try
             {
@@ -37,7 +37,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ShipmentLevelCode = shipment.ShipmentLevelCode,
                         CustomerId = shipment.CustomerId,
                         Tenant = tenant,
-                        PartnerType = partnerType
+                        PartnerType = partnerType,
+                        IsExternal = isExternal
                     };
 
                     output = digitalPortalDocumentHelper.GetShipmentSharedDocuments(args).OrderBy(o => o.Name).ToList();
