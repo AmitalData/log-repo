@@ -2382,13 +2382,16 @@ namespace WebFreight.Web
                     PartnerTypeId = card.PartnerTypeId,
                     Via = via,
                     Tenant = card.Tenant,
+                    LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant)
 
                 };
                 commonDataContext.SharedLogisticsContactLastLogins.Add(sharedContactLastLogin);
             }
-            sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
-            commonDataContext.SaveChanges();
 
+            user.DigitalLastLoginDateTime = sharedContactLastLogin.LoginDateTime;
+            sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
+            
+            commonDataContext.SaveChanges();
         }
 
         private static bool IscustomerCareIpAuthenticated()
