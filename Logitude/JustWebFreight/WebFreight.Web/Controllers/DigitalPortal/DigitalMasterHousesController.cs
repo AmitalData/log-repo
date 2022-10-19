@@ -16,7 +16,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalMasterHouses/GetMasterWithConnectedHouses")]
-        public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20)
+        public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20, bool IsExternal = false)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DigitalMasterHouseResponse response = new DigitalMasterHouseResponse
                 {
-                    Master = MapMasterData(shipmentId, tenant, partnerType),
+                    Master = MapMasterData(shipmentId, tenant, partnerType, IsExternal),
                 };
 
                 housesShipments.Data.ForEach(item =>
@@ -47,7 +47,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         item.ShipmentLevelCode,
                         item.CustomerId,
                         Tenant = tenant,
-                        PartnerType = partnerType
+                        PartnerType = partnerType,
+                        IsExternal = IsExternal
                     };
 
                     results.Add(new DigitalMasterHouse()
@@ -60,7 +61,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ConsigneeName = item.ConsigneeName,
                         GrossWeight = item.GrossWeight,
                         Quantity = item.PackagesQuantity,
-                        Documents = digitalPortalDocumentHelper.GetShipmentSharedDocuments(documentArgs).OrderBy(o => o.Name).ToList()
+                        Documents = digitalPortalDocumentHelper.GetShipmentSharedDocuments(documentArgs).OrderBy(o => o.Name).ToList(),
                     });
                 });
 
@@ -77,7 +78,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        private DigitalMasterHouse MapMasterData(string shipmentId, int tenant, string partnerType)
+        private DigitalMasterHouse MapMasterData(string shipmentId, int tenant, string partnerType, bool isExternal)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM masterShipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
@@ -89,7 +90,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
                 CustomerId = masterShipment.CustomerId,
                 Tenant = tenant,
-                PartnerType = partnerType
+                PartnerType = partnerType,
+                IsExternal = isExternal
             };
 
             var master = new DigitalMasterHouse()
