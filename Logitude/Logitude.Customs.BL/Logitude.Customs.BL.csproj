@@ -857,6 +857,7 @@
     <Compile Include="EntityDataMappings\Generated\SecurityClearenceTypeCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SeizureFactorTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SeizureMethodTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ServersNameDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignStationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteLookupDataMapping.Generated.cs" />
@@ -1036,6 +1037,7 @@
     <Compile Include="EntityDataMappings\SecurityClearenceTypeCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SeizureFactorTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SeizureMethodTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ServersNameDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignStationDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteLookupDataMapping.cs" />
@@ -1120,6 +1122,7 @@
     <Compile Include="EntityQueryServices\Generated\SignStationQueryService.Generated.cs" />
 
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ServersNameQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportLogisticPermitActionQueryService.Generated.cs" />
@@ -1634,6 +1637,7 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ServersNameUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientsTapagUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
@@ -1645,6 +1649,7 @@
     <Compile Include="EntityUpdateServices\Generated\SignStationUpdateService.Generated.cs" />
 
     <Compile Include="EntityUpdateServices\Generated\StorageStatusTableUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ServersNameUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogisticActionRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestUpdateService.Generated.cs" />

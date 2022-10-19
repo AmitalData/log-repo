@@ -1075,6 +1075,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ServersNameViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StorageStatusTableViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
@@ -1097,6 +1098,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SignStationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GTBFUSTATUWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ServersNameController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ExportDeclarationClosingController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
@@ -3337,6 +3339,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SecurityClearenceTypeCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServersNameUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SignStationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />

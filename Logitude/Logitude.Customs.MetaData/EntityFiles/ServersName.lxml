@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רשימת שרתים&quot;"
   DefaultText="&quot;ServersName&quot;"
-  Code="&quot;b701&quot;"
+  Code="&quot;98e2&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -92,6 +92,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -164,6 +165,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -236,6 +238,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -435,6 +438,34 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;ServersNames&quot;"
+    TextCode="&quot;Servers Names&quot;"
+    LocalTextCode="&quot;רשימת שרתים&quot;"
+    QueryGroupCode="&quot;98e2&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.ServersName&quot;"
+    QuerySection="&quot;Customs.ServersName&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ServerName&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ServersNames&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ServerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ServersNames&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ServiceName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.ServersHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.ServersName&quot;"
@@ -465,6 +496,16 @@
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;Customs.ServersName&quot;"
+    Code="&quot;SN01&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;Customs.ServersName.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -493,6 +534,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
