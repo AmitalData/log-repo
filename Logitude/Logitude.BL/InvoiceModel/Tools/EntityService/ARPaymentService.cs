@@ -39,6 +39,8 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using System.Xml;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -2184,6 +2186,45 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //{
 
             //}
+        }
+
+        public static void UpdateCanceledARPaymentStatus(string arPaymentId, int tenant)
+        {
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+            ARPayment arPayment = aRPaymentRepository.GetSingleARPayment(arPaymentId, tenant);
+            string oldARPaymentStatus = arPayment.SATTransferStatusCode;
+            TryUpdateCanceledARPaymentStatus(arPayment, tenant, aRPaymentRepository);
+            if (oldARPaymentStatus == arPayment.SATTransferStatusCode) return;
+            aRPaymentRepository.SubmitChanges();
+
+            XmlElement comprobanteComplementoXMLElement = GetcomprobanteComplementoXMLElement(arPayment.SATXML);
+            SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
+            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
+        }
+
+        public static void TryUpdateCanceledARPaymentStatus(ARPayment arPayment, int tenant, ARPaymentRepository aRPaymentRepository)
+        {
+            Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, arPayment.SATXML);
+            if (resultadoConsultaEstatusSAT == null) return;
+            const string checkingStatucCode = "Cancelado";
+            if (resultadoConsultaEstatusSAT.EstadoComprobante != checkingStatucCode) return;
+
+            const string sATTransferedStatusCode = "TD";
+            arPayment.SATTransferStatusCode = sATTransferedStatusCode;
+            aRPaymentRepository.Update(arPayment);
+        }
+
+        public static XmlElement GetcomprobanteComplementoXMLElement(string paymentsATXML)
+        {
+            int satVersion = SATBaseProfact40Service.GetSATVersion(paymentsATXML);
+
+            if (satVersion == 4)
+            {
+                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(paymentsATXML).Complemento.Any[0];
+            }
+
+            return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(paymentsATXML).Complemento.Any[0];
         }
     }
 

@@ -205,6 +205,15 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "ResetFullTextSearchIndexChangeTrackingTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "UpdateCanceledSATEntitiesStatusesTask", 
+                Name = "UpdateCanceledSATEntitiesStatusesTask", 
+                SearchFields = "UpdateCanceledSATEntitiesStatusesTask", 
+                IsInternallyDefined = false, 
+                Description = "UpdateCanceledSATEntitiesStatusesTask", 
+			});
 			
             return all;
        }
