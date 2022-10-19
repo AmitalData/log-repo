@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -173,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -835,23 +835,26 @@ export class ConsigmentTabContentComponent
 
 
     RemovePackageButton(item) {
+        
+        if (!this.IsDisplayOnly) {
+            if (!AppTool.IsNullOrEmpty(item)) {
 
-        if (!AppTool.IsNullOrEmpty(item)) {
+                var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage");
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 150;
+                confirmWindow.Show(msg);
+                confirmWindow.WindowClosed.subscribe((event: any) => {
 
-            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage");
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.Height = 150;
-            confirmWindow.Show(msg);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) { // YES
+                        this.ConsimentPackages.Remove(item);
+                        this.EntityPM.RemoveConsignmentPackage(item.EntityPM);
+                    }
+                });
 
-                if (confirmWindow.Yes) { // YES
-                    this.ConsimentPackages.Remove(item);
-                    this.EntityPM.RemoveConsignmentPackage(item.EntityPM);
-                }
-            });
-
+            }
         }
+
     }
 
     OnSecondCargoLostFocus() {
