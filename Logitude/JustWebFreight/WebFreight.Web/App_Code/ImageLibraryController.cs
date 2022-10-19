@@ -95,9 +95,6 @@ namespace WebFreight.Web.App_Code
                     }
                 }
 
-
-
-
                 Uploader uploaderService = new Uploader();
                 byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
 
@@ -121,17 +118,11 @@ namespace WebFreight.Web.App_Code
 
         }
 
-
-
-
-
         [ActionName("PostUploadFile")]
         public HttpResponseMessage PostUploadFile(ImageParameter filter)
         {
-
             try
             {
-
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -148,14 +139,11 @@ namespace WebFreight.Web.App_Code
                     string result = imageLibraryControllerHelper.UploadImage(filter);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
-
-
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
 
         [ActionName("PostImageAfterResize")]
@@ -173,7 +161,6 @@ namespace WebFreight.Web.App_Code
             ImageParameter.Base64String = Convert.ToBase64String(ImageParameter.FileData);
             return Request.CreateResponse(HttpStatusCode.OK, ImageParameter);
         }
-
 
         [ActionName("PostUploadPdfFile")]
         public HttpResponseMessage PostUploadPdfFile(ImageParameter filter)
@@ -319,9 +306,6 @@ namespace WebFreight.Web.App_Code
 
         }
 
-
-
-
         public HttpResponseMessage GetRemoveFile(string documentId, int tenant)
         {
             try
@@ -346,7 +330,6 @@ namespace WebFreight.Web.App_Code
             }
 
         }
-
 
         public HttpResponseMessage GetImageUrl(string name)
         {
@@ -412,9 +395,6 @@ namespace WebFreight.Web.App_Code
 
         }
 
-
-
-
         //[ActionName("PostUploadPdfFile")]
         //public HttpResponseMessage PostUploadImage(ImageParameter filter)
         //{
@@ -422,7 +402,6 @@ namespace WebFreight.Web.App_Code
         //    var temp = uploaderService.UploadImage(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(),filter.BufferNumber,filter.Tenant, "jpg", null, null, filter.EntityId);
 
         //}
-
 
     }
 

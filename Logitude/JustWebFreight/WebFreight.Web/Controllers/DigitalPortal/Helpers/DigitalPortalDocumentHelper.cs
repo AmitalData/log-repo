@@ -11,6 +11,7 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 {
@@ -29,6 +30,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
             Uploader uploader = new Uploader();
+            var docAth = AuthenticationUtil.GenerateToken();
 
             if (args.PartnerType == "AG")
             {
