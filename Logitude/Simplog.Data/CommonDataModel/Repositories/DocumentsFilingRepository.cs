@@ -123,6 +123,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return externalDocument;
 
         }
+        public string GetSingleDocumentsFilingIdByDocumentId(string DocumentId, int tenant)
+        {
+
+
+            var DocumentsFilingId = (from a in context.DocumentsFilings
+                            ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+                        where a.DocumentId == DocumentId && a.Tenant == tenant
+                        select a.Id).FirstOrDefault();
+            return DocumentsFilingId;
+
+        }
         public bool CheckIfDocumentTypeHasDocumentFilling(string documentTypeId, string objectTableId, string entityId, int tenant)
         {
 

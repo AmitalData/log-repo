@@ -22,6 +22,9 @@ using System.Web.Http;
 using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.WebServices;
+using System.Text;
+using ICSharpCode.SharpZipLib.Tar;
+using iTextSharp.text.pdf.qrcode;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -38,6 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
+                
 
                 var pageObj = new CustomDocumentPageObject();
                 if (isConnectedToUni || !String.IsNullOrWhiteSpace(pm.OnPremiseFillingService))
@@ -64,26 +68,50 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
                 else
                 {
+                    currPage = currPage + 1;
                     Uploader up = new Uploader();
-                    byte[] imageBytes = null;
-                    string documentExtension = up.GetFileExtension(documentId, tenant);
+                    byte[] tarBytes = null;
+                    var externalDocumentRepository = new DocumentsFilingRepository(tenant);
+                    DocumentRepository documentRepository = new DocumentRepository(tenant);
+                    var pdfDocumentFillingId = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(documentId, tenant);
+                    if (pdfDocumentFillingId != null)
+                    {
+                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId);
+                        if (TarDocumentId != null)
+                        {
+                            string documentExtension = up.GetFileExtension(TarDocumentId, tenant);
+                            var poco = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(TarDocumentId, tenant);
+                            {
+                                tarBytes = up.DownloadFile(TarDocumentId, documentExtension, "", tenant);
+                            }
+                            var byteArr = this.GetTiffPageFromTar(tarBytes, currPage, out string TiffList);
 
-                    if (!string.IsNullOrEmpty(documentExtension) && (documentExtension == "tiff" || documentExtension == "tif"))
-                    {
-                        imageBytes = up.DownloadFile(documentId, documentExtension, "", tenant);
+                            if (tarBytes != null && byteArr != null)
+                            {
+                                //get multi pages tiff count
+                                Bitmap bmp = GetBitmap(byteArr);
+                                RotateBitmap(bmp, angle);
+                                byte[] newBytes = GetImageBytes(bmp);
+                                pageObj.Count = bmp.GetFrameCount(FrameDimension.Page);
+                                pageObj.Page = Resize(new MemoryStream(newBytes));
+                                pageObj.TiffPageLines = TiffList;
+                                var TiffPages = new List<string>(TiffList.Split(new char[] { '\n' }));
+                                pageObj.Count = TiffPages.Count - 1;
+                            }
+                        }
+                        else
+                        {
+                            ErrorMessage = "document is not found by filename";
+                            pageObj.ErrorMessage = ErrorMessage;
+                        }
                     }
-                    if (imageBytes != null)
+                    else
                     {
-                        //get multi pages tiff count
-                        Bitmap bmp = GetBitmap(imageBytes);
-                        RotateBitmap(bmp, angle);
-                        byte[] newBytes = GetImageBytes(bmp);
-                        pageObj.Count = bmp.GetFrameCount(FrameDimension.Page);
-                        pageObj.Page = BinaryImageToSerializeListBytes(newBytes, currPage);
+                        ErrorMessage = "document is not found";
+                        pageObj.ErrorMessage = ErrorMessage;
                     }
 
                 }
-
 
                 return Request.CreateResponse(HttpStatusCode.OK, pageObj);
             }
@@ -91,6 +119,75 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+        public byte[] GetTiffPageFromTar(byte[] tarBytes, int pageRequest, out String TiffList)
+        {
+            StringBuilder sbTiffList = new StringBuilder();
+            bool asciiTranslate = false;
+            TarInputStream tarIn = null;
+            MemoryStream tarMemoryStream = null;
+            byte[] byteArr = null;
+            //using (FileStream fsIn = new FileStream(tarFileName, FileMode.Open, FileAccess.Read))
+            try
+            {
+                tarMemoryStream = new MemoryStream(tarBytes);
+                tarIn = new TarInputStream(tarMemoryStream);
+                TarEntry tarEntry;
+                int i = 1;
+                while ((tarEntry = tarIn.GetNextEntry()) != null)
+                {
+
+                    if (tarEntry.IsDirectory)
+                    {
+                        //i++;
+                        continue;
+                    }
+                    // Converts the unix forward slashes in the filenames to windows backslashes
+                    //
+                    string name = tarEntry.Name.Replace('/', Path.DirectorySeparatorChar);
+
+                    // Remove any root e.g. '\' because a PathRooted filename defeats Path.Combine
+                    if (Path.IsPathRooted(name))
+                    {
+                        name = name.Substring(Path.GetPathRoot(name).Length);
+                    }
+                    var fi = new FileInfo(name);
+                    if (fi.Extension.Equals(".tiff", StringComparison.OrdinalIgnoreCase) || fi.Extension.Equals(".tif", StringComparison.OrdinalIgnoreCase))
+                    {
+
+                        sbTiffList.AppendLine(fi.Name);
+                        if (pageRequest == i)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                tarIn.CopyEntryContents(ms);
+                                byteArr = ms.ToArray();
+                                //string binStr = Convert.ToBase64String(byteArr);
+                            }
+
+                        }
+
+
+                        i++;
+                    }
+
+                }
+
+            }
+
+            finally
+            {
+                if (tarIn != null)
+                {
+                    tarIn.Close();
+                }
+                if (tarMemoryStream != null)
+                {
+                    tarMemoryStream.Close();
+                }
+                TiffList = sbTiffList.ToString();
+            }
+            return byteArr;
         }
 
         private static Bitmap RotateBitmap(Bitmap bmp,int? angle)
@@ -121,7 +218,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return stream.ToArray();
             }
         }
-
         public Bitmap GetBitmap(byte [] imageBytes)
         {
             MemoryStream st = new MemoryStream(imageBytes);
@@ -255,8 +351,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             return image;
         }
+   
 
-     
     }
 
 
