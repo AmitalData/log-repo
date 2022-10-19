@@ -425,6 +425,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent, isExport: boolean) {
+       
         if (SessionLocator.SelectedSession.CurrentEditComponent) {
             if (SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.IsDirty) {
                 SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
@@ -1198,12 +1199,16 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
+       
         if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
+            if(this.DataContext.DisplayOnlyMessage="לתצוגה בלבד - אילוץ אושר")
+               messageWindow.Show(" אילוץ אושר - לא ניתן לקשר מסמכים חדשים");
+            else
+               messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
