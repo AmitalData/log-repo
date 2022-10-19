@@ -670,6 +670,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (myCard != null)
                         {
                             invoicedataprovider.Notify1VATNumber = myCard.VatNumber;
+                            invoicedataprovider.Notify1Name = myCard.EnglishName;
 
                             if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
                             {

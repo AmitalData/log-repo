@@ -55,6 +55,7 @@ namespace WebFreight.Web.DataProviders
         public string DescriptionOfGoods { get; set; }
         public string Signature { get; set; }
         public string ShipmentNumber { get; set; }
+        public string MasterShipmentNumber { get; set; }
         public string MAWBOBLDate { get; set; }
         public string AWBFreightPrepaid { get; set; }
         public string AWBFreightCollect { get; set; }

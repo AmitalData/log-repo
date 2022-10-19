@@ -8,6 +8,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipperAddress { get; set; }
         public string ShipperAddress_NoTel { get; set; }       
         public string ShipmentNumber { get; set; }
+        public string LoadingPortCode { get; set; }
+        public string DischargePortCode { get; set; }
+        public string MainCarriageCarrierCode { get; set; }
         public string ShipmentNumberLink { get; set; }
         public string BookingNumber { get; set; }
         public string CompanyName { get; set; }
