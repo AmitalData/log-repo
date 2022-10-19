@@ -27,7 +27,7 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
 
             if (values != null && values.Any())
             {
-                queryableData = queryableData.Where(d => searchItems.Contains($"PaidStatus:{d.PaidStatus}"));
+                queryableData = queryableData.Where(d => searchItems.Any(a => a.Contains("PaidStatus:" + d.PaidStatus)));
             }
 
             return queryableData;
