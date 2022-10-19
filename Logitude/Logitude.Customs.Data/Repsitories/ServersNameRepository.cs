@@ -20,8 +20,24 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public bool Any()
+        {
+            return  context.ServersNames.Any();
+        }
 
-   }
+        public List<string> GetServiceNameListByMachineName(string machineName)
+        {
+            machineName = machineName.ToLower();
+            var serviceNameList = context.ServersNames
+                .Where(r => r.ServerName.ToLower() == machineName)
+                .Select(r => r.ServiceName)
+                .ToList();
+
+            return serviceNameList;
+
+        }
+
+    }
 
 }
    

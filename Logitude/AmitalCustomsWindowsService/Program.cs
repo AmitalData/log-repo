@@ -1,4 +1,5 @@
 ﻿using AmitalCustomsWindowsService.Utils;
+using CustomsWorkerRole.BL;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Customs.BL.EntityQueryServiceExt;
@@ -163,6 +164,10 @@ namespace AmitalCustomsWindowsService
                 CustomsRegistrations.Register();
                 InfraRegistrationHelper.Register();
                 LoggedContactResolver.RegisterLoggedContactUtil();
+                    
+                var serverMonitorControlService = new ServerMonitorControlService();
+                serverMonitorControlService.StopProccessIfNotExist();
+                
                 _ThreadStartStaticLoaded = true;
                 
             }
