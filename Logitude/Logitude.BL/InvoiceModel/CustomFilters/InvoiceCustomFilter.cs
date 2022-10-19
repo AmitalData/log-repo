@@ -33,6 +33,11 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                     {
                         queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
                     }
+                    
+                    if (item.FieldName == "PaidStatus")
+                    {
+                        queryableData = DigitalPortalCustomFilter.GetDigtalCustomInvlicesFilteredQuery(item, queryableData);
+                    }
 
                     if (item.FieldName == "DigitalQuickSearch")
                     {

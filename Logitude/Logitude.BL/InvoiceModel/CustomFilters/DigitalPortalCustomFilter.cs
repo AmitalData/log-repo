@@ -18,5 +18,20 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
 
             return queryableData;
         }
+
+        public static IQueryable<ARInvoice> GetDigtalCustomInvlicesFilteredQuery(QueryFilterItem item, IQueryable<ARInvoice> queryableData)
+        {
+            var values = item.FieldValue == null ? null : item.FieldValue.ToString().Split(',').ToList();
+
+            var searchItems = values.Select(a => $"PaidStatus:{a}").ToList();
+
+            if (values != null && values.Any())
+            {
+                queryableData = queryableData.Where(d => searchItems.Contains($"PaidStatus:{d.PaidStatus}"));
+            }
+
+            return queryableData;
+        }
+
     }
 }
