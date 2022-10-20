@@ -134,7 +134,7 @@
                                 <IconButton  style="top:-1px"  [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
                             </div>
                             <div *ngIf="IsSubEntity" class="buttons">
-                                <button class="Button" (click)="NewSectionButtonClick()">New Section</button>
+                                <button class="Button" (click)="NewSectionButtonClick('Standard')">New Section</button>
                             </div>
                             <div *ngIf="!IsSubEntity" class="buttons" style="width:45px;">
                                 <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="52">
