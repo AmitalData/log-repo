@@ -241,7 +241,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         {
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
-                            Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            //Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
                             break;
                         }
                         if (_ReceivedBrokeredMessage.RetryNumber > 5)

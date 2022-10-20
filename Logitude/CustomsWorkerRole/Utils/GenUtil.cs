@@ -32,5 +32,22 @@ namespace CustomsWorkerRole.Utils
 
             return iQueueTimeOutInMin;
         }
+        public static int IfNoQueue_ServerWaitTimeInSec()
+        {
+            int iSleepNoQueueInSec = 60;
+            string SleepNoQueueInSec = ConfigurationManager.AppSettings.Get("IfNoQueue_ServerWaitTimeInSec") ?? "";
+            if (string.IsNullOrWhiteSpace(SleepNoQueueInSec))
+            {
+                return iSleepNoQueueInSec;
+            }
+            int.TryParse(SleepNoQueueInSec, out iSleepNoQueueInSec);
+            if (iSleepNoQueueInSec < 1)
+            {
+                iSleepNoQueueInSec = 1;
+            }
+
+            return iSleepNoQueueInSec;
+        }
+
     }
 }
