@@ -55,11 +55,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"מפוצל כבר !!!");
 
-                int counter = customResponse.connect ?
+                int counter = customResponse.Connect ?
                     ConnectedDeclaration(customResponse.ServerSplitDeclarationsList, customResponse.courierMasterId, customResponse.tenant) :
                     DisconnectedDeclaration(customResponse.ServerSplitDeclarationsList, customResponse.courierMasterId, customResponse.tenant);
 
-                mess.AppendLine($"{(customResponse.connect ? "קושרו" : "נותקו")} {counter} הצהרות");
+                mess.AppendLine($"{(customResponse.Connect ? "קושרו" : "נותקו")} {counter} הצהרות");
             }
             else
             {
@@ -77,28 +77,44 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private int CreateChunkMessages(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int count = 0;
-            
-            var decsIds = new List<string>();
 
-            if (!string.IsNullOrEmpty(customResponse.ConnectedDeclarations))
-            {
-                if (customResponse.ConnectedDeclarations == "ALL")
-                    decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant).Select(r => r.Id).ToList();
-                else if (customResponse.ConnectedDeclarations?.Split(',') != null)
-                    decsIds = customResponse.ConnectedDeclarations?.Split(',').Where(x => !string.IsNullOrEmpty(x)).ToList();
-                
-                count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
-            }
+            count += UpdateConnectedDeclaration(customResponse, requestParams);
 
-            if (!string.IsNullOrEmpty(customResponse.NotConnectedDeclarations))
-            {
-                if (customResponse.NotConnectedDeclarations == "ALL")
-                    decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant).Select(r => r.Id).ToList();
-                else if (customResponse.NotConnectedDeclarations?.Split(',') != null)
-                    decsIds = customResponse.NotConnectedDeclarations?.Split(',').Where(x => !string.IsNullOrEmpty(x)).ToList();
-            
-                count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
-            }
+            count += UpdateDisconnectedDeclaration(customResponse, requestParams);
+
+            return count;
+        }
+
+        private int UpdateDisconnectedDeclaration(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
+        {
+            int count;
+            List<string> decsIds;
+
+            if (customResponse.disconnectedAll)
+                decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant)
+                    .Select(r => r.Id)
+                    .Where(x => !customResponse.disconnectedItems.Contains(x)).ToList();
+            else
+                decsIds = customResponse.disconnectedItems.ToList();
+
+            count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
+
+            return count;
+        }
+
+        private int UpdateConnectedDeclaration(DCI_CourierMastersConnectedResponseContentHeader customResponse, GenericRequestParams requestParams)
+        {
+            int count;
+            List<string> decsIds;
+
+            if (customResponse.connectedAll)
+                decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant)
+                    .Select(r => r.Id)
+                    .Where(x => !customResponse.connectedItems.Contains(x)).ToList();
+            else
+                decsIds = customResponse.connectedItems.ToList();
+
+            count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
 
             return count;
         }
@@ -111,7 +127,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 count++;
                 customResponse.ServerSplitDeclarationsList = list100;
                 customResponse.LoggingUserId = requestParams.LoggingUserId;
-                customResponse.connect = connect;
+                customResponse.Connect = connect;
                 new CRSUtil().CreateCRS_DCAIn<DCI_CourierMastersConnectedResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
             });
             return count;

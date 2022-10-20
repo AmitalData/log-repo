@@ -17,6 +17,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { PendingRequestParams } from 'Customs/DataContract/RequestParams/PendingRequestParams';
 import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 
 
 @Injectable()
@@ -52,6 +53,9 @@ export class CourierMasterService {
 
     public connectedSelectAll: boolean;
     public disconnectedSelectAll: boolean;
+    public connectedItems: ObservableCollection = new ObservableCollection([]);
+    public disconnectedItems: ObservableCollection = new ObservableCollection([]);
+
     public isNotDirty: boolean;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
@@ -762,10 +766,10 @@ export class CourierMasterService {
         });
     }
 
-    sendConnectDeclaration(courierMasterPM: CourierMasterPM) {
+    sendConnectDeclaration(courierMasterId: string, tenant: number, MAWB: string, connectedAll: boolean, disconnectedAll: boolean, connectedItems: string[], disconnectedItems: string[]) {
         const ajax: Observable<any> = this._http.post(
             this._apiUrl + "/sendConnectDeclaration",
-            courierMasterPM,
+            {courierMasterId: courierMasterId, tenant: tenant, MAWB: MAWB, connectedAll: connectedAll, disconnectedAll: disconnectedAll, connectedItems: connectedItems, disconnectedItems: disconnectedItems},
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 

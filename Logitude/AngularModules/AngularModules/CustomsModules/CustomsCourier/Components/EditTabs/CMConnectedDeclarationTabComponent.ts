@@ -43,8 +43,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
 
     private EntityResourceService: EntityResourceService;
     status: string;
-    IsSelected: boolean;
-    IsSelectedNot: boolean;
+
     constructor(public entityArgs: EntityArgs, public CourierMasterService: CourierMasterService) {
         super();
         this.EntityResourceService = new EntityResourceService();
@@ -56,7 +55,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
 
                     this.IsVisibile = true;
-                    this.OnAllBtnClicked(true);
+                    this.OnAllConnectedChecked(true);
                     this.BuildColumns();
                     this.BuildColumns1();
                     this.LoadConnectedItems();
@@ -108,7 +107,6 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                     this.CourierMasterService.isNotDirty = true;
                     if (this.CourierMasterService.disconnectedSelectAll) {
                         //  this.CourierMasterService.connectedSelectAll = true;
-                        this.IsSelected = true;
                         this.CourierMasterService.disconnectedSelectAll = false;
                     }
                     
@@ -147,65 +145,61 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
 
     private async sendConnectDeclaration() {
         if (
-            this.entityPM.ConnectedDeclarations !== "ALL" 
-            && this.entityPM.NotConnectedDeclarations !== "ALL"
-            && this.entityPM.ConnectedDeclarations?.split(',')?.length < 100 
-            && this.entityPM.NotConnectedDeclarations?.split(',')?.length < 100
+                this.CourierMasterService.connectedSelectAll
+                && !this.CourierMasterService.disconnectedSelectAll
+                && this.entityPM.ConnectedDeclarations?.split(',')?.length < 100 
+                && this.entityPM.NotConnectedDeclarations?.split(',')?.length < 100
             )
             return;
             
         SessionLocator.SelectedSession.StartBusyIndicator('פותח מסר קישור הצהרות')
-        await this.CourierMasterService.sendConnectDeclaration(this.entityPM)
-            .then(() => CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', () => { }))
-            .catch(() => CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', () => { }));
-
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        await this.CourierMasterService.sendConnectDeclaration(this.entityPM.Id, this.entityPM.Tenant, this.entityPM.HAWB, this.CourierMasterService.connectedSelectAll, this.CourierMasterService.disconnectedSelectAll, this.CourierMasterService.connectedItems.Collection, this.CourierMasterService.disconnectedItems.Collection)
+            .then(() => { 
+                CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', () => { })
+                SessionLocator.SelectedSession.StopBusyIndicator();
+            })
+            .catch(() => {
+                CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', () => { })
+                SessionLocator.SelectedSession.StopBusyIndicator();
+            });
     }
 
-    OnAllBtnClicked(isFirst: boolean) {
-         this.IsSelected = true;
-        this.CourierMasterService.connectedSelectAll = true;//    this.entityPM.ConnectedDeclarations = "ALL,";
+    OnAllConnectedChecked(isFirst: boolean) {
+        this.CourierMasterService.connectedSelectAll = true;
+        this.CourierMasterService.connectedItems.Clear();
         this.entityPM.NotConnectedDeclarations = "";
-        if (isFirst)
-            this.CourierMasterService.isNotDirty = true;
-   else
-        this.CourierMasterService.isNotDirty = false;
-
+        this.CourierMasterService.isNotDirty = !!isFirst;
+        
         this.LoadConnectedItems();
- 
     }
-
-
-    OnAllBtnClickedNot() {
-         this.IsSelectedNot = true;
-        this.CourierMasterService.disconnectedSelectAll = true;
-        this.entityPM.ConnectedDeclarations = "ALL";
-
-        this.LoadNotConnectedDeclarationGrid();
-         this.CourierMasterService.isNotDirty = false;
-    }
-
-    OnNoneBtnClickedNot() {
-        this.IsSelectedNot = false;
-        this.CourierMasterService.disconnectedSelectAll = false;
-        this.entityPM.ConnectedDeclarations = ""; 
-        this.CourierMasterService.isNotDirty = false;
-
-        this.LoadNotConnectedDeclarationGrid();
-
-    }
-
-
-    OnNoneBtnClicked() {
-         this.IsSelected = false;
+    
+    OnAllConnectedUnchecked() {
         this.CourierMasterService.connectedSelectAll = false;
+        this.CourierMasterService.connectedItems.Clear();
         this.entityPM.NotConnectedDeclarations = "ALL";
         this.CourierMasterService.isNotDirty = false;
 
         this.LoadConnectedItems();
-
-
     }
+
+    OnAllDiconnectedChecked() {
+        this.CourierMasterService.disconnectedSelectAll = true;
+        this.CourierMasterService.disconnectedItems.Clear();
+        this.entityPM.ConnectedDeclarations = "ALL";
+        
+        this.LoadNotConnectedDeclarationGrid();
+        this.CourierMasterService.isNotDirty = false;
+    }
+    
+    OnAllDiconnectedUnchecked() {
+        this.CourierMasterService.disconnectedSelectAll = false;
+        this.CourierMasterService.disconnectedItems.Clear();
+        this.entityPM.ConnectedDeclarations = "";
+        this.CourierMasterService.isNotDirty = false;
+
+        this.LoadNotConnectedDeclarationGrid();
+    }
+
     public columns: any[] = null;
     BuildColumns() {
         this.columns = [];
@@ -432,42 +426,6 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
 
         return this.CourierMasterService.getPromiseByFilters1(filters);
 
-    }
-
-    onCheckBoxChecked($event) {
-
-        this.IsSelected = false;
-        if (!this.entityPM.NotConnectedDeclarations) {
-            this.entityPM.NotConnectedDeclarations = "";
-        }
-        if (!$event.IsChecked) {
-            if (!this.entityPM.NotConnectedDeclarations.includes($event.rowData.Id)) {
-                this.notConnectedListIds.Collection.push($event.rowData.Id);
-                this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations + $event.rowData.Id + ",";
-            }
-        }
-        else {
-            if (this.entityPM.NotConnectedDeclarations.includes($event.rowData.Id)) {
-     
-                this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace($event.rowData.Id+",", "");
-            }
-        }
-      
-    }
-    onCheckBoxChecked1($event) {
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-        }
-        if ($event.IsChecked) {
-            if (!this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + $event.rowData.Id + ",";
-            }
-        }
-        else {
-            if (this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id+",", "");
-            }
-        }
     }
 
     DisplayOnlyCheck() {
