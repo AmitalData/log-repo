@@ -17,6 +17,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
 
         public int NumberOfRows { get; set; }
         public bool Inactive { get; set; }
+        public string Type { get; set; }
+        public string RelatedScreenCode { get; set; }
 
 
     }

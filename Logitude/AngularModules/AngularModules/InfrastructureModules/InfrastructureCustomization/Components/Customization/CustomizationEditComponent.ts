@@ -44,6 +44,7 @@ export class CustomizationEditComponent {
     private MainMenuWidthCollapsed: number = 45;
     private MainMenuWidthOpened: number = 145;
     LayoutDirection: string = 'ltr';
+    IsSubEntity: boolean = false;
 
     private isMainSidebarCollapsed: boolean = false;
     public get IsMainSidebarCollapsed() { return this.isMainSidebarCollapsed; }
@@ -122,6 +123,7 @@ export class CustomizationEditComponent {
         args.IsObjectTableFilterEnabled = this.IsObjectTableFilterEnabled;
         args.IsCustomFieldsMenue = this.IsCustomFieldsMenue;
         args.ObjectTableId = this.ObjectTableId;
+        args.IsSubEntity = this.IsSubEntity;
 
         myResult.push(new CustomFieldsMainMenuItem(args));
         myResult.push(new StandardFieldsMainMenuItem(args));

@@ -20,6 +20,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int NumberOfRows { get; set; }
         public int Number { get; set; }
         public bool Inactive { get; set; }
+        public string Type { get; set; }
+        public string RelatedScreenCode { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
 

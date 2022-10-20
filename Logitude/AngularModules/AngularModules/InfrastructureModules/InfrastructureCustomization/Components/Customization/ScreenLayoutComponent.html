@@ -133,8 +133,14 @@
                                 <span [attr.title]="SelectedItem.Name"  class="Header-with-dots">{{SelectedItem.Name || 'Screen'}}</span>
                                 <IconButton  style="top:-1px"  [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
                             </div>
-                            <div class="buttons">
+                            <div *ngIf="IsSubEntity" class="buttons">
                                 <button class="Button" (click)="NewSectionButtonClick()">New Section</button>
+                            </div>
+                            <div *ngIf="!IsSubEntity" class="buttons" style="width:45px;">
+                                <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="52">
+                                    <ToggleButtonItem [Text]="'Section'" (click)="NewSectionButtonClick('Standard')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                    <ToggleButtonItem [Text]="'Child Entities Grids'" (click)="NewSectionButtonClick('Grid')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                </ToggleButton>
                             </div>
                         </div>
                         <div class="component-wrapper">

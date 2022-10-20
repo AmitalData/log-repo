@@ -75,13 +75,19 @@
                                 </td>
                                 <td style="width: 240px;">
                                     <div style="height: 25px; width: 240px; margin-bottom:3px">
-                                        <LogTextBox (ValueChanged)="OnSectionScreenNameChange()" [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
+                                        <LogTextBox (ValueChanged)="OnSectionScreenNameChange()" [NoObjectField]="true" [Text]="sectionScreen.Section.Name" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
                                                     [ObjectTableName]="'sectionScreen'" [HideColumns]="true"></LogTextBox>
                                     </div>
 
                                 </td>
+                                <td style="width: 8px;">
+                                    <div></div>
+                                </td>
+                                <td *ngIf="sectionScreen.Section.Type == 'Grid'" style="width: 22px;">
+                                    <IconButton style="margin-left:2px;" class="section-button" [Name]="'edit'" [IsSmall]="true" (click)="EditSection(sectionScreen)"></IconButton>
+                                </td>
                                 <td style="width: 50px;">
-                                    <IconButton class="section-button" [Name]="'delete'" [IsSmall]="true" (click)="RemoveSection(sectionScreen)" ></IconButton>
+                                    <IconButton style="margin-left:2px;" class="section-button" [Name]="'delete'" [IsSmall]="true" (click)="RemoveSection(sectionScreen)"></IconButton>
                                 </td>
                                 <td><div></div></td>
                             </tr>
@@ -90,7 +96,7 @@
 
 
 
-                    <div [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
+                    <div *ngIf="sectionScreen.Section.Type != 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
                         <table style="border:solid 1px silver;margin-left:20px">
                             <tr>
                                 <td attr.data-cy="{{'Column_' + column}}" [style.border-right]="column == '2' ? 'none':'dashed 1px silver' " style="width:250px;vertical-align: top;" *ngFor="let item of sectionScreen.ScreenRows; let column = index">
@@ -126,6 +132,10 @@
                                 <td></td>
                             </tr>
                         </table>
+                    </div>
+
+                    <div *ngIf="sectionScreen.Section.Type == 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 115px; vertical-align: top;">
+                        
                     </div>
 
                     <div style="height:10px;"></div>
