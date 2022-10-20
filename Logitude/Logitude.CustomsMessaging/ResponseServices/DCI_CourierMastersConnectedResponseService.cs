@@ -91,13 +91,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             List<string> decsIds;
 
             if (customResponse.disconnectedAll)
-                decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant)
+                decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant)
                     .Select(r => r.Id)
                     .Where(x => !customResponse.disconnectedItems.Contains(x)).ToList();
             else
                 decsIds = customResponse.disconnectedItems.ToList();
 
-            count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
+            count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
 
             return count;
         }
@@ -108,13 +108,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             List<string> decsIds;
 
             if (!customResponse.connectedAll)
-                decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant)
+                decsIds = declarationRepository.GetCourierConnectedDeclaratins(customResponse.courierMasterId, customResponse.tenant)
                     .Select(r => r.Id)
                     .Where(x => !customResponse.connectedItems.Contains(x)).ToList();
             else
                 decsIds = customResponse.connectedItems.ToList();
 
-            count = CreateChunkMessages(customResponse, requestParams, true, decsIds);
+            count = CreateChunkMessages(customResponse, requestParams, false, decsIds);
 
             return count;
         }
