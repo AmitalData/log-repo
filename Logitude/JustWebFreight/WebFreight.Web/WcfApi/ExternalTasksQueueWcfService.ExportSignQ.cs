@@ -76,11 +76,9 @@ namespace WebFreight.Web.WcfApi
 
                         if (queueResponse.RetryNumber > 10)
                         {
-                            //anaO.
-                            //queueservice.CompleteAsFailed();
-
-                            //return;
-                            //CompleteAsFailed
+                            stringBuilder.AppendLine($"queueResponse.RetryNumber {queueResponse.RetryNumber} > 10");
+                            queueservice.Complete();
+                            return new ResponseExportSignTask() { };
                         }
                         if (queueResponse.MessageId != null)
                         {
@@ -123,9 +121,11 @@ namespace WebFreight.Web.WcfApi
 
                         if (queueResponse.RetryNumber > 10)
                         {
-                            //CompleteAsFailed
-                            //anaO.
-                            //queueservice.CompleteAsFailed();
+                            stringBuilder.AppendLine($"queueResponse.RetryNumber {queueResponse.RetryNumber} > 10");
+                            queueservice.Complete();
+                            
+                            return new ResponseExportSignTask() { };
+
                         }
                         if (queueResponse.MessageId != null)
                         {
