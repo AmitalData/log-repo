@@ -769,7 +769,7 @@ export class CourierMasterService {
     sendConnectDeclaration(courierMasterId: string, tenant: number, MAWB: string, connectedAll: boolean, disconnectedAll: boolean, connectedItems: string[], disconnectedItems: string[]) {
         const ajax: Observable<any> = this._http.post(
             this._apiUrl + "/sendConnectDeclaration",
-            {courierMasterId: courierMasterId, tenant: tenant, MAWB: MAWB, connectedAll: connectedAll, disconnectedAll: disconnectedAll, connectedItems: connectedItems, disconnectedItems: disconnectedItems},
+            { courierMasterId: courierMasterId, tenant: tenant, MAWB: MAWB || '', connectedAll: !!connectedAll, disconnectedAll: !!disconnectedAll, connectedItems: connectedItems, disconnectedItems: disconnectedItems },
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
