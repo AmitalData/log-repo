@@ -55,17 +55,15 @@ export class TermsofUseComponent implements OnInit {
 
         var file = querySelection(this.VersionDocumentId);
 
-        if (file) {
-            var fileExtension = file.name.split('.')[1];
-            this.FileName = file.name.split('.')[0];
+        if (!file) return;
+        var fileExtension = file.name.split('.')[1];
+        this.FileName = file.name.split('.')[0];
 
-            if (fileExtension) {
-                if (!this.isPdfExtension(fileExtension)) {
-                    this.ShowMessage("File extension must be pdf");
-                } else {
-                    this.ConvertArrayBufferToBase64(file, this);
-                }
-            }
+        if (!fileExtension) return;
+        if (!this.isPdfExtension(fileExtension)) {
+            this.ShowMessage("File extension must be pdf");
+        } else {
+            this.ConvertArrayBufferToBase64(file, this);
         }
 
     }
@@ -83,12 +81,7 @@ export class TermsofUseComponent implements OnInit {
         var reader: FileReader = new FileReader();
         var reader = new FileReader();
         reader.onload = function (e) {
-            var binary = '';
-            var bytes = new Uint8Array(resultToUnitArray(e));
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
-            }
+            let binary = viewmodel.ConvertFileToBinary(e, viewmodel);          
             viewmodel.createTermsOfUse(window.btoa(binary));
         };
 
@@ -96,6 +89,16 @@ export class TermsofUseComponent implements OnInit {
 
         };
         reader.readAsArrayBuffer(file);
+    }
+
+    private ConvertFileToBinary(e: ProgressEvent<FileReader>, viewmodel: any) {
+        var binary = '';
+        var bytes = new Uint8Array(resultToUnitArray(e));
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return binary;
     }
 
     createTermsOfUse(file: any) {
@@ -110,19 +113,18 @@ export class TermsofUseComponent implements OnInit {
     }
 
     private InsertTermsOfUse(termsofUsePM: TermsofUsePM) {
-        this.termsofUseService.insert(termsofUsePM).subscribe((res: any) => {
+        this.termsofUseService.insert(termsofUsePM).subscribe((response: ServiceResponse) => {
 
-            var response: ServiceResponse = res;
-            var response: ServiceResponse = res;
-            if (!response.HasError) {
-                var myResult = response.Result;
-                if (myResult) {
-                    this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
-                }
+            if (response.HasError) {
+                this.HandleServiceError(response);
             }
-            else {
-                this.HandleServiceError(response)
+
+            if (response.HasError || !response.Result) {
+                return;
             }
+
+            this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
+
         });
     }
 
@@ -132,20 +134,19 @@ export class TermsofUseComponent implements OnInit {
     }
 
     GetTermsOfUse() {
-        this.termsofUseService.GetTermsOfUseByTenant().subscribe((res: any) => {
+        this.termsofUseService.GetTermsOfUseByTenant().subscribe((response: ServiceResponse) => {
 
-            var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) {
-                var result = serviceResponse.Result;
-                if (result && result != null) {
-                    result.forEach((item) => {
-                        this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
-                    });
-                }
+            if (response.HasError) {
+                this.HandleServiceError(response);
             }
-            else {
-                this.HandleServiceError(serviceResponse)
+
+            if (response.HasError || !response.Result) {
+                return;
             }
+
+            response.Result.forEach((item) => {
+                this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
+            });
         });
     }
 

@@ -518,12 +518,12 @@ export class MaintenanceComponent {
     }
     private AddTermsOfUseMenuItem() {
         if (SessionLocator.Tenant != 0 || !SessionLocator.LoggedUserPM.IsCustomerCare) return;
-        var item4 = new MenusTablePM();
-        item4.CategoryTypeCode = "CMS";
-        item4.Icon = "Settings";
-        item4.Code = "TOU";
-        item4.ObjectTableName = "Terms of Use";
-        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item4));
+        let menusTablePM = new MenusTablePM();
+        menusTablePM.CategoryTypeCode = "CMS";
+        menusTablePM.Icon = "Settings";
+        menusTablePM.Code = "TOU";
+        menusTablePM.ObjectTableName = "Terms of Use";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(menusTablePM));
     }
 
     private AddCustomFieldsMenu(item: MenusTablePM) {
