@@ -800,6 +800,16 @@ export class ConsigmentTabContentComponent
 
             }
         }
+        else{
+            var messageWindow = new MessageWindow();
+            messageWindow.Title = ""
+            messageWindow.RTL=true;
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען");
+            return;
+        }
 
     }
 
