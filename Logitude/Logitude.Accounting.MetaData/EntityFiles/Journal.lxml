@@ -5021,8 +5021,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Journal.M.AllDateMustInit&quot;"
-      DefaultText="&quot;All dates variable must initialize&quot;"
-      LocalDefaultText="&quot;כל התאריכים חייבים אתחול&quot;"
+      DefaultText="&quot;All the dates must have a value&quot;"
+      LocalDefaultText="&quot;חייבים להזין את כל שדות התאריכים&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
