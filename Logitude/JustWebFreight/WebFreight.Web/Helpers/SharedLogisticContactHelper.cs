@@ -440,7 +440,15 @@ namespace WebFreight.Web.Helpers
                     var htmlTemplate = messageArgs.HtmlTemplate;
                     if (isHTMLTemplate)
                     {
+                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                        EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                         htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                        if (!string.IsNullOrEmpty(htmlTemplate))
+                        {
+                            htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                            htmlTemplate = htmlEditorHelper.GetLogoHtmlString(htmlTemplate);
+                            htmlTemplate = encodedHtmlHelper.EncodedHtmlScript(htmlTemplate);
+                        }
                     }
                     if (!string.IsNullOrEmpty(htmlTemplate))
                     {
@@ -506,7 +514,15 @@ namespace WebFreight.Web.Helpers
                     var htmlTemplate = messageArgs.HtmlTemplate;
                     if (isHTMLTemplate)
                     {
+                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                        EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                         htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                        if (!string.IsNullOrEmpty(htmlTemplate))
+                        {
+                            htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                            htmlTemplate = htmlEditorHelper.GetLogoHtmlString(htmlTemplate);
+                            htmlTemplate = encodedHtmlHelper.EncodedHtmlScript(htmlTemplate);
+                        }
                     }
                     if (!string.IsNullOrEmpty(htmlTemplate))
                     {
@@ -569,7 +585,15 @@ namespace WebFreight.Web.Helpers
                     var htmlTemplate = messageArgs.HtmlTemplate;
                     if (isHTMLTemplate)
                     {
+                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                        EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                         htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                        if (!string.IsNullOrEmpty(htmlTemplate))
+                        {
+                            htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                            htmlTemplate = htmlEditorHelper.GetLogoHtmlString(htmlTemplate);
+                            htmlTemplate = encodedHtmlHelper.EncodedHtmlScript(htmlTemplate);
+                        }
                     }
                     if (!string.IsNullOrEmpty(htmlTemplate))
                     {
@@ -628,7 +652,15 @@ namespace WebFreight.Web.Helpers
                     var htmlTemplate = messageArgs.HtmlTemplate;
                     if (isHTMLTemplate)
                     {
+                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                        EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                         htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                        if (!string.IsNullOrEmpty(htmlTemplate))
+                        {
+                            htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                            htmlTemplate = htmlEditorHelper.GetLogoHtmlString(htmlTemplate);
+                            htmlTemplate = encodedHtmlHelper.EncodedHtmlScript(htmlTemplate);
+                        }
                     }
                     if (!string.IsNullOrEmpty(htmlTemplate))
                     {
