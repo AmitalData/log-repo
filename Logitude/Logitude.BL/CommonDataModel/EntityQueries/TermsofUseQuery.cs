@@ -44,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -61,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -78,6 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -95,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -119,14 +123,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Tenant = a.Tenant,
                                                        VersionDocumentId = a.VersionDocumentId,
                                                        PrivateLabelId = a.PrivateLabelId,
+                                                       IsNew = a.IsNew
                                                    };
             return termsofUses;
         }
 
-        public TermsofUsePM GetTermsofUseDefault()
+        public TermsofUsePM GetTermsofUseDefault(bool useNewTermsOfUse)
         { 
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d=>d.VersionNumber)
-                                        where a.Tenant == 0 && a.PrivateLabelId == null
+                                        where a.Tenant == 0 && a.PrivateLabelId == null && a.IsNew == useNewTermsOfUse
                                         select new TermsofUsePM()
                                         {
                                             Id = a.Id,
@@ -135,6 +140,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
 
 
@@ -157,6 +163,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionDocumentId = a.VersionDocumentId,
                                             Tenant = a.Tenant,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault(); 
         }
 
@@ -174,6 +181,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionDocumentId = a.VersionDocumentId,
                                             Tenant = a.Tenant,
                                             PrivateLabelId = a.PrivateLabelId,
+                                            IsNew = a.IsNew
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -193,6 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        VersionDocumentId = a.VersionDocumentId,
                                                        Tenant = a.Tenant,
                                                        PrivateLabelId = a.PrivateLabelId,
+                                                       IsNew = a.IsNew
                                                    });
             return termsofUse;
         }
@@ -210,6 +219,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                           VersionDocumentId = a.VersionDocumentId,
                                                                           Tenant = a.Tenant,
                                                                           PrivateLabelId = a.PrivateLabelId,
+                                                                          IsNew = a.IsNew
                                                                       });
             return termsofUse;
         }

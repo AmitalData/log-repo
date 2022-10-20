@@ -193,9 +193,10 @@ export class MaintenanceComponent {
             item2.CategoryTypeCode = "CMS";
             item2.Icon = "Settings"
             item2.Code = "TOUS";
-            item2.ObjectTableName = "Terms of Use";
+            item2.ObjectTableName = "Terms of Use Signature";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
         }
+        this.AddTermsOfUseMenuItem();
    
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
 
@@ -515,6 +516,16 @@ export class MaintenanceComponent {
             }
         }
     }
+    private AddTermsOfUseMenuItem() {
+        if (SessionLocator.Tenant != 0 || !SessionLocator.LoggedUserPM.IsCustomerCare) return;
+        var item4 = new MenusTablePM();
+        item4.CategoryTypeCode = "CMS";
+        item4.Icon = "Settings";
+        item4.Code = "TOU";
+        item4.ObjectTableName = "Terms of Use";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item4));
+    }
+
     private AddCustomFieldsMenu(item: MenusTablePM) {
         var item = new MenusTablePM();
         item.CategoryTypeCode = "CMS";
@@ -1549,7 +1560,17 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 600;
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/Vizion/VizionAutomaticRequestComponent');
                     break;
-                } 
+                }
+
+                case "TOU": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 800;
+                    logitudeWindow.Height = 500;
+                    logitudeWindow.IsShowCloseButton = true;
+                    logitudeWindow.Title = "Terms of Use";
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsofUseComponent');
+                    break;
+                }
 
                 default: {
                     if (item.ObjectTableId) {
