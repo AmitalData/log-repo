@@ -66,6 +66,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     get Modified() { return this.modified }
     public IsObjectTableFilterEnabled: boolean = false;
     public IsTabsCustomizationEnabled: boolean = false;
+    public IsSubEntity: boolean = false;
     private screenLayoutService: IScreenLayoutService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
@@ -114,6 +115,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.IsObjectTableFilterEnabled = windowArgs.IsObjectTableFilterEnabled;
         this.IsTabsCustomizationEnabled = windowArgs.IsTabsCustomizationEnabled;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjecttableId)[0];
+        this.IsSubEntity = windowArgs.IsSubEntity || this.ObjectTable.IsComposition;
         this.FillTableScreensCollection();
     }
 
@@ -670,21 +672,57 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
 
-    NewSectionButtonClick() {
+    NewSectionButtonClick(sectionType: string) {
         var screenSection: ScreenSectionPM = this.GetNewInstanceFromScreenSectionPM();
+
+        if (sectionType == "Grid") {
+            this.ShowAddNewGridScreenSectionComponent(screenSection);
+            return;
+        }
+
         var sectionScreen: SectionScreenItem = new SectionScreenItem(screenSection);
+        this.ShowAddNewStandardScreenSectionComponent(screenSection, sectionScreen);
+    }
+
+    private ShowAddNewStandardScreenSectionComponent(screenSection: ScreenSectionPM, sectionScreen: SectionScreenItem) {
+        this.BuildStandardScreenSectionRows(screenSection);
+        this.AddNewSection(sectionScreen);
+    }
+
+    private AddNewSection(sectionScreen: SectionScreenItem) {
+        sectionScreen.ScreenRows = this.ScreenRows;
+        sectionScreen.IsNew = true;
+        this.SectionScreens.push(sectionScreen);
+        this.Modified = true;
+    }
+
+    private BuildStandardScreenSectionRows(screenSection: ScreenSectionPM) {
         this.ScreenRows = [];
         for (var i = 0; i < this.SelectedItem.ScreenPM.NumberOfColumns; i++) {
             var screenRowDetails = this.BuildScreenRowDetails(i, screenSection.Number);
             this.ScreenRows.push(screenRowDetails);
         }
+    }
 
-        sectionScreen.ScreenRows = this.ScreenRows;
-        sectionScreen.IsNew = true;
-        this.SectionScreens.push(sectionScreen);
-        this.Modified = true;
-
-
+    ShowAddNewGridScreenSectionComponent(screenSection: ScreenSectionPM) {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 420;
+        logitudeWindow.Height = 250;
+        logitudeWindow.Title = "Add Component"
+        let windowArgs: any = {};
+        windowArgs.IsNew = true;
+        windowArgs.ObjecttableId = this.ObjecttableId;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/Section/AddEditGridScreenSectionComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if (!$event) return;
+            if (!$event.GridName) return;
+            screenSection.Type = "Grid";
+            screenSection.Name = $event.GridName;
+            screenSection.RelatedScreenCode = $event.RelatedScreenCode;
+            var sectionScreen: SectionScreenItem = new SectionScreenItem(screenSection);
+            this.AddNewSection(sectionScreen);
+        });
     }
 
     EditSelectedScreen() {

@@ -40,6 +40,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Number = a.Number,
                         NumberOfRows = a.NumberOfRows,
                         Inactive = a.Inactive,
+                        Type = a.Type,
+                        RelatedScreenCode = a.RelatedScreenCode,
 
                     }).FirstOrDefault();
         }
@@ -60,6 +62,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Number = a.Number,
                         NumberOfRows = a.NumberOfRows,
                         Inactive = a.Inactive,
+                        Type = a.Type,
+                        RelatedScreenCode = a.RelatedScreenCode,
                     });
         }
 
@@ -78,6 +82,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   Number = a.Number,
                                                   NumberOfRows = a.NumberOfRows,
                                                   Inactive = a.Inactive,
+                                                  Type = a.Type,
+                                                  RelatedScreenCode = a.RelatedScreenCode,
                                               };
 
             return result;

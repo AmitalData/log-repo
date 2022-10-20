@@ -14,5 +14,7 @@ export class ScreenSectionList {
 		Number: number;
 		NumberOfRows: number;
 		Inactive: boolean;
+		Type: string;
+		RelatedScreenCode: string;
 	
 }

@@ -8,6 +8,7 @@ import { ScreenSectionPMService } from 'Infrastructure/Services/StandardPMs/Scre
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ScreenLayoutComponent, SectionScreenItem } from '../ScreenLayoutComponent';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 const deleteSectionMessage = "Are you sure you want delete this section?";
 @Component({
     selector: 'LighteningScreenComponent',
@@ -75,6 +76,33 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
         this.ScreenLayoutComponent.DeleteSectionFields(editedSection);
         SessionLocator.SelectedSession.StopBusyIndicator();
 
+    }
+
+    EditSection(screenSection) {
+        if (!screenSection) return;
+        if (!screenSection.Section) return;
+        this.ShowEditNewGridScreenSectionComponent(screenSection);
+    }
+
+    ShowEditNewGridScreenSectionComponent(screenSection: SectionScreenItem) {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 420;
+        logitudeWindow.Height = 250;
+        logitudeWindow.Title = "Edit Component"
+        let windowArgs: any = {};
+        windowArgs.ObjecttableId = this.ScreenLayoutComponent.ObjecttableId;
+        windowArgs.IsNew = false;
+        windowArgs.Name = screenSection.Section.Name;
+        windowArgs.RelatedScreenCode = screenSection.Section.RelatedScreenCode;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/Section/AddEditGridScreenSectionComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if (!$event) return;
+            if (!$event.GridName) return;
+            screenSection.Section.Name = $event.GridName;
+            screenSection.Section.RelatedScreenCode = $event.RelatedScreenCode;
+            this.ScreenLayoutComponent.Modified = true;
+        });
     }
 
 }

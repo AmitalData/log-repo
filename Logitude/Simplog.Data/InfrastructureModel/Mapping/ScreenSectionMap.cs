@@ -16,6 +16,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
+            this.Property(t => t.Type)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.RelatedScreenCode)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
             this.Property(t => t.ScreenCode)
                .HasMaxLength(100)
                .IsUnicode(false);
@@ -33,6 +41,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.ScreenCode).HasColumnName("ScreenCode");
+            this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.RelatedScreenCode).HasColumnName("RelatedScreenCode");
             this.Property(t => t.NumberOfRows).HasColumnName("NumberOfRows");
             this.Property(t => t.Number).HasColumnName("Number");
 

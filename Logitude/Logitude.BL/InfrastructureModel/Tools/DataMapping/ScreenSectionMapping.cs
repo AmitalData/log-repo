@@ -20,6 +20,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             screenSection.Name = screenSectionPM.Name;
             screenSection.CreatedByUserId = screenSectionPM.CreatedByUserId;
             screenSection.Inactive = screenSectionPM.Inactive;
+            screenSection.Type = screenSectionPM.Type;
+            screenSection.RelatedScreenCode = screenSectionPM.RelatedScreenCode;
 
         }
     }

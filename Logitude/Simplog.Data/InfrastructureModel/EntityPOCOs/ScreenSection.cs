@@ -23,6 +23,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public int Tenant { get; set; }
         public string Name { get; set; }
+        public string Type { get; set; }
+        public string RelatedScreenCode { get; set; }
         public string CreatedByUserId { get; set; }
 
 

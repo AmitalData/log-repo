@@ -65,6 +65,16 @@ export class ScreenSectionPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
+       
+	 
+    private relatedScreenCode: string;
+    public get RelatedScreenCode() { return this.relatedScreenCode; }
+    public set RelatedScreenCode(newValue: string) { if (this.relatedScreenCode != newValue) { this.relatedScreenCode = newValue; this.MarkAsDirty("RelatedScreenCode"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
@@ -97,4 +107,4 @@ export class ScreenSectionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
