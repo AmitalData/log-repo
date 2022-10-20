@@ -70,7 +70,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 {
 
                     return;
-                    
+
                 }
                 //EventTracer.CreateTraceEvent(new TraceEvent(), "CRTR", entityPM.Tenant, loggedContact.Id, entityPM.Id, null, "Trucker", null, null, false);
                 if (myAmitalEventTracer.MyFUStatus == null)//itzik
@@ -86,49 +86,47 @@ namespace Logitude.Customs.BL.TraceEvents
                     {
                         ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
 
-                    string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
-                    if (!string.IsNullOrWhiteSpace( queueName ))
-                    {
-
-                        var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                        unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                        string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
+                        if (!string.IsNullOrWhiteSpace(queueName))
                         {
-                            Action = "StatusUpdate",
-                            ParameterName = "transmission",
 
-                            ///UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                            var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                            unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                            {
+                                Action = "StatusUpdate",
+                                ParameterName = "transmission",
 
-                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
-                            InterfaceTypeCode = queueName
+                                ///UServerDelayTime = myAmitalEventTracer.UServerDelayTime
 
-                        });
+                                UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
+                                InterfaceTypeCode = queueName
 
+                            });
+
+                        }
+
+                        else
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
+                        }
                     }
-                }
-
-                    }
-
                     else
                     {
-                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
+                        var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+                        //myUServerCommunicationService.Send();
+                        myUServerCommunicationService.Send(
+                             new UServerCommunicationServiceParam()
+                             {
+                                 SendImmediately = false,
+                                 SuppressBuildCom = false,
+                                 UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                             });
+
+
+
                     }
-                }
-                else
-                {
-                    var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                    //myUServerCommunicationService.Send();
-                    myUServerCommunicationService.Send(
-                         new UServerCommunicationServiceParam()
-                         {
-                             SendImmediately = false,
-                             SuppressBuildCom = false,
-                             UServerDelayTime = myAmitalEventTracer.UServerDelayTime
-                         });
 
                 }
-
-
-
             }
             finally
             {
