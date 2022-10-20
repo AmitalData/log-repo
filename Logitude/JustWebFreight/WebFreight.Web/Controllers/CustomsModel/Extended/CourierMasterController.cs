@@ -944,11 +944,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
         [HttpPost]
-        public HttpResponseMessage SendConnectDeclaration([FromBody] CourierMasterPM courierMasterPM)
+        public HttpResponseMessage SendConnectDeclaration([FromBody] DCI_CourierMastersConnectedResponseContentHeader param)
         {
             try
             {
-                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM);
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(param);
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
 
