@@ -1,7 +1,7 @@
 
-declare var window: any; 
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core'; 
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator'; 
+declare var window: any;
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
 import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -67,7 +67,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant =  SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -232,7 +232,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                             EntityPm.CancellSignRequest = false;
                             this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
+                                MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Sign Document" });
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                     this.messageWindow.Width = 300;
@@ -264,7 +264,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                     EntityPm.CancellSignRequest = false;
                     this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
+                        MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Sign Document" });
                         if (Result.Result != null && Result.Result.HasError) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.messageWindow.Width = 300;
@@ -432,7 +432,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
         this.IsNew = args.IsNew;
         this._PackageTypeListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
-                this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0]?.Id; 
+                this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0]?.Id;
             }
             else {
                 this.ValidationErrorsList = myResult.ErrorsArray;
@@ -942,8 +942,8 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                 this.EntityPM.DirectionId = "C";
                 this.EntityPM.ShipmentLevelCode = "A";
                 this.EntityPM.OrderIsDangerouseGoods = false;
-                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc(); 
-                this.EntityPM.CustomerId =SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
+                this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -1019,7 +1019,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
-    
+
     NewShipmentMixPanelLocator(shipmentPm: ShipmentPM) {
         if (shipmentPm.DirectionId == "C") {
             MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "New Customs Shipment" });
