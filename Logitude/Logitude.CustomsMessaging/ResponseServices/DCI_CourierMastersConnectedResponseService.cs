@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             int count;
             List<string> decsIds;
 
-            if (customResponse.connectedAll)
+            if (!customResponse.connectedAll)
                 decsIds = declarationRepository.GetNotConnectedDeclarations(customResponse.tenant)
                     .Select(r => r.Id)
                     .Where(x => !customResponse.connectedItems.Contains(x)).ToList();
