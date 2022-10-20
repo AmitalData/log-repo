@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools;
+﻿///#define tzuri_req
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
 using Logitude.SystemLogs;
@@ -31,6 +32,10 @@ namespace WebFreight.Web.WcfApi
     public partial class ExternalTasksQueueWcfService : IExternalTasksQueueWcfService, IExternalTasksQueueExportSignWcfService
     {
 
+
+
+
+#if !tzuri_req
         public string GetTaskFromQueue(int tenant, int priority)
         {
             Envelope envelope = new Envelope();
@@ -146,8 +151,6 @@ namespace WebFreight.Web.WcfApi
 
             }
         }
-
-       
         public Response MarkTaskAsDone(string communicationLogId, int tenant, int priority)
         {
             Response response = new Response();
@@ -215,7 +218,211 @@ namespace WebFreight.Web.WcfApi
             return response;
         }
 
+#else
+
+        public string GetTaskByQueueDefinitionCode(int tenant, int priority, string queueDefinitionCode)
+        {
+            if (string.IsNullOrWhiteSpace(queueDefinitionCode))
+            {
+                queueDefinitionCode = "externaltasksqueue";
+            }
+            Envelope envelope = new Envelope();
+            CommunicationLog commLog = null;
+            QueueResponse queueResponse = null;
+            string result = null;
+            //BrokeredMessage message = null;
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                if (CacheManager.CacheWrapper == null)
+                {
+                    CacheManager.CacheWrapper = new MockCacheWrapper();
+                }
 
 
+                //HttpContext.Current.Items.Add("workerrolename", "production");
+
+                string enableQueueWaitOnExternalWCFService = System.Configuration.ConfigurationManager.AppSettings.Get("EnableQueueWaitOnExternalWCFService");
+                TimeSpan queueWaitTime = new TimeSpan(0, 0, 0);
+                if (enableQueueWaitOnExternalWCFService == "true")
+                {
+                    queueWaitTime = new TimeSpan(0, 0, 20);
+                }
+
+                string queueName = queueDefinitionCode/*"externaltasksqueue"*/ + tenant + priority;
+                DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
+                queueResponse = queueservice.Receive(queueWaitTime);
+
+                // QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
+
+                //message = client.Receive(new TimeSpan(0, 0, 20));
+                if (queueResponse.MessageId != null)
+                {
+                    string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
+                    int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
+                    ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                    DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+                    CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(commoncontext);
+                    commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+                    if (commLog.CommunicationStatusTypeCode == "D")
+                    {
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "D", "Message removed from queue (Communication log status = Done) " + DateTime.Now.ToString(), null);
+                        queueservice.Complete();
+                    }
+                    else if (queueResponse.RetryNumber >= 4)
+                    {
+                        queueservice.CompleteAsFailed();
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "F", "queue message exceeded 5 retries" + DateTime.Now.ToString(), null);
+                    }
+
+                    else
+                    {
+                        Document document = documentRepository.GetSingleDocument(tenant, commLog.DocumentId);
+                        Uploader uploader = new Uploader();
+
+                        byte[] filedata = uploader.DownloadFile(document.Id, document.Extension, document.Folder, tenant);
+                        if (filedata != null)
+                        {
+                            XmlDocument doc = new XmlDocument();
+                            MemoryStream ms = new MemoryStream(filedata);
+                            doc.Load(ms);
+                            //result = doc.InnerXml;
+
+                            List<QueueTask> taskslist = LogitudeXmlSerializer.DeserializeObject<List<QueueTask>>(doc.InnerXml);
+                            envelope.CommunicationLogId = communicationLogId;
+
+                            envelope.Tasks = taskslist;
+                        }
+                        else
+                        {
+                            envelope.HasError = true;
+                            envelope.ErrorMessage = "File Not found";
+                            Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "F", "Exception occured while proccessing the queue message " + DateTime.Now.ToString(), envelope.ErrorMessage);
+                            queueservice.CompleteAsFailed();
+
+                        }
+                        //envelope.Result = message.LockToken.ToString() + "," + communicationLogId;
+
+
+                        result = LogitudeXmlSerializer.SerializeObjectToXmlString(envelope);
+
+                    }
+
+                    commLog.MessageLockId = queueResponse.MessageId;
+                    communicationLogRep.Update(commLog);
+                    communicationLogRep.SubmitChanges();
+                }
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+
+                envelope.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                envelope.HasError = true;
+                envelope.ErrorMessage = ex.Message;
+                envelope.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    envelope.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                if (queueResponse != null && commLog != null)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, commLog.CommunicationStatusTypeCode, "Exception occured while proccessing the queue message " + DateTime.Now.ToString(), envelope.ErrorMessage);
+
+                }
+
+                result = LogitudeXmlSerializer.SerializeObjectToXmlString(envelope);
+                return result;
+
+            }
+        }
+        public Response MarkTaskAsDoneByQueueDefinitionCode(string communicationLogId, int tenant, int priority, string queueDefinitionCode)
+        {
+            if (string.IsNullOrWhiteSpace(queueDefinitionCode))
+            {
+                queueDefinitionCode = "externaltasksqueue";
+            }
+            Response response = new Response();
+            CommunicationLog commLog = null;
+            try
+            {
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                if (CacheManager.CacheWrapper == null)
+                {
+                    CacheManager.CacheWrapper = new MockCacheWrapper();
+                }
+                //HttpContext.Current.Items.Add("workerrolename", "production");
+                //QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
+                string queueName = queueDefinitionCode/*"externaltasksqueue"*/ + tenant + priority;
+                DbQueueService queueservice = new DbQueueService(queueName, tenant);
+
+                if (!string.IsNullOrEmpty(communicationLogId))
+                {
+                    ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                    CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(commoncontext);
+                    commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+                    //commLog.CommunicationStatusTypeCode = "D";
+
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, commLog.MessageLockId, "D", "Start of mark as done " + DateTime.Now.ToString(), null);
+
+                    //Guid lockToken = new Guid(commLog.MessageLockId);
+                    //client.Complete(lockToken);
+                    queueservice.Complete(commLog.MessageLockId);
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, commLog.MessageLockId, "D", "End of mark as done " + DateTime.Now.ToString(), null);
+
+                    //commoncontext.SaveChanges();
+                }
+                else
+                {
+                    response.HasError = false;
+                    response.ErrorMessage = "Invalid communicationLogId";
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                if (commLog != null)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, commLog.MessageLockId, commLog.CommunicationStatusTypeCode, "Exception occured while marking the queue message as done " + DateTime.Now.ToString(), response.ErrorMessage);
+
+                }
+
+
+                return response;
+            }
+
+            return response;
+        }
+
+        public string GetTaskFromQueue(int tenant, int priority)
+        {
+            return GetTaskByQueueDefinitionCode(tenant, priority, "externaltasksqueue");
+        }
+        
+        public Response MarkTaskAsDone(string communicationLogId, int tenant, int priority)
+        {
+            return MarkTaskAsDoneByQueueDefinitionCode(communicationLogId, tenant, priority, "externaltasksqueue");
+        }
+
+        
+
+#endif
     }
 }

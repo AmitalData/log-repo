@@ -13,6 +13,7 @@ using Logitude.AmitalMessaging.Utils;
 using System.Diagnostics;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
+using System.Web;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
@@ -66,7 +67,8 @@ namespace Logitude.Customs.BL.TraceEvents
             var mytransmission_details = new List<transmission_details>();
             var mytransmission_detail1 = new transmission_details()
             {
-                sender = new sender() { Value = $"Mehes Cloud ({_CommunicationModel.Tenant})" },
+                //sender = new sender() { Value = $"Mehes Cloud ({_CommunicationModel.Tenant})" },
+                sender = new sender() { Value = $"HYBRID" },
                 subject = new subject() { Value = CommunicationsParamsSubject },
             };
             if (_CommunicationModel.special_instruction != null)
@@ -96,9 +98,13 @@ namespace Logitude.Customs.BL.TraceEvents
         }
         public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam)
         {
-                        
-            
 
+            //if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
+            //{
+            //    throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
+            //}
+
+            const string queueName = "ExternalTasksQueue";
             _CommunicationsParams = new CommunicationsParams()
             {
                 Tenant = _CommunicationModel.Tenant,
@@ -116,14 +122,72 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
 
-                FolderName = "ExternalTasksQueue",
+                FolderName =
+                //"ExternalTasksQueue",
+                queueName//"ExportStorageStatus"
             };
-          
+
 
             var mytransmission = GetTransmission();
             string myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
+            
+            bool withoutEnvelop = true;
+            if (withoutEnvelop)
+            {
+                List<QueueTask> queue1Tasks = GetArrayOfQueueTask(unifreightHybridQueueTasParam, myMainObject);
+                _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
 
+            }
+            else
+            {
+                myMainObject = HttpUtility.HtmlEncode(myMainObject);
+                var myEnvelope = new Envelope()
+                {
 
+                    CommunicationLogId = Guid.NewGuid().ToString(),
+                    Tasks = new List<QueueTask>() {
+
+                    new QueueTask() {
+                        Action = "StatusUpdate",
+                        Parameters = new List<Parameter>()
+                        {
+                            new Parameter()
+                            {
+
+                                 Name="transmission",
+                                 Value = myMainObject
+                            }
+                        }
+                    }
+                    }
+
+                };
+                _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(myEnvelope);
+            }
+           
+            
+
+            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+            Communications.
+                          SendCommunicationLogMessageToQueue(
+                          //queueName: "externaltasksqueue" + _CommunicationModel.Tenant + 1,
+                          queueName: queueName.ToLower() + _CommunicationModel.Tenant + 1,
+                          communicationLogId: communicationLogId,
+                          tenant: _CommunicationsParams.Tenant,
+                          queueParameters: null,
+                          delayTime: unifreightHybridQueueTasParam.UServerDelayTime,
+                          InterfaceTypeCode: unifreightHybridQueueTasParam.InterfaceTypeCode
+
+                          );
+
+            LogMessagingUtil.Instance.Append("UnifreightHybridQueueTaskService()")
+                        .Append("CommunicationLogId:").Append(communicationLogId)
+                        .Append("Tenant").Append(_CommunicationsParams.Tenant);
+        }
+
+        private static List<QueueTask> GetArrayOfQueueTask(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam, string myMainObject)
+        {
             List<QueueTask> queue1Tasks = new List<QueueTask>();
 
 
@@ -139,21 +203,7 @@ namespace Logitude.Customs.BL.TraceEvents
                                                     Value = myMainObject }
                                              }
             });
-
-            _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
-            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
-
-            Communications.
-                          SendCommunicationLogMessageToQueue(
-                          queueName: "externaltasksqueue" + _CommunicationModel.Tenant + 1,
-                          communicationLogId: communicationLogId,
-                          tenant: _CommunicationsParams.Tenant,
-                          queueParameters: null,
-                          delayTime: unifreightHybridQueueTasParam.UServerDelayTime);
-
-            LogMessagingUtil.Instance.Append("UnifreightHybridQueueTaskService()")
-                        .Append("CommunicationLogId:").Append(communicationLogId)
-                        .Append("Tenant").Append(_CommunicationsParams.Tenant);
+            return queue1Tasks;
         }
 
         private string ResolveUserIdOrMehesID(int tenant)
@@ -180,6 +230,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public string Action { get; set; }
         public string ParameterName { get; set; }
         public TimeSpan UServerDelayTime { get; set; }
+        public string InterfaceTypeCode { get; internal set; }
     }
 
 }

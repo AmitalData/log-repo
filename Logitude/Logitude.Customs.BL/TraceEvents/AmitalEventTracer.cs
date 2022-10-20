@@ -81,15 +81,36 @@ namespace Logitude.Customs.BL.TraceEvents
                 var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser: iscustomUser);
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
+
                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
                     {
+                        ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+
+                    string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
+                    if (!string.IsNullOrWhiteSpace( queueName ))
+                    {
+
                         var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
                         unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
                         {
                             Action = "StatusUpdate",
                             ParameterName = "transmission",
-                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+
+                            ///UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+
+                            UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
+                            InterfaceTypeCode = queueName
+
                         });
+
+                    }
+                }
+
+                    }
+
+                    else
+                    {
+                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
                     }
                 }
                 else
@@ -126,6 +147,27 @@ namespace Logitude.Customs.BL.TraceEvents
 
         }
 
+        private static string GetQueueNameByUnifreightEntity(string entname)
+        {
+            string queueName = "";
+            switch (entname)
+            {
+                case "MSCSTORAGE":
+                    queueName = "ExportStorageStatus";
+                    break;
+                case "BFIFILE"://"BFIFILE" : "CFIFILEM",
+                    queueName = "ExportDeclarationStatus";
+                    break;
+
+                case "CFIFILEM":
+                default:
+                    //throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
+                    
+                    break;
+            }
+
+            return queueName;
+        }
 
 
         public static GFUSTS GetFUStatus(AmitalEventTracerModel myAmitalEventTracer, bool iscustomUser = false)
