@@ -1866,11 +1866,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails()
             {
                 Code = "Journal.M.AllDateMustInit",
-                DefaultText = "All dates variable must initialize",
+                DefaultText = "All the dates must have a value",
                 ObjectTableId = objectTable.Id,
                 Tenant = 0,
                 TextCodeTypeCode = "M",
-                LocalDefaultText = "כל התאריכים חייבים אתחול"
+                LocalDefaultText = "חייבים להזין את כל שדות התאריכים"
             }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
