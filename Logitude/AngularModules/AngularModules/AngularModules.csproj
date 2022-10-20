@@ -370,6 +370,7 @@
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\TermsOfUse\TermsofUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\Vizion\VizionAutomaticRequestComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.html" />
@@ -2009,6 +2010,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\TermsOfUse\TermsofUseComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\Vizion\VizionAutomaticRequestComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />

@@ -54,4 +54,10 @@ ShortName="PrivateLabelId"
 		<Constraints
 		  Nullable="true" />
 	</Column>
+	<Column
+    Name="IsNew"
+    Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
 </Table>

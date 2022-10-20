@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         } 
                     }
 
-                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault();
+                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault(tenantPM.UseNewTermsOfUse);
 
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
@@ -182,6 +182,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 service.Create(termsofUsePM);
 
                 return Request.CreateResponse(HttpStatusCode.OK, termsofUsePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTermsofUseByTenant()
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);
+                List<TermsofUsePM> termsofUseListPM = termsofUseQuery.GetTermsofUseByTenant(authToken.Tenant).ToList();
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, termsofUseListPM);
+
             }
 
             catch (Exception ex)

@@ -176,6 +176,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                 ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -360,6 +361,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
                         ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                         EnableDeliveryOptions = tt.EnableDeliveryOptions,
+                        UseNewTermsOfUse = tt.UseNewTermsOfUse
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
@@ -531,6 +533,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
                     ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                     EnableDeliveryOptions = tt.EnableDeliveryOptions,
+                    UseNewTermsOfUse = tt.UseNewTermsOfUse
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -685,7 +688,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                            ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                           AccountingActivated = a.AccountingActivated
+                                           AccountingActivated = a.AccountingActivated,
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -839,7 +843,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        AccountingActivated = a.AccountingActivated,
-
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1004,7 +1008,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
-
+                                               UseNewTermsOfUse = a.UseNewTermsOfUse
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1171,7 +1175,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                            ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
-
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1326,7 +1330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                        ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
-
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1500,7 +1504,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EmptyReturnClosingDays = myPOCO.EmptyReturnClosingDays,
                     ShipmentATAClosingDays = myPOCO.ShipmentATAClosingDays,
                     EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
-
+                    UseNewTermsOfUse = myPOCO.UseNewTermsOfUse
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1625,6 +1629,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                 ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse
                                             };
             return result;
         }

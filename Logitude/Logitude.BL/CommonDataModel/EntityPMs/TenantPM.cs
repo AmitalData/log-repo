@@ -420,5 +420,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int? EmptyReturnClosingDays { get; set; }
         public int? ShipmentATAClosingDays { get; set; }
         public bool IsDigitalPortalAccessActivated { get; set; }
+        public bool UseNewTermsOfUse { get; set; }
     }
 }

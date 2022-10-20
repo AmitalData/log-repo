@@ -541,7 +541,7 @@ namespace TestTenantConfiguration
         private int LastTermOfUseLastVersion()
         {
             TermsofUseQuery termsofUseQuery = new TermsofUseQuery(this.Tenant);
-            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDefault();
+            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDefault(false);
             return termsofUsePM.VersionNumber;
         }
         #endregion
