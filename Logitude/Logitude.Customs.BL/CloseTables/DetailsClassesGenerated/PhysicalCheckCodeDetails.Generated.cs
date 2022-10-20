@@ -35,13 +35,6 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,בדיקה פיזית סגורה", 
 			});
 			 
-            all.Add(new PhysicalCheckCodeDetails()
-            {    
-                Code = "N", 
-                Name = "ללא בדיקה", 
-                SearchFields = "ללא בדיקה", 
-			});
-			
             return all;
        }
 
