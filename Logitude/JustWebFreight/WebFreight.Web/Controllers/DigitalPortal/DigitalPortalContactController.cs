@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, entityPM.Id);
+                        SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, entityPM.DigitalPortalCardId);
 
                         string entityName = "Contact" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ContactPM" + entityPM.Id + entityPM.Tenant;
