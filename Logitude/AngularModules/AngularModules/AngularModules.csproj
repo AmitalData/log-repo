@@ -393,7 +393,6 @@
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\StatusesTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelCustomsShipmentComponent.html" />
-    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddPrivateLabelShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelPackageComponent.html" />
@@ -4833,7 +4832,6 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelCustomsShipmentComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddPrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
