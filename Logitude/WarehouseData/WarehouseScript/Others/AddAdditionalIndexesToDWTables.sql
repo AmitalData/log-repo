@@ -148,7 +148,7 @@ BEGIN
   begin 
   
   CREATE NONCLUSTERED INDEX [IX_ShipmentPayables_ShipmentId] ON[dbo].[dw_ShipmentPayables]([ShipmentId])
-INCLUDE([ShipmentPayableParentId],[ChargesTypeId],[VendorId],[Notes],[ExpectedAmount],[ExpectedAmountLocal],[ExpectedAmountInProfitCurrency],[AccountedAmountInLocalCurrency],[AccountedAmountInProfitCurrency],[OpenAmountInProfitCurrency],[OpenAmountInLocalCurrency],[Id]) WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+INCLUDE([ShipmentPayableParentId],[ChargesTypeId],[VendorId],[Notes],[ExpectedAmount],[ExpectedAmountLocal],[ExpectedAmountInProfitCurrency],[AccountedAmountInLocalCurrency],[AccountedAmountInProfitCurrency],[OpenAmountInProfitCurrency],[OpenAmountInLocalCurrency],[Id]) WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]
 
   end
 
