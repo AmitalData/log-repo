@@ -337,10 +337,6 @@
       Code="&quot;2&quot;"
       Name="&quot;בדיקה פיזית סגורה&quot;"
       SearchFields="&quot;2,בדיקה פיזית סגורה&quot;" />
-    <Record
-      Code="&quot;N&quot;"
-      Name="&quot;ללא בדיקה&quot;"
-      SearchFields="&quot;ללא בדיקה&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
