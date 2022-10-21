@@ -148,24 +148,43 @@
                 <div *ngIf="isFieldCompareOperator(setValue.operator)">
                     <div class="set-value-value-container">
                         <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="setValue.value"
+                            [DataFilters]="getTreeSelectDataFilters(setValueIndex)"
                             (ValueChanged)="updateSetValue($event, setValueIndex)">
                         </TreeSelect>
                     </div>
                 </div>
                 <div *ngIf="!isFieldCompareOperator(setValue.operator) && isObjectField(setValue.field)">
                     <div class="set-value-value-container">
-                        <FieldValue *ngIf="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
-                            [ObjectField]="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))" [Name]="'setValue_'"
-                            [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event, setValueIndex)">
+
+                        <FieldValue
+                            *ngIf="setValue.fieldChangedToggle && getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
+                            [ObjectField]="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
+                            [Name]="'setValue_'" [CurrentValue]="setValue.value"
+                            (ValueChanged)="updateSetValue($event, setValueIndex)">
                         </FieldValue>
+
+                        <FieldValue
+                            *ngIf="!setValue.fieldChangedToggle && getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
+                            [ObjectField]="getObjectField(SetEntityField ? setValue.fieldCode : getFieldCode(setValue.field))"
+                            [Name]="'setValue_'" [CurrentValue]="setValue.value"
+                            (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        </FieldValue>
+
                     </div>
                 </div>
                 <div *ngIf="!isFieldCompareOperator(setValue.operator) && !isObjectField(setValue.field)">
                     <div class="set-value-value-container">
-                        <FieldValue [IsIntegerNumberInput]="false" [DataType]="getDeclareVariableType(setValue.field)"
-                            [Name]="'setValue_'" [CurrentValue]="setValue.value"
-                            (ValueChanged)="updateSetValue($event,setValueIndex)">
+
+                        <FieldValue *ngIf="setValue.fieldChangedToggle" [IsIntegerNumberInput]="false"
+                            [DataType]="getDeclareVariableType(setValue.field)" [Name]="'setValue_'"
+                            [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event,setValueIndex)">
                         </FieldValue>
+
+                        <FieldValue *ngIf="!setValue.fieldChangedToggle" [IsIntegerNumberInput]="false"
+                            [DataType]="getDeclareVariableType(setValue.field)" [Name]="'setValue_'"
+                            [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event,setValueIndex)">
+                        </FieldValue>
+
                     </div>
                 </div>
             </div>

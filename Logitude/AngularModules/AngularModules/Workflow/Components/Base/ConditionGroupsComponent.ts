@@ -13,7 +13,9 @@ import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOper
 import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "ConditionGroups",
@@ -81,6 +83,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.Conditions[conditionIndex].fieldCode = objectField ? objectField.FieldCode : null;
             this.Conditions[conditionIndex].field = objectField ? objectField.FieldName : null;
             this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
+            this.Conditions[conditionIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].valueCode = null;
@@ -218,5 +221,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     getObjectField(fieldCode: string) {
         return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
+    }
+
+    getTreeSelectDataFilters(conditionIndex: number) {
+        let condition = this.Conditions[conditionIndex];
+        let dataFilters: TreeSelectDataFilter[] = [];
+        if (condition.type) {
+            dataFilters.push({ Key: "type", Value: condition.type });
+        }
+        if (condition.lookupType) {
+            dataFilters.push({ Key: "lookupType", Value: condition.lookupType });
+        }
+        return dataFilters;
     }
 }

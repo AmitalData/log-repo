@@ -8,6 +8,7 @@ export class Condition {
     public field: string;
     public fieldCode: string;
     public type: string;
+    public lookupType: string;
     public value: string;
     public valueCode: string;
     public valueExpression: string;
@@ -23,6 +24,7 @@ export class Condition {
         this.field = null;
         this.fieldCode = null;
         this.type = null;
+        this.lookupType = null;
         this.value = null;
         this.valueCode = null;
         this.valueExpression = null;

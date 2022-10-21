@@ -1,14 +1,17 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "SetValues",
@@ -65,6 +68,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = field ? this.getFieldType(field) : null;
+            this.SetValues[setValueIndex].lookupType = field ? this.getFieldLookupType(field) : null;
+            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+
             this.setValuesChanged();
         }
     }
@@ -76,6 +82,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
+            this.SetValues[setValueIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+
             this.setValuesChanged();
         }
     }
@@ -121,6 +130,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
+    getFieldLookupType(field: string) {
+        if (this.isObjectField(field)) {
+            let fieldCode = this.getFieldCode(field);
+            let objectField = this.getObjectField(fieldCode);
+            return objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+        } else {
+            return null;
+        }
+    }
+
     getDeclareVariableType(field: string) {
         let fieldCode = this.getFieldCode(field);
         let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
@@ -161,5 +180,17 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getObjectFieldsQueryFilters() {
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
+    }
+
+    getTreeSelectDataFilters(setValueIndex: number) {
+        let setValue = this.SetValues[setValueIndex];
+        let dataFilters: TreeSelectDataFilter[] = [];
+        if(setValue.type){
+            dataFilters.push({ Key: "type", Value: setValue.type });
+        }
+        if(setValue.lookupType){
+            dataFilters.push({ Key: "lookupType", Value: setValue.lookupType });
+        }
+        return dataFilters;
     }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from "@angular/core";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "TreeSelect",
@@ -7,21 +9,22 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewIni
 
 export class TreeSelectComponent implements OnInit, AfterViewInit {
 
-    @Input() Items: any = [];
+    @Input() Items: TreeSelectItem[] = [];
     @Input() Value: string;
     @Input() Width: string = "300px";
     @Input() ShowSearch: boolean = true;
     @Input() AllowClear: boolean = true;
     @Input() IsDisabled: boolean = false;
     @Input() ShowExpand: boolean = true;
+    @Input() DataFilters: TreeSelectDataFilter[] = [];
     @Input() DataCy: string | null = null;
 
     @Output() ValueChanged = new EventEmitter();
 
     @ViewChild("nzTreeSelect") NzTreeSelect: any;
 
-    public TreeItems: any = [];
-    public FilteredTreeItems: any = [];
+    public TreeItems: TreeSelectItem[] = [];
+    public FilteredTreeItems: TreeSelectItem[] = [];
 
     public SearchTerm: string = "";
 
@@ -30,6 +33,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
             this.AllowClear = false;
         }
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
+        this.TreeItems = this.applyDataFilters(this.TreeItems);
         this.setFilteredTreeItems("");
     }
 
@@ -41,6 +45,29 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         this.NzTreeSelect.onChange = (value: string) => {
             this.onTreeSelectValueChange(value);
         };
+    }
+
+    applyDataFilters = (items: TreeSelectItem[]) => items.filter(i => {
+        if (i.children) {
+            i.children = this.applyDataFilters(i.children);
+        }
+        return this.isValidDataFiltersOnItem(i);
+    })
+
+    isValidDataFiltersOnItem(item: TreeSelectItem) {
+        let result = true;
+        if (this.DataFilters && this.DataFilters.length > 0) {
+            for (let dataFilter of this.DataFilters) {
+                let itemData = item.data[dataFilter.Key];
+                if (itemData !== undefined && dataFilter.Key && dataFilter.Key !== "" && dataFilter.Value && dataFilter.Value !== "") {
+                    if (itemData === null || (itemData.toLowerCase() !== dataFilter.Value.toLowerCase())) {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     onTreeSelectSearchChange(searchTerm: string) {
@@ -71,9 +98,9 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         this.limitFilteredTreeItems();
     }
 
-    getFilteredTreeItems(searchTerm: string, items: any = null) {
+    getFilteredTreeItems(searchTerm: string, items: TreeSelectItem[] | null = null) {
         let filteredTreeItems = [];
-        JSON.parse(JSON.stringify((items ? items : this.TreeItems))).forEach((item: any) => {
+        JSON.parse(JSON.stringify((items ? items : this.TreeItems))).forEach((item: TreeSelectItem) => {
             if (item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 || (this.Value && item.key.toLowerCase() === this.Value.toLowerCase())) {
                 filteredTreeItems.push(item);
             } else {
@@ -86,14 +113,14 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         return filteredTreeItems;
     }
 
-    limitFilteredTreeItems(items: any = null) {
+    limitFilteredTreeItems(items: TreeSelectItem[] | null = null) {
         for (let item of (items || this.FilteredTreeItems)) {
             if (item.children && item.children.length > 10) {
-                let exactMatchItems = item.children.filter((i: any) => i.title.toLowerCase() === this.SearchTerm.toLowerCase());
+                let exactMatchItems = item.children.filter((i: TreeSelectItem) => i.title.toLowerCase() === this.SearchTerm.toLowerCase());
                 let limitedItems = item.children.slice(0, 10);
                 if (this.Value) {
-                    let selectedItem = item.children.filter((i: any) => i.key.toLowerCase() === this.Value.toLowerCase())[0];
-                    let isSelectedItemInLimitedItems = limitedItems.filter((i: any) => i.key.toLowerCase() === this.Value.toLowerCase()).length > 0;
+                    let selectedItem = item.children.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase())[0];
+                    let isSelectedItemInLimitedItems = limitedItems.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase()).length > 0;
                     if (selectedItem && !isSelectedItemInLimitedItems) {
                         item.children = item.children.slice(0, 9);
                         item.children.unshift(selectedItem);
@@ -105,8 +132,8 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
                 }
 
                 if (exactMatchItems.length > 0) {
-                    exactMatchItems.forEach((exactMatchItem: any) => {
-                        let isExactMatchItemInChildrenItems = item.children.filter((i: any) => i.key.toLowerCase() === exactMatchItem.key.toLowerCase()).length > 0;
+                    exactMatchItems.forEach((exactMatchItem: TreeSelectItem) => {
+                        let isExactMatchItemInChildrenItems = item.children.filter((i: TreeSelectItem) => i.key.toLowerCase() === exactMatchItem.key.toLowerCase()).length > 0;
                         if (!isExactMatchItemInChildrenItems) {
                             item.children.unshift(exactMatchItem);
                         }
@@ -120,11 +147,11 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         }
     }
 
-    displayItem = (item: any) => {
-        let itemParentNode = item.parentNode;
+    displayItem = (nzTreeItem: any) => {
+        let itemParentNode = nzTreeItem.parentNode;
         if (itemParentNode) {
-            return itemParentNode.title + " > " + item.title;
+            return itemParentNode.title + " > " + nzTreeItem.title;
         }
-        return item.title;
+        return nzTreeItem.title;
     }
 }

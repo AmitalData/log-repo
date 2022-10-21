@@ -13,3 +13,5 @@ export type NodeType = "startNode" |
     "dummyNode" |
     "labelNode" |
     null;
+
+export type TreeSelectDataFilter = { Key: string, Value: string };

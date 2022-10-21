@@ -48,8 +48,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
-    public IsPrimaryObjectFieldExists: boolean = false;
-
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     SetWindowArgs(args: any) {
@@ -137,9 +135,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 field.fieldCode = primaryObjectField.FieldCode;
                 field.type = primaryObjectField.DataTypeCode;
                 this.ReturnedFields.push(field);
-                this.IsPrimaryObjectFieldExists = true;
-            } else {
-                this.IsPrimaryObjectFieldExists = false;
             }
             this.ReturnedFields.push(new ReturnedField());
             this.IsValidReturnedFields = false;
@@ -270,5 +265,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     deleteField(index: number) {
         this.ReturnedFields.splice(index, 1);
         this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
+    }
+
+    getEntityLabel() {
+        return this.Entity.indexOf(".") === -1 ? this.Entity : this.Entity.split(".")[1];
     }
 }

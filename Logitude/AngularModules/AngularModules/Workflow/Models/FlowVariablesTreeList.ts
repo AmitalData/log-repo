@@ -1,4 +1,5 @@
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { FlowReader } from "./FlowReader";
 import { ObjectTables } from "./ObjectTables";
 import { TreeSelectItem } from "./TreeSelectItem";
@@ -57,7 +58,10 @@ export class FlowVariablesTreeList {
         this.getDeclareVariableNodes().forEach((node: any) => {
             let treeSelectItemName = node.data["variableName"];
             let treeSelectItemKey = "declaredvariables" + this.ItemKeySplitter + node.data["variableCode"];
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let data = {
+                type: (node.data["variableType"] || null)
+            };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             declaredVariablesItemChildren.push(treeSelectItem);
         });
 
@@ -88,7 +92,11 @@ export class FlowVariablesTreeList {
         objectFields.forEach((objectField: ObjectFieldPM) => {
             let treeSelectItemName = objectField.FullNameTextCodeDefaultText.trim();
             let treeSelectItemKey = itemsKeyPrefix + this.ItemKeySplitter + objectField.FieldCode;
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let data = {
+                type: objectField.DataTypeCode,
+                lookupType: (objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null)
+            };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);
         });
 
