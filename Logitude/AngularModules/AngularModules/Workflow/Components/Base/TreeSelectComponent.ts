@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from "@angular/core";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { TreeSelectDataFilter } from "Workflow/Models/Types";
+//import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "TreeSelect",
@@ -16,7 +16,10 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() AllowClear: boolean = true;
     @Input() IsDisabled: boolean = false;
     @Input() ShowExpand: boolean = true;
-    @Input() DataFilters: TreeSelectDataFilter[] = [];
+    //@Input() DataFilters: TreeSelectDataFilter[] = [];
+
+    @Input() ShowItem: (treeSelectItem: TreeSelectItem) => boolean = (_treeSelectItem: TreeSelectItem) => { return true };
+
     @Input() DataCy: string | null = null;
 
     @Output() ValueChanged = new EventEmitter();
@@ -33,7 +36,8 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
             this.AllowClear = false;
         }
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
-        this.TreeItems = this.applyDataFilters(this.TreeItems);
+        //this.TreeItems = this.applyDataFilters(this.TreeItems);
+        this.TreeItems = this.checkItemsToShow(this.TreeItems);
         this.setFilteredTreeItems("");
     }
 
@@ -47,28 +51,35 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         };
     }
 
-    applyDataFilters = (items: TreeSelectItem[]) => items.filter(i => {
+    checkItemsToShow = (items: TreeSelectItem[]) => items.filter(i => {
         if (i.children) {
-            i.children = this.applyDataFilters(i.children);
+            i.children = this.checkItemsToShow(i.children);
         }
-        return this.isValidDataFiltersOnItem(i);
+        return this.ShowItem(i);//this.isValidDataFiltersOnItem(i);
     })
 
-    isValidDataFiltersOnItem(item: TreeSelectItem) {
-        let result = true;
-        if (this.DataFilters && this.DataFilters.length > 0) {
-            for (let dataFilter of this.DataFilters) {
-                let itemData = item.data[dataFilter.Key];
-                if (itemData !== undefined && dataFilter.Key && dataFilter.Key !== "" && dataFilter.Value && dataFilter.Value !== "") {
-                    if (itemData === null || (itemData.toLowerCase() !== dataFilter.Value.toLowerCase())) {
-                        result = false;
-                        break;
-                    }
-                }
-            }
-        }
-        return result;
-    }
+    // applyDataFilters = (items: TreeSelectItem[]) => items.filter(i => {
+    //     if (i.children) {
+    //         i.children = this.applyDataFilters(i.children);
+    //     }
+    //     return this.isValidDataFiltersOnItem(i);
+    // })
+
+    // isValidDataFiltersOnItem(item: TreeSelectItem) {
+    //     let result = true;
+    //     if (this.DataFilters && this.DataFilters.length > 0) {
+    //         for (let dataFilter of this.DataFilters) {
+    //             let itemData = item.data[dataFilter.Key];
+    //             if (itemData !== undefined && dataFilter.Key && dataFilter.Key !== "" && dataFilter.Value && dataFilter.Value !== "") {
+    //                 if (itemData === null || (itemData.toLowerCase() !== dataFilter.Value.toLowerCase())) {
+    //                     result = false;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return result;
+    // }
 
     onTreeSelectSearchChange(searchTerm: string) {
         this.SearchTerm = searchTerm ? searchTerm : "";

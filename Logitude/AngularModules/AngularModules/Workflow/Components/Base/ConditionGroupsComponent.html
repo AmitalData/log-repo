@@ -232,7 +232,6 @@
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
                                 [IsDisabled]="Condition.isDisabled"
-                                [DataFilters]="getTreeSelectDataFilters(conditionIndex)"
                                 (ValueChanged)="updateConditionValue($event, conditionIndex)">
                             </TreeSelect>
                         </div>

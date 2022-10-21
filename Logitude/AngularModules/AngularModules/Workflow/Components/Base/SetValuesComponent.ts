@@ -182,15 +182,42 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
     }
 
-    getTreeSelectDataFilters(setValueIndex: number) {
-        let setValue = this.SetValues[setValueIndex];
-        let dataFilters: TreeSelectDataFilter[] = [];
-        if(setValue.type){
-            dataFilters.push({ Key: "type", Value: setValue.type });
-        }
-        if(setValue.lookupType){
-            dataFilters.push({ Key: "lookupType", Value: setValue.lookupType });
-        }
-        return dataFilters;
+    // getTreeSelectDataFilters(setValueIndex: number) {
+    //     let setValue = this.SetValues[setValueIndex];
+    //     let dataFilters: TreeSelectDataFilter[] = [];
+    //     if (setValue.type) {
+    //         dataFilters.push({ Key: "type", Value: setValue.type });
+    //     }
+    //     if (setValue.lookupType) {
+    //         dataFilters.push({ Key: "lookupType", Value: setValue.lookupType });
+    //     }
+    //     return dataFilters;
+    // }
+
+    showItem(setValueIndex: number) {
+        return (item: TreeSelectItem) => this.isSameFieldItemType(item, setValueIndex);
     }
+
+    isSameFieldItemType = (item: TreeSelectItem, setValueIndex: number) => {
+
+        //if left side is lookup and item.data["fieldCode"] === left_side_lookup_type.Id => return true
+
+        let setValue = this.SetValues[setValueIndex];
+        let fieldItemType = item.data["type"];
+        let fieldItemLookupType = item.data["lookupType"];
+
+        if (fieldItemType !== undefined) {
+            if (fieldItemType === null || (setValue.type && fieldItemType.toLowerCase() !== setValue.type.toLowerCase())) {
+                return false;
+            }
+        }
+
+        if (fieldItemType && fieldItemType === FieldTypes.LookUp && fieldItemLookupType !== undefined) {
+            if (fieldItemLookupType === null || (setValue.lookupType && fieldItemLookupType.toLowerCase() !== setValue.lookupType.toLowerCase())) {
+                return false;
+            }
+        }
+
+        return true;
+    };
 }

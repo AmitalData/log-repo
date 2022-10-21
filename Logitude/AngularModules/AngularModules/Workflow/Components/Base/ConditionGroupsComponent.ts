@@ -223,15 +223,15 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
     }
 
-    getTreeSelectDataFilters(conditionIndex: number) {
-        let condition = this.Conditions[conditionIndex];
-        let dataFilters: TreeSelectDataFilter[] = [];
-        if (condition.type) {
-            dataFilters.push({ Key: "type", Value: condition.type });
-        }
-        if (condition.lookupType) {
-            dataFilters.push({ Key: "lookupType", Value: condition.lookupType });
-        }
-        return dataFilters;
-    }
+    // getTreeSelectDataFilters(conditionIndex: number) {
+    //     let condition = this.Conditions[conditionIndex];
+    //     let dataFilters: TreeSelectDataFilter[] = [];
+    //     if (condition.type) {
+    //         dataFilters.push({ Key: "type", Value: condition.type });
+    //     }
+    //     if (condition.lookupType) {
+    //         dataFilters.push({ Key: "lookupType", Value: condition.lookupType });
+    //     }
+    //     return dataFilters;
+    // }
 }
