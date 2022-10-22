@@ -94,7 +94,8 @@ export class FlowVariablesTreeList {
             let treeSelectItemKey = itemsKeyPrefix + this.ItemKeySplitter + objectField.FieldCode;
             let data = {
                 type: objectField.DataTypeCode,
-                lookupType: (objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null)
+                lookupType: (objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null),
+                fieldCode: objectField.FieldCode
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);

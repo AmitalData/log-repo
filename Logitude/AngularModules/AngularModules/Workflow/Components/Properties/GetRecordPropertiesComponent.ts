@@ -15,6 +15,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -112,6 +113,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 condition.field = childField;
                 condition.fieldCode = fieldCode;
                 condition.type = objectField ? objectField.DataTypeCode : null;
+                condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
                 condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
                 condition.operator = ConditionOperators.EqualsField;
                 condition.isDisabled = true;

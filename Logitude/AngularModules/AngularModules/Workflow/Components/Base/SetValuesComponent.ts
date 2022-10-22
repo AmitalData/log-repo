@@ -200,20 +200,27 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     isSameFieldItemType = (item: TreeSelectItem, setValueIndex: number) => {
 
-        //if left side is lookup and item.data["fieldCode"] === left_side_lookup_type.Id => return true
-
         let setValue = this.SetValues[setValueIndex];
         let fieldItemType = item.data["type"];
         let fieldItemLookupType = item.data["lookupType"];
+        let fieldItemCode = item.data["fieldCode"];
+
+
+        if (setValue.type && setValue.type === FieldTypes.LookUp && setValue.lookupType) {
+            let lookupField = setValue.lookupType + "." + ObjectTables.getKeyPropertyPathByName(setValue.lookupType);
+            if (fieldItemCode === lookupField) {
+                return true;
+            }
+        }
 
         if (fieldItemType !== undefined) {
-            if (fieldItemType === null || (setValue.type && fieldItemType.toLowerCase() !== setValue.type.toLowerCase())) {
+            if (fieldItemType === null || fieldItemType !== setValue.type) {
                 return false;
             }
         }
 
-        if (fieldItemType && fieldItemType === FieldTypes.LookUp && fieldItemLookupType !== undefined) {
-            if (fieldItemLookupType === null || (setValue.lookupType && fieldItemLookupType.toLowerCase() !== setValue.lookupType.toLowerCase())) {
+        if (fieldItemType === FieldTypes.LookUp && fieldItemLookupType !== undefined) {
+            if (fieldItemLookupType === null || fieldItemLookupType !== setValue.lookupType) {
                 return false;
             }
         }

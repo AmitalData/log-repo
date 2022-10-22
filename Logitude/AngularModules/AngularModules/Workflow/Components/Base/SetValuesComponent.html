@@ -148,8 +148,7 @@
                 <div *ngIf="isFieldCompareOperator(setValue.operator)">
                     <div class="set-value-value-container">
                         <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="setValue.value"
-                            [ShowItem]="showItem(setValueIndex)"
-                            (ValueChanged)="updateSetValue($event, setValueIndex)">
+                            [ShowItem]="showItem(setValueIndex)" (ValueChanged)="updateSetValue($event, setValueIndex)">
                         </TreeSelect>
                     </div>
                 </div>
