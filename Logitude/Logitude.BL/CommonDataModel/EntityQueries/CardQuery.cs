@@ -27,6 +27,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using System.IO;
 using Logitude.BL.DataContracts;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1927,7 +1928,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 TableLastUpdateClass.UpdateTableHistory(tenant, tableName);
                 TableLastUpdateClass.UpdateTableHistory(tenant, "Carrier");
-                RunStoredProcedureClass.UpdateCardSearcsRecords(newTenantCard.Id, newTenantCard.Tenant);
+                if (!LogitudeSettings.IsCostomsDeploy)
+                {
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(newTenantCard.Id, newTenantCard.Tenant);
+                }
             }
             #region CardList            
             CardList myCardList = new CardList()
