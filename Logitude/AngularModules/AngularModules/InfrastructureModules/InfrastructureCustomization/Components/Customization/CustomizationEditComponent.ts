@@ -93,6 +93,7 @@ export class CustomizationEditComponent {
         this.SelectedMenu = item;
     }
 
+    public IsSubEntity: boolean = false;
 
     constructor() {
         this.RunComponent();
@@ -106,6 +107,7 @@ export class CustomizationEditComponent {
         this.ObjectTableId = args.ObjectTableId;
         this.IsObjectTableFilterEnabled = args.IsObjectTableFilterEnabled;
         this.IsCustomFieldsMenue = args.IsCustomFieldsMenue;
+        this.IsSubEntity = args.IsSubEntity;
         this.BuildCustomizationMainMenuItems();
        
     }

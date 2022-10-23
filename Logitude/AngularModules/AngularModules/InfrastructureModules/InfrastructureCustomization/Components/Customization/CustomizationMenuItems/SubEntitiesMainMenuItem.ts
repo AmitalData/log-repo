@@ -3,23 +3,25 @@ import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private mainArgs: any) {
+    constructor(private customizationMainMenuArgs: any) {
         super("subEntities");
         this.TextCode = "Sub Entities";
         this.Code = "SUBENTITIES";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/SubEntitiesComponent";
-        this.args = this.BuildScreenArgs(mainArgs);
-        this.IsVisible = this.GetFeaturePermission(mainArgs);
+        this.screenArgs = this.BuildScreenArgs(customizationMainMenuArgs);
+        this.IsVisible = this.CheckFeaturePermission(customizationMainMenuArgs);
 
 
     }
     BuildScreenArgs(args: any): any {
         return {
+            ObjectTableId: args.ObjectTableId,
+            IsObjectTableFilterEnabled: args.IsObjectTableFilterEnabled
         }
     }
-    GetFeaturePermission(args: any): boolean {
-        let IsShowSubEntities = true; //to be updated later
-        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue;
+    CheckFeaturePermission(args: any): boolean {
+        let IsShowSubEntities = FeatureLocator.HasFeaturePermession("General", "SubEntitiesCustomization");
+        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity;
     }
 
 }
