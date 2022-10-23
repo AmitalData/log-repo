@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO)
         {
+            entityPM.Tenant = entityPOCO.Tenant;
             if(entityPOCO.ResponseStatusCode != null)
                 entityPM.RequestCancelStatus =  new LogisticActionResponseReqSRepository(entityPOCO.Tenant).GetSingle(entityPOCO.ResponseStatusCode).LocalName;
             if (entityPOCO.ExporterNumber != null)
