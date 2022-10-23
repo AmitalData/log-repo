@@ -88,10 +88,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         this.TenantPM = SessionLocator.TenantPM;
         this.SessionIndex = this.CurrentSession.SessionIndex;
         this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-        this.SetUnits();
-        this.SetLabels();
-        this.SetFromPort();
-
+        
     }
 
 
@@ -256,11 +253,14 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     }
 
     SetWindowArgs(args: any) {
+        this.SetArgs(args);
+        this.SetUnits();
+        this.SetLabels();
+        this.SetFromPort();
         this.SetExportShipmentArgs(args);
     }
 
     private SetExportShipmentArgs(args: any) {
-        this.SetArgs(args);
         if (this.IsNew) this.SetNewExportShipmentArgs();
         else this.SetEditExportShipmentArgs();
         this.SetUIProperties();
