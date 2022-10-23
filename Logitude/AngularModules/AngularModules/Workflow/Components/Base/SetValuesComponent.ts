@@ -11,7 +11,6 @@ import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "SetValues",
@@ -32,6 +31,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public DataContext: any = this;
     public IsValidSetValues: boolean = true;
 
+    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
     public SetValuesOperatorsItems = new SetValueOperatorsList().Items;
@@ -43,7 +43,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     ngOnInit() {
-        this.initializeFlowVariablesTreeItems();
+        this.initializeFlowVariablesTree();
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
     }
@@ -52,8 +52,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.setValuesChanged();
     }
 
-    initializeFlowVariablesTreeItems() {
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId).Items;
+    initializeFlowVariablesTree() {
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
+        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
     setValuesChanged() {
@@ -69,6 +70,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = field ? this.getFieldType(field) : null;
             this.SetValues[setValueIndex].lookupType = field ? this.getFieldLookupType(field) : null;
+            this.SetValues[setValueIndex].picklistType = field ? this.getFieldPickListType(field) : null;
             this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
 
             this.setValuesChanged();
@@ -83,6 +85,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
             this.SetValues[setValueIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            this.SetValues[setValueIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
             this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
 
             this.setValuesChanged();
@@ -140,6 +143,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
+    getFieldPickListType(field: string) {
+        if (this.isObjectField(field)) {
+            let fieldCode = this.getFieldCode(field);
+            let objectField = this.getObjectField(fieldCode);
+            return objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+        } else {
+            return null;
+        }
+    }
+
     getDeclareVariableType(field: string) {
         let fieldCode = this.getFieldCode(field);
         let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
@@ -182,49 +195,14 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
     }
 
-    // getTreeSelectDataFilters(setValueIndex: number) {
-    //     let setValue = this.SetValues[setValueIndex];
-    //     let dataFilters: TreeSelectDataFilter[] = [];
-    //     if (setValue.type) {
-    //         dataFilters.push({ Key: "type", Value: setValue.type });
-    //     }
-    //     if (setValue.lookupType) {
-    //         dataFilters.push({ Key: "lookupType", Value: setValue.lookupType });
-    //     }
-    //     return dataFilters;
-    // }
-
-    showItem(setValueIndex: number) {
-        return (item: TreeSelectItem) => this.isSameFieldItemType(item, setValueIndex);
-    }
-
-    isSameFieldItemType = (item: TreeSelectItem, setValueIndex: number) => {
-
+    showFlowVariablesTreeItem(setValueIndex: number) {
         let setValue = this.SetValues[setValueIndex];
-        let fieldItemType = item.data["type"];
-        let fieldItemLookupType = item.data["lookupType"];
-        let fieldItemCode = item.data["fieldCode"];
-
-
-        if (setValue.type && setValue.type === FieldTypes.LookUp && setValue.lookupType) {
-            let lookupField = setValue.lookupType + "." + ObjectTables.getKeyPropertyPathByName(setValue.lookupType);
-            if (fieldItemCode === lookupField) {
-                return true;
-            }
+        let compareWithLookupOrPickListType: string | null = null;
+        if (setValue.type === FieldTypes.LookUp) {
+            compareWithLookupOrPickListType = setValue.lookupType;
+        } else if (setValue.type === FieldTypes.PickList) {
+            compareWithLookupOrPickListType = setValue.picklistType;
         }
-
-        if (fieldItemType !== undefined) {
-            if (fieldItemType === null || fieldItemType !== setValue.type) {
-                return false;
-            }
-        }
-
-        if (fieldItemType === FieldTypes.LookUp && fieldItemLookupType !== undefined) {
-            if (fieldItemLookupType === null || fieldItemLookupType !== setValue.lookupType) {
-                return false;
-            }
-        }
-
-        return true;
-    };
+        return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, setValue.type, compareWithLookupOrPickListType);
+    }
 }

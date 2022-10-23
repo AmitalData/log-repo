@@ -14,4 +14,3 @@ export type NodeType = "startNode" |
     "labelNode" |
     null;
 
-export type TreeSelectDataFilter = { Key: string, Value: string };

@@ -15,7 +15,6 @@ import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { TreeSelectDataFilter } from "Workflow/Models/Types";
 
 @Component({
     selector: "ConditionGroups",
@@ -40,9 +39,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Output() ConditionsChangedEvent = new EventEmitter();
 
     public DataContext: any = this;
-    //public ObjectFieldsDictionary: any = {};
     public DateTimeValueExpressions = DateTimeValueExpressions;
 
+    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
@@ -57,16 +56,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     ngOnInit() {
-        this.initializeFlowVariablesTreeItems();
+        this.initializeFlowVariablesTree();
     }
 
     ngOnChanges() {
         this.ConditionOperatorsItemsDictionary = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ItemsDictionary;
     }
 
-    initializeFlowVariablesTreeItems() {
+    initializeFlowVariablesTree() {
         if (this.ShowFlowVariablesTree) {
-            this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId).Items;
+            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
+            this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
     }
 
@@ -78,12 +78,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     updateConditionField(objectField: ObjectFieldPM, conditionIndex: number) {
-        //this.saveInObjectFieldsDictionary(objectField);
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.fieldCode) {
             this.Conditions[conditionIndex].fieldCode = objectField ? objectField.FieldCode : null;
             this.Conditions[conditionIndex].field = objectField ? objectField.FieldName : null;
             this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
             this.Conditions[conditionIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            this.Conditions[conditionIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
             this.Conditions[conditionIndex].value = null;
             this.Conditions[conditionIndex].valueCode = null;
@@ -92,12 +92,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             this.emitConditionsChanged();
         }
     }
-
-    // saveInObjectFieldsDictionary(objectField: ObjectFieldPM) {
-    //     if (objectField) {
-    //         this.ObjectFieldsDictionary[objectField.FieldCode] = objectField;
-    //     }
-    // }
 
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
         if (operatorCode !== this.Conditions[conditionIndex]?.operator) {
@@ -137,7 +131,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     updateConditionFieldValue(objectField: ObjectFieldPM, conditionIndex: number) {
-        //this.saveInObjectFieldsDictionary(objectField);
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.valueCode) {
             this.Conditions[conditionIndex].value = objectField ? objectField.FieldName : null;
             this.Conditions[conditionIndex].valueCode = objectField ? objectField.FieldCode : null;
@@ -210,7 +203,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     isDateTimeField(fieldCode: string) {
-        //let objectField = this.ObjectFieldsDictionary[fieldCode];
         let objectField = this.getObjectField(fieldCode);
         return objectField && (objectField.DataTypeCode === FieldTypes.DateTime || objectField.DataTypeCode === FieldTypes.Date);
     }
@@ -223,49 +215,14 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
     }
 
-    showItem(conditionIndex: number) {
-        return (item: TreeSelectItem) => this.isSameFieldItemType(item, conditionIndex);
-    }
-
-    isSameFieldItemType = (item: TreeSelectItem, conditionIndex: number) => {
-
+    showFlowVariablesTreeItem(conditionIndex: number) {
         let condition = this.Conditions[conditionIndex];
-        let fieldItemType = item.data["type"];
-        let fieldItemLookupType = item.data["lookupType"];
-        let fieldItemCode = item.data["fieldCode"];
-
-
-        if (condition.type && condition.type === FieldTypes.LookUp && condition.lookupType) {
-            let lookupField = condition.lookupType + "." + ObjectTables.getKeyPropertyPathByName(condition.lookupType);
-            if (fieldItemCode === lookupField) {
-                return true;
-            }
+        let compareWithLookupOrPickListType: string | null = null;
+        if (condition.type === FieldTypes.LookUp) {
+            compareWithLookupOrPickListType = condition.lookupType;
+        } else if (condition.type === FieldTypes.PickList) {
+            compareWithLookupOrPickListType = condition.picklistType;
         }
-
-        if (fieldItemType !== undefined) {
-            if (fieldItemType === null || fieldItemType !== condition.type) {
-                return false;
-            }
-        }
-
-        if (fieldItemType === FieldTypes.LookUp && fieldItemLookupType !== undefined) {
-            if (fieldItemLookupType === null || fieldItemLookupType !== condition.lookupType) {
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-    // getTreeSelectDataFilters(conditionIndex: number) {
-    //     let condition = this.Conditions[conditionIndex];
-    //     let dataFilters: TreeSelectDataFilter[] = [];
-    //     if (condition.type) {
-    //         dataFilters.push({ Key: "type", Value: condition.type });
-    //     }
-    //     if (condition.lookupType) {
-    //         dataFilters.push({ Key: "lookupType", Value: condition.lookupType });
-    //     }
-    //     return dataFilters;
-    // }
+        return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, condition.type, compareWithLookupOrPickListType);
+    }
 }

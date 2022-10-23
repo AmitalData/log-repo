@@ -46,7 +46,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList(["Customer", "User"], this.OnlyParentEntities);
+        this.EntitiesTreeList = new EntitiesTreeList(this.OnlyParentEntities);
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -137,5 +137,9 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     setValuesData() {
         this.Data["setValues"] = this.SetValues;
+    }
+
+    showEntitiesTreeItem() {
+        return (item: TreeSelectItem) => item.key !== "Customer" && item.key !== "User";
     }
 }

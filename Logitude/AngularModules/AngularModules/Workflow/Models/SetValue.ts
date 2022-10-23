@@ -3,6 +3,7 @@ export class SetValue {
     public fieldCode: string;
     public type: string;
     public lookupType: string;
+    public picklistType: string;
     public operator: string;
     public value: string;
     public fieldChangedToggle: boolean;
@@ -12,6 +13,7 @@ export class SetValue {
         this.fieldCode = null;
         this.type = null;
         this.lookupType = null;
+        this.picklistType = null;
         this.operator = null;
         this.value = null;
         this.fieldChangedToggle = false;

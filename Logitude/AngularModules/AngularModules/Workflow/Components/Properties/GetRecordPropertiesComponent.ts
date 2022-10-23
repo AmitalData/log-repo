@@ -65,7 +65,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList(["Opportunity"]);
+        this.EntitiesTreeList = new EntitiesTreeList();
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -114,6 +114,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 condition.fieldCode = fieldCode;
                 condition.type = objectField ? objectField.DataTypeCode : null;
                 condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+                condition.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
                 condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
                 condition.operator = ConditionOperators.EqualsField;
                 condition.isDisabled = true;
@@ -271,5 +272,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     getEntityLabel() {
         return this.Entity.indexOf(".") === -1 ? this.Entity : this.Entity.split(".")[1];
+    }
+
+    showEntitiesTreeItem() {
+        return (item: TreeSelectItem) => item.key !== "Opportunity";
     }
 }

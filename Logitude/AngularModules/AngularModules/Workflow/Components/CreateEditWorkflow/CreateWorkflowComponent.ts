@@ -33,7 +33,6 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
 
     SetWindowArgs(args: any) {
         this.EntityId = args['EntityId'];
-        //this.IsNewEntity = args['IsNewEntity'];
     }
 
     get Name() { return this.EntityPM.Name; }

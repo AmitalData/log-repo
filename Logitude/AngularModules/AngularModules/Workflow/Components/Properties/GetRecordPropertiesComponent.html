@@ -186,7 +186,7 @@
                             </div>
                             <div class="table-row-cell-block">
                                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                                    (ValueChanged)="updateEntity($event)">
+                                    [ShowItem]="showEntitiesTreeItem()" (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
                         </td>
