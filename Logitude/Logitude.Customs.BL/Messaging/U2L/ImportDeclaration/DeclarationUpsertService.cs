@@ -158,6 +158,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 //var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                if ((new CustomsSettingQueryService(ResolvedTenant())).GetSettingByTenantN(ResolvedTenant()).IsConnectedToUniFreight)
+                {
+                    amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                }
+
 
                 if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
                 {
@@ -1743,6 +1748,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
+            if (amitalContext == null) return null;
             var rec = (from a in amitalContext.GTRTRANs
                        where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
                        select a).FirstOrDefault();
@@ -1756,6 +1762,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
+            if (amitalContext == null) return null;
             var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
 
             if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
