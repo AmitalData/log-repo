@@ -16,3 +16,11 @@ Feature: Workflow run history
     Scenario: search run history
         When search instance in run history
         Then the result instances should appear successfully
+
+    Scenario: open single instance activity list
+        When open instance activity list
+        Then the activity list should appear successfully
+
+    Scenario: refresh single instance activity list
+        When refresh instance activity list
+        Then the activity list should refresh successfully

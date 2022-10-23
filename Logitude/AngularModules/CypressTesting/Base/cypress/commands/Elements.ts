@@ -22,6 +22,8 @@ declare global {
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains: string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
+            ClickEditElementButton(selector: any): Chainable<Element>
+            GetDecisionElementFromList(): Chainable<Element>
 
             ClickingAfterHovering(LogLovSelector: string, HiddenElementSelector: string): Chainable<Element>
             SelectCheckBox(Selector: string): Chainable<Element>
@@ -75,6 +77,15 @@ Cypress.Commands.add("SelectCheckBox", (Selector: string) => {
     });
 
 })
+
+Cypress.Commands.add("ClickEditElementButton", (Selector: string) => {
+    cy.get(Selector).find('button').click();
+});
+
+Cypress.Commands.add("GetDecisionElementFromList", () => {
+    cy.get('ul.p-menu-list').find('li').eq(2).click();
+});
+
 Cypress.Commands.add("ClickingAfterHovering", (LogLovSelector: string, HiddenElementSelector: string) => {
     cy.get(LogLovSelector).trigger(BaseSelectors.MouseoverTrigger).find(HiddenElementSelector).click()
 

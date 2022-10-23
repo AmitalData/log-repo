@@ -9,6 +9,7 @@ import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms'
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { ConditionDetails } from "../models/ConditionDetails";
 import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/WorkflowRunHistoryFixturePath'
+import { DecisionElementDetails } from "../models/DecisionElementDetails";
 
 let ConditionCounter = 1;
 let ConditionGroupButton = 1;
@@ -129,7 +130,7 @@ export function AssertUpdateWorkflow() {
 }
 
 export function CloseEditStartNodeWindow() {
-    cy.Click(WorkflowSelectors.WorkflowStartOkButton, 'Ok', true);
+    cy.Click(WorkflowSelectors.WorkflowStartOkButton, null);
 }
 
 export function SaveWorkflow() {
@@ -231,6 +232,83 @@ export function AssertSearchInstanceByBusinessKey() {
     BaseAssertion.AssertElementContain(WorkflowSelectors.FirstWorkflowInstanceBusinessKey, SearchInstanceBusinessKey)
 }
 
+export function OpenSingleInstanceActivityList() {
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
+    });
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
+    });
+    cy.Click(WorkflowSelectors.FirstWorkflowInstanceBusinessKey + BaseSelectors.FirstElement, null)
+}
+
+export function AssertOpenSingleInstanceActivityList() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+}
+
+export function RefreshSingleInstanceActivityList() {
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
+    });
+    cy.Click(WorkflowSelectors.SingleInstanceActivityListRefreshButton, null)
+}
+
+export function AssertRefreshSingleInstanceActivityList() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+}
+
+/// decision 
+export function FillDecisionElementDetails(decisionElementDetails: DecisionElementDetails) {
+    AddDecisionElement();
+    cy.FillLogTextBox(WorkflowSelectors.DecisionElementName, decisionElementDetails.Title);
+    cy.FillLogTextBox(WorkflowSelectors.DecisionElementLabel, decisionElementDetails.Label);
+}
+
+function AddDecisionElement() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.Click(WorkflowSelectors.FirstConnectorButton, null);
+    cy.GetDecisionElementFromList();
+    BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200)
+}
+
+export function FillDecisionRootConditionsDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length));
+    ConditionGroupButton = ConditionCounter;
+}
+
+export function CloseEditDecisionNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowDecisionOkButton, null);
+}
+
+export function SaveDecisionWorkflow() {
+    CloseEditDecisionNodeWindow();
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveButton, null, true);
+}
+
+function OpenEditDecisionElement() {
+    cy.Click(WorkflowSelectors.WorkflowDecisionElement, null);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.ClickEditElementButton(WorkflowSelectors.NodeSettingFooter);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+}
+
+export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+    OpenEditDecisionElement();
+    if (!IsRootGroup) {
+        cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
+    }
+    else {
+        cy.Click(WorkflowSelectors.WorkflowGroupButton(ConditionGroupButton - conditionDetailsList.length), null)
+    }
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    ConditionGroupButton = ConditionCounter;
+}
+
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
         case "Main Carriage Final ATA":
@@ -257,5 +335,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
         case "Notes":
             return cy.FillLogTextBox(selector, value);
+        case "Main Carriage Transport Mode":
+            return cy.SelectDropDownListItem2(selector, value);
     }
 }

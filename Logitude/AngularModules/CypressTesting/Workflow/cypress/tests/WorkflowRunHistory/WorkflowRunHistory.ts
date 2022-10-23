@@ -38,6 +38,23 @@ Then("the result instances should appear successfully", () => {
     Actions.AssertSearchInstanceByBusinessKey();
 });
 
+When("open instance activity list", () => {
+    Actions.OpenSingleInstanceActivityList();
+});
+
+Then("the activity list should appear successfully", () => {
+    Actions.AssertOpenSingleInstanceActivityList();
+});
+
+When("refresh instance activity list", () => {
+    Actions.RefreshSingleInstanceActivityList();
+});
+
+Then("the activity list should refresh successfully", () => {
+    Actions.AssertRefreshSingleInstanceActivityList();
+});
+
+
 
 
 
