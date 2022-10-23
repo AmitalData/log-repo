@@ -238,7 +238,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 //Yuval Chalup 19.11.2015 TASK-17450 --->
                                 eventContextTagModelList.Add(myInsertEventContextTagModel);
-                                myDeclarationPM.PhysicalCheck = 1;
+                                myDeclarationPM.PhysicalCheck = "1";
                                 myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationUpdateService.Update(myDeclarationPM, true);
 

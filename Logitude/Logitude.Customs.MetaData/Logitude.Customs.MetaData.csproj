@@ -132,6 +132,7 @@
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
     <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
     <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
+    <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -170,6 +171,7 @@
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />
     <None Include="DBScripts\Pre\20220425_COMMLOG_DBIDCOUNTERS_SEQ.sxml" />
+    <None Include="DBScripts\Pre\20220905_UpdateDeclarationPhysicalCheck.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -445,6 +447,7 @@
     <None Include="DBTables\PendingByKeyword.dxml" />
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
+    <None Include="DBTables\PhysicalCheckCode.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
@@ -547,6 +550,7 @@
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
+    <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />

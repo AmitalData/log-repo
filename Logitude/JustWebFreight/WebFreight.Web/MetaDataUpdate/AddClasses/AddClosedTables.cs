@@ -3351,5 +3351,31 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 StorageStatusTableRepository.Add(StorageStatusTableDetails);
             }
         }
+
+
+        public static void AddPhysicalCheckCode(PhysicalCheckCode PhysicalCheckCodeDetails, PhysicalCheckCodeRepository physicalCheckCodeRepository)
+        {
+            Dictionary<string, PhysicalCheckCode> tenant = physicalCheckCodeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(PhysicalCheckCodeDetails.Code))
+            {
+                PhysicalCheckCode physicalCheckCode = physicalCheckCodeRepository.GetSingle(PhysicalCheckCodeDetails.Code);
+                physicalCheckCode.Name = PhysicalCheckCodeDetails.Name;
+                physicalCheckCode.SearchFields = (PhysicalCheckCodeDetails.Code + "," + PhysicalCheckCodeDetails.Name).ToLower();
+                physicalCheckCodeRepository.Update(physicalCheckCode);
+            }
+            else
+            {
+                PhysicalCheckCode physicalCheckCode = new PhysicalCheckCode()
+                {
+                    Code = PhysicalCheckCodeDetails.Code,
+                    Name = PhysicalCheckCodeDetails.Name,
+                    SearchFields = (PhysicalCheckCodeDetails.Code + "," + PhysicalCheckCodeDetails.Name).ToLower()
+                };
+                physicalCheckCodeRepository.Add(PhysicalCheckCodeDetails);
+            }
+        }
+
+
     }
 }
