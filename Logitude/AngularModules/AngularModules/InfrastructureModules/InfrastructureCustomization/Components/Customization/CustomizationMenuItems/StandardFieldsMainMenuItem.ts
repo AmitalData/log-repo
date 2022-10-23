@@ -3,13 +3,13 @@ import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class StandardFieldsMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private customizationMainArgs: any) {
+    constructor(private customizationMainMenuArgs: any) {
         super("Fields");
         this.TextCode = "Standard Fields";
         this.Code = "STANDARDFIELD";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/StandardFieldsComponent";
-        this.args = this.BuildScreenArgs(customizationMainArgs);
-        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
+        this.screenArgs = this.BuildScreenArgs(customizationMainMenuArgs);
+        this.IsVisible = this.CheckFeaturePermission(customizationMainMenuArgs);
 
 
     }
@@ -18,7 +18,7 @@ export class StandardFieldsMainMenuItem extends CustomizationMainMenuItem {
             ObjectTableId: args.ObjectTableId
         }
     }
-    GetFeaturePermission(args: any): boolean {
+    CheckFeaturePermission(args: any): boolean {
         let IsShowStandardFields = FeatureLocator.HasFeaturePermession("General", "StandardFieldsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowStandardFields) && !args.IsCustomFieldsMenue;
     }

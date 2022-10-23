@@ -3,13 +3,13 @@ import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class TabsMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private customizationMainArgs: any) {
+    constructor(private customizationMainMenuArgs: any) {
         super("tabs");
         this.TextCode = "Tabs";
         this.Code = "TABS";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationTabsComponent";
-        this.args = this.BuildScreenArgs(customizationMainArgs);
-        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
+        this.screenArgs = this.BuildScreenArgs(customizationMainMenuArgs);
+        this.IsVisible = this.CheckFeaturePermission(customizationMainMenuArgs);
 
 
     }
@@ -18,7 +18,7 @@ export class TabsMainMenuItem extends CustomizationMainMenuItem {
             ObjectTableId: args.ObjectTableId
         }
     }
-    GetFeaturePermission(args: any): boolean {
+    CheckFeaturePermission(args: any): boolean {
         let IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue;
     }

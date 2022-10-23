@@ -5,13 +5,13 @@ declare var window: any;
 
 export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private customizationMainArgs: any) {
+    constructor(private customizationMainMenuArgs: any) {
         super("Fields");
         this.TextCode = "Custom Fields";
         this.Code = "CUSTOMFIELD";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent";
-        this.args = this.BuildScreenArgs(customizationMainArgs);
-        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
+        this.screenArgs = this.BuildScreenArgs(customizationMainMenuArgs);
+        this.IsVisible = this.CheckFeaturePermission(customizationMainMenuArgs);
 
 
     }
@@ -26,7 +26,7 @@ export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
             AllowCustomFields: objectTable.AllowCustomFields
         }
     }
-    GetFeaturePermission(args: any): boolean {
+    CheckFeaturePermission(args: any): boolean {
         let IsShowCustomFields = FeatureLocator.HasFeaturePermession("General", "CustomFieldsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowCustomFields || args.IsCustomFieldsMenue);
     }
