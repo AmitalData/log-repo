@@ -162,7 +162,8 @@ export class CustomizationMainComponent {
             Title: this.selectedRow.DefaultText,
             IsCustomFieldsMenue: this.IsCustomFieldsMenue,
             IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled,
-            ObjectTableId: objectTableId
+            ObjectTableId: objectTableId,
+            IsSubEntity: false
         };
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }

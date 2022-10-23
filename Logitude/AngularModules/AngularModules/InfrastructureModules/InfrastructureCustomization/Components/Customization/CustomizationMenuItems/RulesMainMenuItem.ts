@@ -3,13 +3,13 @@ import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class RulesMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private mainArgs: any) {
+    constructor(private customizationMainArgs: any) {
         super("rules");
         this.TextCode = "Rules";
         this.Code = "RULES";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/RulesComponents/RulesMainComponent";
-        this.args = this.BuildScreenArgs(mainArgs);
-        this.IsVisible = this.GetFeaturePermission(mainArgs);
+        this.args = this.BuildScreenArgs(customizationMainArgs);
+        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
 
 
     }

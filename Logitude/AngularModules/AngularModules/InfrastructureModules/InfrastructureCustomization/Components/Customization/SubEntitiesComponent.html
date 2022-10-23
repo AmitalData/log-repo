@@ -1,3 +1,75 @@
-<div style="height: 100%; display: table; margin: auto auto;">
-    <label>Coming Soon ...</label>
-</div>
+<style>
+    .Body {
+        overflow: auto;
+    }
+</style>
+
+<table>
+    <tr style="height:30px">
+        <td>
+            <div style="width: 100%; margin-left: 670px ">
+                <button style="width:100px; position:absolute; bottom:7px; right:0px" class="Button" (click)="AddNewSubEntity()" disabled>New Sub Entity</button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+
+                    <table>
+                        <tr>
+
+                            <td style="width: 250px; min-width: 250px; max-width: 250px;">Entity Name</td>
+                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Type</td>
+                            <td style="width: 60px; min-width: 60px; max-width: 60px;"></td>
+                            <td class="LastChild" style="min-width: 20px;">
+                                <div></div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of SubEntitiesList">
+
+                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px; position: relative;">
+                                <div style="display:inline-block">
+
+                                    <span>{{item.Name | TextCodeTranslationPipe}}</span>
+
+                                </div>
+                            </td>
+
+                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                <span *ngIf="!item.IsCustom">Standard Object</span>
+                                <span *ngIf="item.IsCustom">Custom Object</span>
+                            </td>
+
+                            <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowCustomizationEditComponentForSubEntity(item.Id, item.Name)"></IconButton>
+                            </td>
+
+
+                            <td class="LastChild" style="min-width: 20px;">
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </td>
+    </tr>
+</table>
+
+

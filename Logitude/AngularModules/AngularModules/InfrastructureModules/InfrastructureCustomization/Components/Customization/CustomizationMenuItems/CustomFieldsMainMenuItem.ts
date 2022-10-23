@@ -5,13 +5,13 @@ declare var window: any;
 
 export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private mainArgs: any) {
+    constructor(private customizationMainArgs: any) {
         super("Fields");
         this.TextCode = "Custom Fields";
         this.Code = "CUSTOMFIELD";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent";
-        this.args = this.BuildScreenArgs(mainArgs);
-        this.IsVisible = this.GetFeaturePermission(mainArgs);
+        this.args = this.BuildScreenArgs(customizationMainArgs);
+        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
 
 
     }

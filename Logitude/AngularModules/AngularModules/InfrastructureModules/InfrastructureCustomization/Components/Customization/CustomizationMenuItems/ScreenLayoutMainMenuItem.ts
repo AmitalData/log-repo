@@ -3,13 +3,13 @@ import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class ScreenLayoutMainMenuItem extends CustomizationMainMenuItem {
 
-    constructor(private mainArgs: any) {
+    constructor(private customizationMainArgs: any) {
         super("screenLayout");
         this.TextCode = "Screen Layout";
         this.Code = "SCREENLAYOUT";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/ScreenLayoutComponent";
-        this.args = this.BuildScreenArgs(mainArgs);
-        this.IsVisible = this.GetFeaturePermission(mainArgs);
+        this.args = this.BuildScreenArgs(customizationMainArgs);
+        this.IsVisible = this.GetFeaturePermission(customizationMainArgs);
 
 
     }
