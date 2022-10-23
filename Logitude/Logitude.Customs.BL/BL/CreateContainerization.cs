@@ -98,19 +98,20 @@ namespace Logitude.Customs.BL.BL
                         ContainerizationPMById.ChangeSetOp = ChangeSetOperation.Update;
                         containerizationList.Add(ContainerizationPMById);
                     }
-                    if (entityPM.ContainerizationStatus == "3" && (containerizationList.Count() > 2|| list.Any(x=>!x.IsNew)))
-                    {
-                        List<ContainerizationDetails> listCD = new List<ContainerizationDetails>();
-                        ContainerizationDetails CD = new ContainerizationDetails();
-                        CD.Id = "0";
-                        CD.ContainerizationNumber = "0";
-                        CD.Tenant = 0;
-                        listCD.Add(CD);
-                        return listCD;
-                    }
+                 
                     containerizationListKeys.Add((dec.CargoTypeCode?.ToLower() + dec.ManifestNumber?.ToLower() + dec.SecondCargoId?.ToLower() + dec.ThirdCargoId?.ToLower()).ToString());
                 }
 
+            }
+            if (entityPM.ContainerizationStatus == "3" && (containerizationList.Count() > 1 || list.Any(x => !x.IsNew)))
+            {
+                List<ContainerizationDetails> listCD = new List<ContainerizationDetails>();
+                ContainerizationDetails CD = new ContainerizationDetails();
+                CD.Id = "0";
+                CD.ContainerizationNumber = "0";
+                CD.Tenant = 0;
+                listCD.Add(CD);
+                return listCD;
             }
             ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
             foreach (var containerization in containerizationList)
