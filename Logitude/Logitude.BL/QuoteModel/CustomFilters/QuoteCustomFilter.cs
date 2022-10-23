@@ -19,6 +19,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.QuoteModel
 {
@@ -115,10 +116,7 @@ namespace Logitude.BL.QuoteModel
 
                     if (item.FieldName == "MyQuotes")
                     {
-                        string loggedUser = AuthenticationUtil.GetAuthenticatedUser();
-                        ContactRepository contactRep = new ContactRepository(tenant);
-                        Contact contact = contactRep.GetSingleContactByEmail(loggedUser, tenant);
-
+                        ContactPM contact = LoggedContactResolver.GetLoggedContact(tenant);
                         queryableData = queryableData.Where(d => d.SalesmanUserId == contact.Id && !d.IsCancelled);
                     }
 
