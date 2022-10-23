@@ -11,10 +11,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
     public partial class ShipmentTracing
     {
-        public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems = false)
         {
-            //if (!entityPM.IsHybrid)
-            //{
             string DepartedCode = "PICD";
             if (RoutingDate.IsDateAddedOrModified(itemPM.ATD, itemPOCO.ATD))
             {
@@ -150,19 +148,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.DeleteTraceEvent(ArrivedCode);
                 }
             }
-            //}
 
-            this.TracePickUpArrangedEvent(itemPM, itemPOCO, shipmentPM);
+            this.TracePickUpArrangedEvent(itemPM, itemPOCO, shipmentPM, ignoreDeletedItems);
 
             if (IsAllowingPartial(shipmentPM.StatusId))
             {
                 ComputePartialStatusAmount(DepartedCode);
             }
         }
-        public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems = false)
         {
-            //if (!entityPM.IsHybrid)
-            //{
             if (itemPM.PickUpDeliveryTypeCode == "DELV")
             {
                 string DepartedCode = "DELD";
@@ -185,7 +180,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             if (itemPM.PickUpDeliveryFromTypeCode != itemPOCO.PickUpDeliveryFromTypeCode)
                             {
                                 this.UpdateLocation(DepartedCode);
-                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                             }
 
                             else
@@ -197,7 +191,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                             if (itemPM.FromAddressId != itemPOCO.FromAddressId)
                                             {
                                                 this.UpdateLocation(DepartedCode);
-                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                                             }
 
                                             break;
@@ -208,7 +201,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                             if (itemPM.FromPortId != itemPOCO.FromPortId)
                                             {
                                                 this.UpdateLocation(DepartedCode);
-                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                                             }
 
                                             break;
@@ -219,7 +211,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                             if (itemPM.FromAddressCity != itemPOCO.FromAddressCity)
                                             {
                                                 this.UpdateLocation(DepartedCode);
-                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                                             }
 
                                             break;
@@ -230,23 +221,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     }
                 }
 
-                //string ArrivedCode = "PIOD";
                 string ArrivedCode_New = "DEAR";
                 if (RoutingDate.IsDateAddedOrModified(itemPM.ATA, itemPOCO.ATA))
                 {
-                    //this.DeleteTraceEvent(ArrivedCode, itemPM.PickUpDeliveryNumber, itemPOCO.ATA);
                     this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
-
-                    //ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-                    //if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
-                    //{
-                    //    this.CreateTraceEvent(ArrivedCode, lastDelivery.ATA, lastDelivery);
-                    //}
                 }
 
                 else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
                 {
-                   // this.DeleteTraceEvent(ArrivedCode);
                     this.DeleteTraceEvent(ArrivedCode_New, itemPM.PickUpDeliveryNumber, itemPOCO.ATA);
                 }
 
@@ -298,26 +280,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             }
                         }
                     }
-
-                    //else
-                    //{
-                    //    this.DeleteTraceEvent(ArrivedCode_New);
-                    //}
                 }
 
-                this.TraceDeliveryArrangedEvent(itemPM, itemPOCO, shipmentPM);
+                this.TraceDeliveryArrangedEvent(itemPM, itemPOCO, shipmentPM, ignoreDeletedItems);
 
                 if (IsAllowingPartial(shipmentPM.StatusId))
                 {
                     ComputePartialStatusAmount(ArrivedCode_New);
                 }
             }
-            // }
         }
         public void TraceDeletedPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
         {
-            //if (!entityPM.IsHybrid)
-            //{
             if (itemPOCO.PickUpDeliveryTypeCode == "PICK")
             {
                 if (itemPOCO.ATA != null)
@@ -337,9 +311,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.DeleteTraceEvent("PICD", itemPM.PickUpDeliveryNumber, itemPOCO.ATD);
                 }
 
-                if (IsFirstPickup(itemPM, shipmentPM) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
+                if (IsFirstPickup(itemPM, shipmentPM, false) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("PCAR");
+                    this.CreateEventForNextPickup(itemPM, shipmentPM);
                 }
 
                 if (IsAllowingPartial(shipmentPM.StatusId))
@@ -347,46 +322,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     ComputePartialStatusAmount("PICD");
                 }
             }
-            //}
         }
         public void TraceDeletedDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
         {
-            //if (!entityPM.IsHybrid)
-            //{
             if (itemPM.PickUpDeliveryTypeCode == "DELV")
             {
                 if (itemPOCO.ATA != null)
                 {
-                    //this.DeleteTraceEvent("PIOD");
                     this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber, itemPOCO.ATA);
-
-                    //ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-                    //if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
-                    //{
-                       // this.CreateTraceEvent("PIOD", lastDelivery.ATA, lastDelivery);
-                    //}
                 }
 
                 if (itemPOCO.ATD != null)
                 {
                     this.DeleteTraceEvent("DELD");
                 }
-                if (IsFirstDelivery(itemPM, shipmentPM) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
+                if (IsFirstDelivery(itemPM, shipmentPM, false) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("DLAR");
+                    this.CreateEventForNextDelivery(itemPM, shipmentPM);                    
                 }
-
 
                 if (IsAllowingPartial(shipmentPM.StatusId))
                 {
                     ComputePartialStatusAmount("DEAR");
                 }
             }
-            //}
         }
-        private void TraceDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        private void TraceDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems)
         {
-            if (!IsFirstDelivery(itemPM, shipmentPM))
+            if (!IsFirstDelivery(itemPM, shipmentPM, ignoreDeletedItems))
             {
                 return;
             }
@@ -395,9 +359,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceUpdateDeliveryArrangedEvent(itemPM, itemPOCO);
             this.TraceDeleteDeliveryArrangedEvent(itemPM, itemPOCO);
         }
-        private void TracePickUpArrangedEvent(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        private void TracePickUpArrangedEvent(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems)
         {
-            if (!IsFirstPickup(itemPM, shipmentPM))
+            if (!IsFirstPickup(itemPM, shipmentPM, ignoreDeletedItems))
             {
                 return;
             }
@@ -405,10 +369,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceUpdatePickUpArrangedEvent(itemPM, itemPOCO);
             this.TraceDeletePickUpArrangedEvent(itemPM, itemPOCO);
         }
-        private bool IsFirstPickup(ShipmentPickUpPM itemPM, ShipmentPM shipmentPM)
+        private bool IsFirstPickup(ShipmentPickUpPM itemPM, ShipmentPM shipmentPM, bool ignoreDeletedItems)
         {
             ShipmentPickUpPM firstPickup =
                             (from d in shipmentPM.ShipmentPickUps
+                             where ignoreDeletedItems ? d.ChangeSetOp != ChangeSetOperation.Delete : true
                              select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
             if (firstPickup == null)
             {
@@ -421,11 +386,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return false;
         }
-        private bool IsFirstDelivery(ShipmentDeliveryPM itemPM, ShipmentPM shipmentPM)
+        private bool IsFirstDelivery(ShipmentDeliveryPM itemPM, ShipmentPM shipmentPM, bool ignoreDeletedItems)
         {
             ShipmentDeliveryPM firstDelivery =
                             (from d in shipmentPM.ShipmentDeliveries
+                             where ignoreDeletedItems ? d.ChangeSetOp != ChangeSetOperation.Delete : true
                              select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
             if (firstDelivery == null)
             {
                 return false;
@@ -704,8 +671,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).ToList();
             return AllEventTraces.Find(d => eventDateTime != null && d.EventDateTime == eventDateTime && d.Deleted == false) != null;
-        }
-    
+        }    
         private bool IsETAOrETDEditedAfterDeleteFirstDeilvery(ShipmentDeliveryPM shipmentDeliveryPM, ShipmentPickUpDelivery itemPOCO)
         {
             bool IsEventNotExist = !IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("DLAR", itemPOCO.ETD);
@@ -719,12 +685,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (IsETDLegDateDeleted(null, shipmentDeliveryPM, itemPOCO) && IsEventNotExist)
                 return true;
 
-            if (IsETDLegDateDeleted(null, shipmentDeliveryPM, itemPOCO) && IsEventNotExist)
+            if (IsETALegDateDeleted(null, shipmentDeliveryPM, itemPOCO) && IsEventNotExist)
                 return true;
 
             return false;
         }
-
         private bool IsETAOrETDEditedAfterDeleteFirstPickup(ShipmentPickUpPM shipmentPickUpPM, ShipmentPickUpDelivery itemPOCO)
         {
             bool IsEventNotExist = !IsEventExistInTraceEvents("PCAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("PCAR", itemPOCO.ETD);
@@ -738,10 +703,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (IsETDLegDateDeleted(shipmentPickUpPM, null, itemPOCO) && IsEventNotExist)
                 return true;
 
-            if (IsETDLegDateDeleted(shipmentPickUpPM, null, itemPOCO) && IsEventNotExist)
+            if (IsETALegDateDeleted(shipmentPickUpPM, null, itemPOCO) && IsEventNotExist)
                 return true;
 
             return false;
+        }
+        private void CreateEventForNextDelivery(ShipmentDeliveryPM shipmentDeliveryPM, ShipmentPM shipmentPM)
+        {
+            ShipmentDeliveryPM nextDelivery =
+                           (from d in shipmentPM.ShipmentDeliveries
+                            where d.PickUpDeliveryNumber != shipmentDeliveryPM.PickUpDeliveryNumber
+                            select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+            if (nextDelivery == null) return;
+
+            ShipmentPickUpDelivery shipmentDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, shipmentDeliveryPM.Id);
+            if (shipmentDelivery == null) return;
+
+            this.TraceDelivery(nextDelivery, shipmentDelivery, shipmentPM, true);
+        }
+        private void CreateEventForNextPickup(ShipmentPickUpPM shipmentPickUpPM, ShipmentPM shipmentPM)
+        {
+            ShipmentPickUpPM nextPickup =
+                           (from d in shipmentPM.ShipmentPickUps
+                            where d.PickUpDeliveryNumber != shipmentPickUpPM.PickUpDeliveryNumber
+                            select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+            if (nextPickup == null) return;
+
+            ShipmentPickUpDelivery shipmentPickup = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, nextPickup.Id);
+            if (shipmentPickup == null) return;
+
+            this.TracePickUp(nextPickup, shipmentPickup, shipmentPM, true);
         }
     }
 }
