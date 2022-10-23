@@ -74,7 +74,7 @@ a:focus {
     height: 83px;
     outline: none;
 }
-
+/*Web header*/
 .web-header .nav {
     float: right;
     display: inline-block;
@@ -99,8 +99,35 @@ a:focus {
 .web-header .nav ul>li.active {
     border-bottom: 2px solid #ED3833;
 }
+/*Mobile header Login*/
+.mobile-header .nav {
+    float: right;
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+}
 
+.mobile-header .nav ul{
+    margin-top: 20px;
+    margin-right: 25px;
+}
 
+.mobile-header .nav ul>li {
+    padding: 5px 10px;
+    font-weight: 600;
+    border-radius: 5px;
+    background: #f4f4f4;
+    color: var(--MainColor);
+}
+
+.mobile-header .nav ul>li:hover {
+    border-radius: 0;
+    background-color: #f5f5f5;
+}
+
+.mobile-header .nav ul>li.active {
+    border-bottom: 2px solid #ED3833;
+}
 /* header: mobile */
 
 .mobile-header {
