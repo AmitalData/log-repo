@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
@@ -36,6 +36,8 @@ import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParam
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -1404,6 +1406,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false
         });
+        
     }
 
     DataSource = {
@@ -2574,6 +2577,287 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
+    }
+
+
+    onColumnsClick() {
+        debugger;
+        var windowArgs: any = {};
+       windowArgs.queryId = "1-15713"
+      windowArgs.queryCode ="Customs.DeclarationCourierStatus.BulkFeedPending";
+        windowArgs.isNewQueryMode = false;
+        windowArgs.currentObjectTable = this.ObjectTableName;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 960;
+        logitudeWindow.Height = 520;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.O.QueryColumnsEdit");//"Query Columns Edit";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+
+            //var myfilterAgrs = this.CurrentQueryFilters;
+            // if (this.AdvanceFilters) {
+            //     this.AdvanceFilters.AdditionalFilters.forEach((filter, key) => {
+            //         myfilterAgrs.AdditionalFilters.push(filter);
+            //     });
+            // }
+      // this.QueryValueChanged({ QueryCode: "Customs.DeclarationCourierStatus.BulkFeedPending", Title: TextCodeTranslator.Translate( "CourierMaster.Q.OPENCOURIERMASTERS"), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+            //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+        });
+    }
+    AdvanceFilters: ApiQueryFilters;
+    public searchFields: string;
+    ClearMySearch: boolean = false;
+    public UserQueries: any[];
+    private title: string;//= "";
+    public columnsObjectFields: any[] = [];
+    public Queries: any[];
+    private _SelectedQuery: any = null;
+    public QueryCode: string;
+    MethodName: string = null;
+    MenuTableQuerySection: string;
+
+
+
+    public get SelectedQuery(): any {
+        return this._SelectedQuery;
+    }
+    public set SelectedQuery(value: any) {
+        this._SelectedQuery = value;
+    }
+    get Title() { return this.title; }
+    set Title(newValue: string) {
+        if (this.title != newValue) {
+            this.title = newValue;
+        }
+    }
+    // QueryValueChanged(Args) {
+    //     this.AdvanceFilters = new ApiQueryFilters();
+    //     if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
+    //         if (Args.IgnoreSearchFields != true) {
+    //             this.searchFields = "";
+    //         }
+    //     }
+    //     this.ClearMySearch = true;
+    //     this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
+    //     this.Title = Args.Title;
+    //     this.columns = [];
+    //     this.columnsObjectFields = [];
+    //     if (this.Queries == null || this.Queries.length == 0) {
+    //         var MyQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+    //         this.SelectedQuery = MyQueries.filter(x => x.UniqueCode === Args.QueryCode)[0];
+    //     }
+    //     else {
+    //         this.SelectedQuery = this.Queries.filter(x => x.UniqueCode === Args.QueryCode)[0];
+    //     }
+
+    //     if (this.SelectedQuery == null) {
+    //         this.SelectedQuery = this.UserQueries.filter(x => x.UniqueCode === Args.QueryCode)[0];
+    //     }
+    //     if (this.SelectedQuery != null) {
+    //         this.QueryCode = this.SelectedQuery.UniqueCode;
+
+    //         this.MethodName = this.GetMethodName();
+
+
+    //         this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
+    //         this.SelectedQueryId = this.SelectedQuery.Id;
+
+    //         if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
+    //             this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
+    //         }
+    //         else {
+    //             this.dataSource.sortingCol = this.SelectedQuery.DefaultSortColumn;
+    //         }
+    //         if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortDirection)) {
+    //             this.dataSource.sortingDir = this.listArgs.Filters.SortDirection;
+    //         }
+    //         else {
+    //             this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
+    //         }
+    //         if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
+    //             var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode);
+    //             predefinedFilters.forEach((filter, key) => {
+    //                 var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
+    //                 var value1 = filter.PredefinedValue;
+    //                 var value2 = filter.PredefinedValue2;
+
+    //                 if (value2 != null) {
+    //                     filterOperator = "Between";
+    //                 }
+    //                 if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
+    //                     var TommorowDate = DateTool.AddDays((new Date()), 1);
+    //                     TommorowDate.setUTCHours(0, 0, 0, 0);
+    //                     var TodayDate = new Date();
+    //                     TodayDate.setUTCHours(0, 0, 0, 0);
+    //                     if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
+    //                     if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
+    //                     var YesterdayDate = DateTool.AddDays((new Date()), -1);
+    //                     YesterdayDate.setUTCHours(0, 0, 0, 0);
+    //                     var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+    //                     LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
+    //                     var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+    //                     LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
+    //                     var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
+    //                     CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
+    //                     var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
+    //                     CurrentYearToDate.setUTCHours(0, 0, 0, 0);
+    //                     var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+    //                     LastYearFromDate.setUTCHours(0, 0, 0, 0);
+    //                     var LastYearToDate = DateTool.AddDays((new Date()), 1);
+    //                     LastYearToDate.setUTCHours(0, 0, 0, 0);
+
+    //                     //var TodayDate = new Date();
+    //                     //var YesterdayDate = DateTool.AddDays((new Date()), -1);
+    //                     //var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+    //                     //var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+    //                     //var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+    //                     //var CurrentYearToDate = new Date();
+    //                     //var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+    //                     //var LastYearToDate = new Date();
+    //                     /*
+    //                       case "Today":
+    //                 {
+    //                     this.Text = "Today " + this.Today;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.TodayDate, ToDate: this.TommorowDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //             case "Yesterday":
+    //                 {
+    //                     this.Text = "Yesterday " + this.Yesterday;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.YesterdayDate, ToDate: this.TodayDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //             case "Last 7 Days":
+    //                 {
+    //                     this.Text = "Last 7 Days " + this.LastSevenDays;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.LastSevenDaysDate, ToDate: this.TommorowDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //             case "Last 30 Days":
+    //                 {
+    //                     this.Text = "Last 30 Days " + this.LastThirtyDays;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.LastThirtyDaysDate, ToDate: this.TommorowDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //             case "Current Year":
+    //                 {
+    //                     this.Text = "Current Year " + this.CurrentYear;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.CurrentYearFromDate, ToDate: this.CurrentYearToDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //             case "Last Year":
+    //                 {
+    //                     this.Text = "Last Year " + this.LastYear;
+    //                     //this.SetDisplayText();
+    //                     this.SelectedItemChanged.emit({ FromDate: this.LastYearFromDate, ToDate: this.LastYearToDate, Operation: "Between" });
+    //                     break;
+    //                 }
+    //                     */
+    //                     if (value1 == "Today") {
+    //                         value1 = TodayDate;
+    //                         value2 = TommorowDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "Yesterday") {
+    //                         value1 = YesterdayDate;
+    //                         value2 = TodayDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "Last 7 Days") {
+    //                         value1 = LastSevenDaysDate;
+    //                         value2 = TommorowDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "Last 30 Days") {
+    //                         value1 = LastThirtyDaysDate;
+    //                         value2 = TommorowDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "Current Year") {
+    //                         value1 = CurrentYearFromDate;
+    //                         value2 = CurrentYearToDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "Last Year") {
+    //                         value1 = LastYearFromDate;
+    //                         value2 = LastYearToDate;
+    //                         filterOperator = "Between";
+    //                     }
+    //                     else if (value1 == "NoDate" || value1 == "No Date") {
+    //                         value1 = "NoDate";
+    //                         filterOperator = "NoDate";
+    //                     }
+    //                 }
+    //                 var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
+    //                 if (field) {
+    //                     if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.ObjectFieldName).length > 0) {
+    //                         Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.ObjectFieldName);
+    //                     }
+    //                     Args.Filters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
+    //                 }
+    //             });
+    //         }
+
+    //         this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.);
+    //     }
+    //     //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
+    //     //    this.EnableSpotLight = true;
+    //     //    //this.CD.detectChanges();
+    //     //}
+
+    //     //console.log("QueryValueChanged()", queryId);
+    //     //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
+    //     //this.GetQueryColumns(queryId, this.UserId);
+    //     this.SelectedQueryCode = Args.QueryCode;
+    //     //this.SelectedQueryId = Args.QueryId;
+
+    //     this.dataSource = {
+    //         pageSize: 30,
+    //         rowCount: null,
+    //         sortingCol: "",//"CreateDateTime",
+    //         sortingDir: "",//"Descending",
+    //         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+    //             return this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+
+    //         },
+    //     };
+    //     if (this.FiltersMenu) {
+    //         this.FiltersMenu.AdditionalFilters.forEach((filter, key) => {
+    //             if (Args.Filters && filter.IgnoreFilter) {
+    //                 Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+    //             }
+    //             else {
+    //                 if (Args.Filters == null) {
+    //                     Args.Filters = new ApiQueryFilters();
+    //                 }
+    //                 if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
+    //                     Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+    //                 }
+    //                 Args.Filters.AdditionalFilters.push(filter);
+    //                 //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
+    //             }
+    //         });
+
+    //     }
+    //     this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: Args.Filters, Reload: true });
+    //     this.SetNewEntityButton();
+    //     this.SetAddButton();
+    // }
+    GetMethodName() {
+        if (this.MenuTableQuerySection) return this.ObjectTableName;
+        let methodName = this.SelectedQuery.QuerySection;
+        if (methodName.indexOf("Customs.") > -1) {
+            methodName = methodName.split('.')[1];
+        }
+        return methodName;
+
+
     }
 
 }
