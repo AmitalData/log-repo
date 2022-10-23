@@ -338,8 +338,8 @@ export class RootComponent implements AfterViewInit {
       SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
         .then(cmpRef => {
           cmpRef.instance.ComponentRef = cmpRef;
-          if (!serviceResponse.HasError) {
-            cmpRef.instance.Load(termsofUseArgs.PrivateLabelId, termsofUseArgs.Id);
+            if (!serviceResponse.HasError) {
+                cmpRef.instance.Load(termsofUseArgs.PrivateLabelId, termsofUseArgs.Id, termsofUseArgs.VersionDocumentId);
           } else {
             if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
               cmpRef.instance.LoadErrorMessage(serviceResponse.ErrorsArray[0]);
