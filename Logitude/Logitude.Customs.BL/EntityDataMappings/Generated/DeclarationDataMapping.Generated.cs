@@ -413,7 +413,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationOfficeHandlerCode, 
 	         TransferExporterCode, 
 	         IsExportDeclarationAmendments, 
-	         ExportLoadingPortCode,
+	         ExportLoadingPortCode, 
 	         PhysicalCheckName,
 	      }
 
