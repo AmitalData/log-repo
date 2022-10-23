@@ -1133,7 +1133,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
         newWindow.Width = 600;
         newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
-        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelCustomsShipmentComponent' : 'AddEditImporterShipmentComponent';
         return newWindowComponentPath;
     }
 
@@ -1147,7 +1147,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
         newWindow.Width = this.isPrivateLabel ? 960 : 600;
         newWindow.Height = this.isPrivateLabel ? 600 : 350;
-        newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
         return newWindowComponentPath;
     }
 
