@@ -1417,6 +1417,8 @@ export class DeclarationPM {
     private exportLoadingPortCode: string;
     public get ExportLoadingPortCode() { return this.exportLoadingPortCode; }
     public set ExportLoadingPortCode(newValue: string) { if (this.exportLoadingPortCode != newValue) { this.exportLoadingPortCode = newValue; this.MarkAsDirty("ExportLoadingPortCode"); } }
+       
+	 
     private physicalCheckName: string;
     public get PhysicalCheckName() { return this.physicalCheckName; }
     public set PhysicalCheckName(newValue: string) { if (this.physicalCheckName != newValue) { this.physicalCheckName = newValue; this.MarkAsDirty("PhysicalCheckName"); } }
@@ -1450,4 +1452,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

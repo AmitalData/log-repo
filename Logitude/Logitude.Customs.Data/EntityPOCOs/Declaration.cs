@@ -437,8 +437,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PhysicalCheck { get; set; }
 	      
         public virtual PhysicalCheckCode PhysicalCheckCode { get; set; }
-        [Column("ExportContainerizationID")]
-	    public string ExportContainerizationID { get; set; }
         [Column("IsSubmitDeclaration")]
 	    public bool? IsSubmitDeclaration { get; set; }
         [ForeignKey("CustomsAmedmentType")]

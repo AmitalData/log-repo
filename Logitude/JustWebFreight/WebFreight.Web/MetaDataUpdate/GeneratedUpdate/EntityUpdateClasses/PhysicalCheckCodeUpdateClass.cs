@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckCodeUpdateClass
    {  		
-		public const string HashString = "ed1d4559a884fa39d5e1086a8b6b72ab";
+		public const string HashString = "fef489e243182574f3952510b1908438";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
