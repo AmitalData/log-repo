@@ -159,6 +159,17 @@
                 </tr>
                 <tr class="FormFieldRow" *ngIf="HasRequiresApprovalFeature">
                     <td>
+                        <LogLabel [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td>
                         <LogLabel [ObjectFieldName]="'SwissportSuspendedCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
@@ -169,17 +180,6 @@
                     <td></td>
                 </tr>
 
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogCheckBox [ObjectFieldName]="'RequiresApproval'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-
-                    </td>
-                    <td></td>
-                </tr>
                 <tr>
                     <td></td>
                 </tr>
