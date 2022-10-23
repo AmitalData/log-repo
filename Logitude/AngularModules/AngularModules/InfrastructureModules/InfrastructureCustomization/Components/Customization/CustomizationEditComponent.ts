@@ -44,7 +44,6 @@ export class CustomizationEditComponent {
     private MainMenuWidthCollapsed: number = 45;
     private MainMenuWidthOpened: number = 145;
     LayoutDirection: string = 'ltr';
-    IsSubEntity: boolean = false;
 
     private isMainSidebarCollapsed: boolean = false;
     public get IsMainSidebarCollapsed() { return this.isMainSidebarCollapsed; }
@@ -187,7 +186,7 @@ export class CustomizationEditComponent {
             .then(cmpRef => {
                 this.SelectedMenu.Page = cmpRef.instance;
                 cmpRef.instance.customizationEditComponent = this;
-                cmpRef.instance.SetWindowArgs(this.SelectedMenu.args);
+                cmpRef.instance.SetWindowArgs(this.SelectedMenu.screenArgs);
             });
     }
 

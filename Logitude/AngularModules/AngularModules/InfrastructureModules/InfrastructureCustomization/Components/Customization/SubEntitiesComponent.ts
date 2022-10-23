@@ -5,6 +5,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { FieldsTranslations, GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectTables } from '../../../../Workflow/Models/ObjectTables';
 import { CustomizationObjectTableService } from '../../ExternalService/CustomizationObjectTableService';
@@ -27,6 +28,7 @@ export class SubEntitiesComponent {
     public SubEntitiesList: Array<ObjectTablePM>;
     private _entityResourceService: EntityResourceService;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
+    public enableAddCustomChildEntity: boolean = false;
     constructor() {
         this.customizationObjectTableService = new CustomizationObjectTableService();
         this._entityResourceService = new EntityResourceService();
@@ -36,6 +38,7 @@ export class SubEntitiesComponent {
     SetWindowArgs(args: any) {
         this.ObjectTableId = args['ObjectTableId'];
         this.IsObjectTableFilterEnabled = args['IsObjectTableFilterEnabled'];
+        this.enableAddCustomChildEntity = FeatureLocator.HasFeaturePermession("General", "AddCustomChildEntity");
         this.BuildSubEntitiesList();
     }
     private BuildSubEntitiesList() {
