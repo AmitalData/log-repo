@@ -1023,14 +1023,18 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 case PartnerTypeNames.consignee:
                     return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShared;           
                 case PartnerTypeNames.shipper:
-                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShared;            
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShared;
+                case PartnerTypeNames.Carrier:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsMainCarrierShared;
+                case PartnerTypeNames.Trucker:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarriesShared;
                 default:
                     return true
             }
         }
         return true;
     }
-
+    
     checkPartnerTypePermissionContactAccess(partnerTypeName) : boolean{
         if(this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
             switch (partnerTypeName) {
@@ -1071,7 +1075,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 case PartnerTypeNames.consignee:
                     return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShowContactTS;           
                 case PartnerTypeNames.shipper:
-                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShowContactTS;        
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShowContactTS;
+                case PartnerTypeNames.Carrier:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsMainCarShowContactTS;
+                case PartnerTypeNames.Trucker:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarShowContactTS;         
                 default:
                     return true
             }
@@ -1119,6 +1127,8 @@ export enum PartnerTypeNames {
     ConsigneeNotImporter = 'Consignee Not Importer',
     ShipperNotExporter = 'Shipper Not Exporter',
     Agent = 'Agent',
-    consignee = 'consignee',        
-    shipper = 'shipper'
+    consignee = 'consignee',
+    shipper = 'shipper',        
+    Carrier = 'Carrier',
+    Trucker = 'Trucker'
 }

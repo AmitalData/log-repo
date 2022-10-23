@@ -201,12 +201,16 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         item16.PartnerName = "Pickup and Deliveries Carriers";
         item16.SuggestedIsChecked = this.TenantZeroEntity.IsPickDelivCarriesShared;
         item16.ChooseIsChecked = this.EntityPM.IsPickDelivCarriesShared;
+        item16.IsShowContactTelSMS = this.EntityPM.IsPickDelivCarShowContactTS;
+        item16.IsShowContactTelSMSFieldName = "IsPickDelivCarShowContactTS";
 
         var item17: PartnerItem = new PartnerItem(this);
         item17.Code = "MC";
         item17.PartnerName = "Main Carriage Carrier";
         item17.SuggestedIsChecked = this.TenantZeroEntity.IsMainCarrierShared;
         item17.ChooseIsChecked = this.EntityPM.IsMainCarrierShared;
+        item17.IsShowContactTelSMS = this.EntityPM.IsMainCarShowContactTS;
+        item17.IsShowContactTelSMSFieldName = "IsMainCarShowContactTS";
 
         this.PartnersList.push(item1);
         this.PartnersList.push(item2);

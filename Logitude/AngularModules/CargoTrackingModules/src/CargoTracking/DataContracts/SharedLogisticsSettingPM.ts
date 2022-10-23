@@ -88,4 +88,8 @@ export class SharedLogisticsSettingPM {
     IsCollectorShared: boolean;
 
     IsCollectorShowContactTS: boolean;
+
+    IsMainCarShowContactTS: boolean;
+    
+    IsPickDelivCarShowContactTS: boolean;
 }
