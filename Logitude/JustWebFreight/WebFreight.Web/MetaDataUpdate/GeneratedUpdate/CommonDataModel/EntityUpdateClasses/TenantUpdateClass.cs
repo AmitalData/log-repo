@@ -84,7 +84,8 @@ using Logitude.DashboardModule.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class TenantUpdateClass
-		public const string HashString = "57fb16e60a530847a5cc7d11d1378117";
+   {  		
+		public const string HashString = "41cae7e9170cf37921ad598e257a83cf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10273,7 +10274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 			   
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
