@@ -36,4 +36,12 @@ export class ObjectTables {
         return null;
     }
 
+    static getNameById(id: string) {
+        if (id) {
+            let entityObjectTable = this.getById(id);
+            return entityObjectTable ? entityObjectTable.Name : null;
+        }
+        return null;
+    }
+
 }

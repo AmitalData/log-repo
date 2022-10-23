@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
@@ -29,6 +31,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public DataContext: any = this;
     public IsValidSetValues: boolean = true;
 
+    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
     public SetValuesOperatorsItems = new SetValueOperatorsList().Items;
@@ -40,7 +43,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     ngOnInit() {
-        this.initializeFlowVariablesTreeItems();
+        this.initializeFlowVariablesTree();
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
     }
@@ -49,8 +52,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.setValuesChanged();
     }
 
-    initializeFlowVariablesTreeItems() {
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId).Items;
+    initializeFlowVariablesTree() {
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
+        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
     setValuesChanged() {
@@ -65,6 +69,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = field ? this.getFieldType(field) : null;
+            this.SetValues[setValueIndex].lookupType = field ? this.getFieldLookupType(field) : null;
+            this.SetValues[setValueIndex].picklistType = field ? this.getFieldPickListType(field) : null;
+            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+
             this.setValuesChanged();
         }
     }
@@ -76,6 +84,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
             this.SetValues[setValueIndex].value = null;
             this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
+            this.SetValues[setValueIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            this.SetValues[setValueIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+
             this.setValuesChanged();
         }
     }
@@ -121,6 +133,26 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
+    getFieldLookupType(field: string) {
+        if (this.isObjectField(field)) {
+            let fieldCode = this.getFieldCode(field);
+            let objectField = this.getObjectField(fieldCode);
+            return objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+        } else {
+            return null;
+        }
+    }
+
+    getFieldPickListType(field: string) {
+        if (this.isObjectField(field)) {
+            let fieldCode = this.getFieldCode(field);
+            let objectField = this.getObjectField(fieldCode);
+            return objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+        } else {
+            return null;
+        }
+    }
+
     getDeclareVariableType(field: string) {
         let fieldCode = this.getFieldCode(field);
         let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
@@ -161,5 +193,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getObjectFieldsQueryFilters() {
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
+    }
+
+    showFlowVariablesTreeItem(setValueIndex: number) {
+        let setValue = this.SetValues[setValueIndex];
+        let compareWithLookupOrPickListType: string | null = null;
+        if (setValue.type === FieldTypes.LookUp) {
+            compareWithLookupOrPickListType = setValue.lookupType;
+        } else if (setValue.type === FieldTypes.PickList) {
+            compareWithLookupOrPickListType = setValue.picklistType;
+        }
+        return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, setValue.type, compareWithLookupOrPickListType);
     }
 }

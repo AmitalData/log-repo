@@ -1,4 +1,5 @@
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { FlowReader } from "./FlowReader";
 import { ObjectTables } from "./ObjectTables";
 import { TreeSelectItem } from "./TreeSelectItem";
@@ -13,6 +14,107 @@ export class FlowVariablesTreeList {
     constructor(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
         this.initialize(flowObjectFields, flowObject, currentNodeId);
         this.setVariablesTreeItems();
+    }
+
+    public compareItemType(item: TreeSelectItem, compareWithType: string, compareWithLookupOrPickListType: string) {
+        switch (compareWithType) {
+            case FieldTypes.LookUp:
+                return this.compareItemLookupType(item, compareWithLookupOrPickListType);
+            case FieldTypes.PickList:
+                return this.compareItemPickListType(item, compareWithLookupOrPickListType);
+            case FieldTypes.Text:
+            case FieldTypes.NText:
+                return this.compareItemTextType(item);
+            case FieldTypes.Boolean:
+                return this.compareItemBooleanType(item);
+            case FieldTypes.Date:
+            case FieldTypes.DateTime:
+                return this.compareItemDateType(item);
+            case FieldTypes.BigInteger:
+            case FieldTypes.Decimal:
+            case FieldTypes.Double:
+            case FieldTypes.Integer:
+            case FieldTypes.SigDouble:
+            case FieldTypes.UnsDecimal:
+            case FieldTypes.UnsInteger:
+                return this.compareItemNumberType(item);
+            default:
+                return this.compareItemDefaultType(item, compareWithType);
+        }
+    }
+
+    private compareItemLookupType(item: TreeSelectItem, compareWithLookupOrPickListType: string) {
+        let fieldItemType = item.data["type"];
+        let fieldItemLookupType = item.data["lookupType"];
+        let fieldItemCode = item.data["fieldCode"];
+        if (compareWithLookupOrPickListType) {
+            let lookupField = compareWithLookupOrPickListType + "." + ObjectTables.getKeyPropertyPathByName(compareWithLookupOrPickListType);
+            if (fieldItemCode === lookupField) {
+                return true;
+            }
+        }
+        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.LookUp)) {
+            return false;
+        }
+        if (fieldItemLookupType !== undefined && (fieldItemLookupType === null || fieldItemLookupType !== compareWithLookupOrPickListType)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemPickListType(item: TreeSelectItem, compareWithLookupOrPickListType: string) {
+        let fieldItemType = item.data["type"];
+        let fieldItemPickListType = item.data["picklistType"];
+        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.LookUp)) {
+            return false;
+        }
+        if (fieldItemPickListType !== undefined && (fieldItemPickListType === null || fieldItemPickListType !== compareWithLookupOrPickListType)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemTextType(item: TreeSelectItem) {
+        let fieldItemType = item.data["type"];
+        let validTypes = [FieldTypes.Text, FieldTypes.NText];
+        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemBooleanType(item: TreeSelectItem) {
+        let fieldItemType = item.data["type"];
+        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.Boolean)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemDateType(item: TreeSelectItem) {
+        let fieldItemType = item.data["type"];
+        let validTypes = [FieldTypes.Date, FieldTypes.DateTime];
+        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemNumberType(item: TreeSelectItem) {
+        let fieldItemType = item.data["type"];
+        let validTypes = [FieldTypes.BigInteger, FieldTypes.Decimal, FieldTypes.Double, FieldTypes.Integer, FieldTypes.SigDouble, FieldTypes.UnsDecimal, FieldTypes.UnsInteger];
+        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
+            return false;
+        }
+        return true;
+    }
+
+    private compareItemDefaultType(item: TreeSelectItem, compareWithType: string) {
+        let fieldItemType = item.data["type"];
+        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== compareWithType)) {
+            return false;
+        }
+        return true;
     }
 
     private initialize(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
@@ -57,7 +159,10 @@ export class FlowVariablesTreeList {
         this.getDeclareVariableNodes().forEach((node: any) => {
             let treeSelectItemName = node.data["variableName"];
             let treeSelectItemKey = "declaredvariables" + this.ItemKeySplitter + node.data["variableCode"];
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let data = {
+                type: (node.data["variableType"] || null)
+            };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             declaredVariablesItemChildren.push(treeSelectItem);
         });
 
@@ -88,7 +193,13 @@ export class FlowVariablesTreeList {
         objectFields.forEach((objectField: ObjectFieldPM) => {
             let treeSelectItemName = objectField.FullNameTextCodeDefaultText.trim();
             let treeSelectItemKey = itemsKeyPrefix + this.ItemKeySplitter + objectField.FieldCode;
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let data = {
+                type: objectField.DataTypeCode,
+                lookupType: (objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null),
+                picklistType: (objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null),
+                fieldCode: objectField.FieldCode
+            };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);
         });
 

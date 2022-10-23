@@ -28,7 +28,7 @@
     }
 
     .table-row-cell {
-        padding-bottom: 10px;
+        padding-bottom: 8px;
     }
 
     .split-block {
@@ -66,6 +66,7 @@
         overflow: auto;
         width: 936px;
         height: 220px;
+        margin-bottom: 6px;
     }
 
     .min-get-records-conditions-container {
@@ -82,6 +83,7 @@
     .LogLov-selected-field-container {
         display: table-cell;
         width: 320px;
+        padding-right: 5px;
     }
 
     .selected-coulmn-container {
@@ -105,8 +107,6 @@
     .delete-coulmn-button {
         display: block;
         cursor: pointer;
-        margin-left: 5px;
-        margin-bottom: 3px;
     }
 
     .sort_container {
@@ -119,10 +119,6 @@
 
     .sortBy_container {
         width: 350px;
-    }
-
-    .orderBy_label {
-        margin-bottom: 4px;
     }
 
     .add-buttons-container {
@@ -190,7 +186,7 @@
                             </div>
                             <div class="table-row-cell-block">
                                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                                    (ValueChanged)="updateEntity($event)">
+                                    [ShowItem]="showEntitiesTreeItem()" (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
                         </td>
@@ -206,7 +202,7 @@
                     <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Filter {{Entity}} Records</div>
+                                <div class="select-get-record-label">Filter {{getEntityLabel()}} Records</div>
                             </div>
                         </td>
                     </tr>
@@ -278,7 +274,7 @@
                     <tr *ngIf="isAllRecords() && EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Sort {{Entity}} Records</div>
+                                <div class="select-get-record-label">Sort {{getEntityLabel()}} Records</div>
                             </div>
                         </td>
                     </tr>
@@ -300,7 +296,7 @@
                             </div>
 
                             <div *ngIf="isOrderBy()" class="sortBy_container">
-                                <div>
+                                <div class="sortBy_label">
                                     <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
                                         [DataContext]="DataContext"></LogLabel>
                                 </div>
@@ -347,12 +343,12 @@
                                                 [SelectedValue]="returnedField.fieldCode" [HideColumns]="true"
                                                 [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                                                 (SelectedItemChanged)="updateSelectedField($event, fieldIndex)"
-                                                [ForceDisabled]="IsPrimaryObjectFieldExists && fieldIndex === 0"
+                                                [ForceDisabled]="fieldIndex === 0"
                                                 [DataCy]="'SelectedCoulmn_' + fieldIndex">
                                             </LogLov>
                                         </div>
                                         <div class="delete-coulmn-container">
-                                            <img *ngIf="(IsPrimaryObjectFieldExists && (fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0))) || (!IsPrimaryObjectFieldExists && fieldIndex > 0)"
+                                            <img *ngIf="fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0)"
                                                 class="delete-coulmn-button" src="./Images/Trash-can.png"
                                                 (click)="deleteField(fieldIndex)"
                                                 [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedField" />

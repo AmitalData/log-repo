@@ -13,3 +13,4 @@ export type NodeType = "startNode" |
     "dummyNode" |
     "labelNode" |
     null;
+

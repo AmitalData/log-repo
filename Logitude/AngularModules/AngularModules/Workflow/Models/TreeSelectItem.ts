@@ -10,6 +10,7 @@ export class TreeSelectItem {
     public disableCheckbox: boolean;
     public expanded: boolean;
     public children: TreeSelectItem[];
+    public data: any;
 
     constructor(
         key: string,
@@ -18,9 +19,10 @@ export class TreeSelectItem {
         selectable: boolean,
         expanded: boolean,
         disabled: boolean,
-        children: TreeSelectItem[]
+        children: TreeSelectItem[],
+        data: any = {}
     ) {
-        this.key = key || "unknown";
+        this.key = key || Date.now().toString();
         this.title = title || "Unknown";
         this.icon = null;
         this.isLeaf = isLeaf;
@@ -31,5 +33,6 @@ export class TreeSelectItem {
         this.disableCheckbox = false;
         this.expanded = expanded;
         this.children = children;
+        this.data = data;
     }
 }
