@@ -1238,6 +1238,25 @@ export class DeclarationWebService {
         );
     }
 
+    GetWaitingDeclarationAmendment(CustomFileNo: string) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetWaitingDeclarationAmendmentByCustomsFile/?customFileNo=" + CustomFileNo , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+
     GetDeclarationCargoSplitByDeclarationIdList(declarationId: string, tenant: number) {
         return defer(() => {
 
@@ -1333,6 +1352,10 @@ export class DeclarationWebService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+
+    400919         
+
     // ---------------------------------------- MAPING --------------------------------------------------
     MapJsonToEntity(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationErrorView = null) {
 
