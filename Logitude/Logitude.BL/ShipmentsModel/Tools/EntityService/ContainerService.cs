@@ -359,6 +359,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 emptyReturn.FromPortId = shipmentPM.OnCarriageToPortId;
             }
 
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment3ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment3ToPortId;
+            }
+
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment2ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment2ToPortId;
+            }
+
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment1ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment1ToPortId;
+            }
+
             else 
             {
                 emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
