@@ -49,13 +49,10 @@ namespace WebFreight.Web.ContainerTracking
             MapPOD();
             MapPreCarriage();
             MapOnCarriage();
-
             MapGate();
-            //MapLIFLocation();
             MapEmptyReturn();
             MapCarrierRelease();
             MapCustomsRelease();
-
         }
 
         private void MapCarrierRelease()
@@ -63,28 +60,16 @@ namespace WebFreight.Web.ContainerTracking
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.CarrierRelease, ref containerUpdatedFields.CarrierReleaseDate);
             containerUpdatedFields.CarrierReleaseState = GetReleaseState(VizionMilestoneDescriptionCodes.CarrierRelease);
         }
-
-
-
         private void MapCustomsRelease()
         {
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.CustomsRelease, ref containerUpdatedFields.CustomsReleaseDate);
             containerUpdatedFields.CustomsReleaseState = GetReleaseState(VizionMilestoneDescriptionCodes.CustomsRelease);
-
         }
-
         private void MapEmptyReturn()
         {
             MapMilestoneLocationField(VizionMilestoneDescriptionCodes.GateInEmptyReturn, ref containerUpdatedFields.EmptyReturnLocation);
-
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.GateInEmptyReturn, ref containerUpdatedFields.EstimatedEmptyReturn, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.GateInEmptyReturn, ref containerUpdatedFields.ActualEmptyReturn);
-
-        }
-
-        private void MapLIFLocation()
-        {
-            //containerUpdatedFields.LIFLocation = visionContainerStatus?.payload?.inland_destination?. ?? containerUpdatedFields.LIFLocation
         }
 
         private void MapGate()
@@ -111,7 +96,6 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapPreCarriage()
         {
-
             if (!IsDeferuntPort(visionContainerStatus?.payload?.inland_origin, visionContainerStatus?.payload?.origin_port))
                 return;
             containerUpdatedFields.VisionPreCarriage = visionContainerStatus?.payload?.inland_origin;
@@ -151,8 +135,6 @@ namespace WebFreight.Web.ContainerTracking
             MapMilestoneLocationField(VizionMilestoneDescriptionCodes.EmptyPickup, ref containerUpdatedFields.EmptyPickupLocation);
         }
 
-
-
         private void MapPOL()
         {
             containerUpdatedFields.POLLocation = visionContainerStatus?.payload?.origin_port?.unlocode ?? containerUpdatedFields.POLLocation;
@@ -165,8 +147,6 @@ namespace WebFreight.Web.ContainerTracking
 
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageETD, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageATD);
-
-
         }
         private string GetReleaseState(string descriptionCode)
         {
@@ -264,9 +244,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 containerUpdatedFields.PODLocation = pODLocation;
             }
-
         }
-
 
         private DateTime? GetValue(string key)
         {
@@ -293,13 +271,11 @@ namespace WebFreight.Web.ContainerTracking
             }
             return milestonesDictinoary;
         }
-
         private string GetMilstonesKey(string description, string unlocode, bool planned)
         {
             return $"{description}-{unlocode}-{planned}";
         }
     }
-
 
     public static class VizionMilestoneDescriptionCodes
     {
@@ -315,6 +291,5 @@ namespace WebFreight.Web.ContainerTracking
         public static string GateInEmptyReturn = "Gate in empty return";
         public static string CarrierRelease = "Carrier release";
         public static string CustomsRelease = "Customs release";
-
     }
 }

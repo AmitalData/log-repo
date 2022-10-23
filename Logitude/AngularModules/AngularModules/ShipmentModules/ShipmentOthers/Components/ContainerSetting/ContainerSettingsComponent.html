@@ -70,6 +70,28 @@
                                                 </td>
                                             </tr>
 
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 170px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentATADateIndicator'" [NoObjectField]="true" [Text]="'Shipment ATA Date'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <ComboBox [ItemsSource]="ShipmentATADateComboList" [SelectedItem]="SelectedShipmentATADateItem" (SelectedItemChanged)="SelectedShipmentATADateItem = $event" [Binding]="'Name'"></ComboBox>
+                                                            </td>
+                                                            <td style="width: 18px;" >
+                                                                <div float-end></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>                                                    
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                             <tr>
                                                 <td colspan="2">
                                                     <div></div>
