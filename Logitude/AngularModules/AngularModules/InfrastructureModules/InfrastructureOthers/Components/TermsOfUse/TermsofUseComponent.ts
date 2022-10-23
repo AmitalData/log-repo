@@ -18,6 +18,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { TermsofUsePM } from '../../../../Common/EntityPMs/TermsofUsePM';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 declare var querySelection, resultToUnitArray: any;
 
@@ -73,8 +74,13 @@ export class TermsofUseComponent implements OnInit {
     }
 
     ViewFile(item: TermsofUsePMViewModel) {
-        var documentName = item.DocumentId
-        DownloadManager.DownloadPage(documentName);
+
+        if (!AppTool.IsNullOrEmpty(item.DocumentId)) {
+            DownloadManager.DownloadTermsOfUse(null, item.DocumentId);
+            return;
+        }
+
+        DownloadManager.DownloadPage(item.Id + "_termsofuses");
     }
 
     ConvertArrayBufferToBase64(file: any, viewmodel: any) {
@@ -168,10 +174,12 @@ class TermsofUsePMViewModel {
     Date: Date;
     VersionNumber: number;
     DocumentId: string;
+    Id: number;
     constructor(item: TermsofUsePM) {
         this.Date = item.Date;
         this.VersionNumber = item.VersionNumber;
         this.DocumentId = item.VersionDocumentId;
+        this.Id = item.Id;
     }
 
 }

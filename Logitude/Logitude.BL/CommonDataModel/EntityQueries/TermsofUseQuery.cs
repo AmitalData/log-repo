@@ -111,6 +111,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentId;
         }
 
+
+        public bool CheckIfDocumentExist(int tenant , string documentId)
+        {
+            return (from a in repository.context.TermsofUses
+                              where a.VersionDocumentId == documentId && (a.Tenant == 0 || a.Tenant == tenant)
+                              select a).Any();
+        }
+
         public IQueryable<TermsofUsePM> GetTermsofUsePMsByVersion()
         {
             IQueryable<TermsofUsePM> termsofUses = from a in repository.context.TermsofUses
