@@ -31,7 +31,6 @@ export class AddEditCourierPendingReasonComponent
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.CourierPendingReason";
-    public EntityPM: CourierPendingReasonPM;
     isWindowMode: boolean = false;
     isNewRecord: boolean = false;
     isFromUnifreight: boolean = false;
@@ -185,6 +184,11 @@ export class AddEditCourierPendingReasonComponent
     public get ErrorPlace() { return this.EntityPM.ErrorPlace; }
     public set ErrorPlace(newValue: string) {
         this.EntityPM.ErrorPlace = newValue;
+    }
+
+    public get RequiresApproval() { return this.EntityPM.RequiresApproval; }
+    public set RequiresApproval(newValue: boolean) {
+        this.EntityPM.RequiresApproval = newValue;
     }
 
     private _UnifreightStatusCode: string;

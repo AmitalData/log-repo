@@ -84,6 +84,11 @@ export class CourierPendingReasonPM {
     public set SwissportSuspendedCode(newValue: string) { if (this.swissportSuspendedCode != newValue) { this.swissportSuspendedCode = newValue; this.MarkAsDirty("SwissportSuspendedCode"); } }
        
 	 
+    private requiresApproval: boolean;
+    public get RequiresApproval() { return this.requiresApproval; }
+    public set RequiresApproval(newValue: boolean) { if (this.requiresApproval != newValue) { this.requiresApproval = newValue; this.MarkAsDirty("RequiresApproval"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		
