@@ -144,5 +144,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
+
     }
-}
+}
