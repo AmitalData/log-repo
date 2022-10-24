@@ -176,7 +176,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                 ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                                UseNewTermsOfUse = a.UseNewTermsOfUse
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                                ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -361,7 +362,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
                         ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                         EnableDeliveryOptions = tt.EnableDeliveryOptions,
-                        UseNewTermsOfUse = tt.UseNewTermsOfUse
+                        UseNewTermsOfUse = tt.UseNewTermsOfUse,
+                        ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
@@ -533,7 +535,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
                     ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                     EnableDeliveryOptions = tt.EnableDeliveryOptions,
-                    UseNewTermsOfUse = tt.UseNewTermsOfUse
+                    UseNewTermsOfUse = tt.UseNewTermsOfUse,
+                    ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -689,7 +692,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
                                            AccountingActivated = a.AccountingActivated,
-                                           UseNewTermsOfUse = a.UseNewTermsOfUse
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                           ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -843,7 +847,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        AccountingActivated = a.AccountingActivated,
-                                       UseNewTermsOfUse = a.UseNewTermsOfUse
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                       ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1008,7 +1013,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                               UseNewTermsOfUse = a.UseNewTermsOfUse
+                                               UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                               ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1175,7 +1181,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                            ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                           UseNewTermsOfUse = a.UseNewTermsOfUse
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                           ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1330,7 +1337,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                        ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                       UseNewTermsOfUse = a.UseNewTermsOfUse
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                       ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1504,7 +1512,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EmptyReturnClosingDays = myPOCO.EmptyReturnClosingDays,
                     ShipmentATAClosingDays = myPOCO.ShipmentATAClosingDays,
                     EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
-                    UseNewTermsOfUse = myPOCO.UseNewTermsOfUse
+                    UseNewTermsOfUse = myPOCO.UseNewTermsOfUse,
+                    ShipmentATADateIndicator = myPOCO.ShipmentATADateIndicator,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
