@@ -1055,6 +1055,52 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isPickDelivCarShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPickDelivCarShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isPickDelivCarShowContactTS;
+		 }
+		 set
+		 {
+		   if(isPickDelivCarShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPickDelivCarShowContactTS",OldValue=isPickDelivCarShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPickDelivCarShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMainCarShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMainCarShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isMainCarShowContactTS;
+		 }
+		 set
+		 {
+		   if(isMainCarShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMainCarShowContactTS",OldValue=isMainCarShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMainCarShowContactTS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

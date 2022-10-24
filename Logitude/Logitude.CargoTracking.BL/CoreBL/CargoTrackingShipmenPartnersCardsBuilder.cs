@@ -29,7 +29,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("Carrier", "MainCarriageCarrierId", "MainCarriageCarrierName"),
                 new PartnerCardMetaData("Carrier", "CarrierId", "CarrierName", true),
                 new PartnerCardMetaData("Warehouse", "WarehouseLegWarehouseId", "WarehouseLegTerminalName"),
-                new PartnerCardMetaData("Trucker", "CarrierId", "CarrierName"),
+                new PartnerCardMetaData("Trucker", "TruckerId", "TruckerName"),
                 new PartnerCardMetaData("Consolidator", "ConsolidatorId", "ConsolidatorName"),
                 new PartnerCardMetaData("Freelancer", "FreelancerId", "FreelancerName"),
                 new PartnerCardMetaData("Coloader", "ColoaderId", "ColoaderName"),

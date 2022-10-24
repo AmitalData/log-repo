@@ -66,7 +66,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsSalesmanShared, 
 	         IsSalesmanShowContactTS, 
 	         IsCollectorShared, 
-	         IsCollectorShowContactTS,
+	         IsCollectorShowContactTS, 
+	         IsPickDelivCarShowContactTS, 
+	         IsMainCarShowContactTS,
 	      }
 
 
@@ -117,7 +119,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsSalesmanShared, 
 	         IsSalesmanShowContactTS, 
 	         IsCollectorShared, 
-	         IsCollectorShowContactTS,
+	         IsCollectorShowContactTS, 
+	         IsPickDelivCarShowContactTS, 
+	         IsMainCarShowContactTS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -344,6 +348,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShowContactTS))
             {
 				entityPOCO.IsCollectorShowContactTS = entityPM.IsCollectorShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPickDelivCarShowContactTS))
+            {
+				entityPOCO.IsPickDelivCarShowContactTS = entityPM.IsPickDelivCarShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMainCarShowContactTS))
+            {
+				entityPOCO.IsMainCarShowContactTS = entityPM.IsMainCarShowContactTS;
 			}
 			}
 
@@ -575,6 +589,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsCollectorShowContactTS = entityPOCO.IsCollectorShowContactTS;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPickDelivCarShowContactTS))
+            {
+					entityPM.IsPickDelivCarShowContactTS = entityPOCO.IsPickDelivCarShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMainCarShowContactTS))
+            {
+					entityPM.IsMainCarShowContactTS = entityPOCO.IsMainCarShowContactTS;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -799,6 +823,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShowContactTS))
             {
                 oldEntityPM.IsCollectorShowContactTS = entityPM.IsCollectorShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPickDelivCarShowContactTS))
+            {
+                oldEntityPM.IsPickDelivCarShowContactTS = entityPM.IsPickDelivCarShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMainCarShowContactTS))
+            {
+                oldEntityPM.IsMainCarShowContactTS = entityPM.IsMainCarShowContactTS;
             }
 			
 		}
