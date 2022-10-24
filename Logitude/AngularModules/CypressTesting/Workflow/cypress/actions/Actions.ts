@@ -267,7 +267,7 @@ export function FillDecisionElementDetails(decisionElementDetails: DecisionEleme
 function AddDecisionElement() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.Click(WorkflowSelectors.FirstConnectorButton, null);
-    cy.GetDecisionElementFromList();
+    cy.Click(WorkflowSelectors.AddDecisionNode, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200)
 }
 
@@ -291,8 +291,12 @@ export function SaveDecisionWorkflow() {
 function OpenEditDecisionElement() {
     cy.Click(WorkflowSelectors.WorkflowDecisionElement, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
-    cy.ClickEditElementButton(WorkflowSelectors.NodeSettingFooter);
+    ClickEditElementButton(WorkflowSelectors.NodeSettingFooter);
     BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+}
+
+function ClickEditElementButton(Selector: string) {
+    cy.get(Selector).find('.edit-button').click();
 }
 
 export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {

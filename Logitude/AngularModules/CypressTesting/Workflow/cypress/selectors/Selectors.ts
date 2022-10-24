@@ -43,6 +43,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowDecisionOkButton = "button[data-cy^='condition-properties-save-button']";
     public static readonly WorkflowDecisionElement = "[data-selector^='condition-node-1'";
     public static readonly NodeSettingFooter = ".node-settings-panel-footer";
+    public static readonly AddDecisionNode = ".add-condition-node";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";
