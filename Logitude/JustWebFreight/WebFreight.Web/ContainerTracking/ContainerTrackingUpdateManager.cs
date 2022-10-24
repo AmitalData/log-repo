@@ -40,13 +40,8 @@ namespace WebFreight.Web.ContainerTracking
             this.shipmentPM = containerUpdatedFields.ShipmentPM;
             this.portRepository = new PortRepository(tenant);
             this.portQuery = new PortQuery(portRepository);
-            this.tenantRepository = new TenantRepository(tenant);
-            this.GetTenant();
-        }
-        private void GetTenant()
-        {
-            myTenant = tenantRepository.GetSingleTenant(tenant);
-        }
+            this.tenantRepository = new TenantRepository(tenant);            
+        }       
         public void Update()
         {
             this.UpdateContainer();
@@ -145,7 +140,13 @@ namespace WebFreight.Web.ContainerTracking
         {
             this.shipmentPM = shipmentPM;
             this.tenant = shipmentPM.Tenant;
+            this.GetTenant();
         }
+        private void GetTenant()
+        {
+            myTenant = tenantRepository.GetSingleTenant(tenant);
+        }
+
         private void MapContainerFields()
         {
             this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, containerPM);
