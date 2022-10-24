@@ -7172,7 +7172,7 @@
     QueryGroupCode="&quot;9f91&quot;"
     IndexOrder="1"
     ObjectTableName="&quot;Customs.DeclarationCourierStatus&quot;"
-    QuerySection="&quot;Customs.DeclarationCourierWorkScreen&quot;"
+    QuerySection="&quot;Customs.DeclarationCourierStatus&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
