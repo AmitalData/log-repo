@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    requestParams.Tenant,
                    customResponse.DocumentsFilingId,
                    customsDocumentPM,
-                   customResponse.CustomsDoucumentTypeCode);// DocumentTypeCode);
+                   customResponse.DocumentTypeCode);
 
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();

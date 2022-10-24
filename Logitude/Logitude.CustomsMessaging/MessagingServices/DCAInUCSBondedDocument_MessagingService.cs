@@ -569,10 +569,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
             customsDocumentPM.DocumentsFilingId = DocumentsFilingPMId;
-            //ICustomContext dbContext = CustomContext.GetContext(Tenant);
-            //var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
-            //var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
-            customsDocumentPM.DocumentTypeCode = CustomsDoucumentTypeCode;// DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
+            ICustomContext dbContext = CustomContext.GetContext(Tenant);
+            var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+            var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
+            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
                                                                           //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 
