@@ -6,6 +6,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -568,7 +569,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
             customsDocumentPM.DocumentsFilingId = DocumentsFilingPMId;
-            customsDocumentPM.DocumentTypeCode = CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
+            ICustomContext dbContext = CustomContext.GetContext(Tenant);
+            var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+            var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
+            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
                                                                           //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 
