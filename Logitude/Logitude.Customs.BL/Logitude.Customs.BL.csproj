@@ -1117,7 +1117,6 @@
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientsTapagQueryService.Generated.cs" />
 
-    <Compile Include="EntityQueryServices\Generated\PhysicalCheckCodeQueryService.Generated.cs" />
 
     <Compile Include="EntityQueryServices\Generated\SignStationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PhysicalCheckCodeQueryService.Generated.cs" />
