@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL
                 Name = "בדיקה פיזית סגורה", 
                 SearchFields = "2,בדיקה פיזית סגורה", 
 			});
-			 
+			
             return all;
        }
 

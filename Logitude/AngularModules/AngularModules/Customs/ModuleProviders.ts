@@ -256,8 +256,8 @@ import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListSe
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
 import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
-
 import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
+import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 
 
 //#endregion
@@ -754,6 +754,7 @@ export class ModuleProviders {
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
             case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }            
+            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
              //#endregion                
 
             //#region StandardPMs

@@ -1120,7 +1120,7 @@
     <Compile Include="EntityQueryServices\Generated\PhysicalCheckCodeQueryService.Generated.cs" />
 
     <Compile Include="EntityQueryServices\Generated\SignStationQueryService.Generated.cs" />
-
+    <Compile Include="EntityQueryServices\Generated\PhysicalCheckCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ServersNameQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
@@ -1647,9 +1647,9 @@
     <Compile Include="EntityUpdateServices\Generated\PhysicalCheckCodeUpdateService.Generated.cs" />
 
     <Compile Include="EntityUpdateServices\Generated\SignStationUpdateService.Generated.cs" />
-
     <Compile Include="EntityUpdateServices\Generated\StorageStatusTableUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ServersNameUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PhysicalCheckCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogisticActionRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestUpdateService.Generated.cs" />

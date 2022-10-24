@@ -199,8 +199,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void RunStoredProcedures()
         {
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }

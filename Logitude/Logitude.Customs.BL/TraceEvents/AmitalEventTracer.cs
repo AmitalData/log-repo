@@ -81,11 +81,15 @@ namespace Logitude.Customs.BL.TraceEvents
                 var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser: iscustomUser);
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
-                    string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
-                    if (!string.IsNullOrWhiteSpace(queueName))
-                    {
+
                         if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
                         {
+                        ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
+
+                        string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
+                        if (!string.IsNullOrWhiteSpace(queueName))
+                        {
+
                             var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
                             unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
                             {
@@ -93,31 +97,33 @@ namespace Logitude.Customs.BL.TraceEvents
                                 ParameterName = "transmission",
                                 UServerDelayTime = myAmitalEventTracer.UServerDelayTime,
                                 InterfaceTypeCode = queueName
-                            });
-                        }
-                    }
 
-                    else
-                    {
-                        LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
-                    }
+                            });
+
+                        }
+
+                        else
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
+                        }
                 }
                 else
                 {
                     var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                    //myUServerCommunicationService.Send();
-                    myUServerCommunicationService.Send(
-                         new UServerCommunicationServiceParam()
-                         {
-                             SendImmediately = false,
-                             SuppressBuildCom = false,
-                             UServerDelayTime = myAmitalEventTracer.UServerDelayTime
-                         });
+                        //myUServerCommunicationService.Send();
+                        myUServerCommunicationService.Send(
+                             new UServerCommunicationServiceParam()
+                             {
+                                 SendImmediately = false,
+                                 SuppressBuildCom = false,
+                                 UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                             });
+
+
+
+                    }
 
                 }
-
-
-
             }
             finally
             {
@@ -136,6 +142,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
         }
 
+
         private static string GetQueueNameByUnifreightEntity(string entname)
         {
             string queueName = "";
@@ -151,7 +158,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 case "CFIFILEM":
                 default:
                     //throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
-
+                    
                     break;
             }
 

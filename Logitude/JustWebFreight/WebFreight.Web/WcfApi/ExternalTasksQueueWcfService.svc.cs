@@ -152,8 +152,6 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-       
-
         public Response MarkTaskAsDone(string communicationLogId, int tenant, int priority)
         {
             Response response = new Response();

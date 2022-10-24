@@ -4,8 +4,7 @@ import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/Base
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
-import { Exception, UIMessage } from './FeedbackToStorageTabComponentTypes';
+import { Exception } from './FeedbackToStorageTabComponentTypes';
 
 @Component({
   selector: 'app-feedback-to-storage-tab-component',
@@ -15,7 +14,6 @@ import { Exception, UIMessage } from './FeedbackToStorageTabComponentTypes';
 export class FeedbackToStorageTabComponent extends BaseComponent implements OnInit {
   entityPM: ExportStoragePM = null as any;
   exceptionslist: ObservableCollection = new ObservableCollection([]);
-  UIMessageTable: UIMessage[] = [];
   excptionTypes: { id: string, text: string }[] = [
     { id: '1', text: 'שגיאה' },
     { id: '2', text: 'התראה' },
@@ -25,7 +23,7 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
 
   constructor(
     private entityArgs: EntityArgs,
-    private logtuideTableDataService: LogtuideTableDataService,
+    // private logtuideTableDataService: LogtuideTableDataService,
     private xml2jsonService: Xml2jsonService,
   ) {
     super();
@@ -33,7 +31,6 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
 
 
   async ngOnInit(): Promise<void> {
-    await this.initUIMessageTable();
     this.initEntityArgs()
     this.initTable()
   }
@@ -44,18 +41,12 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
   }
 
 
-  async initUIMessageTable() {
-    this.UIMessageTable = await this.logtuideTableDataService.getTable('Customs.UIMessage');
-  }
-
-
   initTable() {
     let xmlString: string = this.entityPM.StorErrorXML;
     if (!xmlString) return;
 
     const exceptions: Exception[] = this.parseXmlString(xmlString);
     this.updateExcptionLevel(exceptions);
-    // this.updateExcptionType(exceptions);
     this.insertData(exceptions);
   }
 
@@ -71,11 +62,6 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
 
   updateExcptionLevel(exceptions: Exception[]) {
     exceptions.forEach(e => e.ExceptionLevel = this.excptionTypes.find(ex => ex.id == e.ExceptionLevel)?.text);
-  }
-
-
-  updateExcptionType(exceptions: Exception[]) {
-    exceptions.forEach(e => e.ExeptionType = this.UIMessageTable.find(ex => ex.Code == e.ExeptionType)?.LocalName);
   }
 
 
