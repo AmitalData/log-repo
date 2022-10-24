@@ -43,6 +43,7 @@ export class ClientEditComponent extends BaseComponent{
    clientMessageService: ClientMessagesService = new ClientMessagesService();
    public ValidationErrorsList: string[] = [];
    private CurrentSession = SessionLocator.SelectedSession;
+   public isEntityChange: boolean = false;
 
    ClientsTapagList: ClientsTapag[] = [];
     tapagNumberName = '';
@@ -276,7 +277,7 @@ export class ClientEditComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-        
+        this.isEntityChange = true;
         if (this.isNewClient) {
             this.clientPMService.insert(this.CurrentEntity).subscribe((response:any) => {
                 var result = response.Result;
@@ -309,13 +310,13 @@ export class ClientEditComponent extends BaseComponent{
         }
 
         if (this.CurrentEntity.ClientAddresses == null || (this.CurrentEntity.ClientAddresses != null && this.CurrentEntity.ClientAddresses.length == 0)) {
-            errors.push("חובה להזין לפחות כתובת אחת ללקוח");
+            errors.push("חובה להזין לפחות כתובת םחת ללקוח");
         }
 
         if (this.CurrentEntity.ClientDrivingLicenses != null && this.CurrentEntity.ClientDrivingLicenses.length > 0){
             for (let item of this.CurrentEntity.ClientDrivingLicenses) {
                 if (item.ClientDrivingLicenseTypes == null || (item.ClientDrivingLicenseTypes != null && item.ClientDrivingLicenseTypes.length == 0)) {
-                    errors.push("חובה להזין לפחות סוג רישיון אחד לכל רישיון");
+                    errors.push("חובה להזין לפחות סוג רישיון םחד לכל רישיון");
                 }
             }
         }

@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener, ComponentRef} from '@angular/core';
 import { ChildDirective } from '../Directives/ChildDirective';
 import { Settings } from '../../Infrastructure/Settings';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
@@ -60,7 +60,7 @@ export class LogitudeWindow {
         }
     }
 
-    private ComponentRef: any = null;
+    public ComponentRef: ComponentRef<any> = null;
     private InstanceComponent: LogitudeWindowTemplateComponent = null;
     public Show(myContent: any) {
         if (myContent != null) {

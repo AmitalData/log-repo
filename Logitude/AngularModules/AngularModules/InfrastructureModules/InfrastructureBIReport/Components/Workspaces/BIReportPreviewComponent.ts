@@ -70,6 +70,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public context;
     public CountText: string;
     public IsFilterValueChanged: boolean = false;
+    public isEntityChange: boolean = false;
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -584,6 +585,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
 
     SaveBIReport(isBackBtn = false) {
+        this.isEntityChange = true;
         if (this.EntityId == null) {
             this.NewBIReport();
         }

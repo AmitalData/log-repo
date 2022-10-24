@@ -70,6 +70,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     public SecondCargoIDPlaceholder: string = " ";
     public ThirdCargoIdPlaceholder: string = " ";
     public ManifestNumberPlaceholder: string = " ";
+    public isEntityChange: boolean = false;
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     LogisticActionRequestService: LogisticActionRequestService = new LogisticActionRequestService();
     exportFileNoCurrentValue: string = '';
@@ -436,6 +437,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
 
+        this.isEntityChange;
+            
         this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
         if (!DontClose)
