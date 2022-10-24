@@ -288,8 +288,13 @@ namespace WebFreight.Web.ContainerTracking
         public static string GateInOriginPort = "Gate in at origin port";
         public static string GateOutFromDestinationPort = "Gate out from destination port";
         public static string DischargedFromVesselAtDestinationPort = "Discharged from vessel at destination port";
-        public static string GateInEmptyReturn = "Gate in empty return";
+        public static string GateInEmptyReturn = "Gate in empty return"; //Gate in empty 
         public static string CarrierRelease = "Carrier release";
         public static string CustomsRelease = "Customs release";
+
+        //Loaded on vessel at transshipment port + Loaded transshipment // from port
+        //Vessel arrival at transshipment port + Vessel arrived // to port
+        //Vessel departure from transshipment port + Vessel departed // from
+        //Discharged from vessel at transshipment port +  Discharged transshipment // to
     }
 }
