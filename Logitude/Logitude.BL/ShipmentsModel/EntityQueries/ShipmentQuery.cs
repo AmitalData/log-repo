@@ -2658,9 +2658,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            shipmentPM.IsCustomerArchived = (from a in repository.context.ShipmentDigitalDataViews
-                                             where a.Id == shipmentPM.Id && a.Tenant == tenant
-                                             select a.IsCustomerArchived).FirstOrDefault();
+            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a=>a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
+                                                                                    .Select(a=>a.IsCustomerArchived).FirstOrDefault();
+                
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
@@ -13441,7 +13441,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
-                               IsCustomerArchived = f.IsCustomerArchived
+                               IsCustomerArchived = f.IsCustomerArchived,
+                               NotesSharedWithCustomer = f.NotesSharedWithCustomer,
                            };
 
             return myResult;
