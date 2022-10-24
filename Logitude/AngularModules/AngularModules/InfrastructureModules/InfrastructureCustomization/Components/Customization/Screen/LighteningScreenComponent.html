@@ -63,9 +63,9 @@
                 <div style="height:10px;display:block"></div>
 
                 <!--abed-->
-                <div class="screen-section" *ngFor="let sectionScreen of Sections;">
+                <div *ngFor="let sectionScreen of Sections;">
 
-                    <div style="height: 25px;  margin-bottom:3px">
+                    <div class="screen-section" style="height: 25px;  margin-bottom:3px">
                         <table>
                             <tr>
 
@@ -96,7 +96,7 @@
 
 
 
-                    <div *ngIf="sectionScreen.Section.Type != 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
+                    <div class="screen-section" *ngIf="sectionScreen.Section.Type != 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
                         <table style="border:solid 1px silver;margin-left:20px">
                             <tr>
                                 <td attr.data-cy="{{'Column_' + column}}" [style.border-right]="column == '2' ? 'none':'dashed 1px silver' " style="width:250px;vertical-align: top;" *ngFor="let item of sectionScreen.ScreenRows; let column = index">
@@ -134,8 +134,8 @@
                         </table>
                     </div>
 
-                    <div *ngIf="sectionScreen.Section.Type == 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 115px; vertical-align: top;">
-                        
+                    <div class="screen-section" *ngIf="sectionScreen.Section.Type == 'Grid'" [hidden]="sectionScreen.HideSectionArea" style="height: 115px;width:100%;">
+                        <GridScreenSectionPreview [ScreenSection]="sectionScreen.Section"></GridScreenSectionPreview>
                     </div>
 
                     <div style="height:10px;"></div>

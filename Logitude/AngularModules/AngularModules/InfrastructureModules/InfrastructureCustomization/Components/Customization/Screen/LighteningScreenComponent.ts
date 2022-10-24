@@ -22,6 +22,7 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
     public ScreenLayoutComponent: ScreenLayoutComponent;
     public lighteningScreenWidth: string;
     private screenLayoutwidth = 650;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor()
     {
         super();
@@ -100,8 +101,12 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
             if (!$event) return;
             if (!$event.GridName) return;
             screenSection.Section.Name = $event.GridName;
+            let isRelatedScreenCodeModified = screenSection.Section.RelatedScreenCode != $event.RelatedScreenCode;
             screenSection.Section.RelatedScreenCode = $event.RelatedScreenCode;
             this.ScreenLayoutComponent.Modified = true;
+            if (isRelatedScreenCodeModified) {
+                this.CurrentSession.SessionEvent.emit({ Name: "ReloadGridSection" });
+            }
         });
     }
 
