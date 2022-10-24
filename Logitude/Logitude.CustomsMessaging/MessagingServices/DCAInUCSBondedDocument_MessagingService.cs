@@ -416,7 +416,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                                     DateTimeStyles.None);
             }
 
-            LogitudeSettings.HandleLogMe("CheckIsSendByDocTypeBonded  ", false, "CheckIsSendByDocType", stopLogAt);
+            LogitudeSettings.HandleLogMe("CheckIsSendByDocTypeBonded  ", false, "SendBondedCustomDocument", stopLogAt);
 
 
             bool IsSendByDocType = false;
@@ -428,14 +428,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))"+ documentTypePM?.Code, false, "CheckIsSendByDocType", stopLogAt);
+                    LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))"+ documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);
                     DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
                     DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
                     if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
 
-                        LogitudeSettings.HandleLogMe("   if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))" + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode, false, "CheckIsSendByDocType", stopLogAt);
+                        LogitudeSettings.HandleLogMe("   if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))" + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode, false, "SendBondedCustomDocument", stopLogAt);
 
                         CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                         CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
@@ -578,10 +578,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
             customsDocumentPM.DocumentsFilingId = DocumentsFilingPMId;
-            ICustomContext dbContext = CustomContext.GetContext(Tenant);
-            var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
-            var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
-            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
+            //ICustomContext dbContext = CustomContext.GetContext(Tenant);
+            //var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+            //var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
+            customsDocumentPM.DocumentTypeCode = CustomsDoucumentTypeCode;// DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
                                                                           //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 
