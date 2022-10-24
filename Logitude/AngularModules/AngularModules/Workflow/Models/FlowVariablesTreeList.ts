@@ -2,6 +2,7 @@ import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { FlowReader } from "./FlowReader";
 import { ObjectTables } from "./ObjectTables";
+import { ReturnedField } from "./ReturnedField";
 import { TreeSelectItem } from "./TreeSelectItem";
 
 export class FlowVariablesTreeList {
@@ -118,7 +119,7 @@ export class FlowVariablesTreeList {
     }
 
     private initialize(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
-        this.FlowObjectFields = flowObjectFields;
+        this.FlowObjectFields = flowObjectFields ? flowObjectFields : [];
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
     }
@@ -136,16 +137,19 @@ export class FlowVariablesTreeList {
 
     private getRecordsVariablesItemChildren() {
         let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
-        let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity);
+        let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity, null);
 
-        let recordsVariablesItemChildren = [
+        let recordsVariablesItemChildren: TreeSelectItem[] = [
             new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordItemChildren)
         ];
 
         this.getGetRecordNodesWithFirstRecordOption().forEach((node: any) => {
+            let entity = node.data["entity"];
+            let returnedFields = node.data["returnedFields"];
+            let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : [];
             let treeSelectItemName = node.data["name"];
             let treeSelectItemKey = treeSelectItemName ? treeSelectItemName.replace(/\ /gi, "").replace(new RegExp(this.ItemKeySplitter, "gi"), "").toLowerCase() : "";
-            let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, node.data["entity"]);
+            let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, treeSelectItemChildren);
             recordsVariablesItemChildren.push(treeSelectItem);
         });
@@ -154,7 +158,7 @@ export class FlowVariablesTreeList {
     }
 
     private getDeclaredVariablesItemChildren() {
-        let declaredVariablesItemChildren = [];
+        let declaredVariablesItemChildren: TreeSelectItem[] = [];
 
         this.getDeclareVariableNodes().forEach((node: any) => {
             let treeSelectItemName = node.data["variableName"];
@@ -185,12 +189,14 @@ export class FlowVariablesTreeList {
         return [];
     }
 
-    private getObjectFieldsItems(itemsKeyPrefix: string, entity: string) {
-        let entityId = ObjectTables.getIdByName(entity);
-        let objectFields = this.FlowObjectFields.filter(o => o.ObjectTableId === entityId);
-        let objectFieldsItems = [];
+    private getObjectFieldsItems(itemsKeyPrefix: string, entity: string, returnedFieldsCodes: string[] | null) {
+        let objectFieldsItems: TreeSelectItem[] = [];
 
-        objectFields.forEach((objectField: ObjectFieldPM) => {
+        if (returnedFieldsCodes && returnedFieldsCodes.length === 0) {
+            return objectFieldsItems;
+        }
+
+        this.getObjectFields(entity, returnedFieldsCodes).forEach((objectField: ObjectFieldPM) => {
             let treeSelectItemName = objectField.FullNameTextCodeDefaultText.trim();
             let treeSelectItemKey = itemsKeyPrefix + this.ItemKeySplitter + objectField.FieldCode;
             let data = {
@@ -207,12 +213,21 @@ export class FlowVariablesTreeList {
         return sortedObjectFieldsItems;
     }
 
-    private sortTreeSelectItems(items: any) {
+    private getObjectFields(entity: string, returnedFieldsCodes: string[] | null) {
+        let entityId = ObjectTables.getIdByName(entity);
+        let objectFields = this.FlowObjectFields.filter(o => o.ObjectTableId === entityId);
+        if (returnedFieldsCodes) {
+            objectFields = objectFields.filter(o => returnedFieldsCodes.indexOf(o.FieldCode) !== -1);
+        }
+        return objectFields;
+    }
+
+    private sortTreeSelectItems(items: TreeSelectItem[]) {
         if (items) {
-            let sortedItems = items.sort((a: any, b: any) => {
-                let textA = a.title.toLowerCase();
-                let textB = b.title.toLowerCase();
-                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            let sortedItems = items.sort((leftItem: TreeSelectItem, rightItem: TreeSelectItem) => {
+                let leftItemTitle = leftItem.title.toLowerCase();
+                let rightItemTitle = rightItem.title.toLowerCase();
+                return (leftItemTitle < rightItemTitle) ? -1 : (leftItemTitle > rightItemTitle) ? 1 : 0;
             });
             return sortedItems;
         }
