@@ -1197,6 +1197,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalTotangoController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalUploaderController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalMasterHouse.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalMasterHouseResponse.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalAuthenticationHelper.cs" />
