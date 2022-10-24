@@ -385,7 +385,7 @@ export class RootComponent implements AfterViewInit {
       .then(cmpRef => {
         cmpRef.instance.ComponentRef = cmpRef;
         if (!serviceResponse.HasError) {
-          cmpRef.instance.Load(termsofUseArgs.PrivateLabelId, termsofUseArgs.Id);
+            cmpRef.instance.Load(termsofUseArgs.PrivateLabelId, termsofUseArgs.Id, termsofUseArgs.VersionDocumentId);
         } else {
           if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
             cmpRef.instance.LoadErrorMessage(serviceResponse.ErrorsArray[0]);
