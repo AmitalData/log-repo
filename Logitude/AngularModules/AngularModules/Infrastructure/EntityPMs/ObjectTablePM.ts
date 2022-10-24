@@ -348,6 +348,10 @@ export class ObjectTablePM {
     public get IsCustom() { return this.isCustom; }
     public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
 
+    private parentObjectTableId: string;
+    public get ParentObjectTableId() { return this.parentObjectTableId; }
+    public set ParentObjectTableId(newValue: string) { if (this.parentObjectTableId != newValue) { this.parentObjectTableId = newValue; this.MarkAsDirty("ParentObjectTableId"); } }
+
     public OldEntityPM: ObjectTablePM;
 		
     public IsDirty: boolean;
