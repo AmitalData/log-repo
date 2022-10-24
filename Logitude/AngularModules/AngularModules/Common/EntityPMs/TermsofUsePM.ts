@@ -49,6 +49,9 @@
             public get DivSelectBackgroud() { return this.divSelectBackgroud; }
             public set DivSelectBackgroud(newValue: string) { this.divSelectBackgroud = newValue; this.MarkAsDirty(); }
             
+            private isNew: boolean;
+            public get IsNew() { return this.isNew; }
+            public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty(); } }
 
 
             public OldEntityPM: TermsofUsePM;

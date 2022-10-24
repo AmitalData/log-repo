@@ -18,7 +18,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 termsofUse.Date = termsofUsePm.Date;
                 termsofUse.VersionNumber = termsofUsePm.VersionNumber;
                 termsofUse.VersionDocumentId = termsofUsePm.VersionDocumentId;
-                termsofUse.PrivateLabelId = termsofUsePm.PrivateLabelId; 
+                termsofUse.PrivateLabelId = termsofUsePm.PrivateLabelId;
+                termsofUse.IsNew = termsofUsePm.IsNew;
         }
     }
 }

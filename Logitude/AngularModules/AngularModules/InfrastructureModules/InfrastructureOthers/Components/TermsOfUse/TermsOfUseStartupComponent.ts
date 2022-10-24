@@ -75,11 +75,11 @@ export class TermsOfUseStartupComponent implements OnInit {
         this.HasErrorMessage = true;
     }
 
-    Load(privateLabelId: string, termsOfUseId: number) {
+    Load(privateLabelId: string, termsOfUseId: number, versionDocumentId: string) {
 
         this.PrivateLabelId = privateLabelId; 
         this.TermsOfUseId = termsOfUseId;
-         
+        this.VersionDocumentId = versionDocumentId;
     }
 
     DeclineButtonClicked() {
@@ -123,13 +123,18 @@ export class TermsOfUseStartupComponent implements OnInit {
     }
 
     GetTermsofUseDocument() {
-        if (this.PrivateLabelId == null) {
-            // Tenant 0 terms of use
-            var documentId = this.TermsOfUseId + "_termsofuses";
-            DownloadManager.DownloadPage(documentId);
-        } else{  
+        if (!AppTool.IsNullOrEmpty(this.PrivateLabelId)) {
             DownloadManager.DownloadTermsOfUse(this.PrivateLabelId);
-        } 
+            return;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.VersionDocumentId)) {
+            DownloadManager.DownloadTermsOfUse(this.PrivateLabelId, this.VersionDocumentId);
+            return;
+        }
+
+        DownloadManager.DownloadPage(this.TermsOfUseId + "_termsofuses");
+      
     } 
 
 }

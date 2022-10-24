@@ -147,7 +147,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsQuotesRequestActivatedInShared = entityPM.IsQuotesRequestActivatedInShared;
             poco.EmptyReturnClosingDays = entityPM.EmptyReturnClosingDays;
             poco.ShipmentATAClosingDays = entityPM.ShipmentATAClosingDays;
-
+            poco.UseNewTermsOfUse = entityPM.UseNewTermsOfUse;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

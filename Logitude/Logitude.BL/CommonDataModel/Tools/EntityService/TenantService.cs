@@ -21,6 +21,7 @@ using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -48,7 +49,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-            
+            this.entityPM.UseNewTermsOfUse = (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev");
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 this.entityPM.Id = TenantCounter.GetNumber();

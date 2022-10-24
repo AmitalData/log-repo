@@ -13,6 +13,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
+import { AppTool } from '../../../../Infrastructure/Tools';
 @Component({
     
 
@@ -83,14 +84,14 @@ export class TermsofUseSignatureComponent implements OnInit {
     ViewFile(item: TermsofUseSignaturePMViewModel) {
 
         if (item.VersionDocumentId == null) {
-            // Tenant 0 terms of use
-            var documentId = item.TermsOfUseId + "_termsofuses";
-            DownloadManager.DownloadPage(documentId);
+            DownloadManager.DownloadPage(item.TermsOfUseId + "_termsofuses");
         } else {
-            DownloadManager.DownloadPage(item.VersionDocumentId);
+            DownloadManager.DownloadTermsOfUse(null, item.VersionDocumentId);
         }
-        }  
-    }
+
+       
+    }  
+}
 
  
 
