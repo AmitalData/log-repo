@@ -4799,7 +4799,7 @@ namespace WebFreight.Web.Helpers
         private bool ShouldChangeEntityNameToCustomer(ObjectField objectField, object currentEntity, int tenant)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CCR", tenant)) return false;
-            if (objectField.FieldCode != "Shipment.ShipperNotExporterId" && objectField.FieldCode != "Shipment.ConsigneeNotImporterId") return false;
+            if (objectField.FieldCode != "Shipment.ShipperNotExporterId" && objectField.FieldCode != "Shipment.ConsigneeNotImporterId" &&   objectField.FieldCode != "Shipment.CustomerId") return false;
             if (!IsCustomerExist(objectField, currentEntity, tenant)) return false;
             
             return true;
