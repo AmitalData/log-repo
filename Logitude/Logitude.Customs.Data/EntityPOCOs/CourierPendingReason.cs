@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string MamanSuspendedCode { get; set; }
         [Column("SwissportSuspendedCode")]
 	    public string SwissportSuspendedCode { get; set; }
+        [Column("RequiresApproval")]
+	    public bool? RequiresApproval { get; set; }
     }
 }
 	 

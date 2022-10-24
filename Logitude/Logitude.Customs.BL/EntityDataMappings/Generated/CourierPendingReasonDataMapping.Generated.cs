@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         UnifreightStatusCode, 
 	         MamanSuspendedCode, 
-	         SwissportSuspendedCode,
+	         SwissportSuspendedCode, 
+	         RequiresApproval,
 	      }
 
 
@@ -50,7 +51,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightStatusCode, 
 	         ErrorPlaceName, 
 	         MamanSuspendedCode, 
-	         SwissportSuspendedCode,
+	         SwissportSuspendedCode, 
+	         RequiresApproval,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -107,6 +109,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
             {
 				entityPOCO.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
+            {
+				entityPOCO.RequiresApproval = entityPM.RequiresApproval;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -170,6 +177,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SwissportSuspendedCode = entityPOCO.SwissportSuspendedCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequiresApproval))
+            {
+					entityPM.RequiresApproval = entityPOCO.RequiresApproval;
+            }
+
 		}
 
 		public void PMToOldPM(CourierPendingReasonPM entityPM, CourierPendingReasonPM oldEntityPM)
@@ -224,6 +236,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
             {
                 oldEntityPM.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
+            {
+                oldEntityPM.RequiresApproval = entityPM.RequiresApproval;
             }
 			
 		}

@@ -588,6 +588,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCI_CourierMastersConnectedMessagingService>
                 ((new DCI_CourierMastersConnectedMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+               DCAInUCAApproveAllPending_MsgMessagingService>
+               ((new DCAInUCAApproveAllPending_MsgMessagingService()).MainInterfaceCode);
+
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                  DCAInUCBUCADPE_MsgMessagingService>

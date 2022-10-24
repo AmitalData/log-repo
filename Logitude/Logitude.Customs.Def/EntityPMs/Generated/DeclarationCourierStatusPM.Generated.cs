@@ -1688,6 +1688,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string approvedCourierPendingList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedCourierPendingList  
+	   {
+	    
+	     get
+		{
+		   return approvedCourierPendingList;
+		 }
+		 set
+		 {
+		   if(approvedCourierPendingList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedCourierPendingList",OldValue=approvedCourierPendingList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvedCourierPendingList=value;
+		   }
+			
+		 }
+	   }
+	  private string notApprovedPendingList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NotApprovedPendingList  
+	   {
+	    
+	     get
+		{
+		   return notApprovedPendingList;
+		 }
+		 set
+		 {
+		   if(notApprovedPendingList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotApprovedPendingList",OldValue=notApprovedPendingList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notApprovedPendingList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
