@@ -255,7 +255,6 @@ import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLis
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
-import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
 import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 
