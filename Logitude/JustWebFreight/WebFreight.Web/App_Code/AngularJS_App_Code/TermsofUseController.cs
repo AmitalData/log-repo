@@ -43,11 +43,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = null;
-                    
+
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId)){
+                        termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
+                    }
 
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {
-                        termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
                         TenantManagmentPrivateLabelsQuery privateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
                         TenantManagmentPrivateLabelsPM privateLabelsPM = privateLabelsQuery.GetSinglePM(tenantPM.PrivateLabelId);
                         if(privateLabelsPM.PrivateLabelUrl == SecurityUtility.getLoggedDomain())
