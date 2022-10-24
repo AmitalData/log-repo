@@ -75,6 +75,7 @@ Cypress.Commands.add("SelectCheckBox", (Selector: string) => {
     });
 
 })
+
 Cypress.Commands.add("ClickingAfterHovering", (LogLovSelector: string, HiddenElementSelector: string) => {
     cy.get(LogLovSelector).trigger(BaseSelectors.MouseoverTrigger).find(HiddenElementSelector).click()
 
