@@ -206,52 +206,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? wasApproved ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? WasApproved  
-	   {
-	    
-	     get
-		{
-		   return wasApproved;
-		 }
-		 set
-		 {
-		   if(wasApproved != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WasApproved",OldValue=wasApproved,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   wasApproved=value;
-		   }
-			
-		 }
-	   }
-	  private bool? approval ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? Approval  
-	   {
-	    
-	     get
-		{
-		   return approval;
-		 }
-		 set
-		 {
-		   if(approval != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Approval",OldValue=approval,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   approval=value;
-		   }
-			
-		 }
-	   }
 	  private bool? courierPendingRequireApr ;
 	  	  
        

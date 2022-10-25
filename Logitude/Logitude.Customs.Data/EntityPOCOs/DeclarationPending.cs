@@ -38,8 +38,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Status { get; set; }
         [Column("Approval")]
 	    public bool? Approval { get; set; }
-        [Column("Approval")]
-	    public bool? Approval { get; set; }
     }
 }
 	 

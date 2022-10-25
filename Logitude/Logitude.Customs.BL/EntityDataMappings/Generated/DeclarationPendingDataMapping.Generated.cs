@@ -27,7 +27,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonCode, 
 	         PendingRemarks, 
 	         Status, 
-	         Approval, 
 	         Approval,
 	      }
 
@@ -43,8 +42,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Status, 
 	         Approval, 
 	         CourierPendingRequireApr, 
-	         WasApproved, 
-	         Approval, 
 	         CourierPendingRequireApr, 
 	         WasApproved,
 	      }
@@ -68,11 +65,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Status))
             {
 				entityPOCO.Status = entityPM.Status;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Approval))
-            {
-				entityPOCO.Approval = entityPM.Approval;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Approval))
@@ -114,11 +106,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Approval = entityPOCO.Approval;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Approval))
-            {
-					entityPM.Approval = entityPOCO.Approval;
-            }
-
 		}
 
 		public void PMToOldPM(DeclarationPendingPM entityPM, DeclarationPendingPM oldEntityPM)
@@ -138,11 +125,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Status))
             {
                 oldEntityPM.Status = entityPM.Status;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Approval))
-            {
-                oldEntityPM.Approval = entityPM.Approval;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Approval))

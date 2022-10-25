@@ -34,8 +34,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Status).HasColumnName("Status").HasMaxLength(1).IsUnicode(true);
 
             this.Property(t => t.Approval).HasColumnName("Approval");
-
-            this.Property(t => t.Approval).HasColumnName("Approval");
         }
     }
 }
