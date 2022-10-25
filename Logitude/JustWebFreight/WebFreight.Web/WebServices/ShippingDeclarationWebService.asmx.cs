@@ -3914,7 +3914,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.WarehouseLegReleaseDate = shipment.WarehouseLegReleaseDate;
                 myDataProvider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
                 #endregion
-
+                this.SetDestinationWarehouseLegTerminalData(myDataProvider, shipment, addressRepository);
                 ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
                 if (lastPickUp != null)
                 {
@@ -3945,6 +3945,18 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private void SetDestinationWarehouseLegTerminalData(ShippingDeclarationDataProvider myDataProvider, ShipmentPM shipment, AddressRepository addressRepository)
+        {
+            if (shipment.WarehouseLeg2WarehouseId == null) return;
+            Card warehouse = CardRepository.GetSingleCard(shipment.WarehouseLeg2WarehouseId, tenant, false);
+            if (warehouse != null) return;
+            myDataProvider.DestinationWarehouseLegTerminalName = warehouse.EnglishName;
+
+            Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
+            if (address != null) return;
+            myDataProvider.DestinationWarehouseLegTerminalAddress = DataProviders.General.GetAddress(address);
         }
         private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
         {
