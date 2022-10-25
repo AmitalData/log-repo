@@ -3949,13 +3949,10 @@ namespace WebFreight.Web.WebServices
 
         private void SetDestinationWarehouseLegTerminalData(ShippingDeclarationDataProvider myDataProvider, ShipmentPM shipment, AddressRepository addressRepository)
         {
+            myDataProvider.DestinationWarehouseLegTerminalName = shipment.WarehouseLeg2TerminalName;
             if (shipment.WarehouseLeg2WarehouseId == null) return;
-            Card warehouse = CardRepository.GetSingleCard(shipment.WarehouseLeg2WarehouseId, tenant, false);
-            if (warehouse != null) return;
-            myDataProvider.DestinationWarehouseLegTerminalName = warehouse.EnglishName;
-
-            Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
-            if (address != null) return;
+            Address address = addressRepository.GetSingleAddress(shipment.WarehouseLeg2WarehouseId, tenant);
+            if (address == null) return;
             myDataProvider.DestinationWarehouseLegTerminalAddress = DataProviders.General.GetAddress(address);
         }
         private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
