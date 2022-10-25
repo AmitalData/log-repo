@@ -200,7 +200,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return count;
         }
 
-  
+        public IQueryable<FollowUp> GetFollowUpsForShipments(int tenant)
+        {
+            return (from a in context.FollowUps.Include("Shipment")
+                         where a.Tenant == tenant && a.ShipmentId != null
+                         select a);
+        }
+
         public int GetFollowUpsCountForMasters(int tenant)
         {
             int count = (from a in context.FollowUps.Include("EventType").Include("OwnerUser.Contact")
