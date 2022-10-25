@@ -2490,50 +2490,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
 
     }
-    ApproveAllPendingMethod() {
-        debugger;
-        if (this.IsDisplayOnly) {
-           var myMessageWindow = new MessageWindow();
-           myMessageWindow.Width = 250;
-           myMessageWindow.Height = 150;
-           myMessageWindow.Show("קיים מסר זהה בתהליך");
-           SessionLocator.SelectedSession.StopBusyIndicator();
-           return;
-       }
-       var currRequestParams = new PendingRequestParams();
-       currRequestParams.LoggingEnabled = true;
-       currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-       currRequestParams.Tenant = SessionLocator.Tenant;
-       currRequestParams.CourierMasterId = this.entityPM.Id;
-       currRequestParams.MAWB = this.entityPM.MAWB;
-       let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
-       
-       var confirmWindow = new ConfirmWindow();
-       confirmWindow.Show(text);
-       confirmWindow.WindowClosed.subscribe((event: any) => {
-           if (confirmWindow.Yes) {
-               SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-               this._CourierMasterService.PostApproveAllPending(currRequestParams)
-
-           .subscribe((res: any) => {
-
-                       SessionLocator.SelectedSession.StopBusyIndicator();
-                       var myMessageWindow = new MessageWindow();
-               var myMessageWindow = new MessageWindow();
-                       myMessageWindow.Show(res.Result);
-
-
-               myMessageWindow.WindowClosed.subscribe(s => {
-                           this.RefreshButtonClicked();
-
-                       });
-                   });
-
-
-           }
-       });
-
-   }
+    
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
