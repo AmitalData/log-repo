@@ -219,6 +219,12 @@ namespace WebFreight.Web.DataProviders
         public double? TotalWeightInLBS { get; set; }
         public double? TotalVolumeINCBM { get; set; }
         public double? TotalVolumeINCBF { get; set; }
+
+        public string ShipperNotExporterName { get; set; }
+        public string ShipperNotExporterAddress { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string ConsigneeNotImporterAddress { get; set; }
+
     }
 
     public class ManifestDetailsClass

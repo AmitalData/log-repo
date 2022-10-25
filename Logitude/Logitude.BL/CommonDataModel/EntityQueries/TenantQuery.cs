@@ -847,7 +847,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        AccountingActivated = a.AccountingActivated,
-                                       UseNewTermsOfUse = a.UseNewTermsOfUse,                                  
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse,
                                        ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                    }).FirstOrDefault();
 
@@ -1181,7 +1181,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                            ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                           UseNewTermsOfUse = a.UseNewTermsOfUse,                                      
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse,
                                            ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                        }).FirstOrDefault();
 
