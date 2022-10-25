@@ -222,7 +222,7 @@ namespace WebFreight.Web.ContainerTracking
                     string.IsNullOrEmpty(shipment.Master) ||
                     visionContainerStatus?.payload?.bill_of_lading == shipment.Master
                     ) &&
-                    !container.IsCancelled && 
+                    !container.IsCancelled &&
                     !container.IsClosed;
         }
 
@@ -607,27 +607,28 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? EventDate;
         public string TrackingSource;
 
-        public string LoadedTransshipmentLocation;
-        public string LoadedTransshipmentVessel;
-        public string LoadedTransshipmentVoyage;
-        public DateTime? EstimatedLoadedTransshipment;
-        public DateTime? ActualLoadedTransshipment;
-
-        public string VesselArrivedLocation;
-        public string VesselArrivedVessel;
-        public string VesselArrivedVoyage;
-        public DateTime? EstimatedVesselArrived;
-        public DateTime? ActualVesselArrived;
-
-        //public string EmptyReturnLocation;
-        //public DateTime? EstimatedEmptyReturn;
-        //public DateTime? ActualEmptyReturn;
-
-        //public string EmptyReturnLocation;
-        //public DateTime? EstimatedEmptyReturn;
-        //public DateTime? ActualEmptyReturn;
+        public ContainerTransshipmentUpdatedFields LoadedTransshipment; 
+        public ContainerTransshipmentUpdatedFields VesselArrived;
+        public ContainerTransshipmentUpdatedFields VesselDeparted;
+        public ContainerTransshipmentUpdatedFields DischargedTransshipment;
+        
 
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }
+    }
+
+    public class ContainerTransshipmentUpdatedFields
+    {
+        public ContainerTransshipmentUpdatedFields(string key)
+        {
+            this.Key = key;
+        }
+
+        public string Key;
+        public string Location;
+        public string Vessel;
+        public string Voyage;
+        public DateTime? EstimatedDate;
+        public DateTime? ActualDate;
     }
 }
