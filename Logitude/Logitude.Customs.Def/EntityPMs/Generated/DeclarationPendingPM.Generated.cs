@@ -206,29 +206,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? courierPendingRequireApr ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? CourierPendingRequireApr  
-	   {
-	    
-	     get
-		{
-		   return courierPendingRequireApr;
-		 }
-		 set
-		 {
-		   if(courierPendingRequireApr != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPendingRequireApr",OldValue=courierPendingRequireApr,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   courierPendingRequireApr=value;
-		   }
-			
-		 }
-	   }
 	  private bool? wasApproved ;
 	  	  
        

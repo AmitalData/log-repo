@@ -42,7 +42,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Status, 
 	         Approval, 
 	         CourierPendingRequireApr, 
-	         CourierPendingRequireApr, 
 	         WasApproved,
 	      }
 
