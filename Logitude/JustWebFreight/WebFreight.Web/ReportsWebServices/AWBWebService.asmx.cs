@@ -127,6 +127,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.UserSignatureImage = GetUserSignatureImage();
                 awbDp.Place = shipmentPM.AWBPlace;
                 awbDp.CustomsDeclarationNumber = shipmentPM.DeclarationNumber;
+                awbDp.WarehouseLegTerminalName = shipmentPM.WarehouseLegTerminalName;
 
                 this.GetBranchData();
                 this.GetLoggedTenantData();
@@ -155,7 +156,6 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetOnForwardingData();
                 this.GetPreCarriageData();
                 this.GetOnCarriageData();
-                this.GetWarehouseLegTerminalData();
 
                 if (isPrint)
                 {
@@ -186,14 +186,6 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return awbDp;
-        }
-
-        private void GetWarehouseLegTerminalData()
-        {
-            if (shipmentPM.WarehouseLegWarehouseId == null) return;
-            Card warehouse = CardRepository.GetSingleCard(shipmentPM.WarehouseLegWarehouseId, tenant, false);
-            if (warehouse != null) return;
-            awbDp.WarehouseLegTerminalName = warehouse.EnglishName;
         }
 
         private void GetBranchData()
