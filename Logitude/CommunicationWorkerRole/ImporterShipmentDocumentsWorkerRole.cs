@@ -219,7 +219,7 @@ namespace CommunicationWorkerRole
                                             ShipmentPM ImporterShipment = null;
  
                                             string EntityNumber = "";
-                                            if (ForwarderShipment != null)
+                                            if (ForwarderShipment != null || ForwarderShipmentOrder != null)
                                             {
                                                 PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
 
