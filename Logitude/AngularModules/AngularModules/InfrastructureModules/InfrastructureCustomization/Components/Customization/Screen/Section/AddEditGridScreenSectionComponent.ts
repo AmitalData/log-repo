@@ -3,6 +3,8 @@ import { SessionLocator } from '../../../../../../Infrastructure/Utilities/Sessi
 import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { AppTool } from '../../../../../../Infrastructure/Tools';
 import { ScreenPM } from '../../../../../../Infrastructure/EntityPMs/ScreenPM';
+import { CustomizationObjectTableService } from '../../../../ExternalService/CustomizationObjectTableService';
+import { ObjectTablePM } from '../../../../../../Infrastructure/EntityPMs/ObjectTablePM';
 declare var window;
 
 @Component({
@@ -17,26 +19,36 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
     private ObjecttableId: string;
     AllGridScreens: ScreenPM[];
     SelectedScreen: ScreenPM;
-
+    CustomizationObjectTableService: CustomizationObjectTableService;
+    ChildObjectTables: ObjectTablePM[] = [];
     constructor() {
         super();
+        this.CustomizationObjectTableService = new CustomizationObjectTableService();
     }
 
     SetWindowArgs(args: any) {
         this.IsNew = args.IsNew;
         this.ObjecttableId = args.ObjecttableId;
+        this.FillChildObjectTableIds();
         this.FillGridScreens();
         if (this.IsNew) return;
         this.FillEditArgsMode(args);
     }
 
+    FillChildObjectTableIds() {
+        this.ChildObjectTables = this.CustomizationObjectTableService.GetChildsById(this.ObjecttableId);
+        if (!this.ChildObjectTables) {
+            this.ChildObjectTables = [];
+        }
+    }
+
     FillGridScreens() {
-        this.AllGridScreens = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type == "Grid" && !d.Inactive);
+        this.AllGridScreens = window.Screens.filter(screen => this.ChildObjectTables.some(childObjectTable => childObjectTable.Id == screen.ObjectTableId) && screen.Type == "Grid" && !screen.Inactive);
     }
 
     FillEditArgsMode(args: any) {
         this.Name = args.Name;
-        let selectedScreen = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type == "Grid" && d.Code == args.RelatedScreenCode && !d.Inactive);
+        let selectedScreen = window.Screens.filter(screen => this.ChildObjectTables.some(childObjectTable => childObjectTable.Id == screen.ObjectTableId) && screen.Type == "Grid" && screen.Code == args.RelatedScreenCode && !screen.Inactive);
         if (selectedScreen && selectedScreen[0]) {
             this.GridScreensSelectionChanged(selectedScreen[0])
         }

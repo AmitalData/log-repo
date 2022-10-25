@@ -20,6 +20,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     public SortedTypes: string[] = [];
     public SelectedSortedByField: ObjectFieldPM;
     public SearchFieldsId: string;
+    public AllFields: any[] = [];
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
     @Output() onDataSourceChangedEvent = new EventEmitter();
@@ -64,11 +65,6 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         return this.ScreenLayoutComponent.SelectedItem.ScreenPM;
     }
 
-    get AllFields() {
-        let allFields = this.ScreenLayoutComponent.AllbanckStackFields.concat(this.SelectedFields);
-        return allFields;
-    }
-
     get SelectedFields() {
         return this.ScreenLayoutComponent.GridScreenSelectedFields;
     }
@@ -110,6 +106,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.ScreenLayoutComponent.currentScreenFields.forEach((screenField, index) => {
             this.AddScreenField(screenField, index);
         });
+        this.AllFields = this.SelectedFields.concat(this.ScreenLayoutComponent.AllbanckStackFields);
     }
 
     private AddScreenField(screenField: any, index: number) {
