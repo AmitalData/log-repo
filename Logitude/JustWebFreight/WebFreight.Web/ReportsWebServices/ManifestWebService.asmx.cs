@@ -311,19 +311,27 @@ namespace WebFreight.Web.ReportsWebServices
                     if (shipperNotExporter != null)
                     {
                         manifestDataProvider.ShipperNotExporterName = shipperNotExporter.EnglishName;
-                        manifestDataProvider.ShipperNotExporterAddress = GetConsigneAddress(master.ConsigneeAddressId, shipperNotExporter.Tenant, addressRepository);
+                        Address address = addressRepository.GetSingleAddress(master.ShipperNotExporterAddressId, tenant);
+                        if (address != null)
+                        {
+                            manifestDataProvider.ShipperNotExporterAddress = DataProviders.General.GetAddress(address);
+                        }
                     }
                 }
                 #endregion
 
-                #region Shipper Not Exporter
+                #region Consignee Not Importer
                 if (!string.IsNullOrEmpty(master.ConsigneeNotImporterId))
                 {
                     CardPM consigneeNotImporter = cardQuery.GetSinglePM(master.ConsigneeNotImporterId, tenant);
                     if (consigneeNotImporter != null)
                     {
                         manifestDataProvider.ConsigneeNotImporterName = consigneeNotImporter.EnglishName;
-                        manifestDataProvider.ConsigneeNotImporterAddress = GetConsigneAddress(master.ConsigneeAddressId, consigneeNotImporter.Tenant, addressRepository);
+                        Address address = addressRepository.GetSingleAddress(master.ConsigneeNotImporterAddressId, tenant);
+                        if (address != null)
+                        {
+                            manifestDataProvider.ConsigneeNotImporterAddress = DataProviders.General.GetAddress(address);
+                        }
                     }
                 }
                 #endregion
