@@ -21,7 +21,6 @@ namespace WebFreight.Web.Helpers
         public bool IsQuotesRequestsMenuEnabled { get; set; }
         public string ContactId { get; set; }
         public bool IsReportsMenuEnabled { get; set; }
-
-        
+        public string ImageFileData  { get; set; }
     }
 }
