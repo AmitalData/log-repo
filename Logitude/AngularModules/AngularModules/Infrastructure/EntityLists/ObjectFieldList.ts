@@ -89,5 +89,8 @@ export class ObjectFieldList {
 		NavigationPropertyName: string;
 		ForMetaDataOnly: boolean;
 		IsListFilter: boolean;
+		NumberOfDigits: number;
+		DigitsAfterPoint: number;
+		CustomPickListCode: string;
 	
 }
