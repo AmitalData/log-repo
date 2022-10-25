@@ -32,6 +32,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? Approval  { get; set; }
        [DataMember]
        public bool? WasApproved  { get; set; }
+       [DataMember]
+       public bool? Approval  { get; set; }
+       [DataMember]
+       public bool? WasApproved  { get; set; }
    }
 
 }

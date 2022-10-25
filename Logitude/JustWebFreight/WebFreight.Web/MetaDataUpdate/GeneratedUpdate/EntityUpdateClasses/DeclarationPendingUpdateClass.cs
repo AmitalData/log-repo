@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationPendingUpdateClass
    {  		
-		public const string HashString = "0a100d13c51bfae07bd27a5110ebac36";
+		public const string HashString = "716f4d283fee4fcc8af8146c0f03f442";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -503,10 +503,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Approval",
 					  						DefaultText =  "Approval",
-					  						FullLocalDefaultText =  "םישור",
+					  						FullLocalDefaultText =  "אישור",
 					  						ListFieldLable =  "ApprovalListLable",
 					  						ListLableDefaultText =  "Approval",
-					  						ListLocalDefaultText =  "םישור",
+					  						ListLocalDefaultText =  "אישור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -679,10 +679,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Approval",
 					  						DefaultText =  "Approval",
-					  						FullLocalDefaultText =  "םישור",
+					  						FullLocalDefaultText =  "אישור",
 					  						ListFieldLable =  "ApprovalListLable",
 					  						ListLableDefaultText =  "Approval",
-					  						ListLocalDefaultText =  "םישור",
+					  						ListLocalDefaultText =  "אישור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

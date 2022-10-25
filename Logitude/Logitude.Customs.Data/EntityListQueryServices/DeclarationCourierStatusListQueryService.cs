@@ -243,11 +243,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
                 RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
             }
-            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotApprovedPendingList");
-            if (filter != null)
-            {
-                iQueryable = iQueryable.Where(d => d.NotApprovedPendingList != null);
-            }
+            
            
             var CourierPendingFilter = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierPendingReasonList").FirstOrDefault();
             if (CourierPendingFilter != null)
