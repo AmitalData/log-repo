@@ -9,7 +9,7 @@ export class CustomizationMainMenuItem {
     public QuerySection: string;
     public ComponentPath: string;
     public Page: any = null;
-    public args: any = {};
+    public screenArgs: any = {};
     public IsVisible: boolean;
 
     constructor(myIcon: string) {

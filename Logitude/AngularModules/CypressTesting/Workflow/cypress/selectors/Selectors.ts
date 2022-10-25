@@ -1,4 +1,3 @@
-
 export class WorkflowSelectors {
     public static readonly AutomationsTab = '#GeneralMHAutomations';
     public static readonly WorkflowsBox = "div[data-cy^='Workflows']";
@@ -21,7 +20,7 @@ export class WorkflowSelectors {
     public static readonly FlowNameInFlowBuilder = ".TabTitleRow";
     public static readonly BackToWorkflowListButton = ".BackBottun";
     public static readonly WorkflowSearchBox = "searchtextbox > input";
-    public static readonly WorkflowNameInListDiv = "div[class^='row-cell']"; 
+    public static readonly WorkflowNameInListDiv = "div[class^='row-cell']";
     public static readonly WorkflowListRefreshButton = "#Refresh";
     public static readonly WorkflowListExcelExport = "img[title^='Export To Excel']";
     public static readonly WorkflowLinkButton = "span[class^='linkbtn']";
@@ -37,13 +36,21 @@ export class WorkflowSelectors {
     public static readonly RunHistoryRefreshButton = "[data-cy^='RunHistoryRefresh']";
     public static readonly RunHistorySearchBox = "[data-cy^='RunHistorySearchBox']";
     public static readonly FirstWorkflowInstanceBusinessKey = "[data-cy^='HistoryRow_0_Text']";
+    public static readonly SingleInstanceActivityListRefreshButton = "[data-cy^='SingleInstanceActivityListRefresh']";
+    public static readonly FirstConnectorButton = "[data-selector^='connector-node-1']";
+    public static readonly DecisionElementName = "[data-cy^='condition-title']";
+    public static readonly DecisionElementLabel = "[data-cy^='decision-label']";
+    public static readonly WorkflowDecisionOkButton = "button[data-cy^='condition-properties-save-button']";
+    public static readonly WorkflowDecisionElement = "[data-selector^='condition-node-1'";
+    public static readonly NodeSettingFooter = ".node-settings-panel-footer";
+    public static readonly AddDecisionNode = ".add-condition-node";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";
     }
 
     public static WorkflowConditionOperation(index: number): string {
-        return "[data-cy^='ConditionOperator_"+ index.toString()+ "']";
+        return "[data-cy^='ConditionOperator_" + index.toString() + "']";
     }
 
     public static WorkflowConditionValue(index: number): string {
@@ -53,22 +60,22 @@ export class WorkflowSelectors {
     public static readonly WorkflowRootGroupCondition = "[data-cy^='AddRootGroupButton']";
 
     public static WorkflowAddGroupCondition(index: number): string {
-        return "[data-cy^='ConditionValue_"+ index.toString()+ "']";
+        return "[data-cy^='ConditionValue_" + index.toString() + "']";
     }
 
     public static WorkflowAddConditionButton(index: number): string {
-        return "[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+        return "[data-cy^='AddConditionButton_" + index.toString() + "']";
     }
 
     public static WorkflowGroupCondition(index: number): string {
-        return "[data-cy^='AddConditionButton_"+ index.toString()+ "']";
+        return "[data-cy^='AddConditionButton_" + index.toString() + "']";
     }
 
     public static WorkflowGroupOperation(index: number): string {
-        return "[data-cy^='ConditionOperation_"+ index.toString()+ "']";
+        return "[data-cy^='ConditionOperation_" + index.toString() + "']";
     }
 
     public static WorkflowGroupButton(index: number): string {
-        return "[data-cy^='AddGroupButton_"+ index.toString()+ "']";
+        return "[data-cy^='AddGroupButton_" + index.toString() + "']";
     }
 }

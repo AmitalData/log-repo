@@ -314,6 +314,39 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.Field8 = new CustomFieldClass("Field8", "Container", entityPoco.Field8);
             containerPM.Field9 = new CustomFieldClass("Field9", "Container", entityPoco.Field9);
             containerPM.Field10 = new CustomFieldClass("Field10", "Container", entityPoco.Field10);
+
+            containerPM.Field11 = new CustomFieldClass("Field11", "Container", entityPoco.Field11);
+            containerPM.Field12 = new CustomFieldClass("Field12", "Container", entityPoco.Field12);
+            containerPM.Field13 = new CustomFieldClass("Field13", "Container", entityPoco.Field13);
+            containerPM.Field14 = new CustomFieldClass("Field14", "Container", entityPoco.Field14);
+            containerPM.Field15 = new CustomFieldClass("Field15", "Container", entityPoco.Field15);
+            containerPM.Field16 = new CustomFieldClass("Field16", "Container", entityPoco.Field16);
+            containerPM.Field17 = new CustomFieldClass("Field17", "Container", entityPoco.Field17);
+            containerPM.Field18 = new CustomFieldClass("Field18", "Container", entityPoco.Field18);
+            containerPM.Field19 = new CustomFieldClass("Field19", "Container", entityPoco.Field19);
+            containerPM.Field20 = new CustomFieldClass("Field20", "Container", entityPoco.Field20);
+
+            containerPM.Field21 = new CustomFieldClass("Field21", "Container", entityPoco.Field21);
+            containerPM.Field22 = new CustomFieldClass("Field22", "Container", entityPoco.Field22);
+            containerPM.Field23 = new CustomFieldClass("Field23", "Container", entityPoco.Field23);
+            containerPM.Field24 = new CustomFieldClass("Field24", "Container", entityPoco.Field24);
+            containerPM.Field25 = new CustomFieldClass("Field25", "Container", entityPoco.Field25);
+            containerPM.Field26 = new CustomFieldClass("Field26", "Container", entityPoco.Field26);
+            containerPM.Field27 = new CustomFieldClass("Field27", "Container", entityPoco.Field27);
+            containerPM.Field28 = new CustomFieldClass("Field28", "Container", entityPoco.Field28);
+            containerPM.Field29 = new CustomFieldClass("Field29", "Container", entityPoco.Field29);
+            containerPM.Field30 = new CustomFieldClass("Field30", "Container", entityPoco.Field30);
+
+            containerPM.Field31 = new CustomFieldClass("Field31", "Container", entityPoco.Field31);
+            containerPM.Field32 = new CustomFieldClass("Field32", "Container", entityPoco.Field32);
+            containerPM.Field33 = new CustomFieldClass("Field33", "Container", entityPoco.Field33);
+            containerPM.Field34 = new CustomFieldClass("Field34", "Container", entityPoco.Field34);
+            containerPM.Field35 = new CustomFieldClass("Field35", "Container", entityPoco.Field35);
+            containerPM.Field36 = new CustomFieldClass("Field36", "Container", entityPoco.Field36);
+            containerPM.Field37 = new CustomFieldClass("Field37", "Container", entityPoco.Field37);
+            containerPM.Field38 = new CustomFieldClass("Field38", "Container", entityPoco.Field38);
+            containerPM.Field39 = new CustomFieldClass("Field39", "Container", entityPoco.Field39);
+            containerPM.Field40 = new CustomFieldClass("Field40", "Container", entityPoco.Field40);
             MapConcurrencyFields(containerPM);
         }
 
@@ -851,6 +884,36 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    AdditionalReference3 = container.AdditionalReference3,
                                                    AdditionalReference4 = container.AdditionalReference4,
                                                    HasTransshipments = container.HasTransshipments,
+                                                   Field11 = container.Field11,
+                                                   Field12 = container.Field12,
+                                                   Field13 = container.Field13,
+                                                   Field14 = container.Field14,
+                                                   Field15 = container.Field15,
+                                                   Field16 = container.Field16,
+                                                   Field17 = container.Field17,
+                                                   Field18 = container.Field18,
+                                                   Field19 = container.Field19,
+                                                   Field20 = container.Field20,
+                                                   Field21 = container.Field21,
+                                                   Field22 = container.Field22,
+                                                   Field23 = container.Field23,
+                                                   Field24 = container.Field24,
+                                                   Field25 = container.Field25,
+                                                   Field26 = container.Field26,
+                                                   Field27 = container.Field27,
+                                                   Field28 = container.Field28,
+                                                   Field29 = container.Field29,
+                                                   Field30 = container.Field30,
+                                                   Field31 = container.Field31,
+                                                   Field32 = container.Field32,
+                                                   Field33 = container.Field33,
+                                                   Field34 = container.Field34,
+                                                   Field35 = container.Field35,
+                                                   Field36 = container.Field36,
+                                                   Field37 = container.Field37,
+                                                   Field38 = container.Field38,
+                                                   Field39 = container.Field39,
+                                                   Field40 = container.Field40,
                                                };
             return result;
         }

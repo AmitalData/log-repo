@@ -109,6 +109,10 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsCollectorShared { get; set; }
         [Column("IsCollectorShowContactTS")]
 	    public bool IsCollectorShowContactTS { get; set; }
+        [Column("IsPickDelivCarShowContactTS")]
+	    public bool IsPickDelivCarShowContactTS { get; set; }
+        [Column("IsMainCarShowContactTS")]
+	    public bool IsMainCarShowContactTS { get; set; }
     }
 }
 	 

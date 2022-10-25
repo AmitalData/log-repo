@@ -28,6 +28,8 @@ delete from QuoteTemplateExcludedSections where Tenant = @Tenant
 delete from QuoteComputedFields where Tenant = @Tenant
 delete from Quotes where Tenant = @Tenant
 
+delete from ShipmentDocsFields where Tenant = @Tenant
+delete from ShipmentDigitalFields where Tenant = @Tenant
 delete from ShipmentUnassignedFields where Tenant = @Tenant
 delete from Containers where Tenant = @Tenant
 delete from ShipmentCustomsTransmissions where Tenant = @Tenant

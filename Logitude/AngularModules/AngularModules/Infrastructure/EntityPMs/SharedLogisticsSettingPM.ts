@@ -249,6 +249,16 @@ export class SharedLogisticsSettingPM {
     public set IsCollectorShowContactTS(newValue: boolean) { if (this.isCollectorShowContactTS != newValue) { this.isCollectorShowContactTS = newValue; this.MarkAsDirty("IsCollectorShowContactTS"); } }
        
 	 
+    private isPickDelivCarShowContactTS: boolean;
+    public get IsPickDelivCarShowContactTS() { return this.isPickDelivCarShowContactTS; }
+    public set IsPickDelivCarShowContactTS(newValue: boolean) { if (this.isPickDelivCarShowContactTS != newValue) { this.isPickDelivCarShowContactTS = newValue; this.MarkAsDirty("IsPickDelivCarShowContactTS"); } }
+       
+	 
+    private isMainCarShowContactTS: boolean;
+    public get IsMainCarShowContactTS() { return this.isMainCarShowContactTS; }
+    public set IsMainCarShowContactTS(newValue: boolean) { if (this.isMainCarShowContactTS != newValue) { this.isMainCarShowContactTS = newValue; this.MarkAsDirty("IsMainCarShowContactTS"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

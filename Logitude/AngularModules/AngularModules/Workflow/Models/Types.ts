@@ -1,4 +1,5 @@
-export type NodeType = "startNode" |
+export type NodeType =
+    "startNode" |
     "conditionNode" |
     "loopNode" |
     "setValueNode" |
@@ -13,3 +14,4 @@ export type NodeType = "startNode" |
     "dummyNode" |
     "labelNode" |
     null;
+

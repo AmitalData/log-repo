@@ -5,6 +5,7 @@
 	AS 
 	SELECT
 	Shipment.Id,
+	Shipment.NotesSharedWithCustomer,
     Shipment.Tenant,
 	Shipment.ChargeableWeight,
 	Shipment.Volume,

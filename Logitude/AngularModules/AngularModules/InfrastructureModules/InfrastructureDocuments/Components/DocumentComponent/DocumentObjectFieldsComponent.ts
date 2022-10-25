@@ -259,7 +259,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
             return field.LookUpTableId;
         }
 
-        if (field.FieldCode == "Shipment.ShipperNotExporterId" || field.FieldCode == "Shipment.ConsigneeNotImporterId") {
+        if (field.FieldCode == "Shipment.ShipperNotExporterId" || field.FieldCode == "Shipment.ConsigneeNotImporterId" || field.FieldCode == "Shipment.CustomerId") {
             return window.ObjectTables.filter(objectTable => objectTable.Name == "Customer")[0].Id;
         }
 

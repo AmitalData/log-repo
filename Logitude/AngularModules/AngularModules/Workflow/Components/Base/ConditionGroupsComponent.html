@@ -231,7 +231,7 @@
                         class="condition-value-container">
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
-                                [IsDisabled]="Condition.isDisabled"
+                                [IsDisabled]="Condition.isDisabled" [ShowItem]="showFlowVariablesTreeItem(conditionIndex)"
                                 (ValueChanged)="updateConditionValue($event, conditionIndex)">
                             </TreeSelect>
                         </div>

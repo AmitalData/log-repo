@@ -14,7 +14,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VersionDocumentId { get; set; }
         public string PrivateLabelId { get; set; }
 
-
+        public bool IsNew { get; set; }
 
 
     }

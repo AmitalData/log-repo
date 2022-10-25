@@ -15,6 +15,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -48,8 +49,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
-    public IsPrimaryObjectFieldExists: boolean = false;
-
     public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     SetWindowArgs(args: any) {
@@ -66,7 +65,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList(["Opportunity"]);
+        this.EntitiesTreeList = new EntitiesTreeList();
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -114,6 +113,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 condition.field = childField;
                 condition.fieldCode = fieldCode;
                 condition.type = objectField ? objectField.DataTypeCode : null;
+                condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+                condition.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
                 condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
                 condition.operator = ConditionOperators.EqualsField;
                 condition.isDisabled = true;
@@ -137,9 +138,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 field.fieldCode = primaryObjectField.FieldCode;
                 field.type = primaryObjectField.DataTypeCode;
                 this.ReturnedFields.push(field);
-                this.IsPrimaryObjectFieldExists = true;
-            } else {
-                this.IsPrimaryObjectFieldExists = false;
             }
             this.ReturnedFields.push(new ReturnedField());
             this.IsValidReturnedFields = false;
@@ -270,5 +268,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     deleteField(index: number) {
         this.ReturnedFields.splice(index, 1);
         this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
+    }
+
+    getEntityLabel() {
+        return this.Entity.indexOf(".") === -1 ? this.Entity : this.Entity.split(".")[1];
+    }
+
+    showEntitiesTreeItem() {
+        return (item: TreeSelectItem) => item.key !== "Opportunity";
     }
 }

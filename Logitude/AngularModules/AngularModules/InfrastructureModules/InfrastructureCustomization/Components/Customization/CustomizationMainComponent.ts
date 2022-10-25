@@ -117,7 +117,7 @@ export class CustomizationMainComponent {
     }
 
     HasEntityPermessions(objectTable) {
-        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false) || objectTable.IsComposition;
+        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false);
 
     }
 
@@ -162,7 +162,8 @@ export class CustomizationMainComponent {
             Title: this.selectedRow.DefaultText,
             IsCustomFieldsMenue: this.IsCustomFieldsMenue,
             IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled,
-            ObjectTableId: objectTableId
+            ObjectTableId: objectTableId,
+            IsSubEntity: false
         };
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }

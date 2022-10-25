@@ -1,8 +1,8 @@
-<div [attr.data-cy]="DataCy">
+<div [attr.title]="Title" [attr.data-cy]="DataCy">
 
     <nz-tree-select #nzTreeSelect [ngStyle]="{ width : Width, maxWidth : Width }" [nzNodes]="FilteredTreeItems"
         [(ngModel)]="Value" [nzShowSearch]="ShowSearch" [nzNotFoundContent]="'No Results Found'" [nzAllowClear]="AllowClear"
-        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisabled]="IsDisabled" [nzShowExpand]="ShowExpand" [nzDisplayWith]="displayItem">
+        [nzDropdownStyle]="{ 'max-height': '300px' }" [nzDisabled]="IsDisabled" [nzShowExpand]="ShowExpand" [nzDisplayWith]="getDisplayTitle">
     </nz-tree-select>
 
 </div>

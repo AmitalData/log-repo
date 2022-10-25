@@ -84,6 +84,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
                     entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;
                     entityMasterData.MainCarriageATA = entityPM.MainCarriageATA;
+
+                    entityMasterData.PreCarriageETD = entityPM.PreCarriageETD;
+                    entityMasterData.PreCarriageATD = entityPM.PreCarriageATD;
+                    entityMasterData.OnCarriageETA = entityPM.OnCarriageETA;
+                    entityMasterData.OnCarriageATA = entityPM.OnCarriageATA;
                 }
             }
         }

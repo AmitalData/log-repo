@@ -112,6 +112,10 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsCollectorShared).HasColumnName("IsCollectorShared");
 
             this.Property(t => t.IsCollectorShowContactTS).HasColumnName("IsCollectorShowContactTS");
+
+            this.Property(t => t.IsPickDelivCarShowContactTS).HasColumnName("IsPickDelivCarShowContactTS");
+
+            this.Property(t => t.IsMainCarShowContactTS).HasColumnName("IsMainCarShowContactTS");
         }
     }
 }

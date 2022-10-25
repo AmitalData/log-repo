@@ -22,9 +22,9 @@ export class EntitiesTreeList {
         { Code: "APInvoice", Name: "AP Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
     ];
 
-    constructor(excludedParentEntities: string[], onlyParentEntities: boolean = false) {
+    constructor(onlyParentEntities: boolean = false) {
         this.OnlyParentEntities = onlyParentEntities;
-        this.setEntitiesTreeItems(excludedParentEntities);
+        this.setEntitiesTreeItems();
     }
 
     public getChildField(parentEntityCode: string, childEntityCode: string) {
@@ -35,9 +35,8 @@ export class EntitiesTreeList {
         return childEntity ? childEntity.ChildField : null;
     }
 
-    private setEntitiesTreeItems(excludedParentEntities: string[]) {
-        let entities = excludedParentEntities && excludedParentEntities.length > 0 ? this.Entities.filter(e => excludedParentEntities.indexOf(e.Code) === -1) : this.Entities;
-        entities.forEach(entity => {
+    private setEntitiesTreeItems() {
+        this.Entities.forEach(entity => {
             let childrenItems = this.getChildrenItems(entity.Code);
             let entityItem = new TreeSelectItem(entity.Code, entity.Name, this.OnlyParentEntities, true, !this.OnlyParentEntities, false, childrenItems);
             this.Items.push(entityItem);

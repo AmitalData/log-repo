@@ -211,5 +211,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ToCountryCode { get; set; }
         public string MasterShipmentDataId { get; set; }
         public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
     }
 }

@@ -344,7 +344,9 @@ export class ObjectTablePM {
     public get AvailableInCustomization() { return this.availableInCustomization; }
     public set AvailableInCustomization(newValue: boolean) { if (this.availableInCustomization != newValue) { this.availableInCustomization = newValue; this.MarkAsDirty("AvailableInCustomization"); } }
        
-	 
+    private isCustom: boolean;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
 
     public OldEntityPM: ObjectTablePM;
 		

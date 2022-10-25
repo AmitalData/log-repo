@@ -22,7 +22,14 @@
         <!-- <div class="title">Cargo Tracking</div> -->
         <img *ngIf="ComapnyLogo" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
 
+        <div class="nav">
+            <ul class="left-nav" [class.show]="displayMenu">
 
+                <li *ngIf="brandingData?.ActivatePrivateSite" (click)="GoToPrivateSite()" style="float: right;">Login</li>
+
+
+            </ul>
+        </div>
     </div>
 
     <!-- Web Header -->

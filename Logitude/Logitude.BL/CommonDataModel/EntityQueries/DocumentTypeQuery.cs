@@ -2050,7 +2050,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return (from a in repository.context.DocumentTypes where a.Code == code && a.Tenant == tenant select a.Id).FirstOrDefault();
         }
 
+        public List<DocumentTypePM> GetDigitalDocuments(string objectTableName, int tenant)
+        {
+            List<DocumentTypePM> documentTypeLists = repository.context.DocumentTypes.Include("ObjectTable")
+                                                                                      .Where(a=> a.Tenant == tenant && a.IsCustomerView && a.ObjectTable.Name == objectTableName)
+                                                                                      .Select(a => new DocumentTypePM()
+                                                                                      {
+                                                                                          Id = a.Id,
+                                                                                          Tenant = a.Tenant,
+                                                                                          Name = a.Name,
+                                                                                          Code = a.Code,
+                                                                                      }).ToList();
 
+            return documentTypeLists;
+        }
     }
 
     public class ShareDocumentTypesArgs

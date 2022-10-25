@@ -153,7 +153,7 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                    [ShowExpand]="!OnlyParentEntities" (ValueChanged)="updateEntity($event)">
+                    [ShowExpand]="!OnlyParentEntities" [ShowItem]="showEntitiesTreeItem()" (ValueChanged)="updateEntity($event)">
                 </TreeSelect>
             </div>
         </td>

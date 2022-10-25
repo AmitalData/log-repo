@@ -27,6 +27,7 @@ import { OceanInsightsSettingsComponent } from './Components/OceanInsightsSettin
 import { NewImageLibraryComponent } from './Components/ImageLibrary/NewImageLibraryComponent';
 import { ImageLibraryGeneralTabComponent } from './Components/ImageLibrary/ImageLibraryGeneralTabComponent';
 import { VizionAutomaticRequestComponent } from './Components/Vizion/VizionAutomaticRequestComponent';
+import { TermsofUseComponent } from './Components/TermsOfUse/TermsofUseComponent';
 
 export const Components =
     [
@@ -59,6 +60,7 @@ export const Components =
         NewImageLibraryComponent,
         ImageLibraryGeneralTabComponent,
         VizionAutomaticRequestComponent,
+        TermsofUseComponent
     ];
 
 export class ModuleDeclarations {
@@ -96,6 +98,7 @@ export class ModuleDeclarations {
             case "NewImageLibraryComponent": { myResult = NewImageLibraryComponent; break; }
             case "ImageLibraryGeneralTabComponent": { myResult = ImageLibraryGeneralTabComponent; break; }
             case "VizionAutomaticRequestComponent": { myResult = VizionAutomaticRequestComponent; break; }
+            case "TermsofUseComponent": { myResult = TermsofUseComponent; break; }
         }
 
         return myResult;

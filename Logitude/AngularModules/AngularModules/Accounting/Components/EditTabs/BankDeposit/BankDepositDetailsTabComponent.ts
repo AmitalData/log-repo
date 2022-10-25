@@ -177,7 +177,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 console.log("Entity Reloaded");
                 console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
+                this.RedrawScreen(false);
             }
         });
     }
@@ -187,7 +187,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
     }
 
-    RedrawScreen() {
+    RedrawScreen(getDepositLines = true) {
 
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         console.log("Deposit Reloaded: ", this.EntityPM);
@@ -198,8 +198,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         // Redraw UI
         this.IsLinesSelection = false;
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-        this.GetDepositLines();
+        if(getDepositLines) {
+            this.GetDepositLines();
+        }
 
         this.CashbookLines = new ObservableCollection([]);
         this.SelectedCashbookLines = new ObservableCollection([]);
@@ -538,8 +539,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     private GetCashbookLines()
     {
         
-        this.BankDepositLines.Clear();
-        this.EntityPM.BankDepositLines = [];
+        // this.BankDepositLines.Clear();
+        // this.EntityPM.BankDepositLines = [];
 
 
         this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
@@ -835,8 +836,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     PushBankDeposit(cashbookLine: CashBookLinePM) {
-        if (!AppTool.IsNullOrEmpty(cashbookLine)) {
-
+        const isChequeNotExists = this.EntityPM.BankDepositLines.filter(x => x.ARPaymentChequeId == cashbookLine.ARPChequeId).length == 0;
+        if (!AppTool.IsNullOrEmpty(cashbookLine) && isChequeNotExists) {
             // Get Counter
             var lastRow = this.BankDepositLines.Collection[this.BankDepositLines.Length - 1];
             // var lastRow = this.BankDepositLines[this.BankDepositLines.length - 1];

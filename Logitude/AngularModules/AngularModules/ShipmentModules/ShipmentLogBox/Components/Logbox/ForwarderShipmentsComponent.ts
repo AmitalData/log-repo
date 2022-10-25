@@ -611,7 +611,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                     confirmWindow.Height = 150;
                     confirmWindow.YesButtonText = "Continue";
                     confirmWindow.NoButtonText = "Cancel";
-                    confirmWindow.Show("Shipment (" + myResult.Result.ForwarderShipmentNumber + ") with the same " + !this.IsExportShipment ? "order number" : "reference" + " is alreay exist in the query");
+                    confirmWindow.Show(this.GetWarningMessage(myResult));
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
                             this.ContinueCreateShipmentProcess(); 
@@ -639,6 +639,13 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
+    }
+
+    private GetWarningMessage(myResult: any): string {
+        let forwarderShipmentNumber = myResult?.Result?.ForwarderShipmentNumber;
+        let fieldName = !this.IsExportShipment ? "order number" : "reference";
+
+        return "Shipment (" + forwarderShipmentNumber + ") with the same " + fieldName + " is alreay exist in the query";
     }
 
     ValidateShipment() {

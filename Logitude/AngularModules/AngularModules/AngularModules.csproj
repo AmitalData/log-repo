@@ -373,6 +373,7 @@
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\TermsOfUse\TermsofUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\Vizion\VizionAutomaticRequestComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.html" />
@@ -417,6 +418,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentOthers\Components\ContainerSetting\ContainerSettingsComponent.html" />
+    <Content Include="ShipmentModules\ShipmentOthers\Components\GeneralContainersStatusesSimulator\GeneralContainersStatusesSimulatorComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\ChooseStandaloneShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\ChooseVesselComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\InlandDomesticAddressComponent.html" />
@@ -1997,6 +1999,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\QueryFilterTreeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\SubEntitiesComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\CustomizationObjectTableService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\GridScreenLayoutService.ts" />
@@ -2017,6 +2020,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\TermsOfUse\TermsofUseComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\Vizion\VizionAutomaticRequestComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
@@ -4876,6 +4880,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\WarningApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentOthers\Components\ContainerSetting\ContainerSettingsComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentOthers\Components\GeneralContainersStatusesSimulator\GeneralContainersStatusesSimulator.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentOthers\Components\ShipmentContainersStatuses\ContainersStatusesSimulatorComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />

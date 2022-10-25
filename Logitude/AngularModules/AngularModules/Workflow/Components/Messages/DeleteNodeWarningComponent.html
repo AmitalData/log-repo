@@ -1,5 +1,5 @@
 <style>
-    .error-icon-cell {
+    .warning-icon-cell {
         width: 100px;
     }
 
@@ -18,11 +18,12 @@
         white-space: break-spaces;
     }
 
-    .error-icon {
-        width: 95px;
-        height: 95px;
+    .warning-icon {
+        width: 80px;
+        height: 80px;
         position: absolute;
-        top: 0;
+        top: 14px;
+        left: 4px;
     }
 
     .bold-text {
@@ -45,8 +46,8 @@
 
 <table>
     <tr class="message-row">
-        <td class="error-icon-cell">
-            <img class="error-icon" src="./Images/ErrorIcon.png">
+        <td class="warning-icon-cell">
+            <img class="warning-icon" src="./Images/InfoIcon.png">
         </td>
         <td>
             <div class="message-container">
@@ -72,7 +73,7 @@
     <tr>
         <td colspan="2">
             <FooterButtons [ShowSaveOnly]="true" [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="cancelButtonClicked()"
-                [SaveButtonDataCy]="'error-message-ok-button'"></FooterButtons>
+                [SaveButtonDataCy]="'warning-message-ok-button'"></FooterButtons>
         </td>
     </tr>
 </table>

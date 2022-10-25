@@ -297,11 +297,35 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
                 }
+
                 if (!string.IsNullOrEmpty(master.SalesmanUserId))
                 {
                     manifestDataProvider.SalesmanName = master.SalesmanUserName;
                 }
+                #endregion
 
+                #region Shipper Not Exporter
+                if (!string.IsNullOrEmpty(master.ShipperNotExporterId))
+                {
+                    CardPM shipperNotExporter = cardQuery.GetSinglePM(master.ShipperNotExporterId, tenant);
+                    if (shipperNotExporter != null)
+                    {
+                        manifestDataProvider.ShipperNotExporterName = shipperNotExporter.EnglishName;
+                        manifestDataProvider.ShipperNotExporterAddress = GetConsigneAddress(master.ConsigneeAddressId, shipperNotExporter.Tenant, addressRepository);
+                    }
+                }
+                #endregion
+
+                #region Shipper Not Exporter
+                if (!string.IsNullOrEmpty(master.ConsigneeNotImporterId))
+                {
+                    CardPM consigneeNotImporter = cardQuery.GetSinglePM(master.ConsigneeNotImporterId, tenant);
+                    if (consigneeNotImporter != null)
+                    {
+                        manifestDataProvider.ConsigneeNotImporterName = consigneeNotImporter.EnglishName;
+                        manifestDataProvider.ConsigneeNotImporterAddress = GetConsigneAddress(master.ConsigneeAddressId, consigneeNotImporter.Tenant, addressRepository);
+                    }
+                }
                 #endregion
 
                 #region Consolidator
