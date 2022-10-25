@@ -79,6 +79,20 @@
     <Constraints
       Nullable="true" />  
     </Column>
+  <Column
+    Name="SortedByFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />  
+  </Column>
+  <Column
+    Name="SortedType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />  
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"

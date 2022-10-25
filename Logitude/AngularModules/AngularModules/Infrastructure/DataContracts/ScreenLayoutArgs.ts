@@ -8,4 +8,6 @@ export class ScreenLayoutArgs {
     public Rows: number;
     public Columns: number;
     public ScreenCode: string;
+    public SortedType: string;
+    public SortedByFieldCode: string;
 }

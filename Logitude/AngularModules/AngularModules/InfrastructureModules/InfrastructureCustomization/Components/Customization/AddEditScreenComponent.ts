@@ -24,18 +24,33 @@ export class AddEditScreenComponent extends BaseComponent {
     IsNew: boolean = true;
     private numberOfRows: number =1;
     private numberOfColumns: number = 3;
-    private screenType: string = "LIGHTENING";
     private CurrentSession = SessionLocator.SelectedSession;
     public IsEditMode: boolean = false;
+    public IsSubEntity: boolean;
+    public ScreenTypes: ScreenTypeDetails[] = [];
+
+    private selectedScreenType: ScreenTypeDetails;
+    get SelectedScreenType() { return this.selectedScreenType; }
+    set SelectedScreenType(value: ScreenTypeDetails) {
+        if (this.selectedScreenType != value) {
+            this.selectedScreenType = value;
+        }
+    }
 
     constructor() {
         super();
         this.screenExtendedService = new ScreenExtendedService();
+        this.FillScreenTypes();
+    }
 
+    FillScreenTypes() {
+        this.ScreenTypes.push(new ScreenTypeDetails("Grid", "Grid Screen Layout"));
+        this.ScreenTypes.push(new ScreenTypeDetails("LIGHTENING", "Form Screen Layout"));
     }
 
     SetWindowArgs(args: any) {
         this.screenLayoutComponent = args.ScreenLayoutComponent;
+        this.IsSubEntity = args.IsSubEntity;
 
         this.EntityPM = args.Screen || this.GetNewScreenInstance();
         this.Name = this.EntityPM ? this.EntityPM.Name : "";
@@ -43,18 +58,28 @@ export class AddEditScreenComponent extends BaseComponent {
 
         this.SetObjectTableFields(this.EntityPM);
         this.IsEditMode = args.Screen != null;
+        this.SetScreenType();
     }
 
 
     GetNewScreenInstance() {
         var screen = new ScreenPM();
-        screen.Type = this.screenType;
         screen.Tenant = SessionLocator.Tenant;
         screen.NumberOfRows = this.numberOfRows;
         screen.NumberOfColumns = this.numberOfColumns;
         return screen;
     }
 
+    SetScreenType() {
+        if (!this.IsSubEntity) {
+            this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == "LIGHTENING")[0];
+            return;
+        }
+        if (this.IsEditMode) {
+            this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == this.EntityPM.Type)[0];
+            return;
+        }
+    }
 
     private SetObjectTableFields(screen: ScreenPM) {
         var objectTable = window.ObjectTables.filter(x => x.Id === this.screenLayoutComponent.ObjecttableId)[0];
@@ -96,6 +121,12 @@ export class AddEditScreenComponent extends BaseComponent {
             return;
         }
 
+
+        if (!this.selectedScreenType || AppTool.IsNullOrEmpty(this.selectedScreenType.Code)) {
+            this.ValidationErrorsList.push("Type is Required");
+            return;
+        }
+
         this.MapScreenFields();
         this.IsEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
     }
@@ -104,6 +135,7 @@ export class AddEditScreenComponent extends BaseComponent {
    private MapScreenFields() {
        this.EntityPM.Name = this.Name;
        this.EntityPM.Inactive = this.Inactive;
+       this.EntityPM.Type = this.selectedScreenType.Code;
 
     }
 
@@ -161,5 +193,13 @@ export class AddEditScreenComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+}
 
+class ScreenTypeDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }

@@ -70,8 +70,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             return (this.Poco.Inactive != this.entityPM.Inactive && this.entityPM.Inactive == true); 
         }
 
-        public void Update(List<ScreenSectionPM> screenSections)
+        public void Update(List<ScreenSectionPM> screenSections, Screen screen)
         {
+            if (screen != null && screen.Type == "Grid") return;
+
             screenSections.ForEach((screenSection) =>
             {
                 switch (screenSection.ChangeSetOp)
