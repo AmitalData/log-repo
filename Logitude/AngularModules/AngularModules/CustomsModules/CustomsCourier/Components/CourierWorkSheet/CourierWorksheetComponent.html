@@ -478,7 +478,7 @@
                                                         <tr>
                                                             <td>
                                                                 <!--All-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='ALL' ">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
@@ -627,11 +627,12 @@
                                                                         </td>
                                                                         <td style="width:1px"></td>
                                                                         
+                                                                        
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--SVG-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='SVG' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='SVG' ">
                                                                     <tr>
                                                                         <td style="width:100px"><button class="Button"
                                                                                 (click)="SendALLSVG(false)"
@@ -642,7 +643,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!--MNF-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='MNF' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='MNF' ">
                                                                     <tr>
                                                                         <td style="width:300px;">
                                                                             <ul class="FiltersMenu"
@@ -707,7 +708,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!--DEC-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='DEC' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='DEC' ">
                                                                     <tr>
                                                                         <td style="width: 300px;">
                                                                             <ul class="FiltersMenu"
@@ -772,7 +773,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!--DOC-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='DOC' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='DOC' ">
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu"
@@ -893,7 +894,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!--PAY-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='PAY' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='PAY' ">
                                                                     <tr>
                                                                         <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)"
                                                                             style="width:100px; text-align:right"
@@ -942,7 +943,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!--ACC-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='ACC' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='ACC' ">
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu"
@@ -971,7 +972,7 @@
                                                                     </tr>
                                                                 </table>
                                                                 <!-- HOLD -->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='HOLD' ">
+                                                                <table *ngIf="_SelectedTabFilter?.Code=='HOLD' ">
                                                                     <tr>
                                                                         <td class="col1Label"
                                                                             style="width:80px; font-size: 13px; font-weight:bold; padding-right: 10px;">
@@ -1033,12 +1034,12 @@
                                                                                 [AsRegularButton]="'true'"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
+
                                                                                 <div
                                                                                     class="class-MENUSplitButton-content">
                                                                                     <div></div>
                                                                                 </div>
                                                                                 </split-button>
-                                                                                
                                                                         </td>
                                                                         <td>
                                                                             <div *ngIf="HasRequiresApprovalFeature"
@@ -1055,7 +1056,10 @@
                                                                                         <div></div>
                                                                                     </div>
                                                                                 </split-button>
-                                                                            </div>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
                                                                         </td>
                                                                         <td>
                                                                             <div></div>
@@ -1517,9 +1521,7 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="_SelectedTabFilter.Code=='HOLD'"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="_SelectedTabFilter?.Code=='HOLD'" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"
@@ -1554,9 +1556,7 @@
         -->
                                                     </div>
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="!(_SelectedTabFilter.Code=='HOLD')"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="!(_SelectedTabFilter?.Code=='HOLD')" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"
