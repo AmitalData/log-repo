@@ -26,6 +26,7 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
+import { GridScreenLayoutService } from '../../ExternalService/GridScreenLayoutService';
 
 
 
@@ -67,6 +68,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     public IsObjectTableFilterEnabled: boolean = false;
     public IsTabsCustomizationEnabled: boolean = false;
     public IsSubEntity: boolean = false;
+    public GridScreenSelectedFields: ObjectFieldPM[] = [];
     private screenLayoutService: IScreenLayoutService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
@@ -107,6 +109,9 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
     private GetScreenLayoutService() {
+        if (this.IsGridScreen) {
+            return new GridScreenLayoutService(this);
+        }
         return this.IsMuiltSectionScreen ? new MuiltSectionScreenLayoutService(this) : new ClassicScreenLayoutService(this);
     }
 
@@ -434,6 +439,11 @@ export class ScreenLayoutComponent extends BaseComponent {
         return screen && screen.Type == 'LIGHTENING';
     }
 
+    get IsGridScreen() {
+        var screen = this.OldItem ? this.OldItem : this.SelectedItem;
+        return screen && screen.Type == 'Grid';
+    }
+
     onMyDrop(event: DragEvent, screenRowDetails: ScreenRowDetails, column: number, sectionNumber: number = null) {
         let screenRows = this.screenLayoutService.GetScreenRows(sectionNumber);
         this.Modified = true;
@@ -667,6 +677,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         logitudeWindow.Title = "New Screen"
         let windowArgs: any = {};
         windowArgs.ScreenLayoutComponent = this;
+        windowArgs.IsSubEntity = this.IsSubEntity;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditScreenComponent');
     }
@@ -732,7 +743,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         logitudeWindow.Title = EditScreenTitle
         logitudeWindow.WindowArgs = {
             ScreenLayoutComponent: this,
-            Screen: this.SelectedItem.ScreenPM
+            Screen: this.SelectedItem.ScreenPM,
+            IsSubEntity: this.IsSubEntity,
         };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditScreenComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -784,6 +796,10 @@ export class ScreenLayoutComponent extends BaseComponent {
     GetScreenComponentPath(screenType: string) {
         if (screenType == "LIGHTENING") {
             return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/LighteningScreenComponent';
+        }
+
+        if (screenType == "Grid") {
+            return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/GridScreenComponent';
         }
 
         return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/ClassicScreenComponent';

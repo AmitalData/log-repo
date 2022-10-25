@@ -26,6 +26,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Name { get; set; }
         public int  UserTenant { get; set; }
         public string Type { get; set; }
+        public string SortedByFieldCode { get; set; }
+        public string SortedType { get; set; }
 
 
         [Include]

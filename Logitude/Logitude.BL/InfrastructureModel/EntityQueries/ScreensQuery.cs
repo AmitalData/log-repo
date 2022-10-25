@@ -57,6 +57,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    Tenant = a.Tenant,
                                    UserTenant = tenant,
                                    Type = a.Type,
+                                   SortedByFieldCode = a.SortedByFieldCode,
+                                   SortedType = a.SortedType,
                                }).ToList();
 
 
@@ -105,6 +107,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
                                       Type = a.Type,
+                                      SortedByFieldCode = a.SortedByFieldCode,
+                                      SortedType = a.SortedType,
 
 
                                   }).ToList();
@@ -135,6 +139,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         UserTenant = tenant,
                         Type = a.Type,
+                        SortedByFieldCode = a.SortedByFieldCode,
+                        SortedType = a.SortedType,
 
                     }).FirstOrDefault();
 
@@ -160,6 +166,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         UserTenant = tenant,
                         Type = a.Type,
+                        SortedByFieldCode = a.SortedByFieldCode,
+                        SortedType = a.SortedType,
 
                     }).ToList();
         }

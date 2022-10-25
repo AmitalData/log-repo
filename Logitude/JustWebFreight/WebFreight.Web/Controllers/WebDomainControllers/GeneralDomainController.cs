@@ -554,7 +554,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                new ScreenSectionService(objectContext, authToken.Tenant).Update(args.ScreenSections);
+                new ScreenSectionService(objectContext, authToken.Tenant).Update(args.ScreenSections, screen);
 
                 return Request.CreateResponse(HttpStatusCode.OK, args);
             }
@@ -569,6 +569,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             screen.NumberOfRows = args.Rows;
             screen.NumberOfColumns = args.Columns;
+            screen.SortedByFieldCode = args.SortedByFieldCode;
+            screen.SortedType = args.SortedType;
             myRepo.context.Screens.Attach(screen);
             myRepo.context.SetAsModified(screen);
             myRepo.context.SaveChanges();

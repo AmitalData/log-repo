@@ -662,6 +662,10 @@ export class ObjectFieldPM {
     public get IsListFilter() { return this.isListFilter; }
     public set IsListFilter(newValue: boolean) { if (this.isListFilter != newValue) { this.isListFilter = newValue; this.MarkAsDirty("IsListFilter"); } }
 
+    private indexOrder: number;
+    public get IndexOrder() { return this.indexOrder; }
+    public set IndexOrder(newValue: number) { if (this.indexOrder != newValue) { this.indexOrder = newValue; this.MarkAsDirty("IndexOrder"); } }
+
 
 
     public OldEntityPM: ObjectFieldPM;

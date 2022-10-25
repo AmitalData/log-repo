@@ -80,7 +80,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
                         ScreenSectionService screenSectionService = new ScreenSectionService(MyContext, authToken.Tenant);
-                        screenSectionService.Update(screenSections);
+                        screenSectionService.Update(screenSections, null);
                         scope.Complete();
 
                         return Request.CreateResponse(HttpStatusCode.OK, screenSections);

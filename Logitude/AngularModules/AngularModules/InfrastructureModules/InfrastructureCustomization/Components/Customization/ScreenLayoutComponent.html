@@ -112,7 +112,7 @@
                                             </div>
 
                                         </td>
-                                  
+
                                     </tr>
                                 </table>
                             </div>
@@ -122,29 +122,32 @@
                     </td>
 
                     <!-- Content -->
-                    <td *ngIf="!IsMuiltSectionScreen">
+                    <td *ngIf="!IsMuiltSectionScreen && !IsGridScreen">
                         <div class="LocationDirective" LocationDirective Code="ClASSIC"> </div>
                     </td>
 
-                    <td *ngIf="IsMuiltSectionScreen" style=" border: 1px solid silver;border-right:0px">
+                    <td *ngIf="IsMuiltSectionScreen || IsGridScreen" style=" border: 1px solid silver;">
 
                         <div *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" class="screen-designer-header">
                             <div class="title">
                                 <span [attr.title]="SelectedItem.Name"  class="Header-with-dots">{{SelectedItem.Name || 'Screen'}}</span>
                                 <IconButton  style="top:-1px"  [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
                             </div>
-                            <div *ngIf="IsSubEntity" class="buttons">
+                            <div *ngIf="IsSubEntity && !IsGridScreen" class="buttons">
                                 <button class="Button" (click)="NewSectionButtonClick('Standard')">New Section</button>
                             </div>
-                            <div *ngIf="!IsSubEntity" class="buttons" style="width:45px;">
+                            <div *ngIf="!IsSubEntity && !IsGridScreen" class="buttons" style="width:45px;">
                                 <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="52">
                                     <ToggleButtonItem [Text]="'Section'" (click)="NewSectionButtonClick('Standard')" style="height:100%; width: 100%;"></ToggleButtonItem>
                                     <ToggleButtonItem [Text]="'Child Entities Grids'" (click)="NewSectionButtonClick('Grid')" style="height:100%; width: 100%;"></ToggleButtonItem>
                                 </ToggleButton>
                             </div>
                         </div>
-                        <div class="component-wrapper">
+                        <div *ngIf="!IsGridScreen" class="component-wrapper">
                             <div class="LocationDirective" LocationDirective Code="LIGHTENING"> </div>
+                        </div>
+                        <div *ngIf="IsGridScreen" class="component-wrapper">
+                            <div class="LocationDirective" LocationDirective Code="Grid"> </div>
                         </div>
 
                     </td>
@@ -152,7 +155,7 @@
                     <td style="width:2px"></td>
 
                     <!-- Right Sidebar -->
-                    <td style="width:216px;border:solid 1px silver;">
+                    <td *ngIf="!IsGridScreen" style="width:216px;border:solid 1px silver;">
                         <div class="SimpleGridView MediaFillAbsolute">
                             <div class="SimpleGridViewHeader" style="height:75px;">
                                 <table>

@@ -31,12 +31,12 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
     }
 
     FillGridScreens() {
-        this.AllGridScreens = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type != "Grid" && !d.Inactive);
+        this.AllGridScreens = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type == "Grid" && !d.Inactive);
     }
 
     FillEditArgsMode(args: any) {
         this.Name = args.Name;
-        let selectedScreen = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type != "Grid" && d.Code == args.RelatedScreenCode && !d.Inactive);
+        let selectedScreen = window.Screens.filter(d => d.ObjectTableId == this.ObjecttableId && d.Type == "Grid" && d.Code == args.RelatedScreenCode && !d.Inactive);
         if (selectedScreen && selectedScreen[0]) {
             this.GridScreensSelectionChanged(selectedScreen[0])
         }

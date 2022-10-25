@@ -165,7 +165,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool ForMetaDataOnly { get; set; }
 
         public bool IsListFilter { get; set; }
-
+        public bool IndexOrder { get; set; }
 
 
     }

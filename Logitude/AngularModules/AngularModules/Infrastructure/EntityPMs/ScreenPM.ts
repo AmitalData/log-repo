@@ -55,4 +55,12 @@ export class ScreenPM {
     public set Type(newValue: string) { this.type = newValue; }
 
 
+    private sortedByFieldCode: string;
+    public get SortedByFieldCode() { return this.sortedByFieldCode; }
+    public set SortedByFieldCode(newValue: string) { this.sortedByFieldCode = newValue; }
+
+
+    private sortedType: string;
+    public get SortedType() { return this.sortedType; }
+    public set SortedType(newValue: string) { this.sortedType = newValue; }
 }
