@@ -31,7 +31,7 @@ import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
+import { PendingRequestParams } from 'Customs/DataContract/RequestParams/PendingRequestParams';
 
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
@@ -131,35 +131,40 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
+    HasRequiresApprovalFeature:boolean=false;
+
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _http: HttpClient, private cdr: ChangeDetectorRef) {
         super();
-        
+        if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
+            this.HasRequiresApprovalFeature = true;
+        }
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
+        });
 
-
-            //this.entityPM = entityArgs.EntityPM;
-            this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
-            this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
-            this._TabFilterList.push(new TabFilter("SVG", "בעיות בסיווג", null, null));
-            this._TabFilterList.push(new TabFilter("MNF", "בעיות במצהר ", null, null));
-            this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
-            this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
-            this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
-            this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
-            this._SelectedTabFilter = this._TabFilterList[0];
-            //SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-            //this.PseventRowSelectEventSubscribe =
-            //    SessionLocator.SelectedSession.PseventRowSelectEvent.subscribe(
-            //        (res) => {
-            //            if (res == "CourierWorksheetListTemplate.SendSplitButton") {
-            //                this.preventSelect = true;
-            //            }
-            //        });
-            //);
-            this.GetMamanPUR();
-            this.GetIsSendDocumentsFromQueueButton();
-            this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
-            this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
+        //this.entityPM = entityArgs.EntityPM;
+        this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
+        this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
+        this._TabFilterList.push(new TabFilter("SVG", "בעיות בסיווג", null, null));
+        this._TabFilterList.push(new TabFilter("MNF", "בעיות במצהר ", null, null));
+        this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
+        this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
+        this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
+        this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
+        this._SelectedTabFilter = this._TabFilterList[0];
+        //SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+        //this.PseventRowSelectEventSubscribe =
+        //    SessionLocator.SelectedSession.PseventRowSelectEvent.subscribe(
+        //        (res) => {
+        //            if (res == "CourierWorksheetListTemplate.SendSplitButton") {
+        //                this.preventSelect = true;
+        //            }
+        //        });
+        //);
+        this.GetMamanPUR();
+        this.GetIsSendDocumentsFromQueueButton();
+        this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
 
             this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
 
@@ -627,6 +632,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.RefreshList();
         this.DisplayOnlyCheck();
         this.DisplayOnlyCheckDeletePending();
+        this.DisplayOnlyCheckApprovePending();
 
 
         if (this._ValidationErrors2.length > 0) {
@@ -685,13 +691,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
     _HOLD_Total = 0;
+    _NotApproved = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
     _InCorrectDECToBatchSend = 0;
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    // _DecWithoutHaTra = 0;
+    _TotalNotAccepted =0;
+   // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
 
@@ -908,6 +916,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
 
+                            break;
+                        }
+                        case "NotApproved": {
+                            //statements; 
+                            this._NotApproved = item.Value;
                             break;
                         }
                         default: {
@@ -1738,6 +1751,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 case "A": {
                     break;
                 }
+                case "NotApproved": {
+                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null,  "NotEqual", true, false, false, "string");
+                    break;
+                }
                 default: {
                     filters.addAdditionalFilter("CourierPendingReasonList", this.SelectedPendingCodeFilter.Key, null, null, "Contains", false, false, false, "string");
                     break;
@@ -1858,6 +1875,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     GetPending() {
         this._PendingCodes.length = 0;
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
+        if (this.HasRequiresApprovalFeature) {
+            this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
+        }       
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
@@ -2363,7 +2383,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             SessionLocator.SelectedSession.StopBusyIndicator();
             return;
         }
-        var currRequestParams = new SendClosePendingRequestParams();
+        var currRequestParams = new PendingRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
@@ -2386,26 +2406,70 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (confirmWindow.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierMasterService.PostSendClosePending(currRequestParams)
-
-                    .subscribe((res: any) => {
-
+ 
+            .subscribe((res: any) => {
+ 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        var myMessageWindow = new MessageWindow();
+                var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
 
-
-                        myMessageWindow.WindowClosed.subscribe(s => {
+ 
+                myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
                         });
                     });
 
-
-            }
+         
+    }
         });
 
     }
+    ApproveAllPendingMethod() {
+        debugger;
+        if (this.IsDisplayOnly) {
+           var myMessageWindow = new MessageWindow();
+           myMessageWindow.Width = 250;
+           myMessageWindow.Height = 150;
+           myMessageWindow.Show("קיים מסר זהה בתהליך");
+           SessionLocator.SelectedSession.StopBusyIndicator();
+           return;
+       }
+       var currRequestParams = new PendingRequestParams();
+       currRequestParams.LoggingEnabled = true;
+       currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+       currRequestParams.Tenant = SessionLocator.Tenant;
+       currRequestParams.CourierMasterId = this.entityPM.Id;
+       currRequestParams.MAWB = this.entityPM.MAWB;
+       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
+       
+       var confirmWindow = new ConfirmWindow();
+       confirmWindow.Show(text);
+       confirmWindow.WindowClosed.subscribe((event: any) => {
+           if (confirmWindow.Yes) {
+               SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+               this._CourierMasterService.PostApproveAllPending(currRequestParams)
+
+           .subscribe((res: any) => {
+
+                       SessionLocator.SelectedSession.StopBusyIndicator();
+                       var myMessageWindow = new MessageWindow();
+               var myMessageWindow = new MessageWindow();
+                       myMessageWindow.Show(res.Result);
+
+
+               myMessageWindow.WindowClosed.subscribe(s => {
+                           this.RefreshButtonClicked();
+
+                       });
+                   });
+
+
+           }
+       });
+
+   }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
@@ -2501,6 +2565,25 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
+                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                }
+            }
+        });
+    }
+
+    DisplayOnlyCheckApprovePending() {
+        this.IsDisplayOnly = false;
+        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
+
+        //Check if deleting pending
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "DCAInUCBApproveAllPending", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }

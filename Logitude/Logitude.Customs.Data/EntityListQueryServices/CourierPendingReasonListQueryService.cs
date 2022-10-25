@@ -36,6 +36,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 UnifreightStatusCode = a.UnifreightStatusCode,
 												MamanSuspendedCode=a.MamanSuspendedCode,
 												SwissportSuspendedCode=a.SwissportSuspendedCode,
+												RequiresApproval = a.RequiresApproval,
 		                    	            });
             return query;
 		}

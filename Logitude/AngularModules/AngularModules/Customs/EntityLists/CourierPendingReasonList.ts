@@ -20,6 +20,7 @@ export class CourierPendingReasonList {
 	ErrorPlaceName: string;
 	MamanSuspendedCode: string;
 	SwissportSuspendedCode: string;
+	RequiresApproval: boolean;
 	
 }
  
