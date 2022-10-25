@@ -3499,6 +3499,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     EditItem(item: SupplierInvoiceItemLine) {
         if (!AppTool.IsNullOrEmpty(item)) {
+
+            if (this.Parent.declarationPM.Direction == "E" )
+                this.allowExport = true;
+
             var windowArgs: any = {};
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.Parent = item;
