@@ -109,9 +109,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _SelectedMNFTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
     _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
-    public columns: any[] = null;
+    public columns: any[] = [];
     public columnsPending: any[] = null;
-    public queryColumns: any[] = null;
+    public queryColumns: any[] = [];
     IsActionButtonsEnabled: boolean = false;
     IsInit: boolean = false;
     IsFiltered: boolean = false;
@@ -131,7 +131,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
-    HasRequiresApprovalFeature:boolean=false;
+    HasRequiresApprovalFeature: boolean = false;
 
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _http: HttpClient, private cdr: ChangeDetectorRef) {
@@ -166,7 +166,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
 
-            this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
+        this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
 
     }
     //PseventRowSelectEventSubscribe: any;
@@ -698,8 +698,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _TotalNotAccepted =0;
-   // _DecWithoutHaTra = 0;
+    _TotalNotAccepted = 0;
+    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
 
@@ -1188,20 +1188,55 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public Tenant: number = SessionInfo.LoggedUserTenant;
     public QueryColumns: any[];
 
-    async GetQueryColumns(queryCode, userId) {
+    async GetQueryColumns(queryCode, userId, isUserAdd = false) {
 
-
-
-        //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        await this.getColumns(queryCode, userId);
+        this.getBaseColumns()
+        await this.getAllColumns(queryCode, userId, isUserAdd);
     }
+    getBaseColumns() {
+        if (this.queryColumns.length==0) {
+            this.queryColumns.push({
+                FieldName: 'CourierPendingReasonList',
+                DataTypeCode: 'String',
+                //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+                Styles: { width: '37px' },
+                IsCustomTemplate: true,
+                HtmlListComponentName: 'CourierWorksheetListTemplate',
+                HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+                ServerSideSortable: false
+            });
+            this.queryColumns.push({
+                FieldName: 'SendSplitButton',
+                DataTypeCode: 'String',
+                //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+                Styles: { width: '99px' },
+                IsCustomTemplate: true,
+                HtmlListComponentName: 'CourierWorksheetListTemplate',
+                HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+                ServerSideSortable: false
+            });
+        }
+    }
+    getAllColumns(queryCode, userId, isUserAdd = false) {
 
-    getColumns(queryCode, userId) {
         return new Promise<void>((resolve) => {
             this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + "Customs.DeclarationCourierStatus.CourierWorkScreen" + "&objecttableid=" + "1-695" + "&userid=" + userId)
                 .subscribe((response: any) => {
-                   
-                    this.columns = [];
+                    this.QueryColumns = response;
+                    this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
+
+                    this.QueryColumns.forEach((value, key) => {
+                        var mutaztouch0 = value.ObjectFieldCode;
+                        var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
+                        var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
+
+                        this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
+                    });
+
+                    if (!isUserAdd)
+                        this.columns = [];
+
+
                     this.columns.push({
                         FieldName: "MyDeclarationCheckBox",
                         DataTypeCode: 'String',
@@ -1213,296 +1248,276 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
                     });
 
-                    this.columns.push({
-                        FieldName: 'CourierHawb',
-                        DataTypeCode: 'String',
-                        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
-                        Styles: { width: '108px' },
-                        IsCustomTemplate: true,
-                        HtmlListComponentName: 'CourierWorksheetListTemplate',
-                        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-                        ServerSideSortable: true,
-                        SortByName: 'CourierHawb'
-                    });
+                    for (var i = 0; i < this.QueryColumns.length; i++) {
+                        var CurColumn = this.columns.filter(a => a.FieldName == this.QueryColumns[i].ObjectFieldName);
+                        this.columnsObjectField = this.columnsObjectFields.find(f => f.FieldName == this.QueryColumns[i].ObjectFieldName)
+                        if (this.columns != null && (CurColumn == null || CurColumn.length == 0)) {
 
-                   this.QueryColumns = response;
-                    this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
+                            this.columns.push({
+                                FieldName: this.columnsObjectField.FieldName,//this.columnsObjectFields[i].ListPropertyPath ? this.columnsObjectFields[i].ListPropertyPath : this.columnsObjectFields[i].FieldName,
+                                DataTypeCode: this.columnsObjectField.DataTypeCode,
+                                Display: TextCodeTranslator.Translate(this.columnsObjectField.ListTextCodeCode),
+                                IsCustomTemplate: true,
+                                Styles: { width: this.QueryColumns[i].ColumnWidth + 'px' },
+                                HtmlListComponentName: 'CourierWorksheetListTemplate',
+                                HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+                                ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
+                                
+                            });
+                        }
+                    }
+                    this.columns = this.columns.concat(this.queryColumns);
+                    if (isUserAdd)
+                        this.ngOnInit();
 
-                    this.QueryColumns.forEach((value, key) => {
-                        var mutaztouch0 = value.ObjectFieldCode;
-                        var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
-                        var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
-
-                        this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
-                    }); 
-                    // for (var i = 0; i < this.QueryColumns.length; i++) {
-                    //  //   var CurColumn = this.columns.filter(a => a.FieldName == this.QueryColumns[i].ObjectFieldName);
-                    //   //  if ( (CurColumn == null || CurColumn.length == 0)) {
-
-                    //         this.columns.push({
-                    //             FieldName: this.columnsObjectFields[i].FieldName,//this.columnsObjectFields[i].ListPropertyPath ? this.columnsObjectFields[i].ListPropertyPath : this.columnsObjectFields[i].FieldName,
-                    //             DataTypeCode: this.columnsObjectFields[i].DataTypeCode,
-                    //             Display: TextCodeTranslator.Translate(this.columnsObjectFields[i].ListTextCodeCode),
-                    //             IsCustomTemplate: true,
-                    //             Styles: { width: this.QueryColumns[i].ColumnWidth + 'px' },
-                    //             HtmlListComponentName: this.columnsObjectFields[i].HtmlListComponentName, //'TransportModeCellDisplayListTemplate',
-                    //             HtmlListComponentUrl: this.columnsObjectFields[i].HtmlListComponentUrl, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
-                    //            ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
-                    //           //  ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'TransportModeCellDisplayListTemplate',
-                    //            // ObjectField: this.columnsObjectFields[i],
-                    //             //QueryCode: queryCode
-                    //             //ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
-                    //         });
-                    //   //  }
-                    // }
-                    // this.BuildColumns()
                     resolve();
                 });
         })
 
     }
-    BuildColumns() {
-        this.columns = [];
+    
+    // BuildColumns() {
+    //     this.columns = [];
 
-        this.columns.push({
-            FieldName: "MyDeclarationCheckBox",
-            DataTypeCode: 'String',
-            Display: '',
-            IsCustomTemplate: true,
-            Styles: { width: '27px' },
-            //IsCheckBox: true
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-        });
+    //     this.columns.push({
+    //         FieldName: "MyDeclarationCheckBox",
+    //         DataTypeCode: 'String',
+    //         Display: '',
+    //         IsCustomTemplate: true,
+    //         Styles: { width: '27px' },
+    //         //IsCheckBox: true
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierHawb',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
-            Styles: { width: '108px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'CourierHawb'
-        });
-        //SortByName: 'CourierHawb'
+    //     this.columns.push({
+    //         FieldName: 'CourierHawb',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
+    //         Styles: { width: '108px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'CourierHawb'
+    //     });
+    //     //SortByName: 'CourierHawb'
 
-        this.columns.push({
-            FieldName: 'ProcedureCurrentName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '117px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'ProcedureCurrentName'
-        });
+    //     this.columns.push({
+    //         FieldName: 'ProcedureCurrentName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
+    //         Styles: { width: '117px' },
+    //         IsCustomTemplate: true,
+    //         ServerSideSortable: true,
+    //         SortByName: 'ProcedureCurrentName'
+    //     });
 
-        this.columns.push({
-            FieldName: 'HighLowValue',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
-            Styles: { width: '67px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'FastIndividualProcessCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'HighLowValue',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
+    //         Styles: { width: '67px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'FastIndividualProcessCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'ImporterName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '173px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'ImporterName'
-        });
+    //     this.columns.push({
+    //         FieldName: 'ImporterName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
+    //         Styles: { width: '173px' },
+    //         IsCustomTemplate: true,
+    //         ServerSideSortable: true,
+    //         SortByName: 'ImporterName'
+    //     });
 
-        this.columns.push({
-            FieldName: 'ImporterCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '90px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'SortedImporterCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'ImporterCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
+    //         Styles: { width: '90px' },
+    //         IsCustomTemplate: true,
+    //         ServerSideSortable: true,
+    //         SortByName: 'SortedImporterCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'DocumentStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DocumentStatusCode"),
-            Styles: { width: '55px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'SortedDocumentStatusCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'DocumentStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DocumentStatusCode"),
+    //         Styles: { width: '55px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'SortedDocumentStatusCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'IsCourierMissingClassification',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '47px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'IsCourierMissingClassification'
-        });
+    //     this.columns.push({
+    //         FieldName: 'IsCourierMissingClassification',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
+    //         Styles: { width: '47px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'IsCourierMissingClassification'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierManifestStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '50px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'SortedCourierManifestStatus'
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierManifestStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
+    //         Styles: { width: '50px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'SortedCourierManifestStatus'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierDeclarationStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '50px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'SortedCourierDeclarationStatus'
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierDeclarationStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
+    //         Styles: { width: '50px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'SortedCourierDeclarationStatus'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierPaymentStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
-            Styles: { width: '53px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'CourierPaymentStatusCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierPaymentStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
+    //         Styles: { width: '53px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'CourierPaymentStatusCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierCustomStatusName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '100px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'CourierCustomStatusName'
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierCustomStatusName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
+    //         Styles: { width: '100px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'CourierCustomStatusName'
+    //     });
 
-        this.columns.push({
-            FieldName: 'StorageSiteStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
-            Styles: { width: '98px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'StorageSiteStatusCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'StorageSiteStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
+    //         Styles: { width: '98px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'StorageSiteStatusCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'SpecialActionStatus',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
-            Styles: { width: '54px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'SpecialActionStatus'
-        });
+    //     this.columns.push({
+    //         FieldName: 'SpecialActionStatus',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
+    //         Styles: { width: '54px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'SpecialActionStatus'
+    //     });
 
-        this.columns.push({
-            FieldName: 'DeclarationStatusTypeName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
-            Styles: { width: '188px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
-        });
+    //     this.columns.push({
+    //         FieldName: 'DeclarationStatusTypeName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
+    //         Styles: { width: '188px' },
+    //         IsCustomTemplate: true,
+    //         ServerSideSortable: true,
+    //         SortByName: 'DeclarationStatusTypeName'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierPendingReasonName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
-            Styles: { width: '105px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'CourierPendingReasonName'
-        });
-        this.columns.push({
-            FieldName: 'TruckerName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.TruckerName"),
-            Styles: { width: '115px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'TruckerName'
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierPendingReasonName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
+    //         Styles: { width: '105px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'CourierPendingReasonName'
+    //     });
+    //     this.columns.push({
+    //         FieldName: 'TruckerName',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.TruckerName"),
+    //         Styles: { width: '115px' },
+    //         IsCustomTemplate: true,
+    //         ServerSideSortable: true,
+    //         SortByName: 'TruckerName'
+    //     });
 
-        this.columns.push({
-            FieldName: 'LastMileStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
-            Styles: { width: '73px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'LastMileStatusCode'
-        });
+    //     this.columns.push({
+    //         FieldName: 'LastMileStatusCode',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
+    //         Styles: { width: '73px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'LastMileStatusCode'
+    //     });
 
-        this.columns.push({
-            FieldName: 'IsClosedForFollowUp',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '42px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: true,
-            SortByName: 'IsClosedForFollowUp'
-        });
+    //     this.columns.push({
+    //         FieldName: 'IsClosedForFollowUp',
+    //         DataTypeCode: 'String',
+    //         Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+    //         Styles: { width: '42px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: true,
+    //         SortByName: 'IsClosedForFollowUp'
+    //     });
 
-        this.columns.push({
-            FieldName: 'CourierPendingReasonList',
-            DataTypeCode: 'String',
-            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '37px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false
-        });
-        this.columns.push({
-            FieldName: 'SendSplitButton',
-            DataTypeCode: 'String',
-            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '99px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false
-        });
+    //     this.columns.push({
+    //         FieldName: 'CourierPendingReasonList',
+    //         DataTypeCode: 'String',
+    //         //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+    //         Styles: { width: '37px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: false
+    //     });
+    //     this.columns.push({
+    //         FieldName: 'SendSplitButton',
+    //         DataTypeCode: 'String',
+    //         //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+    //         Styles: { width: '99px' },
+    //         IsCustomTemplate: true,
+    //         HtmlListComponentName: 'CourierWorksheetListTemplate',
+    //         HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+    //         ServerSideSortable: false
+    //     });
 
-    }
+    // }
 
     DataSource = {
 
@@ -1752,7 +1767,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     break;
                 }
                 case "NotApproved": {
-                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null,  "NotEqual", true, false, false, "string");
+                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null, "NotEqual", true, false, false, "string");
                     break;
                 }
                 default: {
@@ -1877,7 +1892,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         if (this.HasRequiresApprovalFeature) {
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
-        }       
+        }
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
@@ -2406,70 +2421,70 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (confirmWindow.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierMasterService.PostSendClosePending(currRequestParams)
- 
-            .subscribe((res: any) => {
- 
+
+                    .subscribe((res: any) => {
+
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                var myMessageWindow = new MessageWindow();
+                        var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
 
- 
-                myMessageWindow.WindowClosed.subscribe(s => {
+
+                        myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
                         });
                     });
 
-         
-    }
+
+            }
         });
 
     }
     ApproveAllPendingMethod() {
         debugger;
         if (this.IsDisplayOnly) {
-           var myMessageWindow = new MessageWindow();
-           myMessageWindow.Width = 250;
-           myMessageWindow.Height = 150;
-           myMessageWindow.Show("קיים מסר זהה בתהליך");
-           SessionLocator.SelectedSession.StopBusyIndicator();
-           return;
-       }
-       var currRequestParams = new PendingRequestParams();
-       currRequestParams.LoggingEnabled = true;
-       currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-       currRequestParams.Tenant = SessionLocator.Tenant;
-       currRequestParams.CourierMasterId = this.entityPM.Id;
-       currRequestParams.MAWB = this.entityPM.MAWB;
-       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
-       
-       var confirmWindow = new ConfirmWindow();
-       confirmWindow.Show(text);
-       confirmWindow.WindowClosed.subscribe((event: any) => {
-           if (confirmWindow.Yes) {
-               SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-               this._CourierMasterService.PostApproveAllPending(currRequestParams)
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            return;
+        }
+        var currRequestParams = new PendingRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.MAWB = this.entityPM.MAWB;
+        let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
 
-           .subscribe((res: any) => {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(text);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this._CourierMasterService.PostApproveAllPending(currRequestParams)
 
-                       SessionLocator.SelectedSession.StopBusyIndicator();
-                       var myMessageWindow = new MessageWindow();
-               var myMessageWindow = new MessageWindow();
-                       myMessageWindow.Show(res.Result);
+                    .subscribe((res: any) => {
 
-
-               myMessageWindow.WindowClosed.subscribe(s => {
-                           this.RefreshButtonClicked();
-
-                       });
-                   });
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
 
 
-           }
-       });
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
 
-   }
+                        });
+                    });
+
+
+            }
+        });
+
+    }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
@@ -2766,7 +2781,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.GetQueryColumns("Customs.DeclarationCourierStatus.CourierWorkScreen", SessionInfo.LoggedUserId)
+            this.GetQueryColumns("Customs.DeclarationCourierStatus.CourierWorkScreen", SessionInfo.LoggedUserId, true)
+
             // this.QueryValueChanged({ QueryCode: "Customs.DeclarationCourierStatus.BulkFeedPending", Title: TextCodeTranslator.Translate( "CourierMaster.Q.OPENCOURIERMASTERS"), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
@@ -2777,6 +2793,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public UserQueries: any[];
     private title: string;//= "";
     public columnsObjectFields: any[] = [];
+    public columnsObjectField: any;
     public Queries: any[];
     private _SelectedQuery: any = null;
     public QueryCode: string;
