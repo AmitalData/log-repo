@@ -34,84 +34,64 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, info.CardId);
-
+               
                 // Create Docs In
                 var tenant = authToken.Tenant;
-                var loggedUserEmail = authToken.Email;
-                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-                ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+                var email = authToken.Email;
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
+                DocumentsFilingService service = new DocumentsFilingService(context, tenant);
+                var documentId = service.UploadDigitalDoeument(info,tenant, loggedContact);
 
-                Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(loggedUserEmail, tenant);
-                var objecttableId = GetObjectTableId(info.ObjectTableName, tenant);
-                DocumentsFilingPM newDocument = new DocumentsFilingPM()
-                {
-                    DocumentTypeId = info.DocumentTypeId,
-                    EntityId = info.EntityId,
-                    Tenant = tenant,
-                    ObjectTableName = info.ObjectTableName,
-                    ObjectTableId = objecttableId,
-                    DirectionCode = "I",
-                    ReceivedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    FileExtension = info.FileExtension,
-                    FileSize = info.FileSize,
-                    ReceivedByUserName = loggedContact?.EnglishName,
-                };
-
-                newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact?.EnglishName + "," + loggedContact?.LocalName;
-                newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-                newDocument.CreatedByUserId = loggedContact.Id;
-                newDocument.OwnerId = loggedContact.Id;
-                newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                newDocument.UpdatedByUserId = loggedContact.Id;
-                newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                DocumentsFilingService service = new DocumentsFilingService(MyContext, tenant);
-                service.Create(newDocument, null);
-
-                // Upload Image 
-                ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
-                var filter = new ImageParameter()
-                {
-                    Base64String = info.Base64String,
-                    EntityId = newDocument.Id,
-                    Extension = info.FileExtension,
-                    FileSize = info.FileSize,
-                    FileName = info.FileName,
-                    Tenant = tenant,
-                    Buffersize = info.Buffersize
-                };
-
-                ImageParameter _filter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
-                
-                // Notes & Events 
-                if (!string.IsNullOrEmpty(info.Notes))
-                {
-                    if (info.Notes.Contains('.')) info.Notes = info.Notes.Split('.')[0];
-                }
-                var eventCode = "DOUP";
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = authToken.Tenant,
-                    EventTypeCode = eventCode,
-                    UserId = loggedContact.Id,
-                    EntityId = info.EntityId,
-                    ObjectTableName = "Shipment",
-                    Notes = info.Notes,
-                });
-
-                return Ok("");
+                ImageParameter imageParameterfilter =  UploadImage(documentId, info, tenant);
+                AddUploadEvent(info, loggedContact.Id, tenant);
+               
+                return Ok(imageParameterfilter);
             }
             catch (Exception ex)
             {
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
-
-        private string GetObjectTableId(string objectTableName, int tenant)
+        private ImageParameter UploadImage(string documentId, DigitalUploaderInfo info, int tenant)
         {
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
-            string objectTableId = objectTableQuery.GetObjectTableIdByName(objectTableName);
-            return objectTableId;
+            // Upload Image 
+            ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
+            var filter = new ImageParameter()
+            {
+                Base64String = info.Base64String,
+                EntityId = documentId,
+                Extension = info.FileExtension,
+                FileSize = info.FileSize,
+                FileName = info.FileName,
+                Tenant = tenant,
+                Buffersize = info.Buffersize
+            };
+
+            ImageParameter imageParameterfilter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
+            return imageParameterfilter;
         }
+
+        private void AddUploadEvent(DigitalUploaderInfo info, string loggedContactId, int tenant)
+        {
+            // Notes & Events 
+            if (!string.IsNullOrEmpty(info.Notes))
+            {
+                if (info.Notes.Contains('.')) info.Notes = info.Notes.Split('.')[0];
+            }
+
+            var eventCode = "DOUP";
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventTypeCode = eventCode,
+                UserId = loggedContactId,
+                EntityId = info.EntityId,
+                ObjectTableName = info.ObjectTableName,
+                Notes = info.Notes,
+            });
+        }
+
     }
 }

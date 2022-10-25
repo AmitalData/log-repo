@@ -45,6 +45,7 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.Server.Tools.CToolWorkflows;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1655,6 +1656,49 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             return true;
         }
+
+
+        #region Digital Portal 
+
+        public string UploadDigitalDoeument(DigitalUploaderInfo info, int tenant, Contact loggedContact)
+        {
+           
+            var objecttableId = GetObjectTableId(info.ObjectTableName, tenant);
+            DocumentsFilingPM newDocument = new DocumentsFilingPM()
+            {
+                DocumentTypeId = info.DocumentTypeId,
+                EntityId = info.EntityId,
+                Tenant = tenant,
+                ObjectTableName = info.ObjectTableName,
+                ObjectTableId = objecttableId,
+                DirectionCode = "I",
+                ReceivedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                FileExtension = info.FileExtension,
+                FileSize = info.FileSize,
+                ReceivedByUserName = loggedContact?.EnglishName,
+            };
+
+            newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact?.EnglishName + "," + loggedContact?.LocalName;
+            newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+            newDocument.CreatedByUserId = loggedContact.Id;
+            newDocument.OwnerId = loggedContact.Id;
+            newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            newDocument.UpdatedByUserId = loggedContact.Id;
+            newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            Create(newDocument, null);
+
+            return newDocument?.Id;
+        }
+
+        private string GetObjectTableId(string objectTableName, int tenant)
+        {
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+            string objectTableId = objectTableQuery.GetObjectTableIdByName(objectTableName);
+            return objectTableId;
+        }
+
+        #endregion Digital Portal 
+
     }
     public class UniFileVerM
     {
