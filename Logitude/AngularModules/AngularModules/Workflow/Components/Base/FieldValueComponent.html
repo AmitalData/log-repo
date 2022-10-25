@@ -13,7 +13,7 @@
                 [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true"
                 [DisplayMemberPath]="LookupTable.LovDisplayMemberPath || LookupTable.LookUp2 || LookupTable.LookUp1"
                 [SelectedValue]="CurrentValue" [HideColumns]="!LookupTable.AutoCompleteSearchWindow"
-                [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event?.Id)"
+                [HideLastColumn]="LookupTable.AutoCompleteSearchWindow" (SelectedItemChanged)="updateValue($event)"
                 [DataCy]="Name" [ForceDisabled]="IsDisabled">
             </LogLov>
 

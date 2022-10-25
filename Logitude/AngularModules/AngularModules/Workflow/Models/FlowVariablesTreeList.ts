@@ -66,7 +66,7 @@ export class FlowVariablesTreeList {
     private compareItemPickListType(item: TreeSelectItem, compareWithLookupOrPickListType: string) {
         let fieldItemType = item.data["type"];
         let fieldItemPickListType = item.data["picklistType"];
-        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.LookUp)) {
+        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.PickList)) {
             return false;
         }
         if (fieldItemPickListType !== undefined && (fieldItemPickListType === null || fieldItemPickListType !== compareWithLookupOrPickListType)) {

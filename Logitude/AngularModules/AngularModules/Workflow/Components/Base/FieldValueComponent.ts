@@ -83,6 +83,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     updateValue(value: any) {
         if (this.isDateTimeObjectField() && !this.IsIntegerNumberInput) {
             value = this.getDateValue(value);
+        } else if (this.isLookupObjectField() && this.LookupTable) {
+            value = this.getLookupValue(value, this.LookupTable.KeyPropertyPath);
         }
         this.ValueChanged.emit(value);
     }
@@ -94,6 +96,13 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
                 this.getTwoDigitsNumber(value.getMonth() + 1),
                 this.getTwoDigitsNumber(value.getDate())
             ].join('-');
+        }
+        return null;
+    }
+
+    getLookupValue(value: any, lookupKeyPropertyPath: string) {
+        if (value) {
+            return lookupKeyPropertyPath ? (value[lookupKeyPropertyPath] || value.Id) : value.Id;
         }
         return null;
     }
