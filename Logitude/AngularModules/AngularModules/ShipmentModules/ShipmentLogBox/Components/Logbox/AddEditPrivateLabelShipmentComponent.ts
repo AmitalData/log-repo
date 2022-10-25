@@ -95,7 +95,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
     SetFromPort() {
         if (!this.IsNew) {
-            this.FromPort = this.EntityPM.FromPort;
+            this.FromPort = this.EntityPM.FromPortId;
             return;
         }
 
