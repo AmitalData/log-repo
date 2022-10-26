@@ -2,9 +2,6 @@
 using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using System;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -29,12 +26,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<DigitalContactLastSetting> GetDigitalContactLastSetting(int tenant)
         {
-            return (from record in context.DigitalContactLastSettings where record.Tenant == tenant select record);
+            return context.DigitalContactLastSettings.Where(a => a.Tenant == tenant).Select(a => a);
         }
 
         public DigitalContactLastSetting GetSingleDigitalContactLastSetting(string id, int tenant)
         {
-            return (from record in context.DigitalContactLastSettings where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return context.DigitalContactLastSettings.Where(a => a.Id == id && a.Tenant == tenant).FirstOrDefault();
         }
 
         public void Add(DigitalContactLastSetting entity)
@@ -54,7 +51,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public List<DigitalContactLastSetting> GetDigitalContactLastSettings(string contactId, string objectTableId, int tenant)
         {
-            var result = context.DigitalContactLastSettings.Where(a => a.ContactId == contactId && a.Tenant == tenant && a.ObjectTableId == objectTableId).ToList();
+            var result = context.DigitalContactLastSettings.Where(a => a.ContactId == contactId && a.Tenant == tenant && a.ObjectTableId == objectTableId)
+                                                           .ToList();
 
             return result;
         }
