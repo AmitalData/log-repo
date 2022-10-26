@@ -97,6 +97,9 @@
 
                                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Table Name:" />
                                         <TextBox Grid.Row="1" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding TableName, Mode=TwoWay}" />
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Object Table Name:" />
+                                        <TextBox Grid.Row="2" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ObjectTableName, Mode=TwoWay}" />
                                     </Grid>
 
 

@@ -92,6 +92,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
 
             if (string.IsNullOrEmpty(this.TableName)) str.AppendLine("Name is required!");
             if (string.IsNullOrEmpty(this.Name)) str.AppendLine("Table Name is required!");
+            if (string.IsNullOrEmpty(this.ObjectTableName)) str.AppendLine("Object Table Name is required!");
 
             foreach (var field in this.AnalyticsFactsFieldsMetaDataViewModels) field.Validate(str);
 
