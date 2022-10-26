@@ -406,6 +406,8 @@
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
+
+    <Compile Include="Tasks\DeleteOldContactActivityLogsTask.cs" />
     <Compile Include="Services\Logbox\CustomerTenantsURLService.cs" />
     <Compile Include="Services\Logbox\ImporterBuilderShipmentsBatchService.cs" />
     <Compile Include="Services\Logbox\ImporterBuilderShipmentsOrderBatchService.cs" />

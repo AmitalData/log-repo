@@ -214,6 +214,15 @@ namespace Logitude.BL.InfrastructureModel
                 IsInternallyDefined = false, 
                 Description = "UpdateCanceledSATEntitiesStatusesTask", 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldContactActivityLogsTask", 
+                Name = "DeleteOldContactActivityLogsTask", 
+                SearchFields = "DeleteOldContactActivityLogsTask", 
+                Description = "DeleteOldContactActivityLogsTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }
