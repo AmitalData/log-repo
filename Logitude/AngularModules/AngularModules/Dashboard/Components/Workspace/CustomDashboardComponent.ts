@@ -91,6 +91,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     private GetDefaultDashboard() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var defaultId: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
         if (!AppTool.IsNullOrEmpty(defaultId)) {
             this.SelectedDashboardId = defaultId;
@@ -128,7 +129,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                     this.SetEmptyDashboardVisibility();
                 }
 
-                
+                this.CurrentSession.StopBusyIndicator();
             }            
         });
     }
