@@ -3951,7 +3951,7 @@ namespace WebFreight.Web.WebServices
         {
             myDataProvider.DestinationWarehouseLegTerminalName = shipment.WarehouseLeg2TerminalName;
             if (shipment.WarehouseLeg2WarehouseId == null) return;
-            Address address = addressRepository.GetSingleAddress(shipment.WarehouseLeg2WarehouseId, tenant);
+            Address address = addressRepository.GetSingleAddress(shipment.WarehouseLeg2AddressId, tenant);
             if (address == null) return;
             myDataProvider.DestinationWarehouseLegTerminalAddress = DataProviders.General.GetAddress(address);
         }
