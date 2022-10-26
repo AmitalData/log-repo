@@ -144,7 +144,11 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
+        if(this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD") {
+            this.CurrentSession.CloseCurrentWindowData({entity: this.paymentPM});
+        } else {
+            this.CurrentSession.CloseCurrentWindow();
+        }
     }
 
     CloneEntity(entityToClone: ARPaymentPM) {

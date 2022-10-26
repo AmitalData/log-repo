@@ -2346,6 +2346,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.SetDefaultChequeFields();
             }
         }
+		if(this.EntityPM.AccountingPaymentMethodCode == "CH" && event.hasOwnProperty('entity')) {
+			this.EntityPM.ARPaymentChequeReplicas = event.entity.aRPaymentChequeReplicas
+		}
     }
     SetDefaultChequeFields() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
