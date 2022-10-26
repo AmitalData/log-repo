@@ -1676,6 +1676,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 FileExtension = info.FileExtension,
                 FileSize = info.FileSize,
                 ReceivedByUserName = loggedContact?.EnglishName,
+                Notes = info.Notes
             };
 
             newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact?.EnglishName + "," + loggedContact?.LocalName;
