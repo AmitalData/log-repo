@@ -21,7 +21,7 @@
                         <tr>
 
                             <td style="width: 250px; min-width: 250px; max-width: 250px;">Entity Name</td>
-                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Type</td>
+                            <td style="width: 80px; min-width: 80px; max-width: 80px;">Is Custom</td>
                             <td style="width: 60px; min-width: 60px; max-width: 60px;"></td>
                             <td class="LastChild" style="min-width: 20px;">
                                 <div></div>
@@ -39,18 +39,17 @@
                             <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px; position: relative;">
                                 <div style="display:inline-block">
 
-                                    <span>{{item.Name | TextCodeTranslationPipe}}</span>
+                                    <span>{{GetItemNameAfterTranslation(item)}}</span>
 
                                 </div>
                             </td>
 
-                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
-                                <span *ngIf="!item.IsCustom">Standard Object</span>
-                                <span *ngIf="item.IsCustom">Custom Object</span>
+                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+                                <img *ngIf="item.IsCustom" src="./Images/CheckBoxIcon.png" class="CenterCenter" style="width:15px; height:12px"/>
                             </td>
 
-                            <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
-                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowCustomizationEditComponentForSubEntity(item.Id, item.Name)"></IconButton>
+                            <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; position: relative;" >
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowCustomizationEditComponentForSubEntity(item)"></IconButton>
                             </td>
 
 

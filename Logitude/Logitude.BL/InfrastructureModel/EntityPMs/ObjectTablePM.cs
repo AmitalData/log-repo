@@ -73,6 +73,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool AvailableInCustomization { get; set; }
         public string ParentObjectTableId { get; set; }
         public bool IsCustom { get; set; }
+        public string Description { get; set; }
+        public string DefaultText { get; set; }
+        public string DefaultTextPlural { get; set; }
 
     }
 }

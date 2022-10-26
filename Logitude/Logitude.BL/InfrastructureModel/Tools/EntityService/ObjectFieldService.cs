@@ -64,7 +64,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             textCodeRepository = new TextCodeRepository(ObjectContext);
             objectTableRepository = new ObjectTableRepository(ObjectContext);
             objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
-            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
             string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
             string tenantListAutomationObjectFields = "tabletenantAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower() + theEntityPm.Tenant;
@@ -104,7 +104,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     count = list.Count;
                 }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container")
+                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container" || ObjectTable.IsCustom)
                 {
                     allowedCount = ObjectTable.MaxNumberOfCustomFields;
                 }
@@ -264,7 +264,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(ObjectContext);
             ObjectFieldValidationRepository objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
 
-            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
 
             string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
@@ -309,7 +309,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (helpTextCode == null)
                 {
-                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);
+                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true);
 
                     TextCode newHelpTextCode = new TextCode();
                     newHelpTextCode.TextCodeTypeCode = "H";
@@ -425,7 +425,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
 
-			string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+			string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
 			string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
 			string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
 			string tenantListAutomationObjectFields = "tabletenantAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower() + theEntityPm.Tenant;
@@ -468,7 +468,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (helpTextCode == null)
                 {
-                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);
+                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true);
 
                     TextCode newHelpTextCode = new TextCode();
                     newHelpTextCode.TextCodeTypeCode = "H";

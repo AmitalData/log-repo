@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             ObjectTableRepository repository = new ObjectTableRepository(tenant);
             ObjectTableQuery query = new ObjectTableQuery(repository);
-            var objectTables = query.GetObjectPMsByTenant(0).ToList();
+            var objectTables = query.GetObjectPMsByTenant(tenant).ToList();
 
             return objectTables;
         }

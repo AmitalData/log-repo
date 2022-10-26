@@ -26,6 +26,7 @@ import { QueryFilterTreeComponent } from './Components/Customization/QueryFilter
 import { CustomizationEditComponent } from './Components/Customization/CustomizationEditComponent';
 import { SubEntitiesComponent } from './Components/Customization/SubEntitiesComponent';
 import { AddEditGridScreenSectionComponent } from './Components/Customization/Screen/Section/AddEditGridScreenSectionComponent';
+import { AddSubEntityComponent } from './Components/Customization/AddSubEntityComponent';
 
 export const Components =
     [
@@ -55,7 +56,8 @@ export const Components =
         QueryFilterTreeComponent,
         CustomizationEditComponent,
         SubEntitiesComponent,
-        AddEditGridScreenSectionComponent
+        AddEditGridScreenSectionComponent,
+        AddSubEntityComponent
     ];
 export const ControlsComponents =
     [
@@ -100,6 +102,7 @@ export class ModuleDeclarations {
             case "CustomizationEditComponent": { myResult = CustomizationEditComponent; break; }
             case "SubEntitiesComponent": { myResult = SubEntitiesComponent; break; }
             case "AddEditGridScreenSectionComponent": { myResult = AddEditGridScreenSectionComponent; break; }
+            case "AddSubEntityComponent": { myResult = AddSubEntityComponent; break; }
         }
 
         return myResult;
