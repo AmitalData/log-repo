@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         IsAmendment = true,
                         ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID),
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
-                        Consignments = GetConsignments(declaration, tenant, null, context, null),
+                        Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments),
                     };
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
@@ -211,17 +211,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsConnectedToUnifreight = false;
                     declarationPM.AmendmentDontDisplayInList = false;
                     declarationPM.IsAmendment = true;
-                    declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context,declarationOrg?.Consignments);
+                    declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context,null);
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    if(declarationOrg != null) {
-                        declarationOrg?.Consignments.ForEach(x => {
-                            x.ExportContainerizationID = null;
-                            x.ChangeSetOp = ChangeSetOperation.Update;
-                        });
-                        declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationUpdateService.Update(declarationOrg,true);
-                    }
+
 
                 }
 
@@ -671,7 +664,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationPM != null)
                 {
                     var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
-                    consignmentPM.SequenceNumeric = maxCounter + 1;                 
+                    consignmentPM.SequenceNumeric = maxCounter + 1;
                 }
                 if (consignment.TransportContractDocument != null)
                 {
@@ -685,6 +678,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (consignments != null) { 
                         consignmentPM.ExportContainerizationID = consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
+                    }
+                    if (declarationPM != null)
+                    {                      
+                        consignmentPM.ExportContainerizationID = declarationPM.Consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
                     }
                 }
                 if (consignment.UnloadingLocation != null)
