@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Procedure
-  DBType="Main"
+  DBType="SystemLogs"
   Name="DeleteOldContactActivityLogs"
   Schema="dbo"
-  Module="Infrastructure">
+  Module="Common">
   <SqlScript>
     <![CDATA[
 CREATE procedure [dbo].[DeleteOldContactActivityLogs] as

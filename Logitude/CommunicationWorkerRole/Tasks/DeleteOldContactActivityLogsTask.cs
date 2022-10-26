@@ -21,7 +21,7 @@ namespace CommunicationWorkerRole.Tasks
         public override void StartTask()
         {
 
-            string dataBaseConnection = GetGlobalConnectionString();
+            string dataBaseConnection = GetSystemLogsConnectionString();
             using (SqlConnection sqlConnection = new SqlConnection(dataBaseConnection))
             {
                 SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldContactActivityLogs]", sqlConnection)
@@ -36,9 +36,9 @@ namespace CommunicationWorkerRole.Tasks
             }
         }
 
-        private string GetGlobalConnectionString()
+        private string GetSystemLogsConnectionString()
         {
-            string dbConnectionTo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            string dbConnectionTo = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
             string destinationConnectionString = BuildConnectionString(GetConnectionStringArguments(dbConnectionTo));
             return destinationConnectionString;
         }
