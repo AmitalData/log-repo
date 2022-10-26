@@ -4,6 +4,10 @@
         width: 10px;
     }
 
+    .Table-cell05 {
+        width: 5px;
+    }
+
     .Dashboard-body {
         height: 100%;
         padding: 2px;
@@ -55,15 +59,15 @@
                     </button>
                 </td>
 
-                <td class="Table-cell10">
+                <td class="Table-cell05">
                     <div></div>
                 </td>
 
                 <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
-                    <button class="Button" (click)="AddWidgetClicked()">Add Widget</button>
+                    <button class="BlueButton" (click)="AddWidgetClicked()">Add Widget</button>
                 </td>
 
-                <td class="Table-cell10">
+                <td class="Table-cell05">
                     <div></div>
                 </td>
 
@@ -79,15 +83,15 @@
                     </LogLov>
                 </td>
 
-                <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
+                <td style="width:1px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AdDashboardClicked()"></IconButton>
                 </td>
 
-                <td style="width:20px;" *ngIf="!IsEditLayoutModeActive">
+                <td style="width:1px;" *ngIf="!IsEditLayoutModeActive">
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
                 </td>
 
-                <td style="width:20px;">
+                <td style="width:1px;">
                     <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
 
                 </td>
