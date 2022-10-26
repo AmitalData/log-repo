@@ -2346,8 +2346,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.SetDefaultChequeFields();
             }
         }
-		if(this.EntityPM.AccountingPaymentMethodCode == "CH" && event.hasOwnProperty('entity')) {
-			this.EntityPM.ARPaymentChequeReplicas = event.entity.aRPaymentChequeReplicas
+		if(this.EntityPM.AccountingPaymentMethodCode == "CH" && event.hasOwnProperty('chequesReplicas')) {
+			let chequesReplicas: ARPaymentChequeReplicaPM[] = event.chequesReplicas;
+			this.EntityPM.ARPaymentChequeReplicas.map((item, i) => {
+				if (chequesReplicas.filter(x => x.ChequeNumber == item.ChequeNumber).length > 0){
+					this.EntityPM.ARPaymentChequeReplicas[i].StatusCode = chequesReplicas.filter(x => x.ChequeNumber == item.ChequeNumber)[0].StatusCode;
+				 }
+			   });
+
+
 		}
     }
     SetDefaultChequeFields() {
