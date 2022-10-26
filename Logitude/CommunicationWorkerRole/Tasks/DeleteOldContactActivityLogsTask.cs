@@ -3,6 +3,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace CommunicationWorkerRole.Tasks
 
         public override void StartTask()
         {
-            string dataBaseConnection = TenantServerConfigration.GetDbConnection(0);
+
+            string dataBaseConnection = GetGlobalConnectionString();
             using (SqlConnection sqlConnection = new SqlConnection(dataBaseConnection))
             {
                 SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldContactActivityLogs]", sqlConnection)
@@ -32,6 +34,33 @@ namespace CommunicationWorkerRole.Tasks
                 cmd.ExecuteNonQuery();
                 sqlConnection.Close();
             }
+        }
+
+        private string GetGlobalConnectionString()
+        {
+            string dbConnectionTo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            string destinationConnectionString = BuildConnectionString(GetConnectionStringArguments(dbConnectionTo));
+            return destinationConnectionString;
+        }
+
+        private string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
+        {
+            string result = "Data Source=" + connectionStringArguments.Server + ";Initial Catalog=" + connectionStringArguments.Catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName + ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+
+        private ConnectionStringArguments GetConnectionStringArguments(string dbConnectionTo)
+        {
+            string[] destinationConnectionArray = dbConnectionTo.Split(',');
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = destinationConnectionArray[0],
+                UserName = destinationConnectionArray[1],
+                Password = destinationConnectionArray[2],
+                Server = destinationConnectionArray[3],
+            };
+
+            return connectionStringArguments;
         }
     }
 }
