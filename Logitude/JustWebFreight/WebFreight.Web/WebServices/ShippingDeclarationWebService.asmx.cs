@@ -3123,6 +3123,7 @@ namespace WebFreight.Web.WebServices
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
                     packageline.Temperature = package.Temperature;
                     packageline.ContainerStrippedDate = package.ContainerStrippedDate;
+                    packageline.Ventilation = package.Ventilation;
 
                     packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
                     packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
