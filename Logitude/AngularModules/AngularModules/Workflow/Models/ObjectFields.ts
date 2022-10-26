@@ -1,14 +1,14 @@
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 export class ObjectFields {
 
-    private static Fields: ObjectFieldPM[] | null = null;
+    private static Fields: ObjectFieldList[] | null = null;
 
     static isLoaded() {
         return this.Fields !== null;
     }
 
-    static set(objectFields: ObjectFieldPM[]) {
+    static set(objectFields: ObjectFieldList[]) {
         return this.Fields = objectFields;
     }
 

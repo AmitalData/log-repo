@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
@@ -21,7 +22,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     @Input() SetValues: SetValue[];
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldPM[];
+    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EntityId: string;
     @Input() SetEntityField: boolean = false;
