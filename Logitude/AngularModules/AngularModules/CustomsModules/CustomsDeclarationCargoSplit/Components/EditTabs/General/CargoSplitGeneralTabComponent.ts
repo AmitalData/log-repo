@@ -387,8 +387,9 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.IsDirty = false
     }
  
-    SetWindowArgs(winArg: any) {        
+    SetWindowArgs(winArg: any) { 
         if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
+        this.IsFromDeclaration = true;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
@@ -892,6 +893,13 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
         }
         else {
+            if(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && !this.IsFromDeclaration && this.IsExportDeclaration)
+            { 
+                for (let i = this.Tabs.length - 1; i >= 0; i--) {
+                    this.DeleteTabs(this.Tabs[i]);
+                }
+                this.AddTab(null);
+            }
         
             this.IsCustomsFileRetrieved = true;
             this.CurrentSession.StartBusyIndicator("")
@@ -1183,7 +1191,7 @@ export class CargoSplitGeneralTabComponent
                 ).catch((err) => {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(err);
-                });
+                }); 
 
 
             this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
@@ -1196,6 +1204,10 @@ export class CargoSplitGeneralTabComponent
                                         if (!response.HasError) {
                                             if (response.Result instanceof DeclarationCargoSplitPM) this.EntityPM = response.Result;
                                             this.BuildTabs();
+                                            this.RefreshEntity();
+                                            this.SetDisplayFields(this.ResponseStatusCode); 
+                                            this.decCargoSplitCargoIdentifierModel.SetDisplayFields(this.ResponseStatusCode);
+                                          
                                         }
                                     }
 
@@ -1215,7 +1227,7 @@ export class CargoSplitGeneralTabComponent
             this.FillValidationErrorList.emit(errors);
         }
         this.EntityPM.IsDirty = true
-
+       
     }
 
     OnMassageDisplayMethod() {
@@ -1329,7 +1341,7 @@ export class CargoSplitGeneralTabComponent
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
         
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן םחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1545,7 +1557,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
+            errors.push("חובה להזין נתונים לפחות ליבואן םחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {
@@ -1711,10 +1723,11 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
         
     }
     
-    SetDisplayFields()
+    SetDisplayFields(responseStatusCode:string = null)
     {
         
-        if(this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "1" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "3" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "6")
+        if(this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "1" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "3" || this.EntityPMDecCargo.EntityParentPM?.responseStatusCode == "6"
+        || responseStatusCode=="1" || responseStatusCode=="3" || responseStatusCode=="6")
             {
                 this.UIProperties.SetEnabled("CargoTypeCode", "Customs.DecCargoSplitCargoIdentifier", false);
                 this.UIProperties.SetEnabled("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);

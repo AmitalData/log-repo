@@ -328,7 +328,7 @@
                                             <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
         [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
 
-                                            <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
+                                            <SearchBox [ObjectTableName]="'Customs.CustomsItem'"
                                                        [IsQuickSearch]="true"
                                                        [DropDownWidth]="144"
                                                        [ItemHeight]="20"
@@ -339,7 +339,10 @@
                                                        (TextChanged)="CustomsItemTextChanged($event)"
                                                        [IsDisabled]="IsDisplayOnly"
                                                        [HideIcons]="true"
-                                                       (LostFocus)="CustomsItemLostFocus($event)"></SearchBox>
+                                                       (LostFocus)="CustomsItemLostFocus($event)"
+                                                       [QueryFilterItems]="taxExemptCodeTypesFilter"
+                                                       [SearchFieldName]="'FullClassification'"
+                                                       ></SearchBox>
 
                                         </td>
 
@@ -1297,7 +1300,7 @@
                                             <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
                                             [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
 
-                                            <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
+                                            <SearchBox [ObjectTableName]="'Customs.CustomsItem'"
                                                        [IsQuickSearch]="true"
                                                        [DropDownWidth]="144"
                                                        [ItemHeight]="20"
@@ -1308,7 +1311,10 @@
                                                        (TextChanged)="CustomsItemTextChanged($event)"
                                                        [IsDisabled]="IsDisplayOnly"
                                                        [HideIcons]="true"
-                                                       (LostFocus)="CustomsItemLostFocus($event)"></SearchBox>
+                                                       (LostFocus)="CustomsItemLostFocus($event)"
+                                                       [QueryFilterItems]="taxExemptCodeTypesFilter"
+                                                       [SearchFieldName]="'FullClassification'"
+                                                       ></SearchBox>
 
                                         </td>
 
@@ -1489,7 +1495,8 @@
                                                                                         [HideColumns]="true"
                                                                                         [LookUpTableName]="'Customs.AmountType'"
                                                                                         (SelectedItemChanged)="item.SetLocalName($event, 'AdditionalPriceTypeName')"
-                                                                                        [FocusOnMe]="true">
+                                                                                        [FocusOnMe]="true"
+                                                                                        [QueryFilterItems]="AdditionalPriceTypeCodeFilterItems">
                                                                                 </LogLov>
 
                                                                             </div>

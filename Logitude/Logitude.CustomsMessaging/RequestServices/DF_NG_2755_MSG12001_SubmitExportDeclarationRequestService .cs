@@ -48,47 +48,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode, requestParams.RequestVIA);
             }
 
-            var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
-            if (
-                declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
-                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault()) > TimeSpan.FromMinutes(1)
-                )
-            {
-
-                switch (requestParams.RequestVIA)
-                {
-                    case SendRequestVIA.WebServiceInteractive:
-                        requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                        break;
-                    case SendRequestVIA.WebServiceBatch:
-                        break;
-                    case SendRequestVIA.DCABatch:
-                        break;
-                    case SendRequestVIA.Default:
-                    default:
-                        throw new System.Exception("should not be SendRequestVIA.Default !!!!");
-                        break;
-                }
-                requestParams.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().ToShortDateString(), " שעה ", declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().ToShortTimeString());// "הבקשה תשלח בעתיד";
-                requestParams.FutureSendDateTime = declarationPaymentsPM.FuturePaymentDateTime;
-            }
-            if (!requestParams.FutureSendDateTime.HasValue)
-            {
-                switch (requestParams.RequestVIA)
-                {
-                    case SendRequestVIA.WebServiceInteractive:
-                        var myDF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                        myDF_MSG10000_ImportDeclarationRequestService.ManipulateRequestParams(requestParams);
-                        break;
-                    case SendRequestVIA.WebServiceBatch:
-                    case SendRequestVIA.DCABatch:
-                        break;
-                    case SendRequestVIA.Default:
-                    default:
-                        throw new System.Exception("should not be SendRequestVIA.Default !!!!");
-                        break;
-                }
-            }
+            
 
             base.ManipulateRequestParams(requestParams);
         }
@@ -310,8 +270,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
             myDF_NG_2755_MSG12001_SubmitDeclaration.AnswerForCollateralRequest = GetSubmitDeclarationCollateralAnswer(declarationPaymentsPM);
 
-            //Raise event PHF- Declaration Payment Sent
-            SendPHF(declarationPaymentsPM, requestParams.LoggingUserId);
 
             return myDF_NG_2755_MSG12001_SubmitDeclaration;
         }
@@ -441,46 +399,6 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-
-        private void SendPHF(DeclarationPaymentPM declarationPaymentPM, string loggingUserId)
-        {
-            try
-            {
-                var declarationQueryService = new DeclarationQueryService(this.dbContext);
-                DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
-                if (connectedDeclarationPM.IsCourierDeclaration) return;
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                {
-                    Tenant = declarationPaymentPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = "PHF",
-                    notes = "Declaration Payment Sent",
-                    CommunicationLoggingEntityReference = connectedDeclarationPM.DeclarationNumber,
-                    EntityId = declarationPaymentPM.DeclarationId,
-                    UserId = loggingUserId,
-
-                    CommunicationSubject = "FU Status PHF from logitude ",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                    {
-                        entname = "CFIFILEM",
-                        primary_number = connectedDeclarationPM.CustomFileNo,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = "PHF",
-                        status_DateTime = DateTime.Now,
-                        //status_place = "FRA",
-                        //status_save = "no_fail",
-                        comments = "Declaration Payment:" + connectedDeclarationPM.DeclarationNumber + ", Payment Date:" + declarationPaymentPM.PaymentDate,
-                    }
-                };
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-            }
-            catch (System.Exception)
-            {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
-                throw;
-            }
-        }
 
         public override void PostGetRequest(DF_NG_2755_MSG12001_SubmitDeclaration customRequest, GenericRequestParams requestParams)
         {

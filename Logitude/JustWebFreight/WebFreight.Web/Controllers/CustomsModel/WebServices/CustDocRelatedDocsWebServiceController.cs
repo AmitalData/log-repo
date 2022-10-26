@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 List<DocumentsFilingPM> documentFilings = null;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
                 CFICONNQueryService queryService = null;
-                if (declarationType != "E")
+                if (declarationType != "E" && CustomsSettingQueryService.GetSettingByTenant(authToken.Tenant).IsConnectedToUniFreight)
                 {
                     queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
                 }

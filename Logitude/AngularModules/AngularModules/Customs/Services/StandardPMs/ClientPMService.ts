@@ -28,6 +28,7 @@ import {ClientDrivingLicensePM} from '../../EntityPMs/ClientDrivingLicensePM';
 
 import {ClientDrivingLicenseTypePM} from '../../EntityPMs/ClientDrivingLicenseTypePM';
 import {ClientsPoaPM} from '../../EntityPMs/ClientsPoaPM';
+import {ClientsTapagPM} from '../../EntityPMs/ClientsTapagPM';
 
 @Injectable()
 
@@ -192,6 +193,7 @@ export class ClientPMService {
                this.MapClientAddresses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapClientDrivingLicenses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapClientPoas(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClientsTapags(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -237,6 +239,15 @@ export class ClientPMService {
 						
 							 
             entityPM.OldEntityPM.ClientPoas.push(newClientsPoaPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClientsTapags = [];
+            for (var item in entityPM.ClientsTapags) {
+            var myClientsTapagPM = entityPM.ClientsTapags[item];
+            var newClientsTapagPM: ClientsTapagPM = this.clone(myClientsTapagPM);
+						
+							 
+            entityPM.OldEntityPM.ClientsTapags.push(newClientsTapagPM);
             }
 			   
 		}
@@ -745,6 +756,98 @@ export class ClientPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.ClientPoas.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClientsTapags(entityPM: ClientPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClientsTapags: ClientsTapagPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClientsTapags = entityPM.OldEntityPM.ClientsTapags;
+        }
+
+        entityPM.ClientsTapags = new Array<ClientsTapagPM>();
+        for (var item in jsonPM.ClientsTapags) {
+            var jItem = jsonPM.ClientsTapags[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClientsTapagPM: ClientsTapagPM;
+	  
+            if (mapParent) {
+                newClientsTapagPM = new ClientsTapagPM(entityPM);
+            }
+            else
+            {
+                newClientsTapagPM = new ClientsTapagPM(null);
+            }
+ 			newClientsTapagPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClientsTapagPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClientsTapagPM.UniqueKey = Guid.newGuid();
+                newClientsTapagPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClientsTapagPM.OldEntityPM = this.clone(newClientsTapagPM);
+
+				
+            }
+            else {
+                if (newClientsTapagPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClientsTapagPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClientsTapagPM.ChangeSetOp = "Insert";
+                }
+ 
+                newClientsTapagPM.OldEntityPM = null;
+                newClientsTapagPM.EntityParentPM = null;
+            }
+			 newClientsTapagPM.DisableMarkAsDirty = false;
+			 newClientsTapagPM.IsDirty = false;
+            entityPM.ClientsTapags.push(newClientsTapagPM);
+        }
+        if (oldClientsTapags) {
+            
+            for (var itemKey in oldClientsTapags) {
+                if (entityPM.ClientsTapags.filter(p=> p.UniqueKey === oldClientsTapags[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClientsTapags[itemKey]) {
+                        //oldClientsTapags[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClientsTapags.push(oldClientsTapags[itemKey]);
+						var oldItemJson = oldClientsTapags[itemKey];
+                        var deletedPM: ClientsTapagPM = new ClientsTapagPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClientsTapags.push(deletedPM);
                     }
                 }
             }

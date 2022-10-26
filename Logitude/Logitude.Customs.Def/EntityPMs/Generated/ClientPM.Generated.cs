@@ -953,7 +953,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<ClientsTapagPM> clientsTapags;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClientsTapag", "ClientId","ClientId")]
+	   [DataMember]
+	   public virtual List<ClientsTapagPM> ClientsTapags  
+	   {
+	        get
+             {
+                 if (clientsTapags == null)
+                 {
+                     clientsTapags = new List<ClientsTapagPM>();
+                 }
+                 return clientsTapags;
+              }
+             set { clientsTapags = value; }
+	    }
+		   
+	   private List<ClientsTapagPM>  deletedClientsTapags;
+	   public virtual List<ClientsTapagPM> DeletedClientsTapags  
+	   {
+	        get
+             {
+                 if ( deletedClientsTapags == null)
+                 {
+                      deletedClientsTapags = new List<ClientsTapagPM>();
+                 }
+                 return  deletedClientsTapags;
+              }
+             set {  deletedClientsTapags = value; }
+	    }
+	     }
    
 }
 	 

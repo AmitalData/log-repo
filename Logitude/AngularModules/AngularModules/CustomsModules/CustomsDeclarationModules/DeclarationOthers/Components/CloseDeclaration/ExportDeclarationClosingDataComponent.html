@@ -117,7 +117,7 @@
                                 </td>
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
-                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O' ? '' : 'XXX-XXXXXXXX'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="ManifestNumberPlaceholder" 
                                         [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
                                 </td>
                             </tr>
@@ -137,7 +137,7 @@
                                 </td>
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'FinalSecondCargoId'" [InputType]="'text'"
-                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="SecondCargoIdPlaceholder"
                                         [HideColumns]="true" [Text]="FinalSecondCargoId"></LogTextBox>
                                 </td>
                             </tr>
@@ -156,7 +156,7 @@
                                 </td>
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'FinalThirdCargoId'" [InputType]="'text'"
-                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="ThirdCargoIdPlaceholder"
                                         [HideColumns]="true" [Text]="FinalThirdCargoId"></LogTextBox>
                                 </td>
                             </tr>

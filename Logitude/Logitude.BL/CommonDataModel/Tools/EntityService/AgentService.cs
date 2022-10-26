@@ -131,7 +131,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if(!LogitudeSettings.IsCostomsDeploy)
+            //if (dbms != "oracle")
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
@@ -188,7 +189,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");

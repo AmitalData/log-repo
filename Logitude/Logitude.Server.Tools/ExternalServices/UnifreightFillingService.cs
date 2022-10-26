@@ -210,7 +210,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     ErrorMessage = p.strMsg;
                     return null;
                     throw new Exception("OnPremiseFillingService.Message=" + p.strMsg);
-                }
+                } 
                 var data = res.AllDataCalcOnClient ?? new byte[0];
                 TiffPageLines = p.TiffPageLines;
                 AllDataCalcOnClient = res.AllDataCalcOnClient;

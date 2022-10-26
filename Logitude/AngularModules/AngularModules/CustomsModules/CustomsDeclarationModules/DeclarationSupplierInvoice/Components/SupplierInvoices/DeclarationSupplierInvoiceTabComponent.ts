@@ -60,6 +60,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     @Output() MenuHeaderchangeevent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayMessage: boolean;
+    showMultiUpdateWindowBtn: boolean = false;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
@@ -127,6 +128,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             });
             });
         });
+
+        this.showMultiUpdateWindowBtn = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdateClassificationCodeWindow")
     }
 
     IsAccumulatedMessageText: string;

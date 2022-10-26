@@ -778,6 +778,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
            
             updateClass.FillStorageStatusTable();
+
+            updateClass.FillPhysicalCheckCode();
         }
 
         private static void UpdateTenantData(int tenant)
@@ -1537,7 +1539,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             foreach (ObjectTable objectTable in ObjectTableList)
             {
-                if(objectTable.DBTableName == "ShipmentStoragePricings")
+                if(objectTable.DBTableName == "CustomerTenantAccessStatusTypes")
                 {
 
                 }

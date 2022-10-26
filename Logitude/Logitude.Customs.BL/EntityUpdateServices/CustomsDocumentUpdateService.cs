@@ -83,6 +83,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
         {
             AutoSetOriginalDocumentTrue(entityPM);
+            var customContext = CustomContext.GetContext(entityPM.Tenant);
+
+            //if (entityPM.DeclarationId != null)
+            //{
+            //DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+
+            //var declaration = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+
+            //if (declaration?.Direction == "E")
+            //{
+            var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
+            var customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(customContext);
+            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentId }, false);
+            var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
+
+            var deleteItems = metaDataPoco.Where(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null).ToList();
+
+
+            entityPM.CustomsDocumentMetaDataValues.RemoveAll(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null);
+            if (deleteItems != null && deleteItems.Count() > 0)
+            {
+                deleteItems.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
+                entityPM.DeletedCustomsDocumentMetaDataValues.AddRange(deleteItems);
+            }
+            //    }
+
+
+            //}
 
             CustomsDocumentMetaDataValueUpdateService customsDocumentMetaDataValueUpdateService = new CustomsDocumentMetaDataValueUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             customsDocumentMetaDataValueUpdateService.UpdateMulti(entityPM.CustomsDocumentMetaDataValues, entityPM.DeletedCustomsDocumentMetaDataValues, entityPM, false);
@@ -137,7 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
-            LogitudeSettings.HandleLogMe( "log- " + logData + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+            LogitudeSettings.HandleLogMe("log- " + logData + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
 
             LogitudeSettings.HandleLogMe("AutoSetMetaDataValue" + logData, false, "AutoSetMetaDataValue", stopLogAt);
         }
@@ -160,7 +188,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
 
-            var loggedUserId = AuthenticationUtil.ResolveUserId(tenant,true);
+            var loggedUserId = AuthenticationUtil.ResolveUserId(tenant, true);
             var table = ObjectTableQuery.GetObjectTableByCode("DocumentsFiling", 0);
 
 
@@ -838,7 +866,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             catch (Exception e)
             {
 
-                LogitudeSettings.HandleLogMe("send failed : " +e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+                LogitudeSettings.HandleLogMe("send failed : " + e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
                 if (!IgnoreSendFailure)
                 {
                     LogitudeSettings.HandleLogMe("שליחת מסמך למכס נכשל : " + e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
@@ -964,5 +992,5 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return myDBEntity ?? new DeclarationPM();
         }
     }
-    
+
 }

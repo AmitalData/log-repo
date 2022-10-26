@@ -1040,6 +1040,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\BuyerRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CargoTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientsPoaViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientsTapagViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationHataraStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationStatusCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationViewsController.Generated.cs" />
@@ -1067,6 +1068,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionRequestViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionResponseReqSViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticPermitViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
@@ -1090,6 +1092,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SignStationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GTBFUSTATUWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ExportDeclarationClosingController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
@@ -3148,6 +3151,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsTapagUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
@@ -3275,6 +3279,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PoaAuthorizationTypeLookupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckSearchResultTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PoaStatusTypeLookUpUpdateClass.cs" />
@@ -3328,6 +3333,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SignStationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
@@ -3673,11 +3679,14 @@
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
+    <None Include="Properties\PublishProfiles\Customs.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
+    <None Include="Properties\PublishProfiles\HybridWS - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MasterDev.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsDev.pubxml" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
@@ -6048,6 +6057,17 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentPackageItem.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsMessageType.cs" />
+    <Content Include="Web.https.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.https.Debug.config">
+      <DependentUpon>Web.https.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.https.Release.config">
+      <DependentUpon>Web.https.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ShipmentsController.cs" />
@@ -6664,6 +6684,8 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">

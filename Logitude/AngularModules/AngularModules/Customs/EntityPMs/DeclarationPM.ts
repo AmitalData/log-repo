@@ -1344,9 +1344,9 @@ export class DeclarationPM {
     public set ExportDeclarationOfficeCode(newValue: string) { if (this.exportDeclarationOfficeCode != newValue) { this.exportDeclarationOfficeCode = newValue; this.MarkAsDirty("ExportDeclarationOfficeCode"); } }
        
 	 
-    private physicalCheck: number;
+    private physicalCheck: string;
     public get PhysicalCheck() { return this.physicalCheck; }
-    public set PhysicalCheck(newValue: number) { if (this.physicalCheck != newValue) { this.physicalCheck = newValue; this.MarkAsDirty("PhysicalCheck"); } }
+    public set PhysicalCheck(newValue: string) { if (this.physicalCheck != newValue) { this.physicalCheck = newValue; this.MarkAsDirty("PhysicalCheck"); } }
        
 	 
     private finalLoadingSiteName: string;
@@ -1362,11 +1362,6 @@ export class DeclarationPM {
     private cancelRejectionReasonName: string;
     public get CancelRejectionReasonName() { return this.cancelRejectionReasonName; }
     public set CancelRejectionReasonName(newValue: string) { if (this.cancelRejectionReasonName != newValue) { this.cancelRejectionReasonName = newValue; this.MarkAsDirty("CancelRejectionReasonName"); } }
-       
-	 
-    private exportContainerizationID: string;
-    public get ExportContainerizationID() { return this.exportContainerizationID; }
-    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
        
 	 
     private isSubmitDeclaration: boolean;
@@ -1422,6 +1417,11 @@ export class DeclarationPM {
     private exportLoadingPortCode: string;
     public get ExportLoadingPortCode() { return this.exportLoadingPortCode; }
     public set ExportLoadingPortCode(newValue: string) { if (this.exportLoadingPortCode != newValue) { this.exportLoadingPortCode = newValue; this.MarkAsDirty("ExportLoadingPortCode"); } }
+       
+	 
+    private physicalCheckName: string;
+    public get PhysicalCheckName() { return this.physicalCheckName; }
+    public set PhysicalCheckName(newValue: string) { if (this.physicalCheckName != newValue) { this.physicalCheckName = newValue; this.MarkAsDirty("PhysicalCheckName"); } }
        
 	 
 

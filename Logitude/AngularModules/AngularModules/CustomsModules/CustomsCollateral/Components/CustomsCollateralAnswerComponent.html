@@ -232,8 +232,29 @@
                                     <table style="width:140px">
                                         <tr>
                                             <td style="width:140px">
-                                                <LogTextBox [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
-                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                                                <SearchBox *ngIf="taxExemptCodeTypesFilter && EntityPM.EntityParentPM.direction == 'E'" [ObjectTableName]="'Customs.ClientsTapag'"
+                                                    [IsQuickSearch]="true"
+                                                    [DropDownWidth]="125"
+                                                    [ItemHeight]="20"
+                                                    [DisplayText]="CustomsTapgFile"
+                                                    [SearchText]="CustomsTapgFile"
+                                                    [DisplayMember]="'TapagNumber'"
+                                                    [MaxPopupItemsCount]="8"
+                                                    [HideIcons]="true"
+                                                    [Watermark]="''"
+                                                    (LostFocus)="CustomsItemLostFocus($event)"
+                                                    (ItemClicked)="CustomsItemClicked($event)"
+                                                    [QueryFilterItems]="taxExemptCodeTypesFilter"
+                                                    >
+
+                                                </SearchBox>
+
+                                                <LogTextBox *ngIf="EntityPM.EntityParentPM.direction != 'E'" [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
+                                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                               
+
                                             </td>
                                             <!-- *ngIf="IsGuaranteeDefaultList" -->
                                             <td style="width: 20px; padding-right: 4px; padding-top: 3px;">

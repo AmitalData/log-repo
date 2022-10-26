@@ -131,6 +131,8 @@
     <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
     <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
+    <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
+    <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -169,6 +171,7 @@
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />
     <None Include="DBScripts\Pre\20220425_COMMLOG_DBIDCOUNTERS_SEQ.sxml" />
+    <None Include="DBScripts\Pre\20220905_UpdateDeclarationPhysicalCheck.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -199,6 +202,7 @@
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
     <None Include="DBTables\CargoStatus.dxml" />
+    <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
@@ -229,6 +233,7 @@
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
+    <None Include="DBTables\ClientsTapag.dxml" />
     <None Include="DBTables\ClosedTableStatus.dxml" />
     <None Include="DBTables\CollateralAnswerStatus.dxml" />
     <None Include="DBTables\CollateralAnswerType.dxml" />
@@ -442,6 +447,7 @@
     <None Include="DBTables\PendingByKeyword.dxml" />
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
+    <None Include="DBTables\PhysicalCheckCode.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
@@ -474,6 +480,7 @@
     <None Include="DBTables\SeizureFactorType.dxml" />
     <None Include="DBTables\SeizureMethodType.dxml" />
     <None Include="DBTables\SignatureType.dxml" />
+    <None Include="DBTables\SignStation.dxml" />
     <None Include="DBTables\SiteLookup.dxml" />
     <None Include="DBTables\SiteType.dxml" />
     <None Include="DBTables\SpecialActionDescriptionType.dxml" />
@@ -541,6 +548,9 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\ClientsTapag.lxml" />
+    <None Include="EntityFiles\SignStation.lxml" />
+    <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />

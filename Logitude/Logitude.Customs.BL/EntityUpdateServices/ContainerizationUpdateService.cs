@@ -132,6 +132,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (containerizationExportFiles.Count > 1)
                 {
                     entityPOCO.IsMultiExportFiles = true;
+                    entityPM.ExportFile = "List";
+                }
+                else
+                {
+                    entityPM.ExportFile = containerizationExportFiles[0];
                 }
                 var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
                 if (containerizationImporters.Count > 1)

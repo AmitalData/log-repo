@@ -85,7 +85,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         }
 
 
-        public HttpResponseMessage GetQuantityType(string classificationCode)
+        public HttpResponseMessage GetQuantityType(string classificationCode, bool isExport)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 
                 if (!String.IsNullOrWhiteSpace( classificationCode))
                 {
-                    var key = "GetQuantityType," + classificationCode;
+                    var key = "GetQuantityType," + classificationCode + ",isExport," + isExport;
                     if (CacheManager.CacheWrapper.Get(key) == null)
                     {
                         CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         //    QuantityTypeCode = measurmentUnit.Code;
                         //}
 
-                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(classificationCode, tenant);
+                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(classificationCode, tenant, isExport);
                         if (QuantityTypeCode != null)
                         {
 

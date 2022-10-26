@@ -592,6 +592,7 @@
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
     <Compile Include="Tasks\SendReportExel.cs" />
+    <Compile Include="Tasks\ExchangeRatesQuery.cs" />
     <Compile Include="Tasks\SendDeclarationStatus.cs" />
     <Compile Include="Tasks\SendManifestService.cs" />
     <Compile Include="Testers\EcomTesterService.cs" />
@@ -613,6 +614,7 @@
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />
     <Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
+    <Compile Include="UnifreightGateway\ExportCloudSSOService.cs" />
     <Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />
     <Compile Include="UnifreightGateway\MevakerSendSignedDeclarationService.cs" />
     <Compile Include="UnifreightGateway\SendDirectMessageService.cs" />

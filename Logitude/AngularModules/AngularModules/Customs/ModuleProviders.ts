@@ -254,6 +254,8 @@ import { ContainerizationHataraStatusListService } from './Services/StandardList
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
+import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
+import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 
 
 //#endregion
@@ -731,7 +733,7 @@ export class ModuleProviders {
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
             case "ExportStorageListService": { myResult = new ExportStorageListService(); break; }
             case "LogisticPermitListService": { myResult = new LogisticPermitListService(); break; }
-
+            case "ClientsTapagListService": { myResult = new ClientsTapagListService(); break; } 
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
@@ -746,7 +748,7 @@ export class ModuleProviders {
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
-
+            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
                 
              //#endregion                
 

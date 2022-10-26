@@ -151,8 +151,8 @@ export class NewContainerizationComponent extends BaseComponent {
 
     }
 
-    itemMouseOver(itemValue: string) {     
-        if (this.SelectedValue != itemValue) {
+    itemMouseOver(itemValue: string) {        
+        if (this.SelectedValue != itemValue) {           
             var img_A = document.getElementById(this.TransportFilter_A);
             var img_O = document.getElementById(this.TransportFilter_O);
             var img_I = document.getElementById(this.TransportFilter_I);
@@ -224,7 +224,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
 
         if(this.entityPM.Id!=null){
-             var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations
+             var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations;
              connectDec =connectDec.substring(0, connectDec.length - 1);
              filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
         }
@@ -312,6 +312,8 @@ export class NewContainerizationComponent extends BaseComponent {
             //Display: "הגשה",
             Styles: { width: '60px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'TransportModeForExport',
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
             ColumnHeaderTemplateName: 'BlackTransportModeListHeaderTemplate',
@@ -397,6 +399,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
     OnAllBtnClicked() {
 
+        this.containerizationExtendedListService.countConnect=0;
         this.containerizationExtendedListService.IsError=false;
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
@@ -409,7 +412,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.containerizationExtendedListService.SelectedDeclarations = false;
         }
         this.LoadConnectedItems();
-
+      
     }
 
     filterAgrs: ApiQueryFilters;
@@ -418,18 +421,22 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     OnNoneBtnClicked() {
+        this.containerizationExtendedListService.countConnect=0;
         this.containerizationExtendedListService.IsError=false;
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
+        this.entityPM.IsDirty = false;
         this.containerizationExtendedListService.ConnectedDeclarations = "";
         this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
     }
 
     itemClicked(itemValue: string) {
+        this.containerizationExtendedListService.countConnect=0;          
         if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
+            this.OnNoneBtnClicked(); 
         }
 
 
@@ -618,7 +625,9 @@ export class NewContainerizationComponent extends BaseComponent {
         return params
     }
     private timerToken: any;
-    TextChanged(searchtext: any) {       
+    TextChanged(searchtext: any) {    
+        this.containerizationExtendedListService.countConnect=0;   
+        this.OnNoneBtnClicked(); 
         if (searchtext != null || searchtext != undefined) {
 
             this.timerToken = setTimeout(() => {
@@ -631,10 +640,11 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
-    OnValueChange(searchValue: any) {
-        if (searchValue == null) {
+    OnValueChange(searchValue: any) {        
+        this.containerizationExtendedListService.countConnect=0;
+
             this.OnNoneBtnClicked()
-        }
+
 
     }
 

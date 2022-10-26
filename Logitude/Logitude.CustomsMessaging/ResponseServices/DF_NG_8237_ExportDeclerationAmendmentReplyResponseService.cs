@@ -591,7 +591,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 }
-                if (customResponse.Response.Declaration != null && !isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2"))
+                if (customResponse.Response.Declaration != null  && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2"))
                 {
                     DF_NG_2757_MSG10004_ExportDeclarationResponseService dF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
 

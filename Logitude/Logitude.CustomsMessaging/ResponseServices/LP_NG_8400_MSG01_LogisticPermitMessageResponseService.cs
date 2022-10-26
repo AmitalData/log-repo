@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, true);
                 UpdateLogisticPermit(customResponse, requestParams);
 
-                this.MyRequestSheetParam.RequestDescription = remarks + " היתר לוגיסטי מספר : " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
+                this.MyRequestSheetParam.RequestDescription = remarks + " היתר לוגיסטי מספר : " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId  ;
             }
             else
             {
@@ -169,7 +169,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ExportStoragePM exportstorage = query.GetByCargoKeys(customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3, customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
 
             var exportStorageUpdateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-            if (IsExportStorageAlone)
+            if (exportstorage != null)
+            {
+
+             if (IsExportStorageAlone )
             {
                 requestParams.AppicationId = exportstorage.Id;
                 LogMessagingUtil.Instance.AppendLine("ExportStorage No. " + exportstorage.Id);
@@ -180,9 +183,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
 
-           
-            if (exportstorage != null)
-            {
+                this.MyRequestSheetParam.RequestDescription += "/" + exportstorage.StorageNo;
+
 
 
                 this.MyRequestSheetParam.EntityId2 = exportstorage.Id;

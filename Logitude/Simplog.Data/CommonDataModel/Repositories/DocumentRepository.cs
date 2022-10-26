@@ -61,6 +61,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                      select a).ToList();
             return result;
         }
+        public string GetDocumentIdByFileName(string fileName)
+        {
+            return (from a in context.Documents
+                    where a.FileName.Contains(fileName)
+                    select a.Id).FirstOrDefault();
+        }
 
         public void Add(Document entity)
         {

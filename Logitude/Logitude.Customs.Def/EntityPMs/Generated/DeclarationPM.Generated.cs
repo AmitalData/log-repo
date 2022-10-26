@@ -5354,12 +5354,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? physicalCheck ;
+	  private string physicalCheck ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? PhysicalCheck  
+       public string PhysicalCheck  
 	   {
 	    
 	     get
@@ -5370,7 +5370,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(physicalCheck != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   physicalCheck=value;
 		   }
@@ -5442,29 +5442,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRejectionReasonName",OldValue=cancelRejectionReasonName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   cancelRejectionReasonName=value;
-		   }
-			
-		 }
-	   }
-	  private string exportContainerizationID ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportContainerizationID  
-	   {
-	    
-	     get
-		{
-		   return exportContainerizationID;
-		 }
-		 set
-		 {
-		   if(exportContainerizationID != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportContainerizationID",OldValue=exportContainerizationID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportContainerizationID=value;
 		   }
 			
 		 }
@@ -5718,6 +5695,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportLoadingPortCode",OldValue=exportLoadingPortCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   exportLoadingPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string physicalCheckName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PhysicalCheckName  
+	   {
+	    
+	     get
+		{
+		   return physicalCheckName;
+		 }
+		 set
+		 {
+		   if(physicalCheckName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheckName",OldValue=physicalCheckName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   physicalCheckName=value;
 		   }
 			
 		 }

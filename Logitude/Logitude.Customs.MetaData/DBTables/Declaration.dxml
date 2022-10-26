@@ -998,14 +998,8 @@
   </Column>
   <Column
     Name="PhysicalCheck"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExportContainerizationID"
     Type="varchar"
-    Size="15">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1245,6 +1239,11 @@
   <Relation
     ForeignKeyColumn="ExportDeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PhysicalCheck"
+    ReferencedTable="PhysicalCheckCodes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

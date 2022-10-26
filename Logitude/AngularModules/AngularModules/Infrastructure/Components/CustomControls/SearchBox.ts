@@ -88,6 +88,7 @@ export class SearchBox implements OnInit {
     @Input() MaxPopupItemsCount: number;
     @Input() InputType: string;
     @Input() QueryFilterItems: ApiQueryFilters;
+    @Input() SearchFieldName: string;
     LookUpTable: ObjectTablePM;
     public isRTL: boolean = false;
 
@@ -377,7 +378,7 @@ export class SearchBox implements OnInit {
                      this.IsQuickSearchNoResult = false;
 
                       if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                        this.QueryFilterItems.Filter10Name = "SearchFields";
+                        this.QueryFilterItems.Filter10Name = this.SearchFieldName ? this.SearchFieldName : "SearchFields";
                         this.QueryFilterItems.Filter10Value = this.SearchText;
                         this.QueryFilterItems.Filter10Operator = "Contains";
                       }

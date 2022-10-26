@@ -236,13 +236,15 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
 
                     _IQueueService = new DbQueueService();
                     _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
-
-                    _ReceivedBrokeredMessage = _IQueueService.Receive();
-
+                    using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                    {
+                        _ReceivedBrokeredMessage = _IQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                    }
                     if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                     {
                         //Thread.Sleep(TimeSpan.FromSeconds(5));
-                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                        //Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                        Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
                         break;
                     }
 

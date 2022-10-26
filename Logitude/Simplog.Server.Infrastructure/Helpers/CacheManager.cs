@@ -47,7 +47,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             return clearItem;
         }
-        public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true) //Itzik Test
+        public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true, int absoluteExpiration = 30) //Itzik Test
             where TEntity : class ///,new()
             
         {
@@ -76,7 +76,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                 if (EntityPM != null)
                 {
                     CacheManager.CacheWrapper.Insert(entityKeyString, EntityPM,
-                        null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
 
                 }
                 else
@@ -84,7 +84,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                     if (!donotCacheNull)
                     {
                     CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache(),
-                        null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
                     }
             }
             }

@@ -427,13 +427,18 @@ namespace CustomsWorkerRole
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        var receivedMessage = _CustomDbQueueService.Receive();
+                        CustomDBQueueMessage receivedMessage=null;
 
+                        using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                        {
+                            receivedMessage = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin()*60);
+                        }
                         if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
                         {
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
-                            Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            //Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
                             break;
                         }
 

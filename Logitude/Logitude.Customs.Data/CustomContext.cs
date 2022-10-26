@@ -192,6 +192,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClientsPoaMap());
 	
+            modelBuilder.Configurations.Add(new ClientsTapagMap());
+	
             modelBuilder.Configurations.Add(new ClosedTableStatusMap());
 	
             modelBuilder.Configurations.Add(new CollateralAnswerStatusMap());
@@ -624,6 +626,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
+            modelBuilder.Configurations.Add(new PhysicalCheckCodeMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckSearchResultTypeMap());
@@ -695,6 +699,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
 	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
+	
+            modelBuilder.Configurations.Add(new SignStationMap());
 	
             modelBuilder.Configurations.Add(new SiteLookupMap());
 	
@@ -1708,6 +1714,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClientsPoa> ClientsPoas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClientsTapag> ClientsTapags 
 	 {
 	      get; set;
 	 
@@ -3009,6 +3021,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<PhysicalCheckCode> PhysicalCheckCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PhysicalCheckOperation> PhysicalCheckOperations 
 	 {
 	      get; set;
@@ -3220,6 +3238,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SignatureType> SignatureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SignStation> SignStations 
 	 {
 	      get; set;
 	 

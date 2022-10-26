@@ -243,8 +243,10 @@
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
     <Compile Include="Contracts\ICustomsSendReportExel.cs" />
+    <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
+    <Compile Include="Helpers\TableCounter.Customs.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
@@ -357,6 +359,7 @@
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\ConcurrentQueueService.cs" />
     <Compile Include="QueueService\CustomDbQueueService.cs" />
+    <Compile Include="QueueService\DbQueueService.Customs.CS" />
     <Compile Include="QueueService\IQueueService.cs" />
     <Compile Include="QueueService\DbQueueService.cs" />
     <Compile Include="QueueService\LogQueueMessage.cs" />

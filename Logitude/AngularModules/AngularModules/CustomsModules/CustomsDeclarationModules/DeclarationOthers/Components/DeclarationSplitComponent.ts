@@ -325,7 +325,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.DeclarationPM.Id, null, objecttable.Id, "I", this.DeclarationPM.CustomFileNo, this.DocumentFilterSelectedValue)
+        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.DeclarationPM.Id, null, objecttable.Id, "I", this.DeclarationPM.CustomFileNo, this.DocumentFilterSelectedValue, this.DeclarationPM.Direction, this.DeclarationPM.ExportFile)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 SessionLocator.SelectedSession.StopBusyIndicator();

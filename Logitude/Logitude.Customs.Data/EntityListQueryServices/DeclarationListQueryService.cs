@@ -164,7 +164,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 select new
                 {
                     DeclarationID = rs.DeclarationId,
-                    CourierPendingReasonName = tablecode1 != null ? tablecode1.LocalName : "øùéîä"
+                    CourierPendingReasonName = tablecode1 != null ? tablecode1.LocalName : "ï¿½ï¿½ï¿½ï¿½ï¿½"
                 }
                    );
 
@@ -500,7 +500,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
                                                      PhysicalCheck = a.PhysicalCheck,
-
+                                                     PhysicalCheckName = a.PhysicalCheck == null ? "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½" : a.PhysicalCheckCode.Name,
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,                                                     
@@ -543,6 +543,26 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                               select a);
                 iQueryable = iQueryable.Where(x => query1.Any(c=>c.DeclarationId==x.Id) );
             }
+            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck") != null)
+            {
+                var qPhCh = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck");
+                string physicalCheck;
+                switch (qPhCh.FieldValue.ToString())
+                {
+                    case "N":
+                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == null);
+                        break;
+                    case "":
+                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == null);
+                        break;
+                    default:
+                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == qPhCh.FieldValue.ToString());
+
+                        physicalCheck = qPhCh.FieldValue.ToString();
+                        break;
+                }
+
+            }
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
 
             if (filter != null)
@@ -571,7 +591,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 if (courierPendingReasonList.Contains(","))
                 {
-                    courierPendingReasonList = "øùéîä";
+                    courierPendingReasonList = "ï¿½ï¿½ï¿½ï¿½ï¿½";
                 }
                 else
                 {
@@ -591,11 +611,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 if (fastIndividualProcessCode == "F")
                 {
-                    fastIndividualProcessCode = "îäéø";
+                    fastIndividualProcessCode = "ï¿½ï¿½ï¿½ï¿½";
                 }
                 else if (fastIndividualProcessCode == "I")
                 {
-                    fastIndividualProcessCode = "ôøèðé";
+                    fastIndividualProcessCode = "ï¿½ï¿½ï¿½ï¿½ï¿½";
                 }
             }
             return fastIndividualProcessCode;
@@ -795,10 +815,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 switch (mycode)
                 {
                     case "F":
-                        this.FastIndividualProcessName = "îäéø";
+                        this.FastIndividualProcessName = "ï¿½ï¿½ï¿½ï¿½";
                         break;
                     case "I":
-                        this.FastIndividualProcessName = "ôøèðé";
+                        this.FastIndividualProcessName = "ï¿½ï¿½ï¿½ï¿½ï¿½";
                         break;
                     default:
                         break;

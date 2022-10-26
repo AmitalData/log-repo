@@ -131,6 +131,7 @@
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
+    <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
+    <Compile Include="EntityKeys\PhysicalCheckCodeKeys.cs" />
     <Compile Include="EntityKeys\PoaAuthorizationTypeLookupKeys.cs" />
     <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
     <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
@@ -229,10 +231,10 @@
     <Compile Include="EntityKeys\SecurityClearenceTypeCodeKeys.cs" />
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
+    <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
     <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
-
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
@@ -365,6 +368,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
@@ -445,6 +449,7 @@
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PhysicalCheckCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaAuthorizationTypeLookupListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
@@ -465,7 +470,6 @@
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StorageStatusTableListQueryService.Generated.cs" />
-
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
@@ -501,6 +505,7 @@
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PhysicalCheckCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaAuthorizationTypeLookupListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PhysicalCheckSearchResultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaStatusTypeLookUpListQueryService.cs" />
@@ -521,7 +526,6 @@
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StorageStatusTableListQueryService.cs" />
-
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
@@ -566,6 +570,7 @@
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClientsTapagList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationHataraStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
@@ -647,6 +652,7 @@
     <Compile Include="EntityLists\Generated\PartyRelationshipTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PhysicalCheckCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PoaAuthorizationTypeLookupList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PhysicalCheckSearchResultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PoaStatusTypeLookUpList.Generated.cs" />
@@ -665,10 +671,10 @@
     <Compile Include="EntityLists\Generated\SecurityClearenceTypeCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SignStationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StatusFieldTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StorageStatusTableList.Generated.cs" />
-
     <Compile Include="EntityLists\Generated\StuffingSiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SuppInvoiceItemsAbachStatementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoiceItemsPriceList.Generated.cs" />
@@ -712,6 +718,7 @@
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
+    <Compile Include="EntityMapping\ClientsTapagMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
     <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
@@ -793,6 +800,7 @@
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
+    <Compile Include="EntityMapping\PhysicalCheckCodeMap.cs" />
     <Compile Include="EntityMapping\PoaAuthorizationTypeLookupMap.cs" />
     <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
     <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
@@ -810,10 +818,10 @@
     <Compile Include="EntityMapping\SecurityClearenceTypeCodeMap.cs" />
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
+    <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
     <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
-
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
@@ -857,6 +865,7 @@
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
+    <Compile Include="EntityPOCOs\ClientsTapag.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
     <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
@@ -938,6 +947,7 @@
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
+    <Compile Include="EntityPOCOs\PhysicalCheckCode.cs" />
     <Compile Include="EntityPOCOs\PoaAuthorizationTypeLookup.cs" />
     <Compile Include="EntityPOCOs\PhysicalCheckSearchResultType.cs" />
     <Compile Include="EntityPOCOs\PoaStatusTypeLookUp.cs" />
@@ -956,6 +966,7 @@
     <Compile Include="EntityPOCOs\SecurityClearenceTypeCode.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
+    <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
     <Compile Include="EntityPOCOs\StorageStatusTable.cs" />
@@ -1002,6 +1013,7 @@
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
+    <Compile Include="Repsitories\ClientsTapagRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
     <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
@@ -1091,6 +1103,7 @@
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
@@ -1171,6 +1184,7 @@
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PhysicalCheckCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaAuthorizationTypeLookupRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
@@ -1188,6 +1202,7 @@
     <Compile Include="Repsitories\Generated\SecurityClearenceTypeCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StorageStatusTableRepository.Generated.cs" />
@@ -1225,6 +1240,7 @@
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
+    <Compile Include="Repsitories\PhysicalCheckCodeRepository.cs" />
     <Compile Include="Repsitories\PoaAuthorizationTypeLookupRepository.cs" />
     <Compile Include="Repsitories\PhysicalCheckSearchResultTypeRepository.cs" />
     <Compile Include="Repsitories\PoaStatusTypeLookUpRepository.cs" />
@@ -1242,10 +1258,10 @@
     <Compile Include="Repsitories\SecurityClearenceTypeCodeRepository.cs" />
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
+    <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
     <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
-
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />

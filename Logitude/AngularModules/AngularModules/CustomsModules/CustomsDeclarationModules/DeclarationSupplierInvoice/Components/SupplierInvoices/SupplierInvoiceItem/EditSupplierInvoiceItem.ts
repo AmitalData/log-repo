@@ -30,6 +30,7 @@ import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/Object
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     public OriginalItemPM: SupplierInvoiceItemPM;
     public ClonedItemPM: SupplierInvoiceItemPM;
     public TypeCodeFilterItems: ApiQueryFilters;
+    public AdditionalPriceTypeCodeFilterItems: ApiQueryFilters;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
     //public OriginalItemPM: SupplierInvoiceItemPM; // screen bindingObjectsLocator 
 
@@ -54,6 +56,8 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     allowExport: boolean = false;
+    taxExemptCodeTypesFilter: ApiQueryFilters;
+
     public InvoiceNumberText: string = "Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber";
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -70,12 +74,18 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
             this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
         }
+
+        this.AdditionalPriceTypeCodeFilterItems = new ApiQueryFilters();
+        if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
+            this.AdditionalPriceTypeCodeFilterItems.addAdditionalFilter("Code", "1", null, null, "Exclude", false, false, false, "string",false,true);
+        }
+
         this.BuildTabs();
 
         // Initilize lists
         this.ModificationsList = new ObservableCollection([]);
         this.PricesList = new ObservableCollection([]);
-        this.ProcessTypesList = new ObservableCollection([]);
+        this.ProcessTypesList = new ObservableCollection([]); 
         this.ConDeclarList = new ObservableCollection([]);
         this.SerialNumbersList = new ObservableCollection([]);
         this.DescriptionsList = new ObservableCollection([]);
@@ -89,12 +99,12 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.allowExport ? this.InvoiceNumberText="Customs.SupplierInvoiceItemsConnectedDeclaration.O.InvoiceSequence": this.InvoiceNumberText;    
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
-
+            
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
             this.FillGridsData(); // copy  grids data from entity PM to ItemSource arrays
-
+            this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
 
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();

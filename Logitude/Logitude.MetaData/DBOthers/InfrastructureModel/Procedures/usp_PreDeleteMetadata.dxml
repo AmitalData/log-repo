@@ -11,6 +11,7 @@ create PROCEDURE [dbo].[usp_PreDeleteMetadata]
 )
 AS
 
+
  
  
  Declare @ObjectTableId As varchar(15)
@@ -18,7 +19,7 @@ AS
  Begin
  
  SELECT TOP 1 @ObjectTableId = Id FROM ObjectTables where name = @pTableName
-
+ 
 
 ----*--Before Delete--*--
 

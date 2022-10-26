@@ -146,6 +146,16 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public Declaration GetWaitingDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
+        {
+
+            return (from a in context.Declarations
+                    where (a.CustomFileNo == customFileNo && a.IsAmendment == true && new string[] { "6", "7", "8", "10" }.Contains(a.AmendmentStatus))
+                    && a.Tenant == tenant && a.IsCancelled == false
+                    select a).FirstOrDefault();
+        }
+
+
         public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
@@ -498,15 +508,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        public List<Declaration> GetDeclarationsByExportContainerizationId(string exportContainerizationID)
-        {
-            List<Declaration> declarations = (from a in context.Declarations
-                                              where a.ExportContainerizationID == exportContainerizationID
-                                              select a).ToList();
 
-            return declarations;
 
-        }
+
         public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds, string clientID)
         {
             DateTime month3ago = DateTime.Now.AddDays(-90);

@@ -391,7 +391,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
-       public int? PhysicalCheck  { get; set; }
+       public string PhysicalCheck  { get; set; }
        [DataMember]
        public string CargoTypeName  { get; set; }
        [DataMember]
@@ -436,6 +436,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportLoadingPortCode  { get; set; }
        [DataMember]
        public string CargoTypeCode  { get; set; }
+       [DataMember]
+       public string PhysicalCheckName  { get; set; }
    }
 
 }

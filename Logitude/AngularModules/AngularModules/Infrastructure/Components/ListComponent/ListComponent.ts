@@ -916,6 +916,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 myComponentPath = (myObjectTableName == "LogisticActionRequest") ? myComponentPath += "/CustomsLogisticActionRequest" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "PhysicalCheck") ? myComponentPath += "/CustomsPhysicalCheck" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "Declaration") ? myComponentPath += "/CustomsDeclarationModules/DeclarationOthers" : myComponentPath;
+                                myComponentPath = (myObjectTableName == "Containerization") ? myComponentPath += "/CustomsContainerization/" : myComponentPath;                                
                                 myComponentPath += "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
 
@@ -2684,9 +2685,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsNewEntityButtonVisible: boolean = false;
     public IsNewEntityButtonDisabled: boolean = false;
     private SetNewEntityButton() {
-        this.SetNewEntityLabel();
-        this.SetNewEntityButtonDisabled();
-        this.SetNewEntityButtonVisibility();
+        
+        if((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse))
+        {
+            this.SetNewEntityLabel();
+            this.SetNewEntityButtonDisabled();
+            this.SetNewEntityButtonVisibility();
+        }
     }
     
     private SetNewEntityLabel() {
