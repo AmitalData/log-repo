@@ -852,7 +852,7 @@ namespace WebFreight.Web.Helpers
 
         private bool CheckIfDWObjectTableHasSourceTenantField(string parentDimTabelName , int tenant)
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("BRS", tenant)) return false;
+            if (!FeatureToggleHelper.HasFeatureToggle("BRS", tenant))  return false;
 
             return  new DWObjectFieldQuery(0).GetDWObjectFieldByDWObjectTableCode(0, parentDimTabelName).Where(d => d.Code == "[Source Tenant]").Any(); 
          
