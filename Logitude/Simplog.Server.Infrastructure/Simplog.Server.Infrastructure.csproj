@@ -180,6 +180,7 @@
     <Compile Include="CacheMessageSender.cs" />
     <Compile Include="ChangeSetOperation.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
+    <Compile Include="DataContracts\Models\DigitalContactLastSettingInfo.cs" />
     <Compile Include="DataContracts\Models\DigitalDashboardSummary.cs" />
     <Compile Include="DataContracts\Models\DigitalUploaderInfo.cs" />
     <Compile Include="DataContracts\Models\GeneralFilters.cs" />
