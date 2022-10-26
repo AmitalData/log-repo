@@ -1,7 +1,8 @@
 {
-  "HashString": "652addefa760475a885297cb3d1c51bf",
-  "Name": "Shipment Analytics",
+  "HashString": "b8c3de6bf3a2403e99670acbb768d1ea",
+  "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
+  "ObjectTableName": "Shipment",
   "AnalyticsFactsFieldsMetaDatas": [
     {
       "HashString": "f178932734d6453e92e7263486349bf7",

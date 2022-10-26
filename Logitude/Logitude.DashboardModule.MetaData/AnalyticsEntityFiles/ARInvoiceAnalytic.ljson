@@ -1,7 +1,8 @@
 {
-  "HashString": "bedb180980434a96b39892a5393e78b8",
-  "Name": "ARInvoice Analytic",
+  "HashString": "f3bcd6e9a89a4934b8faefbe11866a7b",
+  "Name": "AR Invoices Statistics",
   "TableName": "ARInvoiceAnalytics",
+  "ObjectTableName": "ARInvoice",
   "AnalyticsFactsFieldsMetaDatas": [
     {
       "HashString": "1894c97ca98b44b5a324659ae02eaee7",

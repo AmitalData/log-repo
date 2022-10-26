@@ -28,8 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.IsSalesman = userPm.IsSalesman;
             user.IsFreelancer = userPm.IsFreelancer;
             user.FreelancerId = userPm.FreelancerId;
-            user.BusinessUnitId = userPm.BusinessUnitId;
-            
+            user.BusinessUnitId = userPm.BusinessUnitId;            
             user.ExpirationDate = userPm.ExpirationDate;
             user.LicencedUser = userPm.LicencedUser;
             user.IsProductRestricted = userPm.IsProductRestricted;
@@ -50,7 +49,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.AdditionalPackagesOnly = userPm.AdditionalPackagesOnly;
             user.LayoutDirection = userPm.LayoutDirection;
             user.SignatureImageId = userPm.SignatureImageId;
-            user.HideDashboardToolTip = userPm.HideDashboardToolTip;
             BuildSearchFields(userPm, user);
         }
 

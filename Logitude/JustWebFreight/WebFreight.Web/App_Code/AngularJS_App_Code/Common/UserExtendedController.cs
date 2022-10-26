@@ -825,7 +825,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
                 UserRepository userRepository = new UserRepository(tenant);
                 var user = userRepository.GetSingleUserById(userId);
-                user.HideDashboardToolTip = true;
+                //user.HideDashboardToolTip = true;
                 userRepository.Update(user);
                 userRepository.SubmitChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, userId);

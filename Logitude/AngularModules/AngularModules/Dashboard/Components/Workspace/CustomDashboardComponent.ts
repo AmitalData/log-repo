@@ -46,7 +46,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     @Input('Show') Show;
     private filterName_SelectedDashboard: string = "SelectedDashboard";
     private filterControlNameSpace: string = "Workspace.CustomDashboard";
-    public IsEmptyDashboardVisible: boolean = true;
+    public IsEmptyDashboardVisible: boolean = false;
     public IsPermissionMessageVisible: boolean = false;
     constructor() {
         super();

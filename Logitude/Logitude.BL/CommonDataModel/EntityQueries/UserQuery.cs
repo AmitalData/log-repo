@@ -99,7 +99,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,                            
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId,
-                                  HideDashboardToolTip = a.HideDashboardToolTip,
                              }).FirstOrDefault();
 
                     if (entity != null)
@@ -190,7 +189,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection= a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId,
-                              HideDashboardToolTip = a.HideDashboardToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -283,7 +281,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId,
-                                      HideDashboardToolTip = a.HideDashboardToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -373,7 +370,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId,
-                                  HideDashboardToolTip = a.HideDashboardToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -451,7 +447,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId,
-                              HideDashboardToolTip = a.HideDashboardToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -544,7 +539,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId,
-                                      HideDashboardToolTip = a.HideDashboardToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -634,7 +628,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId,
-                                  HideDashboardToolTip = a.HideDashboardToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -712,7 +705,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId,
-                              HideDashboardToolTip = a.HideDashboardToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -803,7 +795,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId,
-                                      HideDashboardToolTip = a.HideDashboardToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -892,7 +883,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId,
-                                  HideDashboardToolTip = a.HideDashboardToolTip,
 
                               }).FirstOrDefault();
 
@@ -972,7 +962,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                               LayoutDirection = a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId,
-                              HideDashboardToolTip = a.HideDashboardToolTip,
 
                           }).FirstOrDefault();
 
@@ -1055,11 +1044,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            UserRoles = a.UserRoles,
                                            SecurityLevel = a.SecurityLevel,
                                            AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                                            LayoutDirection = a.LayoutDirection,
                                            SignatureImageId = a.SignatureImageId,
-                                           HideDashboardToolTip = a.HideDashboardToolTip,
-
                                        };
             return users;
         }
@@ -1126,11 +1112,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserRoles = a.UserRoles,
                             SecurityLevel = a.SecurityLevel,
                             AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                             LayoutDirection = a.LayoutDirection,
                             SignatureImageId = a.SignatureImageId,
-                            HideDashboardToolTip = a.HideDashboardToolTip,
-
                         };
 
             IQueryable<UserPM> query2 = null;
@@ -1204,7 +1187,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SecurityLevel = user.SecurityLevel,
                                               AdditionalPackagesOnly = user.AdditionalPackagesOnly,
                                               SignatureImageId = user.SignatureImageId,
-                                              HideDashboardToolTip = user.HideDashboardToolTip,
                                               Mobile = user.Contact.Mobile ?? "",
                                           };
 
@@ -1293,7 +1275,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DocumentFilingInbox = user.DocumentFilingInbox,
                     ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                     SignatureImageId = user.SignatureImageId,
-                    HideDashboardToolTip = user.HideDashboardToolTip,
                 };
 
                 result.Add(newItem);
@@ -1430,8 +1411,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  SecurityLevel = a.SecurityLevel,
                                  LayoutDirection = a.LayoutDirection,
                                  SignatureImageId = a.SignatureImageId,
-                                 HideDashboardToolTip = a.HideDashboardToolTip,
-
                              }).FirstOrDefault();
 
             if (entity != null)
@@ -1495,8 +1474,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         DocumentFilingInbox = a.DocumentFilingInbox,
                                         ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                         SignatureImageId = a.SignatureImageId,
-                                        HideDashboardToolTip = a.HideDashboardToolTip,
-
                                     }).ToList();
             return users;
         }
@@ -1544,11 +1521,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId,
-                                      HideDashboardToolTip = a.HideDashboardToolTip,
-
                                   }).ToList();
             return users;
         }
@@ -1680,8 +1654,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           SecurityLevel= a.SecurityLevel,
                           LayoutDirection = a.LayoutDirection,
                           SignatureImageId = a.SignatureImageId,
-                          HideDashboardToolTip = a.HideDashboardToolTip,
-
                       }).FirstOrDefault();
 
             if (entity != null)

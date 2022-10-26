@@ -46,4 +46,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ObjectTableName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -49,6 +49,11 @@ export class AnalyticsFactsMetaDataPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private objectTableName: string;
+    public get ObjectTableName() { return this.objectTableName; }
+    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
 
     public OldEntityPM: AnalyticsFactsMetaDataPM;
 		

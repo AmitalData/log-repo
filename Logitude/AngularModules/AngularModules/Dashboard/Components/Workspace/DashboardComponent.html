@@ -34,28 +34,18 @@
     <tr style="height:21px;" *ngIf="IsCustomDashboardFeatureOn">
         <td>
             <ul class="PagesMenu">
-                <li [class.SelectedPageMenu]="SelectedPageItem == 'CLASIC'" (click)="SelectedPageItem = 'CLASIC'">Classic Dashboard</li>
-                <li [class.SelectedPageMenu]="SelectedPageItem == 'CUSTOM'" (click)="SelectedPageItem = 'CUSTOM'">
-                    Custom Dashboards
-                </li>
+                <li [class.SelectedPageMenu]="SelectedPageItem == 'CUSTOM'" (click)="SelectedPageItem = 'CUSTOM'">Customizable Dashboards</li>
+                <li [class.SelectedPageMenu]="SelectedPageItem == 'CLASIC'" (click)="SelectedPageItem = 'CLASIC'">Classic Dashboards</li>
             </ul>
-        </td>
-    </tr>
-
-    <tr *ngIf="ShowDashboardToolTip && IsCustomDashboardFeatureOn">
-        <td>
-            <div class="dashboard-tooltip">
-                <div class="tooltip__arrow"></div>
-                <div class="tooltip-container">
-                    <div style="padding: 5px;"> Explore new dashboards and build your own</div>
-                    <div class="tooltop-btn-container"><button class="tooltip-button" (click)="CloseDashboardToolTipClick()">Close</button></div>
-                </div>
-            </div> 
         </td>
     </tr>
 
     <tr>
         <td>
+            <div class="CellContent" [hidden]="SelectedPageItem != 'CUSTOM'">
+                <custom-dashboard [Show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
+            </div>
+
             <div class="MediaFill" [hidden]="SelectedPageItem != 'CLASIC'">
                 <div *ngIf="isNotMoreDetails" style="width:100%;height:100%">
                     <table>
@@ -563,10 +553,6 @@
                 <div *ngIf="!isNotMoreDetails" style="width:100%;height:100%">
                     <ActivityStatusDetails [Show]="!isNotMoreDetails" (BackButtonClickedEvent)="OnMoreDetailsBackButtonClicked($event)"></ActivityStatusDetails>
                 </div>
-            </div>
-
-            <div class="CellContent" [hidden]="SelectedPageItem != 'CUSTOM'">
-                <custom-dashboard [Show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
             </div>
         </td>
     </tr>

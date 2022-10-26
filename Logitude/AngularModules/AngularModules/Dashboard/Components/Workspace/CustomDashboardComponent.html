@@ -95,7 +95,7 @@
         </table>
     </div>
 
-    <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">
+    <div *ngIf="!IsEmptyDashboardVisible" class="Dashboard-body">
         <custom-layout (onReactChangeLayouts)="onReactChangeLayouts($event)" (openEditWidget)="openEditWidget($event)" [Show]="Show" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
     </div>
 
