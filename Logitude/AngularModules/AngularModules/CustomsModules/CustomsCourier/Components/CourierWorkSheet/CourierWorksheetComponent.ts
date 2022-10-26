@@ -1729,7 +1729,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 break;
             }
             case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "null", null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("AcceptanceStatusCode", null, null, null, "IsNull", false, false, false, "string");
                 break;
             }
         }
