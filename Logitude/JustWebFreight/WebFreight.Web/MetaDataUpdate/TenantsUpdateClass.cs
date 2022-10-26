@@ -780,6 +780,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillStorageStatusTable();
 
             updateClass.FillPhysicalCheckCode();
+            updateClass.FillToggle();
         }
 
         private static void UpdateTenantData(int tenant)
