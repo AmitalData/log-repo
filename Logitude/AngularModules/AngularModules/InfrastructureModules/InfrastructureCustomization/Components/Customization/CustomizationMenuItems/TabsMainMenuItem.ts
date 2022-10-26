@@ -20,7 +20,7 @@ export class TabsMainMenuItem extends CustomizationMainMenuItem {
     }
     CheckFeaturePermission(args: any): boolean {
         let IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
-        return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue;
+        return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue && !args.IsSubEntity;
     }
 
 }

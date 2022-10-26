@@ -44,16 +44,20 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("ObjectTable", tenant).ToString();
+
+            ObjectTableServiceInitializer objectTableServiceInitializer = new ObjectTableServiceInitializer(this.entityPM, this.ObjectContext);
+            objectTableServiceInitializer.Initialize();
+
             this.Poco = new ObjectTable();
             this.Poco.Id = this.entityPM.Id;
             this.Poco.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(theEntityPm.Tenant);
             this.Poco.LastUpdateDate = theEntityPm.LastUpdateDate;
-         
+
             ObjectTableValidating.Validate(theEntityPm);
             ObjectTableTracing.Trace(theEntityPm, Poco, isNewEntity);
             ObjectTableMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
-            entityRepository.SubmitChanges();
+            this.ObjectContext.SaveChanges();
 
         }
 

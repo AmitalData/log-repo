@@ -65,6 +65,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.HeaderScreenCode = objectTablePM.HeaderScreenCode;
             objectTable.ParentObjectTableName = objectTablePM.ParentObjectTableName;
             objectTable.AvailableInCustomization = objectTablePM.AvailableInCustomization;
+            objectTable.ParentObjectTableId = objectTablePM.ParentObjectTableId;
+            objectTable.IsCustom = objectTablePM.IsCustom;
 
         }
     }

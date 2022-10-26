@@ -106,6 +106,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsTabsHidden = a.IsTabsHidden,
                                          ParentObjectTableName = a.ParentObjectTableName,
                                          AvailableInCustomization = a.AvailableInCustomization,
+                                         ParentObjectTableId = a.ParentObjectTableId,
+                                         IsCustom = a.IsCustom,
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -179,6 +181,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     IsTabsHidden = a.IsTabsHidden,
                                     ParentObjectTableName = a.ParentObjectTableName,
                                     AvailableInCustomization = a.AvailableInCustomization,
+                                    ParentObjectTableId = a.ParentObjectTableId,
+                                    IsCustom = a.IsCustom
                                 }).ToList();
             }
 
@@ -260,6 +264,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            IsTabsHidden = a.IsTabsHidden,
                                            ParentObjectTableName = a.ParentObjectTableName,
                                            AvailableInCustomization = a.AvailableInCustomization,
+                                           ParentObjectTableId = a.ParentObjectTableId,
+                                           IsCustom = a.IsCustom
                                        }).ToList();
             }
             if (tenant != 0)
@@ -335,6 +341,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             IsTabsHidden = a.IsTabsHidden,
                                             ParentObjectTableName = a.ParentObjectTableName,
                                             AvailableInCustomization = a.AvailableInCustomization,
+                                            ParentObjectTableId = a.ParentObjectTableId,
+                                            IsCustom = a.IsCustom
                                         }).ToList();
                 }
             }
@@ -590,6 +598,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsTabsHidden = a.IsTabsHidden,
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
+                                                   ParentObjectTableId = a.ParentObjectTableId,
+                                                   IsCustom = a.IsCustom
                                                }).ToList();
 
                         scope.Complete();
@@ -675,6 +685,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             IsTabsHidden = a.IsTabsHidden,
                                             ParentObjectTableName = a.ParentObjectTableName,
                                             AvailableInCustomization = a.AvailableInCustomization,
+                                            ParentObjectTableId = a.ParentObjectTableId,
+                                            IsCustom = a.IsCustom
                                         }).ToList();
 
 
@@ -827,6 +839,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsTabsHidden = a.IsTabsHidden,
                                                      ParentObjectTableName = a.ParentObjectTableName,
                                                      AvailableInCustomization = a.AvailableInCustomization,
+                                                     ParentObjectTableId = a.ParentObjectTableId,
+                                                     IsCustom = a.IsCustom
                                                  };
             return result;
         }  
@@ -888,6 +902,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsTabsHidden = a.IsTabsHidden,
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
+                                                   ParentObjectTableId = a.ParentObjectTableId,
+                                                   IsCustom = a.IsCustom
                                                }).FirstOrDefault();
 
 

@@ -459,6 +459,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ParentObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustom"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"

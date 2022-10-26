@@ -388,7 +388,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
         this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
 
-            if (table) {
+            if (table && !table.IsCustom) {
                 this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
                     this.ViewDataField(tableId);
                 });

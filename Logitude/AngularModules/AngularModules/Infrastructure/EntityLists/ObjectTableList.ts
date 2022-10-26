@@ -59,6 +59,8 @@ export class ObjectTableList {
 		LovDisplayMemberPathLocal: string;
 		IsTabsHidden: boolean;
 		ParentObjectTableName: string;
-		AvailableInCustomization: boolean;
+        AvailableInCustomization: boolean;
+        ParentObjectTableId: string;
+        IsCustom: boolean;
 	
 }
