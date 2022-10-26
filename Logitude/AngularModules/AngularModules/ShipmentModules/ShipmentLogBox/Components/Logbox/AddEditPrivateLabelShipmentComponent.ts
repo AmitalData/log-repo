@@ -95,7 +95,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
     SetFromPort() {
         if (!this.IsNew) {
-            this.FromPort = this.EntityPM.FromPort;
+            this.FromPort = this.EntityPM.FromPortId;
             return;
         }
 
@@ -279,9 +279,9 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     }
 
     private SetArgs(args: any) {
+        this.IsNew = args.IsNew;
         this.SetIsCustomsActivated(args);
         this.args = args;
-        this.IsNew = args.IsNew;
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
@@ -761,6 +761,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
                 return;
             }
             this.EntityPM = serviceResponse.Result;
+            this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
             this.CurrentSession.CloseCurrentWindow();
         });
     }

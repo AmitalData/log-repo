@@ -3123,6 +3123,7 @@ namespace WebFreight.Web.WebServices
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
                     packageline.Temperature = package.Temperature;
                     packageline.ContainerStrippedDate = package.ContainerStrippedDate;
+                    packageline.Ventilation = package.Ventilation;
 
                     packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
                     packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
@@ -3914,7 +3915,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.WarehouseLegReleaseDate = shipment.WarehouseLegReleaseDate;
                 myDataProvider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
                 #endregion
-
+                this.SetDestinationWarehouseLegTerminalData(myDataProvider, shipment, addressRepository);
                 ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
                 if (lastPickUp != null)
                 {
@@ -3945,6 +3946,15 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private void SetDestinationWarehouseLegTerminalData(ShippingDeclarationDataProvider myDataProvider, ShipmentPM shipment, AddressRepository addressRepository)
+        {
+            myDataProvider.DestinationWarehouseLegTerminalName = shipment.WarehouseLeg2TerminalName;
+            if (shipment.WarehouseLeg2WarehouseId == null) return;
+            Address address = addressRepository.GetSingleAddress(shipment.WarehouseLeg2AddressId, tenant);
+            if (address == null) return;
+            myDataProvider.DestinationWarehouseLegTerminalAddress = DataProviders.General.GetAddress(address);
         }
         private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
         {

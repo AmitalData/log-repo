@@ -21,6 +21,7 @@ using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 using Logitude.ShipmentOrderModule.Def.EntityAMs;
 using CommunicationWorkerRole.EntityMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using System.Collections.Generic;
 
 namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
 {
@@ -44,6 +45,8 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private APILogsPM apiLog;
         private string URI = "";//"http://localhost:9996/api/";
         private string token;
+        private string batchNumber;
+        private string customerId;
         private APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
         {
             PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",//"121060db-b064-4ee3-a65f-b3e6c214e659",
@@ -65,6 +68,8 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             if (queueService == null || queueResponse == null) return;
             shipmentOrderId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("ShipmentOrderId") ? queueResponse.MessageValues["ShipmentOrderId"].ToString() : "";
             tenant = GetTenantValueFromQueueResponse(queueResponse);
+            batchNumber = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("BatchNumber") ? queueResponse.MessageValues["BatchNumber"].ToString() : "";
+            customerId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("CustomerId") ? queueResponse.MessageValues["CustomerId"].ToString() : "";
             messageId = queueResponse.MessageId;
         }
 
@@ -109,6 +114,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             {
                 ShipmentOrderAM shipmentOrderAM = GetShipmentOrderAM();
                 SendShipmentAM(shipmentOrderAM);
+                SendRelatedDocumentsQueue();
                 queueService.Complete();
             }
             catch (Exception ex)
@@ -142,6 +148,14 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             }
         }
 
+        private void SendRelatedDocumentsQueue()
+        {
+            if (string.IsNullOrEmpty(batchNumber)) return;
+
+            IQueueService queueService = new DbQueueService();
+            queueService.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);
+            queueService.Send(new Dictionary<string, string>() { { "ShipmentOrderId", shipmentOrderId }, { "Tenant", tenant.ToString() }, { "CustomerId", customerId }, { "BatchNumber", batchNumber } }, (int)tenant, null, customerId, batchNumber);
+        }
         private void HandleRequestError(Task<HttpResponseMessage> result)
         {
             APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);

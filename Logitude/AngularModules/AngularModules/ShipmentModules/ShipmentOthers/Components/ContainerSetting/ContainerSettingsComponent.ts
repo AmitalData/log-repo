@@ -6,6 +6,8 @@ import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantP
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
@@ -20,12 +22,36 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     public ValidationErrorsList: string[];
     public reloadingTranslation: boolean;
     public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container.";
+    public ShipmentATADateComboList: Array<CodeNameClass>;
     constructor() {
         super();
     }
 
     ngOnInit() {
-        this.GetCurrentTenant();        
+        this.GetCurrentTenant();
+        this.FillShipmentATADateComboList();
+    }
+
+    FillShipmentATADateComboList() {
+        this.ShipmentATADateComboList = [];
+        this.ShipmentATADateComboList.push(new CodeNameClass("Vessel", "Vessel Arrival"));
+        this.ShipmentATADateComboList.push(new CodeNameClass("Container", "Container Arrival"));
+    }
+
+    private selectedShipmentATADateItem: CodeNameClass;
+    get SelectedShipmentATADateItem() { return this.selectedShipmentATADateItem; }
+    set SelectedShipmentATADateItem(value: CodeNameClass) {
+        if (this.selectedShipmentATADateItem != value) {
+            this.selectedShipmentATADateItem = value;
+
+            if (value) {
+                this.ShipmentATADateIndicator = value.Code;
+            }
+
+            else {
+                this.ShipmentATADateIndicator = null;
+            }
+        }
     }
 
     private GetCurrentTenant() {
@@ -33,6 +59,11 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.tenant = response.Result;
             this.IsVisible = true;
+
+            if (!AppTool.IsNullOrEmpty(this.tenant.ShipmentATADateIndicator))
+                this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.tenant.ShipmentATADateIndicator)[0];
+            else
+                this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
         });
     }
 
@@ -47,6 +78,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     set ShipmentATAClosingDays(value: number) {
         if (this.tenant.ShipmentATAClosingDays != value) {
             this.tenant.ShipmentATAClosingDays = value;
+        }
+    }
+
+    get ShipmentATADateIndicator() { return this.tenant.ShipmentATADateIndicator; }
+    set ShipmentATADateIndicator(value: string) {
+        if (this.tenant.ShipmentATADateIndicator != value) {
+            this.tenant.ShipmentATADateIndicator = value;
         }
     }
 

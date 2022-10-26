@@ -700,12 +700,21 @@ namespace Logitude.Infrastructure.BL
                 Name = "Quote Markup Currency", 
                 Description = "Quote Markup Currency", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "DPB", 
                 Name = "Digital Portal Branding", 
                 Description = "Digital Portal Branding Tab", 
                 SearchFields = "DPB,Digital Portal Branding", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BRS", 
+                Name = "BI Report Security", 
+                SearchFields = "BRS,BI Report Security", 
+                Description = "BI Report Security", 
 			});
 			
             return all;
