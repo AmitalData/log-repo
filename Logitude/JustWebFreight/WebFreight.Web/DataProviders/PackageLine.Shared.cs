@@ -93,6 +93,7 @@ namespace WebFreight.Web.DataProviders
         public double? PackageGrossWeightInLBS { get; set; }
         public double? PackageVolumeInCBM { get; set; }
         public double? PackageVolumeInCBF { get; set; }
+        public double? Ventilation { get; set; }
 
         public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
@@ -130,7 +131,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCountryOfBirthName { get; set; }
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
-        public string HorseRemarks { get; set; }
+        public string HorseRemarks { get; set; }        
     }
 
     public class InsidePackageGroup
