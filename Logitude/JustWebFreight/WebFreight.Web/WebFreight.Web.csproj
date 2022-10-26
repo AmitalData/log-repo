@@ -1192,6 +1192,7 @@
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalContactLastSettingsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDashboardController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalGlobalSearchController.cs" />
