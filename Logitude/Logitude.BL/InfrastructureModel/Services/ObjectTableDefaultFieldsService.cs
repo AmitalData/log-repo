@@ -35,27 +35,27 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             var defaultObjectFields = new List<ObjectField>();
 
-            ObjectField objectField = SetIdFieldProperties();
+            ObjectField objectField = GetIdObjectField();
             defaultObjectFields.Add(objectField);
 
-            objectField = SetTenantFieldProperties();
+            objectField = GetTenantObjectField();
             defaultObjectFields.Add(objectField);
 
-            objectField = SetCreateDateFieldProperties();
+            objectField = GetCreateDateObjectField();
             defaultObjectFields.Add(objectField);
 
-            objectField = SetCreatedByFieldProperties();
+            objectField = GetCreatedByObjectField();
             defaultObjectFields.Add(objectField);
 
-            objectField = SetUpdateDateFieldProperties();
+            objectField = GetUpdateDateObjectField();
             defaultObjectFields.Add(objectField);
 
-            objectField = SetUpdatedByFieldProperties();
+            objectField = GetUpdatedByObjectField();
             defaultObjectFields.Add(objectField);
 
             return defaultObjectFields;
         }
-        private ObjectField SetIdFieldProperties()
+        private ObjectField GetIdObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("Id");
             objectField.DataTypeCode = "Text";
@@ -65,7 +65,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.AddFullNameTextCode("Id", objectField);
             return objectField;
         }
-        private ObjectField SetTenantFieldProperties()
+        private ObjectField GetTenantObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("Tenant");
             objectField.DataTypeCode = "Integer";
@@ -74,7 +74,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.AddFullNameTextCode("Tenant", objectField);
             return objectField;
         }
-        private ObjectField SetCreateDateFieldProperties()
+        private ObjectField GetCreateDateObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("CreateDate");
             objectField.DataTypeCode = "DateTime";
@@ -89,7 +89,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.AddFullNameTextCode("Create Date", objectField);
             return objectField;
         }
-        private ObjectField SetCreatedByFieldProperties()
+        private ObjectField GetCreatedByObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("CreatedBy");
             objectField.DataTypeCode = "Text";
@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.AddFullNameTextCode("Created By", objectField);
             return objectField;
         }
-        private ObjectField SetUpdateDateFieldProperties()
+        private ObjectField GetUpdateDateObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("UpdateDate");
             objectField.DataTypeCode = "DateTime";
@@ -120,7 +120,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.AddFullNameTextCode("Update Date", objectField);
             return objectField;
         }
-        private ObjectField SetUpdatedByFieldProperties()
+        private ObjectField GetUpdatedByObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("UpdatedBy");
             objectField.DataTypeCode = "Text";
