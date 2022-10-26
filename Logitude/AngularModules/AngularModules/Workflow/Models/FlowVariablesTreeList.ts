@@ -1,4 +1,4 @@
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { FlowReader } from "./FlowReader";
 import { ObjectTables } from "./ObjectTables";
@@ -6,13 +6,13 @@ import { ReturnedField } from "./ReturnedField";
 import { TreeSelectItem } from "./TreeSelectItem";
 
 export class FlowVariablesTreeList {
-    private FlowObjectFields: ObjectFieldPM[];
+    private FlowObjectFields: ObjectFieldList[];
     private FlowObject: any;
     private CurrentNodeId: string;
     private ItemKeySplitter: string = "_";
     public Items: TreeSelectItem[] = [];
 
-    constructor(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
+    constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string) {
         this.initialize(flowObjectFields, flowObject, currentNodeId);
         this.setVariablesTreeItems();
     }
@@ -118,7 +118,7 @@ export class FlowVariablesTreeList {
         return true;
     }
 
-    private initialize(flowObjectFields: ObjectFieldPM[], flowObject: any, currentNodeId: string) {
+    private initialize(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string) {
         this.FlowObjectFields = flowObjectFields ? flowObjectFields : [];
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
@@ -196,7 +196,7 @@ export class FlowVariablesTreeList {
             return objectFieldsItems;
         }
 
-        this.getObjectFields(entity, returnedFieldsCodes).forEach((objectField: ObjectFieldPM) => {
+        this.getObjectFields(entity, returnedFieldsCodes).forEach((objectField: ObjectFieldList) => {
             let treeSelectItemName = objectField.FullNameTextCodeDefaultText.trim();
             let treeSelectItemKey = itemsKeyPrefix + this.ItemKeySplitter + objectField.FieldCode;
             let data = {

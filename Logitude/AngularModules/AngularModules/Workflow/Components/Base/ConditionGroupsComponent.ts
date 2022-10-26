@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
@@ -33,7 +34,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     @Input() ShowFlowVariablesTree: boolean = false;
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldPM[];
+    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
@@ -189,7 +190,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
     }
 
-    getObjectFieldsValueQueryFilters(objectField: ObjectFieldPM) {
+    getObjectFieldsValueQueryFilters(objectField: ObjectFieldList) {
         let lookupTableIdFilterValue = (objectField && objectField.DataTypeCode === FieldTypes.LookUp) ? objectField.LookUpTableId : null;
         return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, objectField.DataTypeCode, lookupTableIdFilterValue);
     }

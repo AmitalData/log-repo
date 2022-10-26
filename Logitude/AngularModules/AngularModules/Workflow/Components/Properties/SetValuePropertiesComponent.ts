@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { SetValue } from "Workflow/Models/SetValue";
@@ -18,7 +18,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     public Data: any;
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldPM[];
+    public FlowObjectFields: ObjectFieldList[];
     public CurrentSession = SessionLocator.SelectedSession;
 
     public IsValidSetValues: boolean = true;
