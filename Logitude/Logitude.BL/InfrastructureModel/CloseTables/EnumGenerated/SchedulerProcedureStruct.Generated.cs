@@ -36,6 +36,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string RecalculateCashbooksTotalsTask = "RecalculateCashbooksTotalsTask";  
        public const string ResetFullTextSearchIndexChangeTrackingTask = "ResetFullTextSearchIndexChangeTrackingTask";  
        public const string UpdateCanceledSATEntitiesStatusesTask = "UpdateCanceledSATEntitiesStatusesTask";  
+       public const string DeleteOldContactActivityLogsTask = "DeleteOldContactActivityLogsTask";  
     }
 }
 

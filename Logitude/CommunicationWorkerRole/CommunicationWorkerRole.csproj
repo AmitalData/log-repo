@@ -408,6 +408,7 @@
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
+    <Compile Include="Tasks\DeleteOldContactActivityLogsTask.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />
     <Compile Include="Services\Logbox\CustomerTenantsURLService.cs" />
