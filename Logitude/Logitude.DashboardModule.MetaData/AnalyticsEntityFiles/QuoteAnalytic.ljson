@@ -1,6 +1,6 @@
 {
-  "HashString": "e601b000f9794663929e5ce619a029e5",
-  "Name": "Quote Analytic",
+  "HashString": "678f8c885c4a47d5b9f255575e642f72",
+  "Name": "Quotes Statistics",
   "TableName": "QuoteAnalytics",
   "ObjectTableName": "Quote",
   "AnalyticsFactsFieldsMetaDatas": [

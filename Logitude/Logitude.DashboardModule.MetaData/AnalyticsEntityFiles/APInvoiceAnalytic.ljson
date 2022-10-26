@@ -1,6 +1,6 @@
 {
-  "HashString": "573fe01eceab480c99e0d9e14ddc1dab",
-  "Name": "APInvoice Analytic",
+  "HashString": "80507b466bd54386985a24ec4ffde163",
+  "Name": "AP Invoices Statistics",
   "TableName": "APInvoiceAnalytics",
   "ObjectTableName": "APInvoice",
   "AnalyticsFactsFieldsMetaDatas": [
