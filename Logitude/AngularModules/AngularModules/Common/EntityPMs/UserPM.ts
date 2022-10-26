@@ -501,11 +501,6 @@ export class UserPM {
     public set IsHRUser(newValue: boolean) { if (this.isHRUser != newValue) { this.isHRUser = newValue; this.MarkAsDirty("IsHRUser"); } }
        
 	 
-    private hideDashboardToolTip: boolean;
-    public get HideDashboardToolTip() { return this.hideDashboardToolTip; }
-    public set HideDashboardToolTip(newValue: boolean) { if (this.hideDashboardToolTip != newValue) { this.hideDashboardToolTip = newValue; this.MarkAsDirty("HideDashboardToolTip"); } }
-       
-	 
 
     public OldEntityPM: UserPM;
 		

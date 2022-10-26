@@ -63,7 +63,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsMenuVisible: boolean = false;
     public IsCustomDashboardFeatureOn: boolean = false;
-    public ShowDashboardToolTip: boolean;
     @Output() BackButtonClickedEvent = new EventEmitter();
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
@@ -75,7 +74,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
         this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
-        this.ShowDashboardToolTip = !SessionLocator.LoggedUserPM.HideDashboardToolTip;
+        this.selectedPageItem = this.IsCustomDashboardFeatureOn ? "CUSTOM" : "CLASIC";
     }
 
     OnMoreDetailsBackButtonClicked(event) {
@@ -92,28 +91,15 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.IsMenuVisible = true;
     }
 
-    private selectedPageItem: string = "CLASIC";
+    private selectedPageItem: string;
     get SelectedPageItem() { return this.selectedPageItem; }
     set SelectedPageItem(newValue: string) {
         if (this.selectedPageItem != newValue) {
             this.selectedPageItem = newValue;
             if (newValue == "CUSTOM") {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
-                if(this.ShowDashboardToolTip) this.CloseToolTip();
+                MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });                
             }                 
         }
-    }
-
-    CloseDashboardToolTipClick(){
-        MixPanelLocator.PostDashboardAction({ ActionName: "Tooltip Close" });
-        this.CloseToolTip();
-    }
-
-    CloseToolTip() {
-        this.ShowDashboardToolTip = false;
-        SessionLocator.LoggedUserPM.HideDashboardToolTip = true;
-        new UserExtendedPMService().MarkShowDashboardToolTip(SessionLocator.LoggedUserId).subscribe(() => {
-        });
     }
 
     ngOnDestroy() {
