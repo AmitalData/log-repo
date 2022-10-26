@@ -462,6 +462,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
             modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
+            modelBuilder.Configurations.Add(new DigitalContactLastSettingMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new CustomsInterfaceMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
@@ -1059,6 +1060,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<Mention> Mentions { get; set; }
         public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
         public IDbSet<HorseGender> HorseGenders { get; set; }
+        public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
+
         public DbConnection GetConnection()
         {
             return this.Database.Connection;
