@@ -22173,6 +22173,19 @@
     FeatureDefaultText="&quot;Correction&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Export Storage List&quot;"
+    TabLocalName="&quot;רשימת אחסנות&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DESL&quot;"
+    ControlPath="&quot;DeclarationExportStorageComponent&quot;"
+    TextCode="&quot;Customs.Declaration.TH.ExportStorageList&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent&quot;"
+    HtmlComponentName="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;UPDT&quot;"

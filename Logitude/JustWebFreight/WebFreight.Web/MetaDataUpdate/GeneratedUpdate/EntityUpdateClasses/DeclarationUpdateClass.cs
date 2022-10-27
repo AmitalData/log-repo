@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "569711b70828278bb378a103f3e495e5";
+		public const string HashString = "6216dab41c884ed138da61bb9a11f632";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17250,6 +17250,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode DeclarationCloseExportDeclarationTextCode_TH22 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CloseExportDeclaration", DefaultText = "Close Export Declaration",LocalDefaultText = "סגירת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCloseExportDeclarationFeature_TH22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.CloseExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CloD", NameTextCodeDefaultText = "Close Export Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+ 
+                 
+			   TextCode DeclarationExportStorageListTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.ExportStorageList", DefaultText = "Export Storage List",LocalDefaultText = "רשימת אחסנות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DeclarationExportStorageListFeature_TH24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.ExportStorageList", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DESL", NameTextCodeDefaultText = "Export Storage List", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -17302,6 +17306,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CloD",HtmlComponentName = "ExportDeclarationClosureComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent", FeatureId = DeclarationCloseExportDeclarationFeature_TH22.Id,FeatureUniqeCode = DeclarationCloseExportDeclarationFeature_TH22.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCloseExportDeclarationTextCode_TH22.Id, TabNameTextCodeCode = DeclarationCloseExportDeclarationTextCode_TH22.Code, Tenant = 0, IndexOrder = 22 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCO",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 23 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DESL",HtmlComponentName = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/ExportStorageList/DeclarationExportStorageComponent", FeatureId = DeclarationExportStorageListFeature_TH24.Id,FeatureUniqeCode = DeclarationExportStorageListFeature_TH24.FeatureUniqeCode, ControlPath = "DeclarationExportStorageComponent", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationExportStorageListTextCode_TH24.Id, TabNameTextCodeCode = DeclarationExportStorageListTextCode_TH24.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
