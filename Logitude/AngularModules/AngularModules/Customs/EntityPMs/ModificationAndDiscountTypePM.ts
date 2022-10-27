@@ -74,6 +74,11 @@ export class ModificationAndDiscountTypePM {
     public set ExtraNumericData(newValue: string) { if (this.extraNumericData != newValue) { this.extraNumericData = newValue; this.MarkAsDirty("ExtraNumericData"); } }
        
 	 
+    private effectGoodsValueExport: string;
+    public get EffectGoodsValueExport() { return this.effectGoodsValueExport; }
+    public set EffectGoodsValueExport(newValue: string) { if (this.effectGoodsValueExport != newValue) { this.effectGoodsValueExport = newValue; this.MarkAsDirty("EffectGoodsValueExport"); } }
+       
+	 
 
     public OldEntityPM: ModificationAndDiscountTypePM;
 		
