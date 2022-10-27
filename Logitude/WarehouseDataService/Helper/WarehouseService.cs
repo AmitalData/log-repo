@@ -20,11 +20,14 @@ namespace WarehouseDataService.Helper
 
         WarehouseServiceHelper warehouseServiceHelper;
         MainDataWarehouseService mainDataWarehouseService;
+        MainDataWarehouseService privateMainDataWarehouseService;
 
         public WarehouseService()
         {
 
             mainDataWarehouseService = new MainDataWarehouseService("Service", ApplicationInfo.Mode);
+            privateMainDataWarehouseService = new MainDataWarehouseService("Service", ApplicationInfo.Mode);
+
             warehouseServiceHelper = new WarehouseServiceHelper();
             BuildConnectionString();
         }
@@ -100,7 +103,7 @@ namespace WarehouseDataService.Helper
         private void RuningBuildDataWarehouseByTasks()
         {
             Task dataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString));
-            Task privateDataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build"));
+            Task privateDataWarehouseBuildTask = new Task(() => privateMainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build"));
             dataWarehouseBuildTask.Start();
             privateDataWarehouseBuildTask.Start();
             Task.WhenAll(dataWarehouseBuildTask, privateDataWarehouseBuildTask).Wait();
@@ -149,7 +152,7 @@ namespace WarehouseDataService.Helper
         private void RuningUpdateDataWarehouseByTasks()
         {
             Task dataWarehouseUpdateTask = new Task(() => mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString));
-            Task privateDataWarehouseUpdateTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update"));
+            Task privateDataWarehouseUpdateTask = new Task(() => privateMainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update"));
             dataWarehouseUpdateTask.Start();
             privateDataWarehouseUpdateTask.Start();
             Task.WhenAll(dataWarehouseUpdateTask, privateDataWarehouseUpdateTask).Wait();

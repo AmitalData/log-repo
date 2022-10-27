@@ -3,6 +3,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -628,6 +629,7 @@ namespace WebFreight.Web.Helpers
             string FinalGroupByStmt = sqlStatmentDetails.FinalGroupByStmt;
             string Fact = sqlStatmentDetails.FromTables.Find(a => a == "Fact");
             DWObjectTablePM dWObjectTablePM = null;
+            string tenantFieldName = "[Source Tenant]";
             if (string.IsNullOrEmpty(Fact))
             {
                 Fact = DWQueryParam.FactTableName;
@@ -698,12 +700,26 @@ namespace WebFreight.Web.Helpers
                 }
 
                 innerjoinSql += " " + innerTableRelationType + " join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + factTable + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
+
+                if (CheckIfDWObjectTableHasSourceTenantField(mytbl.ParentDimTabelName, Tenant))
+                {
+                    innerjoinSql += " and " + " ( " + factTable + "." + tenantFieldName + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "."+ tenantFieldName + " or " + factTable + "."+ tenantFieldName + "= 0 " + ")";
+                }
+
             }
 
             if (isDWQueryUsedAdditionalFact)
             {
                 FinalSelectStmt += " "+ dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactRelationType  + " join " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + " " + " on " + Fact + "." + (dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactForeignKey) + " = " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + ".Id";
             }
+
+            if (isDWQueryUsedAdditionalFact && dWObjectFieldAdditionalFactService.DwObjectTable !=null && CheckIfDWObjectTableHasSourceTenantField(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode, Tenant))
+            {
+                FinalSelectStmt += " and " + Fact + "."+ tenantFieldName +" = " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + "."+ tenantFieldName;
+
+            }
+
+
             FinalSelectStmt += innerjoinSql;
 
             string pivotTableNickname = "";
@@ -715,6 +731,11 @@ namespace WebFreight.Web.Helpers
                 if (sqlStatmentDetails.InnerTables.Where(innerTable => innerTable.DWObjectTableCode == dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode).Count() == 0)
                 {
                     FinalSelectStmt += " inner join " + multipleDiminsionSelection.DimensionTableCode + pivotTableNickname + " on [" + multipleDiminsionSelection.DWObjectTableCode + "].[" + multipleDiminsionSelection.Name + "] = " + pivotTableNickname + ".[Id_Number]";
+
+                    if (CheckIfDWObjectTableHasSourceTenantField(multipleDiminsionSelection.DimensionTableCode , Tenant))
+                    {
+                        FinalSelectStmt += " and " + " ( " + multipleDiminsionSelection.DWObjectTableCode + "." + tenantFieldName + " = " +  pivotTableNickname + "."+ tenantFieldName + " or " + multipleDiminsionSelection.DWObjectTableCode + "." + tenantFieldName + "= 0 " + ")";
+                    }
                 }
             }
             var OrderByString = "" + Fact + ".Id_Number";
@@ -827,6 +848,15 @@ namespace WebFreight.Web.Helpers
             sqlCommandDefinition.SQLString = sqlCommandDefinition.SQLString.Replace("@SelectFieldTenantSql", selectFieldTenantSql);
 
             return sqlCommandDefinition;
+        }
+
+        private bool CheckIfDWObjectTableHasSourceTenantField(string parentDimTabelName , int tenant)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("BRS", tenant))  return false;
+
+            return  new DWObjectFieldQuery(0).GetDWObjectFieldByDWObjectTableCode(0, parentDimTabelName).Where(d => d.Code == "[Source Tenant]").Any(); 
+         
+
         }
 
         private string ApplyFactQuoteBusinessUnitFilter(string additionalCondition)

@@ -700,6 +700,7 @@ namespace Logitude.Infrastructure.BL
                 Name = "Quote Markup Currency", 
                 Description = "Quote Markup Currency", 
 			});		 
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "DPB", 
@@ -714,6 +715,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "ARInvoice Sent Icon", 
                 SearchFields = "ARS,ARInvoice Sent Icon", 
                 Description = "ARInvoice Sent Icon", 
+			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BRS", 
+                Name = "BI Report Security", 
+                SearchFields = "BRS,BI Report Security", 
+                Description = "BI Report Security", 
 			});
 			
             return all;
