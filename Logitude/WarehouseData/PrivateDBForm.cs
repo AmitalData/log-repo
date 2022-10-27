@@ -107,6 +107,8 @@ namespace WarehouseData
 
                             if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                             {
+                                var privateMainDataWarehouseService = new MainDataWarehouseService();
+
                                 string message = "Start " + (type == "Build" ? "building" : "updating") + " data on private tenant (" + tenant + ")";
 
                                 if (string.IsNullOrEmpty(allMessage)) allMessage = message + System.Environment.NewLine;
@@ -117,28 +119,27 @@ namespace WarehouseData
                                 Stopwatch stopWatchPrivateDB = new Stopwatch();
                                 stopWatchPrivateDB.Start();
 
-                                string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
-                                List<int> relatedTenants = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                                string destinationConnectionString = privateMainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
+                                List<int> relatedTenants = privateMainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
 
                                 if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
-                                string tenants = mainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
+                                string tenants = privateMainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
 
                                 if (type == "Build")
                                 {
-                                    mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                    privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                                     privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
 
 
                                 }
-                                else mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
                                 stopWatchPrivateDB.Stop();
                                 TimeSpan tsPrivateDB = stopWatchPrivateDB.Elapsed;
                                 string replaceMessage = "Updated Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "   Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 if (type == "Build")
                                 {
-                                    //string count = mainDataWarehouseService.GetRecordDataCountByTableName("Fact_Shipments", destinationConnectionString).ToString();
                                     replaceMessage = "Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "  Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 }
 
