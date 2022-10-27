@@ -2658,9 +2658,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            shipmentPM.IsCustomerArchived = (from a in repository.context.ShipmentDigitalDataViews
-                                             where a.Id == shipmentPM.Id && a.Tenant == tenant
-                                             select a.IsCustomerArchived).FirstOrDefault();
+            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a=>a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
+                                                                                    .Select(a=>a.IsCustomerArchived).FirstOrDefault();
+                
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
@@ -12361,16 +12361,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return allShipments;
         }
 
-        public List<string> GetShipmentsByTenantCreateDateCustomer(int tenant, DateTime StartDate, DateTime EndDate, string CustomerId, string CustomerTenantAccessId)
+        public IQueryable<Shipment> GetIQueryableShipmentsByTenantAndCreateDate(int tenant, DateTime startDate, DateTime endDate)
         {
-            IQueryable<Shipment> shipments = repository.GetByCreateDate(StartDate, EndDate);
-            CustomerTenantAccessCardBatchQuery BQuery = new CustomerTenantAccessCardBatchQuery(tenant);
-            //var temp = BQuery.GetOldestCustomerTenantAccessCardsBatch(CustomerId, CustomerTenantAccessId, tenant);
-            List<string> shipmentsIds = (from s in shipments
-                                         where s.Tenant == tenant && s.CustomerId == CustomerId
-                                         select s.Id).ToList();//s.CreateDateTime >= temp.FromDatetime &&
-            return shipmentsIds;
+            IQueryable<Shipment> shipments = repository.context.Shipments.Where(a => a.Tenant == tenant && (a.CreateDateTime >= startDate && a.CreateDateTime < endDate));
 
+            return shipments;
         }
 
         public IQueryable<ShipmentList> GetShipmentListTenant(int tenant)
@@ -13446,7 +13441,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
-                               IsCustomerArchived = f.IsCustomerArchived
+                               IsCustomerArchived = f.IsCustomerArchived,
+                               NotesSharedWithCustomer = f.NotesSharedWithCustomer,
                            };
 
             return myResult;

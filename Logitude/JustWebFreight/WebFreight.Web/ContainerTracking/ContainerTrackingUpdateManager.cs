@@ -24,12 +24,14 @@ namespace WebFreight.Web.ContainerTracking
         private ContainerPM containerPM;
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
+        private TenantRepository tenantRepository;
         private PortQuery portQuery;
         private string POLShipmentUpdateIndicator;
         private string PODShipmentUpdateIndicator;
         private bool isUpdatingPackages = false;
         private bool isUpdatingShipmentDateFields = false;
         private bool isUpdatingEmptyLeg = false;
+        private Tenant myTenant;
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
             this.containerUpdatedFields = containerUpdatedFields;
@@ -38,8 +40,8 @@ namespace WebFreight.Web.ContainerTracking
             this.shipmentPM = containerUpdatedFields.ShipmentPM;
             this.portRepository = new PortRepository(tenant);
             this.portQuery = new PortQuery(portRepository);
-        }
-
+            this.tenantRepository = new TenantRepository(tenant);            
+        }       
         public void Update()
         {
             this.UpdateContainer();
@@ -138,7 +140,13 @@ namespace WebFreight.Web.ContainerTracking
         {
             this.shipmentPM = shipmentPM;
             this.tenant = shipmentPM.Tenant;
+            this.GetTenant();
         }
+        private void GetTenant()
+        {
+            myTenant = tenantRepository.GetSingleTenant(tenant);
+        }
+
         private void MapContainerFields()
         {
             this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, containerPM);
@@ -223,7 +231,6 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.PODLocation = containerUpdatedFields.PODLocation;
             containerPM.EstimatedPODVesselArrival = containerUpdatedFields.EstimatedPODVesselArrival;
             containerPM.ActualPODVesselArrival = containerUpdatedFields.ActualPODVesselArrival;
-            containerPM.ActualPODVesselArrival = containerUpdatedFields.ActualPODVesselArrival;
             containerPM.EstimatedPODDischarge = containerUpdatedFields.EstimatedPODDischarge;
             containerPM.ActualPODDischarge = containerUpdatedFields.ActualPODDischarge;
             containerPM.EstimatedPODDeparture = containerUpdatedFields.EstimatedPODDeparture;
@@ -271,8 +278,6 @@ namespace WebFreight.Web.ContainerTracking
             ContainerService containerService = new ContainerService(containerUpdatedFields.ShipmentContext, tenant);
             containerService.Update(containerPM, containerUpdatedFields.ContainersExternal);
         }
-
-
         private void UpdatePackage()
         {
             this.isUpdatingPackages = false;
@@ -295,14 +300,6 @@ namespace WebFreight.Web.ContainerTracking
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     this.isUpdatingPackages = true;
                 }
-                //else if (eventData > package.LastStatusDate)
-                //{
-                //    package.LastStatusCode = container_status;
-                //    package.LastStatusDate = eventData;
-                //    package.ContainerStatusSourceCode = oceanInsightsSource;
-                //    package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                //    this.isUpdatingPackages = true;
-                //}
             }
         }
         private void UpdateEmptyReturnLeg()
@@ -331,7 +328,6 @@ namespace WebFreight.Web.ContainerTracking
 
             return shipmentDelivery;
         }
-
         private void UpdateShipment()
         {
             if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant))
@@ -396,9 +392,9 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                 shipmentPM.IsUpdatedVizionAnalyzer = true;
+
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                 shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-
 
             this.UpdateShipmentDates();
 
@@ -447,7 +443,7 @@ namespace WebFreight.Web.ContainerTracking
 
                 if (shipmentPM.OnCarriageATA == null)
                 {
-                    this.FillFieldsShipmentNewValues("OnCarriageATA", containerPM.ActualPODVesselArrival, shipmentPM);
+                    this.FillOnCarriageATA();
                 }
             }
 
@@ -455,6 +451,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
+
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
 
@@ -462,9 +459,27 @@ namespace WebFreight.Web.ContainerTracking
 
                 if (shipmentPM.MainCarriageATA == null)
                 {
-                    this.FillFieldsShipmentNewValues("MainCarriageATA", containerPM.ActualPODVesselArrival, shipmentPM);
+                    this.FillMainCarriageATA();
                 }
             }
+        }
+        private void FillOnCarriageATA()
+        {
+            DateTime? myDate = containerPM.ActualPODVesselArrival;
+
+            if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
+                myDate = containerPM.ActualPODDischarge;
+
+            this.FillFieldsShipmentNewValues("OnCarriageATA", myDate, shipmentPM);
+        }
+        private void FillMainCarriageATA()
+        {
+            DateTime? myDate = containerPM.ActualPODVesselArrival;
+
+            if(myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
+                myDate = containerPM.ActualPODDischarge;
+
+            this.FillFieldsShipmentNewValues("MainCarriageATA", myDate, shipmentPM);
         }
         private void SaveShipment()
         {

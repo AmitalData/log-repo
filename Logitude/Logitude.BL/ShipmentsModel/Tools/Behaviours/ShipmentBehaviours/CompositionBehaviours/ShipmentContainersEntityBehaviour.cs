@@ -821,7 +821,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private ShipmentDeliveryPM GetShipmentDeliveryPMByContainerEntityId(ContainerPM entityPM)
         {
-            foreach (ShipmentDeliveryPM shipmentDeliveryPM in initializer.EntityPM.ShipmentDeliveries)
+            foreach (ShipmentDeliveryPM shipmentDeliveryPM in initializer.EntityPM.ShipmentDeliveries.Where(d =>d.PickUpDeliveryTypeCode == "DELV"))
             {
                 if (IsDeliveryHaveContainerEntityId(shipmentDeliveryPM, entityPM.Id))
                 {
@@ -953,8 +953,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private ShipmentDeliveryPM GetUpdatedShipmentDeliveryPMByContainerEntityId()
         {
             ShipmentDeliveryPM shipmentDeliveryPM = initializer.EntityPM.ShipmentDeliveries.Find(d => d.ChangeSetOp == ChangeSetOperation.Update
-            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))
-            ));
+            && d.ShipmentPickUpDeliveryPackages != null 
+            && d.PickUpDeliveryTypeCode == "DELV"
+            && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))            ));
             return shipmentDeliveryPM;
         }
 
@@ -1045,15 +1046,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateContainerFieldsFromPickUpFields(ContainerPM containerPM, ShipmentPickUpPM updatedShipmentPickUp, bool isPackageDeleted)
         {
+            if (isPackageDeleted)
+            {
+                containerPM.ShipmentPickupFrom = null;
+                containerPM.ShipmentPickupTo = null;
+                containerPM.ShipmentPickupETA = null;
+                containerPM.ShipmentPickupETD = null;
+                containerPM.ShipmentPickupATA = null;
+                containerPM.ShipmentPickupATD = null;
+                containerService.Update(containerPM);
+
+                return;
+            }
+
             if (!IsContainerUpdatedBefore(containerPM))
             {
-                containerPM.ShipmentPickupFrom = isPackageDeleted ? null : this.GetFirstPickupFromAddress(updatedShipmentPickUp);
-                containerPM.ShipmentPickupTo = isPackageDeleted ? null : this.GetFirstPickupToAddress(updatedShipmentPickUp);
-                containerPM.ShipmentPickupETA = isPackageDeleted ? null : updatedShipmentPickUp?.ETA;
-                containerPM.ShipmentPickupETD = isPackageDeleted ? null : updatedShipmentPickUp?.ETD;
-                containerPM.ShipmentPickupATA = isPackageDeleted ? null : updatedShipmentPickUp?.ATA;
-                containerPM.ShipmentPickupATD = isPackageDeleted ? null : updatedShipmentPickUp?.ATD;
-
+                containerPM.ShipmentPickupFrom = this.GetFirstPickupFromAddress(updatedShipmentPickUp);
+                containerPM.ShipmentPickupTo = this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerPM.ShipmentPickupETA = updatedShipmentPickUp?.ETA;
+                containerPM.ShipmentPickupETD = updatedShipmentPickUp?.ETD;
+                containerPM.ShipmentPickupATA = updatedShipmentPickUp?.ATA;
+                containerPM.ShipmentPickupATD = updatedShipmentPickUp?.ATD;
                 containerService.Update(containerPM);
             }
         }
@@ -1124,7 +1137,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
 
             List<ShipmentDeliveryPM> shipmentDeliveriesPM = initializer.EntityPM.ShipmentDeliveries.FindAll(d => d.ChangeSetOp == ChangeSetOperation.Delete
-            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
+            && d.ShipmentPickUpDeliveryPackages != null
+            && d.PickUpDeliveryTypeCode == "DELV"
+            && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
+            
             if (shipmentDeliveriesPM != null && shipmentDeliveriesPM.Count > 0)
             {
                 this.UpdateContainerFieldsFromDeletedDeliveries(shipmentDeliveriesPM);

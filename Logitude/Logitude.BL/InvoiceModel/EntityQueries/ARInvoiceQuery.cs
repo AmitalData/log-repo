@@ -1900,6 +1900,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     BillToGLAccountId = entityPOCO.BillToGLAccountId,
                     IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
                     TotalEquation = entityPOCO.TotalEquation,
+                    SATXML = entityPOCO.SATXML,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2392,7 +2393,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  select a).FirstOrDefault();
             return invoice != null ? invoice.ARInvoiceTypeCode : null;
         }
-
 
         #region Digital Portal 
 

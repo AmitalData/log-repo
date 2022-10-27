@@ -11,6 +11,7 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 {
@@ -29,6 +30,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
             Uploader uploader = new Uploader();
+            var docAth = AuthenticationUtil.GenerateToken();
 
             if (args.PartnerType == "AG")
             {
@@ -89,10 +91,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
                                     if (myDocument != null)
                                     {
-
                                         myFileName = !string.IsNullOrEmpty(myDocument.CalculatedFileName) ? myDocument.CalculatedFileName : myDocument.FileName;
-
-
                                         myFileExtension = myDocument.Extension;
                                     }
                                 }
@@ -101,13 +100,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
                         string url = null;
                         string id = null;
+                        if (args.IsExternal)
+                        {
+                            id = item.Id;
+                            string encodedUrl = item.SecurityId + "~" + tenant;
+                            encodedUrl = documentOutCopy == null ? encodedUrl : encodedUrl + "~" + documentOutCopy.Id;
+                            encodedUrl = WebUtility.UrlEncode(encodedUrl);
+                            url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
+                        }
 
-
-                        string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
-                        id = myPrefix + item.Id;
-
-                        url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + myDocumentId + ":ship:" + entityId;
-
+                        else
+                        {
+                            string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
+                            id = myPrefix + item.Id;
+                            url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + myDocumentId + ":ship:" + entityId;
+                        }
 
                         output.Add(new SharedLogisticDocumentPM()
                         {

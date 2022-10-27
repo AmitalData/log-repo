@@ -755,6 +755,14 @@ export class TenantPM {
     public set IsDigitalPortalAccessActivated(newValue: boolean) { if (this.isDigitalPortalAccessActivated != newValue) { this.isDigitalPortalAccessActivated = newValue; this.MarkAsDirty("IsDigitalPortalAccessActivated"); } }
        
 	 
+    private useNewTermsOfUse: boolean;
+    public get UseNewTermsOfUse() { return this.useNewTermsOfUse; }
+    public set UseNewTermsOfUse(newValue: boolean) { if (this.useNewTermsOfUse != newValue) { this.useNewTermsOfUse = newValue; this.MarkAsDirty("UseNewTermsOfUse"); } }
+
+    private shipmentATADateIndicator: string;
+    public get ShipmentATADateIndicator() { return this.shipmentATADateIndicator; }
+    public set ShipmentATADateIndicator(newValue: string) { if (this.shipmentATADateIndicator != newValue) { this.shipmentATADateIndicator = newValue; this.MarkAsDirty("ShipmentATADateIndicator"); } }
+       
 
     public OldEntityPM: TenantPM;
 		
@@ -782,4 +790,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

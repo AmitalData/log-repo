@@ -62,9 +62,13 @@ export class DownloadManager {
     }
 
 
-    public static DownloadTermsOfUse(privateLabalId: string) {
+    public static DownloadTermsOfUse(privateLabalId: string, documentId:string = null) {
         const token = ServiceHelper.GetLDocumentDownloadToken();
         let link = AppTool.GetLogitudeURL() + "WebPages/TermsOfUseDownloadPage.aspx?PrivateLableId=" + privateLabalId + "&tempId=" + token;
+        if (!AppTool.IsNullOrEmpty(documentId)) {
+            link += "&DocumentId=" + documentId;
+        }
+
         let win = window.open(link, '_blank');
         if (win) {
             win.focus();

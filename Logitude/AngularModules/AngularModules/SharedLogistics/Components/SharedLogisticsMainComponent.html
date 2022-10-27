@@ -89,7 +89,7 @@ Test:hover {
                                                     </div>
                                                 </div>
 
-                                                <div   class="QueriesSection" >
+                                                <div *ngIf="IsDisplayAreaDocument"  class="QueriesSection" >
                                                     <div>Document Type</div>
                                                     <div>
                                                         <p  class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('SLCIN')">Customize Shared Logistics Invitations</p>

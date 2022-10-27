@@ -445,6 +445,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ShipmentCreationDate = shipment.CreateDateTime;
                 myDataProvider.Date = todayDate.ToShortDateString();
                 myDataProvider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
+                myDataProvider.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode != null ? shipment.MainCarriageCarrierCode : "";
                 myDataProvider.Branch = shipment.BranchName != null ? shipment.BranchName : "";
                 myDataProvider.DeliveryOrder = shipment.DeliveryOrder;
                 myDataProvider.ImportManifest = shipment.ImportManifest;
@@ -2900,6 +2901,34 @@ namespace WebFreight.Web.WebServices
                 }
                 #endregion
 
+                myDataProvider.ColoaderName = !string.IsNullOrEmpty(shipment.ColoaderName) ? shipment.ColoaderName : "";
+                if (!string.IsNullOrEmpty(shipment.ColoaderAddressId))
+                {
+                    Address coloaderAddress = addressRepository.GetSingleAddress(shipment.ColoaderAddressId, tenant);
+                    var address = DataProviders.General.GetAddress(coloaderAddress);
+                    myDataProvider.ColoaderAddress = !string.IsNullOrEmpty(address) ? address : "";
+                }
+                else
+                {
+                    myDataProvider.ColoaderAddress = "";
+                }
+                if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
+                {
+                    myDataProvider.SCACCode = shipment.MainCarriageCarrierId;
+
+                    var shippingLines = commonContext.ShippingLines.Where(d=> d.Id == shipment.MainCarriageCarrierId).FirstOrDefault();
+                    if (shippingLines == null)
+                        myDataProvider.SCACCode = "";
+                    else
+                        myDataProvider.SCACCode = !string.IsNullOrEmpty(shippingLines.SCACCode) ? shippingLines.SCACCode : "";
+                }
+                else
+                {
+                    myDataProvider.SCACCode= "";
+                }
+
+
+
                 #region Receivables Lines
 
                 ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -4020,7 +4049,11 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.IRSNumber = customer.IRSNumber;
                 myDataProvider.CustomerName = customer.EnglishName;
                 myDataProvider.ClientNumber = customer.Code;
+                if(customer.Customer != null)
+                    myDataProvider.CustomerEORI = !string.IsNullOrEmpty(customer.Customer.EORInumber) ? customer.Customer.EORInumber : "";
             }
+            
+
 
             Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
             if (address != null)

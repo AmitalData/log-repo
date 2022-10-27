@@ -607,6 +607,26 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? EventDate;
         public string TrackingSource;
 
+        public string LoadedTransshipmentLocation;
+        public string LoadedTransshipmentVessel;
+        public string LoadedTransshipmentVoyage;
+        public DateTime? EstimatedLoadedTransshipment;
+        public DateTime? ActualLoadedTransshipment;
+
+        public string VesselArrivedLocation;
+        public string VesselArrivedVessel;
+        public string VesselArrivedVoyage;
+        public DateTime? EstimatedVesselArrived;
+        public DateTime? ActualVesselArrived;
+
+        //public string EmptyReturnLocation;
+        //public DateTime? EstimatedEmptyReturn;
+        //public DateTime? ActualEmptyReturn;
+
+        //public string EmptyReturnLocation;
+        //public DateTime? EstimatedEmptyReturn;
+        //public DateTime? ActualEmptyReturn;
+
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }
     }

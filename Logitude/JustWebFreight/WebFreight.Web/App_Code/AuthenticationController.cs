@@ -2312,16 +2312,17 @@ namespace WebFreight.Web
                                 {
                                     Id = user.Id,
                                     Tenant = tenant,
+                                    LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant)
                                 };
 
                                 commonDataContext.ContactLastLogins.Add(lastLogin);
                             }
 
+                            user.DigitalLastLoginDateTime = lastLogin.LoginDateTime;
                             lastLogin.ComputerId = computerId;
                             lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                             commonDataContext.ContactLoginLogs.Add(contactLog);
                             commonDataContext.SaveChanges();
-
 
                             // add a record to contact last login table
                         }
@@ -2381,13 +2382,14 @@ namespace WebFreight.Web
                     PartnerTypeId = card.PartnerTypeId,
                     Via = via,
                     Tenant = card.Tenant,
+                    LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant)
 
                 };
                 commonDataContext.SharedLogisticsContactLastLogins.Add(sharedContactLastLogin);
             }
+
             sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
             commonDataContext.SaveChanges();
-
         }
 
         private static bool IscustomerCareIpAuthenticated()

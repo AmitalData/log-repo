@@ -96,6 +96,12 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.LeadingCurrency = shipmentPM.AWBCurrencyCode == null ? "" : shipmentPM.AWBCurrencyCode;
                 awbDp.Signature = shipmentPM.AWBSignature;
                 awbDp.ShipmentNumber = shipmentPM.ShipmentNumber;
+                if(shipmentPM.ShipmentLevelCode == "H")
+                    awbDp.MasterShipmentNumber = shipmentPM.MasterShipmentNumber;
+                else
+                    awbDp.MasterShipmentNumber = shipmentPM.ShipmentNumber;
+
+
                 awbDp.ChargesCode = shipmentPM.AWBChargesCodeCode;
                 awbDp.InsurrenceValue = !string.IsNullOrEmpty(shipmentPM.AWBInsurrenceValue) ? shipmentPM.AWBInsurrenceValue : "";
                 awbDp.DeclaredValueForCarriage = !string.IsNullOrEmpty(shipmentPM.AWBDeclaredValueForCarriage) ? shipmentPM.AWBDeclaredValueForCarriage : "";
@@ -121,6 +127,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.UserSignatureImage = GetUserSignatureImage();
                 awbDp.Place = shipmentPM.AWBPlace;
                 awbDp.CustomsDeclarationNumber = shipmentPM.DeclarationNumber;
+                awbDp.WarehouseLegTerminalName = shipmentPM.WarehouseLegTerminalName;
 
                 this.GetBranchData();
                 this.GetLoggedTenantData();

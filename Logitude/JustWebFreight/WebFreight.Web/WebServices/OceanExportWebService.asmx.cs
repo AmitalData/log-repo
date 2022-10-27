@@ -97,6 +97,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipment.ShipmentLevelCode, shipment.SecurityKey, tenant);
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
                 myDataProvider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
+                myDataProvider.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode != null ? shipment.MainCarriageCarrierCode : "";
+                myDataProvider.LoadingPortCode = shipment.MainCarriageFromPortCode != null ? shipment.MainCarriageFromPortCode : "";
                 myDataProvider.CompanyName = tenantSettings.Company != null ? tenantSettings.Company : "";
                 myDataProvider.MainCarriageETA = shipment.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETA) : "";
                 myDataProvider.MainCarriageFirstLegETD = shipment.MainCarriageETD;
@@ -114,6 +116,30 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
                 myDataProvider.VolumeUnitCode = shipment.VolumeUnitCode;
                 myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
+
+                if (shipment.Transshipment3ToPortId != null)
+                {
+                    myDataProvider.DischargePortCode = shipment.Transshipment3ToPortCode;
+                }
+                else if (shipment.Transshipment2ToPortId != null)
+                {
+                    myDataProvider.DischargePortCode = shipment.Transshipment2ToPortCode;
+
+                    
+                }
+                else if (shipment.Transshipment1ToPortId != null)
+                {
+                    myDataProvider.DischargePortCode = shipment.Transshipment1ToPortCode;
+
+                    
+                }
+                else if (shipment.MainCarriageToPortCode != null)
+                {
+                    myDataProvider.DischargePortCode = shipment.MainCarriageToPortCode;
+
+                }
+                if (myDataProvider.DischargePortCode == null)
+                    myDataProvider.DischargePortCode = "";
 
                 if (shipment.DocumentsClosingDate != null)
                 {

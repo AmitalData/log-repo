@@ -1,4 +1,4 @@
-<div class="app-content" [ngStyle]="{ 'background-image': BackGroundImg}">
+<div class="app-content" style="background-size: cover;" [ngStyle]="{ 'background-image': BackGroundImg}">
     <!-- Mobile Menu -->
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
@@ -22,7 +22,14 @@
         <!-- <div class="title">Cargo Tracking</div> -->
         <img *ngIf="ComapnyLogo" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
 
+        <div class="nav">
+            <ul class="left-nav" [class.show]="displayMenu">
 
+                <li *ngIf="brandingData?.ActivatePrivateSite" (click)="GoToPrivateSite()" style="float: right;">Login</li>
+
+
+            </ul>
+        </div>
     </div>
 
     <!-- Web Header -->

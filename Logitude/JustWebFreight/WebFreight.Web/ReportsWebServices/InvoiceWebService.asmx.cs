@@ -670,6 +670,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (myCard != null)
                         {
                             invoicedataprovider.Notify1VATNumber = myCard.VatNumber;
+                            invoicedataprovider.Notify1Name = myCard.EnglishName;
 
                             if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
                             {
@@ -2354,6 +2355,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode);
                         invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode, currentInvoice.Tenant);
                         invoicedataprovider.SAT.BillToSATName = GetBillToSATName(billToCard);
+                        invoicedataprovider.SAT.SATForeignRFC = billToCard.SATForeignRFC;
                         invoicedataprovider.SAT.FormadePago = currentInvoice.SATPaymentMethodCode;
 
 
@@ -4168,6 +4170,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode, entityPM.Tenant);
                         invoiceDataProvider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode);
                         invoiceDataProvider.SAT.BillToSATName = GetBillToSATName(billToCard);
+                        invoiceDataProvider.SAT.SATForeignRFC = billToCard.SATForeignRFC;
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;
 
                         invoiceDataProvider.WaterMark = "Draft";

@@ -297,11 +297,43 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
                 }
+
                 if (!string.IsNullOrEmpty(master.SalesmanUserId))
                 {
                     manifestDataProvider.SalesmanName = master.SalesmanUserName;
                 }
+                #endregion
 
+                #region Shipper Not Exporter
+                if (!string.IsNullOrEmpty(master.ShipperNotExporterId))
+                {
+                    CardPM shipperNotExporter = cardQuery.GetSinglePM(master.ShipperNotExporterId, tenant);
+                    if (shipperNotExporter != null)
+                    {
+                        manifestDataProvider.ShipperNotExporterName = shipperNotExporter.EnglishName;
+                        Address address = addressRepository.GetSingleAddress(master.ShipperNotExporterAddressId, tenant);
+                        if (address != null)
+                        {
+                            manifestDataProvider.ShipperNotExporterAddress = DataProviders.General.GetAddress(address);
+                        }
+                    }
+                }
+                #endregion
+
+                #region Consignee Not Importer
+                if (!string.IsNullOrEmpty(master.ConsigneeNotImporterId))
+                {
+                    CardPM consigneeNotImporter = cardQuery.GetSinglePM(master.ConsigneeNotImporterId, tenant);
+                    if (consigneeNotImporter != null)
+                    {
+                        manifestDataProvider.ConsigneeNotImporterName = consigneeNotImporter.EnglishName;
+                        Address address = addressRepository.GetSingleAddress(master.ConsigneeNotImporterAddressId, tenant);
+                        if (address != null)
+                        {
+                            manifestDataProvider.ConsigneeNotImporterAddress = DataProviders.General.GetAddress(address);
+                        }
+                    }
+                }
                 #endregion
 
                 #region Consolidator

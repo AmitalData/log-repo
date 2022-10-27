@@ -42,11 +42,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     TermsofUseSignatureQuery termsofUseSignatureQuery = new TermsofUseSignatureQuery(tenant);
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-                    TermsofUsePM termofuse = new TermsofUsePM();
-                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
+                    TermsofUsePM termofuse = null;
+
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId)){
+                        termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
+                    }
 
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
-                    { 
+                    {
                         TenantManagmentPrivateLabelsQuery privateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
                         TenantManagmentPrivateLabelsPM privateLabelsPM = privateLabelsQuery.GetSinglePM(tenantPM.PrivateLabelId);
                         if(privateLabelsPM.PrivateLabelUrl == SecurityUtility.getLoggedDomain())
@@ -55,7 +58,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         } 
                     }
 
-                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault();
+                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault(tenantPM.UseNewTermsOfUse);
 
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
@@ -182,6 +185,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 service.Create(termsofUsePM);
 
                 return Request.CreateResponse(HttpStatusCode.OK, termsofUsePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTermsofUseByTenant()
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);
+                List<TermsofUsePM> termsofUseListPM = termsofUseQuery.GetTermsofUseByTenant(authToken.Tenant).ToList();
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, termsofUseListPM);
+
             }
 
             catch (Exception ex)

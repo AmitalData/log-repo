@@ -79,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
 
-            if (!string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId) && (containerPm.EstimatedEmptyReturn != containerPoco.EstimatedEmptyReturn || containerPm.ActualEmptyReturn != containerPoco.ActualEmptyReturn))
+            if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant) &&!string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId) && (containerPm.EstimatedEmptyReturn != containerPoco.EstimatedEmptyReturn || containerPm.ActualEmptyReturn != containerPoco.ActualEmptyReturn))
             {
                 this.HandleEmptyReturnLeg();
                 this.containerPm.ConcurrencyGUID = entityRepository.GetConcurrencyGUIDByContainerId(this.containerPm.Id, tenant);
@@ -357,6 +357,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
                 emptyReturn.FromPortId = shipmentPM.OnCarriageToPortId;
+            }
+
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment3ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment3ToPortId;
+            }
+
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment2ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment2ToPortId;
+            }
+
+            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment1ToPortId))
+            {
+                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
+                emptyReturn.FromPortId = shipmentPM.Transshipment1ToPortId;
             }
 
             else 

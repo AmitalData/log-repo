@@ -12,6 +12,7 @@ namespace WebFreight.Web.DataProviders
         public string StockStartNumberPrefix { get; set; }
         public string StockEndNumberPrefix { get; set; }
         public string ProjectNumber { get; set; }
+        public string Notify1Name { get; set; }
         public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }
@@ -744,6 +745,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string BillToPostalCode { get; set; }
+        public string SATForeignRFC { get; set; }
     }
 
     public class ReportConstituentInvoiceLine
