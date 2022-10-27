@@ -30,6 +30,7 @@ import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/Declara
 import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
 import { ExportConsigmentContentComponent } from './Components/General/ConsigmentTabContent/ExportConsigmentContentComponent';
 import { ExportDeclarationClosureComponent } from './Components/Closure/ExportDeclarationClosureComponent';
+import { DeclarationExportStorageComponent } from './Components/ExportStorageList/DeclarationExportStorageComponent';
 
 export const Components =
     [
@@ -96,6 +97,7 @@ export class ModuleDeclarations {
             case "DeclarationTapagTabComponent": { myResult = DeclarationTapagTabComponent; break; }
             case "DeclarationCollateralsComponent": { myResult = DeclarationCollateralsComponent; break; }
             case "DeclarationCargoSplitTabComponent": { myResult = DeclarationCargoSplitTabComponent; break; }
+            case "DeclarationExportStorageComponent": { myResult = DeclarationExportStorageComponent; break; }
             case "ImporterDetailsComponent": { myResult = ImporterDetailsComponent; break; }
             case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
             case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
