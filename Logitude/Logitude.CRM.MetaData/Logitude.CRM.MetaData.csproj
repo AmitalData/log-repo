@@ -158,6 +158,7 @@
     <None Include="DBTables\QuestionnaireAnswer.dxml" />
     <None Include="DBTables\QuestionnaireAnswerLine.dxml" />
     <None Include="DBTables\QuestionnaireQuestion.dxml" />
+    <None Include="DBTables\OpportunityAnalytic.dxml" />
     <None Include="DBTables\Rating.dxml" />
     <None Include="DBTables\SLAEscalation.dxml" />
     <None Include="DBTables\SLAEscalationRecepient.dxml" />

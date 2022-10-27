@@ -48,8 +48,8 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
-		         
-        partial void onAdd();//Partial Methods Definition in Generated
+		 
+               partial void onAdd();//Partial Methods Definition in Generated
         public void Add(TimeUnit entity)
         {
             onAdd();
@@ -62,7 +62,7 @@ namespace Logitude.CRM.Data.Repsitories
             context.TimeUnits.Remove(entity);
         }
 
-        partial void onUpdate();//Partial Methods Definition in Generated
+               partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(TimeUnit entity)
         {
             onUpdate();

@@ -16,21 +16,18 @@ namespace Logitude.DashboardModule.BL.DataProviders
         const string APInvoiceAnalyticsMetaData = "APInvoiceAnalytics";
         const string ARInvoiceAnalyticMetaData = "ARInvoiceAnalytics";
         const string QuoteAnalyticMetaData = "QuoteAnalytics";
+        const string OpportunityAnalyticMetaData = "OpportunityAnalytics";
         public BaseTablesDataProvider GetDataProviderService(WidgetPM widget)
         {
             var entity = GetEntity(widget.EntityId);
             switch (entity.TableName)
             {
-                case ShipmentAnalyticsMetaData:
-                    return new ShipmentDataProviderService(widget, entity);
-                case APInvoiceAnalyticsMetaData:
-                    return new APInvoiceDataProviderService(widget, entity);
-                case ARInvoiceAnalyticMetaData:
-                    return new ARInvoiceDataProviderService(widget, entity);
-                case QuoteAnalyticMetaData:
-                    return new QuoteDataProviderService(widget, entity);
-                default:
-                    throw new Exception($"Meta Data Name {entity.TableName} not Provided in Data Provider Factory");
+                case ShipmentAnalyticsMetaData: return new ShipmentDataProviderService(widget, entity);
+                case APInvoiceAnalyticsMetaData: return new APInvoiceDataProviderService(widget, entity);
+                case ARInvoiceAnalyticMetaData: return new ARInvoiceDataProviderService(widget, entity);
+                case QuoteAnalyticMetaData: return new QuoteDataProviderService(widget, entity);
+                case OpportunityAnalyticMetaData: return new OpportunityDataProviderService(widget, entity);
+                default: throw new Exception($"Meta Data Name {entity.TableName} not Provided in Data Provider Factory");
             }
 
         }
@@ -38,8 +35,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             var analyticsFactsMetaDataRepository = new AnalyticsFactsMetaDataRepository(0);
             var entity = analyticsFactsMetaDataRepository.GetSingle(entityId, 0);
-            if (entity == null)
-                throw new Exception($"Meta Data entity '{entityId}' not found");
+            if (entity == null)  throw new Exception($"Meta Data entity '{entityId}' not found");
             return entity;
         }
     }

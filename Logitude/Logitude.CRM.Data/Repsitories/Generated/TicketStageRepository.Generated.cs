@@ -49,8 +49,8 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
-		         
-        partial void onAdd();//Partial Methods Definition in Generated
+		 
+               partial void onAdd();//Partial Methods Definition in Generated
         public void Add(TicketStage entity)
         {
             onAdd();
@@ -63,7 +63,7 @@ namespace Logitude.CRM.Data.Repsitories
             context.TicketStages.Remove(entity);
         }
 
-        partial void onUpdate();//Partial Methods Definition in Generated
+               partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(TicketStage entity)
         {
             onUpdate();

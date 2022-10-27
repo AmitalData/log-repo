@@ -65,6 +65,7 @@
     <Compile Include="DataProviders\Models\KpiChart.cs" />
     <Compile Include="DataProviders\TablesDataProviders\APInvoiceDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ARInvoiceDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\OpportunityDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\QuoteDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ShipmentDataProviderService.cs" />
     <Compile Include="DataProviders\WidgetDataSource.cs" />
@@ -130,6 +131,10 @@
     <Folder Include="CloseTables\EnumGenerated\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
       <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
       <Name>Logitude.DashboardModule.Data</Name>

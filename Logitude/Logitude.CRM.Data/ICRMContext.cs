@@ -65,7 +65,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<TicketStage> TicketStages { get; }
 		 IDbSet<TicketType> TicketTypes { get; }
 		 IDbSet<TimeUnit> TimeUnits { get; }
-	 
+	     IDbSet<OpportunityAnalytic> OpportunityAnalytics { get; }
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
