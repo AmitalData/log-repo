@@ -26,6 +26,9 @@ using Logitude.Accounting.BL;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.Server.Tools.Counters;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.Infrastructure.BL;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
@@ -3373,6 +3376,25 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     SearchFields = (PhysicalCheckCodeDetails.Code + "," + PhysicalCheckCodeDetails.Name).ToLower()
                 };
                 physicalCheckCodeRepository.Add(PhysicalCheckCodeDetails);
+            }
+        }
+
+        public static void AddToggle(ToggleDetails toggleDetails, ToggleRepository toggleRepository)
+        {
+            Dictionary<string, Toggle> tenantToggle = toggleRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenantToggle.Keys.Contains(toggleDetails.Code))
+            {
+                Toggle toggle = toggleRepository.GetSingle(toggleDetails.Code);
+                toggle.Name = toggleDetails.Name;
+                toggle.SearchFields = (toggleDetails.Code + "," + toggleDetails.Name).ToLower();
+                toggle.Description = toggleDetails.Description; 
+                toggleRepository.Update(toggle);
+            }
+            else
+            {
+                Toggle newToggle = new Toggle() { Code = toggleDetails.Code, Name = toggleDetails.Name, SearchFields = (toggleDetails.Code + "," + toggleDetails.Name).ToLower(), Description = toggleDetails.Description };
+                toggleRepository.Add(newToggle);
             }
         }
 

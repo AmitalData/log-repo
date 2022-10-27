@@ -33,6 +33,9 @@ using System.Transactions;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.BL;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -18566,6 +18569,18 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
          // AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
 
             physicalCheckCodeRepository.SubmitChanges();
+
+        }
+
+        public void FillToggle()
+        {
+
+            ToggleRepository toggleRepository = new ToggleRepository(0);
+            Dictionary<string, Toggle> TenantToggle = toggleRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddToggle(new ToggleDetails() { Code = "FSN", Name = "Force Sign",Description = "Force Sign" }, toggleRepository);
+
+            toggleRepository.SubmitChanges();
 
         }
 
