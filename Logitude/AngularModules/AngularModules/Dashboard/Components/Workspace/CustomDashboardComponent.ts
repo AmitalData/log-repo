@@ -37,7 +37,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private dashboardPMService: DashboardPMService;
     private dashboardPMExtendedService: DashboardPMExtendedService;
     public SelectedDashboard: DashboardPM;
-    public SelectedDashboardName: string;
     public DataContext = this;
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
@@ -116,27 +115,26 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
-                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
 
                 if (this.SelectedDashboard) {
-                    this.applyWDashboard();                    
+                    this.applyWDashboard();
                 }
 
                 else {
                     this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-                    this.SelectedDashboardName = null;
                     this.SetEmptyDashboardVisibility();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
-            }            
+            }
         });
     }
 
     applyWDashboard() {
+        this.SelectedDashboardId = this.SelectedDashboard.Id;
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-        this.SelectedDashboardName = this.SelectedDashboard.Name;
         this.SetEmptyDashboardVisibility();
     }
     private BindReactWidgets(widgets: WidgetPM[]) {
@@ -152,8 +150,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private selectedDashboardId: string;
     get SelectedDashboardId() { return this.selectedDashboardId; }
     set SelectedDashboardId(value: string) {
-        MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: this.SelectedDashboard?.Id });
         if (this.selectedDashboardId != value) {
+            if (this.selectedDashboardId) MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: this.SelectedDashboard?.Id });
             this.selectedDashboardId = value;
 
             LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, value);
@@ -161,7 +159,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         }
     }
 
-    public BackButtonLable: string = "Back";    
+    public BackButtonLable: string = "Back";
     public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutModeActive: boolean = false;
     public HasChanges: boolean = false;
@@ -436,7 +434,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             }
         });
     }
-    private GoBack(reject: boolean) {        
+    private GoBack(reject: boolean) {
         this.ResetFlags();
         this.SetEmptyDashboardVisibility();
 
