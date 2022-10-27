@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var context1 = CustomContext.GetContext(requestParams.Tenant);//context each CRS TRANS
                     var approveAllPending = new ApproveAllPendingClass(context1);
                     var courierStatusPM = qs.GetSingle(decId, true, false);
-                    if (courierStatusPM != null && courierStatusPM.DeclarationPendings.Find(d => d.CourierPendingRequireApr == true && d.Approval == false) != null)
+                    if (courierStatusPM != null && courierStatusPM.DeclarationPendings.Find(d => d.CourierPendingRequireApr == true && d.Approval != true) != null)
                     {
                         approveAllPending.ApproveAllPending(requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, courierStatusPM);
                     }
@@ -143,7 +143,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 bool isUpdateDeclaration = true;
                 if (isUpdateDeclaration)
                 {
-                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval == false).ToList();
+                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval != true).ToList();
                     foreach (var declarationPending in declarationPendingList)
                     {
                         declarationPending.Approval = true;
@@ -152,6 +152,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             itemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        itemPM.ApprovedCourierPendingList += "," + declarationPending.CourierPendingReasonCode;
                     }
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), itemPM.Tenant);
                     declarationCourierStatusUpdateService.Update(itemPM, true);

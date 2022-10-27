@@ -630,6 +630,7 @@
                                                                         </td>
                                                                         <td style="width:1px"></td>
                                                                          
+                                                                         
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -1047,7 +1048,7 @@
                                                                                 style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()" 
-                                                                                    [IsDisabled]="IsDisplayOnly"
+                                                                                    [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
                                                                                     [ButtonText]="'םישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
@@ -1059,9 +1060,13 @@
                                                                                 </split-button>
                                                                             </div>
                                                                         </td>
+                                                                     
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        <td>
                                                                     </tr>
                                                                 </table>
                                                             </td>
