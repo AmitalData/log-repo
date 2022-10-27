@@ -88,10 +88,30 @@
 
                 <td style="width:1px;">
                     <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
+                </td>
 
+                <td class="Table-cell05">
+                    <div></div>
+                </td>
+
+                <td style="width: 17px; vertical-align: middle;">
+                    <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
+                    <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
+                </td>
+
+                <td style="width: 2px;">
+                    <div></div>
+                </td>
+                <td style="width: 12px; vertical-align: middle;">
+                    <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
+                    <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
                 </td>
             </tr>
         </table>
+    </div>
+
+    <div *ngIf="IsGlobalFiltersOpened" style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:150px;">
+        <!--<AdvSearchComponent [ObjectTableName]="ObjectTableName" [QueryChangeEvent]="onQueryChangeEvent" [QueryId]="SelectedQueryId" [QueryCode]="SelectedQueryCode" [Filterchangeevent]="Filterchangeevent"></AdvSearchComponent>-->
     </div>
 
     <div *ngIf="!IsEmptyDashboardVisible" class="Dashboard-body">
