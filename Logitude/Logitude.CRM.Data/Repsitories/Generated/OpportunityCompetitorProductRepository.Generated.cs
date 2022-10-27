@@ -49,8 +49,8 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.OpportunityId == keys.OpportunityId && a.CompetitorId == keys.CompetitorId && a.ProductTypeCode == keys.ProductTypeCode
                     select a).FirstOrDefault();
         }
-		 
-               partial void onAdd();//Partial Methods Definition in Generated
+		 		                 
+        partial void onAdd();//Partial Methods Definition in Generated
         public void Add(OpportunityCompetitorProduct entity)
         {
             onAdd();
@@ -63,7 +63,7 @@ namespace Logitude.CRM.Data.Repsitories
             context.OpportunityCompetitorProducts.Remove(entity);
         }
 
-               partial void onUpdate();//Partial Methods Definition in Generated
+        partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(OpportunityCompetitorProduct entity)
         {
             onUpdate();

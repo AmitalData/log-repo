@@ -48,8 +48,8 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
-		 
-               partial void onAdd();//Partial Methods Definition in Generated
+		 		                 
+        partial void onAdd();//Partial Methods Definition in Generated
         public void Add(EscalationActionTimeIndicator entity)
         {
             onAdd();
@@ -62,7 +62,7 @@ namespace Logitude.CRM.Data.Repsitories
             context.EscalationActionTimeIndicators.Remove(entity);
         }
 
-               partial void onUpdate();//Partial Methods Definition in Generated
+        partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(EscalationActionTimeIndicator entity)
         {
             onUpdate();

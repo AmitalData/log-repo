@@ -303,12 +303,12 @@ namespace <#= repnamespacestring #>
 		 <#+
 		 
 		#>
-
-       <#+
+		                 
+<#+
 			if(tableName == "Opportunity")
 			{
-	   #>
- partial void OnEntityAdd(<#=tableName #> entity);
+ #>
+        partial void OnEntityAdd(<#=tableName #> entity);
 <#+
 			}
 #>
@@ -333,11 +333,11 @@ namespace <#= repnamespacestring #>
             context.<#=dBTableName #>.Remove(entity);
         }
 
-       <#+
+<#+
 			if(tableName == "Opportunity")
 			{
 	   #>
- partial void OnEntityUpdate(<#=tableName #> entity);
+        partial void OnEntityUpdate(<#=tableName #> entity);
 <#+
 			}
 #>

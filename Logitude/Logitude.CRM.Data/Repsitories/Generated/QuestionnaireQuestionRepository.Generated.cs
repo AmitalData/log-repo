@@ -49,8 +49,8 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.QuestioneerId == keys.QuestioneerId && a.VersionNumber == keys.VersionNumber && a.QuestionNumber == keys.QuestionNumber
                     select a).FirstOrDefault();
         }
-		 
-               partial void onAdd();//Partial Methods Definition in Generated
+		 		                 
+        partial void onAdd();//Partial Methods Definition in Generated
         public void Add(QuestionnaireQuestion entity)
         {
             onAdd();
@@ -63,7 +63,7 @@ namespace Logitude.CRM.Data.Repsitories
             context.QuestionnaireQuestions.Remove(entity);
         }
 
-               partial void onUpdate();//Partial Methods Definition in Generated
+        partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(QuestionnaireQuestion entity)
         {
             onUpdate();
