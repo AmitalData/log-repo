@@ -532,6 +532,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     SetMoreReferenceText(reference: string) {
         var allreferences = reference?.split(',');
+        allreferences = allreferences.filter((el, i, a) => i === a.indexOf(el));
         if (allreferences?.length > 4) {
 
             var morereferences = allreferences.slice(3, allreferences.length + 1)
@@ -750,6 +751,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return;
 
         references = references.filter(d=>d).map(x => x.trim());
+        references = references.filter((el, i, a) => i === a.indexOf(el));
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
