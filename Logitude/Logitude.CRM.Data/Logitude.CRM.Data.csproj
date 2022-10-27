@@ -383,6 +383,7 @@
     <Compile Include="EntityPOCOs\OccasionType.cs" />
     <Compile Include="EntityPOCOs\Opportunity.cs" />
     <Compile Include="EntityPOCOs\OpportunityAdditionalService.cs" />
+    <Compile Include="EntityPOCOs\OpportunityAnalytic.cs" />
     <Compile Include="EntityPOCOs\OpportunityClosingReason.cs" />
     <Compile Include="EntityPOCOs\OpportunityCompetitor.cs" />
     <Compile Include="EntityPOCOs\OpportunityCompetitorProduct.cs" />
