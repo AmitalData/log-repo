@@ -38,8 +38,8 @@ namespace Logitude.Customs.Data.Repsitories
                     where
                     a.Tenant == tenant &&
                     a.FirstCargoID == firstCargoID &&
-                    a.SecondCargoID == secondCargoID &&
-                    a.ThirdCargoID == thirdCargoID &&
+                    (a.SecondCargoID == secondCargoID || secondCargoID == null) &&
+                    (a.ThirdCargoID == thirdCargoID || thirdCargoID == null) &&
                     a.CargoTypeCode == cargoIdentifierType.ToString()
                     select a;
             return q.FirstOrDefault();
