@@ -2351,6 +2351,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.EntityPM.ARPaymentChequeReplicas.map((item, i) => {
 				if (chequesReplicas.filter(x => x.ChequeNumber == item.ChequeNumber).length > 0){
 					this.EntityPM.ARPaymentChequeReplicas[i].StatusCode = chequesReplicas.filter(x => x.ChequeNumber == item.ChequeNumber)[0].StatusCode;
+					this.EntityPM.ARPaymentChequeReplicas[i].StatusName = chequesReplicas.filter(x => x.ChequeNumber == item.ChequeNumber)[0].StatusName;
 				 }
 			   });
 
