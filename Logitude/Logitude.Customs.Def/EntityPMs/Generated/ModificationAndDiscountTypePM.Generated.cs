@@ -250,6 +250,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string effectGoodsValueExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EffectGoodsValueExport  
+	   {
+	    
+	     get
+		{
+		   return effectGoodsValueExport;
+		 }
+		 set
+		 {
+		   if(effectGoodsValueExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EffectGoodsValueExport",OldValue=effectGoodsValueExport,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   effectGoodsValueExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -70,4 +70,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EffectGoodsValueExport"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

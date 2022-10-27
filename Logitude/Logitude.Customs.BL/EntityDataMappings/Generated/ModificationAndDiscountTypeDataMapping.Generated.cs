@@ -31,7 +31,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
 	         IsRelevantGoodsItemExport, 
-	         ExtraNumericData,
+	         ExtraNumericData, 
+	         EffectGoodsValueExport,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
 	         IsRelevantGoodsItemExport, 
-	         ExtraNumericData,
+	         ExtraNumericData, 
+	         EffectGoodsValueExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +101,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
             {
 				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectGoodsValueExport))
+            {
+				entityPOCO.EffectGoodsValueExport = entityPM.EffectGoodsValueExport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -157,6 +164,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExtraNumericData = entityPOCO.ExtraNumericData;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EffectGoodsValueExport))
+            {
+					entityPM.EffectGoodsValueExport = entityPOCO.EffectGoodsValueExport;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -206,6 +218,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
             {
                 oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectGoodsValueExport))
+            {
+                oldEntityPM.EffectGoodsValueExport = entityPM.EffectGoodsValueExport;
             }
 			
 		}
