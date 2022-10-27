@@ -3413,7 +3413,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUCARLPM.ChangeSetOp = ChangeSetOperation.Insert;
 
             cCUCARLPM.COUNTER = decSupplierInvioceItemsCars.LineNumber;
-            cCUCARLPM.RIHBIT = decSupplierInvioceItemsCars.RichbitFileNumber.GetLast(10);
+            cCUCARLPM.RIHBIT = decSupplierInvioceItemsCars.RichbitFileNumber.GetLast(12);
             cCUCARLPM.SHEILDNO = decSupplierInvioceItemsCars.VehicleChassisNumber;
 
             foreach (var decSupplierInvioceItemsCarMods in decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleMods)
@@ -3491,7 +3491,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUCARSCPM.ChangeSetOp = ChangeSetOperation.Insert;
             //cCUCARSCPM.LINENO = decSupplierInvioceItemsCars.InvoiceItemLineNumber;
             cCUCARSCPM.COUNTER = decSupplierInvioceItemsCars.LineNumber;
-            cCUCARSCPM.VEHICLEFILE = decSupplierInvioceItemsCars.RichbitFileNumber.GetLast(10);
+            cCUCARSCPM.VEHICLEFILE = decSupplierInvioceItemsCars.RichbitFileNumber.GetLast(12);
             cCUCARSCPM.CHASSISNO = decSupplierInvioceItemsCars.VehicleChassisNumber;
             cCUCARSCPM.CARMODEL = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleModel;
             cCUCARSCPM.ENGINENO = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().EngineNumber;
