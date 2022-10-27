@@ -27,12 +27,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-        public ScreenSectionPM GetSinglePM(string screenCode, int number , int tenant)
+        public ScreenSectionPM GetSinglePM(string id , int tenant)
         {
             return (from a in repository.context.ScreenSections
-                    where a.ScreenCode == screenCode && a.Tenant == tenant && a.Number == number
+                    where a.Id == id && a.Tenant == tenant
                     select new ScreenSectionPM()
                     {
+                        Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
                         ScreenCode = a.ScreenCode,
@@ -55,6 +56,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     where a.Tenant == tenant && a.ScreenCode == screenCode
                     select new ScreenSectionPM()
                     {
+                        Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
                         ScreenCode = a.ScreenCode,
@@ -75,6 +77,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    where a.Inactive == false
                                               select new ScreenSectionList()
                                               {
+                                                  Id = a.Id,
                                                   Tenant = a.Tenant,
                                                   Name = a.Name,
                                                   ScreenCode = a.ScreenCode,

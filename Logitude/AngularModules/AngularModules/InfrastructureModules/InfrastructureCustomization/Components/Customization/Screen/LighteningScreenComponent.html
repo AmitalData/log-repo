@@ -86,8 +86,16 @@
                                 <td *ngIf="sectionScreen.Section.Type == 'Grid'" style="width: 22px;">
                                     <IconButton style="margin-left:2px;" class="section-button" [Name]="'edit'" [IsSmall]="true" (click)="EditSection(sectionScreen)"></IconButton>
                                 </td>
-                                <td style="width: 50px;">
+                                <td style="width: 22px;">
                                     <IconButton style="margin-left:2px;" class="section-button" [Name]="'delete'" [IsSmall]="true" (click)="RemoveSection(sectionScreen)"></IconButton>
+                                </td>
+                                <td>
+                                    <IconButton float-start [Name]="'arrow-up'" [IsSmall]="true" (click)="DecrementOrder(sectionScreen)"
+                                                [disabled]="sectionScreen == Sections[0]" style="margin-left:3px;" class="section-button"></IconButton>
+
+                                    <IconButton float-start [Name]="'arrow-down'" [IsSmall]="true" (click)="IncrementOrder(sectionScreen)"
+                                                [disabled]="sectionScreen == Sections[this.Sections.length-1]" style="margin-left:3px;" class="section-button">
+                                    </IconButton>
                                 </td>
                                 <td><div></div></td>
                             </tr>

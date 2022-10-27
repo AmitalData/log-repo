@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 	  
        
-        public HttpResponseMessage GetSingle(string screencode, int number)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				ScreenSectionRepository  screenSectionRepository = new ScreenSectionRepository(MyContext);
 				ScreenSectionList entityList = null;
-				ScreenSection entityPoco = screenSectionRepository.GetSingleScreenSection(screencode, number , authToken.Tenant);
+				ScreenSection entityPoco = screenSectionRepository.GetSingleScreenSection(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				ScreenSectionQuery screenSectionQuery = new ScreenSectionQuery(screenSectionRepository);
 			    IQueryable<ScreenSectionList> entityLists = screenSectionQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.ScreenCode);
+				entityLists = entityLists.OrderBy(d => d.Id);
 				List<ScreenSectionList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -301,7 +301,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.ScreenCode);
+                                entityLists = entityLists.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -310,7 +310,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.ScreenCode);
+                entityLists = entityLists.OrderBy(d => d.Id);
             } 
 
 			ServiceResponse response = new ServiceResponse();

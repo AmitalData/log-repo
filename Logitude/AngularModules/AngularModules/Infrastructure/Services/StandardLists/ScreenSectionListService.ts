@@ -32,12 +32,12 @@ export class ScreenSectionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/screensectionviews';  
     }
 
-	getSingle(screencode: string, number: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'screencode=' + screencode+'&'+'number=' + number, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ScreenSectionListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "GetSingleList", 'screencode=' + screencode+'&'+'number=' + number); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -103,7 +103,7 @@ export class ScreenSectionListService {
 		for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
+			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters");
 
             if (urlparameters != "?") {
 				urlparameters = urlparameters.concat('&');
@@ -115,10 +115,6 @@ export class ScreenSectionListService {
 			}
 
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-			if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
 

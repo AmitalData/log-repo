@@ -7,7 +7,8 @@
 //------------------------------------------------------------------------------
 
 export class ScreenSectionList {
-   		Tenant: number;
+   		Id: string;
+		Tenant: number;
 		Name: string;
 		CreatedByUserId: string;
 		ScreenCode: string;

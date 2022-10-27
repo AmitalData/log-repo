@@ -9,8 +9,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public ScreenSectionMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.ScreenCode, t.Number });
-
+            this.HasKey(t => new { t.Id});
+            this.Property(t => t.Id)
+                .HasMaxLength(15)
+                .IsUnicode(false);
 
             this.Property(t => t.Name)
                 .HasMaxLength(100)

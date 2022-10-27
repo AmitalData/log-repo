@@ -2124,6 +2124,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\ScreenSectionList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\WebhookKeysList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMCustomCode\BusinessProcessQueuePMCustomCode.ts" />

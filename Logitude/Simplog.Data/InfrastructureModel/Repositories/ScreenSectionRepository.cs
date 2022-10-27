@@ -41,10 +41,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return ScreenSection;
         }
 
-        public ScreenSection GetSingleScreenSection(string screenCode, int sectionNumber)
+        public ScreenSection GetSingleScreenSection(string id, int tenant)
         {
             return (from a in context.ScreenSections
-                    where a.Number == sectionNumber && a.ScreenCode == screenCode
+                    where a.Id == id
                     select a).FirstOrDefault();
         }
 
@@ -81,10 +81,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             get { return webFreightContext; }
         }
 
-        public ScreenSection GetSingleScreenSection(string screencode, int number, int tenant)
-        {
-            throw new NotImplementedException();
-        }
 
         public void SubmitChanges()
         {

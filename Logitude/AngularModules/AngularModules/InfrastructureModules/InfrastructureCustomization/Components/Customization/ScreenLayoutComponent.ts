@@ -829,6 +829,25 @@ export class ScreenLayoutComponent extends BaseComponent {
         });
     }
 
+    SetSectionIndexOrder(sectionScreen: SectionScreenItem, indexOrder: number) {
+        if (sectionScreen.Section.Number == indexOrder) return;
+        sectionScreen.Section.Number = indexOrder;
+        if (sectionScreen.Section.Inactive) return;
+        this.SetScreenRowsFieldsSectionNumber(sectionScreen);
+    }
+    private SetScreenRowsFieldsSectionNumber(screeSectionItem: SectionScreenItem) {
+        if (!screeSectionItem || !screeSectionItem.ScreenRows || screeSectionItem.ScreenRows.length == 0) return;
+
+        screeSectionItem.ScreenRows.forEach(screenRow => {
+
+            if (!screenRow.ScreenFieldPMs || screenRow.ScreenFieldPMs.length == 0) return;
+
+            screenRow.ScreenFieldPMs.forEach(screenField => {
+                screenField.SectionNumber = screeSectionItem.Section.Number;
+            });
+
+        });
+    }
     Save() {
         this.OkClicked(false);
         this.customizationEditComponent.IsDirty = false;

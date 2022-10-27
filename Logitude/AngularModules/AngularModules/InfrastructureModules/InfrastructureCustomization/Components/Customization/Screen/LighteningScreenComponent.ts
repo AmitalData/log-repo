@@ -9,6 +9,10 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ScreenLayoutComponent, SectionScreenItem } from '../ScreenLayoutComponent';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { ScreenSectionPM } from '../../../../../Infrastructure/EntityPMs/ScreenSectionPM';
+import { CustomizationEditComponent } from '../CustomizationEditComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { forEach } from 'cypress/types/lodash';
 const deleteSectionMessage = "Are you sure you want delete this section?";
 @Component({
     selector: 'LighteningScreenComponent',
@@ -35,9 +39,13 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
 
     }
 
+    private orderedSections = new ObservableCollection([]);
+    get Sections() {
 
-    get Sections(){
-        return this.ScreenLayoutComponent.SectionScreens.filter(s=>!s.Section.Inactive)
+        return this.ScreenLayoutComponent.SectionScreens.filter(s => !s.Section.Inactive).sort((a, b) => {
+            return (a.Section.Number === b.Section.Number) ? 0 : (a.Section.Number < b.Section.Number) ? -1 : 1
+        })
+    //    return this.ScreenLayoutComponent.SectionScreens.filter(s => !s.Section.Inactive)
     }
 
 
@@ -110,4 +118,50 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
         });
     }
 
+    
+    
+    DecrementOrder(currentSection: SectionScreenItem) {
+        let allScreenSections = this.ScreenLayoutComponent.SectionScreens;
+
+        if (currentSection == this.Sections[0])
+            return;
+
+        const prevSection: SectionScreenItem = allScreenSections.find(s => s.Section.Number == currentSection.Section.Number - 1);
+        if (!prevSection) return;
+        this.ScreenLayoutComponent.SetSectionIndexOrder(prevSection, (prevSection.Section.Number + 1));
+        this.ScreenLayoutComponent.SetSectionIndexOrder(currentSection, (currentSection.Section.Number - 1));
+
+        if (prevSection.Inactive) {
+            this.DecrementOrder(currentSection);
+        }
+
+        currentSection.Section.IsDirty = true;
+        this.ScreenLayoutComponent.Modified = true;
+
+    }
+
+
+    IncrementOrder(currentSection: SectionScreenItem) {
+        let allScreenSections = this.ScreenLayoutComponent.SectionScreens;
+
+        if (currentSection == this.Sections[this.Sections.length - 1])
+            return;
+
+        const nextSection: SectionScreenItem = allScreenSections.find(s => s.Section.Number == currentSection.Section.Number + 1);
+        if (!nextSection) return;
+        this.ScreenLayoutComponent.SetSectionIndexOrder(nextSection, (nextSection.Section.Number - 1));
+        this.ScreenLayoutComponent.SetSectionIndexOrder(currentSection, (currentSection.Section.Number + 1));
+
+        if (nextSection.Inactive) {
+            this.IncrementOrder(currentSection);
+        }
+
+        currentSection.Section.IsDirty = true;
+        this.ScreenLayoutComponent.Modified = true;
+
+    }
+
+
+
+    
 }
