@@ -48,6 +48,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private filterControlNameSpace: string = "Workspace.CustomDashboard";
     public IsEmptyDashboardVisible: boolean = false;
     public IsPermissionMessageVisible: boolean = false;
+    public IsGlobalFiltersOpened: boolean = false;
     constructor() {
         super();
         this.dashboardPMService = new DashboardPMService();
@@ -84,8 +85,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     private SessionEvent: any = null;
-
-
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
     }
@@ -509,5 +508,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.IsEmptyDashboardVisible = false;
         this.EditLayoutClicked();
         this.AddWidgetClicked();
+    }
+
+    OpenFilterAreaClick() {
+        this.IsGlobalFiltersOpened = true;
+    }
+    CloseFilterAreaClick() {
+        this.IsGlobalFiltersOpened = false;
     }
 }
