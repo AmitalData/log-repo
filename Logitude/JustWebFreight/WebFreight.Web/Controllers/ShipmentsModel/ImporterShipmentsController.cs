@@ -192,6 +192,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + ImporterShipment.Tenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
+                        ImporterShipment.SendUpdatesToAgentEnabled = false;
                         shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
                         if (!string.IsNullOrEmpty(ImporterShipment.CustomerShipmentNumber))
                         {
@@ -375,6 +376,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + Shipment.ImporterTenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
+                        ImporterShipment.SendUpdatesToAgentEnabled = false;
                         shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
@@ -499,6 +501,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(Tenant);
                         string systemEmail = "system@tenant" + Tenant + ".com";
                         ImporterShipment.DontAddToImportersQueue = true;
+                        ImporterShipment.SendUpdatesToAgentEnabled = false;
                         ImporterShipment.IsCancelled = true;
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         shipmentService.Update();
