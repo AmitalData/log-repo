@@ -227,6 +227,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.onSelectedItemChanged(this.NeedToSelectedItem);
         this.onSelectedDataLoadedEvent.emit(this.NeedToSelectedItem);
         this.DisableAllButtons();
+        this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
     }
 
@@ -246,6 +247,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.onNeedToSelectedItemChanged(this.SelectedItem);
         this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
         this.DisableAllButtons();
+        this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
     }
 
@@ -267,6 +269,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.ScreenLayoutComponent.GridScreenSelectedFields.splice(selectedFieldIndex - 1, 0, this.SelectedItem);
         this.onDataSourceChangedEvent.emit(this.ScreenLayoutComponent.GridScreenSelectedFields);
         this.onSelectedDataLoadedEvent.emit(this.SelectedItem);
+        this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
     }
 
@@ -282,6 +285,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.ScreenLayoutComponent.GridScreenSelectedFields.splice(selectedFieldIndex + 1, 0, this.SelectedItem);
         this.onDataSourceChangedEvent.emit(this.ScreenLayoutComponent.GridScreenSelectedFields);
         this.onSelectedDataLoadedEvent.emit(this.SelectedItem);
+        this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
     }
 }

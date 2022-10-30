@@ -11,10 +11,10 @@
         <div style="margin-bottom: 40px; width: 100% " *ngFor="let screenSection of ScreenSections">
 
             <table style="width:100%;">
-                <tr *ngIf="screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0">
+                <tr *ngIf="screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0">
                     <td class="section-title">{{screenSection.Title}}</td>
                 </tr>
-                <tr style="height:100%">
+                <tr *ngIf="screenSection.Type != 'Grid'" style="height:100%">
                     <td *ngFor="let ScreenColumn of screenSection.ScreenColumns" style="width: 430px;">
                         <table>
                             <tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{background: (IsCustomerCareOrDistributor && objectField.IsCustom == true) ? 'rgba(255, 171, 3, 0.6)' : 'transparent'}">
@@ -136,12 +136,13 @@
                     </td>
                     <td></td>
                 </tr>
+                <tr *ngIf="screenSection.Type == 'Grid'" style="height:250px">
+                    <td>
+                        <GridScreenSectionComponent [ScreenSection]="screenSection"></GridScreenSectionComponent>
+                    </td>
+                </tr>
             </table>
-
         </div>
     </div>
-
     <div *ngIf="ShowNoFieldsText" style="vertical-align: top; font-size: 11px; font-family: Arial; font-style: italic; color: gray;">There are no fields to display.</div>
-
 </div>
-

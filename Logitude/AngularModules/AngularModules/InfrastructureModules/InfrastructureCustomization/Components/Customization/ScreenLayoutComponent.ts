@@ -1,5 +1,5 @@
 
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren, OnInit } from '@angular/core';
 import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -40,7 +40,7 @@ const EditScreenTitle = "Edit Screen";
     styleUrls: ['./ScreenLayoutComponent.css']
 })
 
-export class ScreenLayoutComponent extends BaseComponent {
+export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     public DataContext: ScreenLayoutComponent = this;
     public MyArgs: ScreenLayoutArgs = new ScreenLayoutArgs();
     public ObjecttableId: string;
@@ -60,6 +60,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     private modified: boolean = false;
+    ReloadGridSections: boolean;
     set Modified(value: boolean) {
         this.modified = value;
         this.customizationEditComponent.IsDirty = value;
@@ -81,6 +82,13 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.loginService = new LoginService();
     }
 
+    ngOnInit() {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event.Name == "ReloadGridSections") {
+                //this.OkClicked(false);
+            }
+        });
+    }
 
     public SelectedItem: ScreenItem;
     public OldItem: ScreenItem;

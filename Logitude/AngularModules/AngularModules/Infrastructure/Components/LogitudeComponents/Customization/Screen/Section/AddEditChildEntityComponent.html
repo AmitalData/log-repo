@@ -1,0 +1,58 @@
+<style type="text/css">
+</style>
+<table>
+	<tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+		<td>
+			<ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<ScrollViewer>
+				<table>
+					<tr style="height: 70px;">
+						<td>
+							<div style="height:15px"></div>
+							<div style="height:148px">
+								<table style="height:128px">
+									<tr>
+										<td>
+											<div class="MediaFill">
+												<div class="LocationDirective" #GeneratedArea></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div></div>
+						</td>
+					</tr>
+				</table>
+			</ScrollViewer>
+		</td>
+	</tr>
+	<tr style="height: 32px;">
+		<td style="vertical-align: bottom">
+			<table style="height: 22px;">
+				<tr>
+					<td>
+						<div></div>
+					</td>
+					<td style="width: 57px;">
+						<button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+					</td>
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+					<td style="width: 57px;">
+						<button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
