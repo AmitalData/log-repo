@@ -1132,13 +1132,6 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        public List<Declaration> GetDeclaration100(int tenant)
-        {
-
-            var query=(from a in context.Declarations where a.Tenant == tenant select a).Take(100).ToList();
-          return query;
-        }
-
    
         public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
         {          
