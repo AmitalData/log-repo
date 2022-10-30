@@ -517,7 +517,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountQueryService gLAccountQuery = new GLAccountQueryService(MyContext);
-                GLAccountPM gLAccountPM = gLAccountQuery.GetSingle(id, false, false);
+                GLAccountPM gLAccountPM = gLAccountQuery.GetSingle(id, true, false);
                 GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
                 if (parentId.Contains("null"))
                 {
