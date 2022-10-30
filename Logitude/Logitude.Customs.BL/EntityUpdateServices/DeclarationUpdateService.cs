@@ -1246,17 +1246,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 int index = 0;
                 bool dirty = false;
-                foreach (Consignment item in consignments)
-                {
-                    index += 1;
-                    if (item.SequenceNumeric == index) continue;
-                    dirty = true;
-                    item.SequenceNumeric = index;
-                    consignmentRepository.Update(item);
-                    ConsignmentPM itemPM = (from a in entityPM.Consignments
-                                            where a.DeclarationId == item.DeclarationId && a.ConsignmentNumber == item.ConsignmentNumber
-                                            select a).FirstOrDefault();
-                    itemPM.SequenceNumeric = item.SequenceNumeric;
+                if(entityPM.AmendmentDontDisplayInList != true) {
+                   foreach (Consignment item in consignments)
+                   {
+                       index += 1;
+                       if (item.SequenceNumeric == index) continue;
+                       dirty = true;
+                       item.SequenceNumeric = index;
+                       consignmentRepository.Update(item);
+                       ConsignmentPM itemPM = (from a in entityPM.Consignments
+                                               where a.DeclarationId == item.DeclarationId && a.ConsignmentNumber == item.ConsignmentNumber
+                                               select a).FirstOrDefault();
+                       itemPM.SequenceNumeric = item.SequenceNumeric;
+                   }
                 }
                 if (dirty)
                 {
