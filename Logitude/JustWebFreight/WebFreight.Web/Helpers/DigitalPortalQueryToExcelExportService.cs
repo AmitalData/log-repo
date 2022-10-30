@@ -180,6 +180,10 @@ namespace WebFreight.Web.Helpers
 
                 sheet1.Range[$"E{index}:F{index}"].NumberFormat = "dd MMM yyyy";
 
+                sheet1.Range[$"M{index}:O{index}"].NumberFormat = "#,##0.00";
+                sheet1.Range[$"Q{index}:Q{index}"].NumberFormat = "#,##0.00";
+                sheet1.Range[$"S{index}:S{index}"].NumberFormat = "#,##0.00";
+
                 DataRow row = table.NewRow();
                 row[0] = item.ShipmentNumber;
                 row[1] = item.TransportModeName;
@@ -278,6 +282,8 @@ namespace WebFreight.Web.Helpers
 
                 sheet1.Range[$"E{index}:E{index}"].NumberFormat = "dd MMM yyyy";
                 sheet1.Range[$"K{index}:K{index}"].NumberFormat = "dd MMM yyyy";
+
+                sheet1.Range[$"I{index}:J{index}"].NumberFormat = "#,##0.00";
 
                 DataRow row = table.NewRow();
 
