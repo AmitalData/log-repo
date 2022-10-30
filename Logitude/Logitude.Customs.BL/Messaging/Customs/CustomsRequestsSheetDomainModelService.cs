@@ -154,8 +154,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     }
 
                 }
-                bool exportSignViaDBQueue = true;
-                if (exportSignViaDBQueue)
+                
+                if (!_RequestParams.AvoidSign)// exportSignViaDBQueue
                 {
 
                     if (
