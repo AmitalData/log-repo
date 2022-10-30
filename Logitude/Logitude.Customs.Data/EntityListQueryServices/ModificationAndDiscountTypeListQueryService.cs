@@ -38,6 +38,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                         (a.ExtraNumericData == "1") ? "תוספת" :
                                                                         (a.ExtraNumericData == "2") ? "הפחתה" :
                                                                         (a.ExtraNumericData == "3") ? "ללא השפעה" : null,
+                                                                     IsCustomsValueComponent = a.IsCustomsValueComponent,
+                                                                     IsCustomsValueComponentExport = a.IsCustomsValueComponentExport,
+                                                                     ExportFOBModificationAffectID = a.ExportFOBModificationAffectID,   
+                                                                     CurrencyMustBeSameAsInvoice = a.CurrencyMustBeSameAsInvoice,
+                                                                     CurrencyMustSameInvoiceExport = a.CurrencyMustSameInvoiceExport,
+                                                                     IsCustomUseExport = a.IsCustomUseExport,      
+                                                                     ExportNetoValuesModificationAffectTypeID = a.ExportNetoValuesModificationAffectTypeID
                                                                  });
             return query;
         }

@@ -71,9 +71,47 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EffectGoodsValueExport"
+    Name="ExportNetoValuesModificationAffectTypeID"
+    OldNames="EffectGoodsValueExport"
     Type="varchar"
     Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomsValueComponent"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportFOBModificationAffectID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomsValueComponentExport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyMustSameInvoiceExport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyMustBeSameAsInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomUseExport"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

@@ -32,7 +32,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantInvoiceExport, 
 	         IsRelevantGoodsItemExport, 
 	         ExtraNumericData, 
-	         EffectGoodsValueExport,
+	         ExportNetoValuesModificationAffectTypeID, 
+	         IsCustomsValueComponent, 
+	         ExportFOBModificationAffectID, 
+	         IsCustomsValueComponentExport, 
+	         CurrencyMustSameInvoiceExport, 
+	         CurrencyMustBeSameAsInvoice, 
+	         IsCustomUseExport,
 	      }
 
 
@@ -49,7 +55,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantInvoiceExport, 
 	         IsRelevantGoodsItemExport, 
 	         ExtraNumericData, 
-	         EffectGoodsValueExport,
+	         ExportNetoValuesModificationAffectTypeID, 
+	         IsCustomsValueComponent, 
+	         ExportFOBModificationAffectID, 
+	         IsCustomsValueComponentExport, 
+	         CurrencyMustSameInvoiceExport, 
+	         CurrencyMustBeSameAsInvoice, 
+	         IsCustomUseExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -103,9 +115,39 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectGoodsValueExport))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportNetoValuesModificationAffectTypeID))
             {
-				entityPOCO.EffectGoodsValueExport = entityPM.EffectGoodsValueExport;
+				entityPOCO.ExportNetoValuesModificationAffectTypeID = entityPM.ExportNetoValuesModificationAffectTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponent))
+            {
+				entityPOCO.IsCustomsValueComponent = entityPM.IsCustomsValueComponent;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
+            {
+				entityPOCO.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponentExport))
+            {
+				entityPOCO.IsCustomsValueComponentExport = entityPM.IsCustomsValueComponentExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyMustSameInvoiceExport))
+            {
+				entityPOCO.CurrencyMustSameInvoiceExport = entityPM.CurrencyMustSameInvoiceExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyMustBeSameAsInvoice))
+            {
+				entityPOCO.CurrencyMustBeSameAsInvoice = entityPM.CurrencyMustBeSameAsInvoice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomUseExport))
+            {
+				entityPOCO.IsCustomUseExport = entityPM.IsCustomUseExport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -164,9 +206,39 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExtraNumericData = entityPOCO.ExtraNumericData;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EffectGoodsValueExport))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportNetoValuesModificationAffectTypeID))
             {
-					entityPM.EffectGoodsValueExport = entityPOCO.EffectGoodsValueExport;
+					entityPM.ExportNetoValuesModificationAffectTypeID = entityPOCO.ExportNetoValuesModificationAffectTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsValueComponent))
+            {
+					entityPM.IsCustomsValueComponent = entityPOCO.IsCustomsValueComponent;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFOBModificationAffectID))
+            {
+					entityPM.ExportFOBModificationAffectID = entityPOCO.ExportFOBModificationAffectID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsValueComponentExport))
+            {
+					entityPM.IsCustomsValueComponentExport = entityPOCO.IsCustomsValueComponentExport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyMustSameInvoiceExport))
+            {
+					entityPM.CurrencyMustSameInvoiceExport = entityPOCO.CurrencyMustSameInvoiceExport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyMustBeSameAsInvoice))
+            {
+					entityPM.CurrencyMustBeSameAsInvoice = entityPOCO.CurrencyMustBeSameAsInvoice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomUseExport))
+            {
+					entityPM.IsCustomUseExport = entityPOCO.IsCustomUseExport;
             }
 
 		}
@@ -220,9 +292,39 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectGoodsValueExport))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportNetoValuesModificationAffectTypeID))
             {
-                oldEntityPM.EffectGoodsValueExport = entityPM.EffectGoodsValueExport;
+                oldEntityPM.ExportNetoValuesModificationAffectTypeID = entityPM.ExportNetoValuesModificationAffectTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponent))
+            {
+                oldEntityPM.IsCustomsValueComponent = entityPM.IsCustomsValueComponent;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
+            {
+                oldEntityPM.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponentExport))
+            {
+                oldEntityPM.IsCustomsValueComponentExport = entityPM.IsCustomsValueComponentExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyMustSameInvoiceExport))
+            {
+                oldEntityPM.CurrencyMustSameInvoiceExport = entityPM.CurrencyMustSameInvoiceExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyMustBeSameAsInvoice))
+            {
+                oldEntityPM.CurrencyMustBeSameAsInvoice = entityPM.CurrencyMustBeSameAsInvoice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomUseExport))
+            {
+                oldEntityPM.IsCustomUseExport = entityPM.IsCustomUseExport;
             }
 			
 		}

@@ -1643,7 +1643,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
 
-    GetFreightTotals() {
+    GetFreightTotals() {        
         this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
             if (response != null) {
                 this.Parent.TotalForeignCurrency = response.Result;
@@ -1656,7 +1656,23 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 var amount: number = this.InvoiceAmount;
 
                 if (isNaN(this.InvoiceAmount)) amount = 0;
-                this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
+                if(this.declarationPM.Direction == "E"){
+                    let sum=0;
+                   
+                    this.EntityPM.SupplierInvoiceModifications.forEach(item => {
+                        if(item.Amount!=null)
+                        sum += item.Amount
+    
+                    });
+
+                    sum ==0 ? sum=this.Parent.TotalForeignCurrency : sum;
+
+                    this.Parent.Difference = this.Parent.TotalForeignCurrency - sum;
+                }
+                else{
+
+                    this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
+                }
 
                 if (this.Parent.TotalForeignCurrency != 0) {
                     if (this.Parent.Difference != null) {
