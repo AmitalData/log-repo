@@ -20,6 +20,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -32,7 +33,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
                 id = shipmentIdAndTenant.Item1;
@@ -51,6 +51,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

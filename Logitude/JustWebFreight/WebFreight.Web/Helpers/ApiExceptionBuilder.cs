@@ -1,9 +1,5 @@
 ﻿using Logitude.Server.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace WebFreight.Web.Helpers
 {
     public class ApiExceptionBuilder
@@ -52,17 +48,14 @@ namespace WebFreight.Web.Helpers
 
                     errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                     shortErrorMessage = shortErrorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-
                 }
 
-                //errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                 apiException = new APIException()
                 {
                     ErrorType = ex.GetType().Name,
                     ErrorMessage = errorMessage,
                     ShortErrorMessage = shortErrorMessage
                 };
-
             }
 
             return apiException;
@@ -91,8 +84,6 @@ namespace WebFreight.Web.Helpers
                 ErrorMessage = ErrorMessage,
                 ShortErrorMessage = ShortErrorMessage,
             };
-
-
 
             return apiException;
         }

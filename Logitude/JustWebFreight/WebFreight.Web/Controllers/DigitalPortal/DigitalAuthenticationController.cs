@@ -13,7 +13,6 @@ using WebFreight.Web.WebServices;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
@@ -39,6 +38,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     message += Environment.NewLine + e.InnerException.Message;
                 }
+
                 data.ExceptionMessage = message;
                 return data;
             }
@@ -182,5 +182,5 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return imageBase64String;
         }
-    }    
+    }
 }

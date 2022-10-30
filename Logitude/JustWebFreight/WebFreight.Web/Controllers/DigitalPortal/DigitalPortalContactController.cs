@@ -72,7 +72,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
-
                 catch (Exception ex)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers;
@@ -27,7 +24,6 @@ using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using Simplog.Data.InvoiceModel;
 using Logitude.Extensions;
-using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts.Models;
@@ -149,103 +145,117 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalInvoice/GetFilteredDigitalARPayments")]
         public IHttpActionResult GetFilteredDigitalARPayments(string arInvoiceId, string cardId)
         {
-            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
-            var result = new List<ARPaymentList>();
-            var statusRepository = new ARPaymentStatusRepository(authToken.Tenant);
-            var currencyRepository = new CurrencyRepository(authToken.Tenant);
-            var aRPaymentRepository = new ARPaymentRepository(authToken.Tenant);
-            var aRInvoicePaymentQuery = new ARInvoicePaymentQuery(authToken.Tenant);
-            var methodRepository = new AccountingPaymentMethodRepository(authToken.Tenant);
-            var invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, authToken.Tenant);
-
-            foreach (var item in invoicePayments)
+            try
             {
-                var payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, authToken.Tenant);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-                if (payment != null)
+                var result = new List<ARPaymentList>();
+                var statusRepository = new ARPaymentStatusRepository(authToken.Tenant);
+                var currencyRepository = new CurrencyRepository(authToken.Tenant);
+                var aRPaymentRepository = new ARPaymentRepository(authToken.Tenant);
+                var aRInvoicePaymentQuery = new ARInvoicePaymentQuery(authToken.Tenant);
+                var methodRepository = new AccountingPaymentMethodRepository(authToken.Tenant);
+                var invoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(arInvoiceId, authToken.Tenant);
+
+                foreach (var item in invoicePayments)
                 {
-                    var list = new ARPaymentList()
-                    {
-                        Id = payment.Id,
-                        Tenant = payment.Tenant,
-                        PaymentNo = payment.PaymentNo,
-                        AmountInPaymentCurrency = payment.AmountInPaymentCurrency,
-                        OpenAmount = payment.OpenAmount,
-                        ChequeOrPaymentRef = payment.ChequeOrPaymentRef,
-                        CreateDate = payment.CreateDate,
-                        PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount
-                    };
+                    var payment = aRPaymentRepository.GetSingleARPayment(item.ARPaymentId, authToken.Tenant);
 
-                    var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, authToken.Tenant);
-                    if (currency != null)
+                    if (payment != null)
                     {
-                        list.PaymentCurrencyCode = currency.Code;
+                        var list = new ARPaymentList()
+                        {
+                            Id = payment.Id,
+                            Tenant = payment.Tenant,
+                            PaymentNo = payment.PaymentNo,
+                            AmountInPaymentCurrency = payment.AmountInPaymentCurrency,
+                            OpenAmount = payment.OpenAmount,
+                            ChequeOrPaymentRef = payment.ChequeOrPaymentRef,
+                            CreateDate = payment.CreateDate,
+                            PaidAmount = payment.AmountInPaymentCurrency - payment.OpenAmount
+                        };
+
+                        var currency = currencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, authToken.Tenant);
+                        if (currency != null)
+                        {
+                            list.PaymentCurrencyCode = currency.Code;
+                        }
+
+                        var status = statusRepository.GetSingleARPaymentStatus(payment.StatusCode);
+                        if (status != null)
+                        {
+                            list.StatusName = status.Name;
+                        }
+
+                        var method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, authToken.Tenant);
+
+                        if (method != null)
+                        {
+                            list.PaymentMethodName = method.Name;
+                        }
+
+                        result.Add(list);
                     }
-
-                    var status = statusRepository.GetSingleARPaymentStatus(payment.StatusCode);
-                    if (status != null)
-                    {
-                        list.StatusName = status.Name;
-                    }
-
-                    var method = methodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, authToken.Tenant);
-
-                    if (method != null)
-                    {
-                        list.PaymentMethodName = method.Name;
-                    }
-
-                    result.Add(list);
                 }
-            }
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpGet]
         [Route("DigitalInvoice/GetSingle")]
         public IHttpActionResult GetSingle(string id, string cardId)
         {
-            var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
-            var entityQuery = new ARInvoiceQuery(authToken.Tenant);
-
-            var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
-
-            string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
-            var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
-            var query = new DocumentTypeQuery(authToken.Tenant);
-            var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
-            var mainEntityId = entityPM.MainEntityId;
-            var childEntityId = entityPM.Id;
-            if (entityPM.IsConsolidationInvoice)
+            try
             {
-                mainEntityId = entityPM.Id;
-                childEntityId = null;
-            }
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(mainEntityId, childEntityId, docType.Id, authToken.Tenant);
+                var entityQuery = new ARInvoiceQuery(authToken.Tenant);
 
-            if (docsOutData != null)
-            {
-                var docId = docsOutData.Id;
+                var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
 
-                if (docsOutData.DocumentOutCopies.Count() > 0)
+                string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
+                var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
+                var query = new DocumentTypeQuery(authToken.Tenant);
+                var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+                var mainEntityId = entityPM.MainEntityId;
+                var childEntityId = entityPM.Id;
+                if (entityPM.IsConsolidationInvoice)
                 {
-                    docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+                    mainEntityId = entityPM.Id;
+                    childEntityId = null;
                 }
 
-                string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id + ":isFromDigital:true:cardId:" + cardId;
-                entityPM.ReportUrl = url;
-            }
+                var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(mainEntityId, childEntityId, docType.Id, authToken.Tenant);
 
-            entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
-            return Ok(entityPM);
+                if (docsOutData != null)
+                {
+                    var docId = docsOutData.Id;
+
+                    if (docsOutData.DocumentOutCopies.Count() > 0)
+                    {
+                        docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+                    }
+
+                    string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id + ":isFromDigital:true:cardId:" + cardId;
+                    entityPM.ReportUrl = url;
+                }
+
+                entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
+                return Ok(entityPM);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpPost]

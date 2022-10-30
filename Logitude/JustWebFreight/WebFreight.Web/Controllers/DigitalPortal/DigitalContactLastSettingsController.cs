@@ -65,7 +65,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-
         #region private methods 
         private string GetObjectTableId(string objectTableName, int tenant)
         {

@@ -1,25 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using System;
 using WebFreight.Web.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using System.Web;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Server.Infrastructure.DataContracts.Models;
-using Simplog.Data.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
-using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -54,6 +45,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
+
+        #region private 
+        
         private ImageParameter UploadImage(string documentId, DigitalUploaderInfo info, int tenant)
         {
             // Upload Image 
@@ -92,6 +86,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Notes = info.Notes,
             });
         }
-
+        
+        #endregion private
     }
 }
