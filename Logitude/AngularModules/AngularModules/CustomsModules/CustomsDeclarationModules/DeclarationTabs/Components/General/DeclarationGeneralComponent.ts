@@ -1418,7 +1418,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         consignment.DeclarationId = this.EntityPM.Id;
         consignment.Tenant = SessionLocator.Tenant;
         consignment.IsLastReleaseFromWarehous = "F";
-        if (this.EntityPM.Direction == "E") {
+        if (this.EntityPM.Direction == "E") { 
             consignment.ConsignmentType = "E";
         }
         consignment.SequenceNumeric = ++this.consignmentIndex;
@@ -1464,17 +1464,19 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     this.EntityPM.RemoveConsignment(tab.EntityPM);
                     this.ConsigmentTabs.splice(index, 1);
 
+                    if(this.EntityPM.AmendmentDontDisplayInList != true) {
                     //resequence consignments
-                    for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
-                        var consignment = this.EntityPM.Consignments[i];
-                        consignment.SequenceNumeric = i + 1;
-                        //consignment.ConsignmentNumber = i + 1;
-                    }
-                    for (var i = 0; i < this.ConsigmentTabs.length; i++) {
-                        var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
-                        consignment.SequenceNumeric = i + 1;
-                        this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
-                        this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                       for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
+                           var consignment = this.EntityPM.Consignments[i];
+                           consignment.SequenceNumeric = i + 1;
+                           //consignment.ConsignmentNumber = i + 1;
+                       }
+                       for (var i = 0; i < this.ConsigmentTabs.length; i++) {
+                           var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
+                           consignment.SequenceNumeric = i + 1;
+                           this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
+                           this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                       }
                     }
 
                     // select the last tab
