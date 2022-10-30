@@ -45,6 +45,19 @@ namespace Logitude.Customs.Data.Repsitories
             return q.FirstOrDefault();
 
         }
+
+        public List<ExportStorage> GetExportStorageListByDeclarationIdAndExportFile(string declarationId, string exportFileNo, int tenant)
+        {
+            var q = from a in context.ExportStorages
+                    where
+                    a.Tenant == tenant && (
+                    a.ExportFileNo == exportFileNo
+                    || a.DeclarationId== declarationId )
+                    select a;
+           
+            return q.Distinct().ToList();
+
+        }
     }
 
 }

@@ -1,4 +1,3 @@
-
 <style>
     .subTitle {
         color: #1b90cb;
@@ -23,139 +22,164 @@
                 <table>
                     <tr style="height:25px">
                         <td class="TabTitleRow" style="width:150px">
-                            {{'Customs.Declaration.TH.CargoSplit'| TextCodeTranslationPipe}}
+                            {{'Customs.Declaration.TH.ExportStorageList'| TextCodeTranslationPipe}}
                         </td>
 
-                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
-                            <div>
-                                <IconButton [IsSmall]="true"
-                                            [Name]="'Add'"
-                                            (click)="AddDeclarationCargoSplitCommand()"
-                                            style="float:left;"></IconButton>
-                            </div>
-                        </td>
+                        
                     </tr>
 
                     <tr>
                         <td colspan="5" style="height: 100%;">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-edit-grid GridWidth="100%"
-                                                    GridHeight="100%"
-                                                    [ItemSource]="DeclarationCargoSplitList">
-
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [ItemSource]="DeclarationExportStorageList"
+                                    (Ondblclick)="OnFocus()">
+    
                                     <!--(SelectedItemChanged)="EditButtonClicked($event)"-->
-                                    <!-- RequestNumber -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.RequestNumber' | TextCodeTranslationPipe" [binding]="'RequestNumber'" [width]="'110'" [Alignment]="'right'">
+                                    <!-- OpenDate -->
+                                    <log-column [header]="'Customs.ExportStorage.F.OpenDate' | TextCodeTranslationPipe"
+                                        [binding]="'OpenDate'" [width]="'110'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.RequestNumber}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.OpenDate | DateTimeToDatePipe}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- RequestDate -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.RequestDate' | TextCodeTranslationPipe" [binding]="'RequestDate'" [width]="'120'" [Alignment]="'right'">
+                                    <!-- ActionName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.ActionName' | TextCodeTranslationPipe"
+                                        [binding]="'ActionName'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.RequestDate | DateTimeToDatePipe}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ActionName }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- ManifestNumber -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ManifestNumber' | TextCodeTranslationPipe" [binding]="'ManifestNumber'" [width]="'110'" [Alignment]="'right'">
+                                    <!-- ExporterName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.ExporterName' | TextCodeTranslationPipe"
+                                        [binding]="'ExporterName'" [width]="'110'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.ManifestNumber}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ExporterName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- SecondCargoID -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.SecondCargoID' | TextCodeTranslationPipe" [binding]="'SecondCargoID'" [width]="'110'" [Alignment]="'right'">
+                                    <!-- ExportFileNo -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.ExportFileNo' | TextCodeTranslationPipe"
+                                        [binding]="'ExportFileNo'" [width]="'110'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.SecondCargoID}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ExportFileNo}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- ThirdCargoID -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ThirdCargoID' | TextCodeTranslationPipe" [binding]="'ThirdCargoID'" [width]="'110'" [Alignment]="'right'">
+                                    <!-- StorageNo -->
+                                    <log-column [header]="'Customs.ExportStorage.F.StorageNo' | TextCodeTranslationPipe"
+                                        [binding]="'StorageNo'" [width]="'110'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.ThirdCargoID}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.StorageNo}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- ActionTypeCode -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ActionTypeCode' | TextCodeTranslationPipe" [binding]="'ActionTypeName'" [width]="'110'" [Alignment]="'right'">
+                                    <!-- DeclarationNumber -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.DeclarationNumber' | TextCodeTranslationPipe"
+                                        [binding]="'DeclarationNumber'" [width]="'110'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.ActionTypeName}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.DeclarationNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- RequestReason -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.RequestReason' | TextCodeTranslationPipe" [binding]="'RequestReasonName'" [width]="'140'" [Alignment]="'right'">
+                                    <!-- CargoTypeName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.CargoTypeName' | TextCodeTranslationPipe"
+                                        [binding]="'CargoTypeName'" [width]="'140'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.RequestReasonName}}</span>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CargoTypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- CustomFileNo -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.CustomFileNo' | TextCodeTranslationPipe" [binding]="'CustomFileNo'" [width]="'120'" [Alignment]="'right'">
+                                    <!-- ShipName -->
+                                    <log-column [header]="'Customs.ExportStorage.F.ShipName' | TextCodeTranslationPipe"
+                                        [binding]="'ShipName'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.CustomFileNo}}</span>
-                                            </div>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ShipName}}</span>
+                                                </div>
 
-                                        </log-cell-template>
-</ng-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- ResponseStatusName -->
-                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ResponseStatusName' | TextCodeTranslationPipe" [binding]="'ResponseStatusName'" [width]="'120'" [Alignment]="'right'">
+                                    <!-- CustomStatusName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.CustomStatusName' | TextCodeTranslationPipe"
+                                        [binding]="'CustomStatusName'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.ResponseStatusName}}</span>
-                                            </div>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CustomStatusName}}</span>
+                                                </div>
 
-                                        </log-cell-template>
-</ng-template>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <!-- StorageStatus -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.StorageStatus' | TextCodeTranslationPipe"
+                                        [binding]="'StorageStatus'" [width]="'120'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.StorageStatus}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <!-- DeclarationStatusTypeName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.DeclarationStatusTypeName' | TextCodeTranslationPipe"
+                                        [binding]="'DeclarationStatusTypeName'" [width]="'120'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.DeclarationStatusTypeName}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
-                                    <!-- Edit Button -->
-                                    <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
-                                            <span class="CellSeparator" style="float: right;"></span>
-                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
-                                            </div>
-                                        </log-cell-template>
-</ng-template>
-                                    </log-column>
+
+                                    
 
                                 </logitude-edit-grid>
                             </div>
