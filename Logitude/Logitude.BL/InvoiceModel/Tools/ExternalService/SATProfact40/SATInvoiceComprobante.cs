@@ -565,7 +565,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 RfcACuentaTerceros = payableVendorPM.VatNumber,
                 NombreACuentaTerceros = payableVendorPM.SATCustomerName,
                 RegimenFiscalACuentaTerceros = payableVendorPM.RegimenFiscalCode,
-                DomicilioFiscalACuentaTerceros = GetBillToAddressZipCode(payableVendorPM),
+                DomicilioFiscalACuentaTerceros = GetPayableVendorAddressZipCode(payableVendorPM),
             };
         }
 
@@ -582,13 +582,22 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return payableVendorPM;
         }
 
-        private string GetBillToAddressZipCode(CardPM payableVendorPM)
+        private string GetPayableVendorAddressZipCode(CardPM payableVendorPM)
         {
             AddressQuery addressQuery = new AddressQuery(payableVendorPM.Tenant);
             List<AddressPM> payableVendorAddresses = addressQuery.GetAddressesByCardId(payableVendorPM.Id, payableVendorPM.Tenant);
-            AddressPM payableVendorBillingAddress = payableVendorAddresses.Where(address => address.AddressTypeId == "B").FirstOrDefault();
+            const string billingAddressTypeCode = "B";
+            AddressPM payableVendorBillingAddress = payableVendorAddresses.Where(address => address.AddressTypeId == billingAddressTypeCode).FirstOrDefault();
 
-            return payableVendorBillingAddress != null ? payableVendorBillingAddress.ZipCode : "";
+            if(payableVendorBillingAddress != null && !string.IsNullOrEmpty(payableVendorBillingAddress.ZipCode))
+            {
+                return payableVendorBillingAddress.ZipCode;
+            }
+
+            const string mainAddressTypeCode = "M";
+            AddressPM payableVendorMainAddress = payableVendorAddresses.Where(address => address.AddressTypeId == mainAddressTypeCode).FirstOrDefault();
+
+            return payableVendorMainAddress != null ? payableVendorMainAddress.ZipCode : "";
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, ComprobanteConcepto concepto, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups)
