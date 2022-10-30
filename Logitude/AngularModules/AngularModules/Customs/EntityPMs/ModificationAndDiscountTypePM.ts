@@ -74,9 +74,39 @@ export class ModificationAndDiscountTypePM {
     public set ExtraNumericData(newValue: string) { if (this.extraNumericData != newValue) { this.extraNumericData = newValue; this.MarkAsDirty("ExtraNumericData"); } }
        
 	 
-    private effectGoodsValueExport: string;
-    public get EffectGoodsValueExport() { return this.effectGoodsValueExport; }
-    public set EffectGoodsValueExport(newValue: string) { if (this.effectGoodsValueExport != newValue) { this.effectGoodsValueExport = newValue; this.MarkAsDirty("EffectGoodsValueExport"); } }
+    private exportNetoValuesModificationAffectTypeID: string;
+    public get ExportNetoValuesModificationAffectTypeID() { return this.exportNetoValuesModificationAffectTypeID; }
+    public set ExportNetoValuesModificationAffectTypeID(newValue: string) { if (this.exportNetoValuesModificationAffectTypeID != newValue) { this.exportNetoValuesModificationAffectTypeID = newValue; this.MarkAsDirty("ExportNetoValuesModificationAffectTypeID"); } }
+       
+	 
+    private isCustomsValueComponent: boolean;
+    public get IsCustomsValueComponent() { return this.isCustomsValueComponent; }
+    public set IsCustomsValueComponent(newValue: boolean) { if (this.isCustomsValueComponent != newValue) { this.isCustomsValueComponent = newValue; this.MarkAsDirty("IsCustomsValueComponent"); } }
+       
+	 
+    private exportFOBModificationAffectID: string;
+    public get ExportFOBModificationAffectID() { return this.exportFOBModificationAffectID; }
+    public set ExportFOBModificationAffectID(newValue: string) { if (this.exportFOBModificationAffectID != newValue) { this.exportFOBModificationAffectID = newValue; this.MarkAsDirty("ExportFOBModificationAffectID"); } }
+       
+	 
+    private isCustomsValueComponentExport: boolean;
+    public get IsCustomsValueComponentExport() { return this.isCustomsValueComponentExport; }
+    public set IsCustomsValueComponentExport(newValue: boolean) { if (this.isCustomsValueComponentExport != newValue) { this.isCustomsValueComponentExport = newValue; this.MarkAsDirty("IsCustomsValueComponentExport"); } }
+       
+	 
+    private currencyMustSameInvoiceExport: boolean;
+    public get CurrencyMustSameInvoiceExport() { return this.currencyMustSameInvoiceExport; }
+    public set CurrencyMustSameInvoiceExport(newValue: boolean) { if (this.currencyMustSameInvoiceExport != newValue) { this.currencyMustSameInvoiceExport = newValue; this.MarkAsDirty("CurrencyMustSameInvoiceExport"); } }
+       
+	 
+    private currencyMustBeSameAsInvoice: boolean;
+    public get CurrencyMustBeSameAsInvoice() { return this.currencyMustBeSameAsInvoice; }
+    public set CurrencyMustBeSameAsInvoice(newValue: boolean) { if (this.currencyMustBeSameAsInvoice != newValue) { this.currencyMustBeSameAsInvoice = newValue; this.MarkAsDirty("CurrencyMustBeSameAsInvoice"); } }
+       
+	 
+    private isCustomUseExport: boolean;
+    public get IsCustomUseExport() { return this.isCustomUseExport; }
+    public set IsCustomUseExport(newValue: boolean) { if (this.isCustomUseExport != newValue) { this.isCustomUseExport = newValue; this.MarkAsDirty("IsCustomUseExport"); } }
        
 	 
 

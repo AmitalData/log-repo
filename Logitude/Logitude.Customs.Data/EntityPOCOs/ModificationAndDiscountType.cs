@@ -39,8 +39,20 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsRelevantGoodsItemExport { get; set; }
         [Column("ExtraNumericData")]
 	    public string ExtraNumericData { get; set; }
-        [Column("EffectGoodsValueExport")]
-	    public string EffectGoodsValueExport { get; set; }
+     
+	    public string ExportNetoValuesModificationAffectTypeID { get; set; }
+        [Column("IsCustomsValueComponent")]
+	    public bool? IsCustomsValueComponent { get; set; }
+        [Column("ExportFOBModificationAffectID")]
+	    public string ExportFOBModificationAffectID { get; set; }
+        [Column("IsCustomsValueComponentExport")]
+	    public bool? IsCustomsValueComponentExport { get; set; }
+        [Column("CurrencyMustSameInvoiceExport")]
+	    public bool? CurrencyMustSameInvoiceExport { get; set; }
+        [Column("CurrencyMustBeSameAsInvoice")]
+	    public bool? CurrencyMustBeSameAsInvoice { get; set; }
+        [Column("IsCustomUseExport")]
+	    public bool? IsCustomUseExport { get; set; }
     }
 }
 	 

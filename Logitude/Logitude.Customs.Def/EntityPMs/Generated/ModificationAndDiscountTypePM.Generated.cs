@@ -250,25 +250,163 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string effectGoodsValueExport ;
+	  private string exportNetoValuesModificationAffectTypeID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string EffectGoodsValueExport  
+       public string ExportNetoValuesModificationAffectTypeID  
 	   {
 	    
 	     get
 		{
-		   return effectGoodsValueExport;
+		   return exportNetoValuesModificationAffectTypeID;
 		 }
 		 set
 		 {
-		   if(effectGoodsValueExport != value)
+		   if(exportNetoValuesModificationAffectTypeID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EffectGoodsValueExport",OldValue=effectGoodsValueExport,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportNetoValuesModificationAffectTypeID",OldValue=exportNetoValuesModificationAffectTypeID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   effectGoodsValueExport=value;
+		   exportNetoValuesModificationAffectTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isCustomsValueComponent ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsCustomsValueComponent  
+	   {
+	    
+	     get
+		{
+		   return isCustomsValueComponent;
+		 }
+		 set
+		 {
+		   if(isCustomsValueComponent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsValueComponent",OldValue=isCustomsValueComponent,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isCustomsValueComponent=value;
+		   }
+			
+		 }
+	   }
+	  private string exportFOBModificationAffectID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFOBModificationAffectID  
+	   {
+	    
+	     get
+		{
+		   return exportFOBModificationAffectID;
+		 }
+		 set
+		 {
+		   if(exportFOBModificationAffectID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFOBModificationAffectID",OldValue=exportFOBModificationAffectID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFOBModificationAffectID=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isCustomsValueComponentExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsCustomsValueComponentExport  
+	   {
+	    
+	     get
+		{
+		   return isCustomsValueComponentExport;
+		 }
+		 set
+		 {
+		   if(isCustomsValueComponentExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsValueComponentExport",OldValue=isCustomsValueComponentExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isCustomsValueComponentExport=value;
+		   }
+			
+		 }
+	   }
+	  private bool? currencyMustSameInvoiceExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? CurrencyMustSameInvoiceExport  
+	   {
+	    
+	     get
+		{
+		   return currencyMustSameInvoiceExport;
+		 }
+		 set
+		 {
+		   if(currencyMustSameInvoiceExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyMustSameInvoiceExport",OldValue=currencyMustSameInvoiceExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   currencyMustSameInvoiceExport=value;
+		   }
+			
+		 }
+	   }
+	  private bool? currencyMustBeSameAsInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? CurrencyMustBeSameAsInvoice  
+	   {
+	    
+	     get
+		{
+		   return currencyMustBeSameAsInvoice;
+		 }
+		 set
+		 {
+		   if(currencyMustBeSameAsInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyMustBeSameAsInvoice",OldValue=currencyMustBeSameAsInvoice,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   currencyMustBeSameAsInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isCustomUseExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsCustomUseExport  
+	   {
+	    
+	     get
+		{
+		   return isCustomUseExport;
+		 }
+		 set
+		 {
+		   if(isCustomUseExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomUseExport",OldValue=isCustomUseExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isCustomUseExport=value;
 		   }
 			
 		 }
