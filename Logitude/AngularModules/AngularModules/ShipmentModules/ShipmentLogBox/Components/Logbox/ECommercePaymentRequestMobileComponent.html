@@ -396,7 +396,7 @@
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;margin-right: 5px;direction: rtl;">
                                                         <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">אני מאשר\ת את תנאי השירות<span style="color:lightskyblue;text-decoration: underline;font-size:13px;" (click)="ViewAggreement()"> השירות</span> </label><br />
+                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">אני מאשר\ת את תנאי <span style="color:lightskyblue;text-decoration: underline;font-size:13px;" (click)="ViewAggreement()"> השירות</span> </label><br />
                                                     </div>
                                                 </td>
                                             </tr>
