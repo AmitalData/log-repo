@@ -42,7 +42,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
     public reactWidgetsLayout: { lg: ReactWidgetPM[] } = { lg: [] };
-    @Input('Show') Show;
+    @Input('Show') Show = false;
     private filterName_SelectedDashboard: string = "SelectedDashboard";
     private filterControlNameSpace: string = "Workspace.CustomDashboard";
     public IsEmptyDashboardVisible: boolean = false;
@@ -53,6 +53,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMService = new DashboardPMService();
         this.dashboardPMExtendedService = new DashboardPMExtendedService();
         this.SelectedDashboard = new DashboardPM();
+    }
+
+    InitComponent() {
+        //this.Show = true;
     }
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -80,7 +84,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     ngAfterViewInit(): void {
-
+        this.Show = true;
     }
 
     private SessionEvent: any = null;

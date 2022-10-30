@@ -155,6 +155,12 @@ export class AddEditWidgetComponent extends BaseComponent {
     set EntityId(value: string) {
         if (this.EntityPM.EntityId != value) {
             this.EntityPM.EntityId = value;
+
+            this.GroupById = null;
+            this.WidgetMeasuresList.forEach(item => {
+                item.MeasureFieldId = null;
+            });
+
             this.RootFilter = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
