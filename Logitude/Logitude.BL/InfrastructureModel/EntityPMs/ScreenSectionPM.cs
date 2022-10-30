@@ -11,7 +11,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
   public  class ScreenSectionPM
     {
 
-
+        public string Id { get; set; }
         public int Tenant { get; set; }
         public string Name { get; set; }
         public string CreatedByUserId { get; set; }
@@ -24,7 +24,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string RelatedScreenCode { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-
 
 
     }

@@ -8,7 +8,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
 {
  public   class ScreenSectionList
     {
-
+        public string Id { get; set; }
         public int Tenant { get; set; }
         public string Name { get; set; }
         public string CreatedByUserId { get; set; }
@@ -19,7 +19,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool Inactive { get; set; }
         public string Type { get; set; }
         public string RelatedScreenCode { get; set; }
-
 
     }
 }

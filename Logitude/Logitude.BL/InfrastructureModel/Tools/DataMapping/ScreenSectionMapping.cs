@@ -10,6 +10,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             if (isNewState)
             {
+                screenSection.Id = screenSectionPM.Id;
                 screenSection.ScreenCode = screenSectionPM.ScreenCode;
                 screenSection.Tenant = screenSectionPM.Tenant;
             }

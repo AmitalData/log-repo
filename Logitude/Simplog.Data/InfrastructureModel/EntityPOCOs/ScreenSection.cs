@@ -18,7 +18,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
 
         [Key]
-        [Column("ScreenCode", Order = 1)]
+        public string Id { get; set; }
         public string ScreenCode { get; set; }
 
         public int Tenant { get; set; }
@@ -29,8 +29,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
 
 
-        [Key]
-        [Column("Number", Order = 2)]
+        
         public int Number { get; set; }
 
 
