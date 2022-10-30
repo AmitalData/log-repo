@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         private TraceEventRepository traceEventRepository;
         private EntityStatusRepository entityStatusRepository;
         private ObjectTableRepository objectTabelRepository;
+        private ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository;
         string myUserId = null;
         string myCustomerCareUserEmail = null;
         AddressRepository addressRepository;
@@ -59,6 +60,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.traceEventRepository = new TraceEventRepository(objectContext);
             this.eventTypeRepository = new EventTypeRepository(objectContext);
             this.entityStatusRepository = new EntityStatusRepository(objectContext);
+            this.shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
             this.addressRepository = new AddressRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             this.objectTableId = objectTable.Id;
