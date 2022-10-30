@@ -84,8 +84,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
-            if ($event.Name == "ReloadGridSections") {
-                //this.OkClicked(false);
+            if ($event.Name == "ReloadGridSections" && !this.IsSubEntity) {
+                this.OkClicked(false);
             }
         });
     }

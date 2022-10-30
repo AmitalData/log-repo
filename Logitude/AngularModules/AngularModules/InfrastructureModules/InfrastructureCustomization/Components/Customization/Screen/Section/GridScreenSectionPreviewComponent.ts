@@ -41,12 +41,20 @@ export class GridScreenSectionPreviewComponent extends BaseComponent implements 
         let childObjectTable = window.ObjectTables.filter((table: any) => table.Id === relatedScreen.ObjectTableId)[0];
         if (!childObjectTable) return;
 
+        if (childObjectTable.IsCustom) {
+            this.LoadCompleted();
+            return;
+        }
         this.entityResourceService.getEntityResourceByTableName(childObjectTable.Name).subscribe((response: any) => {
-            this.IsReady = true;
-            this.ScreenFields = window.ScreenFields.filter(screenField => screenField.Tenant == SessionLocator.Tenant && screenField.ScreenCode == this.ScreenSection.RelatedScreenCode);
-            if (!this.ScreenFields) return;
-            this.OrderScreenFieldsByColumn();
+            this.LoadCompleted();
         });
+    }
+
+    private LoadCompleted() {
+        this.IsReady = true;
+        this.ScreenFields = window.ScreenFields.filter(screenField => screenField.Tenant == SessionLocator.Tenant && screenField.ScreenCode == this.ScreenSection.RelatedScreenCode);
+        if (!this.ScreenFields) return;
+        this.OrderScreenFieldsByColumn();
     }
 
     OrderScreenFieldsByColumn() {

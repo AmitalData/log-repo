@@ -224,42 +224,55 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.ScreenSections = [];
 
                 const sections: any[] = response.Result;
-                this.LoadAllChildEntityResources(screen, sections, fireEmit, 0);
+                let childEntityResourcesArgs: ChildEntityResourcesArgs = new ChildEntityResourcesArgs();
+                childEntityResourcesArgs.Screen = screen;
+                childEntityResourcesArgs.Sections = sections;
+                childEntityResourcesArgs.FireEmit = fireEmit;
+                childEntityResourcesArgs.Index = 0;
+                this.LoadAllChildEntityResources(childEntityResourcesArgs);
             });
     }
 
-    LoadAllChildEntityResources(screen: ScreenPM, sections: any[], fireEmit: any, index) {
-        let relatedScreen = window.Screens.filter((screen: any) => screen.Code === sections[index].RelatedScreenCode)[0];
-        index++;
-        if (!relatedScreen && sections.length != index) {
-            this.LoadAllChildEntityResources(screen, sections, fireEmit, index);
-        }
-        let childObjectTable = window.ObjectTables.filter((table: any) => table.Id === relatedScreen.ObjectTableId)[0];
-        if (!childObjectTable && sections.length != index) {
-            this.LoadAllChildEntityResources(screen, sections, fireEmit, index);
+    LoadAllChildEntityResources(childEntityResourcesArgs: ChildEntityResourcesArgs) {
+        if (childEntityResourcesArgs.Sections.length <= childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs);
+            return;
         }
 
-        if (sections.length == index + 1) {
-            this.LoadAllChildEntityResourcesCompleted(screen, sections, fireEmit);
-            
+        let relatedScreen = window.Screens.filter((screen: any) => screen.Code === childEntityResourcesArgs.Sections[childEntityResourcesArgs.Index].RelatedScreenCode)[0];
+        childEntityResourcesArgs.Index = childEntityResourcesArgs.Index + 1;
+        if (!relatedScreen && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
+        }
+        let childObjectTable = window.ObjectTables.filter((table: any) => table.Id === relatedScreen.ObjectTableId)[0];
+        if (!childObjectTable && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
+        }
+
+        if (childObjectTable.IsCustom) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
         }
 
         this.entityResourceService.getEntityResourceByTableName(childObjectTable.Name).subscribe((response: any) => {
-            if (sections.length != index)
-                this.LoadAllChildEntityResources(screen, sections, fireEmit, index);
-            this.LoadAllChildEntityResourcesCompleted(screen, sections, fireEmit);
+            if (childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index)
+                this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            else
+                this.LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs);
         });
     }
 
-    private LoadAllChildEntityResourcesCompleted(screen: ScreenPM, sections: any[], fireEmit: any) {
+    private LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs: ChildEntityResourcesArgs) {
         this.CurrentSession.StopBusyIndicator();
-        const screenFields = GetScreenFields(screen, sections);
+        const screenFields = GetScreenFields(childEntityResourcesArgs.Screen, childEntityResourcesArgs.Sections);
         if (screenFields.length == 0)
             return this.ShowNoFieldsText = true;
 
-        sections.forEach(section => this.BuildScreenSection(screen, section, screenFields, this.GetObjectFields()));
+        childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
 
-        if (fireEmit)
+        if (childEntityResourcesArgs.FireEmit)
             this.LoadCompleted.emit(true);
     }
 
@@ -389,6 +402,13 @@ export class ScreenColumn {
         this.Index = index;
         this.ObjectFields = [];
     }
+}
+
+export class ChildEntityResourcesArgs {
+    public Screen: ScreenPM;
+    public Sections: any[];
+    public FireEmit: any;
+    public Index: number;
 }
 
 export class ScreenSection {
