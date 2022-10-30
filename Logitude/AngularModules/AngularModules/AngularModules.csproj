@@ -379,6 +379,8 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\AddEditChildEntityComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\GridScreenSectionComponent.html" />
     <Content Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.html" />
@@ -2031,6 +2033,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\SubDomainGenerateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\AddEditChildEntityComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\GridScreenSectionComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.ts" />

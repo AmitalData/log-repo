@@ -12,6 +12,7 @@ import { ScreenPM } from 'Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { ScreenSectionPM } from 'Infrastructure/EntityPMs/ScreenSectionPM';
 import { TextCodeTranslator } from '../Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../Services/EntityResourceService';
 
 declare var window: any;
 
@@ -30,6 +31,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ScreenCode: string;
     public ScreenColumns: ScreenColumn[];
     public LabelWidth: number = 190;
+    public IsFromGrid: boolean;
     public IsNewEntityCall: boolean;
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
@@ -39,6 +41,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public HideLastColumn: boolean = false;
     public ScreenSections: ScreenSection[];
     private generalTextCode: string = "General.O.General";
+    private CurrentSession = SessionLocator.SelectedSession;
+    private entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     screenSectionService = new ScreenSectionListService();
     private objectTableTab: any;
@@ -111,7 +115,6 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         if (this.EntityPM != null) {
             if (this.isViewEnited == true) {
                 this.ScreenSections = [];
-                var myScreenColumns: ScreenColumn[] = [];
                 var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
 
                 if (myScreen != null) {
@@ -131,26 +134,53 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                         if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId))
                             myObjectFields = myObjectFields.concat(window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ChildObjectTableId));
 
-                        for (var c = 0; c < myScreen.NumberOfColumns; c++) {
-                            var myScreenColumn = new ScreenColumn(c);
-
-                            for (var r = 0; r < myScreen.NumberOfRows; r++) {
-                                var selectedScreenFields = myScreenFields.filter((f: any) => f.Column == c && f.Row == r);
-                                this.AddSelectedScreenFields(selectedScreenFields, myObjectFields, myScreenColumn);
-                            }
-
-                            myScreenColumns.push(myScreenColumn);
-                        }
+                        var myScreenColumns: ScreenColumn[] = this.GetClassicScreenColumns(myScreen, myScreenFields, myObjectFields);
                     }
                 }
 
                 this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
-                this.ScreenSections.push(new ScreenSection(0, this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "", this.ScreenColumns))
+                let screenSection = new ScreenSectionPM();
+                screenSection.Number = 0;
+                screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "",
+                this.ScreenSections.push(new ScreenSection(screenSection, this.ScreenColumns))
                 if (fireEmit) {
                     this.LoadCompleted.emit(true);
                 }
             }
         }
+    }
+
+    private GetClassicScreenColumns(myScreen: any, myScreenFields: any, myObjectFields: any) {
+
+        if (this.IsFromGrid) {
+            return this.GetClassicGridScreenColumns(myScreen, myScreenFields, myObjectFields);
+        }
+
+        var myScreenColumns: ScreenColumn[] = [];
+        for (var c = 0; c < myScreen.NumberOfColumns; c++) {
+            var myScreenColumn = new ScreenColumn(c);
+
+            for (var r = 0; r < myScreen.NumberOfRows; r++) {
+                var selectedScreenFields = myScreenFields.filter((f: any) => f.Column == c && f.Row == r);
+                this.AddSelectedScreenFields(selectedScreenFields, myObjectFields, myScreenColumn);
+            }
+
+            myScreenColumns.push(myScreenColumn);
+        }
+        return myScreenColumns;
+    }
+
+    private GetClassicGridScreenColumns(myScreen: any, myScreenFields: any, myObjectFields: any) {
+        var myScreenColumns: ScreenColumn[] = [];
+        var myScreenColumn = new ScreenColumn(0);
+
+        for (var c = 0; c < myScreen.NumberOfColumns; c++) {
+            var selectedScreenFields = myScreenFields.filter((f: any) => f.Column == c && f.Row == 0);
+            this.AddSelectedScreenFields(selectedScreenFields, myObjectFields, myScreenColumn);
+        }
+
+        myScreenColumns.push(myScreenColumn);
+        return myScreenColumns;
     }
 
     private AddSelectedScreenFields(selectedScreenFields: any, myObjectFields: any, myScreenColumn: ScreenColumn) {
@@ -179,36 +209,79 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         if (screen == null)
             return;
 
-        this.BuildScreenSections(screen);
-
-        if (fireEmit)
-        this.LoadCompleted.emit(true);
+        this.BuildScreenSections(screen, fireEmit);
     }
 
 
 
     private isScreenEnabled: boolean = true;
-    private BuildScreenSections(screen: ScreenPM)
+    private BuildScreenSections(screen: ScreenPM, fireEmit: any)
     {
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.GetScreenSections(screen)
             .subscribe(response =>
             {
                 this.ScreenSections = [];
 
                 const sections: any[] = response.Result;
-
-                const screenFields = GetScreenFields(screen);
-                if (screenFields.length == 0)
-                    return this.ShowNoFieldsText = true;
-
-                sections.forEach(section => this.BuildScreenSection(screen, section, screenFields, this.GetObjectFields()) );
+                let childEntityResourcesArgs: ChildEntityResourcesArgs = new ChildEntityResourcesArgs();
+                childEntityResourcesArgs.Screen = screen;
+                childEntityResourcesArgs.Sections = sections;
+                childEntityResourcesArgs.FireEmit = fireEmit;
+                childEntityResourcesArgs.Index = 0;
+                this.LoadAllChildEntityResources(childEntityResourcesArgs);
             });
     }
 
+    LoadAllChildEntityResources(childEntityResourcesArgs: ChildEntityResourcesArgs) {
+        if (childEntityResourcesArgs.Sections.length <= childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs);
+            return;
+        }
 
+        let relatedScreen = window.Screens.filter((screen: any) => screen.Code === childEntityResourcesArgs.Sections[childEntityResourcesArgs.Index].RelatedScreenCode)[0];
+        childEntityResourcesArgs.Index = childEntityResourcesArgs.Index + 1;
+        if (!relatedScreen && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
+        }
+        let childObjectTable = window.ObjectTables.filter((table: any) => table.Id === relatedScreen.ObjectTableId)[0];
+        if (!childObjectTable && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
+        }
+
+        if (childObjectTable.IsCustom) {
+            this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            return;
+        }
+
+        this.entityResourceService.getEntityResourceByTableName(childObjectTable.Name).subscribe((response: any) => {
+            if (childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index)
+                this.LoadAllChildEntityResources(childEntityResourcesArgs);
+            else
+                this.LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs);
+        });
+    }
+
+    private LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs: ChildEntityResourcesArgs) {
+        this.CurrentSession.StopBusyIndicator();
+        const screenFields = GetScreenFields(childEntityResourcesArgs.Screen, childEntityResourcesArgs.Sections);
+        if (screenFields.length == 0)
+            return this.ShowNoFieldsText = true;
+
+        childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
+
+        if (childEntityResourcesArgs.FireEmit)
+            this.LoadCompleted.emit(true);
+    }
 
     private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)
     {
+        if (section.Type == "Grid") {
+            this.BuildScreenGridSection(section, screenFields);
+            return;
+        }
         const columns: ScreenColumn[] = [];
 
         for (let i = 0; i < screen.NumberOfColumns; i++){
@@ -219,11 +292,25 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             columns.push(column);
         }
 
-        this.ScreenSections.push(new ScreenSection(section.Number, section.Name, columns));
+        this.ScreenSections.push(new ScreenSection(section, columns));
     }
 
+    BuildScreenGridSection(section: ScreenSectionPM, screenFields: any) {
+        const columns: ScreenColumn[] = [];
+        this.AddGridSection(screenFields, section, columns);
+    }
 
-
+    private AddGridSection(screenFields: any, section: ScreenSectionPM, columns: ScreenColumn[]) {
+        screenFields.filter(screenField => screenField.ScreenCode === section.RelatedScreenCode).forEach(field => {
+            const column = new ScreenColumn(field.Column);
+            const objectField = window.ObjectFields.filter((f: any) => f.FieldCode == field.ObjectFieldCode)[0];
+            if (objectField) {
+                column.ObjectFields.push(objectField);
+                columns.push(column);
+            }
+        });
+        this.ScreenSections.push(new ScreenSection(section, columns));
+    }
 
     GetTableName(): string {
         const tab: any = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
@@ -317,22 +404,39 @@ export class ScreenColumn {
     }
 }
 
+export class ChildEntityResourcesArgs {
+    public Screen: ScreenPM;
+    public Sections: any[];
+    public FireEmit: any;
+    public Index: number;
+}
+
 export class ScreenSection {
     public SectionNumber: number;
     public Title: string;
     public ScreenColumns: ScreenColumn[];
+    public Type: string;
+    public RelatedScreenCode: string;
     actualColumnsCount = 0;
-    constructor(sectionNumber: number, title: string,screenColumns:ScreenColumn[]) {
-        this.SectionNumber = sectionNumber;
-        this.Title = title;
+    constructor(screenSectionPM: ScreenSectionPM, screenColumns: ScreenColumn[]) {
+        this.SectionNumber = screenSectionPM.Number;
+        this.Title = screenSectionPM.Name;
+        this.Type = screenSectionPM.Type;
+        this.RelatedScreenCode = screenSectionPM.RelatedScreenCode;
         this.ScreenColumns = screenColumns;
         this.actualColumnsCount = screenColumns.filter(c=>c.ObjectFields.length > 0).length;
     }
 
 }
-function GetScreenFields(screen: ScreenPM)
+function GetScreenFields(screen: ScreenPM, sections: any)
 {
     var screenFields = window.ScreenFields.filter((x: any) => x.ScreenId === screen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+    sections?.forEach(section => {
+        if (section.Type == "Grid") {
+            screenFields = screenFields.concat(window.ScreenFields.filter((x: any) => x.ScreenCode === section.RelatedScreenCode && x.Tenant === SessionInfo.LoggedUserTenant));
+        }
+    });
 
     if (screenFields.length == 0) {
         screenFields = window.ScreenFields.filter((x: any) => x.ScreenId === screen.Id);

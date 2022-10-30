@@ -6,6 +6,8 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 export class GridScreenLayoutService implements IScreenLayoutService {
 
     private screenComponent: any;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(screenComponent: any) {
         this.screenComponent = screenComponent;
     }
@@ -31,6 +33,9 @@ export class GridScreenLayoutService implements IScreenLayoutService {
     }
 
     public BuildScreenUpdateArgs() {
+        if (this.screenComponent.ReloadGridSections) {
+            this.ReladGridSections();
+        }
         this.screenComponent.MyArgs.ScreenFields = [];
         this.screenComponent.MyArgs.RemovedScreenFields = [];
         this.screenComponent.GridScreenSelectedFields.forEach(objectField => {
@@ -43,6 +48,11 @@ export class GridScreenLayoutService implements IScreenLayoutService {
         this.screenComponent.MyArgs.Columns = this.screenComponent.GridScreenSelectedFields.length;
         this.screenComponent.MyArgs.SortedByFieldCode = this.screenComponent.OldItem.ScreenPM.SortedByFieldCode;
         this.screenComponent.MyArgs.SortedType = this.screenComponent.OldItem.ScreenPM.SortedType;
+    }
+
+    private ReladGridSections() {
+        this.screenComponent.ReloadGridSections = false;
+        this.CurrentSession.SessionEvent.emit({ Name: "ReloadGridSections" });
     }
 
     private AddScreenFieldToMyArgs(objectField: ObjectFieldPM) {

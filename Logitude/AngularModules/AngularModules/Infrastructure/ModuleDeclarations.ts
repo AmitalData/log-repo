@@ -207,6 +207,8 @@ import { MultiPrintErrorHandlerComponent } from './Components/MultiPrint/MultiPr
 import { MultiPrintCheckBoxComponent } from './Components/MultiPrint/MultiPrintCheckBoxComponent';
 import { MultiPrintCheckTemplate } from './Components/MultiPrint/MultiPrintCheckTemplate';
 import { MonthpickerComponent } from './Components/LogitudeComponents/MonthPickerComponent';
+import { GridScreenSectionComponent } from './Components/LogitudeComponents/Customization/Screen/Section/GridScreenSectionComponent';
+import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -424,6 +426,8 @@ export const Components =
         MultiPrintErrorHandlerComponent,
         MultiPrintCheckBoxComponent,
         MultiPrintCheckTemplate,
+        GridScreenSectionComponent,
+        AddEditChildEntityComponent
     ];
 
 export class ModuleDeclarations {
@@ -549,6 +553,8 @@ export class ModuleDeclarations {
             case 'MultiPrintErrorHandlerComponent': { myResult = MultiPrintErrorHandlerComponent; break; }
             case 'MultiPrintCheckBoxComponent': { myResult = MultiPrintCheckBoxComponent; break; }
             case 'MultiPrintCheckTemplate': { myResult = MultiPrintCheckTemplate; break; }
+            case 'GridScreenSectionComponent': { myResult = GridScreenSectionComponent; break; }
+            case 'AddEditChildEntityComponent': { myResult = AddEditChildEntityComponent; break; }
         }
 
         return myResult;
