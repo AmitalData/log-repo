@@ -1180,6 +1180,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\InterfaceManagementWSheetExport .cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryProvider.cs" />
+    <Compile Include="CustomWebServices\BL\XLSReports\ExportReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\LastMileReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />

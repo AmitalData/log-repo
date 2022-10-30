@@ -2242,11 +2242,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
         }
 
-        public List<Declaration> GetDeclaration100(int tenant)
+        public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
         {
-            return this.repository.GetDeclaration100(tenant);
+           
+            var ExportReportData = this.repository.GetReportDeclarationForExportReport1(ExportFrom, ExportTo);
+            return ExportReportData;
         }
+        public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
+        {
 
-
+            var ExportReportData = this.repository.GetReportDeclarationForExportReport2(ExportFrom, ExportTo);
+            return ExportReportData;
+        }
     }
 }
