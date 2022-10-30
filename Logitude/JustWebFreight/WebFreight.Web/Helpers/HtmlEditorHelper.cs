@@ -3182,7 +3182,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else
                             {
-                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "TicketHeader" && propertyName != "TicketFooter")
+                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "TicketHeader" && propertyName != "TicketFooter" && propertyName != "CompanyBrandingLogo")
                                 {
 
 
@@ -3194,7 +3194,7 @@ namespace WebFreight.Web.Helpers
                                 }
                                 else
                                 {
-                                    if (propertyName == "Logo" || propertyName == "SmallLogo")
+                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "CompanyBrandingLogo")
                                     {
                                         string logoString = GetTenantLogo(propertyName, tenant);
 
@@ -3516,7 +3516,7 @@ namespace WebFreight.Web.Helpers
                                         else
                                         {
 
-                                            if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "TicketHeader" && propertyName != "TicketFooter")
+                                            if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "TicketHeader" && propertyName != "TicketFooter" && propertyName != "CompanyBrandingLogo")
                                             {
                                                 string resultValue = GetEntityFieldValue(systemEntity, propertyName, systemEntityObjectFields, tenant);
                                                 node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[SystemData." + propertyName + "]", resultValue);
@@ -3524,7 +3524,7 @@ namespace WebFreight.Web.Helpers
                                             }
                                             else
                                             {
-                                                if (propertyName == "Logo" || propertyName == "SmallLogo")
+                                                if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "CompanyBrandingLogo")
                                                 {
                                                     string logoString = GetTenantLogo(propertyName, tenant);
 
@@ -4799,9 +4799,9 @@ namespace WebFreight.Web.Helpers
         private bool ShouldChangeEntityNameToCustomer(ObjectField objectField, object currentEntity, int tenant)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CCR", tenant)) return false;
-            if (objectField.FieldCode != "Shipment.ShipperNotExporterId" && objectField.FieldCode != "Shipment.ConsigneeNotImporterId" &&   objectField.FieldCode != "Shipment.CustomerId") return false;
+            if (objectField.FieldCode != "Shipment.ShipperNotExporterId" && objectField.FieldCode != "Shipment.ConsigneeNotImporterId" && objectField.FieldCode != "Shipment.CustomerId") return false;
             if (!IsCustomerExist(objectField, currentEntity, tenant)) return false;
-            
+
             return true;
         }
 
@@ -5045,7 +5045,7 @@ namespace WebFreight.Web.Helpers
                                             }
                                             else
                                             {
-                                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo")
+                                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo" && propertyName != "CompanyBrandingLogo")
                                                 {
 
 
@@ -5056,7 +5056,7 @@ namespace WebFreight.Web.Helpers
                                                 }
                                                 else
                                                 {
-                                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo")
+                                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo" || propertyName == "CompanyBrandingLogo")
                                                     {
                                                         string logoString = GetTenantLogoHtml(propertyName, tenant);
 
@@ -5136,7 +5136,7 @@ namespace WebFreight.Web.Helpers
                         }
                         else
                         {
-                            if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo")
+                            if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "CompanyBrandingLogo")
                             {
 
 
@@ -5148,7 +5148,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else
                             {
-                                if (propertyName == "Logo" || propertyName == "SmallLogo")
+                                if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "CompanyBrandingLogo")
                                 {
                                     string logoString = GetTenantLogoHtml(propertyName, tenant);
 
@@ -5287,7 +5287,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else
                             {
-                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo")
+                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo" && propertyName != "CompanyBrandingLogo")
                                 {
 
                                     string resultValue = GetEntityFieldValue(systemEntity, propertyName, systemEntityObjectFields, tenant, nodeText);
@@ -5298,7 +5298,7 @@ namespace WebFreight.Web.Helpers
                                 }
                                 else
                                 {
-                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo")
+                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo" || propertyName == "CompanyBrandingLogo")
                                     {
                                         string logoString = GetTenantLogoHtml(propertyName, tenant);
 
@@ -5836,28 +5836,33 @@ namespace WebFreight.Web.Helpers
             string logoCode = " ";
             string fileName = logoName;
             string fileExtension = "jpg";
-
-
+            string logoFileName = fileName + tenant;
+            string folderName= "logos";
             if (fileName == "WideLogo")
             {
                 fileName = "sharedLogtsitcslogo";
                 fileExtension = "png";
             }
 
-            string logoFileName = fileName + tenant;
+            if (fileName == "CompanyBrandingLogo")
+            {
+                logoFileName = GetImageDetailsId(tenant);
+                folderName = string.IsNullOrEmpty(logoFileName) ? folderName : "images";
+                fileExtension = string.IsNullOrEmpty(logoFileName) ? fileExtension : GetImageDetailsExtention(logoFileName, tenant);
+                if (string.IsNullOrEmpty(logoFileName))
+                {
+                    logoFileName = "SmallLogo" + tenant;
+                }
+            }
 
-            byte[] logoFile = GetFileFromServer(logoFileName, fileExtension, "logos", tenant);
-
+            byte[] logoFile = GetFileFromServer(logoFileName, fileExtension, folderName, tenant);
             if (logoFile != null)
             {
                 //base64Data = new char[(int)(Math.Ceiling((double)logoFile.Length / 3) * 4)];
-
                 //Convert.ToBase64CharArray(logoFile, 0, logoFile.Length, base64Data, 0);
                 // System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                 // string rawData = new String(base64Data);
                 string rawData = System.Convert.ToBase64String(logoFile.ToArray(), 0, logoFile.ToArray().Length);
-
-
                 MemoryStream ms = new MemoryStream(logoFile, 0, logoFile.Length);          // Convert byte[] to Image    
                 ms.Write(logoFile, 0, logoFile.Length);
                 System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
@@ -5872,21 +5877,34 @@ namespace WebFreight.Web.Helpers
                 else
                 {
                     rawData = "'" + "data:image/jpg;base64," + rawData + "'";
-
                 }
 
-
                 string style = "'" + "Height:" + height + ";Width:" + width + "'";
-
                 logoCode = "<img style=" + style + " src=" + rawData + "/>";
                 //   logoCode = "<img   src="+ rawData + "style='" + style+ "'" + " />";
-
-
             }
 
-
-
             return logoCode;
+        }
+
+        private string GetImageDetailsExtention(string imageDetailId, int tenant)
+        {
+            ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
+            var extension = imageDetailRepository.GetImageExtensionbyId(tenant, imageDetailId);
+            return extension;
+        }
+
+        private string GetImageDetailsId(int tenant)
+        {
+            string imageDetails = null;
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
+            if (tenantManagementPM != null)
+            {
+                imageDetails = tenantManagementPM.ComapnylogoId;
+            }
+
+            return imageDetails;
         }
         #endregion
 

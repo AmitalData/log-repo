@@ -1252,7 +1252,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                              WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                              CargoTokenTimeout = a.CargoTokenTimeout,
-                                             SecondaryColor = a.SecondaryColor
+                                             SecondaryColor = a.SecondaryColor,
+                                             ComapnylogoId = a.ComapnylogoId
                                          }).FirstOrDefault();
 
             return tenant;
