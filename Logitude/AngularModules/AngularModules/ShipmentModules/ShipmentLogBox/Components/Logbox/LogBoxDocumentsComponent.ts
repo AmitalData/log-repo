@@ -252,7 +252,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.SetPrivateLabelReferencesLabel();
         }
 
-        this.ShortReferencesLabel = this.ReferencesLabel.length > 50 ? this.ReferencesLabel.substring(0, 50) + "..." : this.ReferencesLabel;
+        this.ShortReferencesLabel = this.ReferencesLabel.length > 21 ? this.ReferencesLabel.substring(0, 21) + "..." : this.ReferencesLabel;
     }
 
     private SetPrivateLabelReferencesLabel() {
@@ -385,7 +385,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     get TextChanged() {
         if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "A") {
             if (AppTool.IsNullOrEmpty(this.SelectedShipment.House)) {
-                return this.textChanged = "Master:";
+               return this.textChanged = "Master:";
             }
             else {
                 return this.textChanged = "Hawb:";
@@ -406,29 +406,38 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     private valueChanged: string = "All";
+    private maxTextLength: number = 0;
     get ValueChanged() {
+        let value = "";
         if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "A") {
             if (AppTool.IsNullOrEmpty(this.SelectedShipment.House)) {
-                return this.SelectedShipment.Master;
+                this.maxTextLength = 15;
+                value = this.SelectedShipment.Master;
             }
             else {
-                return this.SelectedShipment.House;
+                this.maxTextLength = 16;
+                value = this.SelectedShipment.House;
             }
         }
         else if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "O") {
-            return this.SelectedShipment.Master;
+            this.maxTextLength = 13;
+            value = this.SelectedShipment.Master;
         }
         else {
             if (this.SelectedShipment != null) {
-                return this.SelectedShipment.CarrierTransportDocumentNumber;
+                this.maxTextLength = 3;
+                value = this.SelectedShipment.CarrierTransportDocumentNumber;
             }
-            return "";
         }
+        return value;
     }
     set ValueChanged(newValue: string) {
         if (this.valueChanged != newValue) {
             this.valueChanged = newValue;
         }
+    }
+    get ValueChangedAfterTriming() {
+        return (!AppTool.IsNullOrEmpty(this.ValueChanged) && this.ValueChanged.length) > this.maxTextLength ? this.ValueChanged.substring(0, this.maxTextLength) + "..." : this.ValueChanged;
     }
 
     //    get ShareWithForwarder() { 

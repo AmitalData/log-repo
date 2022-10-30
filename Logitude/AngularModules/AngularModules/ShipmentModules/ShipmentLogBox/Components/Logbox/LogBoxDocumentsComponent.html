@@ -382,8 +382,8 @@
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId != ShipmentPM.ForwardingPartnerId
                                          && SelectedShipment && SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---'" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                         </td>
-                        <td style="float:right;min-width:170px;">
-                            <span [title]="ReferencesLabel" style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{ ShortReferencesLabel }}</span>
+                        <td class="tooltip" style="float: right; min-width: 170px; max-width:170px; width:170px;">
+                            <span [title]="ReferencesLabel" style="vertical-align: middle; font-size: 12px; color: #6E7172; float: left;">{{ ShortReferencesLabel }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -400,9 +400,9 @@
                         <td *ngIf="!SelectedShipment">
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;"></span>
                         </td>
-                        <td style="float:right;min-width:170px;">
+                        <td style="float: right; min-width: 170px; max-width: 170px; width: 170px;">
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{TextChanged}}</span>
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;min-width:30px;">{{ValueChanged}}</span>
+                            <span class="tooltip" [title]="ValueChanged" style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;min-width:30px;">{{ValueChangedAfterTriming}}</span>
                         </td>
                     </tr>
                 </table>
