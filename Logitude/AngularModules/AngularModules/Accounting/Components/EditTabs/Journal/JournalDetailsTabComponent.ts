@@ -216,7 +216,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     private CheckIfJournalEditableAfterApproval() {
-        if (this.Approved) {
+        if (this.Approved && this.EntityPM.IsLedgerCreated) {
 
             this.CheckIfJournalManuallyCreated();
 
