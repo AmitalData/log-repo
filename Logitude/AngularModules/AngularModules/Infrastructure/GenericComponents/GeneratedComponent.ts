@@ -241,12 +241,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
         let relatedScreen = window.Screens.filter((screen: any) => screen.Code === childEntityResourcesArgs.Sections[childEntityResourcesArgs.Index].RelatedScreenCode)[0];
         childEntityResourcesArgs.Index = childEntityResourcesArgs.Index + 1;
-        if (!relatedScreen && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+        if (!relatedScreen) {
             this.LoadAllChildEntityResources(childEntityResourcesArgs);
             return;
         }
         let childObjectTable = window.ObjectTables.filter((table: any) => table.Id === relatedScreen.ObjectTableId)[0];
-        if (!childObjectTable && childEntityResourcesArgs.Sections.length != childEntityResourcesArgs.Index) {
+        if (!childObjectTable) {
             this.LoadAllChildEntityResources(childEntityResourcesArgs);
             return;
         }
