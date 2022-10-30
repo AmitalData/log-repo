@@ -28,7 +28,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                 string objectTableName = this.GetObjectTableName(widget.EntityId);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature(objectTableName, "READ", authToken.Tenant);
+                SecurityUtility.AuthenticateDashboardReadFeatures(objectTableName, "READ", authToken.Tenant);
                 var dataProvider = new DataProviderFactory().GetDataProviderService(widget);
                 var result = dataProvider.GetChartData();
                 return Request.CreateResponse(result);
@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                 string objectTableName = this.GetObjectTableName(widgetPartArguments.Widget.EntityId);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature(objectTableName, "READ", authToken.Tenant);
+                SecurityUtility.AuthenticateDashboardReadFeatures(objectTableName, "READ", authToken.Tenant);
                 var dataProvider = new DataProviderFactory().GetDataProviderService(widgetPartArguments.Widget);
                 var result = dataProvider.GeChartDataPart(widgetPartArguments);
                 return Request.CreateResponse(result);
@@ -67,7 +67,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                 string objectTableName = this.GetObjectTableName(widget.EntityId);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature(objectTableName, "READ", authToken.Tenant);
+                SecurityUtility.AuthenticateDashboardReadFeatures(objectTableName, "READ", authToken.Tenant);
                 var dataProvider = new DataProviderFactory().GetDataProviderService(widget);
                 var result = dataProvider.GetKpiData();
                 return Request.CreateResponse(result);

@@ -42,8 +42,9 @@
 
     <tr>
         <td>
-            <div class="CellContent" [hidden]="SelectedPageItem != 'CUSTOM'">
-                <custom-dashboard [Show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>
+            <div style="height: 100%; min-width: 100%; position: relative;" [hidden]="SelectedPageItem != 'CUSTOM'">
+                <!--<custom-dashboard [Show]="SelectedPageItem == 'CUSTOM'"></custom-dashboard>-->
+                <div class="LocationDirective" LocationDirective Code="CUSTOM"></div>
             </div>
 
             <div class="MediaFill" [hidden]="SelectedPageItem != 'CLASIC'">
