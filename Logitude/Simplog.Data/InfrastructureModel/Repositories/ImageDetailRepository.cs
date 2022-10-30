@@ -62,7 +62,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public string GetImageExtensionbyId(int tenant, string id)
         {
             string extension = (from a in context.ImageDetails
-                                where a.Id == id && a.Tenant == tenant
+                                where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
                                 select a.Extension).FirstOrDefault();
             return extension;
         }
