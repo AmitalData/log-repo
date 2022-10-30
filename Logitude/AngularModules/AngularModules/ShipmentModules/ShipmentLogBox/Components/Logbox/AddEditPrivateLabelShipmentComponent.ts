@@ -725,6 +725,12 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         if (AppTool.IsNullOrEmpty(this.CustomerReference3) && AppTool.IsNullOrEmpty(this.PrivateLabelInvoiceNumber)) return;
         if (this.CustomerReference3?.toLowerCase().trim() == this.PrivateLabelInvoiceNumber?.toLowerCase().trim())
             this.ValidationErrorsList.push("The Reference and Invoice number should be different");
+        if (!AppTool.IsNullOrEmpty(this.CustomerReference3) && this.CustomerReference3.length >= 30) {
+            this.ValidationErrorsList.push("Reference Field must be less than 30");
+        }
+        if (!AppTool.IsNullOrEmpty(this.PrivateLabelInvoiceNumber) && this.PrivateLabelInvoiceNumber.length >= 30) {
+            this.ValidationErrorsList.push("Invoice Number Field must be less than 30");
+        }
     }
 
     NextButtonClicked() {
