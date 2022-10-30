@@ -153,7 +153,9 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.IsbtnRemoveDisabled = false;
         this.IsbtnDownDisabled = false;
         this.IsbtnUpDisabled = false;
-        this.onUnSelectedDataLoadedEvent.emit(null);
+        if (this.UnSelectedFields.length != 0) {
+            this.onUnSelectedDataLoadedEvent.emit(null);
+        }
     }
 
     onNeedToSelectedItemChanged(item) {
@@ -162,7 +164,9 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.IsbtnRemoveDisabled = true;
         this.IsbtnDownDisabled = true;
         this.IsbtnUpDisabled = true;
-        this.onSelectedDataLoadedEvent.emit(null);
+        if (this.SelectedFields.length != 0) {
+            this.onSelectedDataLoadedEvent.emit(null);
+        }
     }
 
     DisableAllButtons() {
@@ -222,8 +226,9 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         if (this.SearchText != null && this.SearchText != "") {
             this.UnSelectedFields = this.GetSearchedUnSelectedFields(this.SearchText);
         }
+        if (this.UnSelectedFields.length != 0)
+            this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
         this.onUnselectedDataSourceChangedEvent.emit(this.UnSelectedFields);
-        this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
         this.onSelectedItemChanged(this.NeedToSelectedItem);
         this.onSelectedDataLoadedEvent.emit(this.NeedToSelectedItem);
         this.DisableAllButtons();
@@ -242,8 +247,9 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.ScreenLayoutComponent.GridScreenSelectedFields = this.ScreenLayoutComponent.GridScreenSelectedFields.filter(d => d.FieldCode != this.SelectedItem.FieldCode);
         this.UnSelectedFields.push(this.SelectedItem);
         this.ReorderAllSelectedFields();
+        if (this.SelectedFields.length != 0)
+            this.onSelectedDataLoadedEvent.emit(this.NeedToSelectedItem);
         this.onDataSourceChangedEvent.emit(this.ScreenLayoutComponent.GridScreenSelectedFields);
-        this.onSelectedDataLoadedEvent.emit(this.NeedToSelectedItem);
         this.onNeedToSelectedItemChanged(this.SelectedItem);
         this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
         this.DisableAllButtons();
