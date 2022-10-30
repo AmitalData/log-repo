@@ -74,8 +74,43 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
         this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
-        this.selectedPageItem = this.IsCustomDashboardFeatureOn ? "CUSTOM" : "CLASIC";
+
+        this.RunComponent();
     }
+
+    private isLoaderReady: boolean = false;
+    RunComponent() {
+        this.IsMenuVisible = true;
+        if (this.AllLocations) {
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isLoaderReady = true;
+                this.SelectedPageItem = this.IsCustomDashboardFeatureOn ? "CUSTOM" : "CLASIC";
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+
 
     OnMoreDetailsBackButtonClicked(event) {
         if (!AppTool.IsNullOrEmpty(event)) {
@@ -88,7 +123,8 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     ngAfterViewInit() {
-        this.IsMenuVisible = true;
+        //this.IsMenuVisible = true;
+        //this.SelectionChanged();
     }
 
     private selectedPageItem: string;
@@ -96,9 +132,36 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     set SelectedPageItem(newValue: string) {
         if (this.selectedPageItem != newValue) {
             this.selectedPageItem = newValue;
-            if (newValue == "CUSTOM") {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });                
-            }                 
+            this.SelectionChanged();                
+        }
+    }
+
+    private Page_CUSTOM: any = null;
+    SelectionChanged() {
+        if (this.SelectedPageItem != null) {
+            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedPageItem)[0];
+            if (myLocation != null) {
+
+                switch (this.SelectedPageItem) {
+                    case "CUSTOM": {
+                        MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
+
+                        if (this.Page_CUSTOM == null) {
+                            SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.Page_CUSTOM = cmpRef.instance;
+                                    this.Page_CUSTOM.InitComponent();
+                                });
+                        }
+
+                        break;
+                    }
+
+                    case "CLASIC": {
+                        break;
+                    }
+                }
+            }
         }
     }
 

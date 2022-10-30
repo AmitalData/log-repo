@@ -1131,11 +1131,6 @@ namespace WebFreight.Web.Security
 
         }
 
-
-
-
-
-
         public static string getLoggedDomain()
         {
             HttpContext context = HttpContext.Current;
@@ -1325,6 +1320,50 @@ namespace WebFreight.Web.Security
             }
 
             return isCustomerCare;
+        }
+
+        public static void AuthenticateDashboardReadFeatures(string objectTableName, string featureCode, int tenant)
+        {
+            bool exists = false;
+
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                string email = HttpContext.Current.User.Identity.Name;
+                ContactInfo contactinfo = GetContactInfo(email, tenant);
+
+                if (contactinfo != null)
+                {
+                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    {
+                        exists = true;
+                    }
+
+                    else
+                    {
+                        ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+                        if (objectTable != null)
+                        {
+                            foreach (string myRoleId in contactinfo.RolesIds)
+                            {
+                                Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
+                                if (features.Keys.Contains(featureCode + objectTable.Id))
+                                {
+                                    FeaturePM feature = features[featureCode + objectTable.Id];
+                                    if (feature != null)
+                                    {
+                                        exists = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!exists)
+            {
+                throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName + ". Please contact your administrator.");
+            }
         }
     }
 }
