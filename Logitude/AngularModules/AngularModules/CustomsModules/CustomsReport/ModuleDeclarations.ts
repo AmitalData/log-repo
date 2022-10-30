@@ -1,4 +1,5 @@
 import { CustomsReportsComponent } from "./Components/CustomsReportsComponent";
+import { ExportReportComponent } from "./Components/Reports/ExportReportComponent";
 import { LastMileReportComponent } from "./Components/Reports/LastMileReportComponent";
 import { SLAReportComponent } from "./Components/Reports/SLAReportComponent";
 
@@ -7,6 +8,7 @@ export const Components =
         CustomsReportsComponent,
         SLAReportComponent,
         LastMileReportComponent,
+        ExportReportComponent
     ];
 
 export class ModuleDeclarations {
@@ -18,6 +20,7 @@ export class ModuleDeclarations {
             case "CustomsReportsComponent": { myResult = CustomsReportsComponent; break; }
             case "SLAReportComponent": { myResult = SLAReportComponent; break; }
             case "LastMileReportComponent": { myResult = LastMileReportComponent; break; }
+            case "ExportReportComponent": { myResult = ExportReportComponent; break; }
 
 
         }
