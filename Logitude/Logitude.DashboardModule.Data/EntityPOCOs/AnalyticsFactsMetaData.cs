@@ -31,6 +31,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string HashString { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("ObjectTableName")]
+	    public string ObjectTableName { get; set; }
     }
 }
 	 

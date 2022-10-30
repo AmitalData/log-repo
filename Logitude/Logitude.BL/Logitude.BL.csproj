@@ -650,6 +650,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ImageLibraryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
+    <Compile Include="InfrastructureModel\Services\ObjectTableDefaultFieldsService.cs" />
+    <Compile Include="InfrastructureModel\Services\ObjectTableServiceInitializer.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\QuoteChargesGroupService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ScreenSectionService.cs" />

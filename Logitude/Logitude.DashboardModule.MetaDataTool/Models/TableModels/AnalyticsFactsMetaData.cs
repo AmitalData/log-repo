@@ -29,6 +29,16 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             }
         }
 
+        private string objectTableName;
+        public string ObjectTableName
+        {
+            get { return objectTableName; }
+            set
+            {
+                objectTableName = value; FirePropertyChanged("ObjectTableName");
+            }
+        }
+
         public List<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas { get; set; }
     }
 }

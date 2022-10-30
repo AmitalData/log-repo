@@ -16,6 +16,7 @@ import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -41,7 +42,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldPM[];
+    public FlowObjectFields: ObjectFieldList[];
 
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;

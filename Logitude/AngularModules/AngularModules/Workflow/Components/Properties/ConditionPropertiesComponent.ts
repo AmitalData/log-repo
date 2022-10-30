@@ -6,7 +6,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -26,7 +26,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public WorkflowEntityTable: ObjectTablePM;
 
-    public FlowObjectFields: ObjectFieldPM[];
+    public FlowObjectFields: ObjectFieldList[];
     
     public CurrentSession = SessionLocator.SelectedSession;
 

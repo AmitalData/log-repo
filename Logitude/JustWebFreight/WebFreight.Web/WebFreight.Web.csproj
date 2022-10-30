@@ -716,6 +716,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowUserController.cs" />
@@ -1192,6 +1193,7 @@
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalContactLastSettingsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDashboardController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalGlobalSearchController.cs" />

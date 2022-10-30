@@ -660,7 +660,7 @@ class HAWBItem {
             this.SetIsMatched();
             this.SetCellNotes();
 
-            if (fatherComponent.IsFCLEntity) {
+            if (AppTool.IsFCLEntity(item.TransportModeId, item.ShipmentTypeId)) {
                 this.Quantity = item.NumberOfContainers;                
             }
 

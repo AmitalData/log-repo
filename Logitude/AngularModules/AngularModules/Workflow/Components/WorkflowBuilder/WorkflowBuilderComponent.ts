@@ -10,11 +10,11 @@ import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { ObjectFields } from "Workflow/Models/ObjectFields";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -40,7 +40,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
 
-    public FlowObjectFields: ObjectFieldPM[] = [];
+    public FlowObjectFields: ObjectFieldList[] = [];
 
     public WorkFlowPMService: WorkFlowPMService;
 

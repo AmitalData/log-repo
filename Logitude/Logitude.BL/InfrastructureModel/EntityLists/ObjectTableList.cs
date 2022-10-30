@@ -59,5 +59,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsTabsHidden { get; set; }
         public string ParentObjectTableName { get; set; }
         public bool AvailableInCustomization { get; set; }
+        public string ParentObjectTableId { get; set; }
+        public bool IsCustom { get; set; }
     }
 }

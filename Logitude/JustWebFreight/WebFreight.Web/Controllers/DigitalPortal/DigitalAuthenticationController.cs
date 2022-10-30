@@ -10,6 +10,11 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Linq;
 using System.Net;
 using WebFreight.Web.WebServices;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -101,6 +106,81 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        [ActionName("GetLoggingData")]
+        public HttpResponseMessage GetLoggingData(string email, int tenant, string cardId)
+        {
+            try
+            {
+                SharedLogisticLoggedData myResult = new SharedLogisticLoggedData();
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                var cardRepository = new CardRepository(commonDataContext);
+                var contactRepository = new ContactRepository(commonDataContext);
+                var tenantRepository = new TenantRepository(commonDataContext);
+
+                var card = cardRepository.GetSingleCard(cardId, tenant);
+                var myTenant = tenantRepository.GetSingleTenant(tenant);
+                var myContact = contactRepository.GetSingleContactByEmail(email, tenant);
+
+                if (card != null)
+                {
+                    myResult.CardName = card.EnglishName;
+                }
+
+                if (myContact != null)
+                {
+                    myResult.ContactName = myContact.EnglishName;
+                    myResult.ContactId = myContact.Id;
+                    var imageDetailId = myContact.ImageDetailId;
+
+                    myResult.ImageFileData = GetContactImage(imageDetailId, tenant);
+                }
+
+                if (myTenant != null)
+                {
+                    myResult.TenantCompany = myTenant.Company;
+                    myResult.LocalCurrencyCode = myTenant.Currency.Code;
+                    myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
+                    myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
+                    myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
+                    myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
+                }
+
+                var sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+                var sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+                if (sharedLogisticsSetting != null)
+                {
+                    myResult.IsInvoicesMenuEnabled = sharedLogisticsSetting.IsInvoicesMenuEnabled;
+                    myResult.IsAgentShared = sharedLogisticsSetting.IsAgentShared;
+                    myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
+                    myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
+                }
+
+                myResult.IsReportsMenuEnabled = true;
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private string GetContactImage(string imageDetailId, int tenant)
+        {
+            if (string.IsNullOrEmpty(imageDetailId))
+                return null;
+
+            ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
+            var extension = imageDetailRepository.GetImageExtensionbyId(tenant, imageDetailId);
+            var fileLocation = "images";
+            Uploader uploaderService = new Uploader();
+            var imageFiledata = uploaderService.DownloadFile(imageDetailId, extension, fileLocation, tenant);
+            var imageBase64String = Convert.ToBase64String(imageFiledata);
+
+            return imageBase64String;
         }
     }    
 }

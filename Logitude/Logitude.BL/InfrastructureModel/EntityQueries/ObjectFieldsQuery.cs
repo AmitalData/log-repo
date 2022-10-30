@@ -254,7 +254,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ForeignEntity = a.ForeignEntity,
                                                      NavigationPropertyName = a.NavigationPropertyName,
                                                      NumberOfDigits = a.NumberOfDigits,
-                                                     DigitsAfterPoint = a.DigitsAfterPoint
+                                                     DigitsAfterPoint = a.DigitsAfterPoint,
+                                                     CustomPickListCode = a.CustomPickListCode
                                                  };
             return result;
         }

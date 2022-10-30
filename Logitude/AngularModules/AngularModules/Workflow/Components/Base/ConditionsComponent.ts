@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { Condition } from "Workflow/Models/Condition";
 import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
 import { ListItem } from "Workflow/Models/ListItem";
@@ -20,7 +20,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     @Input() ShowFlowVariablesTree: boolean = false;
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldPM[];
+    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     
     @Output() ConditionsOperationChange = new EventEmitter<string>();

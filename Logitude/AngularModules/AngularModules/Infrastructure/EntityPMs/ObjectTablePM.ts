@@ -348,6 +348,22 @@ export class ObjectTablePM {
     public get IsCustom() { return this.isCustom; }
     public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
 
+    private parentObjectTableId: string;
+    public get ParentObjectTableId() { return this.parentObjectTableId; }
+    public set ParentObjectTableId(newValue: string) { if (this.parentObjectTableId != newValue) { this.parentObjectTableId = newValue; this.MarkAsDirty("ParentObjectTableId"); } }
+
+    private description: string;
+    public get Description() { return this.description; }
+    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+
+    private defaultText: string;
+    public get DefaultText() { return this.defaultText; }
+    public set DefaultText(newValue: string) { if (this.defaultText != newValue) { this.defaultText = newValue; this.MarkAsDirty("DefaultText"); } }
+
+    private defaultTextPlural: string;
+    public get DefaultTextPlural() { return this.defaultTextPlural; }
+    public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
+
     public OldEntityPM: ObjectTablePM;
 		
     public IsDirty: boolean;

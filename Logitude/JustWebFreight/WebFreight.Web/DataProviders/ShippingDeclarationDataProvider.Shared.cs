@@ -601,5 +601,7 @@ namespace WebFreight.Web.DataProviders
         public double? TotalWeightInLBS { get; set; }
         public double? TotalVolumeINCBM { get; set; }
         public double? TotalVolumeINCBF { get; set; }
+        public string DestinationWarehouseLegTerminalName { get; set; }
+        public string DestinationWarehouseLegTerminalAddress { get; set; }
     }
 }

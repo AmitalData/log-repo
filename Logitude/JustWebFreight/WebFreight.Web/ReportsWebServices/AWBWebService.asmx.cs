@@ -127,6 +127,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.UserSignatureImage = GetUserSignatureImage();
                 awbDp.Place = shipmentPM.AWBPlace;
                 awbDp.CustomsDeclarationNumber = shipmentPM.DeclarationNumber;
+                awbDp.WarehouseLegTerminalName = shipmentPM.WarehouseLegTerminalName;
 
                 this.GetBranchData();
                 this.GetLoggedTenantData();

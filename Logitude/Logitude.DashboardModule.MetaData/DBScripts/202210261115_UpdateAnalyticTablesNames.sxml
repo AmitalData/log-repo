@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+	<Sql Version="1">
+		<![CDATA[
+		update AnalyticsFactsMetaDatas set Name ='Shipment Statistics' where name ='Shipment Analytics'
+		update AnalyticsFactsMetaDatas set Name ='Quotes Statistics' where name ='Quote Analytic'
+		update AnalyticsFactsMetaDatas set Name ='AR Invoices Statistics' where name ='ARInvoice Analytic'
+		update AnalyticsFactsMetaDatas set Name ='AP Invoices Statistics' where name ='APInvoice Analytic'
+       ]]>
+	</Sql>
+</Script>

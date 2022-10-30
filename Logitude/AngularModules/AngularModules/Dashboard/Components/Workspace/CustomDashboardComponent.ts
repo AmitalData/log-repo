@@ -46,7 +46,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     @Input('Show') Show;
     private filterName_SelectedDashboard: string = "SelectedDashboard";
     private filterControlNameSpace: string = "Workspace.CustomDashboard";
-    public IsEmptyDashboardVisible: boolean = true;
+    public IsEmptyDashboardVisible: boolean = false;
     public IsPermissionMessageVisible: boolean = false;
     constructor() {
         super();
@@ -91,6 +91,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     private GetDefaultDashboard() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var defaultId: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
         if (!AppTool.IsNullOrEmpty(defaultId)) {
             this.SelectedDashboardId = defaultId;
@@ -116,7 +117,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.dashboardPMService.get(dashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
-                this.IsEditLayoutButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
 
                 if (this.SelectedDashboard) {
                     this.applyWDashboard();                    
@@ -128,7 +129,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                     this.SetEmptyDashboardVisibility();
                 }
 
-                
+                this.CurrentSession.StopBusyIndicator();
             }            
         });
     }
@@ -161,11 +162,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         }
     }
 
-    public BackButtonLable: string = "Back";
-    public IsEditLayoutButtonVisible: boolean = !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
+    public BackButtonLable: string = "Back";    
     public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutModeActive: boolean = false;
     public HasChanges: boolean = false;
+    public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
     private ResetFlags() {
         this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditDashboardButtonVisible = false;

@@ -87,11 +87,15 @@ export class CustomDashboardLayoutComponent implements AfterViewInit {
     }
     get DashboardDataBinding() { return this._DashboardDataBinding; }
     ShowDashboard() {
-        this.renderNewDashboard();
+        if (this.reactDashboradContainer) {
+            this.renderNewDashboard();
+        }
     }
 
     ngAfterViewInit(): void {
-        //this.renderNewDashboard();
+        if (this._show) {
+            this.ShowDashboard();
+        }
     }
 
     onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {

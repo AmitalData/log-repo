@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
+import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -25,7 +25,7 @@ export class StartPropertiesComponent extends BaseComponent {
     public CreateTrigger: string = "create";
     public ValidationErrorsList: string[];
 
-    public FlowObjectFields: ObjectFieldPM[];
+    public FlowObjectFields: ObjectFieldList[];
 
     public CurrentSession = SessionLocator.SelectedSession;
 

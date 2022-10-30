@@ -89,6 +89,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsListFilter { get; set; }
         public int NumberOfDigits { get; set; }
         public int DigitsAfterPoint { get; set; }
+        public string CustomPickListCode { get; set; }
 
     }
 }

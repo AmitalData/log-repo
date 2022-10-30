@@ -71,6 +71,11 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsTabsHidden { get; set; }
         public string ParentObjectTableName { get; set; }
         public bool AvailableInCustomization { get; set; }
+        public string ParentObjectTableId { get; set; }
+        public bool IsCustom { get; set; }
+        public string Description { get; set; }
+        public string DefaultText { get; set; }
+        public string DefaultTextPlural { get; set; }
 
     }
 }

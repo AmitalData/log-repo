@@ -117,7 +117,7 @@ export class CustomizationMainComponent {
     }
 
     HasEntityPermessions(objectTable) {
-        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false);
+        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false) && !objectTable.IsCustom;
 
     }
 

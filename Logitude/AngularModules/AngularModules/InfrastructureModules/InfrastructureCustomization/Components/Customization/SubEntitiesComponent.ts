@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { TextCodeTranslationPipe } from '../../../../Controls/Pipes/TextCodeTranslationPipe';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,9 +12,12 @@ import { CustomizationObjectTableService } from '../../ExternalService/Customiza
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 declare var window: any;
+const defaultWindowWidth = 600;
+const defaultWindowHeight = 400;
+const newTabWindowTitle = "New Custom Object";
 
 @Component({
-    
+
     templateUrl: './SubEntitiesComponent.html',
 })
 
@@ -45,31 +48,54 @@ export class SubEntitiesComponent {
         this.SubEntitiesList = this.customizationObjectTableService.GetChildsById(this.ObjectTableId);
     }
 
-    public ShowCustomizationEditComponentForSubEntity(objectTableId: string, objectTableName: string) {
+    public ShowCustomizationEditComponentForSubEntity(objectTablePM: ObjectTablePM) {
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
+
+        if (objectTablePM.IsCustom) {
+            this.ShowSubEntityComponent(objectTablePM);
+            this.CurrentSession.StopBusyIndicator();
+            return;
+        }
+        this._entityResourceService.getEntityResourceByTableName(objectTablePM.Name).subscribe((response: any) => {
             if (response.HasError) return;
             this.CurrentSession.StopBusyIndicator();
-            this.ShowSubEntityComponent(objectTableId, objectTableName);
+            this.ShowSubEntityComponent(objectTablePM);
         });
     }
-    private ShowSubEntityComponent(objectTableId: string, objectTableName:string) {
+    private ShowSubEntityComponent(objectTablePM: ObjectTablePM) {
         var logWindow = new LogitudeWindow();
         logWindow.IsFillScreen = true;
         logWindow.IsShowCloseButton = false;
         logWindow.Title = "";
         logWindow.WindowArgs = {
-            Title: this.textCodeTranslationPipe.transform(objectTableName),//depend on chosen entity to edit
+            Title: this.GetItemNameAfterTranslation(objectTablePM),
             IsCustomFieldsMenue: false,
             IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled,
-            ObjectTableId: objectTableId,
+            ObjectTableId: objectTablePM.Id,
             IsSubEntity: true
         };
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
+    GetItemNameAfterTranslation(objectTable: ObjectTablePM) {
+        let objectTableNameAfterTranslation = this.textCodeTranslationPipe.transform(objectTable.Name);
+        if (objectTableNameAfterTranslation) return objectTableNameAfterTranslation;
+        if (objectTable.IsCustom) return objectTable.DefaultText;
+        return objectTable.Name;
+    }
 
     AddNewSubEntity() {
+        var window = new LogitudeWindow();
+        window.Width = defaultWindowWidth;
+        window.Height = defaultWindowHeight;
+        window.Title = newTabWindowTitle;
+        window.WindowArgs = {
+            CustomizationSubEntitiesComponent: this
+        };
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddSubEntityComponent');
+    }
 
+    ApplyChanges(objectTablePM: ObjectTablePM) {
+        this.SubEntitiesList.push(objectTablePM);
     }
 
     Save() {

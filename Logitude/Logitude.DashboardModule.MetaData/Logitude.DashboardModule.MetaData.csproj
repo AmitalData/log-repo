@@ -69,6 +69,7 @@
     <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />
     <None Include="DBScripts\202209010934_FillAPInvoiceAnalytics.sxml" />
     <None Include="DBScripts\202209010934_FillQuoteAnalytics.sxml" />
+    <None Include="DBScripts\202210261115_UpdateAnalyticTablesNames.sxml" />
     <None Include="DBScripts\202209270207_DeleteWrongMetaDataFields.sxml" />
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="DBTables\APInvoiceAnalytic.dxml" />
