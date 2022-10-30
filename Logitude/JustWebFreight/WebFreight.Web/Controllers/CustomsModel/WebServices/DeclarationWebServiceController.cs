@@ -2356,7 +2356,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
             return responseData;
         }
+        public HttpResponseMessage GetDeclarationExportStoragesByDeclarationIdAndExportFile(string declarationId,string exportFile ,int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                ExportStorageQueryService queryService = new ExportStorageQueryService(customContext);
+                List<ExportStoragePM> declarationExportStoragesList = queryService.GetDeclarationExportStoragesList(declarationId, exportFile, tenant);
 
+                return Request.CreateResponse(HttpStatusCode.OK, declarationExportStoragesList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     internal class CustomsPartnersItemCRList

@@ -65,6 +65,7 @@ export const Components =
         DeclarationCargoSealTabComponent,
         ExportDeclarationComponent,
         ExportDeclarationClosureComponent,
+        DeclarationExportStorageComponent
 
     ];
 

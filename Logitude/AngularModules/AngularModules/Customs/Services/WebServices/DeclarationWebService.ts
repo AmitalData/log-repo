@@ -1276,6 +1276,26 @@ export class DeclarationWebService {
         );
     }
 
+
+    GetDeclarationExportStoragesByDeclarationIdAndExportFile(declarationId: string,exportFile:string, tenant: number) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetDeclarationExportStoragesByDeclarationIdAndExportFile/?declarationId=" + declarationId +"&exportFile=" + exportFile+ "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
         return defer(() => {
             var authHeader = new Headers();
