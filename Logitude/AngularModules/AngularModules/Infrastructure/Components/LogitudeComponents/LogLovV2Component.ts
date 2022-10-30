@@ -40,13 +40,12 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
 
-
 @Component({
     selector: 'LogLov',
 
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath', 'IsDisabled',
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath','IsDisabled',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
@@ -182,6 +181,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     IsTenantZeroSearch: boolean;
     InputDivStyle: any;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
+    @Input() QueryFilterItems: ApiQueryFilters;
     private selectedValue: any;
     @Input()
     public get SelectedValue() {
@@ -189,7 +189,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     public set SelectedValue(newValue: any) {
         if (this.selectedValue != newValue) {
-           this.selectedValue = newValue;
+            if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
+                this.ShowInactivePopUpConfirmWindow(newValue);
+            }
+            else {
+                this.SetSelectedValue(newValue);
+            }
         }
     }
 
@@ -222,7 +227,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    GetTableName(): string {
+    GetTableName(): string  {
         var tablename = this.GetObjectTableName(this.LookUpTableName);
         if (this.SelectedItem?.PartnerTypeId == "SL") {
             tablename = "ShippingLine";
@@ -250,7 +255,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.SelectedItemChanged.emit(this.SelectedItem);
         this.ValueChanged.emit(this.selectedValue);
     }
-    @Input() QueryFilterItems: ApiQueryFilters;
+
     SetSelectedValue(newValue: any) {
         this.selectedValue = newValue;
 
@@ -294,7 +299,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public isRTL: boolean = false;
     LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    CustomizedWidth: number;
+    CustomizedWidth:number;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         this.show = false;
@@ -470,13 +475,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
-            this.ShowInactivePopUpConfirmWindow(this.selectedValue);
-        }
-        else {
-            this.SetSelectedValue(this.selectedValue);
-        }
-        
         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
 
@@ -485,7 +483,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
                 this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-                    res.subscribe((resp: any) => {
+                    res.subscribe((resp:any) => {
 
                     });
 
@@ -499,7 +497,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
                 var loadPr = this.entityListService.getByFilters(this.LookUpTableName, filters);
                 loadPr.then((res: any) => {
-                    res.subscribe((resp: any) => {
+                    res.subscribe((resp:any) => {
                         console.log(resp);
                     });
                 });
@@ -964,7 +962,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     private SetDropDownWidthAccordingToTable() {
         const hasCustomColumnWidths = this.ColumnsWidths.length > 0;
-        if (hasCustomColumnWidths) {
+        if(hasCustomColumnWidths){
             this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
         }
         else if (!this.CustomizedWidth) {
@@ -981,12 +979,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 this.DropDownWidth = 400;
             }
         }
-        else {
+        else{
             this.DropDownWidth = this.CustomizedWidth;
         }
     }
 
-    private CalculateDropdownPanelWidthFromCustomColumnsWidths() {
+    private CalculateDropdownPanelWidthFromCustomColumnsWidths()
+    {
         this.DropDownWidth = this.ColumnsWidths
             .filter(colWidth => this.headerColumns.map(col => col.Field).includes(colWidth.ColumnName))
             .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
@@ -1031,8 +1030,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         var lookupFields: any[];
         this.headerColumns = [];
         this.dataColumns = [];
-        let drawCustomColumns = (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined)
-            || (this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
+        let drawCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined)
+        ||(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
 
         if (drawCustomColumns) {
             lookupFields = this.DrawCustomColumns(lookupFields);
@@ -1128,13 +1127,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private DrawCustomColumns(lookupFields: any[]) {
-        let fields: string[] = [];
-        let hasLocalCustomColumns = (this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
-        let hasEnglishCustomColumns = (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
+        let fields: string[]=[];
+        let hasLocalCustomColumns=(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
+        let hasEnglishCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
 
         if (this.ForceShowLocalAndEnglishColumns) {
 
-            let allColumns = this.DisplayFieldsFromList.replace('EnglishName', 'EnglishName,LocalName')
+            let allColumns = this.DisplayFieldsFromList.replace('EnglishName','EnglishName,LocalName')
             fields = allColumns.split(',');
             this.DropDownWidth += 145;
 
@@ -1146,16 +1145,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-        lookupFields = this.OrderLookupFieldsByCustomFieldsArray(lookupFields, fields);
+        lookupFields=this.OrderLookupFieldsByCustomFieldsArray(lookupFields,fields);
         return lookupFields;
     }
 
-    OrderLookupFieldsByCustomFieldsArray(lookupFields: ObjectFieldPM[], orderedFields: string[]) {
-        lookupFields = lookupFields.sort((a, b) => {
+    OrderLookupFieldsByCustomFieldsArray(lookupFields:ObjectFieldPM[],orderedFields:string[]){
+        lookupFields = lookupFields.sort((a,b)=>{
             var A = a['FieldName'], B = b['FieldName'];
 
             if (orderedFields.indexOf(A) > orderedFields.indexOf(B)) {
-                return 1;
+                 return 1;
             }
             else {
                 return -1;
@@ -1264,8 +1263,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
             else {
                 let includeMetaDataFieldsFilter = this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters ?
-                    this.QueryFilterItems.AdditionalFilters.find(f => f.FieldName == "IncludeMetaDataFields") : null;
-
+                this.QueryFilterItems.AdditionalFilters.find(f => f.FieldName == "IncludeMetaDataFields") : null;
+                
                 if (this.LookUpTableName === "ObjectField" && includeMetaDataFieldsFilter && includeMetaDataFieldsFilter.FieldValue === true) {
                     let objectFieldListService = new ObjectFieldListService();
                     objectFieldListService.getSingle(value, true).subscribe(myResponse => {
@@ -1290,7 +1289,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.entityListService.getSingle(value, this.LookUpTableName).then((res: any) => {
                         res.subscribe(myResponse => {
                             if (myResponse != null) {
-
+                                
                                 var list = myResponse;
                                 if (myResponse instanceof ServiceResponse) {
                                     list = myResponse.Result;
@@ -1305,10 +1304,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                     this.SelectedItemChanged.emit(this.SelectedItem);
                                 }
                             }
-                        })
+                        });
                     });
                 }
-
             }
             this.ValidateField(true);
         }
@@ -1873,16 +1871,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, tenantZeroFilters);
             if (this.UseCompactSearch) {
 
-                let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-                filterParams.FieldName = "CompactSearchField"
-                filterParams.FieldValue = searchText;
-                filterParams.Operator = "Contains";
-                filterParams.IsCustom = false;
-                filterParams.DisplayInList = false;
-                filterParams.IsCustomField = false;
-                filterParams.FieldDataType = null;
-                filterParams.IsCacheOnClient = false;
-                filterParams.IsLookUpFilter = true;
+                let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+                filterParams.FieldName="CompactSearchField"
+                filterParams.FieldValue=searchText;
+                filterParams.Operator="Contains";
+                filterParams.IsCustom=false;
+                filterParams.DisplayInList=false;
+                filterParams.IsCustomField=false;
+                filterParams.FieldDataType=null;
+                filterParams.IsCacheOnClient=false;
+                filterParams.IsLookUpFilter=true;
                 //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
                 tenantZeroFilters.pushAdditionalFilter(filterParams);
 
@@ -1891,7 +1889,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
             loadPromise.then((res: any) => {
-                res.subscribe((resp: any) => {
+                res.subscribe((resp:any) => {
                     //turn loading flag off
                     this.isLoadingZero = false;
                     if (resp.Result) {
@@ -1914,13 +1912,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    ShowOrHideAllDataNoresultMessage() {
+    ShowOrHideAllDataNoresultMessage(){
         if (this.IsAllDataVisible) {
             if (this.ZeroItemsSourceCount == 0) {
-                this.AllDataLovMessage = TextCodeTranslator.Translate("General.O.NoMoreResult");
+                this.AllDataLovMessage=TextCodeTranslator.Translate("General.O.NoMoreResult");
             }
             else {
-                this.AllDataLovMessage = null;
+                this.AllDataLovMessage=null;
             }
         }
     }
@@ -2453,7 +2451,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (items.length > 0) {
 
             const hasCustomColumnsWidths = this.ColumnsWidths.length > 0;
-            if (hasCustomColumnsWidths) {
+            if(hasCustomColumnsWidths){
                 this.SetCustomColumnsWidths();
             } else {
 
@@ -2512,7 +2510,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private SetCustomColumnsWidths() {
+    private SetCustomColumnsWidths()
+    {
         this.Widths = [];
         const defaultColumnWidth = 85;
 
@@ -2567,15 +2566,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
                 if (objectTableName == "GLAccount") {
                     GLAccountSecurityLevelService.CheckLevel(currentEntity.Id)
-                        .then(hasAccess => {
-                            if (hasAccess) {
-                                this.configureEditWindow(objectTableName, currentEntity);
-                            }
-                            else {
-                                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
-                                return;
-                            }
-                        });
+                    .then(hasAccess=> {
+                        if(hasAccess){
+                            this.configureEditWindow(objectTableName, currentEntity);
+                        }
+                        else
+                        {
+                            GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                            return;
+                        }
+                    });
                 } else {
                     this.configureEditWindow(objectTableName, currentEntity);
                 }
@@ -2590,7 +2590,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
     }
-    private configureEditWindow(objectTableName: string, currentEntity: any) {
+    private configureEditWindow(objectTableName: string, currentEntity: any){
         if (!AppTool.IsNullOrEmpty(currentEntity.Id)) {
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
@@ -2747,11 +2747,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 case "Customs.CourierPendingReason":
                     {
 
-                        logWindow.Width = 800;
-                        logWindow.Height = 600;
-                        logWindow.IsShowCloseButton = true;
-                        break;
-                    }
+                    logWindow.Width = 800;
+                    logWindow.Height = 600;
+                    logWindow.IsShowCloseButton = true;
+                    break;
+                }
 
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
@@ -3042,15 +3042,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filters.removeAdditionalFilter("CompactSearchField");
         }
 
-        let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-        filterParams.FieldValue = searchText;
-        filterParams.Operator = "StartsWith";
-        filterParams.IsCustom = false;
-        filterParams.DisplayInList = false;
-        filterParams.IsCustomField = false;
-        filterParams.FieldDataType = null;
-        filterParams.IsCacheOnClient = this.LookUpTable.CacheOnClient;
-        filterParams.IsLookUpFilter = true;
+        let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+        filterParams.FieldValue=searchText;
+        filterParams.Operator="StartsWith";
+        filterParams.IsCustom=false;
+        filterParams.DisplayInList=false;
+        filterParams.IsCustomField=false;
+        filterParams.FieldDataType=null;
+        filterParams.IsCacheOnClient=this.LookUpTable.CacheOnClient;
+        filterParams.IsLookUpFilter=true;
         if (searchText) {
 
             //if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0 && this.callCount == 0) {
@@ -3070,10 +3070,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     }
                 }
 
-                filterParams.FieldName = this.LookUp1;
-                filterParams.ForceEnableAdd = forceEnableAdd;
+                filterParams.FieldName=this.LookUp1;
+                filterParams.ForceEnableAdd=forceEnableAdd;
 
-                // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+               // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -3092,8 +3092,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filterParams.FieldName = this.LookUp2;
-                filterParams.ForceEnableAdd = forceEnableAdd;
+                filterParams.FieldName=this.LookUp2;
+                filterParams.ForceEnableAdd=forceEnableAdd;
                 //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp2;
             }
@@ -3114,9 +3114,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName = "SearchFields";
-                filterParams.ForceEnableAdd = forceEnableAdd;
-                filterParams.Operator = "Contains";
+                filterParams.FieldName="SearchFields";
+                filterParams.ForceEnableAdd=forceEnableAdd;
+                filterParams.Operator="Contains";
 
                 //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = null;
@@ -3127,7 +3127,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.isLoading = true;
         filters = this.FillTreeFilterDetails(filters);
         this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-            res.subscribe((resp: any) => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -3260,16 +3260,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         filters = this.FillTreeFilterDetails(filters);
         var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         if (this.UseCompactSearch) {
-            let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-            filterParams.FieldName = "CompactSearchField"
-            filterParams.FieldValue = searchText;
-            filterParams.Operator = "Contains";
-            filterParams.IsCustom = false;
-            filterParams.DisplayInList = false;
-            filterParams.IsCustomField = false;
-            filterParams.FieldDataType = null;
-            filterParams.IsCacheOnClient = false;
-            filterParams.IsLookUpFilter = true;
+            let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+            filterParams.FieldName="CompactSearchField"
+            filterParams.FieldValue=searchText;
+            filterParams.Operator="Contains";
+            filterParams.IsCustom=false;
+            filterParams.DisplayInList=false;
+            filterParams.IsCustomField=false;
+            filterParams.FieldDataType=null;
+            filterParams.IsCacheOnClient=false;
+            filterParams.IsLookUpFilter=true;
             //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
             filters.pushAdditionalFilter(filterParams);
             loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
@@ -3278,19 +3278,19 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
             searchText = searchText.replace(/\\/g, "\\\\");
 
-            let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-            filterParams.FieldValue = searchText;
-            filterParams.Operator = "StartsWith";
-            filterParams.IsCustom = false;
-            filterParams.DisplayInList = false;
-            filterParams.IsCustomField = false;
-            filterParams.FieldDataType = null;
-            filterParams.IsCacheOnClient = false;
-            filterParams.IsLookUpFilter = true;
+            let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+            filterParams.FieldValue=searchText;
+            filterParams.Operator="StartsWith";
+            filterParams.IsCustom=false;
+            filterParams.DisplayInList=false;
+            filterParams.IsCustomField=false;
+            filterParams.FieldDataType=null;
+            filterParams.IsCacheOnClient=false;
+            filterParams.IsLookUpFilter=true;
 
             if (this.currentFilter == null || this.currentFilter == undefined) {
                 this.callCount = 1;
-                filterParams.FieldName = this.LookUp1;
+                filterParams.FieldName=this.LookUp1;
 
                 //filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
@@ -3300,7 +3300,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filterParams.FieldName = this.LookUp2;
+                filterParams.FieldName=this.LookUp2;
                 //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp2;
             }
@@ -3312,8 +3312,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName = "SearchFields";
-                filterParams.Operator = "Contains";
+                filterParams.FieldName="SearchFields";
+                filterParams.Operator="Contains";
                 //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
                 this.currentFilter = null;
             }
@@ -3323,7 +3323,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         loadPromise.then((res: any) => {
-            res.subscribe((resp: any) => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -3364,7 +3364,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ApplyManipulateData(this.bufferData);
 
                     } else {
-                        this.ItemsSource = this.bufferData;//resp.Result;
+                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
                         this.headerColumns;
                     }
@@ -3391,7 +3391,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     FillTreeFilterDetails(filters) {
         let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
-        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
+        if (!objectField) objectField =  window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
         filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
         filters.ParentEntity = this.GetParentEntity();
         filters.ParentEntityId = this.GetParentEntityId();
