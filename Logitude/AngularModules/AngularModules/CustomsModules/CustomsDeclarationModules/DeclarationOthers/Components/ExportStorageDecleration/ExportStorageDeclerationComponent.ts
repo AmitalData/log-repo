@@ -147,7 +147,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
         filters.addAdditionalFilter("StorageStatus", "Open", null, null, "Equal", false, false, false, "string");
         filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", this.declarationPM.Id, null, null, "Contains", true, false, false, "string");
-        filters.addAdditionalFilter("IsExportFileNo", this.declarationPM.ExportFile, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("IsExportFileNo", this.ExportFile, null, null, "Contains", true, false, false, "string");
 
 
         if (this.ExportFileFilter) {
