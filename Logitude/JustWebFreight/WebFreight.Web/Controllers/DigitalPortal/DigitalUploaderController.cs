@@ -12,6 +12,8 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using Logitude.SystemLogs;
+using System.Net;
+using System.Net.Http;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -19,7 +21,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpPost]
         [Route("DigitalUploader/PostDocument")]
-        public IHttpActionResult PostDocument(DigitalUploaderInfo info)
+        public HttpResponseMessage PostDocument(DigitalUploaderInfo info)
         {
             int tenant = 0;
             string email = "";
@@ -42,17 +44,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 ImageParameter imageParameterfilter =  UploadImage(documentId, info, tenant);
                 AddUploadEvent(info, loggedContact.Id, tenant);
-               
-                return Ok(imageParameterfilter);
+
+                return Request.CreateResponse(HttpStatusCode.OK, imageParameterfilter);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 

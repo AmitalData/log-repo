@@ -12,6 +12,8 @@ using WebFreight.Web.Security;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.SystemLogs;
+using System.Net.Http;
+using System.Net;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -19,7 +21,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalDocuments/GetDigitalEntityDocuments")]
-        public IHttpActionResult GetDigitalEntityDocuments(string entityId, string partnerType, string cardId, bool isExternal = false)
+        public HttpResponseMessage GetDigitalEntityDocuments(string entityId, string partnerType, string cardId, bool isExternal = false)
         {
             int tenant = 0;
             string email = "";
@@ -52,22 +54,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     output = digitalPortalDocumentHelper.GetShipmentSharedDocuments(args).OrderBy(o => o.Name).ToList();
                 }
 
-                return Ok(output);
+                return Request.CreateResponse(HttpStatusCode.OK, output);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpGet]
         [Route("DigitalDocuments/GetDigitalDocuments")]
-        public IHttpActionResult GetDigitalDocuments(string cardId)
+        public HttpResponseMessage GetDigitalDocuments(string cardId)
         {
             int tenant = 0;
             string email = "";
@@ -83,16 +85,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var objectTbleName = "Shipment";
                 var result  =  documentTypeQuery.GetDigitalDocuments(objectTbleName, authToken.Tenant);
 
-                return Ok(result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
     }
