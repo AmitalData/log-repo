@@ -145,7 +145,6 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.ScreenSections.push(new ScreenSection(screenSection, this.ScreenColumns))
                 
                 if (fireEmit) {
-                    this.ReOrderScreenSections();
                     this.LoadCompleted.emit(true);
                 }
             }
@@ -226,7 +225,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             {
                 this.ScreenSections = [];
 
-                const sections: any[] = response.Result;
+                const sections: any[] = this.ReOrderScreenSections(response.Result);
                 let childEntityResourcesArgs: ChildEntityResourcesArgs = new ChildEntityResourcesArgs();
                 childEntityResourcesArgs.Screen = screen;
                 childEntityResourcesArgs.Sections = sections;
@@ -276,7 +275,6 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
 
         if (childEntityResourcesArgs.FireEmit) {
-            this.ReOrderScreenSections();
             this.LoadCompleted.emit(true);
         }
             
@@ -400,9 +398,9 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         }
     }
 
-    private ReOrderScreenSections() {
-        this.ScreenSections = this.ScreenSections.sort((a, b) => {
-            return (a.SectionNumber === b.SectionNumber) ? 0 : (a.SectionNumber < b.SectionNumber) ? -1 : 1
+    private ReOrderScreenSections(screenSections: any[]) {
+        return screenSections.sort((a, b) => {
+            return (a.Number === b.Number) ? 0 : (a.Number < b.Number) ? -1 : 1
         });
     }
 }
