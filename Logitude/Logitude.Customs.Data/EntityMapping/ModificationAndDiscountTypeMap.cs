@@ -43,17 +43,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExtraNumericData).HasColumnName("ExtraNumericData").HasMaxLength(5).IsUnicode(true);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ExportNetoValuesModificationAffectTypeID).HasColumnName("ExportNetoValuesModificationAf").HasMaxLength(2).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.ExportNetoValuesModificationAffectTypeID).HasColumnName("ExportNetoValuesModificationAffectTypeID").HasMaxLength(2).IsUnicode(false);
-			}
-
-
             this.Property(t => t.IsCustomsValueComponent).HasColumnName("IsCustomsValueComponent");
 
             this.Property(t => t.ExportFOBModificationAffectID).HasColumnName("ExportFOBModificationAffectID").HasMaxLength(2).IsUnicode(false);
@@ -65,6 +54,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CurrencyMustBeSameAsInvoice).HasColumnName("CurrencyMustBeSameAsInvoice");
 
             this.Property(t => t.IsCustomUseExport).HasColumnName("IsCustomUseExport");
+
+            this.Property(t => t.NetoValuesModificationAffectID).HasColumnName("NetoValuesModificationAffectID").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

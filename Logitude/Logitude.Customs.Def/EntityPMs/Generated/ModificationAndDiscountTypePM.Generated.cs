@@ -250,29 +250,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportNetoValuesModificationAffectTypeID ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportNetoValuesModificationAffectTypeID  
-	   {
-	    
-	     get
-		{
-		   return exportNetoValuesModificationAffectTypeID;
-		 }
-		 set
-		 {
-		   if(exportNetoValuesModificationAffectTypeID != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportNetoValuesModificationAffectTypeID",OldValue=exportNetoValuesModificationAffectTypeID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportNetoValuesModificationAffectTypeID=value;
-		   }
-			
-		 }
-	   }
 	  private bool? isCustomsValueComponent ;
 	  	  
        
@@ -407,6 +384,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomUseExport",OldValue=isCustomUseExport,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   isCustomUseExport=value;
+		   }
+			
+		 }
+	   }
+	  private string netoValuesModificationAffectID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NetoValuesModificationAffectID  
+	   {
+	    
+	     get
+		{
+		   return netoValuesModificationAffectID;
+		 }
+		 set
+		 {
+		   if(netoValuesModificationAffectID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NetoValuesModificationAffectID",OldValue=netoValuesModificationAffectID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   netoValuesModificationAffectID=value;
 		   }
 			
 		 }
