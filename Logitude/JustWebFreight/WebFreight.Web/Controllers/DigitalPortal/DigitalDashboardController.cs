@@ -14,6 +14,7 @@ using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Collections.Generic;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -23,9 +24,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalDashboardController/GetInvoicesGroupedByPaidStatus")]
         public IHttpActionResult GetInvoicesGroupedByPaidStatus(GeneralFilters newFilters)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
 
@@ -39,8 +44,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(invoicesGroupedByStatus);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
@@ -49,9 +59,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalDashboardController/GetShipmentsGroupedByStatus")]
         public IHttpActionResult GetShipmentsGroupedByStatus(GeneralFilters newFilters)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
@@ -61,8 +75,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(shipmentsGroupedByStatus);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
@@ -71,9 +90,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalDashboardController/GetDashboardSummary")]
         public IHttpActionResult GetDashboardSummary(GeneralFilters newFilters)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
 
@@ -98,8 +121,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(dashboardSummary);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }

@@ -25,11 +25,10 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using System.Reflection;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-using Logitude.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -40,100 +39,139 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/NewGetPartnersByFilters")]
         public IHttpActionResult NewGetPartnersByFilters(string cardId, string cardType, string searchText = "")
         {
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            int tenant = 0;
+            string email = "";
 
-            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+            try
             {
-                return Ok(new List<FilterSearchResponse>());
-            }
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            var shipmentRepository = new ShipmentRepository(authToken.Tenant);
+                if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+                {
+                    return Ok(new List<FilterSearchResponse>());
+                }
 
-            IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+                var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
-            var partners = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                && (cardType == null 
-                                                    || cardType.Trim() == string.Empty 
-                                                    || (cardType.Equals("CS")
-                                                        ? a.CustomerId.Equals(cardId)
-                                                        : a.AgentId.Equals(cardId)))
-                                                &&(a.ConsigneeName.Trim().StartsWith(searchText) 
-                                                   || a.ShipperName.Trim().StartsWith(searchText)))
-                                    .Take(100)
-                                    .SelectMany(a => new List<FilterSearchResponse> 
-                                    {
+                IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+
+                var partners = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                    && (cardType == null
+                                                        || cardType.Trim() == string.Empty
+                                                        || (cardType.Equals("CS")
+                                                            ? a.CustomerId.Equals(cardId)
+                                                            : a.AgentId.Equals(cardId)))
+                                                    && (a.ConsigneeName.Trim().StartsWith(searchText)
+                                                       || a.ShipperName.Trim().StartsWith(searchText)))
+                                        .Take(100)
+                                        .SelectMany(a => new List<FilterSearchResponse>
+                                        {
                                         new FilterSearchResponse
-                                        { 
+                                        {
                                             Id = a.ConsigneeId,
                                             Name = a.ConsigneeName
                                         },
                                         new FilterSearchResponse
-                                        { 
+                                        {
                                             Id = a.ShipperId,
                                             Name = a.ShipperName
-                                        } 
-                                    })
-                                    .DistinctBy(a => a.Id)
-                                    .Where(a => !string.IsNullOrWhiteSpace(a.Name) 
-                                                && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
-                                    .Take(10)
-                                    .OrderBy(x => x.Name)
-                                    .ToList();
+                                        }
+                                        })
+                                        .DistinctBy(a => a.Id)
+                                        .Where(a => !string.IsNullOrWhiteSpace(a.Name)
+                                                    && a.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
+                                        .Take(10)
+                                        .OrderBy(x => x.Name)
+                                        .ToList();
 
-            return Ok(partners);
+                return Ok(partners);
+            }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpGet]
         [Route("DigitalPartners/GetFromToDestinationFiltersFilters")]
         public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
         {
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+            int tenant = 0;
+            string email = "";
 
-            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+            try
             {
-                return Ok(new List<FilterSearchResponse>());
-            }
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-            var shipmentRepository = new ShipmentRepository(authToken.Tenant);
+                if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+                {
+                    return Ok(new List<FilterSearchResponse>());
+                }
 
-            IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
+                var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
-            bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
+                IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
-            var Results = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                &&(cardType.Equals("CS")
-                                                    ? a.CustomerId.Equals(cardId)
-                                                    : a.AgentId.Equals(cardId))
-                                                && (isFrom
-                                                    ? a.From.Trim().StartsWith(searchText) 
-                                                    : a.To.Trim().StartsWith(searchText)))
-                                    .SelectMany(a => new List<FilterSearchResponse> 
-                                    {
+                bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
+
+                var Results = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                    && (cardType.Equals("CS")
+                                                        ? a.CustomerId.Equals(cardId)
+                                                        : a.AgentId.Equals(cardId))
+                                                    && (isFrom
+                                                        ? a.From.Trim().StartsWith(searchText)
+                                                        : a.To.Trim().StartsWith(searchText)))
+                                        .SelectMany(a => new List<FilterSearchResponse>
+                                        {
                                         new FilterSearchResponse
-                                        { 
+                                        {
                                             Id = isFrom ? a.From : a.To,
                                             Name = isFrom ? a.From : a.To
                                         }
-                                    })
-                                    .DistinctBy(a => a.Name)
-                                    .OrderBy(x => x.Name)
-                                    .Take(10)
-                                    .ToList();
+                                        })
+                                        .DistinctBy(a => a.Name)
+                                        .OrderBy(x => x.Name)
+                                        .Take(10)
+                                        .ToList();
 
-            return Ok(Results);
+                return Ok(Results);
+            }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
 
         [HttpGet]
         [Route("DigitalPartners/GetPartnersByFilters")]
         public HttpResponseMessage GetPartnersByFilters([FromUri] DigitalApiQueryFilters filters)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, filters.CardId);
 
@@ -295,8 +333,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -305,19 +348,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/GetDigitalShipmentPartners")]
         public HttpResponseMessage GetDigitalShipmentPartners(string shipmentId, string cardId)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId, true);
                 shipmentId = shipmentIdAndTenant.Item1;
-                var tenant = shipmentIdAndTenant.Item2;
-
+                tenant = shipmentIdAndTenant.Item2;
+                email = shipmentIdAndTenant.Item3;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId,tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

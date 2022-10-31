@@ -147,7 +147,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         oceanCodes.ForEach(a => values.Add($"O:{a}"));
                                     }
                                 }
-
                             }
                             else if (tm.Equals("i", StringComparison.InvariantCultureIgnoreCase))
                             {
