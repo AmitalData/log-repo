@@ -77,9 +77,9 @@ export class SubEntitiesComponent {
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
     GetItemNameAfterTranslation(objectTable: ObjectTablePM) {
+        if (objectTable.IsNew) return objectTable.DefaultText;
         let objectTableNameAfterTranslation = this.textCodeTranslationPipe.transform(objectTable.Name);
         if (objectTableNameAfterTranslation) return objectTableNameAfterTranslation;
-        if (objectTable.IsCustom) return objectTable.DefaultText;
         return objectTable.Name;
     }
 
