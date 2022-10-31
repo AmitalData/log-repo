@@ -45,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TypeName, 
 	         CurrencyTypeName, 
 	         ModificationCounterKey, 
-	         TypeDesc,
+	         TypeDesc, 
+	         ModificationAffectTypeID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
