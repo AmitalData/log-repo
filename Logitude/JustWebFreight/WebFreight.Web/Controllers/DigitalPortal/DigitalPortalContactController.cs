@@ -13,6 +13,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -22,9 +23,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPortalContact/GetSingle")]
         public HttpResponseMessage GetSingle(string id, string cardId)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
@@ -33,8 +40,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.OK, contactPM);
 
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -45,11 +57,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             if (ModelState.IsValid)
             {
+                int tenant = 0;
+                string email = "";
+
                 try
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                        tenant = authToken.Tenant;
+                        email = authToken.Email;
+
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, entityPM.DigitalPortalCardId);
 
@@ -72,8 +90,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
+                catch (AutenticationException ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
                 catch (Exception ex)
                 {
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }

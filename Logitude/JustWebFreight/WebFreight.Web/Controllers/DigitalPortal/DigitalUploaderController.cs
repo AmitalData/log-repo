@@ -11,6 +11,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -20,15 +21,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalUploader/PostDocument")]
         public IHttpActionResult PostDocument(DigitalUploaderInfo info)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                // Create Docs In
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, info.CardId);
-               
-                // Create Docs In
-                var tenant = authToken.Tenant;
-                var email = authToken.Email;
+                
                 ICommonDataContext context = CommonDataContext.GetContext(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
@@ -40,14 +45,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                
                 return Ok(imageParameterfilter);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
 
         #region private 
-        
+
         private ImageParameter UploadImage(string documentId, DigitalUploaderInfo info, int tenant)
         {
             // Upload Image 

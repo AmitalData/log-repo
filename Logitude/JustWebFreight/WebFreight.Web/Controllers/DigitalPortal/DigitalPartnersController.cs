@@ -28,6 +28,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -38,9 +39,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/NewGetPartnersByFilters")]
         public IHttpActionResult NewGetPartnersByFilters(string cardId, string cardType, string searchText = "")
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
@@ -84,8 +90,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(partners);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
@@ -94,9 +105,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/GetFromToDestinationFiltersFilters")]
         public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
@@ -133,8 +149,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(Results);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
@@ -143,9 +164,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/GetPartnersByFilters")]
         public HttpResponseMessage GetPartnersByFilters([FromUri] DigitalApiQueryFilters filters)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, filters.CardId);
 
@@ -307,8 +333,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -317,18 +348,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalPartners/GetDigitalShipmentPartners")]
         public HttpResponseMessage GetDigitalShipmentPartners(string shipmentId, string cardId)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId, true);
                 shipmentId = shipmentIdAndTenant.Item1;
-                var tenant = shipmentIdAndTenant.Item2;
+                tenant = shipmentIdAndTenant.Item2;
+                email = shipmentIdAndTenant.Item3;
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId,tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
