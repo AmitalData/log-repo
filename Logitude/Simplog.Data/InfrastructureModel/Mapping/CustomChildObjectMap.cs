@@ -14,7 +14,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         {
             this.HasKey(t => t.Id); 
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ParentId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ParentEntityId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ParentObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CreatedBy).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedBy).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -72,7 +73,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("CustomChildObject");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.ParentId).HasColumnName("ParentId");
+            this.Property(t => t.ParentEntityId).HasColumnName("ParentEntityId");
+            this.Property(t => t.ParentObjectTableId).HasColumnName("ParentObjectTableId");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
             this.Property(t => t.UpdatedBy).HasColumnName("UpdatedBy");

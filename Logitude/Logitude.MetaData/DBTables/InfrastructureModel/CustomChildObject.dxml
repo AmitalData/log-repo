@@ -20,8 +20,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ParentId"
-    OldNames="EntityId"
+    Name="ParentEntityId"
+    OldNames="ParentId,EntityId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -409,6 +409,13 @@
   <Column
     Name="UpdateDate"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentObjectTableId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

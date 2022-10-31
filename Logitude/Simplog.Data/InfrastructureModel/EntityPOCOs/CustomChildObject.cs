@@ -12,7 +12,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-        public string ParentId { get; set; }
+        public string ParentEntityId { get; set; }
+        public string ParentObjectTableId { get; set; }
         public string ObjectTableId { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
