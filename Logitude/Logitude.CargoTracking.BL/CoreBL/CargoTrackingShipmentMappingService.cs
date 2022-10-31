@@ -107,9 +107,17 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private void FillDocumentsFilings()
         {
             List<DocumentsFilingPM> documentsFilingPM = GetShipmentDocumentsFilings();
+            List<DocumentsFilingPM> documentsListWithoutDuplications = new List<DocumentsFilingPM>();
+            foreach (var document in documentsFilingPM)
+            {
+                if (!documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode && x.CalculatedFileName == document.CalculatedFileName
+                     && x.FileSize == document.FileSize)) {
+                    documentsListWithoutDuplications.Add(document);
+                }
+            }
 
             cargoShipmentPM.DocumentsFilings = new List<CargoDocumentsFiling>();
-            foreach (var documentFiling in documentsFilingPM)
+            foreach (var documentFiling in documentsListWithoutDuplications)
             {
                 MapCargoDocumentsFromDocumentsFilings(documentFiling);
             }
