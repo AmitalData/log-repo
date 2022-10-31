@@ -222,7 +222,7 @@ namespace WebFreight.Web.ContainerTracking
                     string.IsNullOrEmpty(shipment.Master) ||
                     visionContainerStatus?.payload?.bill_of_lading == shipment.Master
                     ) &&
-                    !container.IsCancelled && 
+                    !container.IsCancelled &&
                     !container.IsClosed;
         }
 
@@ -607,27 +607,32 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? EventDate;
         public string TrackingSource;
 
-        public string LoadedTransshipmentLocation;
-        public string LoadedTransshipmentVessel;
-        public string LoadedTransshipmentVoyage;
-        public DateTime? EstimatedLoadedTransshipment;
-        public DateTime? ActualLoadedTransshipment;
-
-        public string VesselArrivedLocation;
-        public string VesselArrivedVessel;
-        public string VesselArrivedVoyage;
-        public DateTime? EstimatedVesselArrived;
-        public DateTime? ActualVesselArrived;
-
-        //public string EmptyReturnLocation;
-        //public DateTime? EstimatedEmptyReturn;
-        //public DateTime? ActualEmptyReturn;
-
-        //public string EmptyReturnLocation;
-        //public DateTime? EstimatedEmptyReturn;
-        //public DateTime? ActualEmptyReturn;
+        public ContainerTransshipment LoadedTransshipment; 
+        public ContainerTransshipment VesselArrived;
+        public ContainerTransshipment VesselDeparted;
+        public ContainerTransshipment DischargedTransshipment;
+        
 
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }
     }
+
+    public class ContainerTransshipment
+    {
+        public string Key;
+        public List<ContainerTransshipmentUpdatedFields> TransshipmentMilestones;
+        public ContainerTransshipment(string key)
+        {
+            this.Key = key;
+            this.TransshipmentMilestones = new List<ContainerTransshipmentUpdatedFields>();
+        }
+    }
+    public class ContainerTransshipmentUpdatedFields
+    {
+        public string Location;
+        public string Vessel;
+        public string Voyage;
+        public DateTime? EstimatedDate;
+        public DateTime? ActualDate;
+    }    
 }
