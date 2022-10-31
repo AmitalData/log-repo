@@ -5,9 +5,10 @@
         <div *ngIf="isLookupObjectField() && LookupTable">
 
             <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-                [LookUpTableName]="LookupTable.Name" [DependencyFilter1Value]="ObjectField.DependencyFilter1Value"
-                [DependencyFilter2Value]="ObjectField.DependencyFilter2Value"
-                [DependencyFilter3Value]="ObjectField.DependencyFilter3Value"
+                [LookUpTableName]="LookupTable.Name"
+                [DependencyFilter1Value]="ObjectField.DependencyFilter1Type === 'Constant' ? ObjectField.DependencyFilter1Value : null"
+                [DependencyFilter2Value]="ObjectField.DependencyFilter2Type === 'Constant' ? ObjectField.DependencyFilter2Value : null"
+                [DependencyFilter3Value]="ObjectField.DependencyFilter3Type === 'Constant' ? ObjectField.DependencyFilter3Value : null"
                 [DependencyFilter1IsList]="ObjectField.DependencyFilter1IsList"
                 [DependencyFilter2IsList]="ObjectField.DependencyFilter2IsList"
                 [DependencyFilter3IsList]="ObjectField.DependencyFilter3IsList" [NoValidation]="true"
