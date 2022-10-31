@@ -28,7 +28,7 @@ using Logitude.CRM.Data.Repsitories;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
-    public class QuoteQuery
+    public partial class QuoteQuery
     {
         QuoteRepository repository;
 

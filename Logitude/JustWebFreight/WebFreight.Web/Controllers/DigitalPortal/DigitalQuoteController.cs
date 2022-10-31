@@ -5,6 +5,17 @@ using WebFreight.Web.Security;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityPMs;
+using System.Net.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Web;
+using WebFreight.Web.DataContracts;
+using System.Data.Entity;
+using Logitude.BL.QuoteModel.EntityLists;
+using System.Collections.Generic;
+using System.Net;
+using System.Linq;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -34,6 +45,43 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             catch (Exception ex)
             {
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalQuote/GetByFilters")]
+        public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+
+                newFilters.Tenant = authToken.Tenant;
+                var quoteQuery = new QuoteQuery(authToken.Tenant);
+                var entityLists = quoteQuery.GetByFilters(newFilters);
+
+                var response = new ServiceResponse();
+                if (newFilters.GetCount)
+                {
+                    response.Count = entityLists.Count();
+                }
+
+                entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
+                entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
+
+                List<QuoteList> listQuery = entityLists.ToList();
+
+                response.Result = listQuery;
+
+                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
     }
