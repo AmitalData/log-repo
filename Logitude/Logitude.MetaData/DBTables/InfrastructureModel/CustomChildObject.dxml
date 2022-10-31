@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CustomChildObjects"
-  OldNames="ChildEntitiesCustomFields"
   Schema="dbo"
   DBType="Main"
   Module="Infrastructure">
@@ -21,7 +20,6 @@
   </Column>
   <Column
     Name="ParentEntityId"
-    OldNames="ParentId,EntityId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -36,7 +34,6 @@
   </Column>
   <Column
     Name="CreatedBy"
-    OldNames="ChildEntityId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -44,7 +41,6 @@
   </Column>
   <Column
     Name="UpdatedBy"
-    OldNames="ChildObjectTableId"
     Type="varchar"
     Size="15">
     <Constraints
