@@ -174,7 +174,8 @@ export class CustomizationEditComponent {
 
     ChangeScreen() {
         if (!this.SelectedMenu || !this.isLoaderReady) return;
-        if (this.SelectedMenu.ComponentPath == null || this.SelectedMenu.Page) return;
+
+        if (this.SelectedMenu.ComponentPath == null || (this.SelectedMenu.Page && !this.SelectedMenu.Page.IsChange)) return;
         
         this.ShowCustomizationMenuItemComponent();
         
@@ -182,11 +183,16 @@ export class CustomizationEditComponent {
     
     private ShowCustomizationMenuItemComponent() {
         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedMenu.Code)[0];
+
+        if (myLocation != null && this.SelectedMenu.Page && this.SelectedMenu.Page.IsChange) {
+            myLocation.viewContainerRef.clear();
+        }
+
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)
             .then(cmpRef => {
                 this.SelectedMenu.Page = cmpRef.instance;
                 cmpRef.instance.customizationEditComponent = this;
-                cmpRef.instance.SetWindowArgs(this.SelectedMenu.screenArgs);
+                cmpRef.instance.SetWindowArgs(this.SelectedMenu.screenArgs);       
             });
     }
 

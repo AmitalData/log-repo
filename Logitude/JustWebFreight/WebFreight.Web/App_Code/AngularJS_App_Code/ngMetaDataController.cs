@@ -898,13 +898,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getObjectFieldsByObjectTable/{tenant}/{objectTableName}")]
-        public List<ObjectFieldPM> GetObjectFieldsByObjectTable(int tenant, string objectTableName)
+        [WebGet(UriTemplate = "getObjectFieldsByObjectTable/{objectTableName}")]
+        public List<ObjectFieldPM> GetObjectFieldsByObjectTable(string objectTableName)
         {
-            ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
-            var tableId = tableRepository.GetObjectTableByName(objectTableName, tenant, false).Id;
-            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
-            List<ObjectFieldPM> objectFields = objectFieldQuery.GetObjectFieldsByTenantAndObjectTableId(tenant, tableId);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            ObjectTableRepository tableRepository = new ObjectTableRepository(authToken.Tenant);
+            var tableId = tableRepository.GetObjectTableByName(objectTableName, authToken.Tenant, false).Id;
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
+            List<ObjectFieldPM> objectFields = objectFieldQuery.GetObjectFieldsByTenantAndObjectTableId(authToken.Tenant, tableId);
             return objectFields;
         }
     }

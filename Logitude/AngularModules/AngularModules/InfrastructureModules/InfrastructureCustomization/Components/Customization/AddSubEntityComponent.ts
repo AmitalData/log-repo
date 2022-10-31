@@ -6,6 +6,7 @@ import { ObjectTablePMService } from '../../../../Infrastructure/Services/Standa
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
@@ -99,6 +100,7 @@ export class AddSubEntityComponent extends BaseComponent {
 
             this.CurrentSession.StopBusyIndicator();
             window.ObjectTables.push(this.objectTablePM);
+            CachedDataManager.RefreshTenantTextCodes();
             this.GetObjectFields();
             this.customizationSubEntitiesComponent.ApplyChanges(this.objectTablePM);
             this.CurrentSession.CloseCurrentWindow();
@@ -107,9 +109,19 @@ export class AddSubEntityComponent extends BaseComponent {
     }
 
     GetObjectFields() {
-        this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name, this.objectTablePM.Tenant).subscribe((response: ServiceResponse) => {
+        this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name).subscribe((response: any) => {
             if (!response) return;
             window.ObjectFields = window.ObjectFields.concat(response);
+            response.forEach(item => {
+                CachedDataManager.RefreshTenantTextCodes().subscribe((res: any) => {
+                    var oldItem = window.ObjectFields.filter(t => t.Id == item.Id)[0];
+                    if (oldItem) {
+                        var index = window.ObjectFields.indexOf(oldItem);
+                        window.ObjectFields.splice(index, 1);
+                    }
+                    window.ObjectFields.push(item);
+                });
+            })
         });
     }
     CancelButtonClicked() {

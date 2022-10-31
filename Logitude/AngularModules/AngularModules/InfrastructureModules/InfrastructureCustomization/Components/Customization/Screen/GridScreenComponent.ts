@@ -58,7 +58,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
 
     ngOnInit(): void
     {
-
+       
     }
 
     get SelectedScreen(){

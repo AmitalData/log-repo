@@ -220,8 +220,8 @@ export class ObjectFieldPMExtendedService {
         return entityPM;
     }
 
-    GetObjectFieldsByObjectTable(objectTableName: string, tenant: number) {
-        var url = this.baseMetaUrlApi +'/getObjectFieldsByObjectTable' + '?tenant=' + tenant + '&objectTableName=' + objectTableName+'&inActive=false';
+    GetObjectFieldsByObjectTable(objectTableName: string) {
+        var url = this.baseMetaUrlApi +'/getObjectFieldsByObjectTable' + '?objectTableName=' + objectTableName;
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;

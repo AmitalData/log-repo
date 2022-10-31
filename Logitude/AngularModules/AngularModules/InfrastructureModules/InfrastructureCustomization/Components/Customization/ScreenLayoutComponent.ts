@@ -60,7 +60,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     private modified: boolean = false;
-    ReloadGridSections: boolean;
+   public ReloadGridSections: boolean;
     set Modified(value: boolean) {
         this.modified = value;
         this.customizationEditComponent.IsDirty = value;
@@ -88,10 +88,17 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
                 this.OkClicked(false);
             }
         });
+
+         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+             if ($event.Name == "ReloadGridComponent") {
+                 this.IsChange = true;
+            }
+        });
     }
 
     public SelectedItem: ScreenItem;
     public OldItem: ScreenItem;
+    public IsChange: boolean = false;
     SelectionChanged(Item) {
         //this.OkClicked(false);
         this.SelectedItem = Item;
@@ -239,7 +246,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     }
 
 
-    FillbanckStackFields() {
+    public FillbanckStackFields() {
         this.banckStackFields = [];
         this.AllbanckStackFields = [];
 
@@ -319,6 +326,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
+
+        if (!this.screenLayoutService) return;
 
         this.screenLayoutService.BuildScreenUpdateArgs();
 
@@ -857,7 +866,11 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         });
     }
     Save() {
-        this.OkClicked(false);
+
+        if (this.customizationEditComponent.IsDirty) {
+            this.OkClicked(false);
+        }
+
         this.customizationEditComponent.IsDirty = false;
         if (this.customizationEditComponent.NewSelectedMenu) {
             this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
