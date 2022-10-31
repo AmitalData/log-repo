@@ -71,14 +71,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExportNetoValuesModificationAffectTypeID"
-    OldNames="EffectGoodsValueExport"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsCustomsValueComponent"
     Type="bit">
     <Constraints
@@ -112,6 +104,13 @@
   <Column
     Name="IsCustomUseExport"
     Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NetoValuesModificationAffectID"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
