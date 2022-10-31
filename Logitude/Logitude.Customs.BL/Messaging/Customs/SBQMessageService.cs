@@ -114,7 +114,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             
             if (execTime.HasValue )
             {
-                var srverTime = (new DualQueryService(AmitalContext.GetContext(tenant))).GetServerDateTime();
+                var srverTime = LogitudeSettings.IsCostomsDeploy ? DateTime.Now : (new DualQueryService(AmitalContext.GetContext(tenant))).GetServerDateTime();
                 if (execTime.GetValueOrDefault()> srverTime.GetValueOrDefault())
                 {
                     Delay = execTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault());
