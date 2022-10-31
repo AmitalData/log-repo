@@ -469,6 +469,7 @@
     <None Include="DBTables\RequiredGuaranteeType.dxml" />
     <None Include="DBTables\ReturnCondition.dxml" />
     <None Include="DBTables\SalesTaxExemptionType.dxml" />
+    <None Include="DBTables\SchedulerParam.dxml" />
     <None Include="DBTables\SecurityClearenceTypeCode.dxml" />
     <None Include="DBTables\SeizureFactorType.dxml" />
     <None Include="DBTables\SeizureMethodType.dxml" />
@@ -573,6 +574,7 @@
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
     <None Include="EntityFiles\ServersName.lxml" />
+    <None Include="EntityFiles\SchedulerParam.lxml" />
     <None Include="EntityFiles\StatusFieldType.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
