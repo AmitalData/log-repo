@@ -1812,6 +1812,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
+    <TypeScriptCompile Include="DashboardModule\Components\ListTemplates\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsFieldsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsMetaDataList.ts" />
