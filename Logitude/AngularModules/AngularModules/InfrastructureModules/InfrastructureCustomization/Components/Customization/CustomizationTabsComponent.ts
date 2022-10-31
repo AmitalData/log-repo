@@ -220,7 +220,9 @@ export class CustomizationTabsComponent extends BaseComponent
     }
 
     Save() {
-        this.OkClicked();
+        if (this.customizationEditComponent.IsDirty) {
+            this.OkClicked();
+        }
     }
     Cancel() {
         this.GetAllTabs(false);     

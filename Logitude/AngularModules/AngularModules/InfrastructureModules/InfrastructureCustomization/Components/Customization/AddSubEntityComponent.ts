@@ -5,6 +5,8 @@ import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTableP
 import { ObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectTablePMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SubEntitiesComponent } from './SubEntitiesComponent';
+import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
@@ -24,10 +26,12 @@ export class AddSubEntityComponent extends BaseComponent {
     private parentObjectTableId: string;
     private objectTablePM: ObjectTablePM;
     private objectTablePMService: ObjectTablePMService;
+    private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
     constructor() {
         super();
         this.objectTablePMService = new ObjectTablePMService();
+        this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
         this.objectTablePM = new ObjectTablePM();
         this.UIProperties.SetRequired("DisplayLabelSingular", "ObjectTable", true);
         this.UIProperties.SetRequired("DisplayLabelPlural", "ObjectTable", true);
@@ -96,12 +100,30 @@ export class AddSubEntityComponent extends BaseComponent {
 
             this.CurrentSession.StopBusyIndicator();
             window.ObjectTables.push(this.objectTablePM);
+            CachedDataManager.RefreshTenantTextCodes();
+            this.GetObjectFields();
             this.customizationSubEntitiesComponent.ApplyChanges(this.objectTablePM);
             this.CurrentSession.CloseCurrentWindow();
 
         });
     }
 
+    GetObjectFields() {
+        this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name).subscribe((response: any) => {
+            if (!response) return;
+            window.ObjectFields = window.ObjectFields.concat(response);
+            response.forEach(item => {
+                CachedDataManager.RefreshTenantTextCodes().subscribe((res: any) => {
+                    var oldItem = window.ObjectFields.filter(t => t.Id == item.Id)[0];
+                    if (oldItem) {
+                        var index = window.ObjectFields.indexOf(oldItem);
+                        window.ObjectFields.splice(index, 1);
+                    }
+                    window.ObjectFields.push(item);
+                });
+            })
+        });
+    }
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

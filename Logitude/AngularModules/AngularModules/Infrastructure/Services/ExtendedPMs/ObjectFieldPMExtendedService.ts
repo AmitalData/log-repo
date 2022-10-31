@@ -11,10 +11,14 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ObjectFieldPMExtendedService {
     private _http: HttpClient;
+    logitudeURL: string = null;
     private _apiUrl: string;
+    baseMetaUrlApi: string = null;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ObjectFieldExtended';
+        this.logitudeURL = ServiceHelper.GetLogitudeURL();
+        this._apiUrl = this.logitudeURL + 'api/ObjectFieldExtended';
+        this.baseMetaUrlApi = this.logitudeURL + "api/ngMetaData";
     }
 
     GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityAutomationIds: string, tenant: number) {
@@ -214,5 +218,13 @@ export class ObjectFieldPMExtendedService {
 
         }
         return entityPM;
+    }
+
+    GetObjectFieldsByObjectTable(objectTableName: string) {
+        var url = this.baseMetaUrlApi +'/getObjectFieldsByObjectTable' + '?objectTableName=' + objectTableName;
+
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return response;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 }

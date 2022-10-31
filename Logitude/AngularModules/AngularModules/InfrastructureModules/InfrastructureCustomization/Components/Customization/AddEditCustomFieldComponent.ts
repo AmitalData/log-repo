@@ -585,14 +585,8 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();
-                            //    this.loginService.GetObjectFields().subscribe((myResult:any) => {
-                            //        if (myResult != null) { 
-                            //            window.ObjectFields = myResult;
-                            //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            //            this.CurrentSession.CloseCurrentWindow();
-                            //        }
-                            //    });  
-                            //});
+                            this.CurrentSession.SessionEvent.emit({ Name: "ReloadGridComponent" });
+
                         });
                     }
                 });
