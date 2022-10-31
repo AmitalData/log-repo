@@ -141,9 +141,11 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
                 let screenSection = new ScreenSectionPM();
                 screenSection.Number = 0;
-                screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "",
+                screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "";
                 this.ScreenSections.push(new ScreenSection(screenSection, this.ScreenColumns))
+                
                 if (fireEmit) {
+                    this.ReOrderScreenSections();
                     this.LoadCompleted.emit(true);
                 }
             }
@@ -210,6 +212,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             return;
 
         this.BuildScreenSections(screen, fireEmit);
+        
     }
 
 
@@ -272,8 +275,11 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
         childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
 
-        if (childEntityResourcesArgs.FireEmit)
+        if (childEntityResourcesArgs.FireEmit) {
+            this.ReOrderScreenSections();
             this.LoadCompleted.emit(true);
+        }
+            
     }
 
     private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)
@@ -392,6 +398,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 });
             }
         }
+    }
+
+    private ReOrderScreenSections() {
+        this.ScreenSections = this.ScreenSections.sort((a, b) => {
+            return (a.SectionNumber === b.SectionNumber) ? 0 : (a.SectionNumber < b.SectionNumber) ? -1 : 1
+        });
     }
 }
 
