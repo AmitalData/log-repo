@@ -277,7 +277,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 UpdatePaymentDocument(documentsFilingPM, attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
             }
             var setting = CustomsSettingQueryService.GetSettingByTenant(this._MyDeclarationPM.Tenant);
-            if (!setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight )
+            if ( setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight )
             {
                 if (this._MyDeclarationPM.Direction == "E")
                 {
