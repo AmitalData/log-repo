@@ -24,6 +24,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
+using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -277,17 +279,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
+                ICommonDataContext commonDbContext = CommonDataContext.GetContext(myDeclarationPM.Tenant);
+                UserRepository userRepository = new UserRepository(commonDbContext);
+                var user = userRepository.GetSingleUserByCode("MEHES", myDeclarationPM.Tenant, true);
+
                 var _requestDescription = "";//12192 -->
                 switch (NoticeToClient.operationCode)
                 {
                     case 1:
                         _requestDescription = "בדיקה פיזית חדשה ";
+
+                        if(myDeclarationPM.Direction == "E") 
+                        {                           
+                            RaiseEvent(myDeclarationPM, user?.Id, status_id: "CHK");
+                        }
+
                         break;
                     case 2:
                         _requestDescription = "עדכון בדיקה פיזית ";
                         break;
                     case 3:
                         _requestDescription = "בדיקה פיזית בוטלה ";
+                        if(myDeclarationPM.Direction == "E")
+                        {
+                            RaiseEvent(myDeclarationPM, user?.Id, status_id: "SFA");
+                        }    
+                        
                         break;
                     default:
                         _requestDescription = "זימון לבדיקה ";
@@ -438,5 +455,54 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
         }
+
+
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        {
+
+            try
+            {
+
+                string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+                if (dirtyDeclarationPM.TransportModeId != "A")
+                {
+                    primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+                }
+
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = status_id,
+                    notes = "",
+                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                    EntityId = dirtyDeclarationPM.Id,
+                    UserId = loggingUserId,
+    
+                    CommunicationSubject = "FU Status " + status_id + " from logitude",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname =  "BFIFILE",
+                        primary_number = primary_number,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = status_id,
+                        status_DateTime = DateTime.Now,
+                        comments = dirtyDeclarationPM.Id,
+    
+    
+                    }
+                };
+
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            }
+            catch(System.Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+
     }
 }

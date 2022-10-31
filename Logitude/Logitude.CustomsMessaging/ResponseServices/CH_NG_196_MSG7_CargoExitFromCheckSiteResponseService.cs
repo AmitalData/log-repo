@@ -17,6 +17,10 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -34,9 +38,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
+
                 ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
                 PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(requestParams.Tenant);
                 PhysicalCheckUpdateService physicalCheckUpdateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                
 
                 var id = physicalCheckQueryService.GetIdByCheckId(customResponse.generalDetails.checkId.ToString(), requestParams.Tenant);
                 bool exitIfNotFound = false;
@@ -195,8 +201,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
                             declarationUpdateService.Update(decPM, true);
                             LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+                    
+                            DeclarationPM myDeclarationPM = new DeclarationPM();
+                            myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(phsicalCheckPM.DeclarationId.ToString(), requestParams.Tenant);
+                            if(myDeclarationPM.Direction =="E")
+                            {
+                                ICommonDataContext commonDbContext = CommonDataContext.GetContext(myDeclarationPM.Tenant);
+                                UserRepository userRepository = new UserRepository(commonDbContext);
+                                var user = userRepository.GetSingleUserByCode("MEHES", myDeclarationPM.Tenant, true);
+
+                                RaiseEvent(myDeclarationPM, user?.Id, status_id: "CHF");
+
+                            }
+
                         }
                     }
+
+                    
+
 
                 }
 
@@ -233,6 +255,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
                CalcAssigneToId(newNotificationPM.Tenant, null, referentUserId, notificationDefinitionCode, "");
 
             notificationUpdateService.Update(newNotificationPM, true);
+        }
+
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        {
+            try
+            {
+                string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+                if (dirtyDeclarationPM.TransportModeId != "A")
+                {
+                    primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+                }
+
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = status_id,
+                    notes = "",
+                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                    EntityId = dirtyDeclarationPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status " + status_id + " from logitude",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "BFIFILE",
+                        primary_number = primary_number,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = status_id,
+                        status_DateTime = DateTime.Now,
+                        comments = dirtyDeclarationPM.Id,
+
+
+                    }
+                };
+
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+
+
         }
     }
 }
