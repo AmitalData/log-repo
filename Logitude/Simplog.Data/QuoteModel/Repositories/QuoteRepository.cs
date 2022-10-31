@@ -259,7 +259,11 @@ namespace Simplog.Data.QuoteModel.Repositories
         internal void UpdateFromQuote(Quote entity)
         {
             var quoteAnalytic = Map<QuoteAnalytic>(entity);
-            if (context.QuoteAnalytics.Any(e => e.Id == quoteAnalytic.Id)) context.QuoteAnalytics.Attach(quoteAnalytic);
+            if (context.QuoteAnalytics.Any(e => e.Id == quoteAnalytic.Id)) 
+            {
+                context.QuoteAnalytics.Attach(quoteAnalytic);
+                context.SetAsModified(quoteAnalytic);
+            } 
             else AddFromQuote(entity);
         }
         private T Map<T>(Quote from) where T : new()
