@@ -16,6 +16,7 @@ using Logitude.BL.QuoteModel.EntityLists;
 using System.Collections.Generic;
 using System.Net;
 using System.Linq;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -23,28 +24,36 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalQuote/GetSingle")]
-        public IHttpActionResult GetSingle(string id, string cardId)
+        public HttpResponseMessage GetSingle(string id, string cardId)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var quoteIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
                 id = quoteIdAndTenant.Item1;
-                var tenant = quoteIdAndTenant.Item2;
+                tenant = quoteIdAndTenant.Item2;
+                email = quoteIdAndTenant.Item3;
                 QuoteQuery quoteQuery = new QuoteQuery(tenant);
                 QuotePM quotePM = quoteQuery.GetSinglePM(id, tenant);
 
                 if (quotePM.CustomerId == cardId || quotePM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
                 {
-                    return Ok(quotePM);
+                    return Request.CreateResponse(HttpStatusCode.OK, quotePM);
                 }
 
                 throw new AutenticationException("Sorry! you are not authorized to read data!");
 
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
@@ -52,12 +61,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalQuote/GetByFilters")]
         public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
         {
+            int tenant = 0;
+            string email = string.Empty;
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
 
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
                 var quoteQuery = new QuoteQuery(authToken.Tenant);
                 var entityLists = quoteQuery.GetByFilters(newFilters);
@@ -79,8 +92,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return reponseMessage;
             }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
