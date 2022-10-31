@@ -2237,7 +2237,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
         }
 
-        
+        public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
+        {
+           
+            var ExportReportData = this.repository.GetReportDeclarationForExportReport1(ExportFrom, ExportTo);
+            return ExportReportData;
+        }
+        public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
+        {
 
+            var ExportReportData = this.repository.GetReportDeclarationForExportReport2(ExportFrom, ExportTo);
+            return ExportReportData;
+        }
     }
 }

@@ -242,6 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="Contracts\ICustomsSendReportExel.cs" />
     <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />

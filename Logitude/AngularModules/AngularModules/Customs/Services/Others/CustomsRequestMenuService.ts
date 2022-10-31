@@ -35,6 +35,10 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems = [];
         //TextCodeTranslator.Translate("Customs.General.O.CopyDeclaration")
         // <!> Abdullah: Fill 'CustomsMenuItem.ObjectTableName' if you want to open a query screen
+        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "EXPORTTENANT0")) {
+          
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportReport"), "ExportReport", './CustomsModules/CustomsReport/Components/Reports/ExportReportComponent', 500, 300, "1112"));
+        }
 
         // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));

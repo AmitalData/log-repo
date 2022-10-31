@@ -14,6 +14,10 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel;
+using System.Data.SqlClient;
+using System.Data;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -1128,13 +1132,130 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        
+   
+        public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
+        {          
+            List<ExportReport1> ExportReports = new List<ExportReport1>();
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+
+
+                SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
+                SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
+
+                pFrom.Direction = ParameterDirection.Input;
+                pTo.Direction = ParameterDirection.Input;
+
+                pFrom.Value = ExportFrom;
+                pTo.Value = ExportTo.Value.AddDays(1);
+
+                SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(pFrom);
+                cmd.Parameters.Add(pTo);
+
+                cn.Open();
+
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+              
+                ExportReport1 exportReport = null;
+
+                while (reader.Read())
+                {
+                    exportReport = new ExportReport1();
+                    exportReport.company = reader["company"].ToString();
+                    exportReport.submit = int.Parse(reader["submit"].ToString());
+                    exportReport.release = int.Parse(reader["release"].ToString());
+                    exportReport.closed = int.Parse(reader["closed"].ToString());
+                    exportReport.notSubmit = int.Parse(reader["notSubmit"].ToString());
+                    ExportReports.Add(exportReport);
+                }
+
+
+                cn.Close();
+            }
+
+            return ExportReports;
+          
+        }
+
+   
+    public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
+    {
+
+        List<ExportReport2> ExportReports2 = new List<ExportReport2>();
+        string strConnString = TenantServerConfigration.GetDbConnection(0);
+        using (SqlConnection cn = new SqlConnection(strConnString))
+        {
+           
+                SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
+                SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
+
+                pFrom.Direction = ParameterDirection.Input;
+                pTo.Direction = ParameterDirection.Input;
+
+                pFrom.Value = ExportFrom;
+                pTo.Value = ExportTo.Value.AddDays(1);
+
+                SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport2", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(pFrom);
+                cmd.Parameters.Add(pTo);
+
+
+                cn.Open();
+
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+
+            ExportReport2 exportReport = null;
+
+            while (reader.Read())
+            {
+                exportReport = new ExportReport2();
+                exportReport.company = reader["company"].ToString();
+                exportReport.localname = reader["localname"].ToString();
+                exportReport.count = int.Parse(reader["count"].ToString());
+              
+                ExportReports2.Add(exportReport);
+            }
+
+
+            cn.Close();
+        }
+
+        return ExportReports2;
 
     }
 
+}
+public class ExportReport1
+    {
+        public string company { get; set; }
+        public int submit { get; set; }
+        public int release { get; set; }
+
+        public int closed { get; set; }
+        public int notSubmit { get; set; }
+
+    }
+public class ExportReport2
+{
+    public string company { get; set; }
+    public string localname { get; set; }
+    public int count { get; set; }
+
+   
+}
 
 
-        public class ContainerizationKey
+public class ContainerizationKey
     {
         public string Id { get; set; }
         public string Key { get; set; }
@@ -1255,7 +1376,7 @@ namespace Logitude.Customs.Data.Repsitories
 
     }
 
-   
+
 }
 
 

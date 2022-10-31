@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "0a96b779ee7d2eef3f83c5f4f29f1c5f";
+		public const string HashString = "13fc9638898e3efc7c85b3ddf93ff637";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "6156",
+			      				    Code =  "634a",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -307,6 +307,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsGeneralFeature_CustomsAirlineMTC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirlineMTC", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomsAirline", NameTextCodeDefaultText = @"Customs Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
 		   Feature CustomsGeneralFeature_DocumentsDefinition = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsDefinition", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.DocumentsDefinition", NameTextCodeDefaultText = @"Documents Definition" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
+
+		   Feature CustomsGeneralFeature_EXPORTTENANT0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTTENANT0", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.EXPORTTENANT0", NameTextCodeDefaultText = @"Export Tenant 0" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
    
 	    
@@ -2113,6 +2115,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONewCancelExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewCancelExport", DefaultText = "New cancel export",LocalDefaultText = @"ביטול יצוא חדש", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOOpenNewDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OpenNewDeclarationExport", DefaultText = "Open new declaration export",LocalDefaultText = @"פתיחת הצהרת יצוא חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportReport", DefaultText = "Export Report",LocalDefaultText = @"דוח יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
