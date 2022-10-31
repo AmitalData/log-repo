@@ -12,6 +12,8 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.SystemLogs;
+using System.Net;
+using System.Net.Http;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -19,7 +21,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalContactLastSettings/GetDigitalContactLastSettings")]
-        public IHttpActionResult GetDigitalContactLastSettings(string contactId, string  entity, string cardId)
+        public HttpResponseMessage GetDigitalContactLastSettings(string contactId, string  entity, string cardId)
         {
             int tenant = 0;
             string email = "";
@@ -40,22 +42,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     digitalContactLastSettings = GetInitialFiltersList(entity);
                 }
 
-                return Ok(digitalContactLastSettings);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalContactLastSettings);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpPut]
         [Route("DigitalUploader/PutDigitalContactLastSettings")]
-        public IHttpActionResult PutDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings)
+        public HttpResponseMessage PutDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings)
         {
             int tenant = 0;
             string email = "";
@@ -71,16 +73,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 DigitalContactLastSettingRepository contactLastSettingRepository = new DigitalContactLastSettingRepository(authToken.Tenant);
                 UpdateDigitalContactLastSettings(digitalContactLastSettings, authToken.Tenant, objectTableId);
 
-                return Ok(digitalContactLastSettings);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalContactLastSettings);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
