@@ -1282,6 +1282,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;NetoValuesModificationAffectID&quot;"
     ListPropertyPath="&quot;NetoValuesModificationAffectID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

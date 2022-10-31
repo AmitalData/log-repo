@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ModificationAndDiscountTypeUpdateClass
    {  		
-		public const string HashString = "599ee9a2b6bdaa468b5dd2067ce48be6";
+
+		public const string HashString = "565a2106405d0ce4aeb9679d1c6cf5ce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -258,10 +259,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -446,10 +447,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -630,7 +631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "IsRelevantInvoiceExport",
 					  						ListFieldLable =  "IsRelevantInvoiceExportListLable",
 					  						ListLableDefaultText =  "IsRelevantInvoiceExport",
-					  						ListLocalDefaultText =  "האם רלוונטי לחשבון ביצוא ",
+					  						ListLocalDefaultText =  "הםם רלוונטי לחשבון ביצום ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -691,7 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "IsRelevantGoodsItemExport",
 					  						ListFieldLable =  "IsRelevantGoodsItemExportListLable",
 					  						ListLableDefaultText =  "IsRelevantGoodsItemExport",
-					  						ListLocalDefaultText =  "האם רלוונטי לסחורה ביצוא ",
+					  						ListLocalDefaultText =  "הםם רלוונטי לסחורה ביצום ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -751,10 +752,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExtraNumericData",
 					  						DefaultText =  "Extra Numeric Data",
-					  						FullLocalDefaultText =  "השפעת ערכי התאמות",
+					  						FullLocalDefaultText =  "השפעת ערכי התםמות",
 					  						ListFieldLable =  "ExtraNumericDataListLable",
 					  						ListLableDefaultText =  "Extra Numeric Data",
-					  						ListLocalDefaultText =  "השפעת ערכי התאמות",
+					  						ListLocalDefaultText =  "השפעת ערכי התםמות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -875,7 +876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Export FOB Modification Affect ID",
 					  						ListFieldLable =  "ExportFOBModificationAffectIDListLable",
 					  						ListLableDefaultText =  "Export FOB Modification Affect ID",
-					  						ListLocalDefaultText =  "השפעה על ערך טובין FOB יצוא",
+					  						ListLocalDefaultText =  "השפעה על ערך טובין FOB יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1132,6 +1133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -1155,6 +1157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "NetoValuesModificationAffectID",
 					  						ListPropertyPath =  "NetoValuesModificationAffectID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1175,7 +1178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Export Neto Values Modification Affect TypeID",
 					  						ListFieldLable =  "NetoValuesModificationAffectIDListLable",
 					  						ListLableDefaultText =  "Export Neto Values Modification Affect TypeID",
-					  						ListLocalDefaultText =  "השפעה על ערך טובין נטו יצוא",
+					  						ListLocalDefaultText =  "השפעה על ערך טובין נטו יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1216,7 +1219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתאמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתםמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ModificationAndDiscountTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MODIFICATIONANDDISCOUNTTYPE", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes", NameTextCodeDefaultText = "Modification And Discount Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ModificationAndDiscountTypeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
