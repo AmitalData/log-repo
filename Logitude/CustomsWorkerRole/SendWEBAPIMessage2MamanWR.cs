@@ -236,7 +236,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                         {
                             _ReceivedBrokeredMessage = _IQueueService.Receive(nextRunDelayInSec: CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                            scopeRecive.Complete();
                         }
+
                         if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                         {
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
