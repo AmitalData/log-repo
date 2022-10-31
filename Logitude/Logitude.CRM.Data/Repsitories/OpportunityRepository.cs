@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,13 +13,13 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CRM.Data.Repsitories
 {
-   public partial class OpportunityRepository:IRepository<Opportunity>
-   {
-		public List<Opportunity> GetMulti(EntityKeyFields entityKeys)
-        {            
-			throw new NotImplementedException();
+    public partial class OpportunityRepository : IRepository<Opportunity>
+    {
+        public List<Opportunity> GetMulti(EntityKeyFields entityKeys)
+        {
+            throw new NotImplementedException();
         }
-       
+
         public IQueryable<Opportunity> GetAllFromIdList(List<string> ids, int tenant)
         {
             IQueryable<Opportunity> entities = (from a in context.Opportunities where a.Tenant == tenant && ids.Contains(a.Id) select a);
@@ -61,7 +61,11 @@ namespace Logitude.CRM.Data.Repsitories
         private void UpdateAnalyticTable(Opportunity entity)
         {
             var opportunityAnalytic = Map<OpportunityAnalytic>(entity);
-            if (context.OpportunityAnalytics.Any(e => e.Id == opportunityAnalytic.Id)) context.OpportunityAnalytics.Attach(opportunityAnalytic);
+            if (context.OpportunityAnalytics.Any(e => e.Id == opportunityAnalytic.Id))
+            {
+                context.OpportunityAnalytics.Attach(opportunityAnalytic);
+                context.SetAsModified(opportunityAnalytic);
+            }
             else AddToAnalyticTable(entity);
         }
 
@@ -89,4 +93,3 @@ namespace Logitude.CRM.Data.Repsitories
     }
 
 }
-   

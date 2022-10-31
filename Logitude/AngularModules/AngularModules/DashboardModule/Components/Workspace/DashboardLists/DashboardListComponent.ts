@@ -63,7 +63,9 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         column["field"] = metaDataField.FieldCode;
         column["headerName"] = metaDataField.DisplayName;
         column["sortable"] = true;
-        if (metaDataField.FieldCode == "ShipmentNumber") {
+        if (metaDataField.FieldCode == "ShipmentNumber"
+            || metaDataField.FieldCode == "QuoteNumber"
+            || metaDataField.FieldCode == "InvoiceNumber") {
             column["cellRendererFramework"] = EditShipmentLinkRendererComponent;
         }
         if (metaDataField.DataTypeCode == "Date" || metaDataField.DataTypeCode == "DateTime") {

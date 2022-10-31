@@ -256,7 +256,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             foreach (var field in joinTableFields)
             {
                 query = $@"{query}
-                           left join {field.JoinedTableDBName} as {BuildJoinTableName(field)} on {BuildJoinTableName(field)}.{field.JoinedTableKey} = {field.FieldCode}";
+                           left join {field.JoinedTableDBName} as {BuildJoinTableName(field)} on {BuildJoinTableName(field)}.{field.JoinedTableKey} = data.{field.FieldCode}";
             }
             return query;
         }
