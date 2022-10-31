@@ -28,6 +28,8 @@ using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.SystemLogs;
+using System.Net.Http;
+using System.Net;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -35,7 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalInvoice/GetDigitalShipmentARInvoicesCharges")]
-        public IHttpActionResult GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId)
+        public HttpResponseMessage GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId)
         {
             int tenant = 0;
             string email = "";
@@ -138,22 +140,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }).ToList();
 
                 resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
-                return Ok(resultClass);
+                return Request.CreateResponse(HttpStatusCode.OK, resultClass);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpGet]
         [Route("DigitalInvoice/GetFilteredDigitalARPayments")]
-        public IHttpActionResult GetFilteredDigitalARPayments(string arInvoiceId, string cardId)
+        public HttpResponseMessage GetFilteredDigitalARPayments(string arInvoiceId, string cardId)
         {
             int tenant = 0;
             string email = "";
@@ -215,22 +217,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-                return Ok(result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpGet]
         [Route("DigitalInvoice/GetSingle")]
-        public IHttpActionResult GetSingle(string id, string cardId)
+        public HttpResponseMessage GetSingle(string id, string cardId)
         {
             int tenant = 0;
             string email = "";
@@ -274,22 +276,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(authToken.Tenant);
-                return Ok(entityPM);
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpPost]
         [Route("DigitalInvoice/GetByFilters")]
-        public IHttpActionResult GetByFilters(GeneralFilters newFilters)
+        public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
         {
             int tenant = 0;
             string email = "";
@@ -305,22 +307,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
                 var res = entityLists.GetPaged(newFilters.PageIndex, newFilters.PageSize);
 
-                return Ok(res);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpPost]
         [Route("DigitalInvoice/GetByInvoicesCounters")]
-        public IHttpActionResult GetByInvoicesCounters(GeneralFilters newFilters)
+        public HttpResponseMessage GetByInvoicesCounters(GeneralFilters newFilters)
         {
             int tenant = 0;
             string email = "";
@@ -435,16 +437,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 };
 
 
-                return Ok(res);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 

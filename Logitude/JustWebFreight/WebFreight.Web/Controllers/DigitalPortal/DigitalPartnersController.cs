@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalPartners/NewGetPartnersByFilters")]
-        public IHttpActionResult NewGetPartnersByFilters(string cardId, string cardType, string searchText = "")
+        public HttpResponseMessage NewGetPartnersByFilters(string cardId, string cardType, string searchText = "")
         {
             int tenant = 0;
             string email = "";
@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
                 {
-                    return Ok(new List<FilterSearchResponse>());
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<FilterSearchResponse>());
                 }
 
                 var shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -88,22 +88,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         .OrderBy(x => x.Name)
                                         .ToList();
 
-                return Ok(partners);
+                return Request.CreateResponse(HttpStatusCode.OK, partners);
+
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpGet]
         [Route("DigitalPartners/GetFromToDestinationFiltersFilters")]
-        public IHttpActionResult GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
+        public HttpResponseMessage GetFromToDestinationFiltersFilters(string cardId, string cardType, string SearchType, string searchText = "")
         {
             int tenant = 0;
             string email = "";
@@ -118,7 +119,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
                 {
-                    return Ok(new List<FilterSearchResponse>());
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<FilterSearchResponse>());
                 }
 
                 var shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -127,7 +128,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
 
-                var Results = shipments.Where(a => a.Tenant == authToken.Tenant
+                var results = shipments.Where(a => a.Tenant == authToken.Tenant
                                                     && (cardType.Equals("CS")
                                                         ? a.CustomerId.Equals(cardId)
                                                         : a.AgentId.Equals(cardId))
@@ -147,16 +148,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         .Take(10)
                                         .ToList();
 
-                return Ok(Results);
+                return Request.CreateResponse(HttpStatusCode.OK, results);
+
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
@@ -363,7 +365,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (AutenticationException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {

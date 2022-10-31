@@ -38,11 +38,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ContactPM contactPM = contactQuery.GetSinglePM(id, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, contactPM);
-
             }
             catch (AutenticationException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
@@ -92,7 +91,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
                 catch (AutenticationException ex)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
                 }
                 catch (Exception ex)
                 {

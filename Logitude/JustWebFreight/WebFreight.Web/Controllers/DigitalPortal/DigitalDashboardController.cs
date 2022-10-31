@@ -15,6 +15,8 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Collections.Generic;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.SystemLogs;
+using System.Net.Http;
+using System.Net;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -22,7 +24,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpPost]
         [Route("DigitalDashboardController/GetInvoicesGroupedByPaidStatus")]
-        public IHttpActionResult GetInvoicesGroupedByPaidStatus(GeneralFilters newFilters)
+        public HttpResponseMessage GetInvoicesGroupedByPaidStatus(GeneralFilters newFilters)
         {
             int tenant = 0;
             string email = "";
@@ -38,26 +40,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
-                var invoicesGroupedByStatus = invoices.Where(r => !string.IsNullOrEmpty(r.PaidStatus))
+                var res = invoices.Where(r => !string.IsNullOrEmpty(r.PaidStatus))
                                                       .GroupBy(r => r.PaidStatus)
                                                       .ToDictionary(t => t.Key, t => t.Count());
 
-                return Ok(invoicesGroupedByStatus);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpPost]
         [Route("DigitalDashboardController/GetShipmentsGroupedByStatus")]
-        public IHttpActionResult GetShipmentsGroupedByStatus(GeneralFilters newFilters)
+        public HttpResponseMessage GetShipmentsGroupedByStatus(GeneralFilters newFilters)
         {
             int tenant = 0;
             string email = "";
@@ -71,24 +73,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
-                var shipmentsGroupedByStatus = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
+                var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
-                return Ok(shipmentsGroupedByStatus);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
         [HttpPost]
         [Route("DigitalDashboardController/GetDashboardSummary")]
-        public IHttpActionResult GetDashboardSummary(GeneralFilters newFilters)
+        public HttpResponseMessage GetDashboardSummary(GeneralFilters newFilters)
         {
             int tenant = 0;
             string email = "";
@@ -119,16 +121,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                                     && d.DueDate <= currentWeek)
                                                                        .Count();
 
-                return Ok(dashboardSummary);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardSummary);
             }
             catch (AutenticationException ex)
             {
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
