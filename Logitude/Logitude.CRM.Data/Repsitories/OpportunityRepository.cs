@@ -49,13 +49,13 @@ namespace Logitude.CRM.Data.Repsitories
 
         partial void OnEntityUpdate(Opportunity entity)
         {
-            AddToAnalyticTable(entity);
+            UpdateAnalyticTable(entity);
         }
 
 
         partial void OnEntityAdd(Opportunity entity)
         {
-            UpdateAnalyticTable(entity);
+            AddToAnalyticTable(entity);
         }
 
         private void UpdateAnalyticTable(Opportunity entity)
