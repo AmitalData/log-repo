@@ -99,10 +99,10 @@ export class AddSubEntityComponent extends BaseComponent {
             if (response.HasError) return;
 
             this.CurrentSession.StopBusyIndicator();
-            window.ObjectTables.push(this.objectTablePM);
-            CachedDataManager.RefreshTenantTextCodes();
+            response.Result.IsNew = true;
+            window.ObjectTables.push(response.Result);
             this.GetObjectFields();
-            this.customizationSubEntitiesComponent.ApplyChanges(this.objectTablePM);
+            this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
             this.CurrentSession.CloseCurrentWindow();
 
         });

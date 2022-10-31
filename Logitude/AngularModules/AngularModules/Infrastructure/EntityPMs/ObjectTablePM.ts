@@ -364,6 +364,10 @@ export class ObjectTablePM {
     public get DefaultTextPlural() { return this.defaultTextPlural; }
     public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
 
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
+
     public OldEntityPM: ObjectTablePM;
 		
     public IsDirty: boolean;
