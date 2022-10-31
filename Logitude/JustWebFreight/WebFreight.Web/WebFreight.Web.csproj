@@ -1070,6 +1070,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SchedulerParamViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CancelRequestRejectReasonTypeController.Generated.cs" />
@@ -1089,6 +1090,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SchedulerParamController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ExportDeclarationClosingController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
@@ -3319,6 +3321,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SchedulerParamUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealCompletenesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealUpdateReasonTypeUpdateClass.cs" />

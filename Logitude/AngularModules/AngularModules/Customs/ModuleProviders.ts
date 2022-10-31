@@ -253,6 +253,7 @@ import { ContainerizationStatusCodeListService } from './Services/StandardLists/
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
+import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
 
 
 //#endregion
@@ -309,6 +310,7 @@ import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPM
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
 import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
+import { SchedulerParamPMService } from './Services/StandardPMs/SchedulerParamPMService';
 
 //#endregion
 
@@ -707,6 +709,8 @@ export class ModuleProviders {
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
             case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
+            case "SchedulerParamListService": { myResult = new SchedulerParamListService(); break; }
+
 
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
@@ -811,6 +815,7 @@ export class ModuleProviders {
             case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
             case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
             case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
+            case "SchedulerParamPMService": { myResult = new SchedulerParamPMService(); break; }
             case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
 
             //#endregion

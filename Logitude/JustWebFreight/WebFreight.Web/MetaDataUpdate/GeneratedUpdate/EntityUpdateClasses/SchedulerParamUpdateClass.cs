@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class DeclarationPendingUpdateClass
+   public class SchedulerParamUpdateClass
    {  		
-		public const string HashString = "0a100d13c51bfae07bd27a5110ebac36";
+		public const string HashString = "09e9fbce64b4a993709962896eb19686";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.DeclarationPending",
+	             				    ObjectTableName =  "Customs.SchedulerParam",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.DeclarationPendings",
-			      				    ObjectTableSingular =  "DeclarationPending",
-			      				    ObjectTablePlural =  "DeclarationPendings",
+			      				    DBTableName =  "Customs.SchedulerParams",
+			      				    ObjectTableSingular =  "SchedulerParam",
+			      				    ObjectTablePlural =  "SchedulerParams",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -104,31 +104,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "DeclarationID",
-			      				    LookUp2 =  "CourierPendingReasonCode",
-			      				    KeyPropertyPath =  "DeclarationID",
+			      				    LookUp1 =  "SchedulerProcedureCode",
+			      				    LookUp2 =  "SchedulerProcedureCode",
+			      				    KeyPropertyPath =  "SchedulerProcedureCode",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
+			      				    HasCounter =  true,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
-			      				    IsAutoComplete =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "CourierPendingReasonCode",
+			      				    SortingByObjectField =  "SchedulerProcedureCode",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  true,
-			      				    EnableSecurity =  false,
+			      				    IsComposition =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "Pending",
-			      				    DefaultText =  "Declaration Pending",
-			      				    Code =  "4985",
+			      				    LocalDefaultText =  "SchedulerParam",
+			      				    DefaultText =  "SchedulerParam",
+			      				    Code =  "0af5",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  DeclarationPendingUpdateClass.HashString,
+			      				    HashString =  SchedulerParamUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -152,134 +152,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DeclarationID",
-					  						ObjectTableName =  "Customs.DeclarationPending",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeclarationID",
-					  						ListPropertyPath =  "DeclarationID",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeclarationID",
-					  						DefaultText =  "Declaration ID",
-					  						ListFieldLable =  "DeclarationIDListLable",
-					  						ListLableDefaultText =  "Declaration ID",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CourierPendingReasonCode",
-					  						ObjectTableName =  "Customs.DeclarationPending",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CourierPendingReason",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CourierPendingReasonCode",
-					  						ListPropertyPath =  "CourierPendingReasonCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CourierPendingReasonCode",
-					  						DefaultText =  "Courier Pending Reason Code",
-					  						FullLocalDefaultText =  "Pending",
-					  						ListFieldLable =  "CourierPendingReasonCodeListLable",
-					  						ListLableDefaultText =  "Courier Pending Reason Code",
-					  						ListLocalDefaultText =  "Pending",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CourierPendingReasonName",
-					  						ObjectTableName =  "Customs.DeclarationPending",
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "Customs.SchedulerParam",
 					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "SchedulerParam",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search ...",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "Search ...",
+					  						IsMaxLength =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SchedulerProcedureCode",
+					  						ObjectTableName =  "Customs.SchedulerParam",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "SchedulerProcedure",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -295,8 +231,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CourierPendingReasonName",
-					  						ListPropertyPath =  "CourierPendingReasonName",
+					  						PMPropertyPath =  "SchedulerProcedureCode",
+					  						ListPropertyPath =  "SchedulerProcedureCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -305,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
+					  						ValidForQuerySection1 =  "Customs.SchedulerParam",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -314,12 +250,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CourierPendingReasonName",
-					  						DefaultText =  "Courier Pending Reason",
-					  						FullLocalDefaultText =  "Pending",
-					  						ListFieldLable =  "CourierPendingReasonNameListLable",
-					  						ListLableDefaultText =  "Courier Pending Reason",
-					  						ListLocalDefaultText =  "Pending",
+					  						FullFieldLable =  "SchedulerProcedureCode",
+					  						DefaultText =  "SchedulerProcedureCode",
+					  						ListFieldLable =  "SchedulerProcedureCodeListLable",
+					  						ListLableDefaultText =  "SchedulerProcedureCode",
+					  						ListLocalDefaultText =  "SchedulerProcedure",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -339,27 +274,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PendingRemarks",
-					  						ObjectTableName =  "Customs.DeclarationPending",
+					 						FieldName =  "Parameter",
+					  						ObjectTableName =  "Customs.SchedulerParam",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  1024,
+					  						MaxLength =  50,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1024,
+					  						SystemMaxLength =  50,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  true,
+					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PendingRemarks",
-					  						ListPropertyPath =  "PendingRemarks",
+					  						PMPropertyPath =  "Parameter",
+					  						ListPropertyPath =  "Parameter",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -368,21 +302,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
+					  						ValidForQuerySection1 =  "Customs.SchedulerParam",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PendingRemarks",
-					  						DefaultText =  "Pending Remarks",
-					  						FullLocalDefaultText =  "הערות",
-					  						ListFieldLable =  "PendingRemarksListLable",
-					  						ListLableDefaultText =  "Pending Remarks",
-					  						ListLocalDefaultText =  "הערות",
+					  						FullFieldLable =  "Parameter",
+					  						DefaultText =  "Parameter",
+					  						ListFieldLable =  "ParameterListLable",
+					  						ListLableDefaultText =  "Parameter",
+					  						ListLocalDefaultText =  "Parameter",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -394,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -402,11 +335,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Status",
-					  						ObjectTableName =  "Customs.DeclarationPending",
+					 						FieldName =  "ParameterValue",
+					  						ObjectTableName =  "Customs.SchedulerParam",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  50,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -414,14 +347,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1,
+					  						SystemMaxLength =  50,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Status",
-					  						ListPropertyPath =  "Status",
+					  						PMPropertyPath =  "ParameterValue",
+					  						ListPropertyPath =  "ParameterValue",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -430,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
+					  						ValidForQuerySection1 =  "Customs.SchedulerParam",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -439,188 +372,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
-					  						ListFieldLable =  "StatusListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Approval",
-					  						ObjectTableName =  "Customs.DeclarationPending",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Approval",
-					  						ListPropertyPath =  "Approval",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationPending",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Approval",
-					  						DefaultText =  "Approval",
-					  						FullLocalDefaultText =  "אישור",
-					  						ListFieldLable =  "ApprovalListLable",
-					  						ListLableDefaultText =  "Approval",
-					  						ListLocalDefaultText =  "אישור",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CourierPendingRequireApr",
-					  						ObjectTableName =  "Customs.DeclarationPending",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CourierPendingRequireApr",
-					  						ListPropertyPath =  "CourierPendingRequireApr",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CourierPendingRequireApr",
-					  						DefaultText =  "CourierPendingRequireApr",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "WasApproved",
-					  						ObjectTableName =  "Customs.DeclarationPending",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "WasApproved",
-					  						ListPropertyPath =  "WasApproved",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "WasApproved",
-					  						DefaultText =  "WasApproved",
+					  						FullFieldLable =  "ParameterValue",
+					  						DefaultText =  "ParameterValue",
+					  						ListFieldLable =  "ParameterValueListLable",
+					  						ListLableDefaultText =  "ParameterValue",
+					  						ListLocalDefaultText =  "ParameterValue",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -639,38 +395,107 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup SchedulerParamQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0af5", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup SchedulerParamQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1417", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable SchedulerParamObjectTable = objectTables.ContainsKey("Customs.SchedulerParam") ? objectTables["Customs.SchedulerParam"] : null;
+            if (SchedulerParamObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                SchedulerParamObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SchedulerParam" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode SchedulerParamTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SchedulerParam.Q.SchedulerParam", DefaultText = @"Scheduler Params",LocalDefaultText = "Scheduler Params", ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature SchedulerParamFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SchedulerParam.Q.SchedulerParam", ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParamFeatures.SchedulerParam", NameTextCodeDefaultText = "SchedulerParam", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,SchedulerParamObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query SchedulerParamQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SchedulerParamTextCode_0.Id, NameTextCodeCode = SchedulerParamTextCode_0.Code, ObjectTableName = "Customs.SchedulerParam", Code = "SchedulerParam",  QueryGroupCode = "0af5", IndexOrder = 0, Tenant = 0, ObjectTableId = SchedulerParamObjectTable.Id, QuerySection = "Customs.SchedulerParam", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SchedulerParamFeature_0.Id,FeatureUniqeCode= SchedulerParamFeature_0.FeatureUniqeCode, DefaultSortName = "SchedulerProcedureCode", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn SchedulerParamQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SchedulerParamQuery.Id,QueryCode = SchedulerParamQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SchedulerParam.SchedulerProcedureCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SchedulerParamQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SchedulerParamQuery.Id,QueryCode = SchedulerParamQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SchedulerParam.Parameter" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SchedulerParamQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SchedulerParamQuery.Id,QueryCode = SchedulerParamQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SchedulerParam.ParameterValue" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable DeclarationPendingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationPending" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> DeclarationPendingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationPending").ToList();
+		   ObjectTable SchedulerParamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SchedulerParam" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> SchedulerParamObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SchedulerParam").ToList();
 		       
 	      
 
-	         Screen DeclarationPendingCustomsDeclarationPendingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DeclarationPending.HeaderScreen", Name = "Customs.DeclarationPendingHeaderScreen", ObjectTableId = DeclarationPendingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen SchedulerParamCustomsSchedulerParamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SchedulerParam.HeaderScreen", Name = "Customs.SchedulerParamHeaderScreen", ObjectTableId = SchedulerParamObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    DeclarationPendingObjectTable.HeaderScreenId = DeclarationPendingCustomsDeclarationPendingHeaderScreenScreen0.Id;
-		    DeclarationPendingObjectTable.HeaderScreenCode = DeclarationPendingCustomsDeclarationPendingHeaderScreenScreen0.Code;
+		    SchedulerParamObjectTable.HeaderScreenId = SchedulerParamCustomsSchedulerParamHeaderScreenScreen0.Id;
+		    SchedulerParamObjectTable.HeaderScreenCode = SchedulerParamCustomsSchedulerParamHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen SchedulerParamGeneralTabScreenSchedulerParamScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SchedulerParam.GeneralTabScreen", Name = "General Tab ScreenSchedulerParam", ObjectTableId = SchedulerParamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsSchedulerParamSchedulerParamGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Id,ScreenCode = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Code, ObjectFieldCode = "Customs.SchedulerParam.SchedulerProcedureCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsSchedulerParamSchedulerParamGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Id,ScreenCode = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Code, ObjectFieldCode = "Customs.SchedulerParam.Parameter", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsSchedulerParamSchedulerParamGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Id,ScreenCode = SchedulerParamGeneralTabScreenSchedulerParamScreen1.Code, ObjectFieldCode = "Customs.SchedulerParam.ParameterValue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable SchedulerParamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SchedulerParam" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode SchedulerParamGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SchedulerParam.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature SchedulerParamGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SchedulerParam.Tab.General", ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParamFeatures.SP01", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,SchedulerParamObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SP01",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SchedulerParamGeneralFeature_TH0.Id,FeatureUniqeCode = SchedulerParamGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SchedulerParamObjectTable.Id, TabNameTextCodeId = SchedulerParamGeneralTextCode_TH0.Id, TabNameTextCodeCode = SchedulerParamGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable SchedulerParamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SchedulerParam" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature SchedulerParamFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParam.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SchedulerParamObjectTable);
+		   Feature SchedulerParamFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParam.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SchedulerParamObjectTable);
+		   Feature SchedulerParamFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParam.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SchedulerParamObjectTable);
+		   Feature SchedulerParamFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SchedulerParamObjectTable.Id, Tenant = 0, NameTextCodeCode = "SchedulerParam.Features.PackageFeature", NameTextCodeDefaultText = "SchedulerParam Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SchedulerParamObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable DeclarationPendingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationPending" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable SchedulerParamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SchedulerParam" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -678,14 +503,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DeclarationPendingObjectTable.Id,
+                ObjectTableId = SchedulerParamObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -697,14 +521,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DeclarationPendingObjectTable.Id,
+                ObjectTableId = SchedulerParamObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
