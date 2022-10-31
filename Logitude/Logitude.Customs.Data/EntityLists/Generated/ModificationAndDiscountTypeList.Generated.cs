@@ -35,8 +35,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExtraNumericData  { get; set; }
        [DataMember]
-       public string ExportNetoValuesModificationAffectTypeID  { get; set; }
-       [DataMember]
        public bool? IsCustomsValueComponent  { get; set; }
        [DataMember]
        public string ExportFOBModificationAffectID  { get; set; }
@@ -48,6 +46,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? CurrencyMustBeSameAsInvoice  { get; set; }
        [DataMember]
        public bool? IsCustomUseExport  { get; set; }
+       [DataMember]
+       public string NetoValuesModificationAffectID  { get; set; }
    }
 
 }

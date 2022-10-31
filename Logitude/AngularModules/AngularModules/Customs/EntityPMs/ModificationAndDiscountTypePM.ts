@@ -74,11 +74,6 @@ export class ModificationAndDiscountTypePM {
     public set ExtraNumericData(newValue: string) { if (this.extraNumericData != newValue) { this.extraNumericData = newValue; this.MarkAsDirty("ExtraNumericData"); } }
        
 	 
-    private exportNetoValuesModificationAffectTypeID: string;
-    public get ExportNetoValuesModificationAffectTypeID() { return this.exportNetoValuesModificationAffectTypeID; }
-    public set ExportNetoValuesModificationAffectTypeID(newValue: string) { if (this.exportNetoValuesModificationAffectTypeID != newValue) { this.exportNetoValuesModificationAffectTypeID = newValue; this.MarkAsDirty("ExportNetoValuesModificationAffectTypeID"); } }
-       
-	 
     private isCustomsValueComponent: boolean;
     public get IsCustomsValueComponent() { return this.isCustomsValueComponent; }
     public set IsCustomsValueComponent(newValue: boolean) { if (this.isCustomsValueComponent != newValue) { this.isCustomsValueComponent = newValue; this.MarkAsDirty("IsCustomsValueComponent"); } }
@@ -107,6 +102,11 @@ export class ModificationAndDiscountTypePM {
     private isCustomUseExport: boolean;
     public get IsCustomUseExport() { return this.isCustomUseExport; }
     public set IsCustomUseExport(newValue: boolean) { if (this.isCustomUseExport != newValue) { this.isCustomUseExport = newValue; this.MarkAsDirty("IsCustomUseExport"); } }
+       
+	 
+    private netoValuesModificationAffectID: string;
+    public get NetoValuesModificationAffectID() { return this.netoValuesModificationAffectID; }
+    public set NetoValuesModificationAffectID(newValue: string) { if (this.netoValuesModificationAffectID != newValue) { this.netoValuesModificationAffectID = newValue; this.MarkAsDirty("NetoValuesModificationAffectID"); } }
        
 	 
 
