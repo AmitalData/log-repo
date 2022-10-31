@@ -3,6 +3,7 @@
         color: #1b90cb;
         font-size: 16px;
     }
+    
 
     .DisbleBox {
         display: inline-block;
@@ -14,6 +15,7 @@
         color: gray;
         font-family: sans-serif;
     }
+   
 </style>
 <table *ngIf="IsLoaded">
     <tr>
@@ -31,11 +33,15 @@
                     <tr>
                         <td colspan="5" style="height: 100%;">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                <logitude-edit-grid 
                                     [ItemSource]="DeclarationExportStorageList"
-                                    (Ondblclick)="OnFocus()">
+                                     
+                                    [ColumnName]="'DeclarationId'"
+                                    [Condition]="EntityPM.Id"
+                                    (SelectedItemChanged)="OnRowSelected($event)"
+                                    >
     
-                                    <!--(SelectedItemChanged)="EditButtonClicked($event)"-->
+                                   
                                     <!-- OpenDate -->
                                     <log-column [header]="'Customs.ExportStorage.F.OpenDate' | TextCodeTranslationPipe"
                                         [binding]="'OpenDate'" [width]="'110'" [Alignment]="'right'">

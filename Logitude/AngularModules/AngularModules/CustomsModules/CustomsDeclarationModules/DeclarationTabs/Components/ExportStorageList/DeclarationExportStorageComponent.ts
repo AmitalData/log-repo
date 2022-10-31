@@ -24,9 +24,10 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 import { Alert } from 'selenium-webdriver';
+import { Guid } from 'Infrastructure/Utilities/Guid';
 
 @Component({
-    
+
     templateUrl: './DeclarationExportStorageComponent.html',
 })
 
@@ -38,8 +39,7 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
     public CurrentEditComponentId: string;
     public DeclarationExportStorageList: ObservableCollection;
 
-    private DeclarationCargoSplitWebService: DeclarationCargoSplitWebService = new DeclarationCargoSplitWebService;
-    private DeclarationCargoSplitPMService: DeclarationCargoSplitPMService = new DeclarationCargoSplitPMService;
+    
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     requestParams: CargoSplitRequestParams = new CargoSplitRequestParams();
     responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
@@ -51,9 +51,9 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
         debugger;
         this.DeclarationExportStorageList = new ObservableCollection([]);
         this._EntityPMService = new EntityPMService();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ExportStorage").subscribe((response:any) => {
-            debugger
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ExportStorage").subscribe((response: any) => {
+                debugger
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.LoadDeclarationExportStorages();
@@ -107,132 +107,75 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
         this.DeclarationExportStorageList = new ObservableCollection([]);
         debugger
         //this.DeclarationCargoSplitWebService.GetDeclarationCargoSplitByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
-        this._DeclarationWebService.GetDeclarationExportStoragesByDeclarationIdAndExportFile(this.EntityPM.Id,this.EntityPM.ExportFile, this.EntityPM.Tenant)
+        this._DeclarationWebService.GetDeclarationExportStoragesByDeclarationIdAndExportFile(this.EntityPM.Id, this.EntityPM.ExportFile, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 debugger;
                 SessionLocator.SelectedSession.StopBusyIndicator();
-                
+
                 this.GetDeclarationExportStorageListsOp_Completed(myResponse, false);
-               
+
             });
     }
 
 
     private GetDeclarationExportStorageListsOp_Completed(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
         if (myResponse.Result != null) {
-           
+
             myResponse.Result.forEach((item) => {
                 this.DeclarationExportStorageList.Insert(item);
             });
         }
     }
-
-    CargoSplitIdEdit(): any {
-        var myDeclarationEditComponentController = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-        if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.CargoSplitId)) {
-            if (this.DeclarationExportStorageList != null && this.DeclarationExportStorageList.Collection != null) {
-                var item = this.DeclarationExportStorageList.Collection.find(r => r.Id == myDeclarationEditComponentController.CargoSplitId);
-                if (item != null) {
-                    this.EditButtonClicked(item);
-                    console.log("CargoSplitId " + myDeclarationEditComponentController.CargoSplitId);
-                    myDeclarationEditComponentController.CargoSplitId = null;
-                }
-            }
-        }
-    }
+   
 
     RefreshEntity() {
         SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
-    
 
 
-    OnFocus(){
-      debugger
-      
-    }
 
-    EditButtonClicked(item: DeclarationCargoSplitPM) {
+    OnRowSelected(event) {
+       
+        if (true)
+            var selected = event;
 
-        var windowArgs: any = {};
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", item.Id).then((res: any) => {
-                    res.subscribe((myResponse: any) => {
+        if (selected) {
+            
+            var currentScreenCode = "DESL";
+            var objectTableName = "Customs.ExportStorage";
 
-                        if (myResponse.HasError) {
-                            console.log("Error while getting EntityPM", myResponse);
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({
+                        SelectedTabCode: currentScreenCode,
+                        EntityId: selected?.Id,
+                        ObjectTableName: objectTableName,
+                    });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                            SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                         }
-                        else {
-                            windowArgs.CurrentEntity = myResponse.Result;
-                            var logWindow = new LogitudeWindow();
-
-                            logWindow.Width = 770;
-                            logWindow.Height = 750;
-                            //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
-                            logWindow.Title = "בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
-                            if (myResponse.Result != null) {
-                                if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
-                                    logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;
-                                }
-                                if (!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName)) {
-                                    logWindow.Title = logWindow.Title + " - " + myResponse.Result.ResponseStatusName;
-                                }
-                            }
-
-                            logWindow.WindowArgs = windowArgs;
-                            logWindow.ShowCloseButton = true;
-                            //logWindow.IsHideHeader = true;
-                            logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-
-                            logWindow.WindowClosed.subscribe(($event1: any) => {
-                                //this.isEditControlOpened = false;
-                                //this.OnBackFromEdit(selectedEntityId, $event);
-                            });
-                        }
+                       
                     });
 
+
+
                 });
-            });
 
-        });
-    }
-    AddDeclarationCargoSplitCommand() {
 
-        var newDeclarationCargoSplitPM = new DeclarationCargoSplitPM();
-        newDeclarationCargoSplitPM.Tenant = this.EntityPM.Tenant;
-        newDeclarationCargoSplitPM.DeclarationId = this.EntityPM.Id;
-        newDeclarationCargoSplitPM.CustomFileNo = this.EntityPM.CustomFileNo;
-        //this.DeclarationCargoSplitList.Insert(newDeclarationCargoSplitPM);
+            return;
 
-        this.NewDeclarationCargoSplit(newDeclarationCargoSplitPM);
+        }
     }
 
-    NewDeclarationCargoSplit(item: DeclarationCargoSplitPM) {
-        SessionLocator.SelectedSession.StartBusyIndicator("");
 
-        var windowArgs: any = {};
-        windowArgs.CurrentEntity = item;
-        windowArgs.IsNewEntity = true;
-        windowArgs.CustomFileNo = this.EntityPM.CustomFileNo;
-        windowArgs.Direction = this.EntityPM.Direction;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 770;
-        logWindow.Height = 750;
-        //windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.O.NewClaimsRelatedEntity");
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe((event: any) => {
-            this.LoadDeclarationExportStorages();
-        });
-
-        logWindow.IsHideHeader = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-        SessionLocator.SelectedSession.StopBusyIndicator();
-
-    }
+    
     
 
     
+
+
+
 }
