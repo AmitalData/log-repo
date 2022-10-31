@@ -14,6 +14,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Server.Infrastructure.DataContracts.Models.SearchModel;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -23,9 +24,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalGlobalSearch/GetDigitalGlobalSearchResults")]
         public IHttpActionResult GetDigitalGlobalSearchResults(GeneralFilters newFilters)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var searchFields = newFilters.SearchText;
@@ -78,8 +83,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(dictionary);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }

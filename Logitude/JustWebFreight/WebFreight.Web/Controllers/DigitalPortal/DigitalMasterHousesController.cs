@@ -9,6 +9,8 @@ using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Extensions;
 using WebFreight.Web.Extensions;
+using Logitude.SystemLogs;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -18,13 +20,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalMasterHouses/GetMasterWithConnectedHouses")]
         public IHttpActionResult GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20, bool isExternal = false)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 string shipmentId = null;
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);
                 shipmentId = shipmentIdAndTenant.Item1;
-                var tenant = shipmentIdAndTenant.Item2;
+                tenant = shipmentIdAndTenant.Item2;
+                email = shipmentIdAndTenant.Item3;
 
                 IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
@@ -72,8 +78,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Ok(response);
             }
 
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.SystemLogs;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -23,6 +24,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"GetBrandingDataByDomain : {domain}", "GetBrandingDataByDomain : GetBrandingDataByDomain", null);
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

@@ -13,7 +13,6 @@ using WebFreight.Web.WebServices;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
@@ -39,10 +38,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     message += Environment.NewLine + e.InnerException.Message;
                 }
+
                 data.ExceptionMessage = message;
                 return data;
             }
-
         }
 
         [ActionName("PostDigitalPortalChangePassword")]
@@ -87,6 +86,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, param.Email, "", "PostDigitalPortalChangePassword : PostDigitalPortalChangePassword", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -103,6 +103,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, changePasswordParameter.Email, "", "PostDigitalPortalCheckPasswordUser : PostDigitalPortalCheckPasswordUser", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
@@ -164,6 +165,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, "", $"GetLoggingData : {tenant}", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -182,5 +184,5 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return imageBase64String;
         }
-    }    
+    }
 }

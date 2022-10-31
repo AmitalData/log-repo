@@ -226,14 +226,11 @@ namespace WebFreight.Web.Security
 
             bool exists = false;
 
-            if (objectTableName.Contains("Customs."))
-            {
-
-            }
             if (HttpContext.Current != null && string.IsNullOrWhiteSpace(overrideEmail))
             {
                 overrideEmail = HttpContext.Current.User.Identity.Name;
             }
+
             if (!string.IsNullOrEmpty(overrideEmail))
             {
                 string email = overrideEmail;//HttpContext.Current.User.Identity.Name;
@@ -531,17 +528,6 @@ namespace WebFreight.Web.Security
             int loggedTenant = tenant;
 
             ContactInfo myContactInfo = null;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            //    #region
-            //    IGlobalContext globalContext = GlobalContext.GetContext();
-            //    GlobalTenant myTenant = (from d in globalContext.GlobalTenants where d.Id == tenant select d).FirstOrDefault();
-            //    if (myTenant != null && !string.IsNullOrEmpty(myTenant.PrivateLabelId))
-            //    {
-
-            //    }
-            //    scope.Complete();
-            //}
             string key = email + "_" + tenant + "_info";
 
             if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
@@ -561,9 +547,8 @@ namespace WebFreight.Web.Security
                         PackagesCodes = allPackages,
                     };
 
-                    CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    CacheManager.CacheWrapper.Insert(key, myContactInfo, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
-
                 else
                 {
                     string token = null;
@@ -649,13 +634,10 @@ namespace WebFreight.Web.Security
                                 RolesIds = allRolesIds,
                                 PackagesCodes = allPackages,
                             };
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
-
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
-
                     else
                     {
                         if (authToken != null)
@@ -667,9 +649,6 @@ namespace WebFreight.Web.Security
                                 IsApi = authToken.APIToken,
 
                             };
-
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
-
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }

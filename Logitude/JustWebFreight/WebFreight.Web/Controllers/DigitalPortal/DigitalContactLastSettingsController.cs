@@ -11,6 +11,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -20,9 +21,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalContactLastSettings/GetDigitalContactLastSettings")]
         public IHttpActionResult GetDigitalContactLastSettings(string contactId, string  entity, string cardId)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
@@ -37,8 +42,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(digitalContactLastSettings);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
@@ -47,9 +57,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalUploader/PutDigitalContactLastSettings")]
         public IHttpActionResult PutDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings)
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalContactLastSettings.CardId);
 
@@ -59,14 +73,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 return Ok(digitalContactLastSettings);
             }
+            catch (AutenticationException ex)
+            {
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
         }
 
-
         #region private methods 
+
         private string GetObjectTableId(string objectTableName, int tenant)
         {
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
@@ -184,7 +203,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return result;
         }
 
-        public void UpdateDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings, int tenant, string objectTableId)
+        private void UpdateDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings, int tenant, string objectTableId)
         {
             var filtersList = digitalContactLastSettings.FilterCodes;
             var context = CommonDataContext.GetContext(tenant);

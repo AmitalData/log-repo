@@ -1,25 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using System;
 using WebFreight.Web.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using System.Web;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Server.Infrastructure.DataContracts.Models;
-using Simplog.Data.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
-using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -29,15 +21,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalUploader/PostDocument")]
         public IHttpActionResult PostDocument(DigitalUploaderInfo info)
         {
+            int tenant = 0;
+            string email = "";
+
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                // Create Docs In
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, info.CardId);
-               
-                // Create Docs In
-                var tenant = authToken.Tenant;
-                var email = authToken.Email;
+                
                 ICommonDataContext context = CommonDataContext.GetContext(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
@@ -49,11 +45,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                
                 return Ok(imageParameterfilter);
             }
-            catch (Exception ex)
+            catch (AutenticationException ex)
             {
                 return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
             }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return BadRequest(ApiExceptionBuilder.BuildException(ex).ErrorMessage);
+            }
         }
+
+        #region private 
+
         private ImageParameter UploadImage(string documentId, DigitalUploaderInfo info, int tenant)
         {
             // Upload Image 
@@ -92,6 +96,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Notes = info.Notes,
             });
         }
-
+        
+        #endregion private
     }
 }
