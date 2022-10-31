@@ -67,7 +67,6 @@ When("create appointment activity", () => {
 
 Then("the appointment activity should appear successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.PostTicketActivity,200);
-    BaseAssertion.AssertStatusCode(RequestAliases.WailAllLoad, 200);
 });
 //#endregion
 

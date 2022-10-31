@@ -7,8 +7,8 @@ Feature: Journal
         And navigate journal workspace
         And a journal line action with the following details
             | ActionName    | חובה+זכות  |
-            | RefDate       | 01/09/2021 |
-            | DueDate       | 01/09/2021 |
+            | RefDate       | 16/10/2022 |
+            | DueDate       | 16/10/2022 |
             | CreditAccount | KHTest     |
             | DebitAccount  | KHTest     |
             | Amount        | 100        |
