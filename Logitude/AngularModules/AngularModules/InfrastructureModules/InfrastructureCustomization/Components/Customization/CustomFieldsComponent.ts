@@ -106,6 +106,7 @@ export class CustomFieldsComponent {
                 objectField.DisplayInEntityVariables = true;
                 objectField.DisplayInList = true;
                 objectField.CanFilter = true;
+                objectField.IndexOrder = 0;
                 windowArgs.objectField = objectField;
                 windowArgs.DataTypeCollection = myResponse.Result;
                 windowArgs.ObjectTableName = this.ObjectTableName;
