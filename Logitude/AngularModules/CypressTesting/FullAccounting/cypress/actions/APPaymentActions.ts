@@ -35,6 +35,7 @@ export function ApproveAPPayment() {
 
 export function AssertApproveAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAPPayments, 200)
+    cy.wait(5000)
 }
 
 export function VoidAPPayment() {

@@ -8,8 +8,8 @@ Feature: AP Invoice
             | Vendor         | KHTest     |
             | InvoiceNumber  | Random     |
             | InvoiceAmount  | 100        |
-            | InvoiceDate    | 05/09/2021 |
-            | AccountingDate | 05/09/2021 |
+            | InvoiceDate    | 16/10/2022 |
+            | AccountingDate | 16/10/2022 |
         When create AP Invoice
         Then the AP Invoice should get successfully
 
