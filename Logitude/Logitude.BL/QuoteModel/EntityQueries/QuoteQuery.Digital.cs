@@ -110,6 +110,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             var quoteBusinessUnitFilter = new QuoteBusinessUnitFilter(tenant);
             entityPocos  = quoteBusinessUnitFilter.RunFilter(entityPocos);
             entityPocos = genericFilter.GetFilteredQuery<Quote>(nonListQueryOperation, entityPocos);
+            var quoteStageRepository = new QuoteStageRepository(tenant);
+            var quotes_Created = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
+            var quotes_Draft = quoteStageRepository.GetQuoteStageIdByCode("QTDR", tenant);
+            entityPocos = entityPocos.Where(d => d.StageId != quotes_Created && d.StageId != quotes_Draft);
+
             var skippedEntities = queryOperations.PageIndex;
             var entityLists = quoteQuery.GetIQueryableEntityList(entityPocos);
             entityLists = genericFilter.GetFilteredQuery<QuoteList>(listQueryOperation, entityLists);
