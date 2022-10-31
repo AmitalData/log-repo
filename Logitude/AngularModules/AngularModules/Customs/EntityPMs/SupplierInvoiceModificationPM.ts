@@ -77,6 +77,11 @@ export class SupplierInvoiceModificationPM {
     public set TypeDesc(newValue: string) { if (this.typeDesc != newValue) { this.typeDesc = newValue; this.MarkAsDirty("TypeDesc"); } }
        
 	 
+    private modificationAffectTypeID: string;
+    public get ModificationAffectTypeID() { return this.modificationAffectTypeID; }
+    public set ModificationAffectTypeID(newValue: string) { if (this.modificationAffectTypeID != newValue) { this.modificationAffectTypeID = newValue; this.MarkAsDirty("ModificationAffectTypeID"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceModificationPM;
 	

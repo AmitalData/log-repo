@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int ModificationCounterKey  { get; set; }
        [DataMember]
        public string TypeDesc  { get; set; }
+       [DataMember]
+       public string ModificationAffectTypeID  { get; set; }
    }
 
 }
