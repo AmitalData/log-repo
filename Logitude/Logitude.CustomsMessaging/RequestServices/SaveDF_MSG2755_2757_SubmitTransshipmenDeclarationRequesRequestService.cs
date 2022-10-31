@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode, requestParams.RequestVIA);
             }
 
-            var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
+            var srverTime = LogitudeSettings.IsCostomsDeploy ? DateTime.Now : (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
             if (
                 declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
                 declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault()) > TimeSpan.FromMinutes(1)
