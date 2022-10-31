@@ -47,6 +47,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -894,6 +895,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 			SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
             SharedLogisticsSettingPM setting = query.GetSingle(settingId.ToString(), false, false);
             return setting;
+        }
+
+        [OperationContract]
+        [WebGet(UriTemplate = "getObjectFieldsByObjectTable/{tenant}/{objectTableName}")]
+        public List<ObjectFieldPM> GetObjectFieldsByObjectTable(int tenant, string objectTableName)
+        {
+            ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+            var tableId = tableRepository.GetObjectTableByName(objectTableName, tenant, false).Id;
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            List<ObjectFieldPM> objectFields = objectFieldQuery.GetObjectFieldsByTenantAndObjectTableId(tenant, tableId);
+            return objectFields;
         }
     }
 }

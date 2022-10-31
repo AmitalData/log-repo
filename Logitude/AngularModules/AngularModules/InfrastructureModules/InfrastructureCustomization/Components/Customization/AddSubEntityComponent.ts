@@ -5,6 +5,7 @@ import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTableP
 import { ObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectTablePMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SubEntitiesComponent } from './SubEntitiesComponent';
+import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
@@ -24,10 +25,12 @@ export class AddSubEntityComponent extends BaseComponent {
     private parentObjectTableId: string;
     private objectTablePM: ObjectTablePM;
     private objectTablePMService: ObjectTablePMService;
+    private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
     constructor() {
         super();
         this.objectTablePMService = new ObjectTablePMService();
+        this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
         this.objectTablePM = new ObjectTablePM();
         this.UIProperties.SetRequired("DisplayLabelSingular", "ObjectTable", true);
         this.UIProperties.SetRequired("DisplayLabelPlural", "ObjectTable", true);
@@ -96,12 +99,19 @@ export class AddSubEntityComponent extends BaseComponent {
 
             this.CurrentSession.StopBusyIndicator();
             window.ObjectTables.push(this.objectTablePM);
+            this.GetObjectFields();
             this.customizationSubEntitiesComponent.ApplyChanges(this.objectTablePM);
             this.CurrentSession.CloseCurrentWindow();
 
         });
     }
 
+    GetObjectFields() {
+        this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name, this.objectTablePM.Tenant).subscribe((response: ServiceResponse) => {
+            if (!response) return;
+            window.ObjectFields = window.ObjectFields.concat(response);
+        });
+    }
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
