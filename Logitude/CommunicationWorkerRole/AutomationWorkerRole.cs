@@ -557,12 +557,12 @@ namespace CommunicationWorkerRole
         private string GetContactEmailByContactId(string loggedContactId, int tenant)
         {
             string contactEmail = string.Empty;
-            if (!string.IsNullOrEmpty(loggedContactId))
-            {
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
-                if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
-            }
+            if (string.IsNullOrEmpty(loggedContactId)) return contactEmail;
+
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
+            if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
+
             return contactEmail;
         }
 
