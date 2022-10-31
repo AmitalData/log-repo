@@ -607,28 +607,32 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? EventDate;
         public string TrackingSource;
 
-        public ContainerTransshipmentUpdatedFields LoadedTransshipment; 
-        public ContainerTransshipmentUpdatedFields VesselArrived;
-        public ContainerTransshipmentUpdatedFields VesselDeparted;
-        public ContainerTransshipmentUpdatedFields DischargedTransshipment;
+        public ContainerTransshipment LoadedTransshipment; 
+        public ContainerTransshipment VesselArrived;
+        public ContainerTransshipment VesselDeparted;
+        public ContainerTransshipment DischargedTransshipment;
         
 
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }
     }
 
-    public class ContainerTransshipmentUpdatedFields
+    public class ContainerTransshipment
     {
-        public ContainerTransshipmentUpdatedFields(string key)
+        public string Key;
+        public List<ContainerTransshipmentUpdatedFields> TransshipmentMilestones;
+        public ContainerTransshipment(string key)
         {
             this.Key = key;
+            this.TransshipmentMilestones = new List<ContainerTransshipmentUpdatedFields>();
         }
-
-        public string Key;
+    }
+    public class ContainerTransshipmentUpdatedFields
+    {
         public string Location;
         public string Vessel;
         public string Voyage;
         public DateTime? EstimatedDate;
         public DateTime? ActualDate;
-    }
+    }    
 }
