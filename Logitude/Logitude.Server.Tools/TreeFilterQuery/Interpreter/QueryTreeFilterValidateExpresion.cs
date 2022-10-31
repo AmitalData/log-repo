@@ -11,7 +11,7 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Interpreter
    public class QueryTreeFilterValidateExpresion : IQueryTreeFilterExpression
     {
         
-        private string[] operatorsHaveFieldValue = new string[] { "IsEmpty", "IsNotEmpty", "LessThan", "LessThanOrEqual", "GreaterThanOrEqual", "LargerThan", "Contains", "NotContains", "Equal", "NotEqual" , "StartsWith", "EndsWith", "InList", "InListExact", "Exclude", "InListInt" };
+        private string[] operatorsHaveFieldValue = new string[] { "LessThan", "LessThanOrEqual", "GreaterThanOrEqual", "LargerThan", "Contains", "NotContains", "Equal", "NotEqual" , "StartsWith", "EndsWith", "InList", "InListExact", "Exclude", "InListInt" };
         private QueryTreeFilterContext queryTreeFilterContext;
         private List<string> fieldsNames = new List<string>();
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)

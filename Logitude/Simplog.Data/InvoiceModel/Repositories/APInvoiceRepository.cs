@@ -237,7 +237,11 @@ namespace Simplog.Data.InvoiceModel.Repositories
         internal void UpdateFromAPInvoice(APInvoice entity)
         {
             var apInvoiceAnalytic = Map<APInvoiceAnalytic>(entity);
-            if (context.APInvoiceAnalytics.Any(e => e.Id == apInvoiceAnalytic.Id)) context.APInvoiceAnalytics.Attach(apInvoiceAnalytic);
+            if (context.APInvoiceAnalytics.Any(e => e.Id == apInvoiceAnalytic.Id)) 
+            {
+                context.APInvoiceAnalytics.Attach(apInvoiceAnalytic);
+                context.SetAsModified(apInvoiceAnalytic);
+            } 
             else AddFromAPInvoice(entity);
         }
         private T Map<T>(APInvoice from) where T : new()
