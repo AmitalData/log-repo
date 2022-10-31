@@ -15,8 +15,8 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 export class ExportReportComponent extends BaseComponent implements OnInit {
     public DataContext: ExportReportComponent = this;
-    public ObjectTableName: string = "Customs.DeclarationCourierStatus";
-    EntityResource = false;
+    public ObjectTableName: string = "Customs.Declarations";
+  
     _ReportTypes: KeyValuePair[] = [];
     SelectedReportType: KeyValuePair;
     _SelectReportType_Key: string;
@@ -27,11 +27,7 @@ export class ExportReportComponent extends BaseComponent implements OnInit {
 
     constructor(private _entityResourceService: EntityResourceService, private http: HttpClient) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus", 0).subscribe((response: any) => {
-            this.EntityResource = true;
-        });
-
-        this.UIProperties.SetVisibility("FromExport", this.ObjectTableName, true);
+      
     }
 
     _FromExport;
@@ -56,7 +52,7 @@ export class ExportReportComponent extends BaseComponent implements OnInit {
     ExportExcel() {
         this.ValidationErrorsList = this.GetErrors();
         if (this.ValidationErrorsList.length == 0) {
-            var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationCourierStatusWebService/GetExportReport2Excel?' + this.GetExportReportSettings();
+            var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationWebService/GetExportReport2Excel?' + this.GetExportReportSettings();
             window.open(url);
         }
     }

@@ -69,7 +69,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                     mailMessage.From = new MailAddress("amitarltest123@gmail.com");
 
-                    mailMessage.To.Add(" tzuri @AMITAL.CO.IL");
+                    mailMessage.To.Add("tzuri@AMITAL.CO.IL");
                     mailMessage.CC.Add("sh254256@gmail.com");               
                     mailMessage.Attachments.Add(new Attachment(data, response.Content.Headers.ContentDisposition.FileName));
                     mailMessage.BodyEncoding = Encoding.UTF8;
