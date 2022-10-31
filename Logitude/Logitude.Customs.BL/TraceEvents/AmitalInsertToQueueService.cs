@@ -38,20 +38,25 @@ namespace Logitude.Customs.BL.TraceEvents
         public static Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE setLogistictFile(DeclarationPM myDeclaration , string tadpisPrintDate=null)
         {
             Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE LogistictFile = new Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE();
-            bool ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
+
+            bool ifCurrecyEquals = false;
+            if (myDeclaration.SupplierInvoices.Count > 0) {
+                 ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
+
+            }
             LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
             {
-                customFileNo = myDeclaration.CustomFileNo,
-                id = myDeclaration.Id,
+                customFileNo = myDeclaration?.CustomFileNo,
+                id = myDeclaration?.Id,
                 declarationNumber = myDeclaration.DeclarationNumber,
                 tadpisPrintDate = tadpisPrintDate,
-                TotalSum = ifCurrecyEquals ? myDeclaration.SupplierInvoices.Sum(s => s.InvoiceAmount).ToString() : null,
-                currecy = ifCurrecyEquals ? myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode : null,
-                totalNisSum = myDeclaration.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.ItemFOBAmountNIS)).ToString(),
-                totalFreightSum = myDeclaration.SupplierInvoices.Sum(s => s.TotalFreightInFreightCurrency).ToString(),
-                totalPackages = myDeclaration.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.PackageQuantity)).ToString(),
+                TotalSum = ifCurrecyEquals ? myDeclaration?.SupplierInvoices.Sum(s => s.InvoiceAmount).ToString() : null,
+                currecy = ifCurrecyEquals ? myDeclaration?.SupplierInvoices[0]?.InvoiceCurrencyTypeCode : null,
+                totalNisSum = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.ItemFOBAmountNIS)).ToString(),
+                totalFreightSum = myDeclaration?.SupplierInvoices.Sum(s => s.TotalFreightInFreightCurrency).ToString(),
+                totalPackages = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.PackageQuantity)).ToString(),
                 loadingDateTime = myDeclaration?.LoadingDateTime.ToString(),
-                direction = myDeclaration.Direction,
+                direction = myDeclaration?.Direction,
 
             };
             LogistictFile.logitudeCustomsFile.invoice = new Invoices[myDeclaration.SupplierInvoices.Count];
