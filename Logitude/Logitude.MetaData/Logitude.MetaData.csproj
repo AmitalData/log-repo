@@ -118,6 +118,7 @@
     <None Include="DBScripts\InfrastructureModel\202205100957_UpdateDoubleFieldDataTypeDisplayName.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209101038_UpdateFieldDataTypesDefaults.sxml" />
     <None Include="DBScripts\InfrastructureModel\202227091630_UpdateFieldDataTypesDisplayNames.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202211010130_UpdateEntityStatusNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
