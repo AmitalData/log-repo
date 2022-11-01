@@ -141,8 +141,9 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
                 let screenSection = new ScreenSectionPM();
                 screenSection.Number = 0;
-                screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "",
+                screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "";
                 this.ScreenSections.push(new ScreenSection(screenSection, this.ScreenColumns))
+                
                 if (fireEmit) {
                     this.LoadCompleted.emit(true);
                 }
@@ -210,6 +211,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             return;
 
         this.BuildScreenSections(screen, fireEmit);
+        
     }
 
 
@@ -223,7 +225,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             {
                 this.ScreenSections = [];
 
-                const sections: any[] = response.Result;
+                const sections: any[] = this.ReOrderScreenSections(response.Result);
                 let childEntityResourcesArgs: ChildEntityResourcesArgs = new ChildEntityResourcesArgs();
                 childEntityResourcesArgs.Screen = screen;
                 childEntityResourcesArgs.Sections = sections;
@@ -272,8 +274,10 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
         childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
 
-        if (childEntityResourcesArgs.FireEmit)
+        if (childEntityResourcesArgs.FireEmit) {
             this.LoadCompleted.emit(true);
+        }
+            
     }
 
     private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)
@@ -392,6 +396,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 });
             }
         }
+    }
+
+    private ReOrderScreenSections(screenSections: any[]) {
+        return screenSections.sort((a, b) => {
+            return (a.Number === b.Number) ? 0 : (a.Number < b.Number) ? -1 : 1
+        });
     }
 }
 
