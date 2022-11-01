@@ -20,7 +20,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 activityInfo.OrganizationId = activityInfo.Tenant.ToString();
                 activityInfo.OrgDisplayName = myTenant.Company + (myTenant.CountryName != null ? ("-" + myTenant.CountryName.Trim()) : "");
                 ActivityLog.AddContactActivityWithTotango(activityInfo.OrganizationId, activityInfo.OrgDisplayName, activityInfo.UserName, activityInfo.Module,
-                   activityInfo.Activity, activityInfo.ContactId, activityInfo.Tenant, activityInfo.IsSharedLogisticsContact, activityInfo.CardId, activityInfo.PartnerTypeId, null);
+                   activityInfo.Activity, activityInfo.ContactId, activityInfo.Tenant, activityInfo.IsSharedLogisticsContact, activityInfo.CardId, activityInfo.PartnerTypeId, activityInfo.Via);
                 return Ok();
             }
             catch (Exception ex)
