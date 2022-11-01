@@ -12,7 +12,6 @@ namespace Logitude.BL.QuoteModel.CustomFilters
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
             queryableData = queryableData.Where(d =>
-                  d.QuoteNumber.Contains(digitalPortalSearchFields) ||
                   d.QuoteNumber.Contains(digitalPortalSearchFields)
            );
 
