@@ -319,6 +319,7 @@ namespace CommunicationWorkerRole
                                 #region E-mail
                                 if (automation.ResultCode == "EMAIL")
                                 {
+                                    AuthenticationUtil.AuthenticatedUserEmail = GetAuthenticationUtilUserEmail(entityChange);
                                     entityChangesAutomation.type = validateResult.IsAutomationValid ? "EmailSsucceed" : "EmailFailed";
 
                                     if (validateResult.IsAutomationValid)
@@ -542,6 +543,27 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private string GetAuthenticationUtilUserEmail(EntityChange entityChange)
+        {
+            if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+            {
+                return AuthenticationUtil.AuthenticatedUserEmail;
+            }
+            return GetContactEmailByContactId(entityChange.CreateByUserId, entityChange.Tenant);
+        }
+
+        private string GetContactEmailByContactId(string loggedContactId, int tenant)
+        {
+            string contactEmail = string.Empty;
+            if (string.IsNullOrEmpty(loggedContactId)) return contactEmail;
+
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
+            if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
+
+            return contactEmail;
         }
 
         private void EventCreationAutomation(ObjectTable objectTable, AutomationEventCreationArguments automationEventCreationArguments)
