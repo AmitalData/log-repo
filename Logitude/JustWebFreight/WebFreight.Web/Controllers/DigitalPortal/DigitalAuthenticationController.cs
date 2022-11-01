@@ -180,8 +180,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var fileLocation = "images";
             Uploader uploaderService = new Uploader();
             var imageFiledata = uploaderService.DownloadFile(imageDetailId, extension, fileLocation, tenant);
-            var imageBase64String = Convert.ToBase64String(imageFiledata);
-
+            string imageBase64String = null;
+            if (imageFiledata != null)
+            {
+                imageBase64String = "data:image/" + extension + ";base64," + Convert.ToBase64String(imageFiledata);
+            }
             return imageBase64String;
         }
     }
