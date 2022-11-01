@@ -372,12 +372,12 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new ChildEntitiesCustomFieldMap());
             modelBuilder.Configurations.Add(new ScreenSectionMap());
             modelBuilder.Configurations.Add(new TabModificationMap());
+            modelBuilder.Configurations.Add(new CustomChildObjectMap());
 
 
 
 
-
-        modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
+            modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             base.OnModelCreating(modelBuilder);
         }
@@ -862,7 +862,11 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-
+        public IDbSet<CustomChildObject> CustomChildObjects
+        {
+            get;
+            set;
+        }
 
 
         public void SetAsModified(object entity)
