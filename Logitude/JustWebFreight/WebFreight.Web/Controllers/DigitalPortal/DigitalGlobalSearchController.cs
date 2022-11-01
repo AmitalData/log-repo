@@ -25,7 +25,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpPost]
         [Route("DigitalGlobalSearch/GetDigitalGlobalSearchResults")]
-        public HttpResponseMessage GetDigitalGlobalSearchResults(GeneralFilters newFilters)
+        public HttpResponseMessage GetDigitalGlobalSearchResults(GeneralFilters newFilters, bool includeQoutes = false)
         {
             int tenant = 0;
             string email = "";
@@ -73,23 +73,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                            .Take(3);
                 }
 
-                newFilters.SortBy = "LastUpdate";
-                newFilters.SortDirection = "Descending";
-
-                var quoteQuery = new QuoteQuery(authToken.Tenant);
-                var quotesQuery = quoteQuery.GetByFilters(newFilters);
-                if (!string.IsNullOrWhiteSpace(searchFields))
-                {
-                    quotesQuery = quotesQuery.Where(d => d.QuoteNumber.Contains(searchFields))
-                                             .Take(3);
-                }
-
                 dictionary = new Dictionary<string, List<GlobalSearchResult>> 
                 {
                     { "Shipments", GetShipmentsGlobalSearch(shipments.ToList())},
                     { "Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())},
-                    { "Quotes", GetQoutesGlobalSearch(quotesQuery.ToList())},
                 };
+
+                if (includeQoutes)
+                {
+                    newFilters.SortBy = "LastUpdate";
+                    newFilters.SortDirection = "Descending";
+
+                    var quoteQuery = new QuoteQuery(authToken.Tenant);
+                    var quotesQuery = quoteQuery.GetByFilters(newFilters);
+                    if (!string.IsNullOrWhiteSpace(searchFields))
+                    {
+                        quotesQuery = quotesQuery.Where(d => d.QuoteNumber.Contains(searchFields))
+                                                 .Take(3);
+                    }
+
+                    dictionary.Add("Quotes", GetQoutesGlobalSearch(quotesQuery.ToList()));
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, dictionary);
             }
