@@ -24,6 +24,7 @@ import { ChartOfAccountList } from '../../../../Accounting/EntityLists/ChartOfAc
 import { UserPM } from '../../../../Common/EntityPMs/UserPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
+import { Operators } from 'Accounting/DataContracts/Operators';
 
 
 @Component({
@@ -40,6 +41,23 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public RunReportTitle: string;
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
+    operatorsList =
+    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+    ];
+    selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
+    amount: number;
+    get Amount() { return this.amount; }
+    set Amount(value: number) {
+        if (this.amount != value) {
+            this.amount = value;
+        }
+    }
+
     public IsSchedulerReport: boolean = false;
     public GLAccountChanged: boolean = false;
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
@@ -204,6 +222,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
+    AmountOperatorChanged($event){
+        this.selectedAmountOperator = $event;
+    }
+
     ValidateDate()
     {
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
@@ -364,6 +386,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public set BalanceInLocalCurrency(v : string) {
         this._BalanceInLocalCurrency = v;
     }
+    
     //#endregion
 
     //#region Filter Methods
@@ -524,7 +547,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "BalanceInLocalCurrency";
         queryFilterItem.FieldValue = this.BalanceInLocalCurrency;
-        queryFilterItem.Operator = "Equals";
+        if(this.selectedAmountOperator) {
+            queryFilterItem.Operator = this.selectedAmountOperator.Code; //ayed
+            this.selectedAmountOperator 
+        }
         queryFilterItems.push(queryFilterItem);
         return queryFilterItems;
     }
@@ -598,7 +624,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
                     break;
                 case "BalanceInLocalCurrency":
-                    this.BalanceInLocalCurrency = queryFilterItem.FieldValue;
+                    this.BalanceInLocalCurrency = queryFilterItem.FieldValue;//ayed
+                    if(this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0){
+                        this.selectedAmountOperator = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
+                    }
                     break;    
             }
         }
