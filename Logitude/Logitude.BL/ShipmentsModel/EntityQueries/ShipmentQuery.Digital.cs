@@ -2364,7 +2364,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (!string.IsNullOrEmpty(newFilters.CardId))
             {
-                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "Equals", null, false);
+                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "InList", null, false);
             }
 
             if (!string.IsNullOrEmpty(shipmentLevelCodeValue))

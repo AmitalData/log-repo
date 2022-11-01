@@ -50,13 +50,14 @@ namespace WebFreight.Web.WebPages
                     ContactRepository contactrep = new ContactRepository(commonDataContext);
                     Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
 
+                    List<string> cards = cardId?.Split(',').ToList<string>();
                     if (contact != null)
                     {
                         CardContact cardContact = commonDataContext.CardContacts
                                                                    .FirstOrDefault(d => d.ContactId == contact.Id
                                                                                         && (d.CardId == partnerId
                                                                                             || (isFromDigital 
-                                                                                                && d.CardId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase))));
+                                                                                                && cards.Contains(d.CardId))));
                         if (cardContact != null)
                         {
                             exists = true;

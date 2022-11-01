@@ -8,6 +8,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
@@ -30,12 +31,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             var queryOperations = new QueryOperations()
             {
                 ObjectTableName = "Quote",
-                PageIndex = filters.PageIndex,
-                PageSize = filters.PageSize,
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
                 QuerySection = "Quotes",
-                SortByColumnName = filters.SortBy,
-                SortDirectin = filters.SortDirection,
-                GetAll = filters.GetAll,
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection,
+                QueryFilterItems = new List<QueryFilterItem>(),
             };
 
             string partnerTypeName = string.Empty;
@@ -51,7 +52,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             if (!string.IsNullOrEmpty(newFilters.CardId))
             {
-                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "Equals", null, false);
+                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "InList", null, false);
             }
 
             var quoteObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Quote", tenant);

@@ -2428,7 +2428,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 if (!string.IsNullOrWhiteSpace(cardBillToId))
                 {
                     cardFilterValues = cardFilterValues + "," + cardBillToId;
-                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "Equals", null, false);
+                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "InList", null, false);
                 }
 
                 queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);

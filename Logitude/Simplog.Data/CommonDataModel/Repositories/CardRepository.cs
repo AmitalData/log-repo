@@ -695,10 +695,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public string GetBillToCardById(string id, int tenant)
+        public string GetBillToCardById(string ids, int tenant)
         {
+            List<string> cards = ids?.Split(',').ToList<string>();
             string billToId = (from a in context.Cards
-                                   where a.Id == id && a.Tenant == tenant
+                                   where cards.Contains(a.Id) && a.Tenant == tenant
                                    select a.BillToId).FirstOrDefault();
 
             return billToId;

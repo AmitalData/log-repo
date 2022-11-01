@@ -977,7 +977,8 @@ namespace WebFreight.Web.Security
 
                     if (contact != null)
                     {
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        List<string> partners = partnerId?.Split(',').ToList<string>();
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && partners.Contains(d.CardId)).FirstOrDefault();
                         
                         if (cardContact != null)
                         {
