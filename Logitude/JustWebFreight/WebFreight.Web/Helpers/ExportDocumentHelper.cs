@@ -818,6 +818,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "999CI":
                 case "999S":// Shipment invoice
                 case "999M":
+                case "ARINV":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         InvoiceWebService invoiceWebService = new InvoiceWebService();
