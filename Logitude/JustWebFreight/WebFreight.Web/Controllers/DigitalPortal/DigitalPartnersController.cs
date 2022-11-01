@@ -59,12 +59,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IQueryable<DigitalShipmentsDataView> shipments = shipmentRepository.GetDigitalShipmentViewsByTenant(authToken.Tenant);
 
+                List<string> cards = cardId?.Split(',').ToList<string>();
+                List<string> cardTypes = cardType?.Split(',').ToList<string>();
                 var partners = shipments.Where(a => a.Tenant == authToken.Tenant
                                                     && (cardType == null
                                                         || cardType.Trim() == string.Empty
-                                                        || (cardType.Equals("CS")
-                                                            ? a.CustomerId.Equals(cardId)
-                                                            : a.AgentId.Equals(cardId)))
+                                                        || (cardTypes.Contains("CS")
+                                                            ? cards.Contains(a.CustomerId)
+                                                            : cards.Contains(a.AgentId)
+                                                            )
+                                                            )
                                                     && (a.ConsigneeName.Trim().StartsWith(searchText)
                                                        || a.ShipperName.Trim().StartsWith(searchText)))
                                         .Take(100)
@@ -128,10 +132,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
 
+                List<string> cards = cardId?.Split(',').ToList<string>();
+                List<string> cardTypes = cardType?.Split(',').ToList<string>();
                 var results = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                    && (cardType.Equals("CS")
-                                                        ? a.CustomerId.Equals(cardId)
-                                                        : a.AgentId.Equals(cardId))
+                                                    && (cardTypes.Contains("CS")
+                                                       ? cards.Contains(a.CustomerId)
+                                                         : cards.Contains(a.AgentId)
+                                                        )
                                                     && (isFrom
                                                         ? a.From.Trim().StartsWith(searchText)
                                                         : a.To.Trim().StartsWith(searchText)))

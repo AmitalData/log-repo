@@ -110,7 +110,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [ActionName("GetLoggingData")]
-        public HttpResponseMessage GetLoggingData(string email, int tenant, string cardId)
+        public HttpResponseMessage GetLoggingData(string email, int tenant)
         {
             try
             {
@@ -121,14 +121,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var contactRepository = new ContactRepository(commonDataContext);
                 var tenantRepository = new TenantRepository(commonDataContext);
 
-                var card = cardRepository.GetSingleCard(cardId, tenant);
                 var myTenant = tenantRepository.GetSingleTenant(tenant);
                 var myContact = contactRepository.GetSingleContactByEmail(email, tenant);
-
-                if (card != null)
-                {
-                    myResult.CardName = card.EnglishName;
-                }
 
                 if (myContact != null)
                 {
