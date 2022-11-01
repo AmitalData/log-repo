@@ -1,6 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,8 @@ using Simplog.Server.Infrastructure.DataContracts.Models.SearchModel;
 using Logitude.SystemLogs;
 using System.Net;
 using System.Net.Http;
+using Logitude.BL.QuoteModel.EntityQueries;
+using Logitude.BL.QuoteModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -24,7 +25,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpPost]
         [Route("DigitalGlobalSearch/GetDigitalGlobalSearchResults")]
-        public HttpResponseMessage GetDigitalGlobalSearchResults(GeneralFilters newFilters)
+        public HttpResponseMessage GetDigitalGlobalSearchResults(GeneralFilters newFilters, bool includeQoutes = false)
         {
             int tenant = 0;
             string email = "";
@@ -36,6 +37,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 var searchFields = newFilters.SearchText;
+
+                var dictionary = new Dictionary<string, List<GlobalSearchResult>>();
+
+                if (string.IsNullOrWhiteSpace(newFilters.SearchText))
+                {
+                    dictionary =  new Dictionary<string, List<GlobalSearchResult>>
+                    {
+                        { "Shipments", new List<GlobalSearchResult>()},
+                        { "Invoicing", new List<GlobalSearchResult>()},
+                        { "Quotes", new List<GlobalSearchResult>()},
+                    };
+                    
+                    return Request.CreateResponse(HttpStatusCode.OK, dictionary);
+                }
+
                 newFilters.Tenant = authToken.Tenant;
                 newFilters.SortBy = "StatusDate";
                 newFilters.SortDirection = "Descending";
@@ -44,7 +60,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (!string.IsNullOrWhiteSpace(searchFields))
                 {
                     shipments = shipments.Where(d => d.ShipmentNumber.Contains(searchFields))
-                                         .Take(10);
+                                         .Take(3);
                 }
 
                 newFilters.SortBy = "UpdateDate";
@@ -54,34 +70,30 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (!string.IsNullOrWhiteSpace(searchFields))
                 {
                     aRInvoices = aRInvoices.Where(d => d.InvoiceNumber.Contains(searchFields))
-                                           .Take(10);
+                                           .Take(3);
                 }
 
-                var invoicesCount = aRInvoices.Count();
-                var shipmentsCount = shipments.Count();
-
-                if(invoicesCount >= 5 && shipmentsCount >= 5)
+                dictionary = new Dictionary<string, List<GlobalSearchResult>> 
                 {
-                    aRInvoices = aRInvoices.Take(5);
-                    shipments = shipments.Take(5);
-                }
-
-                else if (invoicesCount >= shipmentsCount)
-                {
-                    shipments = shipments.Take(shipmentsCount);
-                    aRInvoices = aRInvoices.Take(10 - shipmentsCount);
-                } 
-
-                else if (shipmentsCount >= invoicesCount)
-                {
-                    aRInvoices = aRInvoices.Take(invoicesCount);
-                    shipments  = shipments.Take(10 - invoicesCount);
-                }
-
-                var dictionary = new Dictionary<string, List<GlobalSearchResult>> {
                     { "Shipments", GetShipmentsGlobalSearch(shipments.ToList())},
-                    { "Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())}
+                    { "Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())},
                 };
+
+                if (includeQoutes)
+                {
+                    newFilters.SortBy = "LastUpdate";
+                    newFilters.SortDirection = "Descending";
+
+                    var quoteQuery = new QuoteQuery(authToken.Tenant);
+                    var quotesQuery = quoteQuery.GetByFilters(newFilters);
+                    if (!string.IsNullOrWhiteSpace(searchFields))
+                    {
+                        quotesQuery = quotesQuery.Where(d => d.QuoteNumber.Contains(searchFields))
+                                                 .Take(3);
+                    }
+
+                    dictionary.Add("Quotes", GetQoutesGlobalSearch(quotesQuery.ToList()));
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, dictionary);
             }
@@ -127,6 +139,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     Reference = item.MainEntityReference,
                     Type = item.ARInvoiceTypeName,
                     IsConsolidationInvoice = item.IsConsolidationInvoice
+                });
+            });
+
+            return data;
+        }
+        
+        private List<GlobalSearchResult> GetQoutesGlobalSearch(List<QuoteList> quoteList)
+        {
+            var data = new List<GlobalSearchResult>();
+
+            quoteList.ForEach(item => {
+                data.Add(new QuoteSearchResult
+                {
+                    Id = item.Id,
+                    QuoteNumber = item.QuoteNumber,
+                    Direction = item.DirectionName,
+                    TransportMode = item.TransportModeId,
+                    Reference = item.DirectionId == "I" ? item.ShipperName : item.ConsigneeName
                 });
             });
 
