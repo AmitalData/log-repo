@@ -302,9 +302,19 @@ namespace WebFreight.Web.WebPages
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
+                     List<DocumentsFilingPM> documentsListWithoutDuplications = new List<DocumentsFilingPM>();
                     foreach (DocumentsFilingPM document in documents)
                     {
-
+                        if (domainName == "cargo" && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode && x.CalculatedFileName == document.CalculatedFileName
+                            && x.FileSize == document.FileSize)) {
+                            continue;
+                        }
+                        documentsListWithoutDuplications.Add(new DocumentsFilingPM
+                        {
+                            CalculatedFileName = document.CalculatedFileName,
+                            DocumentTypeCode = document.DocumentTypeCode,
+                            FileSize = document.FileSize,
+                        });
                         document.CalculatedFileName = domainName == "cargo" ? shipmentNumber + '_' + document.DocumentTypeName : document.CalculatedFileName;
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
                         {
