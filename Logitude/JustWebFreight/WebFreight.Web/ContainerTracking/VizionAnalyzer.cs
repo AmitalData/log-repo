@@ -323,9 +323,8 @@ namespace WebFreight.Web.ContainerTracking
             foreach (var item in milestones)
             {
                 if (!milestonesDictinoary.ContainsKey(item.description))
-                    milestonesDictinoary.Add(item.description, new List<VisionMilestone>() { item });
+                    milestonesDictinoary.Add(item.description, new List<VisionMilestone>());
                 milestonesDictinoary[item.description].Add(item);
-
             }
             return milestonesDictinoary;
         }
