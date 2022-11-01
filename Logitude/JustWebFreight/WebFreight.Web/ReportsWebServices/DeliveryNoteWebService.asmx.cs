@@ -975,7 +975,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (childEntity.ETD != null)
             {
                 dataProvider.PickupDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETD);
-                dataProvider.PickupTime = String.Format("{0:hh:mm}", childEntity.ETD);
+                dataProvider.PickupTime = String.Format("{0:hh:mm tt}", childEntity.ETD);
                 dataProvider.PickupTime_DateTime_New = childEntity.ETD;
             }
 
@@ -984,7 +984,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryETADate = childEntity.ETA;
                 dataProvider.DeliveryETATime = childEntity.ETA;
                 dataProvider.DeliveryDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETA);
-                dataProvider.DeliveryTime = String.Format("{0:hh:mm}", childEntity.ETA);
+                dataProvider.DeliveryTime = String.Format("{0:hh:mm tt}", childEntity.ETA);
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
             }
 
