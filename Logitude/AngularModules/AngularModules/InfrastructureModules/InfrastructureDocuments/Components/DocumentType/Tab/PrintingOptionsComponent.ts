@@ -56,6 +56,7 @@ export class PrintingOptionsComponent extends BaseComponent implements OnInit {
                     case "999CI":
                     case "999MP":
                     case "999P":
+                    case "ARINV":
                         {
 
                             if (SessionLocator.TenantPM.CountryCode == "IL" && SessionLocator.LoggedUserPM.IsCustomerCare == false) {
