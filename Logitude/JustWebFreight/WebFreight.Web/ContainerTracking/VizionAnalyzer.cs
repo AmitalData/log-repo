@@ -51,7 +51,7 @@ namespace WebFreight.Web.ContainerTracking
             MapEmptyReturn();
             MapCarrierRelease();
             MapCustomsRelease();
-            //MapTransshipments();
+            MapTransshipments();
         }
         private void MapArrivedField()
         {
@@ -188,74 +188,58 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapLoadedTransshipment()
         {
+            containerUpdatedFields.LoadedTransshipment = new ContainerTransshipment("LoadedTransshipment");
+
             if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.LoadedTransshipmentLocation);
-                MapMilestoneVesselField(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.LoadedTransshipmentVessel);
-                MapMilestoneVoyageField(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.LoadedTransshipmentVoyage);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.EstimatedLoadedTransshipment, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.ActualLoadedTransshipment);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.LoadedOnVesselAtTransshipmentPort, ref containerUpdatedFields.LoadedTransshipment.TransshipmentMilestones);
             }
 
             else if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.LoadedTransshipment))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.LoadedTransshipmentLocation);
-                MapMilestoneVesselField(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.LoadedTransshipmentVessel);
-                MapMilestoneVoyageField(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.LoadedTransshipmentVoyage);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.EstimatedLoadedTransshipment, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.ActualLoadedTransshipment);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.LoadedTransshipment, ref containerUpdatedFields.LoadedTransshipment.TransshipmentMilestones);
             }
         }
         private void MapVesselArrived()
         {
+            containerUpdatedFields.VesselArrived = new ContainerTransshipment("VesselArrived");
+
             if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.VesselArrivedLocation);
-                MapMilestoneVesselField(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.VesselArrivedVessel);
-                MapMilestoneVoyageField(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.VesselArrivedVoyage);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.EstimatedVesselArrived, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.ActualVesselArrived);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.VesselArrivalAtTransshipmentPort, ref containerUpdatedFields.VesselArrived.TransshipmentMilestones);
             }
 
             else if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.VesselArrived))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.VesselArrivedLocation);
-                MapMilestoneVesselField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.VesselArrivedVessel);
-                MapMilestoneVoyageField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.VesselArrivedVoyage);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.EstimatedVesselArrived, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.ActualVesselArrived);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.VesselArrived.TransshipmentMilestones);
             }
         }
         private void MapVesselDeparted()
         {
+            containerUpdatedFields.VesselDeparted = new ContainerTransshipment("VesselDeparted");
+
             if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.VesselDepartureFromTransshipmentPort))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselDepartureFromTransshipmentPort, ref containerUpdatedFields.EmptyReturnLocation);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDepartureFromTransshipmentPort, ref containerUpdatedFields.EstimatedEmptyReturn, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDepartureFromTransshipmentPort, ref containerUpdatedFields.ActualEmptyReturn);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.VesselDepartureFromTransshipmentPort, ref containerUpdatedFields.VesselDeparted.TransshipmentMilestones);
             }
 
             else if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.VesselDeparted))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.EmptyReturnLocation);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.EstimatedEmptyReturn, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.ActualEmptyReturn);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.VesselDeparted.TransshipmentMilestones);
             }
         }
         private void MapDischargedTransshipment()
         {
+            containerUpdatedFields.DischargedTransshipment = new ContainerTransshipment("DischargedTransshipment");
+
             if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.DischargedFromVesselAtTransshipmentPort))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtTransshipmentPort, ref containerUpdatedFields.EmptyReturnLocation);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtTransshipmentPort, ref containerUpdatedFields.EstimatedEmptyReturn, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtTransshipmentPort, ref containerUpdatedFields.ActualEmptyReturn);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.DischargedFromVesselAtTransshipmentPort, ref containerUpdatedFields.DischargedTransshipment.TransshipmentMilestones);
             }
 
             else if (IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.DischargedTransshipment))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.DischargedTransshipment, ref containerUpdatedFields.EmptyReturnLocation);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedTransshipment, ref containerUpdatedFields.EstimatedEmptyReturn, true);
-                MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedTransshipment, ref containerUpdatedFields.ActualEmptyReturn);
+                MapMilestoneLocationList(VizionMilestoneDescriptionCodes.DischargedTransshipment, ref containerUpdatedFields.DischargedTransshipment.TransshipmentMilestones);
             }
         }
 
@@ -326,32 +310,11 @@ namespace WebFreight.Web.ContainerTracking
                 location = plannedMilistone.location?.unlocode;
             }
         }
-
-        private void MapMilestoneVesselField(string descriptionCode, ref string vessel)
-        {
-            if (!IsMilestoneSentWithinResponse(descriptionCode))
-                return;
-            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => !string.IsNullOrEmpty(e.location?.unlocode));
-            if (plannedMilistone != null)
-            {
-                //vessel = plannedMilistone.vessel;
-            }
-        }
-
-        private void MapMilestoneVoyageField(string descriptionCode, ref string voyage)
-        {
-            if (!IsMilestoneSentWithinResponse(descriptionCode))
-                return;
-            var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => !string.IsNullOrEmpty(e.location?.unlocode));
-            if (plannedMilistone != null)
-            {
-                //voyage = plannedMilistone.voyage;
-            }
-        }
         private bool IsMilestoneSentWithinResponse(string description)
         {
             if (!MilestonesDictinoary.ContainsKey(description))
                 return false;
+
             return true;
         }
         private Dictionary<string, List<VisionMilestone>> GetMilstonesAsDictinoary(List<VisionMilestone> milestones)
@@ -360,11 +323,30 @@ namespace WebFreight.Web.ContainerTracking
             foreach (var item in milestones)
             {
                 if (!milestonesDictinoary.ContainsKey(item.description))
-                    milestonesDictinoary.Add(item.description, new List<VisionMilestone>() { item });
+                    milestonesDictinoary.Add(item.description, new List<VisionMilestone>());
                 milestonesDictinoary[item.description].Add(item);
-
             }
             return milestonesDictinoary;
+        }
+        private void MapMilestoneLocationList(string descriptionCode, ref List<ContainerTransshipmentUpdatedFields> transshipmentsmilestones)
+        {
+            List<VisionMilestone> visionMilestones = MilestonesDictinoary[descriptionCode].Where(d => d.source == "carrier").ToList();
+
+            foreach (VisionMilestone visionMilestone in visionMilestones)
+            {
+                ContainerTransshipmentUpdatedFields updatedFields = new ContainerTransshipmentUpdatedFields();
+                updatedFields.Location = visionMilestone.location?.unlocode;
+                updatedFields.Vessel = visionMilestone.vessel;
+                updatedFields.Voyage = visionMilestone.voyage;
+
+                if (visionMilestone.planned)
+                    updatedFields.EstimatedDate = visionMilestone.timestamp;
+
+                else
+                    updatedFields.ActualDate = visionMilestone.timestamp;
+
+                transshipmentsmilestones.Add(updatedFields);
+            }
         }
     }
 
@@ -390,11 +372,6 @@ namespace WebFreight.Web.ContainerTracking
         public static string VesselDepartureFromTransshipmentPort = "Vessel departure from transshipment port";
         public static string VesselDeparted = "Vessel departed";
         public static string DischargedFromVesselAtTransshipmentPort = "Discharged from vessel at transshipment port";
-        public static string DischargedTransshipment = "Discharged transshipment";
-
-        //Loaded on vessel at transshipment port + Loaded transshipment // from port
-        //Vessel arrival at transshipment port + Vessel arrived // to port
-        //Vessel departure from transshipment port + Vessel departed // from
-        //Discharged from vessel at transshipment port +  Discharged transshipment // to
+        public static string DischargedTransshipment = "Discharged transshipment";       
     }
 }

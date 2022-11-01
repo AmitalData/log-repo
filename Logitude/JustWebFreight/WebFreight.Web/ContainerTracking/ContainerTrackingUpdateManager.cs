@@ -26,6 +26,7 @@ namespace WebFreight.Web.ContainerTracking
         private PortRepository portRepository;
         private TenantRepository tenantRepository;
         private PortQuery portQuery;
+        private VesselRepository vesselRepository;
         private string POLShipmentUpdateIndicator;
         private string PODShipmentUpdateIndicator;
         private bool isUpdatingPackages = false;
@@ -40,6 +41,7 @@ namespace WebFreight.Web.ContainerTracking
             this.shipmentPM = containerUpdatedFields.ShipmentPM;
             this.portRepository = new PortRepository(tenant);
             this.portQuery = new PortQuery(portRepository);
+            this.vesselRepository = new VesselRepository(tenant);
             this.tenantRepository = new TenantRepository(tenant);            
         }       
         public void Update()
@@ -160,10 +162,12 @@ namespace WebFreight.Web.ContainerTracking
             this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, containerPM);
             this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, containerPM);
             this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, containerPM);
+
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                 containerPM.IsUpdatedVizionAnalyzer = true;
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                 containerPM.IsUpdatedOceanInsightsAnalyzer = true;
+
             containerPM.CurrentStatus = containerUpdatedFields.CurrentStatus;
             containerPM.CurrentLocation = containerUpdatedFields.CurrentLocation;
             containerPM.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
@@ -176,55 +180,7 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.ActualPOLLoaded = containerUpdatedFields.ActualPOLLoaded;
             containerPM.EstimatedPOLVesselDeparture = containerUpdatedFields.EstimatedPOLVesselDeparture;
             containerPM.ActualPOLVesselDeparture = containerUpdatedFields.ActualPOLVesselDeparture;
-            containerPM.TransshipmentCount = containerUpdatedFields.TransshipmentCount;
-            containerPM.Transshipment1Location = containerUpdatedFields.Transshipment1Location;
-            containerPM.EstimatedTrans1VesselArrival = containerUpdatedFields.EstimatedTrans1VesselArrival;
-            containerPM.ActualTransshipment1VesselArrival = containerUpdatedFields.ActualTransshipment1VesselArrival;
-            containerPM.EstimatedTransshipment1Discharge = containerUpdatedFields.EstimatedTransshipment1Discharge;
-            containerPM.ActualTransshipment1Discharge = containerUpdatedFields.ActualTransshipment1Discharge;
-            containerPM.EstimatedTransshipment1Loaded = containerUpdatedFields.EstimatedTransshipment1Loaded;
-            containerPM.ActualTransshipment1Loaded = containerUpdatedFields.ActualTransshipment1Loaded;
-            containerPM.EstimatedTrans1VesselDeparture = containerUpdatedFields.EstimatedTrans1VesselDeparture;
-            containerPM.ActualTrans1VesselDeparture = containerUpdatedFields.ActualTrans1VesselDeparture;
-            containerPM.Transshipment2Location = containerUpdatedFields.Transshipment2Location;
-            containerPM.EstimatedTrans2VesselArrival = containerUpdatedFields.EstimatedTrans2VesselArrival;
-            containerPM.ActualTransshipment2VesselArrival = containerUpdatedFields.ActualTransshipment2VesselArrival;
-            containerPM.EstimatedTransshipment2Discharge = containerUpdatedFields.EstimatedTransshipment2Discharge;
-            containerPM.ActualTransshipment2Discharge = containerUpdatedFields.ActualTransshipment2Discharge;
-            containerPM.EstimatedTransshipment2Loaded = containerUpdatedFields.EstimatedTransshipment2Loaded;
-            containerPM.ActualTransshipment2Loaded = containerUpdatedFields.ActualTransshipment2Loaded;
-            containerPM.EstimatedTrans2VesselDeparture = containerUpdatedFields.EstimatedTrans2VesselDeparture;
-            containerPM.ActualTrans2VesselDeparture = containerUpdatedFields.ActualTrans2VesselDeparture;
-            containerPM.Transshipment3Location = containerUpdatedFields.Transshipment3Location;
-            containerPM.EstimatedTrans3VesselArrival = containerUpdatedFields.EstimatedTrans3VesselArrival;
-            containerPM.ActualTransshipment3VesselArrival = containerUpdatedFields.ActualTransshipment3VesselArrival;
-            containerPM.EstimatedTransshipment3Discharge = containerUpdatedFields.EstimatedTransshipment3Discharge;
-            containerPM.ActualTransshipment3Discharge = containerUpdatedFields.ActualTransshipment3Discharge;
-            containerPM.EstimatedTransshipment3Loaded = containerUpdatedFields.EstimatedTransshipment3Loaded;
-            containerPM.ActualTransshipment3Loaded = containerUpdatedFields.ActualTransshipment3Loaded;
-            containerPM.EstimatedTrans3VesselDeparture = containerUpdatedFields.EstimatedTrans3VesselDeparture;
-            containerPM.ActualTrans3VesselDeparture = containerUpdatedFields.ActualTrans3VesselDeparture;
-            containerPM.Transshipment4Location = containerUpdatedFields.Transshipment4Location;
-            containerPM.EstimatedTrans4VesselArrival = containerUpdatedFields.EstimatedTrans4VesselArrival;
-            containerPM.ActualTransshipment4VesselArrival = containerUpdatedFields.ActualTransshipment4VesselArrival;
-            containerPM.EstimatedTransshipment4Discharge = containerUpdatedFields.EstimatedTransshipment4Discharge;
-            containerPM.ActualTransshipment4Discharge = containerUpdatedFields.ActualTransshipment4Discharge;
-            containerPM.EstimatedTransshipment4Loaded = containerUpdatedFields.EstimatedTransshipment4Loaded;
-            containerPM.ActualTransshipment4Loaded = containerUpdatedFields.ActualTransshipment4Loaded;
-            containerPM.EstimatedTrans4VesselDeparture = containerUpdatedFields.EstimatedTrans4VesselDeparture;
-            containerPM.ActualTrans4VesselDeparture = containerUpdatedFields.ActualTrans4VesselDeparture;
-            containerPM.Leg1Vessel = containerUpdatedFields.Leg1Vessel;
-            containerPM.Leg1VesselId = containerUpdatedFields.Leg1VesselId;
-            containerPM.Leg1Voyage = containerUpdatedFields.Leg1Voyage;
-            containerPM.Leg2Vessel = containerUpdatedFields.Leg2Vessel;
-            containerPM.Leg2VesselId = containerUpdatedFields.Leg2VesselId;
-            containerPM.Leg2Voyage = containerUpdatedFields.Leg2Voyage;
-            containerPM.Leg3Vessel = containerUpdatedFields.Leg3Vessel;
-            containerPM.Leg3VesselId = containerUpdatedFields.Leg3VesselId;
-            containerPM.Leg3Voyage = containerUpdatedFields.Leg3Voyage;
-            containerPM.Leg4Vessel = containerUpdatedFields.Leg4Vessel;
-            containerPM.Leg4VesselId = containerUpdatedFields.Leg4VesselId;
-            containerPM.Leg4Voyage = containerUpdatedFields.Leg4Voyage;
+            containerPM.TransshipmentCount = containerUpdatedFields.TransshipmentCount; 
             containerPM.Leg5Vessel = containerUpdatedFields.Leg5Vessel;
             containerPM.Leg5VesselId = containerUpdatedFields.Leg5VesselId;
             containerPM.Leg5Voyage = containerUpdatedFields.Leg5Voyage;
@@ -257,12 +213,154 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.LIFLocationPortId = this.GetPortId(containerUpdatedFields.LIFLocation);
             containerPM.POLLocationPortId = this.GetPortId(containerUpdatedFields.POLLocation);
             containerPM.PODLocationPortId = this.GetPortId(containerUpdatedFields.PODLocation);
-            containerPM.Transshipment1LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment1Location);
-            containerPM.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
-            containerPM.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
-            containerPM.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
             containerPM.IsAutomaticUpdates = true;
+            this.MapTransshipments();
         }
+        private void MapTransshipments()
+        {
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)            
+                this.MapVizionTransshipments();                
+            else if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
+                this.MapOITransshipments();
+        }
+        private void MapVizionTransshipments()
+        {
+            this.SetRelatedTransshipmentLeg(containerUpdatedFields.LoadedTransshipment, "From");
+            this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselDeparted, "From");
+            this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselArrived, "To");
+            this.SetRelatedTransshipmentLeg(containerUpdatedFields.DischargedTransshipment, "To");
+        }
+        private void MapOITransshipments()
+        {
+            containerPM.Transshipment1Location = containerUpdatedFields.Transshipment1Location;
+            containerPM.Transshipment1LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment1Location);
+            containerPM.EstimatedTrans1VesselArrival = containerUpdatedFields.EstimatedTrans1VesselArrival;
+            containerPM.ActualTransshipment1VesselArrival = containerUpdatedFields.ActualTransshipment1VesselArrival;
+            containerPM.EstimatedTransshipment1Discharge = containerUpdatedFields.EstimatedTransshipment1Discharge;
+            containerPM.ActualTransshipment1Discharge = containerUpdatedFields.ActualTransshipment1Discharge;
+            containerPM.EstimatedTransshipment1Loaded = containerUpdatedFields.EstimatedTransshipment1Loaded;
+            containerPM.ActualTransshipment1Loaded = containerUpdatedFields.ActualTransshipment1Loaded;
+            containerPM.EstimatedTrans1VesselDeparture = containerUpdatedFields.EstimatedTrans1VesselDeparture;
+            containerPM.ActualTrans1VesselDeparture = containerUpdatedFields.ActualTrans1VesselDeparture;
+            containerPM.Leg1Vessel = containerUpdatedFields.Leg1Vessel;
+            containerPM.Leg1VesselId = containerUpdatedFields.Leg1VesselId;
+            containerPM.Leg1Voyage = containerUpdatedFields.Leg1Voyage;
+
+            containerPM.Transshipment2Location = containerUpdatedFields.Transshipment2Location;
+            containerPM.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
+            containerPM.EstimatedTrans2VesselArrival = containerUpdatedFields.EstimatedTrans2VesselArrival;
+            containerPM.ActualTransshipment2VesselArrival = containerUpdatedFields.ActualTransshipment2VesselArrival;
+            containerPM.EstimatedTransshipment2Discharge = containerUpdatedFields.EstimatedTransshipment2Discharge;
+            containerPM.ActualTransshipment2Discharge = containerUpdatedFields.ActualTransshipment2Discharge;
+            containerPM.EstimatedTransshipment2Loaded = containerUpdatedFields.EstimatedTransshipment2Loaded;
+            containerPM.ActualTransshipment2Loaded = containerUpdatedFields.ActualTransshipment2Loaded;
+            containerPM.EstimatedTrans2VesselDeparture = containerUpdatedFields.EstimatedTrans2VesselDeparture;
+            containerPM.ActualTrans2VesselDeparture = containerUpdatedFields.ActualTrans2VesselDeparture;
+            containerPM.Leg2Vessel = containerUpdatedFields.Leg2Vessel;
+            containerPM.Leg2VesselId = containerUpdatedFields.Leg2VesselId;
+            containerPM.Leg2Voyage = containerUpdatedFields.Leg2Voyage;
+
+            containerPM.Transshipment3Location = containerUpdatedFields.Transshipment3Location;
+            containerPM.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
+            containerPM.EstimatedTrans3VesselArrival = containerUpdatedFields.EstimatedTrans3VesselArrival;
+            containerPM.ActualTransshipment3VesselArrival = containerUpdatedFields.ActualTransshipment3VesselArrival;
+            containerPM.EstimatedTransshipment3Discharge = containerUpdatedFields.EstimatedTransshipment3Discharge;
+            containerPM.ActualTransshipment3Discharge = containerUpdatedFields.ActualTransshipment3Discharge;
+            containerPM.EstimatedTransshipment3Loaded = containerUpdatedFields.EstimatedTransshipment3Loaded;
+            containerPM.ActualTransshipment3Loaded = containerUpdatedFields.ActualTransshipment3Loaded;
+            containerPM.EstimatedTrans3VesselDeparture = containerUpdatedFields.EstimatedTrans3VesselDeparture;
+            containerPM.ActualTrans3VesselDeparture = containerUpdatedFields.ActualTrans3VesselDeparture;
+            containerPM.Leg3Vessel = containerUpdatedFields.Leg3Vessel;
+            containerPM.Leg3VesselId = containerUpdatedFields.Leg3VesselId;
+            containerPM.Leg3Voyage = containerUpdatedFields.Leg3Voyage;
+
+            containerPM.Transshipment4Location = containerUpdatedFields.Transshipment4Location;
+            containerPM.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
+            containerPM.EstimatedTrans4VesselArrival = containerUpdatedFields.EstimatedTrans4VesselArrival;
+            containerPM.ActualTransshipment4VesselArrival = containerUpdatedFields.ActualTransshipment4VesselArrival;
+            containerPM.EstimatedTransshipment4Discharge = containerUpdatedFields.EstimatedTransshipment4Discharge;
+            containerPM.ActualTransshipment4Discharge = containerUpdatedFields.ActualTransshipment4Discharge;
+            containerPM.EstimatedTransshipment4Loaded = containerUpdatedFields.EstimatedTransshipment4Loaded;
+            containerPM.ActualTransshipment4Loaded = containerUpdatedFields.ActualTransshipment4Loaded;
+            containerPM.EstimatedTrans4VesselDeparture = containerUpdatedFields.EstimatedTrans4VesselDeparture;
+            containerPM.ActualTrans4VesselDeparture = containerUpdatedFields.ActualTrans4VesselDeparture;
+            containerPM.Leg4Vessel = containerUpdatedFields.Leg4Vessel;
+            containerPM.Leg4VesselId = containerUpdatedFields.Leg4VesselId;
+            containerPM.Leg4Voyage = containerUpdatedFields.Leg4Voyage;
+        }
+
+        private void SetRelatedTransshipmentLeg(ContainerTransshipment transshipmentObject, string direction)
+        {
+            foreach (ContainerTransshipmentUpdatedFields updatedFields in transshipmentObject.TransshipmentMilestones)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) return;
+                string portId = this.GetPortId(updatedFields.Location);
+                Vessel vessel = this.GetVessel(updatedFields.Vessel);
+
+                int? transshipmentLegIndex = GetTransshipmentLegIndex(portId, direction);
+                if (transshipmentLegIndex == null || string.IsNullOrEmpty(portId)) return;
+
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "LocationPortId", portId, containerPM);
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "Location", updatedFields.Location, containerPM);
+                this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "Vessel", updatedFields.Vessel, containerPM);
+                this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "VesselId", vessel?.Id, containerPM);
+                this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "Voyage", updatedFields.Voyage, containerPM);
+                this.SetTransshipmentLegDates(transshipmentLegIndex, updatedFields, transshipmentObject.Key);
+            }
+        }
+        private int? GetTransshipmentLegIndex(string portId, string direction)
+        {
+            if(direction == "From" && containerPM.ShipmentTransshipment1FromId == portId
+                || direction == "To" && containerPM.ShipmentTransshipment1ToId == portId)
+            {
+                return 1;
+            }
+
+            else if (direction == "From" && containerPM.ShipmentTransshipment2FromId == portId
+                || direction == "To" && containerPM.ShipmentTransshipment2ToId == portId)
+            {
+                return 2;
+            }
+
+            else if (direction == "From" && containerPM.ShipmentTransshipment3FromId == portId
+                || direction == "To" && containerPM.ShipmentTransshipment3ToId == portId)
+            {
+                return 3;
+            }
+
+            return null;
+        }
+        private void SetTransshipmentLegDates(int? transshipmentLegIndex, ContainerTransshipmentUpdatedFields updatedFields, string key)
+        {
+            if(key == "LoadedTransshipment")
+            {
+                this.FillFieldsNewValues("EstimatedTransshipment" + transshipmentLegIndex + "Loaded", updatedFields.EstimatedDate, containerPM);
+                this.FillFieldsNewValues("ActualTransshipment" + transshipmentLegIndex + "Loaded", updatedFields.ActualDate, containerPM);
+            }
+
+            else if (key == "VesselArrived")
+            {
+                this.FillFieldsNewValues("EstimatedTrans" + transshipmentLegIndex + "VesselArrival", updatedFields.EstimatedDate, containerPM);
+                this.FillFieldsNewValues("ActualTransshipment" + transshipmentLegIndex + "VesselArrival", updatedFields.ActualDate, containerPM);
+            }
+
+            else if (key == "VesselDeparted")
+            {
+                this.FillFieldsNewValues("EstimatedTrans" + transshipmentLegIndex + "VesselDeparture", updatedFields.EstimatedDate, containerPM);
+                this.FillFieldsNewValues("ActualTrans" + transshipmentLegIndex + "VesselDeparture", updatedFields.ActualDate, containerPM);
+            }
+
+            else if (key == "DischargedTransshipment")
+            {
+                this.FillFieldsNewValues("EstimatedTransshipment" + transshipmentLegIndex + "Discharge", updatedFields.EstimatedDate, containerPM);
+                this.FillFieldsNewValues("ActualTransshipment" + transshipmentLegIndex + "Discharge", updatedFields.ActualDate, containerPM);
+            }
+        }
+        private Vessel GetVessel(string vesselName)
+        {
+            return vesselRepository.GetSingleVesselByName(vesselName, containerPM.Tenant);
+        }
+
         private void MapConcurrencyFields()
         {
             containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
