@@ -485,7 +485,7 @@ ID List :
                                                     if (dr["ExportFOBModificationAffectID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.ExportFOBModificationAffectID = dr["ExportFOBModificationAffectID"].ToString();
+                                                        newExt.MyModificationAndDiscountType.ExportFOBValuesModificationAffectTypeID = dr["ExportFOBModificationAffectID"].ToString();
                                                     }
                                                     if (dr["CurrencyMustBeSameAsInvoice"].ToString() != null)
                                                     {
