@@ -35,6 +35,7 @@ using Logitude.BL.ShipmentsModel.DigitalModels;
 using System.Threading.Tasks;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using System.Web;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2658,9 +2659,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a=>a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
-                                                                                    .Select(a=>a.IsCustomerArchived).FirstOrDefault();
-                
+            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a => a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
+                                                                                    .Select(a => a.IsCustomerArchived).FirstOrDefault();
+
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
             {
@@ -11116,21 +11117,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             myResult.CreditLimitBlockedCount = GetCreditLimitBlockedCount(tenant, iQueryable_Shipments);
             if (hasFollowupsFeature)
             {
-                int allFollowUpsCount = 0;
-                int myFollowUpsCount = 0;
+                var followUpRepository = new FollowUpRepository(tenant);
 
-                IQueryable<ShipmentFollowUpDataView> allFollowups = repository.GetShipmentFollowUpDataViewByTenant(tenant);
-                allFollowups = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
-                allFollowups = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
+                var allFollowups = followUpRepository.GetFollowUpsForShipments(tenant);
+                allFollowups = AddUserBranchAndProductRestrictionFilters(new QueryOperations(), allFollowups, tenant);
 
                 if (!string.IsNullOrEmpty(directionId))
                 {
-                    allFollowups = allFollowups.Where(d => d.DirectionId == directionId);
+                    allFollowups = allFollowups.Where(d => d.Shipment.DirectionId == directionId);
                 }
 
                 if (!string.IsNullOrEmpty(transportModeId))
                 {
-                    allFollowups = allFollowups.Where(d => d.TransportModeId == transportModeId);
+                    allFollowups = allFollowups.Where(d => d.Shipment.TransportModeId == transportModeId);
                 }
 
                 myResult.AllFollowUpsCount = GetAllFollowUpsCount(tenant, allFollowups);
@@ -11138,6 +11137,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return myResult;
+        }
+
+        public static IQueryable<FollowUp> AddUserBranchAndProductRestrictionFilters(QueryOperations queryOperations, IQueryable<FollowUp> queryData, int tenant)
+        {
+            try
+            {
+                ContactQuery contactRep = new ContactQuery(tenant);
+                UserQuery userQuery = new UserQuery(tenant);
+                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
+                if (user != null && user.IsBranchRestricted)
+                {
+                    queryData = queryData.Where(x => user.UserPermittedBranches.Select(y => y.BranchId).Contains(x.Shipment.BranchId));
+                }
+
+                if (user != null && user.IsProductRestricted)
+                {
+                    queryData = queryData.Where(x => user.UserPermittedProducts.Select(y => y.ProductTypeCode).Contains(x.Shipment.ProductCode));
+                }
+
+                return queryData;
+            }
+            catch
+            {
+                return queryData;
+            }
         }
 
         private int GetOperationalOpenCount_DH(int tenant, IQueryable<Shipment> iQueryable_OperationalOpen)
@@ -11453,7 +11478,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return count;
         }
-        private int GetAllFollowUpsCount(int tenant, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        private int GetAllFollowUpsCount(int tenant, IQueryable<FollowUp> allFollowups)
         {
             int count = 0;
             var AllFollowUpsCount = "AllFollowUpsCount" + tenant;
@@ -11471,12 +11496,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return count;
         }
-        private int GetMyFollowUpsCount(int tenant, string loggedContactId, IQueryable<ShipmentFollowUpDataView> allFollowups)
+        private int GetMyFollowUpsCount(int tenant, string loggedContactId, IQueryable<FollowUp> allFollowups)
         {
             int count = 0;
             var MyFollowUpsCount = "MyFollowUpsCount" + tenant + loggedContactId;
 
-            var iQueryableData = allFollowups.Where(d => d.FollowUpOwnerId == loggedContactId).Take(1001);
+            var iQueryableData = allFollowups.Where(d => d.OwnerUserId == loggedContactId).Take(1001);
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(MyFollowUpsCount) != null)
             {
