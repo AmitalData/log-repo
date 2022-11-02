@@ -30,7 +30,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
 
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
+    public FieldTypes = FieldTypes;
 
     constructor() {
         super();
@@ -121,44 +121,11 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
         return this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.PickList;
     }
 
-    isTextObjectField() {
-        return (this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.NText || this.ObjectField.DataTypeCode === FieldTypes.Text))
-    }
-
-    isBooleanObjectField() {
-        return (this.ObjectField && this.ObjectField.DataTypeCode === FieldTypes.Boolean)
-    }
-
     isDateTimeObjectField() {
-        return (this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.DateTime || this.ObjectField.DataTypeCode === FieldTypes.Date))
-    }
-
-    isNumberObjectField() {
-        return (this.ObjectField &&
-            (
-                this.ObjectField.DataTypeCode === FieldTypes.BigInteger ||
-                this.ObjectField.DataTypeCode === FieldTypes.Decimal ||
-                this.ObjectField.DataTypeCode === FieldTypes.Double ||
-                this.ObjectField.DataTypeCode === FieldTypes.Integer ||
-                this.ObjectField.DataTypeCode === FieldTypes.SigDouble ||
-                this.ObjectField.DataTypeCode === FieldTypes.UnsDecimal ||
-                this.ObjectField.DataTypeCode === FieldTypes.UnsInteger
-            ))
-    }
-
-    isDataTypeText() {
-        return (this.DataType && this.DataType === FieldTypes.Text);
-    }
-
-    isDataTypeBoolean() {
-        return (this.DataType && this.DataType === FieldTypes.Boolean);
+        return (this.ObjectField && (this.ObjectField.DataTypeCode === FieldTypes.DateTime || this.ObjectField.DataTypeCode === FieldTypes.Date));
     }
 
     isDataTypeDateTime() {
         return (this.DataType && (this.DataType === FieldTypes.DateTime || this.DataType === FieldTypes.Date));
-    }
-
-    isDataTypeNumber() {
-        return (this.DataType && this.DataType === FieldTypes.Decimal);
     }
 }

@@ -24,7 +24,7 @@
     <div class="entity-conditions-operation-container">
 
         <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
-            [SelectedItem]="ListItem(ConditionsOperation)" (SelectedItemChanged)="updateConditionsOperation($event)"
+            [SelectedItem]="ConditionsOperation | ListItemPipe" (SelectedItemChanged)="updateConditionsOperation($event)"
             [ListType]="''" [CyData]="'ConditionsOperation'">
         </ComboBox>
 
@@ -35,8 +35,9 @@
         <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
             [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
             [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
-            [ShowFlowVariablesTree]="ShowFlowVariablesTree" [FlowObject]="FlowObject"
-            [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"></ConditionGroups>
+            [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
+            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue">
+        </ConditionGroups>
 
     </div>
 

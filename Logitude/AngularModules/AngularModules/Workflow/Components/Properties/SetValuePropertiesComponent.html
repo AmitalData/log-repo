@@ -88,14 +88,10 @@
         <td>
             <div class="table-container">
 
-
-
                 <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
                     (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
                     [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
-
-
 
             </div>
 
@@ -113,7 +109,8 @@
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'set-value-properties-save-button'"
-                [CancelButtonDataCy]="'set-value-properties-cancel-button'"></FooterButtons>
+                [CancelButtonDataCy]="'set-value-properties-cancel-button'">
+            </FooterButtons>
 
         </td>
     </tr>

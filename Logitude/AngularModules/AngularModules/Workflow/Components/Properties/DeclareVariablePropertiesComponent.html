@@ -90,7 +90,7 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'" [SelectedItem]="GetSelectedDataType()"
+                <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'" [SelectedItem]="VariableType | ListItemPipe : DataTypesItems"
                     (SelectedItemChanged)="DataTypeSelectionMethod($event)" [ListType]="''" [IsDisabled] = "!IsNew">
                 </ComboBox>
             </div>
@@ -123,7 +123,8 @@
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()"
                 [SaveButtonDataCy]="'declare-variable-properties-save-button'"
-                [CancelButtonDataCy]="'declare-variable-properties-cancel-button'"></FooterButtons>
+                [CancelButtonDataCy]="'declare-variable-properties-cancel-button'">
+            </FooterButtons>
 
         </td>
     </tr>

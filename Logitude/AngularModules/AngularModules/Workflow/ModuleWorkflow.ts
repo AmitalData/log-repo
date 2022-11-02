@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { InfrastructureModule } from '../Infrastructure/Module_INFR';
-import { Components, ModuleDeclarations } from './ModuleDeclarations';
+import { Components, ModuleDeclarations, Pipes } from './ModuleDeclarations';
 import { ModuleProviders } from './ModuleProviders';
 
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @NgModule({
     imports: [InfrastructureModule, NzTreeSelectModule],
-    declarations: [...Components],
+    declarations: [...Components, ...Pipes],
     entryComponents: [...Components],
 })
 

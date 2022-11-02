@@ -95,8 +95,8 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                    [Text]="Name" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
                     (ValueChanged)="updateName($event)" [DataCy]="'condition-title'">
                 </LogTextBox>
             </div>
@@ -125,8 +125,9 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                    [Text]="ConditionLabel" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'ConditionLabel'"
-                    (ValueChanged)="updateConditionLabel($event)" [DataCy]="'decision-label'">
+                    [Text]="ConditionLabel" [NoValidation]="true" [HideColumns]="true"
+                    [ObjectFieldName]="'ConditionLabel'" (ValueChanged)="updateConditionLabel($event)"
+                    [DataCy]="'decision-label'">
                 </LogTextBox>
             </div>
         </td>
@@ -146,9 +147,12 @@
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="this.WorkflowEntityTable.Id"
-                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true" (IsValidConditionsChange)="UpdateIsValidConditions($event)"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [FlowObjectFields]="FlowObjectFields">
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                    (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [FlowObject]="FlowObject"
+                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </Conditions>
+
             </div>
         </td>
     </tr>
@@ -163,7 +167,8 @@
         <td>
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'condition-properties-save-button'"
-                [CancelButtonDataCy]="'condition-properties-cancel-button'"></FooterButtons>
+                [CancelButtonDataCy]="'condition-properties-cancel-button'">
+            </FooterButtons>
         </td>
     </tr>
 

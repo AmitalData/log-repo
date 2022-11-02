@@ -5,7 +5,6 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 
@@ -63,6 +62,7 @@ export class StartPropertiesComponent extends BaseComponent {
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
 
+            this.setNameData();
             this.setConditionsData();
 
             //console.log(this.Data);
@@ -72,6 +72,10 @@ export class StartPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
         }
+    }
+
+    setNameData() {
+        this.Data["name"] = "Start";
     }
 
     setConditionsData() {
@@ -105,10 +109,6 @@ export class StartPropertiesComponent extends BaseComponent {
     setUIProperties() {
         this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.Entity));
         this.UIProperties.SetRequired("Trigger", null, AppTool.IsNullOrEmpty(this.Trigger));
-    }
-
-    getObjectTablesQueryFilters() {
-        return ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters("Shipment");
     }
 
     resetConditionsOperatorAndValue(conditions: Condition[] | null = null) {

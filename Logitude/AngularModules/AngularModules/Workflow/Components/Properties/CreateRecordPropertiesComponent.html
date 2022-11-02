@@ -153,7 +153,8 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                    [ShowExpand]="!OnlyParentEntities" [ShowItem]="showEntitiesTreeItem()" (ValueChanged)="updateEntity($event)">
+                    [ShowExpand]="!OnlyParentEntities" [ShowItem]="['Customer', 'User'] | ShowEntitiesTreeItemPipe"
+                    (ValueChanged)="updateEntity($event)">
                 </TreeSelect>
             </div>
         </td>
@@ -168,7 +169,7 @@
     <tr *ngIf="EntityId" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Set Fields Values Of {{Entity}}</div>
+                <div class="label">Set Fields Values Of {{Entity | EntityLabelPipe}}</div>
             </div>
         </td>
     </tr>
@@ -177,7 +178,7 @@
         <td class="table-row-cell">
             <div class="table-container">
 
-                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [SetEntityField]="true"
+                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
                     [EntityId]="EntityId" (IsValidSetValuesChange)="updateIsValidSetValues($event)"
                     [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
@@ -200,7 +201,8 @@
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()"
                 [SaveButtonDataCy]="'create-record-properties-save-button'"
-                [CancelButtonDataCy]="'create-record-properties-cancel-button'"></FooterButtons>
+                [CancelButtonDataCy]="'create-record-properties-cancel-button'">
+            </FooterButtons>
         </td>
     </tr>
 

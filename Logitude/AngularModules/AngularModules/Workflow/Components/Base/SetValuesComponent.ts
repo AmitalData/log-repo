@@ -4,14 +4,15 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { ListItem } from "Workflow/Models/ListItem";
+import { Formatter } from "Workflow/Models/Formatter";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
+import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
 
 @Component({
     selector: "SetValues",
@@ -25,7 +26,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EntityId: string;
-    @Input() SetEntityField: boolean = false;
+    @Input() IsEntityField: boolean = false;
 
     @Output() IsValidSetValuesChange = new EventEmitter<boolean>();
 
@@ -36,8 +37,6 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public FlowVariablesTreeItems: TreeSelectItem[];
 
     public SetValuesOperatorsItems = new SetValueOperatorsList().Items;
-
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     constructor() {
         super();
@@ -63,34 +62,75 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
     }
 
-    updateSetValueField(field: string, setValueIndex: number) {
-        if (field !== this.SetValues[setValueIndex]?.field) {
-            this.SetValues[setValueIndex].field = field ? field : null;
-            this.SetValues[setValueIndex].fieldCode = null;
-            this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
-            this.SetValues[setValueIndex].value = null;
-            this.SetValues[setValueIndex].type = field ? this.getFieldType(field) : null;
-            this.SetValues[setValueIndex].lookupType = field ? this.getFieldLookupType(field) : null;
-            this.SetValues[setValueIndex].picklistType = field ? this.getFieldPickListType(field) : null;
-            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
-
-            this.setValuesChanged();
+    isValidSetValues() {
+        let result = true;
+        for (let setValues of (this.SetValues)) {
+            if (!setValues.field || !setValues.value || !setValues.operator) {
+                result = false;
+                break;
+            }
         }
+        return result;
     }
 
     updateSetValueEntityField(objectField: ObjectFieldPM, setValueIndex: number) {
         if (objectField?.FieldCode !== this.SetValues[setValueIndex]?.fieldCode) {
-            this.SetValues[setValueIndex].field = objectField ? objectField.FieldName : null;
-            this.SetValues[setValueIndex].fieldCode = objectField ? objectField.FieldCode : null;
-            this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
-            this.SetValues[setValueIndex].value = null;
-            this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
-            this.SetValues[setValueIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-            this.SetValues[setValueIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-            this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
-
+            if (objectField) {
+                this.updateSetValueFieldByObjectField(objectField, setValueIndex);
+            } else {
+                this.resetSetValueField(setValueIndex);
+            }
             this.setValuesChanged();
         }
+    }
+
+    updateSetValueField(field: string, setValueIndex: number) {
+        if (field !== this.SetValues[setValueIndex]?.field) {
+            if (field) {
+                if (this.isDeclaredVariable(field)) {
+                    this.updateSetValueFieldByDeclaredVariableField(field, setValueIndex);
+                } else {
+                    let objectField = this.getObjectField(field);
+                    this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
+                }
+            } else {
+                this.resetSetValueField(setValueIndex);
+            }
+            this.setValuesChanged();
+        }
+    }
+
+    updateSetValueFieldByObjectField(objectField: ObjectFieldPM | ObjectFieldList, setValueIndex: number, field: string | null = null) {
+        this.SetValues[setValueIndex].fieldCode = field ? field : (objectField ? objectField.FieldCode : null);
+        this.SetValues[setValueIndex].field = field ? field : (objectField ? objectField.FieldName : null);
+        this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
+        this.SetValues[setValueIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+        this.SetValues[setValueIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+        this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
+        this.SetValues[setValueIndex].value = null;
+        this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+    }
+
+    updateSetValueFieldByDeclaredVariableField(field: string, setValueIndex: number) {
+        this.SetValues[setValueIndex].fieldCode = field ? field : null;
+        this.SetValues[setValueIndex].field = field ? field : null;
+        this.SetValues[setValueIndex].type = field ? this.getDeclaredVariableFieldType(field) : null;
+        this.SetValues[setValueIndex].lookupType = null;
+        this.SetValues[setValueIndex].picklistType = null;
+        this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
+        this.SetValues[setValueIndex].value = null;
+        this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+    }
+
+    resetSetValueField(setValueIndex: number) {
+        this.SetValues[setValueIndex].fieldCode = null;
+        this.SetValues[setValueIndex].field = null;
+        this.SetValues[setValueIndex].type = null;
+        this.SetValues[setValueIndex].lookupType = null;
+        this.SetValues[setValueIndex].picklistType = null;
+        this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
+        this.SetValues[setValueIndex].value = null;
+        this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
     }
 
     updateSetValueOperator(operatorCode: string, setValueIndex: number) {
@@ -124,86 +164,20 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.setValuesChanged();
     }
 
-    getFieldType(field: string) {
-        if (this.isObjectField(field)) {
-            let fieldCode = this.getFieldCode(field);
-            let objectField = this.getObjectField(fieldCode);
-            return objectField ? objectField.DataTypeCode : null;
-        } else {
-            return this.getDeclareVariableType(field);
+    getDeclaredVariableFieldType(field: string) {
+        if (field) {
+            let fieldCode = Formatter.getFieldCode(field);
+            let declareVariableNode = fieldCode ? FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode) : null;
+            return declareVariableNode ? declareVariableNode.data["variableType"] : null;
         }
+        return null;
     }
 
-    getFieldLookupType(field: string) {
-        if (this.isObjectField(field)) {
-            let fieldCode = this.getFieldCode(field);
-            let objectField = this.getObjectField(fieldCode);
-            return objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-        } else {
-            return null;
-        }
+    isDeclaredVariable(field: string) {
+        return new IsDeclaredVariablePipe().transform(field);
     }
 
-    getFieldPickListType(field: string) {
-        if (this.isObjectField(field)) {
-            let fieldCode = this.getFieldCode(field);
-            let objectField = this.getObjectField(fieldCode);
-            return objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-        } else {
-            return null;
-        }
-    }
-
-    getDeclareVariableType(field: string) {
-        let fieldCode = this.getFieldCode(field);
-        let declareVariableNode = FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode);
-        return declareVariableNode ? declareVariableNode.data["variableType"] : null;
-    }
-
-    isFieldCompareOperator(operatorCode: string) {
-        return operatorCode && operatorCode.endsWith("<field>");
-    }
-
-    isObjectField(field: string) {
-        let parent = field.split('_')[0]
-        return parent != "declaredvariables";
-    }
-
-    isValidSetValues() {
-        let result = true;
-        for (let setValues of (this.SetValues)) {
-            if (!setValues.field || !setValues.value || !setValues.operator) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    getFieldCode(field: string) {
-        if (field.indexOf("_") === -1) {
-            return field;
-        }
-        let fieldCode = field.split('_')[1];
-        return fieldCode;
-    }
-
-    getObjectField(fieldCode: string) {
-        return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
-    }
-
-    getObjectFieldsQueryFilters() {
-        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
-    }
-
-    showFlowVariablesTreeItem(setValueIndex: number) {
-        let setValue = this.SetValues[setValueIndex];
-        let compareWithLookupOrPickListType: string | null = null;
-        if (setValue.type === FieldTypes.LookUp) {
-            compareWithLookupOrPickListType = setValue.lookupType;
-        } else if (setValue.type === FieldTypes.PickList) {
-            compareWithLookupOrPickListType = setValue.picklistType;
-        }
-        return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, setValue.type, compareWithLookupOrPickListType);
+    getObjectField(field: string) {
+        return new GetObjectFieldPipe().transform(field, this.FlowObjectFields);
     }
 }
