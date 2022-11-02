@@ -33,7 +33,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItemExport, 
 	         ExtraNumericData, 
 	         IsCustomsValueComponent, 
-	         ExportFOBModificationAffectID, 
 	         IsCustomsValueComponentExport, 
 	         CurrencyMustSameInvoiceExport, 
 	         CurrencyMustBeSameAsInvoice, 
@@ -56,7 +55,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItemExport, 
 	         ExtraNumericData, 
 	         IsCustomsValueComponent, 
-	         ExportFOBModificationAffectID, 
 	         IsCustomsValueComponentExport, 
 	         CurrencyMustSameInvoiceExport, 
 	         CurrencyMustBeSameAsInvoice, 
@@ -118,11 +116,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponent))
             {
 				entityPOCO.IsCustomsValueComponent = entityPM.IsCustomsValueComponent;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
-            {
-				entityPOCO.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponentExport))
@@ -211,11 +204,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsCustomsValueComponent = entityPOCO.IsCustomsValueComponent;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFOBModificationAffectID))
-            {
-					entityPM.ExportFOBModificationAffectID = entityPOCO.ExportFOBModificationAffectID;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsValueComponentExport))
             {
 					entityPM.IsCustomsValueComponentExport = entityPOCO.IsCustomsValueComponentExport;
@@ -295,11 +283,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponent))
             {
                 oldEntityPM.IsCustomsValueComponent = entityPM.IsCustomsValueComponent;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
-            {
-                oldEntityPM.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsValueComponentExport))

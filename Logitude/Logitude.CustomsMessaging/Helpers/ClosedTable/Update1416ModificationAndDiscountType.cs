@@ -39,8 +39,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                 gov.IsRelevantInvoice == curDbPM.IsRelevantInvoice &&
 
                 gov.IsCustomsValueComponent == curDbPM.IsCustomsValueComponent &&
-                gov.IsCustomsValueComponentExport == curDbPM.IsCustomsValueComponentExport&&
-                gov.ExportFOBValuesModificationAffectTypeID == curDbPM.ExportFOBModificationAffectID &&  
+                gov.IsCustomsValueComponentExport == curDbPM.IsCustomsValueComponentExport&& 
                 gov.CurrencyMustBeSameAsInvoice == curDbPM.CurrencyMustBeSameAsInvoice&&
                 gov.CurrencyMustSameInvoiceExport == curDbPM.CurrencyMustSameInvoiceExport&&
                 gov.IsCustomUseExport == curDbPM.IsCustomUseExport&&      
@@ -59,7 +58,6 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             curDbPM.ExtraNumericData = gov.ExtraNumericData;
             curDbPM.IsCustomsValueComponent = gov.IsCustomsValueComponent;
             curDbPM.IsCustomsValueComponentExport = gov.IsCustomsValueComponentExport;
-            curDbPM.ExportFOBModificationAffectID = gov.ExportFOBValuesModificationAffectTypeID;
             curDbPM.CurrencyMustBeSameAsInvoice = gov.CurrencyMustBeSameAsInvoice;
             curDbPM.CurrencyMustSameInvoiceExport = gov.CurrencyMustSameInvoiceExport;
             curDbPM.IsCustomUseExport = gov.IsCustomUseExport;      

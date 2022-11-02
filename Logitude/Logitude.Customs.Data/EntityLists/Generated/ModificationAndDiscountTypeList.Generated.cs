@@ -37,8 +37,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool? IsCustomsValueComponent  { get; set; }
        [DataMember]
-       public string ExportFOBModificationAffectID  { get; set; }
-       [DataMember]
        public bool? IsCustomsValueComponentExport  { get; set; }
        [DataMember]
        public bool? CurrencyMustSameInvoiceExport  { get; set; }

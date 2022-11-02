@@ -77,13 +77,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExportFOBModificationAffectID"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsCustomsValueComponentExport"
     Type="bit">
     <Constraints

@@ -273,29 +273,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportFOBModificationAffectID ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportFOBModificationAffectID  
-	   {
-	    
-	     get
-		{
-		   return exportFOBModificationAffectID;
-		 }
-		 set
-		 {
-		   if(exportFOBModificationAffectID != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFOBModificationAffectID",OldValue=exportFOBModificationAffectID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportFOBModificationAffectID=value;
-		   }
-			
-		 }
-	   }
 	  private bool? isCustomsValueComponentExport ;
 	  	  
        
