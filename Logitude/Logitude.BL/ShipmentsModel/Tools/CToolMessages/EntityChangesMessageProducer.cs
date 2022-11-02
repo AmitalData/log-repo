@@ -117,9 +117,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
         public static void ProduceSendEmailMessage(CommunicationLog communicationLog)
         {
+            Producer sendEmailProducer = null;
             try
             {
-                var sendEmailProducer = new Producer();
+                sendEmailProducer = new Producer();
                 var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented,
                     new JsonSerializerSettings
                     {
@@ -127,11 +128,19 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     });
                 var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage);
                 sendEmailProducer.ProducerBuilder.Flush();
-                sendEmailProducer.ProducerBuilder.Dispose();
+                sendEmailProducer.ProducerBuilder.Dispose();                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, communicationLog.Tenant, null, "ProduceSendEmailMessage", null, null);
+            }
+            finally
+            {
+                if (sendEmailProducer != null)
+                {
+                    sendEmailProducer.ProducerBuilder.Flush();
+                    sendEmailProducer.ProducerBuilder.Dispose();
+                }
             }
         }
 
