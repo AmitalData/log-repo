@@ -17,12 +17,12 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     @Input() ConditionsOperation: string;
     @Input() Conditions: Condition[];
     @Input() AtLeastOneCondition: boolean;
-
-    @Input() ShowFlowVariablesTree: boolean = false;
+    @Input() IsEntityField: boolean = false;
+    @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
-    
+
     @Output() ConditionsOperationChange = new EventEmitter<string>();
     @Output() IsValidConditionsChange = new EventEmitter<boolean>();
 
@@ -31,8 +31,6 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     public ConditionsCounter: number = 1;
 
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
-
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
 
     constructor() {
         super();

@@ -186,7 +186,7 @@
                             </div>
                             <div class="table-row-cell-block">
                                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                                    [ShowItem]="showEntitiesTreeItem()" (ValueChanged)="updateEntity($event)">
+                                    [ShowItem]="['Opportunity'] | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
                         </td>
@@ -202,7 +202,7 @@
                     <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Filter {{getEntityLabel()}} Records</div>
+                                <div class="select-get-record-label">Filter {{Entity | EntityLabelPipe}} Records</div>
                             </div>
                         </td>
                     </tr>
@@ -216,9 +216,10 @@
                                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                                     (IsValidConditionsChange)="UpdateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                                    [ShowFlowVariablesTree]="true" [FlowObject]="FlowObject"
-                                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields"
+                                    [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true">
                                 </Conditions>
+
                             </div>
                         </td>
                     </tr>
@@ -271,15 +272,15 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
+                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Sort {{getEntityLabel()}} Records</div>
+                                <div class="select-get-record-label">Sort {{Entity | EntityLabelPipe}} Records</div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
+                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
                         <td class="table-row-cell sort_container">
                             <div class="orderBy_container">
                                 <div class="orderBy_label">
@@ -288,21 +289,21 @@
                                 </div>
                                 <div class="table-row-cell-block">
                                     <ComboBox [ItemsSource]="SortDirectionListItems" [Binding]="'Name'"
-                                        [SelectedItem]="ListItem(OrderBy)"
+                                        [SelectedItem]="OrderBy | ListItemPipe"
                                         (SelectedItemChanged)="updateOrderBy($event.Code)" [ListType]="''"
                                         [CyData]="'orderby'">
                                     </ComboBox>
                                 </div>
                             </div>
 
-                            <div *ngIf="isOrderBy()" class="sortBy_container">
+                            <div *ngIf="OrderBy && OrderBy !== SortDirections.NotSorted" class="sortBy_container">
                                 <div class="sortBy_label">
                                     <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
                                         [DataContext]="DataContext"></LogLabel>
                                 </div>
                                 <div class="table-row-cell-block">
                                     <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
-                                        [DataContext]="DataContext" [QueryFilterItems]="getObjectFieldsQueryFilters()"
+                                        [DataContext]="DataContext" [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
                                         [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                                         [HideColumns]="true" [SelectedValue]="SortBy"
                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -313,7 +314,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="isAllRecords() && EntityId" class="table-row">
+                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
@@ -338,7 +339,7 @@
                                             <LogLov [NoObjectField]="true"
                                                 [ObjectFieldName]="'SelectedCoulmn_' + fieldIndex"
                                                 [DataContext]="DataContext"
-                                                [QueryFilterItems]="getObjectFieldsQueryFilters()" [IsFreeText]="true"
+                                                [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)" [IsFreeText]="true"
                                                 [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                                                 [SelectedValue]="returnedField.fieldCode" [HideColumns]="true"
                                                 [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -380,7 +381,8 @@
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'get-record-properties-save-button'"
-                [CancelButtonDataCy]="'get-record-properties-cancel-button'"></FooterButtons>
+                [CancelButtonDataCy]="'get-record-properties-cancel-button'">
+            </FooterButtons>
 
         </td>
     </tr>

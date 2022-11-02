@@ -6,16 +6,22 @@ import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
 import { Condition } from "Workflow/Models/Condition";
 import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
 import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
 import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
+import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { Formatter } from "Workflow/Models/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
+import { IsDateTimeTypePipe } from "Workflow/Pipes/IsDateTimeTypePipe";
+import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
+import { IsFieldOperatorPipe } from "Workflow/Pipes/IsFieldOperatorPipe";
+import { IsNoValueOperatorPipe } from "Workflow/Pipes/IsNoValueOperatorPipe";
 
 @Component({
     selector: "ConditionGroups",
@@ -31,8 +37,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() IsValidConditions: boolean = true;
     @Input() ConditionsCounter: number = 1;
     @Input() AtLeastOneCondition: boolean;
-
-    @Input() ShowFlowVariablesTree: boolean = false;
+    @Input() IsEntityField: boolean = false;
+    @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
@@ -50,8 +56,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     public DateTimeValueExpressionsItems: ListItem[] = new DateTimeValueExpressionsList().Items;
     public ConditionOperatorsItemsDictionary = new ConditionOperatorsListsDictionary(this.ShowChangedOperator).ItemsDictionary;
 
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
-
     constructor() {
         super();
     }
@@ -65,7 +69,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     initializeFlowVariablesTree() {
-        if (this.ShowFlowVariablesTree) {
+        if (!this.IsEntityField || !this.IsEntityFieldValue) {
             this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
@@ -78,20 +82,71 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    updateConditionField(objectField: ObjectFieldPM, conditionIndex: number) {
+    updateConditionEntityField(objectField: ObjectFieldPM, conditionIndex: number) {
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.fieldCode) {
-            this.Conditions[conditionIndex].fieldCode = objectField ? objectField.FieldCode : null;
-            this.Conditions[conditionIndex].field = objectField ? objectField.FieldName : null;
-            this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
-            this.Conditions[conditionIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-            this.Conditions[conditionIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-            this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
-            this.Conditions[conditionIndex].value = null;
-            this.Conditions[conditionIndex].valueCode = null;
-            this.Conditions[conditionIndex].valueExpression = this.isDateTimeType(objectField?.DataTypeCode) ? DateTimeValueExpressions.Date : null;
-            this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+            if (objectField) {
+                this.updateConditionFieldByObjectField(objectField, conditionIndex);
+            } else {
+                this.resetConditionField(conditionIndex);
+            }
             this.emitConditionsChanged();
         }
+    }
+
+    updateConditionField(field: string, conditionIndex: number) {
+        if (field !== this.Conditions[conditionIndex]?.field) {
+            if (field) {
+                if (this.isDeclaredVariable(field)) {
+                    this.updateConditionFieldByDeclaredVariableField(field, conditionIndex);
+                } else {
+                    let objectField = this.getObjectField(field);
+                    this.updateConditionFieldByObjectField(objectField, conditionIndex, field);
+                }
+            } else {
+                this.resetConditionField(conditionIndex);
+            }
+            this.emitConditionsChanged();
+        }
+    }
+
+    updateConditionFieldByObjectField(objectField: ObjectFieldPM | ObjectFieldList, conditionIndex: number, field: string | null = null) {
+        this.Conditions[conditionIndex].fieldCode = field ? field : (objectField ? objectField.FieldCode : null);
+        this.Conditions[conditionIndex].field = field ? field : (objectField ? objectField.FieldName : null);
+        this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
+        this.Conditions[conditionIndex].lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+        this.Conditions[conditionIndex].picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+        this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
+        this.Conditions[conditionIndex].value = null;
+        this.Conditions[conditionIndex].valueCode = null;
+        this.Conditions[conditionIndex].valueExpression = objectField ? (this.isDateTimeType(objectField.DataTypeCode) ? DateTimeValueExpressions.Date : null) : null;
+        this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+    }
+
+    updateConditionFieldByDeclaredVariableField(field: string, conditionIndex: number) {
+        let fieldType = field ? this.getDeclaredVariableFieldType(field) : null;
+        this.Conditions[conditionIndex].fieldCode = field ? field : null;
+        this.Conditions[conditionIndex].field = field ? field : null;
+        this.Conditions[conditionIndex].type = fieldType;
+        this.Conditions[conditionIndex].lookupType = null;
+        this.Conditions[conditionIndex].picklistType = null;
+        this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
+        this.Conditions[conditionIndex].value = null;
+        this.Conditions[conditionIndex].valueCode = null;
+        this.Conditions[conditionIndex].valueExpression = this.isDateTimeType(fieldType) ? DateTimeValueExpressions.Date : null;
+        this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+    }
+
+    resetConditionField(conditionIndex: number) {
+        this.Conditions[conditionIndex].fieldCode = null;
+        this.Conditions[conditionIndex].field = null;
+        this.Conditions[conditionIndex].type = null;
+        this.Conditions[conditionIndex].lookupType = null;
+        this.Conditions[conditionIndex].picklistType = null;
+        this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
+        this.Conditions[conditionIndex].value = null;
+        this.Conditions[conditionIndex].valueCode = null;
+        this.Conditions[conditionIndex].valueExpression = null;
+        this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
     }
 
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
@@ -186,36 +241,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.ConditionsChangedEvent.emit(event);
     }
 
-    getObjectFieldsQueryFilters() {
-        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
-    }
-
-    getObjectFieldsValueQueryFilters(objectField: ObjectFieldList) {
-        let lookupTableIdFilterValue = (objectField && objectField.DataTypeCode === FieldTypes.LookUp) ? objectField.LookUpTableId : null;
-        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, objectField.DataTypeCode, lookupTableIdFilterValue);
-    }
-
-    isFieldCompareOperator(operatorCode: string) {
-        return operatorCode && operatorCode.endsWith("<field>");
-    }
-
-    isNoValueOperator(operatorCode: string) {
-        return operatorCode === ConditionOperators.IsEmpty || operatorCode === ConditionOperators.Changed;
-    }
-
-    isDateTimeField(fieldCode: string) {
-        let objectField = this.getObjectField(fieldCode);
-        return objectField && (objectField.DataTypeCode === FieldTypes.DateTime || objectField.DataTypeCode === FieldTypes.Date);
-    }
-
-    isDateTimeType(fieldType: string) {
-        return fieldType && (fieldType === FieldTypes.DateTime || fieldType === FieldTypes.Date);
-    }
-
-    getObjectField(fieldCode: string) {
-        return this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
-    }
-
     showFlowVariablesTreeItem(conditionIndex: number) {
         let condition = this.Conditions[conditionIndex];
         let compareWithLookupOrPickListType: string | null = null;
@@ -225,5 +250,34 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             compareWithLookupOrPickListType = condition.picklistType;
         }
         return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, condition.type, compareWithLookupOrPickListType);
+    }
+
+    getDeclaredVariableFieldType(field: string) {
+        if (field) {
+            let fieldCode = Formatter.getFieldCode(field);
+            let declareVariableNode = fieldCode ? FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode) : null;
+            return declareVariableNode ? declareVariableNode.data["variableType"] : null;
+        }
+        return null;
+    }
+
+    isDeclaredVariable(field: string) {
+        return new IsDeclaredVariablePipe().transform(field);
+    }
+
+    isFieldCompareOperator(operatorCode: string) {
+        return new IsFieldOperatorPipe().transform(operatorCode);
+    }
+
+    isNoValueOperator(operatorCode: string) {
+        return new IsNoValueOperatorPipe().transform(operatorCode);
+    }
+
+    isDateTimeType(type: string) {
+        return new IsDateTimeTypePipe().transform(type);
+    }
+
+    getObjectField(field: string) {
+        return new GetObjectFieldPipe().transform(field, this.FlowObjectFields);
     }
 }

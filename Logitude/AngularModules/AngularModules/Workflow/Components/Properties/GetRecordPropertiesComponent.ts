@@ -7,9 +7,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
 import { SortDirections } from "Workflow/Constants/SortDirections";
 import { Condition } from "Workflow/Models/Condition";
-import { ListItem } from "Workflow/Models/ListItem";
 import { SortDirectionList } from "Workflow/Models/SortDirectionList";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { ReturnedField } from "Workflow/Models/ReturnedField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
@@ -50,7 +48,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
+    public GetRecordsLimit = GetRecordsLimit;
+    public SortDirections = SortDirections;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -192,16 +191,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    isAllRecords() {
-        return this.RecordsLimit == GetRecordsLimit.AllRecords;
-    }
-
     isOrderBy() {
         return this.OrderBy && this.OrderBy != SortDirections.NotSorted;
-    }
-
-    getObjectTablesQueryFilters() {
-        return ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters("Shipment");
     }
 
     UpdateIsValidConditions(isValidConditions: boolean) {
@@ -249,10 +240,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["returnedFields"] = this.ReturnedFields;
     }
 
-    getObjectFieldsQueryFilters() {
-        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(this.EntityId, null, null);
-    }
-
     updateSelectedField(selectedField: ObjectFieldPM, index: number) {
         this.ReturnedFields[index].fieldCode = selectedField ? selectedField.FieldCode : null;
         this.ReturnedFields[index].type = selectedField ? selectedField.DataTypeCode : null;
@@ -269,13 +256,5 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     deleteField(index: number) {
         this.ReturnedFields.splice(index, 1);
         this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
-    }
-
-    getEntityLabel() {
-        return this.Entity.indexOf(".") === -1 ? this.Entity : this.Entity.split(".")[1];
-    }
-
-    showEntitiesTreeItem() {
-        return (item: TreeSelectItem) => item.key !== "Opportunity";
     }
 }

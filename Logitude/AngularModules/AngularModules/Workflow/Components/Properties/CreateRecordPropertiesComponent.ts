@@ -138,8 +138,4 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     setValuesData() {
         this.Data["setValues"] = this.SetValues;
     }
-
-    showEntitiesTreeItem() {
-        return (item: TreeSelectItem) => item.key !== "Customer" && item.key !== "User";
-    }
 }

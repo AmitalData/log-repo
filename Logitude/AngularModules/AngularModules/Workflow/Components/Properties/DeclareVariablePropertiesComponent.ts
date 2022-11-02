@@ -25,8 +25,6 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
 
-    public ListItem = (itemCode: string) => { return new ListItem(itemCode) };
-
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -84,10 +82,6 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         if (fieldDataType != null) {
             this.updateVariableType(fieldDataType.Code)
         }
-    }
-
-    GetSelectedDataType() {
-        return this.DataTypesItems.filter(i => i.Code == this.VariableType)[0];
     }
 
     cancelButtonClicked() {

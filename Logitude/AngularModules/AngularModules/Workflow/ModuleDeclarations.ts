@@ -20,6 +20,17 @@ import { FooterButtonsComponent } from "./Components/Base/FooterButtonsComponent
 import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 import { SetValuesComponent } from "./Components/Base/SetValuesComponent";
 import { DeleteNodeWarningComponent } from "./Components/Messages/DeleteNodeWarningComponent";
+import { GetObjectFieldPipe } from "./Pipes/GetObjectFieldPipe";
+import { GetObjectFieldsQueryFiltersPipe } from "./Pipes/GetObjectFieldsQueryFiltersPipe";
+import { ListItemPipe } from "./Pipes/ListItemPipe";
+import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
+import { IsDeclaredVariablePipe } from "./Pipes/IsDeclaredVariablePipe";
+import { IsFieldOperatorPipe } from "./Pipes/IsFieldOperatorPipe";
+import { IsNoValueOperatorPipe } from "./Pipes/IsNoValueOperatorPipe";
+import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItemPipe";
+import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
+import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
+import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -44,6 +55,20 @@ export const Components = [
     TreeSelectComponent,
     SetValuesComponent,
     DeleteNodeWarningComponent,
+];
+
+export const Pipes = [
+    GetObjectFieldPipe,
+    GetObjectFieldsQueryFiltersPipe,
+    GetObjectTablesQueryFiltersPipe,
+    ListItemPipe,
+    IsDateTimeTypePipe,
+    IsDeclaredVariablePipe,
+    IsFieldOperatorPipe,
+    IsNoValueOperatorPipe,
+    ShowEntitiesTreeItemPipe,
+    ShowFlowVariablesTreeItemPipe,
+    EntityLabelPipe,
 ];
 
 export class ModuleDeclarations {

@@ -26,6 +26,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public WorkflowEntityTable: ObjectTablePM;
 
+    public FlowObject: any;
+    public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
     
     public CurrentSession = SessionLocator.SelectedSession;
@@ -33,6 +35,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
+        this.FlowObject = args.FlowObject ? args.FlowObject : null;
+        this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         
         this.initialize();
