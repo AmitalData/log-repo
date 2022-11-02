@@ -723,6 +723,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BRS,BI Report Security", 
                 Description = "BI Report Security", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UNV", 
+                Name = "Unicargo Server Validations", 
+                SearchFields = "Unicargo Server Validations", 
+                Description = "Unicargo Server Validations", 
+			});
 			
             return all;
        }
