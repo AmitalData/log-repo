@@ -109,5 +109,6 @@ namespace Logitude.BL.DataContracts
         public string thtk { get; set; }
         public string TargetEnv { get; set; }
         public string u71 { get; set; }
+        public bool UseTestLink { get; set; }
     }
 }
