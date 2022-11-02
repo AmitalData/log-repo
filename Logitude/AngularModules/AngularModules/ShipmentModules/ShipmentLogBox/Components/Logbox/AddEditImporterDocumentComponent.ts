@@ -441,6 +441,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
     ValidationErrorsList: any[];
     IsEmptyDocumentCreated: boolean = false;
+    FileDeletedAfterUpload: boolean = false;
 
     public get ObjectTableId() { return this.EntityPm.ObjectTableId }
     public set ObjectTableId(newValue: string) {
@@ -526,7 +527,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
             if (this.CurrentSession.CurrentWindow != null) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             }
-            if (this.IsNewDocument) {
+            if (this.IsNewDocument || this.FileDeletedAfterUpload) {
                 if (!this.IsEmptyDocumentCreated) {
                     this.CreateDocumentMethod(null);
                 }
@@ -622,10 +623,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     var temp = pmResponse.Result;
 
                     if (temp != null && !temp.HasFile) {
-                        this.CurrentSession.StopBusyIndicator();
-                        this.ValidationErrorsList.push("There already an empty document with this document type !");
-
-
+                        this.CheckFileDeletedAfterUpload();
                     }
                     else {
                         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -643,7 +641,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                             }
                             this.EntityPm.IsRequested = true;
                             this.EntityPm.Tenant = SessionLocator.Tenant;
-                            this.EntityPm.Code = "xxx";
+                                                        this.EntityPm.Code = "xxx";
                             this.EntityPm.CreatedByUserId = "xxx";
                             this.EntityPm.OwnerId = "xxx";
 
@@ -681,6 +679,16 @@ export class AddEditImporterDocumentComponent implements OnInit {
             });
         }
 
+    }
+
+    private CheckFileDeletedAfterUpload() {
+        this.CurrentSession.StopBusyIndicator();
+        if (this.FileDeletedAfterUpload) {
+            this.CurrentSession.CloseCurrentWindow();
+            return;
+        }
+
+        this.ValidationErrorsList.push("There already an empty document with this document type !");
     }
 
     //Uploader
@@ -812,7 +820,10 @@ export class AddEditImporterDocumentComponent implements OnInit {
         this.EntityPm.FileSize = null;
         this.EntityPm.FileExtension = null;
         this.EntityPm.FileName = null;
+        this.IsEmptyDocumentCreated = false;
+        this.EntityPm.IsRequested = true;
         this.IsPDF = false;
+        this.FileDeletedAfterUpload = true;
     }
 
     EmailSender: GeneralEmailSender;
