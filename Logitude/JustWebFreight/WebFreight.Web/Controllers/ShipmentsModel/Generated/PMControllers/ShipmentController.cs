@@ -738,9 +738,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         private bool GetRequestToken(Dictionary<string, string> myDict, out string result)
         {
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var content = new FormUrlEncodedContent(myDict);
-            var response = client.PostAsync("https://secure5.tranzila.com/cgi-bin/tranzila71dt.cgi", content);
+            var response = client.PostAsync("https://secure2.tranzila.com/cgi-bin/tranzila71dt.cgi", content);
             var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
             result = httpResponse.Result;
             return (result.Contains("thtk") ? true : false);
