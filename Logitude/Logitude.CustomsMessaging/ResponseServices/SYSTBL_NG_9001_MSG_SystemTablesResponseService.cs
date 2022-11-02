@@ -472,6 +472,41 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.ExtraNumericData = dr["ExtraNumericData"].ToString();
                                                     }
+                                                    if (dr["IsCustomsValueComponent"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponent = true;
+                                                    }
+                                                    if (dr["IsCustomsValueComponentExport"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponentExport = true;
+                                                    }
+                                                    if (dr["ExportFOBModificationAffectID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExportFOBModificationAffectID = dr["ExportFOBModificationAffectID"].ToString();
+                                                    }
+                                                    if (dr["CurrencyMustBeSameAsInvoice"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.CurrencyMustBeSameAsInvoice = true;
+                                                    }
+                                                    if (dr["CurrencyMustSameInvoiceExport"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.CurrencyMustSameInvoiceExport = true;
+                                                    }
+                                                    if (dr["IsCustomUseExport"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomUseExport = true;
+                                                    }
+                                                    if (dr["NetoValuesModificationAffectID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExportNetoValuesModificationAffectTypeID = dr["NetoValuesModificationAffectID"].ToString();
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
