@@ -79,11 +79,6 @@ export class ModificationAndDiscountTypePM {
     public set IsCustomsValueComponent(newValue: boolean) { if (this.isCustomsValueComponent != newValue) { this.isCustomsValueComponent = newValue; this.MarkAsDirty("IsCustomsValueComponent"); } }
        
 	 
-    private exportFOBModificationAffectID: string;
-    public get ExportFOBModificationAffectID() { return this.exportFOBModificationAffectID; }
-    public set ExportFOBModificationAffectID(newValue: string) { if (this.exportFOBModificationAffectID != newValue) { this.exportFOBModificationAffectID = newValue; this.MarkAsDirty("ExportFOBModificationAffectID"); } }
-       
-	 
     private isCustomsValueComponentExport: boolean;
     public get IsCustomsValueComponentExport() { return this.isCustomsValueComponentExport; }
     public set IsCustomsValueComponentExport(newValue: boolean) { if (this.isCustomsValueComponentExport != newValue) { this.isCustomsValueComponentExport = newValue; this.MarkAsDirty("IsCustomsValueComponentExport"); } }

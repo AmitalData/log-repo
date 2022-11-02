@@ -45,8 +45,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsCustomsValueComponent).HasColumnName("IsCustomsValueComponent");
 
-            this.Property(t => t.ExportFOBModificationAffectID).HasColumnName("ExportFOBModificationAffectID").HasMaxLength(2).IsUnicode(false);
-
             this.Property(t => t.IsCustomsValueComponentExport).HasColumnName("IsCustomsValueComponentExport");
 
             this.Property(t => t.CurrencyMustSameInvoiceExport).HasColumnName("CurrencyMustSameInvoiceExport");

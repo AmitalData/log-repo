@@ -19,7 +19,6 @@ export class ModificationAndDiscountTypeList {
 	IsRelevantGoodsItemExport: boolean;
 	ExtraNumericData: string;
 	IsCustomsValueComponent: boolean;
-	ExportFOBModificationAffectID: string;
 	IsCustomsValueComponentExport: boolean;
 	CurrencyMustSameInvoiceExport: boolean;
 	CurrencyMustBeSameAsInvoice: boolean;

@@ -41,8 +41,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExtraNumericData { get; set; }
         [Column("IsCustomsValueComponent")]
 	    public bool? IsCustomsValueComponent { get; set; }
-        [Column("ExportFOBModificationAffectID")]
-	    public string ExportFOBModificationAffectID { get; set; }
         [Column("IsCustomsValueComponentExport")]
 	    public bool? IsCustomsValueComponentExport { get; set; }
         [Column("CurrencyMustSameInvoiceExport")]
