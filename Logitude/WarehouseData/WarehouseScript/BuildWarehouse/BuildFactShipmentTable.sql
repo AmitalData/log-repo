@@ -679,14 +679,14 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	  ------- Pre Carriage & On Carriage for house shipment ----
 	  if(@ShipmentLevelCode = 'H')
 	   begin
-	  SET @PreCarriageCarrierNumber = @PreForwardingCarrierNumber;
+	  --SET @PreCarriageCarrierNumber = @PreForwardingCarrierNumber;
 	  SET @PreCarriageCarrier = @PreForwardingCarrier;
-	  SET @PreCarriageETD = @PreForwardingETD;
-	  SET @PreCarriageETA = @PreForwardingETA;
-	  SET @PreCarriageATA = @PreForwardingATA;
-	  SET @PreCarriageATD = @PreForwardingATD;
-	  SET @PreCarriageFromPort = @PreForwardingFromPort;
-	  SET @PreCarriageToPort = @PreForwardingToPort; 
+	  --SET @PreCarriageETD = @PreForwardingETD;
+	  --SET @PreCarriageETA = @PreForwardingETA;
+	  --SET @PreCarriageATA = @PreForwardingATA;
+	  --SET @PreCarriageATD = @PreForwardingATD;
+	  --SET @PreCarriageFromPort = @PreForwardingFromPort;
+	  --SET @PreCarriageToPort = @PreForwardingToPort; 
 	  SET @PreCarriageTransportMode = @PreForwardingTransportMode;   
 	   end
 	   
