@@ -82,7 +82,7 @@ namespace Logitude.Server.Tools.Counters
                         {
                             SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
                             var myTenants = new List<int>() { 1, 42, 2889 };
-                            if (tenant < 1000)//myTenants.Contains(tenant))
+                            if (tenant < 3000)//myTenants.Contains(tenant))
                             {
                                 cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
                             }
@@ -274,7 +274,7 @@ namespace Logitude.Server.Tools.Counters
                     {
                         SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
                         var myTenants = new List<int>() { 1, 42, 2889 };
-                        if (tenant < 1000)//myTenants.Contains(tenant))
+                        if (tenant < 3000)//myTenants.Contains(tenant))
                         {
                             cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
                         }
