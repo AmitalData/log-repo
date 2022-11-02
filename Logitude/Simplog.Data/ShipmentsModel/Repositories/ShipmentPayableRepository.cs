@@ -94,6 +94,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return myResult;
         }
+       
+        public IQueryable<ShipmentPayable> GetShipmentPayables(int tenant)
+        {
+            return (from record in context.ShipmentPayables
+                    where record.Tenant == tenant
+                    select record);
+        }
 
         public void Add(ShipmentPayable entity)
         {
