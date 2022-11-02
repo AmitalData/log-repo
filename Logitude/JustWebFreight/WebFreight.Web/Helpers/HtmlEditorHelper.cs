@@ -5848,7 +5848,7 @@ namespace WebFreight.Web.Helpers
             {
                 logoFileName = GetImageDetailsId(tenant);
                 folderName = string.IsNullOrEmpty(logoFileName) ? folderName : "images";
-                fileExtension = string.IsNullOrEmpty(logoFileName) ? fileExtension : GetImageDetailsExtention(logoFileName, tenant);
+                fileExtension = string.IsNullOrEmpty(logoFileName) ? fileExtension : GetImageDetailsExtention(logoFileName);
                 if (string.IsNullOrEmpty(logoFileName))
                 {
                     logoFileName = "SmallLogo" + tenant;
@@ -5887,17 +5887,18 @@ namespace WebFreight.Web.Helpers
             return logoCode;
         }
 
-        private string GetImageDetailsExtention(string imageDetailId, int tenant)
+        private string GetImageDetailsExtention(string imageDetailId)
         {
+            int tenant = 0;
             ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
-            var extension = imageDetailRepository.GetImageExtensionbyId(tenant, imageDetailId);
+            var extension = imageDetailRepository.GetImageExtensionbyIdForDigital(imageDetailId);
             return extension;
         }
 
         private string GetImageDetailsId(int tenant)
         {
             string imageDetails = null;
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
             if (tenantManagementPM != null)
             {
