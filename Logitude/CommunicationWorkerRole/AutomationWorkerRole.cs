@@ -319,27 +319,32 @@ namespace CommunicationWorkerRole
                                 #region E-mail
                                 if (automation.ResultCode == "EMAIL")
                                 {
-                                    AuthenticationUtil.AuthenticatedUserEmail = GetAuthenticationUtilUserEmail(entityChange);
-                                    entityChangesAutomation.type = validateResult.IsAutomationValid ? "EmailSsucceed" : "EmailFailed";
-
-                                    if (validateResult.IsAutomationValid)
+                                    var thread = new Thread(() =>
                                     {
-                                        string objectTableName = objectTable != null ? objectTable.Name : "";
-                                        AutomationHelper automationHelper = new AutomationHelper();
-                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference });
-                                        MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
-                                    }
-                                    else
-                                    {
-                                        entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                                        entityChangesAutomationsLists.Add(entityChangesAutomation);
-                                    }
+                                        AuthenticationUtil.AuthenticatedUserEmail = GetAuthenticationUtilUserEmail(entityChange);
+                                        entityChangesAutomation.type = validateResult.IsAutomationValid ? "EmailSsucceed" : "EmailFailed";
 
-                                    entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
-                                    entityChange.EmailAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
-                                    entityChange.EmailAutomationFailedXml = entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList()) : "";
+                                        if (validateResult.IsAutomationValid)
+                                        {
+                                            string objectTableName = objectTable != null ? objectTable.Name : "";
+                                            AutomationHelper automationHelper = new AutomationHelper();
+                                            string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference });
+                                            MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
+                                        }
+                                        else
+                                        {
+                                            entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                                            entityChangesAutomationsLists.Add(entityChangesAutomation);
+                                        }
 
+                                        entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
+                                        entityChange.EmailAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
+                                        entityChange.EmailAutomationFailedXml = entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList()) : "";
 
+                                    });
+
+                                    thread.Start();
+                                    thread.Join();
                                 }
                                 #endregion
 
