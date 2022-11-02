@@ -176,7 +176,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return null;
 
             ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
-            var extension = imageDetailRepository.GetImageExtensionbyId(tenant, imageDetailId);
+            var extension = imageDetailRepository.GetImageExtensionbyIdForDigital(imageDetailId);
             var fileLocation = "images";
             Uploader uploaderService = new Uploader();
             var imageFiledata = uploaderService.DownloadFile(imageDetailId, extension, fileLocation, tenant);
