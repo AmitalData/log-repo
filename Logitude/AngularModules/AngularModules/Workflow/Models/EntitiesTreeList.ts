@@ -20,8 +20,8 @@ export class EntitiesTreeList {
         { Code: "ShipmentPackage", Name: "Package", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
         { Code: "ARInvoice", Name: "AR Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
         { Code: "APInvoice", Name: "AP Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
-        { Code: "ShipmentReceivable", Name: "Shipment Receivable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
-        { Code: "ShipmentPayable", Name: "Shipment Payable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" }
+        { Code: "ShipmentReceivable", Name: "Receivable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
+        { Code: "ShipmentPayable", Name: "Payable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" }
     ];
 
     constructor(onlyParentEntities: boolean = false) {
