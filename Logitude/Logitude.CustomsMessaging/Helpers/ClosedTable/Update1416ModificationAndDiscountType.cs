@@ -36,7 +36,17 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
              gov.IsRelevantInvoiceExport == curDbPM.IsRelevantInvoiceExport&& 
                 curDbPM.IsRelevantGoodsItem == gov.IsRelevantGoodsItem && 
                 curDbPM.ExtraNumericData == gov.ExtraNumericData && 
-                gov.IsRelevantInvoice == curDbPM.IsRelevantInvoice;
+                gov.IsRelevantInvoice == curDbPM.IsRelevantInvoice &&
+
+                gov.IsCustomsValueComponent == curDbPM.IsCustomsValueComponent &&
+                gov.IsCustomsValueComponentExport == curDbPM.IsCustomsValueComponentExport&&
+                gov.ExportFOBModificationAffectID == curDbPM.ExportFOBModificationAffectID &&  
+                gov.CurrencyMustBeSameAsInvoice == curDbPM.CurrencyMustBeSameAsInvoice&&
+                gov.CurrencyMustSameInvoiceExport == curDbPM.CurrencyMustSameInvoiceExport&&
+                gov.IsCustomUseExport == curDbPM.IsCustomUseExport&&      
+                gov.ExportNetoValuesModificationAffectTypeID == curDbPM.NetoValuesModificationAffectID
+
+                ;
         }
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, ModificationAndDiscountTypePM curDbPM)
         {
@@ -47,6 +57,13 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             curDbPM.IsRelevantInvoiceExport = gov.IsRelevantInvoiceExport;
             curDbPM.IsRelevantGoodsItemExport = gov.IsRelevantGoodsItemExport;
             curDbPM.ExtraNumericData = gov.ExtraNumericData;
+            curDbPM.IsCustomsValueComponent = gov.IsCustomsValueComponent;
+            curDbPM.IsCustomsValueComponentExport = gov.IsCustomsValueComponentExport;
+            curDbPM.ExportFOBModificationAffectID = gov.ExportFOBModificationAffectID;
+            curDbPM.CurrencyMustBeSameAsInvoice = gov.CurrencyMustBeSameAsInvoice;
+            curDbPM.CurrencyMustSameInvoiceExport = gov.CurrencyMustSameInvoiceExport;
+            curDbPM.IsCustomUseExport = gov.IsCustomUseExport;      
+            curDbPM.NetoValuesModificationAffectID = gov.ExportNetoValuesModificationAffectTypeID;
 
 
         }

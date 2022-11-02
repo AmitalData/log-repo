@@ -56,6 +56,14 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public Boolean IsRelevantInvoiceExport { get; set; }
         public Boolean IsRelevantGoodsItemExport { get; set; }
         public string ExtraNumericData { get; set; }
+        public Boolean IsCustomsValueComponent { get; set; }
+        public Boolean IsCustomsValueComponentExport { get; set; }
+        public string ExportFOBModificationAffectID { get; set; }
+        public Boolean CurrencyMustBeSameAsInvoice { get; set; }
+        public Boolean CurrencyMustSameInvoiceExport { get; set; }
+        public Boolean IsCustomUseExport { get; set; }
+        public string ExportNetoValuesModificationAffectTypeID { get; set; }
+              
     }
     public class NDMessageActionCode
     {
