@@ -3182,7 +3182,7 @@
   <Column
     Name="PrivateLabelInvoiceNumber"
     Type="varchar"
-    Size="40">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

@@ -168,6 +168,12 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         if (AppTool.IsNullOrEmpty(this.ForwarderPartnerId)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Agent"));
         }
+        if (!AppTool.IsNullOrEmpty(this.CustomerReference2) && this.CustomerReference2.length >= 30) {
+            this.ValidationErrorsList.push("Reference Field must be less than 30");
+        }
+        if (!AppTool.IsNullOrEmpty(this.CustomerReference3) && this.CustomerReference3.length >= 30) {
+            this.ValidationErrorsList.push("Invoice Number Field must be less than 30");
+        }
         this._PortExtendedPMService = new PortExtendedPMService();
         if (AppTool.IsNullOrEmpty(this.FromPortId)) {
             //this.ValidationErrorsList.push(msg.replace("%FieldName", "Gatway"));
