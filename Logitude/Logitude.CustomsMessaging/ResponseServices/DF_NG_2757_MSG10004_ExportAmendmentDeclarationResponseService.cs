@@ -779,6 +779,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             consignmentPM.SecondCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.SecondCargoID);
                             consignmentPM.ThirdCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.ThirdCargoID);
                         }
+                        if (consignments != null)
+                        {
+                            consignmentPM.ExportContainerizationID = consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
+                        }
+                        if (declarationPM != null)
+                        {
+                            consignmentPM.ExportContainerizationID = declarationPM.Consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
+                        }
                     }
                     if (consignment.UnloadingLocation != null)
                     {
