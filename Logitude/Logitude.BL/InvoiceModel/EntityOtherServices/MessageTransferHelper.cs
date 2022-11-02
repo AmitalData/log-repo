@@ -594,6 +594,36 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField38Name { get; set; }
         public string ShipmentField39Name { get; set; }
         public string ShipmentField40Name { get; set; }
+        public string ShipmentField41Name { get; set; }
+        public string ShipmentField42Name { get; set; }
+        public string ShipmentField43Name { get; set; }
+        public string ShipmentField44Name { get; set; }
+        public string ShipmentField45Name { get; set; }
+        public string ShipmentField46Name { get; set; }
+        public string ShipmentField47Name { get; set; }
+        public string ShipmentField48Name { get; set; }
+        public string ShipmentField49Name { get; set; }
+        public string ShipmentField50Name { get; set; }
+        public string ShipmentField51Name { get; set; }
+        public string ShipmentField52Name { get; set; }
+        public string ShipmentField53Name { get; set; }
+        public string ShipmentField54Name { get; set; }
+        public string ShipmentField55Name { get; set; }
+        public string ShipmentField56Name { get; set; }
+        public string ShipmentField57Name { get; set; }
+        public string ShipmentField58Name { get; set; }
+        public string ShipmentField59Name { get; set; }
+        public string ShipmentField60Name { get; set; }
+        public string ShipmentField61Name { get; set; }
+        public string ShipmentField62Name { get; set; }
+        public string ShipmentField63Name { get; set; }
+        public string ShipmentField64Name { get; set; }
+        public string ShipmentField65Name { get; set; }
+        public string ShipmentField66Name { get; set; }
+        public string ShipmentField67Name { get; set; }
+        public string ShipmentField68Name { get; set; }
+        public string ShipmentField69Name { get; set; }
+        public string ShipmentField70Name { get; set; }
 
         public string ShipmentField1Value { get; set; }
         public string ShipmentField2Value { get; set; }
