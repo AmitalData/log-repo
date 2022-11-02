@@ -2220,7 +2220,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     {
                         string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeCode, tenant).DefaultText;
                         PropertyInfo namePropInfo = element.GetType().GetProperty(objectTableName + field.FieldName + "Name");
-                        namePropInfo.SetValue(element, fieldName, null);
+                        if (namePropInfo != null)
+                        {
+                            namePropInfo.SetValue(element, fieldName, null);
+                        }
                     }
                 }
             }
