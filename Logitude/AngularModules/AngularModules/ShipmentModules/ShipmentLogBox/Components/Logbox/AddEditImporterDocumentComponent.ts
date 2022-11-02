@@ -794,11 +794,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => { 
                     //    this.ReloadDocuments(); 
                     //}); 
-                    this.EntityPm.HasFile = false;
-                    this.EntityPm.FileSize = null;
-                    this.EntityPm.FileExtension = null;
-                    this.EntityPm.FileName = null;
-                    this.EntityPm.DocumentId = null;
+                    this.SetAsFileDeleted();
                     this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
                         //this.ReloadDocuments();
                     });
@@ -811,6 +807,13 @@ export class AddEditImporterDocumentComponent implements OnInit {
         });
     }
 
+    private SetAsFileDeleted() {
+        this.EntityPm.HasFile = false;
+        this.EntityPm.FileSize = null;
+        this.EntityPm.FileExtension = null;
+        this.EntityPm.FileName = null;
+        this.IsPDF = false;
+    }
 
     EmailSender: GeneralEmailSender;
     SendDocumentFile() {
@@ -935,6 +938,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         this.SelectedName = "";
         this.TypeSelected = false;
         this.DocumentTypeId = "";
+        this.SetAsFileDeleted();
         if (this.SelectedValue == "O") {
             this.ShowTypes = true;
         }
