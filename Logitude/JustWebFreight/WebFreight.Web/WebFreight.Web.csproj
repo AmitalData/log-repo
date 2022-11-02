@@ -719,6 +719,8 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowUserController.cs" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
@@ -1275,7 +1277,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowAPInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowARInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContainerController.cs" />
-    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShpmentPackageController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityViewsController.Generated.cs" />

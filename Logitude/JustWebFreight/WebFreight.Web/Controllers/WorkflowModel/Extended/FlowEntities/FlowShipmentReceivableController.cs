@@ -21,7 +21,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 {
-    public class FlowShpmentPackageController : ApiController
+    public class FlowShipmentReceivableController : ApiController
     {
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
@@ -32,27 +32,27 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(shipmentsContext);
-                IQueryable<ShipmentPackage> shipmentPackageQuery = shipmentPackageRepository.GetShipmentPackages(tenant);
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(authToken.Tenant);
+                ShipmentReceivableRepository shipmentReceivableRepository = new ShipmentReceivableRepository(shipmentsContext);
+                IQueryable<ShipmentReceivable> shipmentReceivableQuery = shipmentReceivableRepository.GetShipmentReceivables(authToken.Tenant);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                 {
                     AdditionalTreeFilter = javaScriptSerializer.Serialize(apiQueryTreeFilters.QueryFilterItem),
-                    ObjectTableName = "ShipmentPackage",
+                    ObjectTableName = "ShipmentReceivable",
                     Tenant = tenant,
                 };
 
-                shipmentPackageQuery = new TreeFilterQueryService().Apply(shipmentPackageQuery, treeFilterQueryArgs);
-                shipmentPackageQuery = shipmentPackageQuery.OrderBy(string.IsNullOrEmpty(apiQueryTreeFilters.OrderBy) ? "Id" : apiQueryTreeFilters.OrderBy);
-                shipmentPackageQuery = shipmentPackageQuery.Skip(0);
-                shipmentPackageQuery = shipmentPackageQuery.Take(apiQueryTreeFilters.PageSize);
+                shipmentReceivableQuery = new TreeFilterQueryService().Apply(shipmentReceivableQuery, treeFilterQueryArgs);
+                shipmentReceivableQuery = shipmentReceivableQuery.OrderBy(string.IsNullOrEmpty(apiQueryTreeFilters.OrderBy) ? "Id" : apiQueryTreeFilters.OrderBy);
+                shipmentReceivableQuery = shipmentReceivableQuery.Skip(0);
+                shipmentReceivableQuery = shipmentReceivableQuery.Take(apiQueryTreeFilters.PageSize);
 
-                var packages = shipmentPackageQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
+                var shipmentReceivables = shipmentReceivableQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
 
                 ServiceResponse response = new ServiceResponse();
-                response.Result = packages;
+                response.Result = shipmentReceivables;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
