@@ -130,6 +130,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     TooltipCertificate: string;
     TooltipCar: string;
     TooltipEdit: string;
+    SumDifference: number = 0;
 
 
     old_currency;
@@ -440,8 +441,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
 
             this.Parent.TotalForeignCurrency = this.Parent.TotalForeignCurrency - deletedItemPrice;
-            this.Parent.Difference = this.Parent.TotalForeignCurrency - (this.InvoiceAmount);
 
+            this.declarationPM.Direction != "E" ? this.Parent.Difference = this.Parent.TotalForeignCurrency - (this.InvoiceAmount) : this.GetDifference();
+            
 
         }
     }
@@ -577,6 +579,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                             }
                         });
                     }
+                    if(this.declarationPM.Direction == "E")
+                        this.GetDifference()
 
                     this.SetDepositionStatus();
                     //this.GetExchagneRates();
@@ -1640,6 +1644,28 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
 
+    GetDifference(){
+            
+            this.SumDifference = 0;
+
+            
+            this.EntityPM.SupplierInvoiceModifications.forEach(item => {
+                if(item.Amount!=null){
+                    if(item.ModificationAffectTypeID == '1')
+                        this.SumDifference += item.Amount
+                    if(item.ModificationAffectTypeID == '2')
+                    this.SumDifference -= item.Amount    
+                }
+                
+
+            });
+         
+            this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
+
+            this.Parent.Difference = this.InvoiceAmount - this.SumDifference;
+        
+    }
+
     GetFreightTotals() {        
         this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
             if (response != null) {
@@ -1651,25 +1677,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 //}
                 if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
                 var amount: number = this.InvoiceAmount;
-
+ 
                 if (isNaN(this.InvoiceAmount)) amount = 0;
-                if(this.declarationPM.Direction == "E"){
-                    let sum=0;
-                   
-                    this.EntityPM.SupplierInvoiceModifications.forEach(item => {
-                        if(item.Amount!=null)
-                        sum += item.Amount
-    
-                    });
-
-                    sum ==0 ? sum=this.Parent.TotalForeignCurrency : sum;
-
-                    this.Parent.Difference = this.Parent.TotalForeignCurrency - sum;
-                }
-                else{
-
+                if (this.declarationPM.Direction != "E")
                     this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
-                }
+               
 
                 if (this.Parent.TotalForeignCurrency != 0) {
                     if (this.Parent.Difference != null) {
@@ -1680,7 +1692,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                             this.Parent.DifferenceColor = FontTool.Green; //green
                         }
                     }
-                }
+                } 
                 else {
                     this.Parent.DifferenceColor = FontTool.Black;
                 }
@@ -3345,7 +3357,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             if (isNaN(this.oldvalue)) this.oldvalue = 0;
             var totalFCurr: number = this.Parent.Parent.TotalForeignCurrency;
             this.Parent.Parent.TotalForeignCurrency = totalFCurr - this.oldvalue + this.ItemPrice;
-            this.Parent.Parent.Difference = this.Parent.Parent.TotalForeignCurrency - (this.Parent.InvoiceAmount);
+            this.Parent.declarationPM.Direction != "E" ? this.Parent.Parent.Difference = this.Parent.Parent.TotalForeignCurrency - (this.Parent.InvoiceAmount): this.Parent.GetDifference() ;
+           
+
         }
         this.oldvalue = this.entityPM.ItemPrice;
         this.doCalculate = false;

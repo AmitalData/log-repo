@@ -44,7 +44,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                      CurrencyMustBeSameAsInvoice = a.CurrencyMustBeSameAsInvoice,
                                                                      CurrencyMustSameInvoiceExport = a.CurrencyMustSameInvoiceExport,
                                                                      IsCustomUseExport = a.IsCustomUseExport,      
-                                                                     net = a.ExportNetoValuesModificationAffectTypeID
+                                                                     NetoValuesModificationAffectID = a.NetoValuesModificationAffectID
                                                                  });
             return query;
         }
