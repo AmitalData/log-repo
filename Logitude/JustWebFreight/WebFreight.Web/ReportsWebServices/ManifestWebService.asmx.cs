@@ -594,6 +594,9 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
                     detail.ITNumber = shipmentView.ITNumber;
                     detail.CustomerName = newDetail.CustomerName = shipmentView.CustomerName;
+                    SetShipperNotExporterData(newDetail, shipmentView, cardQuery, addressRepository);
+                    SetConsigneeNotImporter(newDetail, shipmentView, cardQuery, addressRepository);
+
 
                     if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
                     {
@@ -1441,6 +1444,27 @@ namespace WebFreight.Web.ReportsWebServices
             return manifestDataProvider;
             #endregion
         }
+
+        private void SetConsigneeNotImporter(NewManifestDetailsClass newDetail, ShipmentDataView shipmentView, CardQuery cardQuery, AddressRepository addressRepository)
+        {
+            if (string.IsNullOrEmpty(shipmentView.ConsigneeNotImporterId)) return;
+            CardPM consigneeNotImporter = cardQuery.GetSinglePM(shipmentView.ConsigneeNotImporterId, tenant);
+            if (consigneeNotImporter == null) return;
+            newDetail.ConsigneeNotImporterName = consigneeNotImporter.EnglishName;
+            Address address = addressRepository.GetSingleAddress(shipmentView.ConsigneeNotImporterAddressId, tenant);
+            if (address != null) newDetail.ConsigneeNotImporterAddress = DataProviders.General.GetAddress(address);
+        }
+
+        private void SetShipperNotExporterData(NewManifestDetailsClass newDetail, ShipmentDataView shipmentView, CardQuery cardQuery, AddressRepository addressRepository)
+        {
+            if (string.IsNullOrEmpty(shipmentView.ShipperNotExporterId)) return;
+            CardPM shipperNotExporter = cardQuery.GetSinglePM(shipmentView.ShipperNotExporterId, master.Tenant);
+            if (shipperNotExporter == null) return;
+            newDetail.ShipperNotExporterName = shipperNotExporter.EnglishName;
+            Address address = addressRepository.GetSingleAddress(shipmentView.ShipperNotExporterAddressId, master.Tenant);
+            if (address != null) newDetail.ShipperNotExporterAddress = DataProviders.General.GetAddress(address);    
+        }
+
         private string GetLoggedContactName()
         {
             ContactPM loggedContact;
