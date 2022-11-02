@@ -15231,7 +15231,6 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 MenuTypeCode = "MTC",
                 IndexOfOrder = 62,
-                CustomsSchedulerParam
                 CategoryTypeCode = "CSM",
                 TextCode = "General.MC.Tables.ReAnalysis",
                 HtmlView = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent",
