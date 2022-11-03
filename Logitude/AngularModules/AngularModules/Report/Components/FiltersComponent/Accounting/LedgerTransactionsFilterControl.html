@@ -459,9 +459,11 @@
                     </td>
                 </tr> -->
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
-                    <td style="width:150px">
-                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'" [ObjectTableName]="'GLAccount'"
-                                  [DataContext]="DataContext"></LogLabel>
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'"
+                                  [Text]="'GLAccount.O.ClosedBalanceInLocalCurrency' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
                     </td>
                     <td>
                             <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList" [Binding]="'LocalName'"
