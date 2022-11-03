@@ -89,6 +89,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     IsEnableEditDocument: boolean = false; 
     IsEnableManageDocument: boolean = false;
+    IsAWBPackage: boolean = false;
 
     public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;
@@ -101,7 +102,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("DocumentType", "EDITPRINTEDDOCUMENTS")) {
             this.IsEnableEditDocument = true;
         }
-        this.CheckManageDocumentFeature(); 
+        this.CheckManageDocumentFeature();
+        this.CheckAWBPackage();
     }
 
 
@@ -1440,6 +1442,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
 
+    }
+    CheckAWBPackage() {
+        var myCodes: string[] = [];
+        myCodes.push("EAWB");
+        this.IsAWBPackage = FeatureLocator.IsPackageOneOf(myCodes);
     }
 
 
