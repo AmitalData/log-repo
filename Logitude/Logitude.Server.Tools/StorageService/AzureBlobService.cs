@@ -228,6 +228,17 @@ namespace Logitude.Server.Tools.StorageService
                     Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
                     if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                     {
+
+                        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
+                        DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
+
+                        if (documentsFiling != null)
+                        {
+                            KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
+
+                            blobfile.Metadata.Add(metadata);
+                        }
+
                         AesFunction aesFunction = new AesFunction();
                         data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
                     }
