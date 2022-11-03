@@ -24,6 +24,7 @@ export class ModificationAndDiscountTypeList {
 	CurrencyMustBeSameAsInvoice: boolean;
 	IsCustomUseExport: boolean;
 	NetoValuesModificationAffectID: string;
+	ExportFOBModificationAffectID: string;
 	
 }
  

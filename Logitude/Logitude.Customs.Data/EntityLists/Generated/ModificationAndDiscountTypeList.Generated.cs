@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsCustomUseExport  { get; set; }
        [DataMember]
        public string NetoValuesModificationAffectID  { get; set; }
+       [DataMember]
+       public string ExportFOBModificationAffectID  { get; set; }
    }
 
 }

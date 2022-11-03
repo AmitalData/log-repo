@@ -62,7 +62,9 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public Boolean CurrencyMustSameInvoiceExport { get; set; }
         public Boolean IsCustomUseExport { get; set; }
         public string ExportNetoValuesModificationAffectTypeID { get; set; }
-              
+
+        public string ExportFOBValuesModificationAffectTypeID { get; set; }
+
     }
     public class NDMessageActionCode
     {
