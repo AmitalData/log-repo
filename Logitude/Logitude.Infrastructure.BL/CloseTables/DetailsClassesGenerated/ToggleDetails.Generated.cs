@@ -716,6 +716,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BRS,BI Report Security", 
                 Description = "BI Report Security", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OT2", 
+                Name = "Only TLS 12 For Tranzilla", 
+                SearchFields = "Only TLS 12 For Tranzilla", 
+                Description = "Only TLS 12 For Tranzilla", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTT", 
+                Name = "Connect Tranzilla on Test Links", 
+                SearchFields = "Connect Tranzilla on Test Links", 
+                Description = "Connect Tranzilla on Test Links", 
+			});
 			
             return all;
        }

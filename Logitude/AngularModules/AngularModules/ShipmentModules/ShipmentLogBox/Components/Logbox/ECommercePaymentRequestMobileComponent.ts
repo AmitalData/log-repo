@@ -319,9 +319,17 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
-        var Env = "https://direct.tranzila.com/" + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
+        let directTranzilaLink = this.GetDirectTranzilaLink();
+        var Env = directTranzilaLink + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
         return Env;
     }
+    private GetDirectTranzilaLink() {
+        if (this.AdditionalData && this.AdditionalData.PaymentData && this.AdditionalData.PaymentData.UseTestLink) {
+            return "https://direct2.tranzila.com/";
+        }
+        return "https://direct.tranzila.com/";
+    }
+
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }

@@ -644,7 +644,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
                         Dictionary<string, string> dict = GetParamsAsDict(myParams);
                         string result = "";
-                        var success = GetRequestToken(dict, out result);
+                        var success = GetRequestToken(dict, out result, tenant);
                         if (success)
                         {
                             CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
@@ -662,6 +662,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                             CustomData.PaymentData.u71 = dict["u71"];
 
                         }
+                        CustomData.PaymentData.UseTestLink = FeatureToggleHelper.HasFeatureToggle("CTT", tenant);
                     }
 
                 }
@@ -736,14 +737,39 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         private static readonly HttpClient client = new HttpClient();
 
-        private bool GetRequestToken(Dictionary<string, string> myDict, out string result)
+        private bool GetRequestToken(Dictionary<string, string> myDict, out string result, int tenant)
         {
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            SetServicePointManagerSecurityProtocol(tenant);
             var content = new FormUrlEncodedContent(myDict);
-            var response = client.PostAsync("https://secure5.tranzila.com/cgi-bin/tranzila71dt.cgi", content);
+            string Uri = GetSecureTranzilaURI(tenant);
+            var response = client.PostAsync(Uri, content);
             var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
             result = httpResponse.Result;
             return (result.Contains("thtk") ? true : false);
+        }
+
+        private string GetSecureTranzilaURI(int tenant)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTT", tenant))
+            {
+                return "https://secure2.tranzila.com/cgi-bin/tranzila71dt.cgi";
+            }
+            else
+            {
+                return "https://secure5.tranzila.com/cgi-bin/tranzila71dt.cgi";
+            }
+        }
+
+        private static void SetServicePointManagerSecurityProtocol(int tenant)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("OT2", tenant))
+            {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+            else
+            {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            }
         }
 
         [HttpGet]
