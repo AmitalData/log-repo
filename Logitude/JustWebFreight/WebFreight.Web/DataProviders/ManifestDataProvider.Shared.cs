@@ -554,6 +554,10 @@ namespace WebFreight.Web.DataProviders
         public string LastDeliveryDriver { get; set; }
         public string FirstPickupTruckNumber { get; set; }
         public string LastDeliveryTruckNumber { get; set; }
+        public string ShipperNotExporterName { get; set; }
+        public string ShipperNotExporterAddress { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string ConsigneeNotImporterAddress { get; set; }
     }
 
     public class PackageDetails
