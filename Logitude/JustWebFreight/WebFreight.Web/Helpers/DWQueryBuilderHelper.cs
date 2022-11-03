@@ -229,15 +229,17 @@ namespace WebFreight.Web.Helpers
                                 else WhereStmt += (" " + AndOr);
                             }
 
+                            string dimTable = (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL);
+                            string notSpecifiedValue = "  ('Not Specified','-1','1')";
 
                             if (filter.Operation.Code == "IsNull")
                             {
-                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " = '' " + " ) ";
+                                WhereStmt += "(" + dimTable + "." + filter.Code + " is null or " + dimTable + "." + filter.Code + " = '' " + "or "  + (dimTable + "." + filter.Code) +"  in " + notSpecifiedValue + " ) ";
 
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
-                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " <> '' " + " ) ";
+                                WhereStmt += "(" + dimTable + "." + filter.Code + " is not null and " + dimTable + "." + filter.Code + " <> '' " + "and " + (dimTable + "." + filter.Code) + " not in " + notSpecifiedValue + " ) ";
                             }
                             else
                             {
