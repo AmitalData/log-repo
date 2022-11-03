@@ -9,6 +9,8 @@ namespace Logitude.Customs.Def.EntityPMs
 {
     public partial class SupplierInvoicePM
     {
+        public string InvoiceCurrencyTypeCodePartnerId;
+
         //[DataMember]
         //public int SupplierInvoiceItemLastLineNumber { get; set; }
         //[DataMember]

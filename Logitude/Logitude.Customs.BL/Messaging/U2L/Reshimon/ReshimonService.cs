@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
         private LogitudeTsrufa _LogitudeTsrufa;
         private SupplierInvoicePM _MySupplierInvoicePM;
         private ICustomContext _context;
-
+        private string partner;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Reshimon.ReshimonService.Upsert()";
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
@@ -79,6 +79,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetXml for file " + this._MyDeclarationPM.CustomFileNo;
             string xml=null;
+            if (!String.IsNullOrWhiteSpace(MoreParams))
+            {
+                AppendLogLine("MoreParams: " + MoreParams);
+                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                partner = UnifreightListsUtil.GetValue(ref unifreightListsParams, "PARTNER");
+                AppendLogLine("partner: " + partner);
+                _MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCurrencyTypeCodePartnerId = partner;
+            }
+            
+
             try
             {
                 Logitude.Server.Tools.EntityPM.SuppressCreateNotifyPropertyChangeValues = true;
@@ -95,6 +106,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                 MyGenericResponseObj.Message = "GetXml returned null";
                 return;
             }
+
+            
+                
             MyGenericResponseObj.Stage = "Get Reshimon Xml Done ";
             AppendLogLine("GetXml:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
