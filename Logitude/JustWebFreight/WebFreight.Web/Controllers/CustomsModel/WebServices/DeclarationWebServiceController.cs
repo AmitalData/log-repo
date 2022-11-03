@@ -49,6 +49,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.AmitalMessaging.Utils;
 using Newtonsoft.Json;
 using Logitude.Customs.BL.BL;
+using WebFreight.Web.CustomWebServices.BL.XLSReports;
+using System.Net.Http.Headers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -2372,6 +2374,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetExportReport2Excel(string tenant, string ExportFromDate, string ExportToDate)
+        {
+            try
+            {
+                var lastMileReport = new ExportReport(tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var item = lastMileReport.GetExportReport(ExportFromDate, ExportToDate);
+
+                response.Content = new StreamContent(new MemoryStream(item));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ms-excel");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = ExportFromDate.ToString() + " - " + ExportToDate.ToString() + ".xls";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
     internal class CustomsPartnersItemCRList

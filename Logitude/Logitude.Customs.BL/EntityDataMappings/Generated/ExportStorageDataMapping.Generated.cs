@@ -96,7 +96,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ActionCode, 
 	         ProcedureCurrentName, 
 	         ActionName, 
-	         ExportLoadingPortName,
+	         ExportLoadingPortName, 
+	         StorageStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

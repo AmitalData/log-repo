@@ -986,6 +986,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string storageStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageStatusName  
+	   {
+	    
+	     get
+		{
+		   return storageStatusName;
+		 }
+		 set
+		 {
+		   if(storageStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageStatusName",OldValue=storageStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
