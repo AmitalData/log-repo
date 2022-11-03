@@ -51,6 +51,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsCustomUseExport { get; set; }
         [Column("NetoValuesModificationAffectID")]
 	    public string NetoValuesModificationAffectID { get; set; }
+        [Column("ExportFOBModificationAffectID")]
+	    public string ExportFOBModificationAffectID { get; set; }
     }
 }
 	 

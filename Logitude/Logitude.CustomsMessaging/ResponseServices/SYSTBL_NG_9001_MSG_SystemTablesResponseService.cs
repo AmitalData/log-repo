@@ -503,6 +503,12 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.ExportNetoValuesModificationAffectTypeID = dr["ExportNetoValuesModificationAffectTypeID"].ToString();
                                                     }
+                                                    if (dr["ExportFOBValuesModificationAffectTypeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExportFOBValuesModificationAffectTypeID = dr["ExportFOBValuesModificationAffectTypeID"].ToString();
+                                                    }
+
                                                     extList.Add(newExt);
                                                 });
                         return extList;

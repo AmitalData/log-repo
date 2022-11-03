@@ -43,7 +43,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                 gov.CurrencyMustBeSameAsInvoice == curDbPM.CurrencyMustBeSameAsInvoice&&
                 gov.CurrencyMustSameInvoiceExport == curDbPM.CurrencyMustSameInvoiceExport&&
                 gov.IsCustomUseExport == curDbPM.IsCustomUseExport&&      
-                gov.ExportNetoValuesModificationAffectTypeID == curDbPM.NetoValuesModificationAffectID
+                gov.ExportNetoValuesModificationAffectTypeID == curDbPM.NetoValuesModificationAffectID &&
+                gov.ExportFOBValuesModificationAffectTypeID == curDbPM.ExportFOBModificationAffectID;
 
                 ;
         }
@@ -62,6 +63,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             curDbPM.CurrencyMustSameInvoiceExport = gov.CurrencyMustSameInvoiceExport;
             curDbPM.IsCustomUseExport = gov.IsCustomUseExport;      
             curDbPM.NetoValuesModificationAffectID = gov.ExportNetoValuesModificationAffectTypeID;
+            curDbPM.ExportFOBModificationAffectID = gov.ExportFOBValuesModificationAffectTypeID;
 
 
         }

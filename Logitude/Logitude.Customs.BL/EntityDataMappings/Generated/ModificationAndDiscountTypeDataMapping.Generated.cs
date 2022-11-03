@@ -37,7 +37,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CurrencyMustSameInvoiceExport, 
 	         CurrencyMustBeSameAsInvoice, 
 	         IsCustomUseExport, 
-	         NetoValuesModificationAffectID,
+	         NetoValuesModificationAffectID, 
+	         ExportFOBModificationAffectID,
 	      }
 
 
@@ -59,7 +60,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CurrencyMustSameInvoiceExport, 
 	         CurrencyMustBeSameAsInvoice, 
 	         IsCustomUseExport, 
-	         NetoValuesModificationAffectID,
+	         NetoValuesModificationAffectID, 
+	         ExportFOBModificationAffectID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -141,6 +143,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NetoValuesModificationAffectID))
             {
 				entityPOCO.NetoValuesModificationAffectID = entityPM.NetoValuesModificationAffectID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
+            {
+				entityPOCO.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -229,6 +236,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.NetoValuesModificationAffectID = entityPOCO.NetoValuesModificationAffectID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFOBModificationAffectID))
+            {
+					entityPM.ExportFOBModificationAffectID = entityPOCO.ExportFOBModificationAffectID;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -308,6 +320,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NetoValuesModificationAffectID))
             {
                 oldEntityPM.NetoValuesModificationAffectID = entityPM.NetoValuesModificationAffectID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFOBModificationAffectID))
+            {
+                oldEntityPM.ExportFOBModificationAffectID = entityPM.ExportFOBModificationAffectID;
             }
 			
 		}

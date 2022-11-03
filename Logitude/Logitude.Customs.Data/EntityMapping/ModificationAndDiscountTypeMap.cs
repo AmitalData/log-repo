@@ -54,6 +54,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsCustomUseExport).HasColumnName("IsCustomUseExport");
 
             this.Property(t => t.NetoValuesModificationAffectID).HasColumnName("NetoValuesModificationAffectID").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ExportFOBModificationAffectID).HasColumnName("ExportFOBModificationAffectID").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

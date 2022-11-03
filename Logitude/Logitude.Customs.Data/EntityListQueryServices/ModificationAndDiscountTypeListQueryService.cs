@@ -42,7 +42,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                      IsCustomsValueComponentExport = a.IsCustomsValueComponentExport,
                                                                      CurrencyMustBeSameAsInvoice = a.CurrencyMustBeSameAsInvoice,
                                                                      CurrencyMustSameInvoiceExport = a.CurrencyMustSameInvoiceExport,
-                                                                     IsCustomUseExport = a.IsCustomUseExport,      
+                                                                     IsCustomUseExport = a.IsCustomUseExport,
+
+                                                                     ExportFOBModificationAffectID = a.ExportFOBModificationAffectID,
+                                                                     NetoValuesModificationAffectID = a.NetoValuesModificationAffectID
 
 
                                                                  });

@@ -104,6 +104,11 @@ export class ModificationAndDiscountTypePM {
     public set NetoValuesModificationAffectID(newValue: string) { if (this.netoValuesModificationAffectID != newValue) { this.netoValuesModificationAffectID = newValue; this.MarkAsDirty("NetoValuesModificationAffectID"); } }
        
 	 
+    private exportFOBModificationAffectID: string;
+    public get ExportFOBModificationAffectID() { return this.exportFOBModificationAffectID; }
+    public set ExportFOBModificationAffectID(newValue: string) { if (this.exportFOBModificationAffectID != newValue) { this.exportFOBModificationAffectID = newValue; this.MarkAsDirty("ExportFOBModificationAffectID"); } }
+       
+	 
 
     public OldEntityPM: ModificationAndDiscountTypePM;
 		
