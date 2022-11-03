@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ActionName  { get; set; }
        [DataMember]
        public string ExportLoadingPortName  { get; set; }
+       [DataMember]
+       public string StorageStatusName  { get; set; }
    }
 
 }

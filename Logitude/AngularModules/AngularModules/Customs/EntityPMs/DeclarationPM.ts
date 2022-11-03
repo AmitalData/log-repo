@@ -1364,6 +1364,11 @@ export class DeclarationPM {
     public set CancelRejectionReasonName(newValue: string) { if (this.cancelRejectionReasonName != newValue) { this.cancelRejectionReasonName = newValue; this.MarkAsDirty("CancelRejectionReasonName"); } }
        
 	 
+    private exportContainerizationID: string;
+    public get ExportContainerizationID() { return this.exportContainerizationID; }
+    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
+       
+	 
     private isSubmitDeclaration: boolean;
     public get IsSubmitDeclaration() { return this.isSubmitDeclaration; }
     public set IsSubmitDeclaration(newValue: boolean) { if (this.isSubmitDeclaration != newValue) { this.isSubmitDeclaration = newValue; this.MarkAsDirty("IsSubmitDeclaration"); } }

@@ -1299,6 +1299,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     sortingCol: string = ''; //'CreateDateTime';
   AfterServerSort: boolean = false;
   ServerSort(colDef, id, forced: boolean = false) {
+    debugger;
         //var div = element.parentNode.parentNode;
     //console.log(div.getAttribute('id'));
     if (forced == false) {

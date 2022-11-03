@@ -50,6 +50,7 @@ export class ExportStorageList {
 	ProcedureCurrentName: string;
 	ActionName: string;
 	ExportLoadingPortName: string;
+	StorageStatusName: string;
 	
 }
  
