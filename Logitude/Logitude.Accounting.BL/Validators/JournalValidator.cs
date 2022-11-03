@@ -180,7 +180,7 @@ namespace Logitude.Accounting.BL.Validators
 
                     if (myJournalPM.APPaymentCancelDate==null)
                     {
-                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate))
+                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate, myJournalPM.AccountingEntityCode, myJournalPM.ExternalSystem))
                         {
                             errorsList.AddNew(transText);
                             valid = false;
@@ -188,7 +188,7 @@ namespace Logitude.Accounting.BL.Validators
                     }
                     else
                     {
-                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime) myJournalPM.APPaymentCancelDate))
+                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime) myJournalPM.APPaymentCancelDate, myJournalPM.AccountingEntityCode, myJournalPM.ExternalSystem))
                         {
                             errorsList.AddNew(transText);
                             valid = false;
@@ -810,7 +810,9 @@ accountingValidationContextServiceProvider
         public static bool IsMonthOpenForAccountingDate(
             IQueryable<AccountingPeriodPM> accountingPeriodsByTypeRegular,
             //JournalPM myJournalPM
-            DateTime AccountingDate
+            DateTime AccountingDate,
+            string accountingEntityCode = null,
+            string externalSystem = null
             )
         {
             bool valid = true;
@@ -844,6 +846,10 @@ accountingValidationContextServiceProvider
                 else if (accountingDateMonth < currentAccountingPeriodPM.OpenMonth)
                 {
                     //valid ... accountingDateMonth can be  less than OpenMonth
+                } else if (((!string.IsNullOrEmpty(externalSystem) && accountingEntityCode == "1") || accountingEntityCode == "2" 
+                    || accountingEntityCode == "3" || accountingEntityCode == "4") &&  accountingDateMonth > currentAccountingPeriodPM.OpenMonth)
+                {
+                    //valid from API
                 }
                 else
                 {

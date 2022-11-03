@@ -219,6 +219,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 Bank = entityPM.Bank,
                 IsNewEntity = isNew,
                 IsFromReconcileScreen = entityPM.UpdateAmountAndStatuses,
+                IsExternalEntity = entityPM.IsExternalEntity
             };
 
             ValidateFullAccounting(arpaymentValidatorArgs);
@@ -560,10 +561,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (accountingPeriodList != null && arguments.RegisterDate != null)
             {
                 var month = arguments.RegisterDate.Value.Month;
-                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+
+
+
+                if (arguments.IsExternalEntity)
                 {
-                    string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
-                    errors += msg + ";";
+                    if (month <= accountingPeriodList.ClosedMonth)
+                    {
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                        errors += msg + ";";
+                    }
+                }
+                else
+                {
+                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    {
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                        errors += msg + ";";
+                    }
                 }
             }
             else
