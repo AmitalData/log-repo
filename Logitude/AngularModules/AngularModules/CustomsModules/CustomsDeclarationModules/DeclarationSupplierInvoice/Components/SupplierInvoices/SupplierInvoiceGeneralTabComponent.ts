@@ -1650,14 +1650,52 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     GetDifference(){
             
             this.SumDifference = 0;
-
             
             this.EntityPM.SupplierInvoiceModifications.forEach(item => {
-                if(item.Amount!=null){
-                    if(item.ModificationAffectTypeID == '1')
-                        this.SumDifference += item.Amount
-                    if(item.ModificationAffectTypeID == '2')
-                    this.SumDifference -= item.Amount    
+                if(item.Amount!=null && (item.ModificationAffectTypeID == '1' || item.ModificationAffectTypeID == '2')){
+
+                    if(item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
+                    {
+                        this.TotalExportModificationInInvoiceCurrency = 0;
+                        var ratePM: any;
+                        var firstRatePM: any;
+                        var InvocieCurrencyRate: number = 0;
+                        var rate: number = 0;
+                        var total: number = 0;
+                        if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
+                            ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
+                            //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+                        }
+                        else {
+                            this.LoadExchangeRatesForModification(item);
+                            return;
+                        }
+                        if (ratePM) {
+                            InvocieCurrencyRate = ratePM.ExchangeRate;
+                        }
+                        total = (isNaN(item.Amount)) ? 0 : item.Amount;
+                        var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
+                        if (ModificationCurrencyRate) {
+                            rate = ModificationCurrencyRate.ExchangeRate;
+                            if (InvocieCurrencyRate > 0) {
+                                total = total * (rate / InvocieCurrencyRate);
+                            }
+                            else {
+                                total = total * rate;
+                            }
+                        }
+                        this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
+                    
+                        item.ModificationAffectTypeID == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
+
+                    }
+
+                else{
+
+                    item.ModificationAffectTypeID == '1' ? this.SumDifference += item.Amount : this.SumDifference -= item.Amount
+                }
+                    
+                       
                 }
                 
 
