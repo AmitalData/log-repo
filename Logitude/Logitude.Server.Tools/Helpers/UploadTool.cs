@@ -65,6 +65,8 @@ namespace Logitude.Server.Tools.Helpers
      
         public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
         {
+            var x = 0;
+            var y = 10 / x;
             string filelocation = "images";
             fileName = filename.ToLower();
             string filePath = "tenant" + tenant.ToString() + "/";
