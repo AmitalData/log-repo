@@ -214,6 +214,8 @@ namespace Logitude.Server.Tools.StorageService
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
+            var y = 0;
+            var x = 3 / y;
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
@@ -232,12 +234,12 @@ namespace Logitude.Server.Tools.StorageService
                         DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
                         DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
 
-                        if (documentsFiling != null)
-                        {
+                        //if (documentsFiling != null)
+                        //{
                             KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
 
                             blobfile.Metadata.Add(metadata);
-                        }
+                       // }
 
                         AesFunction aesFunction = new AesFunction();
                         data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
