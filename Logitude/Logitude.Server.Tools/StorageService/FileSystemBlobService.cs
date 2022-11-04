@@ -33,9 +33,7 @@ namespace Logitude.Server.Tools.StorageService
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
-            var x = 0;
-            var y = 10 / x;
-
+         
             string filepath = fileInfo.ContainerName + "/" + StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + fileInfo.Extension.ToLower(), fileInfo.FolderName);
             var blobService = GetService();
             var response = blobService.Write(data, filepath);
@@ -50,8 +48,6 @@ namespace Logitude.Server.Tools.StorageService
 
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
-            var x = 0;
-            var y = 10 / x;
             string filepath = fileInfo.ContainerName + "/" + StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + fileInfo.Extension.ToLower(), fileInfo.FolderName);
             var blobService = GetService();
             long filesize = fileInfo.FileSize != null ? (long)fileInfo.FileSize : 0;
