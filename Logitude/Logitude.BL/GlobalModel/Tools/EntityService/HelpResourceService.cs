@@ -131,8 +131,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         private void UploadFile()
         {
-            var x = 0;
-            var y = 10 / x;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 byte[] fileData = Convert.FromBase64String(entityPM.File);
