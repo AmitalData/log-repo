@@ -306,9 +306,6 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
         {
-            var x = 0;
-            var y = 10 / x;
-
             string filelocation = GetFileLocation("images");
             fileName = filename.ToLower();
             string filePath = "tenant" + tenant.ToString() + "/";
@@ -1097,8 +1094,6 @@ namespace WebFreight.Web.WebServices
             string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, 
             string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList)
         {
-            var x = 0;
-            var y = 10 / x;
             if (string.IsNullOrEmpty(fileLocation))
             {
                 fileLocation = "docsin";

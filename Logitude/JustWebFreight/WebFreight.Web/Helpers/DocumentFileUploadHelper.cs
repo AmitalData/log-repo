@@ -43,8 +43,6 @@ namespace WebFreight.Web.Helpers
         }
         public Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId, DocumentsFilingPM documentsFilingPM = null)
         {
-            var x = 0;
-            var y = 10 / x;
             Response response = new Response();
 
             try
@@ -283,8 +281,6 @@ namespace WebFreight.Web.Helpers
 
         public BlobInfo UploadBlobInfoToStorage(BlobInfo blobInfo, int tenant)
         {
-            var x = 0;
-            var y = 10 / x;
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
