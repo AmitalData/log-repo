@@ -255,8 +255,6 @@ namespace Logitude.Server.Tools.StorageService
 
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
-            var x = 0;
-            var y = 10 / x;
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
