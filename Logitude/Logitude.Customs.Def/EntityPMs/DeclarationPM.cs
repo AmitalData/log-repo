@@ -42,6 +42,7 @@ namespace Logitude.Customs.Def.EntityPMs
             set { declarationConsignmentPM = value; }
         }
 
+
         private List<DeclarationErrorView> declarationErrorViews;
 
         [Include]

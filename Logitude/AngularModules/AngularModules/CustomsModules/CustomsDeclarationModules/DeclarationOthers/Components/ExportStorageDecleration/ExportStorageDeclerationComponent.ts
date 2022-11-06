@@ -145,7 +145,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         var filters = new ApiQueryFilters;
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
-        filters.addAdditionalFilter("StorageStatus", "Open", null, null, "Equal", false, false, false, "string");
+        filters.addAdditionalFilter("StorageStatusName", "Open", "Close", null, "Equal", false, false, false, "string");
         filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", this.declarationPM.Id, null, null, "Contains", true, false, false, "string");
         filters.addAdditionalFilter("IsExportFileNo", this.ExportFile, null, null, "Contains", true, false, false, "string");
 
@@ -249,13 +249,13 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         });
         this.columns.push({
-            FieldName: 'StorageStatus',
+            FieldName: 'StorageStatusName',
             DataTypeCode: 'String',
             Display: 'סטטוס אחסנה',
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'StorageStatus'
+            SortByName: 'StorageStatusName'
 
         });
         this.columns.push({
