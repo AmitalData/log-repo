@@ -143,8 +143,12 @@ export class NotificationReplyTabComponent extends BaseComponent {
             });
 
             //Order list by CreateDate
-            this.NotificationsGroupsList.sort(
-                (a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) < DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
+            this.NotificationsGroupsList.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime())
+
+
+
+            // this.NotificationsGroupsList.sort(
+            //     (a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) < DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
         }
     }
 
