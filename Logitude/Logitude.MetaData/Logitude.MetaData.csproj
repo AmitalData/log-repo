@@ -245,6 +245,7 @@
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
+    <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
@@ -256,6 +257,7 @@
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CustomChildObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
