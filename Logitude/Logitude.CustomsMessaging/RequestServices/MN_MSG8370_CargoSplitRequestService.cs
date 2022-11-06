@@ -170,8 +170,15 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if(ConsignmentItemPackagingDet.PackageQuantity.HasValue)CargoSplitRequest_MessageConsignmentConsignmentItemPackagingDet.quantity = ConsignmentItemPackagingDet.PackageQuantity.Value;
                 if(ConsignmentItemPackagingDet.GrossMassMeasure.HasValue)
                 {
+
+
                     long Weight = 0;
-                    long.TryParse(ConsignmentItemPackagingDet.GrossMassMeasure.Value.ToString(), out Weight);
+                    double WeightToDouble = 0;
+                    if (double.TryParse(ConsignmentItemPackagingDet.GrossMassMeasure.Value.ToString(), out WeightToDouble))
+                    {
+                        Weight = (long)Math.Truncate(WeightToDouble);
+                    }
+                   
                     CargoSplitRequest_MessageConsignmentConsignmentItemPackagingDet.Weight = Weight;
                     CargoSplitRequest_MessageConsignmentConsignmentItemPackagingDet.WeightSpecified = true;
                 }
