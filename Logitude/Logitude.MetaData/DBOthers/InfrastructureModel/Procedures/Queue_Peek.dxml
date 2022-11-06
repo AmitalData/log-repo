@@ -55,7 +55,7 @@ end
 ]]></SqlScript_>
 	<SqlScript>
 		<![CDATA[
-ALTER PROCEDURE [dbo].[Queue_Peek]
+CREATE PROCEDURE [dbo].[Queue_Peek]
 ---VLADI IMPROVEMENTS
 @V_MESSAGEID numeric  OUTPUT,
 @V_MESSAGEBODY varchar(max)  OUTPUT,
