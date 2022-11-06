@@ -36,14 +36,15 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 import { DatePipe } from '@angular/common';
 
 
-@Component({
-    
-    templateUrl: './ECommercePaymentRequestMobileComponent.html'
+@Component({    
+    templateUrl: './ECommercePaymentRequestMobileComponent.html',
+    styleUrls: ['./mobilePayments.scss', 'detailsMobile.scss']
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
   public DimDenyButton: boolean = false;
   public DimApproveButton: boolean = false;
+  public newStyle: boolean = true;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();

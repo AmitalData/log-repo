@@ -39,7 +39,8 @@ import { DatePipe } from '@angular/common';
 
 @Component({
 
-    templateUrl: './UserIdNumberMobileComponent.html'
+    templateUrl: './UserIdNumberMobileComponent.html',
+    styleUrls: ['./mobilePayments.scss']
 })
 
 export class UserIdNumberMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -58,6 +59,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     private datePipe: DatePipe;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
+    newStyle: boolean = true;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();

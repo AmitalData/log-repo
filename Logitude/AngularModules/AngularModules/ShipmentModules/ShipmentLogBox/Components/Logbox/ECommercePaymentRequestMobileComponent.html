@@ -115,7 +115,7 @@
     }
 
 </style>
-<div class="MediaFillAbsolute" style="background:white;">
+<div class="MediaFillAbsolute" style="background:white;" *ngIf="!newStyle">
     <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
         <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
             <td>
@@ -487,7 +487,7 @@
 </table>
 </div>
 
-<table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
+<table class="LogitudeWindow" *ngIf="!newStyle && ShowPaymentDetailsScreen == true" style="direction:rtl;">
     <tr>
         <td>
             <table style="direction:rtl;border: 1px solid black;">
@@ -568,7 +568,128 @@
 
 </table>
 
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+<div *ngIf="newStyle && ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
+    <div class="root">
+        <div class="container">
+      
+          <div class="section-header">
+            <div class="section-header-right">
+              <h1 class="header">PAY SAFE</h1>
+              <div>
+                <h3 class="subheader">תשלום דיגיטלי מאובטח</h3>
+                <h3 class="shipment">משלוח # {{Hawb}}</h3>
+              </div>
+            </div>
+            <div class="section-header-left">
+              <img src="/images/mobile_payment/illustration.png" alt="">
+            </div>
+          </div>
+      
+          <div class="details">
+            <section class="section">
+              <h3>פרטי הלקוח</h3>
+              <p><span>לכבוד: {{CustomerName}}</span></p>
+              <p><span>כתובת: {{CustomerAddress}}</span></p>
+            </section>
+      
+            <section class="section">
+              <h3>פרטי השולח</h3>
+              <p><span>מאת: {{SenderDetails}}</span></p>
+              <p><span>תיאור טובין: {{GoodsDescritpion}}</span></p>
+            </section>
+      
+            <section class="section">
+              <h3>פרטי חבילה</h3>
+              <p><span>ערך משלוח: {{ForeignCurrencyValue}} {{ForeignCurrency}}</span></p>
+              <p><span>כמות אריזות: {{Quantity}}</span></p>
+              <p><span>משקל: {{Weight}}</span></p>
+            </section>
+          </div>
+      
+          <div class="section-3">
+            <div>
+              <h4 class="amount">סה"כ לתשלום: {{TotalChargesInNIS}} ש"ח <a class="cost-breakdown"  href="#" (click)="$event.preventDefault();PaymentDetailsClick()">פירוט עלויות</a></h4>
+              <p class="checkbox">
+                <!-- <input type="checkbox">  -->
+                <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext"></LogCheckBox>
+                <span>אני מאשר את הסכם </span> <a href="#" (click)="$event.preventDefault();ViewAggreement()">השירות</a>
+            </p>
+            </div>
+          </div>
+      
+          <div class="btn-payment">
+            <button (click)="OnPayClick()" >לתשלום מאובטח</button>
+          </div>
+      
+          <div class="footer">
+            <div class="footer-right">
+              <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
+              <br>
+              <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+            </div>
+            <div class="footer-left">
+              <img src="/images/mobile_payment/orian_logo_mobile.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<div *ngIf="newStyle && ShowPaymentDetailsScreen == true">
+    <div class="root">
+        <div class="container personal-info">
+    
+            <div class="section-header">
+                <div class="section-header-right">
+                    <h1 class="header">Details</h1>
+                    <div>
+                        <h3 class="subheader">פירוט חיובים</h3>
+                        <h3 class="shipment">משלוח # {{Hawb}}</h3>
+                    </div>
+                </div>
+                <div class="section-header-left">
+                    <img src="/images/mobile_payment/details_mobile.png" alt="">
+                </div>
+            </div>
+    
+            <div class="details">
+                <section class="section first-section">
+                    <p>
+                        <span>סעיף חיוב</span>
+                        <span>סכום</span>
+                    </p>
+                </section>
+    
+                <section class="section" *ngFor="let item of AdditionalData.RequestPaymentData.ServiceTypes;">
+                    <p>
+                        <span>{{item.LocalName}}</span>
+                        <span>{{item.AmountInNIS}}</span>
+                    </p>
+                </section>
+        
+            <div class="section-3">
+                <h4 class="amount">סה"כ לתשלום: {{TotalAmount | CustomNumbersPipe:0}} ש"ח</h4>
+            </div>
+    
+            <div class="btn-payment">
+                <button (click)="ClosePaymentDetailsButtonClicked()"><img src="/images/mobile_payment/back_arrow.png" alt=""> חזרה לתשלום מאובטח</button>
+            </div>
+    
+            <div class="footer">
+                <div class="footer-right">
+                    <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
+                    <br>
+                    <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+                </div>
+                <div class="footer-left">
+                    <img src="/images/mobile_payment/orian_logo_mobile.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator> -->
 <form name='form' method='post' style="width:0px;height:0px;">
     <input type='hidden' name='sum' [attr.value]="sum">
     <input type='hidden' name='currency' [attr.value]="currency">

@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;800&family=Montserrat:wght@900&display=swap');
+
+.root {
+    direction: rtl;
+    position: absolute;
+    height: 94%;
+    width: 90%;
+    left: 5%;
+    top: 3%;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+        margin: 0;
+    }
+
+    a {
+        font-family: 'Heebo', sans-serif;
+        font-weight: 400;
+    }
+
+    .container {
+        height: 100%;
+        width: 100%;
+
+        .section-header {
+            height: 18%;
+
+            .section-header-left {
+                vertical-align: top;
+                display: inline-block;
+                width: 40%;
+                text-align: left;
+
+                img {
+                    height: 100px;
+                }
+            }
+
+            .section-header-right {
+                display: inline-block;
+                width: 60%;
+
+                .header {
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 36px;
+                    color: #c90518;
+                    font-weight: 900;
+                }
+
+                .subheader {
+                    color: #14242e;
+                    font-family: 'Heebo', sans-serif;
+                    font-size: 18px;
+                    font-weight: 800;
+                    margin-top: 15px;
+                }
+
+                .shipment {
+                    color: #14242e;
+                    font-family: 'Heebo', sans-serif;
+                    font-size: 18px;
+                    font-weight: 300;
+                }
+            }
+        }
+
+        .details {
+            margin-top: 23px;
+
+            .section {
+                box-shadow: 0px 0px 5px 0px rgba(78, 84, 90, 0.43);
+                padding: 7px 13px;
+                margin: 2.5% 0px;
+
+                p span {
+                    color: #000000;
+                    font-family: 'Heebo', sans-serif;
+                    font-size: 14px;
+                    font-weight: 400;
+                    width: 50%;
+                    display: inline-block;
+                }
+            }
+
+            .first-section {
+                box-shadow: none;
+                padding: 0 13px;
+
+                p span {
+                    color: #006768;
+                    font-family: 'Heebo', sans-serif;
+                    font-size: 16px;
+                    font-weight: 800;
+                }
+            }
+        }
+
+        .section-3 {
+            text-align: center;
+
+            .amount {
+                color: #14242e;
+                font-family: "Heebo", sans-serif;
+                font-size: 1rem;
+                font-weight: 800;
+                margin: 4% 0 2%;
+            }
+        }
+
+        .btn-payment {
+            height: 13%;
+            display: flex;
+
+            button {
+                color: #ffffff;
+                font-family: 'Heebo', sans-serif;
+                font-size: 17px;
+                font-weight: 800;
+                background-color: rgb(201, 5, 24);
+                width: 100%;
+                border-radius: 23px;
+                border: none;
+                height: 45px;
+                margin: auto;
+
+                img {
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .footer {
+            color: #000000;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            position: absolute;
+            bottom: 0px;
+
+            .footer-right {
+                width: 45%;
+                display: inline-block;
+            }
+
+            .footer-left {
+                display: inline-block;
+                width: 55%;
+                direction: ltr;
+
+                img {
+                    width: 40vw;
+                }
+            }
+        }
+    }
+}
