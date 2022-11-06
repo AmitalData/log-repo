@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Global"
+  Name="DeleteOldPerformanceLogs"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript>
+    <![CDATA[
+CREATE procedure [dbo].[DeleteOldPerformanceLogs] as
+IF OBJECT_ID('tempdb..#tblOldPerformanceLogs') IS NOT NULL
+DROP TABLE #tblOldPerformanceLogs
+CREATE TABLE #tblOldPerformanceLogs
+(
+Id varchar(40) NOT NULL PRIMARY KEY
+)
+INSERT #tblOldPerformanceLogs (Id)
+SELECT Id
+FROM [dbo].[PerformanceLogs]
+WHERE [LogDateTimeLocal] < DATEADD(MONTH,-6,GETDATE())
+if(@@ROWCOUNT >0 )
+begin
+declare @skiprows int
+declare @Rows int
+set @Rows = 1
+set @skiprows = 0
+while (@Rows <> 0)
+BEGIN
+DELETE
+FROM [dbo].[PerformanceLogs]
+where [Id] in (
+select  id
+from #tblOldPerformanceLogs
+order by Id
+OFFSET ( @skiprows * 5000) ROWS FETCH NEXT 5000 ROWS ONLY
+)
+SET @Rows = @@ROWCOUNT
+print @Rows
+set @skiprows = @skiprows + 1
+print @skiprows
+WAITFOR DELAY '00:00:02'
+END
+end
+DROP TABLE #tblOldPerformanceLogs
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>
