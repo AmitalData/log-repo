@@ -19,6 +19,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
 {
@@ -88,8 +93,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                 AppendLogLine("partner: " + partner);
                 _MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCurrencyTypeCodePartnerId = partner;
             }
-            
 
+            if (!String.IsNullOrWhiteSpace(partner))
+            {
+                foreach (var supplierInvoice in _MyDeclarationPM.SupplierInvoices)
+                {
+                    if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCode))
+                    {
+                        supplierInvoice.InvoiceCurrencyTypeCodePartnerId = GetComputingPartnerCodeTranslation(supplierInvoice.InvoiceCurrencyTypeCode, partner, "CurrencyTypes", _MyDeclarationPM.Tenant);
+                        if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCodePartnerId))
+                        {
+                            LogMessagingUtil.Instance.AppendLine("Invoice Currency Type Code = " + supplierInvoice.InvoiceCurrencyTypeCode + " Translated to (Computing Partner Translate) " + supplierInvoice.InvoiceCurrencyTypeCodePartnerId);
+                        }
+                    }
+                }
+            }
+            
             try
             {
                 Logitude.Server.Tools.EntityPM.SuppressCreateNotifyPropertyChangeValues = true;
@@ -116,6 +135,36 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
         }
+
+
+        public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
+        {
+            ICommonDataContext context;
+            ObjectTableRepository myObjectTabelRepository;
+            ComputingPartnerQuery computingPartnerQuery;
+            ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
+            context = CommonDataContext.GetContext(tenant);
+            myObjectTabelRepository = new ObjectTableRepository(tenant);
+            computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
+            computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
+
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
+            if (partner == null)
+            {
+                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
+            }
+
+            string partnerCode = null;
+            if (partner != null && objectTable != null)
+            {
+                partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
+            }
+
+            return partnerCode;
+        }
+
+
 
         private void DeserilazeObject(string xmlLOGITSRUFA)
         {
