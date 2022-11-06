@@ -1,10 +1,10 @@
 import { DashboardListComponent } from './Components/Workspace/DashboardLists/DashboardListComponent';
-import { EditShipmentLinkRendererComponent } from './Components/ListTemplates/EditShipmentLinkRendererComponent';
+import { DashboardListLinkRendererComponent } from './Components/ListTemplates/DashboardListLinkRendererComponent';
 
 export const Components =
     [
         DashboardListComponent,
-        EditShipmentLinkRendererComponent,
+        DashboardListLinkRendererComponent,
     ];
 
 export class ModuleDeclarations {
@@ -14,7 +14,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "DashboardListComponent": { myResult = DashboardListComponent; break; }
-            case "EditShipmentLinkRendererComponent": { myResult = EditShipmentLinkRendererComponent; break; }
+            case "DashboardListLinkRendererComponent": { myResult = DashboardListLinkRendererComponent; break; }
         }
 
         return myResult;

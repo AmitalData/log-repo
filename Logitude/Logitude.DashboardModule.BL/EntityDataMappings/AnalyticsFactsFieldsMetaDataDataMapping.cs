@@ -11,6 +11,7 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL.EntityPMs; 
 using Logitude.DashboardModule.Data;
 using Logitude.Server.Tools.Helpers;
+using Logitude.DashboardModule.Data.Repositories;
 
 namespace Logitude.DashboardModule.BL.EntityDataMappings
 {
@@ -24,7 +25,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaData entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.ObjectTableName = new AnalyticsFactsMetaDataRepository(entityPM.Tenant).GetSingle(entityPM.AnalyticsFactsMetaDataId, entityPM.Tenant)?.ObjectTableName;
         }
         private void BuildSearchFields(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaData entityPOCO)
         {
