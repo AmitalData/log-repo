@@ -243,11 +243,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             var entity = new ClientsPoaPM
                             {
-                                AuthorizerPassportCountry = "",
+                                AuthorizerPassportCountry = null,
                                 AuthorizedExternalId = authorizedId,
                                 AuthorizerExternalId = authorizerId,
-                                AuthorizerPassportNumber = "",
-                                AuthorizerPassportType = "",
+                                AuthorizerPassportNumber = null,
+                                AuthorizerPassportType = null,
                                 PoaID = poa.poaID.ToString(),
                                 StartDate = poa.startDate,
                                 EndDate = poa.endDate.GetValueOrDefault(),
