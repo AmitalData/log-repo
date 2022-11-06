@@ -34,10 +34,26 @@ namespace Logitude.Server.Tools.QueueService
             {
                 throw new Exception("SendReturnIdCustoms  use in LogitudeSettings.IsCostomsDeploy");
             }
+            //if (NextRunDate.HasValue)
+            //{
+            //    throw new Exception("Opps  in oracle use by delayInSec Params ");
+            //}
             if (NextRunDate.HasValue)
             {
-                throw new Exception("Opps  in oracle use by delayInSec Params ");
+                if (DateTime.UtcNow > NextRunDate)
+                {
+                    delayTime = null;
+
+                }
+                else
+                {
+                    delayTime = NextRunDate.Value.Subtract(DateTime.UtcNow);
+
+                }
+                NextRunDate = null;
             }
+
+
             int tenantPriority = GetTenantPriority(queueSendModel);
             int? queueMessageId = null;
             //if (LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
@@ -49,10 +65,13 @@ namespace Logitude.Server.Tools.QueueService
                     return null;
                 }
             }
+
+        
             if (delayTime != null)
             {
                 LogMessagingUtil.Instance.AppendLine($"Delay  {this.QueueCode} Queue {delayTime.GetValueOrDefault()}");
             }
+
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
