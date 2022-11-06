@@ -87,6 +87,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     ValidateShipmentOperationalReOpen(entityPM, entityPoco);
                     ValidateShipmentAccountingReOpen(entityPM, entityPoco);
                 }
+
+                if (FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant))
+                {
+                    ValidateRoutingDates(entityPM, entityPoco);
+                }
             }
         }
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
@@ -907,7 +912,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
+        public static void ValidateFutureRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
         {
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -1520,6 +1525,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentAccountingReOpen(ShipmentPM entityPM, Shipment entityPoco)
         {
+            if (!entityPM.IsMultiUpdate) return;
+
             if (!entityPM.IsAccountingClosed && entityPoco.IsAccountingClosed)
             {
                 if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
@@ -1528,6 +1535,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
+            if (!entityPM.IsMultiUpdate) return;
+
             if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
             {
                 if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
@@ -1765,6 +1774,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                   select d).Any();
 
             return isCityExists;
+        }
+        private static void ValidateRoutingDates(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            RoutingDatesValidator routingDatesValidator = new RoutingDatesValidator(entityPM);
+            routingDatesValidator.Validate();
         }
     }
     public class DomesticCountry
@@ -2082,7 +2096,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         public string MeasurementCode { get; set; }
         public string MeasurementShortName { get; set; }
     }
-
     public class LineData
     {
         public string LineLabel { get; set; }

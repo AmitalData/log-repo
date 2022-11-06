@@ -7379,494 +7379,494 @@ export class RoutingHelper {
 
         return myResult;
     }
-    public static ValidateLegDates(shipmentPM: ShipmentPM, pickUpPM: ShipmentPickUpPM, deliveryPM: ShipmentDeliveryPM, errors: string[], legCode: string)
-    {
-        if (!AppTool.IsNullOrEmpty(legCode)) {
-        switch (legCode) {
-            case "Pick Up":
-                {
-                    if (pickUpPM != null) {
-                        /* with it self */
-                        if (pickUpPM.ETD > pickUpPM.ETA) {
-                            errors.push("Pick up expected departure must be less than pick up expected arrival");
-                        }
+    //public static ValidateLegDates(shipmentPM: ShipmentPM, pickUpPM: ShipmentPickUpPM, deliveryPM: ShipmentDeliveryPM, errors: string[], legCode: string)
+    //{
+    //    if (!AppTool.IsNullOrEmpty(legCode)) {
+    //    switch (legCode) {
+    //        case "Pick Up":
+    //            {
+    //                if (pickUpPM != null) {
+    //                    /* with it self */
+    //                    if (pickUpPM.ETD > pickUpPM.ETA) {
+    //                        errors.push("Pick up expected departure must be less than pick up expected arrival");
+    //                    }
 
-                        if (pickUpPM.ATD > pickUpPM.ATA) {
-                            errors.push("Pick up actual departure must be less than pick up actual arrival");
-                        }
+    //                    if (pickUpPM.ATD > pickUpPM.ATA) {
+    //                        errors.push("Pick up actual departure must be less than pick up actual arrival");
+    //                    }
 
-                        /* flow up */
-                        if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-                            if (pickUpPM.ETA >= shipmentPM.PreCarriageETD) {
-                                errors.push("Pick up expected arrival must be less than pre carriage expected departure");
-                            }
+    //                    /* flow up */
+    //                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+    //                        if (pickUpPM.ETA >= shipmentPM.PreCarriageETD) {
+    //                            errors.push("Pick up expected arrival must be less than pre carriage expected departure");
+    //                        }
 
-                            if (pickUpPM.ATA >= shipmentPM.PreCarriageATD) {
-                                errors.push("Pick up actual arrival must be less than pre carriage actual departure");
-                            }
-                        }
+    //                        if (pickUpPM.ATA >= shipmentPM.PreCarriageATD) {
+    //                            errors.push("Pick up actual arrival must be less than pre carriage actual departure");
+    //                        }
+    //                    }
 
-                        else {
-                            if (pickUpPM.ETA >= shipmentPM.MainCarriageETD) {
-                                errors.push("Pick up expected arrival must be less than main carriage expected departure");
-                            }
+    //                    else {
+    //                        if (pickUpPM.ETA >= shipmentPM.MainCarriageETD) {
+    //                            errors.push("Pick up expected arrival must be less than main carriage expected departure");
+    //                        }
 
-                            if (pickUpPM.ATA >= shipmentPM.MainCarriageATD) {
-                                errors.push("Pick up actual arrival must be less than main carriage actual departure");
-                            }
-                        }
-                    }
+    //                        if (pickUpPM.ATA >= shipmentPM.MainCarriageATD) {
+    //                            errors.push("Pick up actual arrival must be less than main carriage actual departure");
+    //                        }
+    //                    }
+    //                }
 
-                    break;
-                }
+    //                break;
+    //            }
 
-            case "Delivery":
-                {
-                    if (deliveryPM != null) {
-                        /* with it self */
-                        if (deliveryPM.ETD > deliveryPM.ETA) {
-                            errors.push("Delivery expected departure must be less than Delivery expected arrival");
-                        }
+    //        case "Delivery":
+    //            {
+    //                if (deliveryPM != null) {
+    //                    /* with it self */
+    //                    if (deliveryPM.ETD > deliveryPM.ETA) {
+    //                        errors.push("Delivery expected departure must be less than Delivery expected arrival");
+    //                    }
 
-                        if (deliveryPM.ATD > deliveryPM.ATA) {
-                            errors.push("Delivery actual departure must be less than Delivery actual arrival");
-                        }
+    //                    if (deliveryPM.ATD > deliveryPM.ATA) {
+    //                        errors.push("Delivery actual departure must be less than Delivery actual arrival");
+    //                    }
 
-                        /* flow down */
-                        if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                            if (deliveryPM.ETD <= shipmentPM.OnCarriageETA) {
-                                errors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
-                            }
+    //                    /* flow down */
+    //                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                        if (deliveryPM.ETD <= shipmentPM.OnCarriageETA) {
+    //                            errors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
+    //                        }
 
-                            if (deliveryPM.ATD <= shipmentPM.OnCarriageATA) {
-                                errors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
-                            }
-                        }
+    //                        if (deliveryPM.ATD <= shipmentPM.OnCarriageATA) {
+    //                            errors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
+    //                        }
+    //                    }
 
-                        else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                            if (deliveryPM.ETD <= shipmentPM.Transshipment3ETA) {
-                                errors.push("Delivery expected departure must be bigger than Transshipment3 expected arrival");
-                            }
+    //                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment3ETA) {
+    //                            errors.push("Delivery expected departure must be bigger than Transshipment3 expected arrival");
+    //                        }
 
-                            if (deliveryPM.ATD <= shipmentPM.Transshipment3ATA) {
-                                errors.push("Delivery actual departure must be bigger than Transshipment3 actual arrival");
-                            }
-                        }
+    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment3ATA) {
+    //                            errors.push("Delivery actual departure must be bigger than Transshipment3 actual arrival");
+    //                        }
+    //                    }
 
-                        else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-                            if (deliveryPM.ETD <= shipmentPM.Transshipment2ETA) {
-                                errors.push("Delivery expected departure must be bigger than Transshipment2 expected arrival");
-                            }
+    //                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment2ETA) {
+    //                            errors.push("Delivery expected departure must be bigger than Transshipment2 expected arrival");
+    //                        }
 
-                            if (deliveryPM.ATD <= shipmentPM.Transshipment2ATA) {
-                                errors.push("Delivery actual departure must be bigger than Transshipment2 actual arrival");
-                            }
-                        }
+    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment2ATA) {
+    //                            errors.push("Delivery actual departure must be bigger than Transshipment2 actual arrival");
+    //                        }
+    //                    }
 
-                        else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-                            if (deliveryPM.ETD <= shipmentPM.Transshipment1ETA) {
-                                errors.push("Delivery expected departure must be bigger than Transshipment1 expected arrival");
-                            }
+    //                    else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment1ETA) {
+    //                            errors.push("Delivery expected departure must be bigger than Transshipment1 expected arrival");
+    //                        }
 
-                            if (deliveryPM.ATD <= shipmentPM.Transshipment1ATA) {
-                                errors.push("Delivery actual departure must be bigger than Transshipment1 actual arrival");
-                            }
-                        }
+    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment1ATA) {
+    //                            errors.push("Delivery actual departure must be bigger than Transshipment1 actual arrival");
+    //                        }
+    //                    }
 
-                        else {
-                            if (deliveryPM.ETD <= shipmentPM.MainCarriageETA) {
-                                errors.push("Delivery expected departure must be bigger than Main-Carriage expected arrival");
-                            }
+    //                    else {
+    //                        if (deliveryPM.ETD <= shipmentPM.MainCarriageETA) {
+    //                            errors.push("Delivery expected departure must be bigger than Main-Carriage expected arrival");
+    //                        }
 
-                            if (deliveryPM.ATD <= shipmentPM.MainCarriageATA) {
-                                errors.push("Delivery actual departure must be bigger than Main-Carriage actual arrival");
-                            }
-                        }
-                    }
+    //                        if (deliveryPM.ATD <= shipmentPM.MainCarriageATA) {
+    //                            errors.push("Delivery actual departure must be bigger than Main-Carriage actual arrival");
+    //                        }
+    //                    }
+    //                }
 
-                    break;
-                }
+    //                break;
+    //            }
 
-            case "Pre Carriage":
-                {
-                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-                        /* with it self */
-                        if (shipmentPM.PreCarriageETD > shipmentPM.PreCarriageETA) {
-                            errors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
-                        }
+    //        case "Pre Carriage":
+    //            {
+    //                if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+    //                    /* with it self */
+    //                    if (shipmentPM.PreCarriageETD > shipmentPM.PreCarriageETA) {
+    //                        errors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
+    //                    }
 
-                        if (shipmentPM.PreCarriageATD > shipmentPM.PreCarriageATA) {
-                            errors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
-                        }
+    //                    if (shipmentPM.PreCarriageATD > shipmentPM.PreCarriageATA) {
+    //                        errors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
+    //                    }
 
-                        /* flow up */
-                        if (shipmentPM.PreCarriageETA >= shipmentPM.MainCarriageETD) {
-                            errors.push("Pre-Carriage expected arrival must be less than Main-Carriage expected departure");
-                        }
+    //                    /* flow up */
+    //                    if (shipmentPM.PreCarriageETA >= shipmentPM.MainCarriageETD) {
+    //                        errors.push("Pre-Carriage expected arrival must be less than Main-Carriage expected departure");
+    //                    }
 
-                        if (shipmentPM.PreCarriageATA >= shipmentPM.MainCarriageATD) {
-                            errors.push("Pre-Carriage actual arrival must be less than Main-Carriage actual departure");
-                        }
+    //                    if (shipmentPM.PreCarriageATA >= shipmentPM.MainCarriageATD) {
+    //                        errors.push("Pre-Carriage actual arrival must be less than Main-Carriage actual departure");
+    //                    }
 
-                        /* flow down */
-                        //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
+    //                    /* flow down */
+    //                    //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
 
-                        //if (shipmentPickups.Count > 0) {
-                        //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
-                        //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
+    //                    //if (shipmentPickups.Count > 0) {
+    //                    //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
+    //                    //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
 
-                        //    if (shipmentPM.PreCarriageETD <= shipmentPicksETA) {
-                        //        errors.push("Pre-Carriage expected departure must be bigger than all pick ups expected arrival");
-                        //    }
+    //                    //    if (shipmentPM.PreCarriageETD <= shipmentPicksETA) {
+    //                    //        errors.push("Pre-Carriage expected departure must be bigger than all pick ups expected arrival");
+    //                    //    }
 
-                        //    if (shipmentPM.PreCarriageATD <= shipmentPicksATA) {
-                        //        errors.push("Pre-Carriage actual departure must be bigger than all pick ups actual arrival");
-                        //    }
-                        //}
-                    }
+    //                    //    if (shipmentPM.PreCarriageATD <= shipmentPicksATA) {
+    //                    //        errors.push("Pre-Carriage actual departure must be bigger than all pick ups actual arrival");
+    //                    //    }
+    //                    //}
+    //                }
 
-                    break;
-                }
+    //                break;
+    //            }
 
-            case "On Carriage":
-                {
+    //        case "On Carriage":
+    //            {
                     
-                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                        /* with it self */
-                        if (shipmentPM.OnCarriageETD > shipmentPM.OnCarriageETA) {
-                            errors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
-                        }
-
-                        if (shipmentPM.OnCarriageATD > shipmentPM.OnCarriageATA) {
-                            errors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
-                        }
-
-                        /* flow down */
-                        if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment3ETA) {
-                                errors.push("On-Carriage expected departure must be bigger than Transshipment3 expected arrival");
-                            }
-
-                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment3ATA) {
-                                errors.push("On-Carriage actual departure must be bigger than Transshipment3 actual arrival");
-                            }
-                        }
-
-                        else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment2ETA) {
-                                errors.push("On-Carriage expected departure must be bigger than Transshipment2 expected arrival");
-                            }
-
-                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment2ATA) {
-                                errors.push("On-Carriage actual departure must be bigger than Transshipment2 actual arrival");
-                            }
-                        }
-
-                        else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment1ETA) {
-                                errors.push("On-Carriage expected departure must be bigger than Transshipment1 expected arrival");
-                            }
-
-                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment1ATA) {
-                                errors.push("On-Carriage actual departure must be bigger than Transshipment1 actual arrival");
-                            }
-                        }
-
-                        else {
-                            if (shipmentPM.OnCarriageETD <= shipmentPM.MainCarriageETA) {
-                                errors.push("On-Carriage expected departure must be bigger than Main-Carriage expected arrival");
-                            }
-
-                            if (shipmentPM.OnCarriageATD <= shipmentPM.MainCarriageATA) {
-                                errors.push("On-Carriage actual departure must be bigger than Main-Carriage actual arrival");
-                            }
-                        }
-
-                        /* flow up */
-                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-                        //if (shipmentDeliveries.Count > 0) {
-                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-                        //    if (shipmentPM.OnCarriageETA >= shipmentDeliveriesETD) {
-                        //        errors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
-                        //    }
-
-                        //    if (shipmentPM.OnCarriageATA >= shipmentDeliveriesATD) {
-                        //        errors.push("On-Carriage actual departure must be less than all deliveries actual arrival");
-                        //    }
-                        //}
-                    }
-
-                    break;
-                }
-
-            case "Main Carriage":
-                {
-                    /* with it self */
-                    if (shipmentPM.MainCarriageETD > shipmentPM.MainCarriageETA) {
-                        errors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
-                    }
-
-                    if (shipmentPM.MainCarriageATD > shipmentPM.MainCarriageATA) {
-                        errors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
-                    }
-
-                    /* flow down */
-                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-                        if (shipmentPM.MainCarriageETD <= shipmentPM.PreCarriageETA) {
-                            errors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
-                        }
-
-                        if (shipmentPM.MainCarriageATD <= shipmentPM.PreCarriageATA) {
-                            errors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
-                        }
-                    }
-
-                    else {
-                        //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
-
-                        //if (shipmentPickups.Count > 0) {
-                        //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
-                        //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
-
-                        //    if (shipmentPM.MainCarriageETD <= shipmentPicksETA) {
-                        //        errors.push("Main-Carriage expected departure must be bigger than all pick ups expected arrival");
-                        //    }
-
-                        //    if (shipmentPM.MainCarriageATD <= shipmentPicksATA) {
-                        //        errors.push("Main-Carriage actual departure must be bigger than all pick ups actual arrival");
-                        //    }
-                        //}
-                    }
-
-                    /* flow up */
-                    if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment1ETD) {
-                            errors.push("Main-Carriage expected arrival must be less than Via1 expected departure");
-                        }
-
-                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment1ATD) {
-                            errors.push("Main-Carriage actual arrival must be less than Via1 actual departure");
-                        }
-                    }
-
-                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment2ETD) {
-                            errors.push("Main-Carriage expected arrival must be less than Via2 expected departure");
-                        }
-
-                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment2ATD) {
-                            errors.push("Main-Carriage actual arrival must be less than Via2 actual departure");
-                        }
-                    }
-
-                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment3ETD) {
-                            errors.push("Main-Carriage expected arrival must be less than Via3 expected departure");
-                        }
-
-                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment3ATD) {
-                            errors.push("Main-Carriage actual arrival must be less than Via3 actual departure");
-                        }
-                    }
-
-                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                        if (shipmentPM.MainCarriageETA >= shipmentPM.OnCarriageETD) {
-                            errors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
-                        }
-
-                        if (shipmentPM.MainCarriageATA >= shipmentPM.OnCarriageATD) {
-                            errors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
-                        }
-                    }
-
-                    else {
-                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-                        //if (shipmentDeliveries.Count > 0) {
-                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-                        //    if (shipmentPM.MainCarriageETA >= shipmentDeliveriesETD) {
-                        //        errors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
-                        //    }
-
-                        //    if (shipmentPM.MainCarriageATA >= shipmentDeliveriesATD) {
-                        //        errors.push("Main-Carriage actual departure must be less than all deliveries actual arrival");
-                        //    }
-                        //}
-                    }
-
-                    break;
-                }
-
-            case "Transshipment1":
-                {
-                    if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-                        /* with it self */
-                        if (shipmentPM.Transshipment1ETD > shipmentPM.Transshipment1ETA) {
-                            errors.push("Via1 expected departure must be less than Via1 expected arrival");
-                        }
-
-                        if (shipmentPM.Transshipment1ATD > shipmentPM.Transshipment1ATA) {
-                            errors.push("Via1 actual departure must be less than Via1 actual arrival");
-                        }
-
-                        /* flow up */
-                        if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-                            if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment2ETD) {
-                                errors.push("Via1 expected arrival must be less than Via2 expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment2ATD) {
-                                errors.push("Via1 actual arrival must be less than Via2 actual departure");
-                            }
-                        }
-
-                        else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                            if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment3ETD) {
-                                errors.push("Via1 expected arrival must be less than Via3 expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment3ATD) {
-                                errors.push("Via1 actual arrival must be less than Via3 actual departure");
-                            }
-                        }
-
-                        else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                            if (shipmentPM.Transshipment1ETA >= shipmentPM.OnCarriageETD) {
-                                errors.push("Via1 expected arrival must be less than On-Carriage expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment1ATA >= shipmentPM.OnCarriageATD) {
-                                errors.push("Via1 actual arrival must be less than On-Carriage actual departure");
-                            }
-                        }
-
-                        else {
-                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-                            //if (shipmentDeliveries.Count > 0) {
-                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-                            //    if (shipmentPM.Transshipment1ETA >= shipmentDeliveriesETD) {
-                            //        errors.push("Via1 expected arrival must be less than all deliveries expected departure");
-                            //    }
-
-                            //    if (shipmentPM.Transshipment1ATA >= shipmentDeliveriesATD) {
-                            //        errors.push("Via1 actual departure must be less than all deliveries actual arrival");
-                            //    }
-                            //}
-                        }
-                    }
-
-                    break;
-                }
-
-            case "Transshipment2":
-                {
-                    if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-                        /* with it self */
-                        if (shipmentPM.Transshipment2ETD > shipmentPM.Transshipment2ETA) {
-                            errors.push("Via2 expected departure must be less than Via2 expected arrival");
-                        }
-
-                        if (shipmentPM.Transshipment2ATD > shipmentPM.Transshipment2ATA) {
-                            errors.push("Via2 actual departure must be less than Via2 actual arrival");
-                        }
-
-                        /* flow up */
-                        if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                            if (shipmentPM.Transshipment2ETA >= shipmentPM.Transshipment3ETD) {
-                                errors.push("Via2 expected arrival must be less than Via3 expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment2ATA >= shipmentPM.Transshipment3ATD) {
-                                errors.push("Via2 actual arrival must be less than Via3 actual departure");
-                            }
-                        }
-
-                        else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                            if (shipmentPM.Transshipment2ETA >= shipmentPM.OnCarriageETD) {
-                                errors.push("Via2 expected arrival must be less than On-Carriage expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment2ATA >= shipmentPM.OnCarriageATD) {
-                                errors.push("Via2 actual arrival must be less than On-Carriage actual departure");
-                            }
-                        }
-
-                        else {
-                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-                            //if (shipmentDeliveries.Count > 0) {
-                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-                            //    if (shipmentPM.Transshipment2ETA >= shipmentDeliveriesETD) {
-                            //        errors.push("Via2 expected arrival must be less than all deliveries expected departure");
-                            //    }
-
-                            //    if (shipmentPM.Transshipment2ATA >= shipmentDeliveriesATD) {
-                            //        errors.push("Via2 actual departure must be less than all deliveries actual arrival");
-                            //    }
-                            //}
-                        }
-                    }
-
-                    break;
-                }
-
-            case "Transshipment3":
-                {
-                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-                        /* with it self */
-                        if (shipmentPM.Transshipment3ETD > shipmentPM.Transshipment3ETA) {
-                            errors.push("Via3 expected departure must be less than Via3 expected arrival");
-                        }
-
-                        if (shipmentPM.Transshipment3ATD > shipmentPM.Transshipment3ATA) {
-                            errors.push("Via3 actual departure must be less than Via3 actual arrival");
-                        }
-
-                        /* flow up */
-                        if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-                            if (shipmentPM.Transshipment3ETA >= shipmentPM.OnCarriageETD) {
-                                errors.push("Via3 expected arrival must be less than On-Carriage expected departure");
-                            }
-
-                            if (shipmentPM.Transshipment3ATA >= shipmentPM.OnCarriageATD) {
-                                errors.push("Via3 actual arrival must be less than On-Carriage actual departure");
-                            }
-                        }
-
-                        else {
-                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-                            //if (shipmentDeliveries.Count > 0) {
-                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-                            //    if (shipmentPM.Transshipment3ETA >= shipmentDeliveriesETD) {
-                            //        errors.push("Via3 expected arrival must be less than all deliveries expected departure");
-                            //    }
-
-                            //    if (shipmentPM.Transshipment3ATA >= shipmentDeliveriesATD) {
-                            //        errors.push("Via3 actual departure must be less than all deliveries actual arrival");
-                            //    }
-                            //}
-                        }
-                    }
-
-                    break;
-                }
-            default: { break; }
-        }
-    }
-    }
+    //                if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                    /* with it self */
+    //                    if (shipmentPM.OnCarriageETD > shipmentPM.OnCarriageETA) {
+    //                        errors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
+    //                    }
+
+    //                    if (shipmentPM.OnCarriageATD > shipmentPM.OnCarriageATA) {
+    //                        errors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
+    //                    }
+
+    //                    /* flow down */
+    //                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment3ETA) {
+    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment3 expected arrival");
+    //                        }
+
+    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment3ATA) {
+    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment3 actual arrival");
+    //                        }
+    //                    }
+
+    //                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment2ETA) {
+    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment2 expected arrival");
+    //                        }
+
+    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment2ATA) {
+    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment2 actual arrival");
+    //                        }
+    //                    }
+
+    //                    else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment1ETA) {
+    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment1 expected arrival");
+    //                        }
+
+    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment1ATA) {
+    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment1 actual arrival");
+    //                        }
+    //                    }
+
+    //                    else {
+    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.MainCarriageETA) {
+    //                            errors.push("On-Carriage expected departure must be bigger than Main-Carriage expected arrival");
+    //                        }
+
+    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.MainCarriageATA) {
+    //                            errors.push("On-Carriage actual departure must be bigger than Main-Carriage actual arrival");
+    //                        }
+    //                    }
+
+    //                    /* flow up */
+    //                    //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+    //                    //if (shipmentDeliveries.Count > 0) {
+    //                    //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+    //                    //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+    //                    //    if (shipmentPM.OnCarriageETA >= shipmentDeliveriesETD) {
+    //                    //        errors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
+    //                    //    }
+
+    //                    //    if (shipmentPM.OnCarriageATA >= shipmentDeliveriesATD) {
+    //                    //        errors.push("On-Carriage actual departure must be less than all deliveries actual arrival");
+    //                    //    }
+    //                    //}
+    //                }
+
+    //                break;
+    //            }
+
+    //        case "Main Carriage":
+    //            {
+    //                /* with it self */
+    //                if (shipmentPM.MainCarriageETD > shipmentPM.MainCarriageETA) {
+    //                    errors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
+    //                }
+
+    //                if (shipmentPM.MainCarriageATD > shipmentPM.MainCarriageATA) {
+    //                    errors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
+    //                }
+
+    //                /* flow down */
+    //                if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+    //                    if (shipmentPM.MainCarriageETD <= shipmentPM.PreCarriageETA) {
+    //                        errors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
+    //                    }
+
+    //                    if (shipmentPM.MainCarriageATD <= shipmentPM.PreCarriageATA) {
+    //                        errors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
+    //                    }
+    //                }
+
+    //                else {
+    //                    //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
+
+    //                    //if (shipmentPickups.Count > 0) {
+    //                    //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
+    //                    //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
+
+    //                    //    if (shipmentPM.MainCarriageETD <= shipmentPicksETA) {
+    //                    //        errors.push("Main-Carriage expected departure must be bigger than all pick ups expected arrival");
+    //                    //    }
+
+    //                    //    if (shipmentPM.MainCarriageATD <= shipmentPicksATA) {
+    //                    //        errors.push("Main-Carriage actual departure must be bigger than all pick ups actual arrival");
+    //                    //    }
+    //                    //}
+    //                }
+
+    //                /* flow up */
+    //                if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment1ETD) {
+    //                        errors.push("Main-Carriage expected arrival must be less than Via1 expected departure");
+    //                    }
+
+    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment1ATD) {
+    //                        errors.push("Main-Carriage actual arrival must be less than Via1 actual departure");
+    //                    }
+    //                }
+
+    //                else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment2ETD) {
+    //                        errors.push("Main-Carriage expected arrival must be less than Via2 expected departure");
+    //                    }
+
+    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment2ATD) {
+    //                        errors.push("Main-Carriage actual arrival must be less than Via2 actual departure");
+    //                    }
+    //                }
+
+    //                else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment3ETD) {
+    //                        errors.push("Main-Carriage expected arrival must be less than Via3 expected departure");
+    //                    }
+
+    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment3ATD) {
+    //                        errors.push("Main-Carriage actual arrival must be less than Via3 actual departure");
+    //                    }
+    //                }
+
+    //                else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.OnCarriageETD) {
+    //                        errors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
+    //                    }
+
+    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.OnCarriageATD) {
+    //                        errors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
+    //                    }
+    //                }
+
+    //                else {
+    //                    //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+    //                    //if (shipmentDeliveries.Count > 0) {
+    //                    //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+    //                    //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+    //                    //    if (shipmentPM.MainCarriageETA >= shipmentDeliveriesETD) {
+    //                    //        errors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
+    //                    //    }
+
+    //                    //    if (shipmentPM.MainCarriageATA >= shipmentDeliveriesATD) {
+    //                    //        errors.push("Main-Carriage actual departure must be less than all deliveries actual arrival");
+    //                    //    }
+    //                    //}
+    //                }
+
+    //                break;
+    //            }
+
+    //        case "Transshipment1":
+    //            {
+    //                if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+    //                    /* with it self */
+    //                    if (shipmentPM.Transshipment1ETD > shipmentPM.Transshipment1ETA) {
+    //                        errors.push("Via1 expected departure must be less than Via1 expected arrival");
+    //                    }
+
+    //                    if (shipmentPM.Transshipment1ATD > shipmentPM.Transshipment1ATA) {
+    //                        errors.push("Via1 actual departure must be less than Via1 actual arrival");
+    //                    }
+
+    //                    /* flow up */
+    //                    if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment2ETD) {
+    //                            errors.push("Via1 expected arrival must be less than Via2 expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment2ATD) {
+    //                            errors.push("Via1 actual arrival must be less than Via2 actual departure");
+    //                        }
+    //                    }
+
+    //                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment3ETD) {
+    //                            errors.push("Via1 expected arrival must be less than Via3 expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment3ATD) {
+    //                            errors.push("Via1 actual arrival must be less than Via3 actual departure");
+    //                        }
+    //                    }
+
+    //                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.OnCarriageETD) {
+    //                            errors.push("Via1 expected arrival must be less than On-Carriage expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.OnCarriageATD) {
+    //                            errors.push("Via1 actual arrival must be less than On-Carriage actual departure");
+    //                        }
+    //                    }
+
+    //                    else {
+    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+    //                        //if (shipmentDeliveries.Count > 0) {
+    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+    //                        //    if (shipmentPM.Transshipment1ETA >= shipmentDeliveriesETD) {
+    //                        //        errors.push("Via1 expected arrival must be less than all deliveries expected departure");
+    //                        //    }
+
+    //                        //    if (shipmentPM.Transshipment1ATA >= shipmentDeliveriesATD) {
+    //                        //        errors.push("Via1 actual departure must be less than all deliveries actual arrival");
+    //                        //    }
+    //                        //}
+    //                    }
+    //                }
+
+    //                break;
+    //            }
+
+    //        case "Transshipment2":
+    //            {
+    //                if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+    //                    /* with it self */
+    //                    if (shipmentPM.Transshipment2ETD > shipmentPM.Transshipment2ETA) {
+    //                        errors.push("Via2 expected departure must be less than Via2 expected arrival");
+    //                    }
+
+    //                    if (shipmentPM.Transshipment2ATD > shipmentPM.Transshipment2ATA) {
+    //                        errors.push("Via2 actual departure must be less than Via2 actual arrival");
+    //                    }
+
+    //                    /* flow up */
+    //                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                        if (shipmentPM.Transshipment2ETA >= shipmentPM.Transshipment3ETD) {
+    //                            errors.push("Via2 expected arrival must be less than Via3 expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment2ATA >= shipmentPM.Transshipment3ATD) {
+    //                            errors.push("Via2 actual arrival must be less than Via3 actual departure");
+    //                        }
+    //                    }
+
+    //                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                        if (shipmentPM.Transshipment2ETA >= shipmentPM.OnCarriageETD) {
+    //                            errors.push("Via2 expected arrival must be less than On-Carriage expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment2ATA >= shipmentPM.OnCarriageATD) {
+    //                            errors.push("Via2 actual arrival must be less than On-Carriage actual departure");
+    //                        }
+    //                    }
+
+    //                    else {
+    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+    //                        //if (shipmentDeliveries.Count > 0) {
+    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+    //                        //    if (shipmentPM.Transshipment2ETA >= shipmentDeliveriesETD) {
+    //                        //        errors.push("Via2 expected arrival must be less than all deliveries expected departure");
+    //                        //    }
+
+    //                        //    if (shipmentPM.Transshipment2ATA >= shipmentDeliveriesATD) {
+    //                        //        errors.push("Via2 actual departure must be less than all deliveries actual arrival");
+    //                        //    }
+    //                        //}
+    //                    }
+    //                }
+
+    //                break;
+    //            }
+
+    //        case "Transshipment3":
+    //            {
+    //                if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+    //                    /* with it self */
+    //                    if (shipmentPM.Transshipment3ETD > shipmentPM.Transshipment3ETA) {
+    //                        errors.push("Via3 expected departure must be less than Via3 expected arrival");
+    //                    }
+
+    //                    if (shipmentPM.Transshipment3ATD > shipmentPM.Transshipment3ATA) {
+    //                        errors.push("Via3 actual departure must be less than Via3 actual arrival");
+    //                    }
+
+    //                    /* flow up */
+    //                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+    //                        if (shipmentPM.Transshipment3ETA >= shipmentPM.OnCarriageETD) {
+    //                            errors.push("Via3 expected arrival must be less than On-Carriage expected departure");
+    //                        }
+
+    //                        if (shipmentPM.Transshipment3ATA >= shipmentPM.OnCarriageATD) {
+    //                            errors.push("Via3 actual arrival must be less than On-Carriage actual departure");
+    //                        }
+    //                    }
+
+    //                    else {
+    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+    //                        //if (shipmentDeliveries.Count > 0) {
+    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+    //                        //    if (shipmentPM.Transshipment3ETA >= shipmentDeliveriesETD) {
+    //                        //        errors.push("Via3 expected arrival must be less than all deliveries expected departure");
+    //                        //    }
+
+    //                        //    if (shipmentPM.Transshipment3ATA >= shipmentDeliveriesATD) {
+    //                        //        errors.push("Via3 actual departure must be less than all deliveries actual arrival");
+    //                        //    }
+    //                        //}
+    //                    }
+    //                }
+
+    //                break;
+    //            }
+    //        default: { break; }
+    //    }
+    //}
+    //}
     public static GetFirstPickup(ShipmentPickUps: ShipmentPickUpPM[]) {
 
         var output: ShipmentPickUpPM = null;
