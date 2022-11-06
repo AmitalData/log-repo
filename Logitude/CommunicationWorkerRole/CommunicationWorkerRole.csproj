@@ -406,7 +406,10 @@
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
-
+    <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
+    <Compile Include="Tasks\DeleteOldAnalyzeQueuesTask.cs" />
+    <Compile Include="Tasks\DeleteOldPerformanceLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldMobileNotificationLogsTask.cs" />
     <Compile Include="Tasks\DeleteOldContactActivityLogsTask.cs" />
     <Compile Include="Services\Logbox\CustomerTenantsURLService.cs" />
     <Compile Include="Services\Logbox\ImporterBuilderShipmentsBatchService.cs" />
