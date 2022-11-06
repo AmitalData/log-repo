@@ -582,7 +582,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
    inner JOIN DIM_Ports Transshipment2FromPort  ON dw_ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPort.Id
    inner JOIN DIM_Ports Transshipment3FromPort  ON dw_ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPort.Id 
    inner JOIN DIM_Partners PreCarriageCarrier  ON dw_ShipmentMasterDatas.PreCarriageCarrierId = PreCarriageCarrier.Id
-   inner JOIN DIM_Partners OnCarriageCarrier  ON dw_Shipments.OnForwardingCarrierId = OnCarriageCarrier.Id   
+   inner JOIN DIM_Partners OnCarriageCarrier  ON dw_ShipmentMasterDatas.OnCarriageCarrierId    = OnCarriageCarrier.Id   
    inner JOIN DIM_Partners Transshipment2Carrier ON dw_ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2Carrier.Id
    inner JOIN DIM_Partners Transshipment3Carrier ON dw_ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3Carrier.Id
 
@@ -697,15 +697,15 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
     ----------------------------------------------
 	
 	     ------- On Carriage for direct and master shipment ----
-	    if(@ShipmentLevelCode = 'D' or @ShipmentLevelCode = 'C')
-	   begin
+	    --if(@ShipmentLevelCode = 'D' or @ShipmentLevelCode = 'C')
+	   --begin
 	       
       SET @OnCarriageATA= @MasterOnCarriageATA
       SET @OnCarriageATD= @MasterOnCarriageATD
       SET @OnCarriageETD= @MasterOnCarriageETD
       SET @OnCarriageETA=  @MasterOnCarriageETA
 	  
-	   end
+	   --end
 
 	--------------ToPort-------------------------
     if(@DirectionId != 'D' or @TransportModeId != 'I')
