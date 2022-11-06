@@ -86,7 +86,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     ValidateShipmentOperationalReOpen(entityPM, entityPoco);
                     ValidateShipmentAccountingReOpen(entityPM, entityPoco);
+                }
 
+                if (FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant))
+                {
                     ValidateRoutingDates(entityPM, entityPoco);
                 }
             }
@@ -1774,8 +1777,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateRoutingDates(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant)) return;
-
             RoutingDatesValidator routingDatesValidator = new RoutingDatesValidator(entityPM);
             routingDatesValidator.Validate();
         }
