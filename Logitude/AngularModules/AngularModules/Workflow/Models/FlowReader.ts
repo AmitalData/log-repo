@@ -22,6 +22,8 @@ export class FlowReader {
                     currentNodes = currentPreviousNodes;
                 }
 
+                allPreviousNodes = allPreviousNodes.filter((node, index, nodes) => nodes.findIndex(n => n.id === node.id) === index);
+
                 return previousNodesType ? allPreviousNodes.filter((n: any) => n.type === previousNodesType) : allPreviousNodes;
             }
         }
@@ -38,7 +40,7 @@ export class FlowReader {
                     previousNodes.push(previousNode);
                 }
             });
-            return previousNodes;
+            return previousNodes.filter((node, index, nodes) => nodes.findIndex(n => n.id === node.id) === index);
         }
         return [];
     }
