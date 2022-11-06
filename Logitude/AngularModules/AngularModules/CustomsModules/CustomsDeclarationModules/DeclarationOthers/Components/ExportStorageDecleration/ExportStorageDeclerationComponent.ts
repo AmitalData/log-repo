@@ -143,7 +143,6 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        debugger;
         var filters = new ApiQueryFilters;
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
         filters.addAdditionalFilter("StorageStatusName", "Open", "Close", null, "Equal", false, false, false, "string");
