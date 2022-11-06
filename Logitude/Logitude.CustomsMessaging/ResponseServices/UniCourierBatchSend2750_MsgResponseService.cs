@@ -34,7 +34,7 @@ using Devart.Data.Oracle;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Data.OracleClient;
+using System.Data.SqlClient;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
