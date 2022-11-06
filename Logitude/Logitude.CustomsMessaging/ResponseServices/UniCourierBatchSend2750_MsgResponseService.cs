@@ -29,8 +29,9 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Data.Common;
-//using System.Data.OracleClient;
-using System.Data.SqlClient;
+//using System.Data.OracleClient;//using System.Data.SqlClient;
+using Devart.Data.Oracle;
+
 using System.Transactions;
 using Oracle.DataAccess.Client;
 
@@ -188,7 +189,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public static void RealSetDeclarationCourierDeclarationStatusCode(int tenant, string declarationId)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(tenant);
+
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+
             if (dbms == "oracle")
             {
 
@@ -222,24 +226,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private static string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
-        }
+  
 
         private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams, List<string> listDeclarationIdCreateCRS)
         {

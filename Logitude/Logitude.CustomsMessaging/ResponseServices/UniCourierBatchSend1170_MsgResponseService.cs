@@ -26,14 +26,14 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using System.Data.Common;
+using Devart.Data.Oracle;
 using Simplog.Data.InfrastructureModel;
-//using System.Data.OracleClient;
+using System.Data.Common;
 using System.Data.SqlClient;
-using Oracle.DataAccess.Client;
+using System.Transactions;
+//using System.Data.OracleClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -205,10 +205,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
-
-            //
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
             if (dbms == "oracle")
             {
 
@@ -241,25 +239,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-
-        private static string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
-        }
 
 
 
