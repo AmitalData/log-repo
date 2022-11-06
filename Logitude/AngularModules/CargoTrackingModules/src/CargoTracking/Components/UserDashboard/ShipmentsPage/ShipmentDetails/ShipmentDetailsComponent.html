@@ -1029,6 +1029,7 @@
 
                         <table class="row-hover" style="width: 100%;">
                             <tr class="header">
+                                <th style="width: 450px;">file name</th>
                                 <th style="width: 450px;">type</th>
                                 <th style="width: 450px;">create date</th>
                                 <th style="width: 450px;">customs ref</th>
@@ -1036,9 +1037,24 @@
                                 <th style="width: 50px;" class="hide-mobile"></th>
                             </tr>
                             <tr *ngFor="let item of cargoTrackingShipmentPM.DocumentsFilings">
+                                <td style="width: 450px;">{{item.CalculatedFileName}}</td>
                                 <td style="width: 450px;">
-                                    <img width="16" src="./assets/images/icons/info.png"
-                                        style="top: 2px; position: relative;padding-right: 7px;" alt="">
+                                    <span [ngSwitch]="item.FileExtension">
+                                        <img class="file-extension" *ngSwitchCase="'pdf'" src="./assets/images/FileIcons/File-pdf-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'txt'" src="./assets/images/FileIcons/txt_48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xls'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xlsx'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'doc'" src="./assets/images/FileIcons/Microsoft-Office-Word-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'docx'" src="./assets/images/FileIcons/Microsoft-Office-Word-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'ppt'" src="./assets/images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'pptx'" src="./assets/images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'zip'" src="./assets/images/FileIcons/Zip-icon.png" />
+                                        <img class="file-extension" *ngSwitchCase="'rar'" src="./assets/images/FileIcons/Zip-icon.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xml'" src="./assets/images/FileIcons/Document-xml-48.png" />
+                                        <img class="file-extension" *ngSwitchDefault src="./assets/images/FileIcons/attachment-icon.png" />
+                                    </span>
+                                    <!-- <img width="16" src="./assets/images/FileIcons/info.png"
+                                        style="top: 2px; position: relative;padding-right: 7px;" alt=""> -->
                                     <custom-label [width]="300">{{item.DocumentTypeName}}</custom-label>
                                 </td>
                                 <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
@@ -1119,6 +1135,10 @@
                                 <div class="row">
                                     <div class="col-50">
                                         <custom-label>{{item.DocumentTypeName}}</custom-label>
+                                        <br>
+                                        <span style="color: gray;font-size: 13px;">
+                                            "{{item.CalculatedFileName}}"
+                                        </span>
                                         <br>
                                         <span style="color: gray;font-size: 13px;">
                                             {{ item.CreateDate | date:'d-MMM-yyyy, H:mm' }}

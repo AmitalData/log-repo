@@ -335,6 +335,13 @@ h1 {
             display: block;
         }
 
+        .file-extension{
+            position: relative;
+            width: 16px;
+            top: 2px; 
+            padding-right: 7px;
+        }
+
 @media screen and (max-width: 479px) and (orientation: portrait),
 (max-height: 479px) and (orientation: landscape) {
     .back-to-shipments{

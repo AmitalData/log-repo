@@ -87,6 +87,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string SecurityId { get; set; }
         public string CustomReference { get; set; }
         public bool ShowDetailsMenu { get; set; }
+        public string CalculatedFileName { get; set; }
+        public string FileExtension { get; set; }
     }
 
     public class ShipmentCustomsData
