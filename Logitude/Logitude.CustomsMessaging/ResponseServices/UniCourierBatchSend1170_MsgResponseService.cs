@@ -27,14 +27,16 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 
+ 
+using Devart.Data.Oracle;
 using Simplog.Data.InfrastructureModel;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Transactions;
-using System.Data.OracleClient;
+//using System.Data.OracleClient;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-
+ 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSend1170_MsgResponseService : ResponseServiceBase
@@ -208,7 +210,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
             if (dbms == "oracle")
             {
 
@@ -241,25 +243,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-
-        private static string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
-        }
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
         {

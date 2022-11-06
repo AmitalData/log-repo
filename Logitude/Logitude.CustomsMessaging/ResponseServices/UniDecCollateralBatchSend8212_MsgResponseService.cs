@@ -11,8 +11,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
-//using Oracle.DataAccess.Client;
-using Simplog.Data.Helpers;
+ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -31,9 +30,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
-//using OracleCommand = Oracle.DataAccess.Client.OracleCommand;
-//using OracleConnection = Oracle.DataAccess.Client.OracleConnection;
-//using OracleParameter = Oracle.DataAccess.Client.OracleParameter;
+ 
+using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -200,7 +198,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var realUpdatedList = new List<string>();
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
             if (dbms == "oracle")
             {
                 realUpdatedList.ChunkBy(100)
@@ -244,26 +243,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      }
                  });
             }
-        }
-        private static string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
 
         }
-
+ 
     }
 }

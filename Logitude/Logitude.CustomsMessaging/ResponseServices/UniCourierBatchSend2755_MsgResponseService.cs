@@ -31,9 +31,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
-//using OracleCommand = Oracle.DataAccess.Client.OracleCommand;
-//using OracleConnection = Oracle.DataAccess.Client.OracleConnection;
-//using OracleParameter = Oracle.DataAccess.Client.OracleParameter;
+ using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -230,7 +228,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public static void RealSetDeclarationCourierPaymentStatusCode(int tenant, string declarationId)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
             if (dbms == "oracle")
             {
 
@@ -262,27 +261,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
         }
-
-
-        private static string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
-        }
-
 
 
         private static List<CourierPendingReason> GetAllCourierPendingReason(GenericRequestParams requestParams)
