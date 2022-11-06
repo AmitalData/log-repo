@@ -33,7 +33,7 @@ using System.Data.Common;
 using Devart.Data.Oracle;
 
 using System.Transactions;
-using Oracle.DataAccess.Client;
+using System.Data.SqlClient;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
