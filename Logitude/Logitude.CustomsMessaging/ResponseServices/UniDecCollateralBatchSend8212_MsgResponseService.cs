@@ -214,10 +214,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
                          cmd = cmd + "  where DECLARATIONID in (:p1) ";
 
-                         OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                         sqlCommand.Parameters.Add(new OracleParameter("p1", inList));
+                         OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                         oracleCommand.Parameters.Add(new OracleParameter("p1", inList));
                          con.Open();
-                         sqlCommand.ExecuteNonQuery();
+                         oracleCommand.ExecuteNonQuery();
                          con.Close();
 
 
