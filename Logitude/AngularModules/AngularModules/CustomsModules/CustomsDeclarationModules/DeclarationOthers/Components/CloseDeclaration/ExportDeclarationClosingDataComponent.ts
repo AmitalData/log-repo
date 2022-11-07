@@ -100,6 +100,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     GetExportDeclarationClosingData(id: string) {
+        
         if (id != null) {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
@@ -255,6 +256,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     get FinalManifestNumber() { return this.EntityPM ? this.EntityPM.FinalManifestNumber : null; }
     set FinalManifestNumber(value: string) {
+       
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
@@ -445,6 +447,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     setIdentifiersPlaceHolders()
     {
+       
         this._CargoIdentifireTypeListService.getSingleFromCache(this.FinalCargoTypeCode)
         .subscribe((Response: ServiceResponse) => {
             if (Response.Result != null) {
@@ -453,9 +456,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.SecondCargoIdPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
                 this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
 
-                this.FinalManifestNumber = '';
-                this.FinalSecondCargoId = '';
-                this.FinalThirdCargoId = '';
+                this.FinalManifestNumber = this.FinalManifestNumber ??'';
+                this.FinalSecondCargoId = this.FinalSecondCargoId ??'';
+                this.FinalThirdCargoId =this.FinalThirdCargoId ??'';
                             
                 this.setWarningValues();
             }
