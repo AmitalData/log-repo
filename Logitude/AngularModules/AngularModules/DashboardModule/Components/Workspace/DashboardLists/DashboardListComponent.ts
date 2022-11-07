@@ -59,18 +59,19 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         });
     }
 
-    GetList() {
+    GetList(isRefresh : boolean = false) {
         this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(this.DataPointSelection))
             .subscribe((res: any) => {
                 this.StopBusyIndicator();
                 var response: ServiceResponse = res;
                 if (!response || response.HasError) return;
-                this.BuildGrid(response.Result);
+                this.BuildGrid(response.Result, isRefresh);
             });
     }
 
-    private BuildGrid(result: any) {
+    private BuildGrid(result: any, isRefresh : boolean) {
         this.rowData = result.DataResult;
+        if(isRefresh) return;
         var fields = result.Fields as AnalyticsFactsFieldsMetaDataPM[];
         this.columns = [];
         fields.forEach(metaDataField => {
@@ -126,7 +127,8 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     }
 
     RefreshBtnClick() {
-        this.Run(this.DataPointSelection);
+        this.StartBusyIndicator();
+        this.GetList(true);
     }
 
     onGridReady(event: any) {
