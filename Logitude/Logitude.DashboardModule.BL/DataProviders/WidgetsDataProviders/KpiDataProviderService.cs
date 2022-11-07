@@ -27,7 +27,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             this.measureField = widgetMeasureField.MeasureFieldId == null ? null : _EntityFields[widgetMeasureField.MeasureFieldId];
             kpiChart.MeasureLabel = measureField?.DisplayName ?? widgetMeasureField.MeasureCode;
-            kpiChart.Value = FormatKpiValue(BuildKpiChartValue<T>(widgetMeasureField, query), measureField.DataTypeCode);
+            kpiChart.Value = FormatKpiValue(BuildKpiChartValue<T>(widgetMeasureField, query), measureField?.DataTypeCode);
             return kpiChart;
         }
 
@@ -35,7 +35,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         {
             if (value == null) return value;
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
-            if (dataTypeCode == "Integer") return String.Format("{0:n0}", value);
+            if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
             return String.Format("{0:n}", value);
         }
 
