@@ -14,6 +14,7 @@ import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
 import { AnalyticsFactsFieldsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsFieldsMetaDataPMService';
+import { AnalyticsFactsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsMetaDataPMService';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -30,14 +31,14 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     public columns: any[] = [];
     public rowData: any;
     private DashboardAnalyticsService = new DashboardAnalyticsService();
-    private AnalyticsFactsFieldsMetaDataPMService = new AnalyticsFactsFieldsMetaDataPMService();
+    private AnalyticsFactsMetaDataPMService = new AnalyticsFactsMetaDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     public entityPMService: EntityPMService;
     ObjectTableName: any;
 
     ngOnInit(): void {
         this.DashboardAnalyticsService = new DashboardAnalyticsService();
-        this.AnalyticsFactsFieldsMetaDataPMService = new AnalyticsFactsFieldsMetaDataPMService();
+        this.AnalyticsFactsMetaDataPMService = new AnalyticsFactsMetaDataPMService();
         this.entityPMService = new EntityPMService();
     }
 
@@ -50,7 +51,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
 
     GetObjectTableName() {
         this.StartBusyIndicator();
-        this.AnalyticsFactsFieldsMetaDataPMService.get(this.DataPointSelection.MeasureFieldId).subscribe((response: ServiceResponse) => {
+        this.AnalyticsFactsMetaDataPMService.get(this.DataPointSelection.Widget.EntityId).subscribe((response: ServiceResponse) => {
             if (response.HasError) {
                 return;
             }
