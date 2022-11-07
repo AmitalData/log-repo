@@ -457,7 +457,7 @@ AS */
                 }
             }
         }
-     /*   public static void DeleteCommunicationLogs(int tenant,int days, string from, string to,string subject,string CommunicationStatusTypeCodeListAsString)
+        public static void DeleteCommunicationLogs(int tenant,int days, string from__, string to__,string subject__,string CommunicationStatusTypeCodeListAsString)
         {
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -489,9 +489,9 @@ AS */
 
 
                     parameter1.Value = days;
-                    parameter2.Value = from;
-                    parameter3.Value = to;
-                    parameter4.Value = subject;
+                    parameter2.Value = from__;
+                    parameter3.Value = to__;
+                    parameter4.Value = subject__;
                     parameter5.Value = CommunicationStatusTypeCodeListAsString;
 
 
@@ -528,7 +528,7 @@ AS */
                 }
             }
         }
-     */
+
 
         public static void CopySupplierInvoiceItemsCer(string sourceDeclarationId, string targetDeclarationId, int tenant)
         {
