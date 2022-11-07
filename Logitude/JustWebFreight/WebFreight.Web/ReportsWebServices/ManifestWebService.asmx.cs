@@ -135,11 +135,11 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
                 manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
                 manifestDataProvider.HousesNumbers = master.HousesNumbers;
-
                 manifestDataProvider.Transshipment1VesselName = master.Transshipment1VesselName;
                 manifestDataProvider.Transshipment2VesselName = master.Transshipment2VesselName;
                 manifestDataProvider.Transshipment1VoyageNumber = master.Transshipment1CarrierNumber;
                 manifestDataProvider.Transshipment2VoyageNumber = master.Transshipment2CarrierNumber;
+                manifestDataProvider.HousesNumber = master.NumberOfHouses;
 
                 manifestDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "KG");
                 manifestDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "LB");
