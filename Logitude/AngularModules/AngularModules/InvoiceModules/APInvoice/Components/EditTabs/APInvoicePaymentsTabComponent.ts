@@ -15,6 +15,10 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { APPaymentInvoicePM } from '../../../../Invoice/EntityPMs/APPaymentInvoicePM';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 
 @Component({
     
@@ -61,6 +65,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
         entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
+            this.SetUIProperties();
             this.Listen();
             this.LoadInvoicePayments();
         });
@@ -74,13 +79,20 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
                     this.LoadInvoicePayments();
+
+                    if (this.isNewPaymentClicked) {
+                        this.isNewPaymentClicked = false;
+                        this.RunNewPayment();
+                    }
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
                     this.LoadInvoicePayments();
                 }
             });
@@ -91,10 +103,28 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-
     public IsEditingEnabled: boolean = false;
     public AddPaymentButtonIsEnabled: boolean = false;
-    
+    SetUIProperties() {
+        var isEditingEnabled = true;
+        var isAddButtonEnabled = true;
+
+        if (this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "VD") {
+            isEditingEnabled = false;
+        }
+
+        if (!isEditingEnabled) {
+            isAddButtonEnabled = false;
+        }
+
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+            isAddButtonEnabled = false;
+        }
+
+        this.IsEditingEnabled = isEditingEnabled;
+        this.AddPaymentButtonIsEnabled = isAddButtonEnabled;
+    }
+
     get CantConnectMessageVisibility() {
         var result = false;
         if (this.EntityPM.AmountInInvoiceCurrency < 0) {
@@ -238,14 +268,6 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         }
     }
 
-
-    RunReachedBoundsMessage() {
-        var messageText = TextCodeTranslator.Translate("APInvoice.M.AmountPaidBiggerThanInvoiceAmount");
-        var window = new MessageWindow();
-        window.Width = 400;
-        window.Show(messageText);
-    }
-
     public NoColumnWidth: number = 50;
     SetGridColumnsWidth() {
         var noColumnWidth = 50;
@@ -263,6 +285,126 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             noColumnWidth = 100;
         }
         this.NoColumnWidth = noColumnWidth;
+    }
+
+    RunReachedBoundsMessage() {
+        var window = new MessageWindow();
+        window.Width = 400;
+        window.Show("Amount paid equals or bigger than invoice amount");
+    }
+
+    private isNewPaymentClicked: boolean = false;
+    AddPaymentClicked() {
+        if (!FeatureLocator.HasEntityPermessions("APPayment", "NEW", true)) {
+            return;
+        }
+
+        if (this.EntityPM.StatusCode == "DR") {
+            var window = new MessageWindow();
+            window.Width = 300;
+            window.Show("Cant add payment for Draft invoice");
+        }
+
+        else if (this.EntityPM.AmountDue <= 0) {
+            this.RunReachedBoundsMessage();
+        }
+
+        else {
+            this.isNewPaymentClicked = true;
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+    }
+
+    private LastRatesList: LastRate[] = [];
+    private newApPaymentPM: APPaymentPM;
+    private vendorAddressId: string;
+    private RunNewPayment() {
+        var myService: CurrencyRatesService = new CurrencyRatesService();
+        myService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, DateTool.GetCurrentDateAsUtc()).subscribe((resp: ServiceResponse) => {
+            if (resp != null) {
+                if (!resp.HasError) {
+                    this.LastRatesList = resp.Result;
+
+                    var partnersDomainService: PartnersDomainService = new PartnersDomainService();
+                    partnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp1: any) => {
+                        if (resp1 != null) {
+                            var address = resp1;
+                            if (address != null) {
+                                this.vendorAddressId = address.Id;
+                                this.CreatePaymentInstance();
+                                this.OpenPaymentWindow();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+    private CreatePaymentInstance() {
+        this.newApPaymentPM = new APPaymentPM();
+        this.newApPaymentPM.IsCreatedFromInvoiceSide = true;
+        this.newApPaymentPM.CreatedFromInvoiceId = this.EntityPM.Id;
+        this.newApPaymentPM.StatusCode = "DR";
+        this.newApPaymentPM.StatusName = "Draft";
+        this.newApPaymentPM.Tenant = this.EntityPM.Tenant;
+        this.newApPaymentPM.IsClosed = false;
+        this.newApPaymentPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.newApPaymentPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
+        this.newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        this.newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+        this.newApPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        this.newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
+        this.newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+        this.newApPaymentPM.VendorId = this.EntityPM.VendorId;
+        this.newApPaymentPM.VendorName = this.EntityPM.VendorName;
+        this.newApPaymentPM.VendorAddressId = this.vendorAddressId;
+        this.newApPaymentPM.VendorPartnerTypeId = this.EntityPM.VendorPartnerTypeId;
+        this.newApPaymentPM.PaymentCurrencyId = this.EntityPM.InvoiceCurrencyId;
+        this.newApPaymentPM.PaymentCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
+        this.newApPaymentPM.InvoiceAmountDue = this.EntityPM.AmountDue;
+        this.newApPaymentPM.InvoiceRate = this.EntityPM.InvoiceCurrencyExchangeRate;
+        this.newApPaymentPM.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
+        this.SetCurrencyRateData();
+    }
+    private SetCurrencyRateData() {
+        var rate = null;
+        var rateDate = null;
+
+        if (!AppTool.IsNullOrEmpty(this.newApPaymentPM.PaymentCurrencyId)) {
+            if (this.newApPaymentPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                rate = 1;
+            }
+
+            else {
+                if (this.LastRatesList != null) {
+                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.newApPaymentPM.PaymentCurrencyId)[0];
+                    if (lastRate != null) {
+                        rate = lastRate.Rate;
+                        rateDate = lastRate.ValueDate;
+                    }
+                }
+            }
+        }
+
+        this.newApPaymentPM.PaymentCurrencyExchangeRate = rate;
+        this.newApPaymentPM.PaymentCurrencyExchangeRateDate = rateDate;
+    }   
+    private OpenPaymentWindow() {
+        var backButtonLabel = TextCodeTranslator.Translate("General.MH.Accounting");
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.newApPaymentPM.Id, EntityPM: this.newApPaymentPM, BackButtonLabel: backButtonLabel, ObjectTableName: 'APPayment' });
+
+                let isEditComponentSaved = false;
+
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+            });
     }
 }
 
@@ -309,7 +451,6 @@ export class APInvoicePaymentItem {
 
     public IsNotMatchedVisibile: boolean = false;
     public IsConnectButtonVisibile: boolean = false;
-    //public ConnectButtonIsEnabled: boolean = false;
 
     get ConnectButtonIsEnabled() {
         var result = true;

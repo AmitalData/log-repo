@@ -35,6 +35,8 @@ import { GLAccountListService } from '../../../../Accounting/Services/StandardLi
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { ThrowStmt } from '@angular/compiler';
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
+import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 
 @Component({
 
@@ -92,6 +94,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
 
+        if (this.EntityPM.IsCreatedFromInvoiceSide && !AppTool.IsNullOrEmpty(this.EntityPM.CreatedFromInvoiceId)) {
+            this.ConnectAPInvoiceToPayment();
+        }
+
         this.InitializeServices();
         this.ApplyViewModel();
         this.Listen();
@@ -102,6 +108,48 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
+
+    private ConnectAPInvoiceToPayment() {
+        var connectAmount = this.GetSmallestAmount();
+        this.CreateAPPaymentInvoicePMInstance(connectAmount);        
+        this.UpdatePaymentAfterConnectingInvoice(connectAmount);
+    }
+
+    private GetSmallestAmount(): number {
+        var paymentAmount = this.EntityPM.OpenAmount == null ? 0 : this.EntityPM.OpenAmount;
+
+        if (this.EntityPM.InvoiceAmountDue <= paymentAmount) {
+            return this.EntityPM.InvoiceAmountDue;
+        }
+
+        else {
+            return paymentAmount;
+        }
+    }
+    private CreateAPPaymentInvoicePMInstance(amount: number) {
+        var amountLocal: number = amount * this.EntityPM.PaymentCurrencyExchangeRate;
+        var aPPaymentInvoicePM: APPaymentInvoicePM = new APPaymentInvoicePM(null);
+        aPPaymentInvoicePM.Tenant = this.EntityPM.Tenant;
+        aPPaymentInvoicePM.APInvoiceId = this.EntityPM.CreatedFromInvoiceId;
+        aPPaymentInvoicePM.APPaymentId = this.EntityPM.Id;
+        aPPaymentInvoicePM.ForeignCurrencyId = this.EntityPM.InvoiceCurrencyId;
+        aPPaymentInvoicePM.ForeignAmount = amount == null ? 0 : amount;
+        aPPaymentInvoicePM.LocalAmount = amountLocal == null ? 0 : amountLocal;
+        aPPaymentInvoicePM.PaymentAmount = amount == null ? 0 : amount;
+        aPPaymentInvoicePM.ExchangeRate = this.EntityPM.InvoiceRate;
+        this.EntityPM.AddAPPaymentInvoicePM(aPPaymentInvoicePM);
+    }
+
+    private  UpdatePaymentAfterConnectingInvoice(connectAmount: number) {
+        if (this.EntityPM.OpenAmount > connectAmount) {
+            this.EntityPM.OpenAmount = this.EntityPM.OpenAmount - connectAmount;
+        }
+
+        else {
+            this.EntityPM.OpenAmount = 0;
+        }
+    }
+
     private InitializeBillToLov() {
         if (this.IsFullAccounting) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -307,6 +355,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.SetUIProperties_Cheque();
         this.SetUIProperties_Invoices();
         this.SetUIProperties_CreditCard();
+
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
@@ -324,6 +373,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
         else {
+
+            if (this.EntityPM.IsCreatedFromInvoiceSide) {
+                this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+            }
+
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, true);
@@ -347,6 +404,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
             }
         }
+
         this.SetUIProperties_FullAccounting();
     }
 
@@ -379,7 +437,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.PaymentCurrencyId) {
                     if (this.PaymentCurrencyId != SessionLocator.TenantPM.CurrencyId) {
                         if (this.EntityPM.PaymentInvoices.length == 0) {
-                            isEnabled = true;
+                            if (this.EntityPM.IsCreatedFromInvoiceSide == false) {
+                                isEnabled = true;
+                            }
                         }
                     }
                 }
@@ -749,25 +809,28 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.VendorId;
     }
     set VendorId(value: string) {
-        if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
-                this.EntityPM.VendorId = value;
-                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
-                this.PaymentCurrencyId = null;
-                if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
-                }
-                else {
-                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
-                }
-                this.GetCardProperties();
-                this.LoadData();
-                this.LoadTaxPercentage();
-                this.IsTaxUpdated = true;
+        if (this.EntityPM.IsCreatedFromInvoiceSide == false) {
+            if (this.EntityPM != null) {
+                if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
+                    this.EntityPM.VendorId = value;
+                    this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
+                    this.PaymentCurrencyId = null;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+                        this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
+                    }
+                    this.GetCardProperties();
+                    this.LoadData();
+                    this.LoadTaxPercentage();
+                    this.IsTaxUpdated = true;
 
+                }
             }
         }
     }
+
     public GLAccountId: string;
     GetCardProperties() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
@@ -883,9 +946,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.VendorAddressId;
     }
     set VendorAddressId(value: string) {
-        if (this.EntityPM != null) {
-            if (this.EntityPM.VendorAddressId != value) {
-                this.EntityPM.VendorAddressId = value;
+        if (this.EntityPM.IsCreatedFromInvoiceSide == false) {
+            if (this.EntityPM != null) {
+                if (this.EntityPM.VendorAddressId != value) {
+                    this.EntityPM.VendorAddressId = value;
+                }
             }
         }
     }
@@ -899,35 +964,37 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.PaymentCurrencyId;
     }
     set PaymentCurrencyId(value: string) {
-        if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyId != value) {
-                this.EntityPM.PaymentCurrencyId = value;
-                this.PaymentCurrencyExchangeRate = this.GetCurrencyRate(value);
-                this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+        if (this.EntityPM.IsCreatedFromInvoiceSide == false) {
+            if (this.EntityPM != null) {
+                if (this.EntityPM.PaymentCurrencyId != value) {
+                    this.EntityPM.PaymentCurrencyId = value;
+                    this.PaymentCurrencyExchangeRate = this.GetCurrencyRate(value);
+                    this.ExchangeRateDate = this.GetCurrencyRateDate(value);
 
-                if (AppTool.IsNullOrEmpty(value)) {
-                    this.PaymentCurrencyCode = null;
-                }
+                    if (AppTool.IsNullOrEmpty(value)) {
+                        this.PaymentCurrencyCode = null;
+                    }
 
-                else {
-                    var myService = new CurrencyListService();
-                    myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            var list: CurrencyList = myResponse.Result;
-                            if (list) {
-                                this.PaymentCurrencyCode = list.Code;
+                    else {
+                        var myService = new CurrencyListService();
+                        myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: CurrencyList = myResponse.Result;
+                                if (list) {
+                                    this.PaymentCurrencyCode = list.Code;
+                                }
                             }
-                        }
+                        });
+                    }
+
+                    this.SetUIProperties_ExchangeRate();
+
+                    this.ItemsSource.Collection.forEach(item => {
+                        item.SetUIProperties();
+                        item.InitExchangeRate();
                     });
+
                 }
-
-                this.SetUIProperties_ExchangeRate();
-
-                this.ItemsSource.Collection.forEach(item => {
-                    item.SetUIProperties();
-                    item.InitExchangeRate();
-                });
-
             }
         }
     }
@@ -939,15 +1006,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.PaymentCurrencyExchangeRate;
     }
     set PaymentCurrencyExchangeRate(value: number) {
-        if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyExchangeRate != value) {
-                this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
-                this.GetRateIsEnabled();
-                this.ComputeLocalAmount();
+        if (this.EntityPM.IsCreatedFromInvoiceSide == false) {
+            if (this.EntityPM != null) {
+                if (this.EntityPM.PaymentCurrencyExchangeRate != value) {
+                    this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
+                    this.GetRateIsEnabled();
+                    this.ComputeLocalAmount();
 
-                this.ItemsSource.Collection.forEach(item => {
-                    item.InitExchangeRate();
-                });
+                    this.ItemsSource.Collection.forEach(item => {
+                        item.InitExchangeRate();
+                    });
+                }
             }
         }
     }
@@ -968,13 +1037,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-
     get AutomaticPaymentCheque() { return this.EntityPM.AutomaticPaymentCheque; }
     set AutomaticPaymentCheque(value: boolean) {
         if (this.EntityPM.AutomaticPaymentCheque != value) {
             this.EntityPM.AutomaticPaymentCheque = value;
         }
     }
+
     private myRelativeRateDate: string = null;
     get RelativeRateDate() { return this.myRelativeRateDate; }
     set RelativeRateDate(value: string) {
@@ -982,6 +1051,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.myRelativeRateDate = value;
         }
     }
+
     ComputeRelativeRateDate() {
         this.RelativeRateDate = DateTool.GetRelativeRateDate(this.RegisterDate, this.ExchangeRateDate, "old");
     }
@@ -1371,16 +1441,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM.AmountInPaymentCurrency != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
+            this.ComputeAmountToPayOnCreatingFromInvoice();
             this.UpdateSummary();
             this.ComputeOpenAmount();
 
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
             });
-
-            //this.ItemsSource.Collection.forEach(item => {
-            //    item.RefreshMatchProperties();
-            //});
 
             this.CalculateTaxDeductionLocalAmount();
         }
@@ -1439,6 +1506,24 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
+    }
+    ComputeAmountToPayOnCreatingFromInvoice() {
+        if (this.EntityPM.IsCreatedFromInvoiceSide && !AppTool.IsNullOrEmpty(this.EntityPM.CreatedFromInvoiceId)) {
+            if (this.EntityPM.AmountInPaymentCurrency > 0) {
+                var paymentInvoice: APPaymentInvoiceArgs = this.ItemsSource.Collection.filter(d => d.Invoice.Id == this.EntityPM.CreatedFromInvoiceId)[0];
+                if (paymentInvoice) {
+                    if (paymentInvoice.AmountDue > this.EntityPM.AmountInPaymentCurrency) {
+                        paymentInvoice.AmountDue = paymentInvoice.AmountDue - this.EntityPM.AmountInPaymentCurrency;
+                    }
+
+                    else {
+                        paymentInvoice.AmountDue = 0;
+                    }
+
+                    this.FillBaselist();
+                }
+            }
+        }
     }
 
     // Summary
@@ -1577,7 +1662,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 }
 export class APPaymentInvoiceArgs extends BaseComponent {
     public EntityPM: APPaymentInvoicePM = null;
-    public Invoice: APInvoiceList = null; APPaymentInvoiceArgs
+    public Invoice: APInvoiceList = null;
     public PaymentPM: APPaymentPM = null;
     public DataContext: APPaymentInvoiceArgs = this;
     public ObjectTableName: string = "APInvoice";
