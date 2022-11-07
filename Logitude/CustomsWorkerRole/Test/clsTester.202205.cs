@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.CustomsMessaging.Dca;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -503,6 +504,11 @@ namespace CustomsWorkerRole.Test
 
 
 
+        }
+
+        public static void DcaPerEnv()
+        {
+            DcaFilterByEnvironmentService.UnitTest();
         }
 
         public static void TestSP()

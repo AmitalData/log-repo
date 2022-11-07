@@ -180,6 +180,8 @@
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
     <Compile Include="Dca\DcaDirect9200TenantService.cs" />
+    <Compile Include="Dca\DcaFilterByEnvironmentService.cs" />
+    <Compile Include="Dca\DcaFilterByEnvironmentService.Test.cs" />
     <Compile Include="Dca\DedicatedCourierDCAService.cs" />
     <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
     <Compile Include="Dca\WaitingTester.cs" />

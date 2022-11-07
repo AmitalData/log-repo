@@ -173,8 +173,15 @@ namespace Logitude.CustomsMessaging.Dca
                 sbFilenameQueue.Enqueue($"Start Tenant {_CustomsSettingPM.Tenant}");
                 if (response.OutgoingMessage != null)
                 {
+                                        
+                    var dcaUtil = new DcaFilterByEnvironmentService(); 
+                    var res =  dcaUtil
+                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList());
+                    var outgoingMessageFilterByEnvironment = res.OutgoingMessage;
+                    sbFilenameQueue.Enqueue(res.SbLocal.ToString());
+
                     Parallel.ForEach(
-                        response.OutgoingMessage.ToList(),
+                        outgoingMessageFilterByEnvironment,
                         new ParallelOptions { MaxDegreeOfParallelism = 4 },//cpu
                         itemOutgoingMessage => {
                             TPL_SaveInDB(correlationIdsCanClear, sbFilenameQueue, itemOutgoingMessage, exceptionBag);
@@ -255,7 +262,14 @@ namespace Logitude.CustomsMessaging.Dca
                 sbFilename.AppendLine($"Start Tenant {_CustomsSettingPM.Tenant}");
                 if (response.OutgoingMessage != null)
                 {
-                    foreach (var itemOutgoingMessage in response.OutgoingMessage)
+                    
+                    var dcaUtil = new DcaFilterByEnvironmentService();
+                    var resFilterByEnvironmentOutGoing = dcaUtil
+                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList());
+                    var outgoingMessageFilterByEnvironment = resFilterByEnvironmentOutGoing.OutgoingMessage;
+                    sbFilename.AppendLine(resFilterByEnvironmentOutGoing.SbLocal.ToString());
+
+                    foreach (var itemOutgoingMessage in outgoingMessageFilterByEnvironment /*response.OutgoingMessage*/)
                     {
                         SaveInDB(correlationIdsCanClear, sbFilename, itemOutgoingMessage);
                     }

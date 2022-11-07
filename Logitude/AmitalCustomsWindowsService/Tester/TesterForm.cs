@@ -320,7 +320,7 @@ namespace AmitalCustomsWindowsService.Tester
             //sql2Oracle.GetReNameLongColumns(root:@"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
             //return;
 
-
+            clsTester.DcaPerEnv();
             //Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
             //return;
 

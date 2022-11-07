@@ -528,7 +528,7 @@ out myMessageOut);
 
             if (_totalDownload > 50)
             {
-                Debug.WriteLine("Dowload 50 DCA Files Try Next Tenant ");
+                Debug.WriteLine("Download 50 DCA Files Try Next Tenant ");
                 return null;
             }
 
@@ -597,6 +597,16 @@ out myMessageOut);
             ListOfDCAFile = ListOfDCAFile
                 .Where(file => _MyDCAIncomeDirStateM.FileMessagesNotBelong2OurEnvironment.Contains(file.SelectedFileDownload) == false)
                 .ToList();
+
+
+            var dcaUtil = new DcaFilterByEnvironmentService();
+            var res = dcaUtil.FilterByEnvironmentListOfDCAFile(_CustomsSettingPM.Tenant, ListOfDCAFile);
+            ListOfDCAFile = res.ListOfDCAFile;
+            
+
+
+
+
             if (!string.IsNullOrWhiteSpace(debugIIGMessageId))
             {
                 var myDebug = _InterfaceListDCA.Where(mess => mess.Code == debugIIGMessageId).First();

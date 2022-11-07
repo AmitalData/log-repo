@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "5ba0e279c3387e55d67ea26dc8caa6b5";
+		public const string HashString = "a060cacfdc98c0aad499466e6ff94ab6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17335,7 +17335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_EXPORTDECLARATIONNEW2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW2", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONNEW2", NameTextCodeDefaultText = @"New Export Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_EXPORTDECLARATIONPSCREEN = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPSCREEN", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPSCREEN", NameTextCodeDefaultText = @"Export Declaration Pilot Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_EXPORTDECLARATIONPSCREEN = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPSCREEN", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPSCREEN", NameTextCodeDefaultText = @"Export Declaration Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_EXPORTDECLARATIONPMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPMENU", NameTextCodeDefaultText = @"Export Declaration Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
@@ -17360,6 +17360,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_BULKUPLOADDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BULKUPLOADDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.BULKUPLOADDOCUMENTS", NameTextCodeDefaultText = @"Bulk Upload Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_MultiUpdateClassificationCodeWindow = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdateClassificationCodeWindow", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdateClassificationCodeWindow", NameTextCodeDefaultText = @"הצגת כפתור עדכון קוד תהליך/הנחה פטור" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_IIGEXPORTIMPORTDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IIGEXPORTIMPORTDECLARATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION", NameTextCodeDefaultText = @"Export # Import IIG Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
