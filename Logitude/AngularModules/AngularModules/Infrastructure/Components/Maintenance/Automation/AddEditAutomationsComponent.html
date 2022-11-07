@@ -227,7 +227,9 @@
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <div></div>
+                                                                                                <div style="margin-left:5px">
+                                                                                                    <HelpIcon *ngIf="(IsSendDocument && ObjectTableName == 'Shipment')" [HideHeader]="true" [Text]="'Using this result, your document will be built automatically and sent to the Recipients Emails or to the FTP'"></HelpIcon>
+                                                                                                </div>
                                                                                             </td>
                                                                                         </tr>
 
@@ -435,7 +437,7 @@
                                                                                                     <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
                                                                                                 </div>
-                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" style="border-radius: 5px">
+                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'7px':''" style="border-radius: 5px">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:10px">
@@ -446,9 +448,9 @@
                                                                                                             <td style="width:120px">
                                                                                                                 <p style="font-size:11px;margin-top:1px;color:#6E7172">Document</p>
                                                                                                             </td>
-                                                                                                            <td style="width:200px">
-                                                                                                                <div style="text-align:left;width:200px;">
-                                                                                                                    <ComboBox [CyData]="'DocumentTypeList'" [ListType]="''" style="width:200px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                            <td style="width:203px">
+                                                                                                                <div style="text-align:left;width:203px;">
+                                                                                                                    <ComboBox [CyData]="'DocumentTypeList'" [ListType]="''" style="width:203px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                             <td>
@@ -507,7 +509,7 @@
 
                                                                                         </tr>
 
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL' && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
+                                                                                        <tr *ngIf="(ResultCodeSelected.Code =='EMAIL' || (IsSendDocument && ObjectTableName == 'Shipment')) && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
                                                                                             <td colspan="4">
 
                                                                                                 <div>
@@ -582,9 +584,9 @@
                                                                                                                                 <p style="font-size:12px;color:#6E7172">Copy Name</p>
                                                                                                                             </td>
 
-                                                                                                                            <td style="vertical-align:central;width:200px">
-                                                                                                                                <div style="text-align:left;width:200px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                            <td style="vertical-align:central;width:203px">
+                                                                                                                                <div style="text-align:left;width:203px;vertical-align:central">
+                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
                                                                                                                                 </div>
                                                                                                                             </td>
 
