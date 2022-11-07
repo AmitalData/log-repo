@@ -30,13 +30,8 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
 
     InitializeSendDocumentResultComponent() {
         this.SendViaClassLists = [];
-        if (this.ObjectTableName == "Shipment") {
-            this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
-            this.SendViaClassLists.push(new Operator("FTP", "FTP"));
-            return;
-        }
         this.SendViaClassLists.push(new Operator("FTP", "FTP"));
-        this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
+        this.SendViaClassLists.push(new Operator("Email", "EMAIL"));       
     }
 
     private sendViaSelected: Operator;
@@ -67,6 +62,9 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
         if (this.automationSendDocument) {
             if (this.automationSendDocument.SendVia) {
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == this.automationSendDocument.SendVia)[0];
+            }
+            else if (this.ObjectTableName == "Shipment") {
+                this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == "EMAIL")[0];
             }
             else
                 this.SendViaSelected = this.SendViaClassLists[0];
