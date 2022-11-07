@@ -40,10 +40,11 @@ namespace CommunicationWorkerRole
 
             while (IsRunning)
             {
-
-                WorkOnce();
-                Thread.Sleep(MillisecondsTimeout);//600000
-
+                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                {
+                    WorkOnce();
+                    Thread.Sleep(MillisecondsTimeout);//600000
+                }
             }
 
         }
