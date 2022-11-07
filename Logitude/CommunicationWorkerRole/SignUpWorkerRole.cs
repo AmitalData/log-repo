@@ -51,55 +51,60 @@ namespace CommunicationWorkerRole
 
         public void WorkOnce()
         {
-            OnStart();
-            if (General.IsUpdating())
+            if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
             {
-                Thread.Sleep(300000);
-                return;
-            }
-            if (!queue.Exists()) //??? onstart built it >>
-            {
-                return;
-            }
-            var msg = queue.GetMessage(TimeSpan.FromSeconds(5));
-            LastActivity = DateTime.UtcNow;
-            if (msg == null)
-            {
-                return;
-            }
-            try
-            {
-                MemoryStream memorystream = new MemoryStream(msg.AsBytes);
-
-                XmlSerializer serializer = new XmlSerializer(typeof(SignUpInfoClass));
-
-                SignUpInfoClass signUpInfo = (SignUpInfoClass)serializer.Deserialize(memorystream);
-                string message = msg.AsString;
-
-                queue.DeleteMessage(msg);
-
-                //string email = signUpInfo.Email;
-                //string name = signUpInfo.Name;
-                //string company = signUpInfo.Company;
-                //string phone = signUpInfo.phone;
 
 
-                if (signUpInfo.IsCrmTenant)
+                OnStart();
+                if (General.IsUpdating())
                 {
-                    CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
-                    string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
-                    if (string.IsNullOrEmpty(accountingCard))  CreateTenant(signUpInfo);
-                    else return;
-
+                    Thread.Sleep(300000);
+                    return;
                 }
-                else CreateTenant(signUpInfo);
-                LogDoneItemInMemory();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
-                Thread.Sleep(10000);
+                if (!queue.Exists()) //??? onstart built it >>
+                {
+                    return;
+                }
+                var msg = queue.GetMessage(TimeSpan.FromSeconds(5));
+                LastActivity = DateTime.UtcNow;
+                if (msg == null)
+                {
+                    return;
+                }
+                try
+                {
+                    MemoryStream memorystream = new MemoryStream(msg.AsBytes);
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(SignUpInfoClass));
+
+                    SignUpInfoClass signUpInfo = (SignUpInfoClass)serializer.Deserialize(memorystream);
+                    string message = msg.AsString;
+
+                    queue.DeleteMessage(msg);
+
+                    //string email = signUpInfo.Email;
+                    //string name = signUpInfo.Name;
+                    //string company = signUpInfo.Company;
+                    //string phone = signUpInfo.phone;
+
+
+                    if (signUpInfo.IsCrmTenant)
+                    {
+                        CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
+                        string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
+                        if (string.IsNullOrEmpty(accountingCard)) CreateTenant(signUpInfo);
+                        else return;
+
+                    }
+                    else CreateTenant(signUpInfo);
+                    LogDoneItemInMemory();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
+                    Thread.Sleep(10000);
+                }
             }
         }
 
@@ -161,7 +166,7 @@ namespace CommunicationWorkerRole
                 };
 
             }
-            else if(LogitudeSettings.DeploymentStage == "logboxwe1")
+            else if (LogitudeSettings.DeploymentStage == "logboxwe1")
             {
                 //EmailParameters parameters = new EmailParameters()
                 //{
