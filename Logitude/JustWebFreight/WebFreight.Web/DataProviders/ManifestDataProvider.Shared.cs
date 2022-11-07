@@ -224,7 +224,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperNotExporterAddress { get; set; }
         public string ConsigneeNotImporterName { get; set; }
         public string ConsigneeNotImporterAddress { get; set; }
-
+        public int? HousesNumber { get; set; }
     }
 
     public class ManifestDetailsClass
