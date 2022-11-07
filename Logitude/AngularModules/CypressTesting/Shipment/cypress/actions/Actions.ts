@@ -117,6 +117,7 @@ export function SaveMainCarriage() {
 export function CreateShipment(shipmentLevel: string) {
     let createSelector = Conditions.IsMaster(shipmentLevel) ? ShipmentSelectors.CreateMasterShipmentButton : ShipmentSelectors.CreateShipmentButton;
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentViews, RequestAliases.ShipmentViews)
     cy.Click(createSelector, null)
 }
 //#endregion
@@ -702,6 +703,7 @@ function FillHouseInShipmentsTab(Shipper: string) {
 
 export function CheckBusyIndicator() {
     cy.get(ShipmentSelectors.ComponentBusyIndicator).should(BaseSelectors.NotExist);
+    cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentViews, RequestAliases.ShipmentViews)
 }
 
 export function CheckHouseCheckBox() {
@@ -712,7 +714,13 @@ export function CheckHouseCheckBox() {
         }
     })
 }
-
+export function ViewAttachedHouse() {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentViews, 200).then((interception) => {
+    })
+    cy.get(ShipmentSelectors.TabTitleRow).eq(1).within(() => {
+        cy.get(ShipmentSelectors.Refresh).click()
+    })
+}
 export function UncheckHouseCheckBox() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {

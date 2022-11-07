@@ -231,15 +231,16 @@ namespace WebFreight.Web.Helpers
 
                             string dimTable = (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL);
                             string notSpecifiedValue = "  ('Not Specified','-1','1')";
+                            string notSpecifiedValueCondtion = (filter.Operation.Code == "IsNull" ? "or " : "and ") + (dimTable + "." + filter.Code) + (filter.Operation.Code == "IsNotNull" ? " not " : "") + " in " + notSpecifiedValue;
 
                             if (filter.Operation.Code == "IsNull")
                             {
-                                WhereStmt += "(" + dimTable + "." + filter.Code + " is null or " + dimTable + "." + filter.Code + " = '' " + "or "  + (dimTable + "." + filter.Code) +"  in " + notSpecifiedValue + " ) ";
+                                WhereStmt += "(" + dimTable + "." + filter.Code + " is null or " + dimTable + "." + filter.Code + " = '' " + ((filter.DataTypeCode == "Text" || filter.DataTypeCode == "Dimension") ?  notSpecifiedValueCondtion:"") + " ) ";
 
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
-                                WhereStmt += "(" + dimTable + "." + filter.Code + " is not null and " + dimTable + "." + filter.Code + " <> '' " + "and " + (dimTable + "." + filter.Code) + " not in " + notSpecifiedValue + " ) ";
+                                WhereStmt += "(" + dimTable + "." + filter.Code + " is not null and " + dimTable + "." + filter.Code + " <> '' " + ((filter.DataTypeCode == "Text" || filter.DataTypeCode == "Dimension") ? notSpecifiedValueCondtion : "") + " ) ";
                             }
                             else
                             {

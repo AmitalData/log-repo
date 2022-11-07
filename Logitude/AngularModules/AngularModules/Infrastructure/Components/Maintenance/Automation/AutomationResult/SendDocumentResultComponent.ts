@@ -14,7 +14,7 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
     SendViaClassLists: Operator[] = [];
     FTPFolderLists: Operator[] = [];
     IsCustomerCare: boolean = false;
-
+    public ObjectTableName: string;
     DataContext: any;
     constructor() {
         super();
@@ -30,6 +30,11 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
 
     InitializeSendDocumentResultComponent() {
         this.SendViaClassLists = [];
+        if (this.ObjectTableName == "Shipment") {
+            this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
+            this.SendViaClassLists.push(new Operator("FTP", "FTP"));
+            return;
+        }
         this.SendViaClassLists.push(new Operator("FTP", "FTP"));
         this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
     }
