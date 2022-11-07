@@ -427,10 +427,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (shipmentPM.InlandDomesticFromTypeCode == "PORT")
                     {
                         var port = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageFromPortId);
+                        var portTo = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageToPortId);
 
                         shipmentPM.ToPartnerCountryCode = port.CountryCode;
-                        shipmentPM.ToPartnerCountryName = port.CountryName;
                         shipmentPM.FromPartnerCountryCode = port.CountryCode;
+                        shipmentPM.ToLocation = portTo.Code;
+                        shipmentPM.FromLocation = port.Code;
+
+                        shipmentPM.ToPartnerCountryName = port.CountryName;
                         shipmentPM.FromPartnerCountryName = port.CountryName;
                     }
 
@@ -438,6 +442,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         shipmentPM.ToPartnerCountryCode = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId);
                         shipmentPM.FromPartnerCountryCode = shipmentPM.ToPartnerCountryCode;
+                        shipmentPM.ToLocation = shipmentPM.InlandDomesticToCity;
+                        shipmentPM.FromLocation = shipmentPM.InlandDomesticFromCity;
                     }
 
                 }
