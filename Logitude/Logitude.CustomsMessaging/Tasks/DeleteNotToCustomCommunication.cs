@@ -71,7 +71,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject.ToString()})");
             LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus.ToString()})");
 
-            //CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
+            CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
         }
     }
 }
