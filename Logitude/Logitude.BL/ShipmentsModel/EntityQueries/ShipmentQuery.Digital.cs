@@ -1359,7 +1359,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else if (shipment.InlandDomesticFromTypeCode == "CASL")
             {
-                return GetCountryByCASLAddress(shipment.InlandDomesticFromCountryId);
+                var res = GetCountryByCASLAddress(shipment.InlandDomesticFromCountryId, tenant);
+                
+                if (res != null)
+                {
+                    return res.Code;
+                }
+
+                return "";
             }
 
             return null;
@@ -1377,7 +1384,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else if (shipment.InlandDomesticToTypeCode == "CASL")
             {
-                return GetCountryByCASLAddress(shipment.InlandDomesticToCountryId);
+                var res = GetCountryByCASLAddress(shipment.InlandDomesticToCountryId, tenant);
+
+                if (res != null)
+                {
+                    return res.Code;
+                }
+
+                return "";
+
             }
 
             return null;
@@ -1423,17 +1438,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return country;
         }
 
-        private string GetCountryByCASLAddress(string countryId)
+        private Country GetCountryByCASLAddress(string countryId, int tenant)
         {
-            string myResult = "";
+            Country myResult = null;
 
             if (!string.IsNullOrEmpty(countryId))
             {
-                Country country = CountryRepository.GetSingleCountry(countryId, tenant, false);
-                if (country != null)
-                {
-                    myResult = country.Code;
-                }
+                myResult =  CountryRepository.GetSingleCountry(countryId, tenant, false);
             }
 
             return myResult;
@@ -2372,7 +2383,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
