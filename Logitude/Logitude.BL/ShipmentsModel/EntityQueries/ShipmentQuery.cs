@@ -440,10 +440,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     if (shipmentPM.InlandDomesticFromTypeCode == "CASL")
                     {
-                        shipmentPM.ToPartnerCountryCode = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId);
-                        shipmentPM.FromPartnerCountryCode = shipmentPM.ToPartnerCountryCode;
                         shipmentPM.ToLocation = shipmentPM.InlandDomesticToCity;
                         shipmentPM.FromLocation = shipmentPM.InlandDomesticFromCity;
+
+                        var country = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
+                        if (country != null)
+                        {
+                            shipmentPM.ToPartnerCountryCode = country.Code;
+                            shipmentPM.FromPartnerCountryCode = shipmentPM.ToPartnerCountryCode;
+                            shipmentPM.ToPartnerCountryName = country.EnglishName;
+                            shipmentPM.FromPartnerCountryName = country.EnglishName;
+                        }
                     }
 
                 }
