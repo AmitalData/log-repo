@@ -21,6 +21,7 @@ import {TenantManagementPMService} from '../../../Infrastructure/Services/Standa
 import {TenantManagementPM} from '../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 import { CardExtendedPMService } from '../../Services/ExtendedPMs/CardExtendedPMService';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 export class CustomerMenuButtonsHandler {
     public EntityPM: CustomerPM;
@@ -159,6 +160,19 @@ export class CustomerMenuButtonsHandler {
                                             button.IsDisabled = false;
                                         }
                                     }
+                                }
+                                break;
+                            }
+
+                        case "LoginToOnlineVisability":
+                            {
+                                if (this.EntityPM.CustomerStatusCode !== "ACT" || !this.TenantPM.IsDigitalPortalAccessActivated)
+                                {
+                                    button.IsDisabled = true;
+                                }
+                                else
+                                {
+                                    button.IsDisabled = false;
                                 }
                                 break;
                             }
@@ -365,6 +379,11 @@ export class CustomerMenuButtonsHandler {
                 this.DisconnectGLAccount();
                 break;
             }
+
+            case "LoginToOnlineVisability": {
+                this.RedirctToDigital();
+                break;
+            }
         }
     }
 
@@ -392,12 +411,16 @@ export class CustomerMenuButtonsHandler {
         this.isActivate = false;
         this.isMarkAsReadyActivation = false;
     }
+
     private CurrentSession = SessionLocator.SelectedSession;
-    SetAsPotential() {
+    SetAsPotential()
+    {
+       this.IsCustomerConnectedToEntities();    
+    }
 
-
-            this.IsCustomerConnectedToEntities();
-        
+    private RedirctToDigital()
+    {
+        window.open(`${SessionLocator.TenantManagementJS.CustomerURL}?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
     }
 
     private isCustomerConnectedToEntities: boolean = false;
@@ -407,12 +430,14 @@ export class CustomerMenuButtonsHandler {
             if (!myResponse.HasError) {
                 this.isCustomerConnectedToEntities = myResponse.Result;
 
-                if (this.isCustomerConnectedToEntities) {
+                if (this.isCustomerConnectedToEntities)
+                {
                     var messageWindow: MessageWindow = new MessageWindow();
                     var validationErrorMessage = "This customer can't be set as potential since it has shipment(s).";
                     messageWindow.Show(validationErrorMessage);
                 }
-                else {
+                else
+                {
                     this.EntityPM.SetAsPotential = true;
                     this.EntityPM.CustomerStatusCode = "POT";
                     this.isSetAsPotential = false;
