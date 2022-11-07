@@ -15,7 +15,7 @@ declare var window;
 @Component({
     selector: 'GridScreenSectionComponent',
     templateUrl: './GridScreenSectionComponent.html',
-    inputs: ['ScreenSection']
+    inputs: ['ScreenSection', 'ParentEntityPM', 'ParentObjectTableName']
 })
 
 export class GridScreenSectionComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -23,18 +23,19 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     private CurrentSession = SessionLocator.SelectedSession;
     ScreenSection: any;
     Screen: any;
+    ParentEntityPM: any
+    ParentObjectTableName: string;
     public DataSource: ObservableCollection;
 
     constructor() {
         super();
-        this.DataSource = new ObservableCollection([]);
-        this.FillDataSource();
+        this.LoadData();
     }
 
-    FillDataSource() {
-        for (let i = 0; i < 25; i++) {
-            this.DataSource.Insert('Sample');
-        }
+    LoadData() {
+        let data = this.ParentEntityPM?.CustomChildEntities?.filter(x => x.Name == this.ScreenObjectTableName)[0]?.Values;
+        if (!data) data = [];
+        this.DataSource = new ObservableCollection(data);
     }
 
     ngAfterViewInit(): void {
@@ -74,44 +75,50 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     }
 
     AddChildEntityClicked() {
-        var logitudeWindow = new LogitudeWindow();
+        let logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add New " + this.ScreenObjectTableName;
-        logitudeWindow.WindowArgs = { EntityPM: new ChildEntity(), Screen: this.Screen }; 
+        logitudeWindow.WindowArgs = this.GetWindowArgs();
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
-        logitudeWindow.WindowClosed.subscribe(function ($event) {
-            if ($event == "AddFollowUpSucceeded") {
-            }
-        });
     }
 
     EditChildEntityClicked(childEntity) {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit " + this.ScreenObjectTableName;
-        logitudeWindow.WindowArgs = { IsEditMode: true, Screen: this.Screen, EntityPM: new ChildEntity()/*childEntity*/ }; 
+        logitudeWindow.WindowArgs = this.GetWindowArgs();
+        logitudeWindow.WindowArgs.IsEditMode = true;
+        logitudeWindow.WindowArgs.EntityPM = childEntity;
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
     }
 
+    private GetWindowArgs() {
+        let windowArgs: any = {};
+        windowArgs.ParentEntityPM = this.ParentEntityPM;
+        windowArgs.Screen = this.Screen;
+        windowArgs.ObjectTableName = this.ScreenObjectTableName;
+        windowArgs.ParentObjectTableName = this.ParentObjectTableName;
+        windowArgs.FatherComponent = this;
+
+        return windowArgs;
+    }
+
     DeleteChildEntityClicked(childEntity) {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete? soon...");
+        confirmWindow.Show("Delete This Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-            }
+            this.DeleteChildEntity(confirmWindow, childEntity);
         });
     }
-}
 
-export class ChildEntity {
-    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-    public UIProperties: UIProperties;
-    constructor() {
-        this.UIProperties = new UIProperties(this);
-        this.IsDirty = false;
+    DeleteChildEntity(confirmWindow: ConfirmWindow, childEntity) {
+        if (!confirmWindow.Yes) return;
+        let index = this.ParentEntityPM.CustomChildEntities.findIndex(a => a.Name == this.ScreenObjectTableName);
+        if (index < 0) return;
+        this.ParentEntityPM.CustomChildEntities[index].RemoveCustomChildObject(childEntity);
+        this.ParentEntityPM.IsDirty = true;
+        this.LoadData();
     }
-
-    public IsDirty: boolean;
 }

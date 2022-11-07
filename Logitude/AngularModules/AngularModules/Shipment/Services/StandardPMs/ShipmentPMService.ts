@@ -35,6 +35,7 @@ import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDelivery
 import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 import { ShipmentProductItemPM } from '../../EntityPMs/ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFieldPM';
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 
 @Injectable()
 
@@ -508,6 +509,9 @@ export class ShipmentPMService {
         this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
         this.MapShipmentProductItems(entityPM, jsonPM, mapParent);
         this.MapShipmentUnassignedFields(entityPM, jsonPM, mapParent);
+
+        let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Shipment");
+        customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
 
         entityPM.IsDirty = false;
         if (mapParent) {
