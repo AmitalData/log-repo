@@ -6,7 +6,7 @@
     <div *ngIf="date" mat-dialog-content style="text-align:end">
         {{date}}
     </div>
-    <div style="white-space: pre-wrap;" mat-dialog-content>{{description}}</div>
+    <div style="white-space: pre-wrap;" mat-dialog-content [innerHTML]="description"></div>
 
     <div class="error-text" *ngIf="error">
         * {{error}}
