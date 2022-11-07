@@ -475,7 +475,7 @@ AS */
 
                     OracleParameter parameter1 = new OracleParameter("days", OracleDbType.Integer);
                     OracleParameter parameter2 = new OracleParameter("from__", OracleDbType.VarChar);
-                    OracleParameter parameter3 = new OracleParameter(parameterName: "to__", OracleDbType.VarChar);
+                    OracleParameter parameter3 = new OracleParameter("to__", OracleDbType.VarChar);
                     OracleParameter parameter4 = new OracleParameter("subject__", OracleDbType.VarChar);
                     OracleParameter parameter5 = new OracleParameter("commstatustypecodelist", OracleDbType.VarChar);
 
