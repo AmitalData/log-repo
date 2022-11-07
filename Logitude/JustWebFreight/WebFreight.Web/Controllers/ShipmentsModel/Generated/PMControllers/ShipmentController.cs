@@ -662,7 +662,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                             CustomData.PaymentData.u71 = dict["u71"];
 
                         }
-                        CustomData.PaymentData.UseTestLink = FeatureToggleHelper.HasFeatureToggle("CTT", tenant);
+                        //CustomData.PaymentData.UseTestLink = FeatureToggleHelper.HasFeatureToggle("CTT", tenant);
                     }
 
                 }
@@ -750,7 +750,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         private string GetSecureTranzilaURI(int tenant)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("CTT", tenant))
+            if (false) //FeatureToggleHelper.HasFeatureToggle("CTT", tenant)
             {
                 return "https://secure2.tranzila.com/cgi-bin/tranzila71dt.cgi";
             }
@@ -762,7 +762,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         private static void SetServicePointManagerSecurityProtocol(int tenant)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("OT2", tenant))
+            if (true) //FeatureToggleHelper.HasFeatureToggle("OT2", tenant)
             {
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             }
