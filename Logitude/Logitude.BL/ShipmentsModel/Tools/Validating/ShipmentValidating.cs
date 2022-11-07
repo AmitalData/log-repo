@@ -1982,7 +1982,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             List<ShipmentPackagePM> masterPackages = shipmentPM.ShipmentPackages;
             foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
             {
-                PackageType packageType = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
+                PackageType packageType  = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
                 if (packageType != null)
                 {
                     LineData line = new LineData();
@@ -2002,20 +2002,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     ShipmentPackagePM masterItem = masterPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
                     if (masterItem != null)
                     {
-                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();
-                        foreach (ShipmentPackagePM p in shipmentPM.ShipmentPackages)
+                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();                        
+                        foreach(ShipmentPackagePM p in masterPackages)
                         {
                             if (p != masterItem)
                                 temp.Add(p);
                         }
                         masterPackages = temp;
                         line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
-                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);
+                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);                        
                     }
                     else
                     {
                         line.MasterStringValue = "Not exists";
-                        line.IsEquals = false;
+                        line.IsEquals = false;                        
                     }
 
                     if (!line.IsEquals)
