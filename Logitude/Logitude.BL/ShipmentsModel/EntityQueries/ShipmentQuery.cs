@@ -422,6 +422,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                         }
                     }
+
+
+                    if (shipmentPM.InlandDomesticFromTypeCode == "PORT")
+                    {
+                        var port = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageFromPortId);
+
+                        shipmentPM.ToPartnerCountryCode = port.CountryCode;
+                        shipmentPM.ToPartnerCountryName = port.CountryName;
+                        shipmentPM.FromPartnerCountryCode = port.CountryCode;
+                        shipmentPM.FromPartnerCountryName = port.CountryName;
+                    }
+
+                    if (shipmentPM.InlandDomesticFromTypeCode == "CASL")
+                    {
+                        shipmentPM.ToPartnerCountryCode = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId);
+                        shipmentPM.FromPartnerCountryCode = shipmentPM.ToPartnerCountryCode;
+                    }
+
                 }
 
                 if (!isInlandDomesticShipment)
