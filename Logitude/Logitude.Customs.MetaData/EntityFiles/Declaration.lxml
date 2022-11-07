@@ -25836,9 +25836,9 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;IIGEXPORTIMPORTDECLARATION&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION&quot;"
-      FeatureDefaultText="&quot;Export # Import IIG Tenant&quot;"
+      FeatureDefaultText="&quot;Export &amp; Import IIG Tenant&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
