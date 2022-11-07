@@ -115,9 +115,10 @@ export class DeclarationShortTitleComponent {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
-
     RefreshButtonClicked() {
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
     }
 
 
