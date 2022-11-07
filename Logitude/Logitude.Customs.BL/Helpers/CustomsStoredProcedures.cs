@@ -457,6 +457,78 @@ AS */
                 }
             }
         }
+        public static void DeleteCommunicationLogs(int tenant,int days, string from, string to,string subject,string CommunicationStatusTypeCodeListAsString)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText =
+
+                    DbContextBaseUtil.GetStoredProcedureName("q_Deletecommlogs", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    OracleParameter parameter1 = new OracleParameter("days", OracleDbType.Integer);
+                    OracleParameter parameter2 = new OracleParameter("from__", OracleDbType.VarChar);
+                    OracleParameter parameter3 = new OracleParameter(parameterName: "to__", OracleDbType.VarChar);
+                    OracleParameter parameter4 = new OracleParameter("subject__", OracleDbType.VarChar);
+                    OracleParameter parameter5 = new OracleParameter("commstatustypecodelist", OracleDbType.VarChar);
+
+
+                    parameter1.Direction = ParameterDirection.Input;
+                    parameter2.Direction = ParameterDirection.Input;
+                    parameter3.Direction = ParameterDirection.Input;
+                    parameter4.Direction = ParameterDirection.Input;
+                    parameter5.Direction = ParameterDirection.Input;
+
+
+
+                    parameter1.Value = days;
+                    parameter2.Value = from;
+                    parameter3.Value = to;
+                    parameter4.Value = subject;
+                    parameter5.Value = CommunicationStatusTypeCodeListAsString;
+
+
+
+                    cmd.Parameters.Add(parameter1);
+                    cmd.Parameters.Add(parameter2);
+                    cmd.Parameters.Add(parameter3);
+                    cmd.Parameters.Add(parameter4);
+                    cmd.Parameters.Add(parameter5);
+
+
+
+                    try
+                    {
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    // must do
+                }
+            }
+        }
+
 
         public static void CopySupplierInvoiceItemsCer(string sourceDeclarationId, string targetDeclarationId, int tenant)
         {

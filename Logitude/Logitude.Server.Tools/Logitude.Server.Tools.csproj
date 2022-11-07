@@ -242,6 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
     <Compile Include="Helpers\SqlBulkInsert.cs" />

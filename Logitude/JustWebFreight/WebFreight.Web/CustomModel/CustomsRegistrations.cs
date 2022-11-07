@@ -37,6 +37,7 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICustomsCloseCourierMasterService, CloseCourierMasterService>("CloseCourierMasterService", new InjectionFactory(c => new CloseCourierMasterService()));
             ContainerAccessor.Container.RegisterType<ICustomsSendManifestService, SendManifestService>("SendManifestService", new InjectionFactory(c => new SendManifestService()));
             ContainerAccessor.Container.RegisterType<ICustomsSendDeclarationStatus, SendDeclarationStatus>("SendDeclarationStatus", new InjectionFactory(c => new SendDeclarationStatus()));
+            ContainerAccessor.Container.RegisterType<ICustomsDeleteNotToCustomCommunication, DeleteNotToCustomCommunication>("DeleteNotToCustomCommunication", new InjectionFactory(c => new DeleteNotToCustomCommunication()));
 
 
             ContainerAccessor.Container.RegisterType<IUpdateOpenDeclarationInCourierMasterService, UpdateOpenDeclarationInCourierMasterService>("UpdateOpenDeclarationInCourierMasterService", new InjectionFactory(c => new UpdateOpenDeclarationInCourierMasterService()));

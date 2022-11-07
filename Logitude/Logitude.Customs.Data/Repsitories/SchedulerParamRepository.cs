@@ -20,8 +20,14 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public List<SchedulerParam> GetAllByProcedureCode(int tenant,string schedulerProcedureCode)
+        {
+            return  (from SchedulerParam in context.SchedulerParams
+                     where SchedulerParam.SchedulerProcedureCode == schedulerProcedureCode && SchedulerParam.Tenant==tenant
+                     select SchedulerParam).ToList();
+        }
 
-   }
+    }
 
 }
    
