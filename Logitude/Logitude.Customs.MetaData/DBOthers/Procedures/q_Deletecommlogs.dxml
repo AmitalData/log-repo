@@ -1,0 +1,69 @@
+﻿<Procedure DBType="Main" Name="q_Deletecommlogs" Schema="dbo" Module="Customs">
+  <SqlScript>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+  CREATE OR REPLACE PROCEDURE q_Deletecommlogs (
+    days                   IN INTEGER,
+    from__                 IN STRING,
+    to__                   IN STRING,
+    subject__              IN STRING,
+    commstatustypecodelist IN STRING
+) AS
+BEGIN
+    LOOP
+        DELETE FROM (
+            SELECT
+                ROWID AS row_id
+            FROM
+                communicationlogs
+            WHERE
+                id NOT IN (
+                    SELECT
+                        requestcomminicationid
+                    FROM
+                        customsrequestssheets
+                )
+                AND createdate_ < sysdate - days
+                AND ( from__ IS NULL
+                      OR from_ = from__ )
+                AND ( to__ IS NULL
+                      OR to_ = to__ )
+                AND ( subject__ IS NULL
+                      OR subject_ =   )
+                AND ( commstatustypecodelist IS NULL
+                      OR communicationstatustypecode IN (
+                    SELECT
+                        regexp_substr(
+                            str, '[^,]+', 1, level
+                        ) value
+                    FROM
+                        (
+                            SELECT
+                                commstatustypecodelist str
+                            FROM
+                                dual
+                        )
+                    CONNECT BY
+                        level <= length(str) - length(
+                            replace(
+                                str, ','
+                            )
+                        ) + 1
+                ) )
+        )
+        WHERE
+            ROWNUM < 1001;
+
+        EXIT WHEN SQL%rowcount = 0;
+        COMMIT;
+    END LOOP;
+
+    COMMIT;
+END;
+/
+	
+    ]]>
+  </OracleScript>
+</Procedure>
