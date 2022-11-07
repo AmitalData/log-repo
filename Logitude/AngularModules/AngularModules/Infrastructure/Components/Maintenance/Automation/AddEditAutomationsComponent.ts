@@ -1012,8 +1012,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ObjectTableName == "APInvoice") {
-                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
-                if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
+                this.AddSendDocumentToResultList();
             }
 
             if (this.ObjectTableName == "ARInvoice") {
@@ -1050,8 +1049,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.FillOnDocumentUpdateResults();
                 }
 
-                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
-                if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
+                this.AddSendDocumentToResultList();
                 
             }
 
@@ -1196,6 +1194,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.IsLoadingComplete = true;
+    }
+
+    private AddSendDocumentToResultList() {
+        const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
+        if (documentSendFeatureToggle != null)
+            this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
     }
 
     private AddSendInterfaceResult() {
