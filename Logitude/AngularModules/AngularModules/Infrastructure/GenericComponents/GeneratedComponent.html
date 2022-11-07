@@ -138,7 +138,7 @@
                 </tr>
                 <tr *ngIf="screenSection.Type == 'Grid'" style="height:250px">
                     <td>
-                        <GridScreenSectionComponent [ScreenSection]="screenSection"></GridScreenSectionComponent>
+                        <GridScreenSectionComponent [ScreenSection]="screenSection" [ParentEntityPM]="EntityPM" [ParentObjectTableName]="ObjectTableName"></GridScreenSectionComponent>
                     </td>
                 </tr>
             </table>
