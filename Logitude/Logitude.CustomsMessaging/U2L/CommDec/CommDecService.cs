@@ -297,7 +297,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 //Delete Supplier Invoice
 
-                if (mode == "1" || mode == "2")
+                if (mode == "1" || mode == "2" || (this._LogitudeCommDecFile.INVOICE != null && this._LogitudeCommDecFile.INVOICE.Count() > 1) || (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 1))
                 {
                     //Delete Supplier Invoice
                     MyGenericResponseObj.Stage = "GetSingle - To delete";
