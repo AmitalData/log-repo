@@ -61,6 +61,8 @@ using System.Drawing;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.Interfaces;
+using System.Security.AccessControl;
+using System.Web.UI.WebControls;
 
 namespace WebFreight.Web.Helpers
 {
@@ -3864,7 +3866,24 @@ namespace WebFreight.Web.Helpers
         {
             string logoCode = " ";
             string logoFileName = logoName + tenant;
-            byte[] logoFile = GetFileFromServer(logoFileName, "jpg", "logos", tenant);
+            string ImageFolder = "logos";
+            int FolderTenant = tenant;
+            if (logoName == "CompanyBrandingLogo")
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(FolderTenant);
+                    TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(FolderTenant);
+                    if (tenantManagementPM != null)
+                    {
+                        logoFileName = tenantManagementPM.ComapnylogoId;
+                        FolderTenant = 0;
+                    }
+                    scope.Complete();
+                }
+            }
+
+            byte[] logoFile = GetFileFromServer(logoFileName, "jpg", ImageFolder, FolderTenant);
             char[] base64Data;
             if (logoFile != null)
             {
@@ -4867,7 +4886,7 @@ namespace WebFreight.Web.Helpers
             return uriSource;
         }
 
-        public byte[] GetFileFromServer(string fileName, string fileExtension, string folderName, int tenant)
+        public byte[] GetFileFromServer(string fileName, string fileExtension, string folderName, int tenant,string logoName = "")
         {
             byte[] resultFile = null;
 
@@ -4879,6 +4898,10 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
+            if (logoName == "CompanyBrandingLogo")
+            {
+                tenant = 0;
+            }
             //Check if InAzure 
             // if (!WebFreightEntryPoint.UsingAzure)
             //{
@@ -5830,7 +5853,7 @@ namespace WebFreight.Web.Helpers
             string fileName = logoName;
             string fileExtension = "jpg";
             string logoFileName = fileName + tenant;
-            string folderName= "logos";
+            string folderName = "logos";
             if (fileName == "WideLogo")
             {
                 fileName = "sharedLogtsitcslogo";
@@ -5848,7 +5871,7 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            byte[] logoFile = GetFileFromServer(logoFileName, fileExtension, folderName, tenant);
+            byte[] logoFile = GetFileFromServer(logoFileName, fileExtension, folderName, tenant,logoName);
             if (logoFile != null)
             {
                 //base64Data = new char[(int)(Math.Ceiling((double)logoFile.Length / 3) * 4)];
@@ -5933,7 +5956,7 @@ namespace WebFreight.Web.Helpers
             string pageLink;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
 
-            
+
 
             if (sharedTenant.IsDigitalPortalAccessActivated == true)
             {

@@ -17,6 +17,7 @@ using System.Collections.Specialized;
 using SendGrid.SmtpApi;
 using System.Diagnostics;
 using CommunicationWorkerRole.Services;
+using Logitude.Server.Tools;
 
 namespace CommunicationWorkerRole
 {
@@ -48,7 +49,7 @@ namespace CommunicationWorkerRole
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 myMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                string createDate = parameters.CommunicationLogCreateDate != null ? parameters.CommunicationLogCreateDate.Value.ToString("yyyy-MM-dd HH:mm:ss.fff"): "";
+                string createDate = parameters.CommunicationLogCreateDate != null ? parameters.CommunicationLogCreateDate.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") : "";
                 var header = new Header();
                 var uniqueArgs = new Dictionary<string, string> {
                   {"CommunicationLogId", parameters.CommunicationLogId},
@@ -170,83 +171,89 @@ namespace CommunicationWorkerRole
 
                     foreach (string imageString in imagesList)
                     {
-                            //int startIndex = imageString.IndexOf("cid:") + 4;
-                            //int endIndex = imageString.IndexOf("/>") - startIndex;
-                            //string imageName = imageString.Substring(startIndex, endIndex).Trim();
-                            //if (imageName.Contains("'"))
-                            //{
-                            //    imageName = imageName.Replace("'", "");
-                            //}
+                        //int startIndex = imageString.IndexOf("cid:") + 4;
+                        //int endIndex = imageString.IndexOf("/>") - startIndex;
+                        //string imageName = imageString.Substring(startIndex, endIndex).Trim();
+                        //if (imageName.Contains("'"))
+                        //{
+                        //    imageName = imageName.Replace("'", "");
+                        //}
 
 
-                            string imageName = getBetween(imageString, "cid:", "'");
-                            string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
-
-                    
-                            // Download file from Azure Storage
-                        
-                       
-                            int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
-
-                            if ((fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0"))
-                            {
-                                string newImageName = SystemLogoHelper.GetEnvironmentLogoName(imageName.Contains("small"));
-                                parameters.Body = parameters.Body.Replace(imageName, newImageName);
-                                imageName = newImageName;
-                            }
+                        string imageName = getBetween(imageString, "cid:", "'");
+                        string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
 
 
-                            #region Download Image
-                            string extension = (!string.IsNullOrEmpty(imageName) && imageName.Split('.').Length > 1) ? imageName.Split('.')[1] : "jpg";
-                            string originalImageName = !string.IsNullOrEmpty(imageName) ? imageName.Split('.')[0] : "";
-
-                            if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
-                            {
-                                extension = "png";
-                                originalImageName = "sharedLogtsitcslogo" + tenant;
-                            }
+                        // Download file from Azure Storage
 
 
-                            string image = originalImageName + "." + extension;
+                        int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
 
-                            Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
-                            {
-                                FileName = originalImageName,
-                                FolderName = GetFolderName(originalImageName.ToLower()),
-                                Extension = extension,
-                                Tenant = tenant,
-
-                            };
-                            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                            byte[] datainByte = storageservice.Read(fileInfo);
+                        if ((fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0"))
+                        {
+                            string newImageName = SystemLogoHelper.GetEnvironmentLogoName(imageName.Contains("small"));
+                            parameters.Body = parameters.Body.Replace(imageName, newImageName);
+                            imageName = newImageName;
+                        }
 
 
-                            #endregion
+                        #region Download Image
+                        string extension = (!string.IsNullOrEmpty(imageName) && imageName.Split('.').Length > 1) ? imageName.Split('.')[1] : "jpg";
+                        string originalImageName = !string.IsNullOrEmpty(imageName) ? imageName.Split('.')[0] : "";
+
+                        if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
+                        {
+                            extension = "png";
+                            originalImageName = "sharedLogtsitcslogo" + tenant;
+                        }
 
 
-                            //CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                            //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(image, "logos"));
+                        string image = originalImageName + "." + extension;
 
-                            //if (blobfile.Exists())
-                            //{
-                            //    MemoryStream memstream = new MemoryStream();
+                        Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                        {
+                            FileName = originalImageName,
+                            FolderName = GetFolderName(originalImageName.ToLower()),
+                            Extension = extension,
+                            Tenant = tenant,
 
-                            //    if (blobfile != null)
-                            //    {
-                            //blobfile.DownloadToStream(memstream);
-                            if (datainByte != null)
-                            {
-                                MemoryStream memstream = new MemoryStream(datainByte);
-                                memstream.Seek(0, SeekOrigin.Begin);
+                        };
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        byte[] datainByte = storageservice.Read(fileInfo);
+                        // todo: added to fix a digital portal issue on pilote, need to be changed
+                        if (datainByte == null)
+                        {
+                            fileInfo.Tenant = 0;
+                            fileInfo.Extension = "png";
+                            datainByte = storageservice.Read(fileInfo);
+                        }
 
-                                LinkedResource logo = new LinkedResource(memstream, "image/" + extension);
-                                logo.ContentId = imageName;
-                                logo.ContentType.Name = image;
+                        #endregion
 
-                                resourceList.Add(logo);
-                            }
-                            //    }
-                            //}                       
+
+                        //CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                        //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(image, "logos"));
+
+                        //if (blobfile.Exists())
+                        //{
+                        //    MemoryStream memstream = new MemoryStream();
+
+                        //    if (blobfile != null)
+                        //    {
+                        //blobfile.DownloadToStream(memstream);
+                        if (datainByte != null)
+                        {
+                            MemoryStream memstream = new MemoryStream(datainByte);
+                            memstream.Seek(0, SeekOrigin.Begin);
+
+                            LinkedResource logo = new LinkedResource(memstream, "image/" + extension);
+                            logo.ContentId = imageName;
+                            logo.ContentType.Name = image;
+
+                            resourceList.Add(logo);
+                        }
+                        //    }
+                        //}                       
 
                     }
                     AlternateView alternateview = AlternateView.CreateAlternateViewFromString(parameters.Body, null, parameters.EmailView);
@@ -272,7 +279,7 @@ namespace CommunicationWorkerRole
                 }
             }
 
-          
+
             if (myMessage.To.Count != 0 || myMessage.CC.Count != 0 || myMessage.Bcc.Count != 0) // Add CC & Bcc -Maheera 
             {
                 try
@@ -285,11 +292,11 @@ namespace CommunicationWorkerRole
                     Debug.WriteLine("Exception!!!!!!myClient.Send(myMessage):" + ee.ToString());
                     throw;
                 }
-                
+
             }
 
 
-           // }
+            // }
         }
 
 
@@ -412,7 +419,7 @@ namespace CommunicationWorkerRole
             {
                 replyToList = value;
             }
-             
+
         }
 
         public string CommunicationLogId { get; set; }
