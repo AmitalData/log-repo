@@ -336,6 +336,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 Id = document.Id,
                 Tenant = document.Tenant,
+                CalculatedFileName = document.CalculatedFileName,
                 DocumentId = document.DocumentId,
                 Code = document.Code,
                 DocumentTypeId = document.DocumentTypeId,
@@ -344,7 +345,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 CreateDate = document.CreateDate,
                 IsDigitallySigned = document.IsDigitallySigned,
                 SecurityId = document.SecurityId,
-                CustomReference = document.CustomReference
+                CustomReference = document.CustomReference,
+                FileExtension = document.FileExtension
             });
         }
         public void SetMilestonesStatus()
