@@ -185,17 +185,27 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let isValid = true;
             let usedInNodes: string[] = [];
             let getRecordNodes = FlowReader.getNodes(flowObject, "getRecordNode");
+            let conditionNodes = FlowReader.getNodes(flowObject, "conditionNode");
             let setValueNodes = FlowReader.getNodes(flowObject, "setValueNode");
             let createRecordNodes = FlowReader.getNodes(flowObject, "createRecordNode");
+            let loopNodes = FlowReader.getNodes(flowObject, "loopNode");
 
             let nodeUsedData = this.getNodeUsedData(nodeToDelete);
             if (nodeUsedData) {
                 let getRecordStatus = this.validateNodesUsedData(getRecordNodes, "conditions", nodeUsedData);
+                let conditionStatus = this.validateNodesUsedData(conditionNodes, "conditions", nodeUsedData);
                 let setValueStatus = this.validateNodesUsedData(setValueNodes, "setValues", nodeUsedData);
                 let createRecordStatus = this.validateNodesUsedData(createRecordNodes, "setValues", nodeUsedData);
-                usedInNodes = usedInNodes.concat(getRecordStatus.usedInNodes).concat(setValueStatus.usedInNodes).concat(createRecordStatus.usedInNodes);
+                let loopStatus = this.validateLoopNodesUsedData(loopNodes, nodeUsedData);
+                usedInNodes = usedInNodes
+                    .concat(getRecordStatus.usedInNodes)
+                    .concat(conditionStatus.usedInNodes)
+                    .concat(setValueStatus.usedInNodes)
+                    .concat(createRecordStatus.usedInNodes)
+                    .concat(loopStatus.usedInNodes);
+
                 usedInNodes = usedInNodes.filter((v, i, a) => a.indexOf(v) === i);
-                isValid = getRecordStatus.isValid && setValueStatus.isValid && createRecordStatus.isValid;
+                isValid = getRecordStatus.isValid && conditionStatus.isValid && setValueStatus.isValid && createRecordStatus.isValid && loopStatus.isValid;
                 return { isValid, usedInNodes };
             }
 
@@ -210,7 +220,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             return variableCode ? ("declaredvariables_" + variableCode) : null;
         } else if (node.type === "getRecordNode") {
             let name = node.data["name"];
-            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase() + "_") : null;
+            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase()) : null;
+        } else if (node.type === "loopNode") {
+            let name = node.data["name"];
+            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase()) : null;
         }
         return null;
     }
@@ -224,11 +237,25 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             nodeDataValues.forEach((dataValue: any) => {
                 let value = dataValue["value"] || null;
                 let field = dataValue["field"] || null;
-                if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
+                if (value && field && (value.startsWith(nodeUsedData + "_") || field.startsWith(nodeUsedData + "_"))) {
                     isValid = false;
                     usedInNodes.push(nodeName);
                 }
             });
+        });
+        return { isValid, usedInNodes };
+    }
+
+    validateLoopNodesUsedData(nodes: any, nodeUsedData: string) {
+        let isValid = true;
+        let usedInNodes: string[] = []
+        nodes.forEach((node: any) => {
+            let nodeName = node.data["name"] || node.id;
+            let collectionVariable = node.data["collectionVariable"] || null;
+            if (collectionVariable && collectionVariable === nodeUsedData) {
+                isValid = false;
+                usedInNodes.push(nodeName);
+            }
         });
         return { isValid, usedInNodes };
     }
