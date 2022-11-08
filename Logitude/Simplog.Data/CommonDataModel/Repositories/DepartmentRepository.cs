@@ -48,6 +48,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Department GetSingleDepartmentByCode(string code, int tenant)
         {
+            string key = $"GetSingleDepartmentByCode({code}, {tenant})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<Department>(key, () =>
+            {
+                return GetSingleDepartmentByCodeReal(code, tenant);
+            });
+
+        }
+
+        Department GetSingleDepartmentByCodeReal(string code, int tenant)
+        {
             return (from record in context.Departments where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
 
