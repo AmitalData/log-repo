@@ -10,12 +10,13 @@ import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindo
 import { UIProperties } from '../../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { Output, EventEmitter } from '@angular/core';
 import { PropertyChangedArgs } from '../../../../../EventEmitterArgs/PropertyChangedArgs';
+import { ObjectsLocator } from '../../../../../Locators/ObjectsLocator';
 declare var window;
 
 @Component({
     selector: 'GridScreenSectionComponent',
     templateUrl: './GridScreenSectionComponent.html',
-    inputs: ['ScreenSection']
+    inputs: ['ScreenSection', 'ParentEntityPM', 'ParentObjectTableName']
 })
 
 export class GridScreenSectionComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -23,28 +24,59 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     private CurrentSession = SessionLocator.SelectedSession;
     ScreenSection: any;
     Screen: any;
+    ParentEntityPM: any
+    ParentObjectTableName: string;
+    ObjectTable: any;
+    public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+    public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
     public DataSource: ObservableCollection;
 
     constructor() {
         super();
-        this.DataSource = new ObservableCollection([]);
-        this.FillDataSource();
     }
 
-    FillDataSource() {
-        for (let i = 0; i < 25; i++) {
-            this.DataSource.Insert('Sample');
+    LoadData() {
+        let data = this.ParentEntityPM?.CustomChildEntities?.filter(x => x.Name == this.ScreenObjectTableName)[0]?.Values;
+        if (!data) data = [];
+        data = this.SortDataBySortingField(data);
+        this.DataSource = new ObservableCollection(data);
+    }
+
+    SortDataBySortingField(data) {
+        if (!this.Screen) return data;
+        let sortingFieldCode: string = 'CreateDate';
+        let SortedByField = window.ObjectFields.filter(field => field.FieldCode == this.Screen.SortedByFieldCode)[0];
+        if (SortedByField) { sortingFieldCode = SortedByField.IsCustom ? SortedByField.FieldName : SortedByField.Code; }
+        let descendingSortedType: boolean = this.Screen.SortedType == 'Descending';
+        return data.sort((customChildObject1, customChildObject2) => {
+            let value1 = SortedByField.IsCustom ? customChildObject1[sortingFieldCode].Value : customChildObject1[sortingFieldCode];
+            let value2 = SortedByField.IsCustom ? customChildObject2[sortingFieldCode].Value : customChildObject2[sortingFieldCode];
+            return this.GetSortIndexValue(value1, value2, descendingSortedType);
+        });
+    }
+
+    private GetSortIndexValue(value1: any, value2: any, descendingSortedType: boolean) {
+        if (value1 > value2) {
+            return descendingSortedType ? -1 : 1;
         }
+
+        if (value1 < value2) {
+            return descendingSortedType ? 1 : -1;
+        }
+
+        return 0;
     }
 
     ngAfterViewInit(): void {
         this.SetScreen();
+        this.LoadData();
     }
 
     SetScreen() {
         if (!this.ScreenSection) return;
         this.OrderScreenSectionColumns();
         this.Screen = window.Screens.filter((screen: any) => screen.Code === this.ScreenSection.RelatedScreenCode)[0];
+        this.ObjectTable = window.ObjectTables.filter(table => table.Name == this.ScreenObjectTableName)[0];
     }
 
     OrderScreenSectionColumns() {
@@ -74,44 +106,50 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     }
 
     AddChildEntityClicked() {
-        var logitudeWindow = new LogitudeWindow();
+        let logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add New " + this.ScreenObjectTableName;
-        logitudeWindow.WindowArgs = { EntityPM: new ChildEntity(), Screen: this.Screen }; 
+        logitudeWindow.WindowArgs = this.GetWindowArgs();
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
-        logitudeWindow.WindowClosed.subscribe(function ($event) {
-            if ($event == "AddFollowUpSucceeded") {
-            }
-        });
     }
 
     EditChildEntityClicked(childEntity) {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit " + this.ScreenObjectTableName;
-        logitudeWindow.WindowArgs = { IsEditMode: true, Screen: this.Screen, EntityPM: new ChildEntity()/*childEntity*/ }; 
+        logitudeWindow.WindowArgs = this.GetWindowArgs();
+        logitudeWindow.WindowArgs.IsEditMode = true;
+        logitudeWindow.WindowArgs.EntityPM = childEntity;
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
     }
 
+    private GetWindowArgs() {
+        let windowArgs: any = {};
+        windowArgs.ParentEntityPM = this.ParentEntityPM;
+        windowArgs.Screen = this.Screen;
+        windowArgs.ObjectTableName = this.ScreenObjectTableName;
+        windowArgs.ParentObjectTableName = this.ParentObjectTableName;
+        windowArgs.FatherComponent = this;
+
+        return windowArgs;
+    }
+
     DeleteChildEntityClicked(childEntity) {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete? soon...");
+        confirmWindow.Show("Delete This Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-            }
+            this.DeleteChildEntity(confirmWindow, childEntity);
         });
     }
-}
 
-export class ChildEntity {
-    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-    public UIProperties: UIProperties;
-    constructor() {
-        this.UIProperties = new UIProperties(this);
-        this.IsDirty = false;
+    DeleteChildEntity(confirmWindow: ConfirmWindow, childEntity) {
+        if (!confirmWindow.Yes) return;
+        let index = this.ParentEntityPM.CustomChildEntities.findIndex(a => a.Name == this.ScreenObjectTableName);
+        if (index < 0) return;
+        this.ParentEntityPM.CustomChildEntities[index].RemoveCustomChildObject(childEntity);
+        this.ParentEntityPM.IsDirty = true;
+        this.LoadData();
     }
-
-    public IsDirty: boolean;
 }

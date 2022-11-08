@@ -135,16 +135,16 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
                 manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
                 manifestDataProvider.HousesNumbers = master.HousesNumbers;
-
                 manifestDataProvider.Transshipment1VesselName = master.Transshipment1VesselName;
                 manifestDataProvider.Transshipment2VesselName = master.Transshipment2VesselName;
                 manifestDataProvider.Transshipment1VoyageNumber = master.Transshipment1CarrierNumber;
                 manifestDataProvider.Transshipment2VoyageNumber = master.Transshipment2CarrierNumber;
+                manifestDataProvider.HousesNumber = master.NumberOfHouses;
 
-                manifestDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "KG");
-                manifestDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, "LB");
-                manifestDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, "CBM");
-                manifestDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, "CBF");
+                manifestDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, master.GrossWeightUnitCode, "KG");
+                manifestDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, master.GrossWeightUnitCode, "LB");
+                manifestDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBM");
+                manifestDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBF");
 
                 if (master.BranchId != null)
                 {
@@ -1695,10 +1695,10 @@ namespace WebFreight.Web.ReportsWebServices
                 packageDetail.Tare = package.Tare;
                 packageDetail.Ventilation = package.Ventilation;
 
-                packageDetail.WeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
-                packageDetail.WeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
-                packageDetail.VolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBM");
-                packageDetail.VolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBF");
+                packageDetail.WeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, shipmentView.GrossWeightUnitCode, "KG");
+                packageDetail.WeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, shipmentView.GrossWeightUnitCode, "LB");
+                packageDetail.VolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, shipmentView.VolumeUnitCode, "CBM");
+                packageDetail.VolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, shipmentView.VolumeUnitCode, "CBF");
 
                 if (!string.IsNullOrEmpty(package.HorseId))
                 {

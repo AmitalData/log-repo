@@ -324,7 +324,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         return Env;
     }
     private GetDirectTranzilaLink() {
-        if (this.AdditionalData && this.AdditionalData.PaymentData && this.AdditionalData.PaymentData.UseTestLink) {
+        if (false) {
             return "https://direct2.tranzila.com/";
         }
         return "https://direct.tranzila.com/";

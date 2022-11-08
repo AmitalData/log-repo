@@ -55,7 +55,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableKey, 
 	         JoinedTableDisplayField, 
 	         SearchFields, 
-	         JoinedTableDBName,
+	         JoinedTableDBName, 
+	         ObjectTableName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

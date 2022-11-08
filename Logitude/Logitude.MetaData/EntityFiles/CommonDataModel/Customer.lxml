@@ -19669,6 +19669,13 @@
         IndexOrder="0"
         LocalDefaultText="&quot;נתק כרטיס&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;LoginToOnlineVisability&quot;"
+        DefaultText="&quot;Login to Online Visability&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="12"
+        LocalDefaultText="&quot;Login to Online Visability&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

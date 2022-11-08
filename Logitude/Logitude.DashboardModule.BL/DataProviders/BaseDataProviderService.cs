@@ -263,13 +263,22 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string BuildAnalyticTableFieldsSelectQuery(List<AnalyticsFactsFieldsMetaData> analyticTableFields)
         {
-            var query = "";
+            var query = "data.Id AS Id";
             foreach (var field in analyticTableFields)
             {
                 if (field.DataTypeCode == "LookUp") query = $@"{query}, {BuildJoinTableName(field)}.{field.JoinedTableDisplayField} as {field.FieldCode} ";
-                else query = $@"{query}, data.{field.FieldCode}";
+                else query = BuildSelectFieldQuery(query, field);
             }
-            return query.TrimStart(',');
+            return query;
+        }
+
+        private string BuildSelectFieldQuery(string query, AnalyticsFactsFieldsMetaData field)
+        {
+            if(_Entity.ObjectTableName == "ARInvoice" && field.FieldCode == "InvoiceNumber")
+            {
+                return $@"{query}, IIF(data.DraftNumber IS NULL, data.InvoiceNumber, data.DraftNumber) as InvoiceNumber";
+            }
+            return $@"{query}, data.{field.FieldCode}";
         }
 
         private string BuildJoinTableName(AnalyticsFactsFieldsMetaData field)

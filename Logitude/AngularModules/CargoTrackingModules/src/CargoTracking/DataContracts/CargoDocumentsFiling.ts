@@ -12,4 +12,6 @@ export class CargoDocumentsFiling
     SecurityId: string;
     CustomReference: string;
     ShowDetailsMenu: boolean;
+    CalculatedFileName: string;
+    FileExtension: string;
 }

@@ -15,7 +15,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() AllowClear: boolean = true;
     @Input() IsDisabled: boolean = false;
     @Input() ShowExpand: boolean = true;
-
+    @Input() IsReturnedTreeSelectItem: boolean = false;
     @Input() ShowItem: (treeSelectItem: TreeSelectItem) => boolean = (_treeSelectItem: TreeSelectItem) => { return true };
 
     @Input() DataCy: string | null = null;
@@ -40,6 +40,10 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        setTimeout(() => {
+            this.setTitle(this.Value);
+        }, 10);
+
         this.NzTreeSelect.nzSelectSearchComponent.onValueChange = (searchTerm: string) => {
             this.onTreeSelectSearchChange(searchTerm);
         }
@@ -62,9 +66,9 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         this.NzTreeSelect.inputValue = "";
         this.NzTreeSelect.value = [];
 
-        this.Title = null;
         this.Value = null;
-        this.ValueChanged.emit(null);
+        this.setTitle(null);
+        this.emitValueChanged(null);
 
         this.setFilteredTreeItems((searchTerm ? searchTerm : ""));
     }
@@ -74,12 +78,25 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         this.NzTreeSelect.nzPlaceHolder = "";
         this.NzTreeSelect.nzSelectSearchComponent.inputElement.nativeElement.value = "";
 
-        let nzTreeItem = value ? this.NzTreeSelect.getTreeNodeByKey(value) : null;
-        this.Title = this.getDisplayTitle(nzTreeItem);
         this.Value = value;
-        this.ValueChanged.emit(value);
+        this.setTitle(value);
+        this.emitValueChanged(value);
 
         this.setFilteredTreeItems("");
+    }
+
+    emitValueChanged(value: string | null) {
+        if (value) {
+            if (this.IsReturnedTreeSelectItem) {
+                let nzTreeItem = this.NzTreeSelect.getTreeNodeByKey(value);
+                let treeSelectItem = nzTreeItem ? nzTreeItem.origin : null;
+                this.ValueChanged.emit(treeSelectItem ? treeSelectItem : null);
+            } else {
+                this.ValueChanged.emit(value);
+            }
+        } else {
+            this.ValueChanged.emit(null);
+        }
     }
 
     setFilteredTreeItems(searchTerm: string) {
@@ -137,6 +154,15 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
             if (item.children && item.children.length > 0) {
                 this.limitFilteredTreeItems(item.children);
             }
+        }
+    }
+
+    setTitle(value: string) {
+        if (value) {
+            let nzTreeItem = this.NzTreeSelect.getTreeNodeByKey(value);
+            this.Title = this.getDisplayTitle(nzTreeItem);
+        } else {
+            this.Title = null;
         }
     }
 

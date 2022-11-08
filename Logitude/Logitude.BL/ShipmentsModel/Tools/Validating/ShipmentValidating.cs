@@ -87,6 +87,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     ValidateShipmentOperationalReOpen(entityPM, entityPoco);
                     ValidateShipmentAccountingReOpen(entityPM, entityPoco);
                 }
+
+                if (FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant))
+                {
+                    ValidateRoutingDates(entityPM, entityPoco);
+                }
             }
         }
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
@@ -907,7 +912,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
+        public static void ValidateFutureRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
         {
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -1520,6 +1525,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentAccountingReOpen(ShipmentPM entityPM, Shipment entityPoco)
         {
+            if (!entityPM.IsMultiUpdate) return;
+
             if (!entityPM.IsAccountingClosed && entityPoco.IsAccountingClosed)
             {
                 if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
@@ -1528,6 +1535,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
+            if (!entityPM.IsMultiUpdate) return;
+
             if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
             {
                 if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
@@ -1766,6 +1775,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             return isCityExists;
         }
+        private static void ValidateRoutingDates(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            RoutingDatesValidator routingDatesValidator = new RoutingDatesValidator(entityPM);
+            routingDatesValidator.Validate();
+        }
     }
     public class DomesticCountry
     {
@@ -1968,7 +1982,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             List<ShipmentPackagePM> masterPackages = shipmentPM.ShipmentPackages;
             foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
             {
-                PackageType packageType = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
+                PackageType packageType  = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
                 if (packageType != null)
                 {
                     LineData line = new LineData();
@@ -1988,20 +2002,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     ShipmentPackagePM masterItem = masterPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
                     if (masterItem != null)
                     {
-                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();
-                        foreach (ShipmentPackagePM p in shipmentPM.ShipmentPackages)
+                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();                        
+                        foreach(ShipmentPackagePM p in masterPackages)
                         {
                             if (p != masterItem)
                                 temp.Add(p);
                         }
                         masterPackages = temp;
                         line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
-                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);
+                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);                        
                     }
                     else
                     {
                         line.MasterStringValue = "Not exists";
-                        line.IsEquals = false;
+                        line.IsEquals = false;                        
                     }
 
                     if (!line.IsEquals)
@@ -2082,7 +2096,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         public string MeasurementCode { get; set; }
         public string MeasurementShortName { get; set; }
     }
-
     public class LineData
     {
         public string LineLabel { get; set; }

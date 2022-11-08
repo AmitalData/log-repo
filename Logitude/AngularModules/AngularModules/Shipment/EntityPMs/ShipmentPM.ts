@@ -21,6 +21,7 @@ import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 import { ShipmentProductItemPM } from './ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -5449,6 +5450,11 @@ export class ShipmentPM {
     private inlandDomesticFromStateId: string;
     public get InlandDomesticFromStateId() { return this.inlandDomesticFromStateId; }
     public set InlandDomesticFromStateId(newValue: string) { if (this.inlandDomesticFromStateId != newValue) { this.inlandDomesticFromStateId = newValue; this.MarkAsDirty("InlandDomesticFromStateId"); } }
+
+
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
 
 
     public OldEntityPM: ShipmentPM;

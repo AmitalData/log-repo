@@ -13,12 +13,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private ObjectTablePM entityPM;
         private TextCodeRepository textCodeRepository;
         private ObjectFieldRepository objectFieldRepository;
+        private string userObjectTableId;
 
         public ObjectTableDefaultFieldsService(ObjectTablePM entityPM, IWebFreightContext objectContext)
         {
             this.entityPM = entityPM;
             this.textCodeRepository = new TextCodeRepository(objectContext);
             this.objectFieldRepository = new ObjectFieldRepository(objectContext);
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(objectContext);
+            userObjectTableId = objectTableRepository.GetObjectTableIdByName("User");
         }
 
         public void AddDefaultFields()
@@ -92,7 +95,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private ObjectField GetCreatedByObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("CreatedBy");
-            objectField.DataTypeCode = "Text";
+            objectField.DataTypeCode = "LookUp";
+            objectField.LookUpTableId = userObjectTableId;
             objectField.MaxLength = 15;
             objectField.SystemMaxLength = 15;
             objectField.CanFilter = true;
@@ -123,7 +127,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private ObjectField GetUpdatedByObjectField()
         {
             ObjectField objectField = GetNewObjectFieldInstance("UpdatedBy");
-            objectField.DataTypeCode = "Text";
+            objectField.DataTypeCode = "LookUp";
+            objectField.LookUpTableId = userObjectTableId;
             objectField.MaxLength = 15;
             objectField.SystemMaxLength = 15;
             objectField.CanFilter = true;

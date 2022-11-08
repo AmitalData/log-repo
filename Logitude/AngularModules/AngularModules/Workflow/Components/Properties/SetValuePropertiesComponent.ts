@@ -37,14 +37,6 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.initialize();
     }
 
-    ngOnInit() {
-        
-    }
-
-    ngOnChanges() {
-        
-    }
-
     initialize() {
         this.Name = this.Data["name"] || null;
         this.SetValues = this.Data["setValues"] || [];
@@ -85,9 +77,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
             this.setValuesData();
-
             //console.log(this.Data);
-
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });

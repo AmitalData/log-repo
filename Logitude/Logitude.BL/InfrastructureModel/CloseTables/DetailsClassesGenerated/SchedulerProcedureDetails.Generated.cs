@@ -223,6 +223,33 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "DeleteOldContactActivityLogsTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldAnalyzeQueuesTask", 
+                Name = "DeleteOldAnalyzeQueuesTask", 
+                SearchFields = "DeleteOldAnalyzeQueuesTask", 
+                Description = "DeleteOldAnalyzeQueuesTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldMobileNotificationLogsTask", 
+                Name = "DeleteOldMobileNotificationLogsTask", 
+                SearchFields = "DeleteOldMobileNotificationLogsTask", 
+                Description = "DeleteOldMobileNotificationLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldPerformanceLogsTask", 
+                Name = "DeleteOldPerformanceLogsTask", 
+                SearchFields = "DeleteOldPerformanceLogsTask", 
+                Description = "DeleteOldPerformanceLogsTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

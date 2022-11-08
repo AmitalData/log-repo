@@ -423,6 +423,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                         }
                     }
+
+                    this.SetInlandDomesticCountryFields(shipmentPM, portsRep);
                 }
 
                 if (!isInlandDomesticShipment)
@@ -2655,6 +2657,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return shipmentPM;
+        }
+
+        private void SetInlandDomesticCountryFields(ShipmentPM shipmentPM, PortRepository portsRep)
+        {
+            if (shipmentPM.InlandDomesticFromTypeCode == "PORT")
+            {
+                Port fromPort = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageFromPortId);
+                if (fromPort != null)
+                {
+                    shipmentPM.FromPartnerCountryCode = fromPort.CountryCode;
+                    shipmentPM.FromLocation = fromPort.Code;
+                    shipmentPM.FromPartnerCountryName = fromPort.CountryName;
+                }               
+            }
+
+            else if (shipmentPM.InlandDomesticFromTypeCode == "CASL")
+            {
+                shipmentPM.FromLocation = shipmentPM.InlandDomesticFromCity;
+                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
+                if (country != null)
+                {
+                    shipmentPM.FromPartnerCountryCode = country.Code;
+                    shipmentPM.FromPartnerCountryName = country.EnglishName;
+                }    
+            }
+
+            if (shipmentPM.InlandDomesticToTypeCode == "PORT")
+            {
+                Port toPort = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageToPortId);
+                if (toPort != null)
+                {
+                    shipmentPM.ToPartnerCountryCode = toPort.CountryCode;
+                    shipmentPM.ToLocation = toPort.Code;
+                    shipmentPM.ToPartnerCountryName = toPort.CountryName;
+                }
+            }
+
+            else if (shipmentPM.InlandDomesticToTypeCode == "CASL")
+            {
+                shipmentPM.ToLocation = shipmentPM.InlandDomesticToCity;
+                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticToCountryId, tenant);
+                if (country != null)
+                {
+                    shipmentPM.ToPartnerCountryCode = country.Code;
+                    shipmentPM.ToPartnerCountryName = country.EnglishName;
+                }
+            }
         }
 
         private void CheckDigitalPortalInvoicedFields(ShipmentPM shipmentPM, string cardId)

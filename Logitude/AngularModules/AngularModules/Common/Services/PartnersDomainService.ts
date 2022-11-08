@@ -236,6 +236,7 @@ export class PartnersDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetContactsByEmail(email: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

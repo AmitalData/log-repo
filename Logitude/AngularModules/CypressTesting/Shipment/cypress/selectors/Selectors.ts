@@ -567,5 +567,7 @@ public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   public static readonly ViewFilterSearchField = '#NewViewFiltersSearchFieldsId_0_1'
   public static readonly ViewShipmentTypeValue = '#Shipment_TextValue'
   public static readonly LogitudeCheckBox = '.LogitudeCheckBox'
+  public static readonly Refresh="img[src='./Images/Buttons/Refresh.png']"
+  public static readonly TabTitleRow="[class='TabTitleRow']"
   //#endregion
 }

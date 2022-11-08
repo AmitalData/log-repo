@@ -30,13 +30,13 @@ import { OnDestroy } from '@angular/core';
         [`
         .new-dashboard {
             width: 100%;
-            height: 100%;
-            padding: 10px 0px 0px 0px;
+            height: calc(100% - 50px);
+            padding: 0px 0px 0px 0px;
         }`],
     selector: 'custom-layout',
     styleUrls: ['CustomDashboardComponent.css'],
     inputs: ['IsEditLayout', 'SelectedDashboard'],
-    encapsulation: ViewEncapsulation.ShadowDom
+    encapsulation: ViewEncapsulation.Emulated
 })
 
 export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy {

@@ -11,4 +11,15 @@ export class Formatter {
         return null;
     }
 
+    static getEntity(entity: string) {
+        if (entity) {
+            if (entity.indexOf(".") !== -1) {
+                let entities = entity.split(".");
+                return entities[entities.length - 1];
+            }
+            return entity;
+        }
+        return null;
+    }
+
 }

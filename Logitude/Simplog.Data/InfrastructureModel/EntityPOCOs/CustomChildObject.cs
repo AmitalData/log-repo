@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -69,5 +70,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Field48 { get; set; }
         public string Field49 { get; set; }
         public string Field50 { get; set; }
+        public virtual User CreatedByUser { get; set; }
+        public virtual User UpdatedByUser { get; set; }
     }
 }

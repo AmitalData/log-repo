@@ -1,3 +1,5 @@
+import { Formatter } from "./Formatter";
+
 export class ObjectTables {
 
     static getAll() {
@@ -20,7 +22,7 @@ export class ObjectTables {
 
     static getIdByName(entityName: string) {
         if (entityName) {
-            entityName = entityName.indexOf(".") === -1 ? entityName : entityName.split(".")[1];
+            entityName = Formatter.getEntity(entityName);
             let entityObjectTable = this.getByName(entityName);
             return entityObjectTable ? entityObjectTable.Id : null;
         }
@@ -29,7 +31,7 @@ export class ObjectTables {
 
     static getKeyPropertyPathByName(entityName: string) {
         if (entityName) {
-            entityName = entityName.indexOf(".") === -1 ? entityName : entityName.split(".")[1];
+            entityName = Formatter.getEntity(entityName);
             let entityObjectTable = this.getByName(entityName);
             return entityObjectTable ? entityObjectTable.KeyPropertyPath : null;
         }

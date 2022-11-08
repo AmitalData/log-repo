@@ -37,7 +37,6 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
-using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.Repositories;
 
 namespace CommunicationWorkerRole.Services
@@ -210,11 +209,7 @@ namespace CommunicationWorkerRole.Services
             }
 
         }
-        private GLAccountMoreData GetGLAccountMoreData(int tenant, string GLAccountId)
-        {
-            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
-            return gLAccountMoreDataRepository.GetSingle(GLAccountId, tenant);
-        }
+
         private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
             if (!result.IsValid)
             {
@@ -522,41 +517,39 @@ namespace CommunicationWorkerRole.Services
             ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = ""};
             string balanceInLocalCurrency = GetFilterFieldValueByName(reportFilterItems, "BalanceInLocalCurrency");
             string balanceInLocalCurrencyOperator = GetFilterFieldOperatorByName(reportFilterItems, "BalanceInLocalCurrency");
-            string gLAccountId = GetFilterFieldValueByName(reportFilterItems, "GLAccountId");
             if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(balanceInLocalCurrency)
                 && !string.IsNullOrWhiteSpace(balanceInLocalCurrencyOperator))
             {
                 var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
                 var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
-                var gLAccountMoreData = GetGLAccountMoreData(tenant, gLAccountId);
-                result.IsValid = CompareBalanceInLocalCurrencyWithLocalOpenBalance(Convert.ToDecimal(balanceInLocalCurrency), gLAccountMoreData.BalanceInLocalCurrency, balanceInLocalCurrencyOperator);
+                result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(balanceInLocalCurrency), ledgerTransactionsDataProvider.LocalClosedBalance, balanceInLocalCurrencyOperator);
                 if (!result.IsValid)
-                    result.ErrorMessage = "The E-mail was not sent, the Balance in local currency " + getOperatorName(balanceInLocalCurrencyOperator) + " the GLaccount balance in local currency";
+                    result.ErrorMessage = "The E-mail was not sent, the closed balance in local currency " + getOperatorName(balanceInLocalCurrencyOperator) + " the GLaccount local closed balance";
             }
             return result;
         }
 
-        private bool CompareBalanceInLocalCurrencyWithLocalOpenBalance(decimal balanceInLocalCurrency, decimal localOpenBalance, string balanceInLocalCurrencyOperator)
+        private bool CompareBalanceInLocalCurrencyWithLocalClosedBalance(decimal balanceInLocalCurrency, decimal localclosedBalance, string balanceInLocalCurrencyOperator)
         {
             bool isValid = false;
             switch (balanceInLocalCurrencyOperator) {
                 case "Equals":
-                    isValid = !(balanceInLocalCurrency== localOpenBalance);
+                    isValid = !(balanceInLocalCurrency== localclosedBalance);
                     break;
                 case "NotEqual":
-                    isValid = !(balanceInLocalCurrency != localOpenBalance);
+                    isValid = !(balanceInLocalCurrency != localclosedBalance);
                     break;
                 case "LargerThan":
-                    isValid = !(balanceInLocalCurrency > localOpenBalance);
+                    isValid = !(balanceInLocalCurrency > localclosedBalance);
                     break;
                 case "LessThan":
-                    isValid = !(balanceInLocalCurrency < localOpenBalance);
+                    isValid = !(balanceInLocalCurrency < localclosedBalance);
                     break;
                 case "LessThanOrEqual":
-                    isValid = !(balanceInLocalCurrency <= localOpenBalance);
+                    isValid = !(balanceInLocalCurrency <= localclosedBalance);
                     break;
                 case "GreaterThanOrEqual":
-                    isValid = !(balanceInLocalCurrency >= localOpenBalance);
+                    isValid = !(balanceInLocalCurrency >= localclosedBalance);
                     break;
             }
             return isValid;

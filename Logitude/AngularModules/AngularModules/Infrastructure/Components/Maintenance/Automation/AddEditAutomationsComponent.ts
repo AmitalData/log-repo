@@ -1012,8 +1012,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ObjectTableName == "APInvoice") {
-                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
-                if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
+                this.AddSendDocumentToResultList();
             }
 
             if (this.ObjectTableName == "ARInvoice") {
@@ -1049,6 +1048,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
                     this.FillOnDocumentUpdateResults();
                 }
+
+                this.AddSendDocumentToResultList();
                 
             }
 
@@ -1193,6 +1194,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.IsLoadingComplete = true;
+    }
+
+    private AddSendDocumentToResultList() {
+        const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
+        if (documentSendFeatureToggle != null)
+            this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
     }
 
     private AddSendInterfaceResult() {
@@ -2364,8 +2371,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
         automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
         automatedBackup.AutomationSendDocument = this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" ? this.AutomationSendDocument : null;
-        automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.ReportTemplateId : null;
-        automatedBackup.DocumentCopyId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.DocumentCopyId : null;
+        automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" || (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.ObjectTableName == "Shipment") ? this.AutomatedBackupClass.ReportTemplateId : null;
+        automatedBackup.DocumentCopyId = this.CurrentEntityPM.ResultCode == "EMAIL" || (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.ObjectTableName == "Shipment") ? this.AutomatedBackupClass.DocumentCopyId : null;
         automatedBackup.AutomationCreateTask = this.CurrentEntityPM.ResultCode == "CREATETASK" ? this.AutomationCreateTask : null;
         automatedBackup.AutomationOnUpdateDocument = this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" ? this.AutomationOnUpdateDocument : null;
 
@@ -2552,6 +2559,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent', myGeneratedComponentLocation.viewContainerRef)
                     .then(cmpRef => {
+                        cmpRef.instance.ObjectTableName = this.ObjectTableName;
                         cmpRef.instance.Run(this.AutomationSendDocument);
 
                     });

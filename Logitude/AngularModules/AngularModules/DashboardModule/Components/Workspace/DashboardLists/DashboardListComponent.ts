@@ -8,10 +8,13 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
-import { EditShipmentLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/EditShipmentLinkRendererComponent';
+import { DashboardListLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/DashboardListLinkRendererComponent';
 import * as moment from 'moment';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
+import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
+import { AnalyticsFactsFieldsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsFieldsMetaDataPMService';
+import { AnalyticsFactsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsMetaDataPMService';
 
 @Component({
     templateUrl: 'DashboardListComponent.html',
@@ -28,29 +31,48 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     public columns: any[] = [];
     public rowData: any;
     private DashboardAnalyticsService = new DashboardAnalyticsService();
+    private AnalyticsFactsMetaDataPMService = new AnalyticsFactsMetaDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public _ShipmentPMService: ShipmentPMService;
+    public entityPMService: EntityPMService;
+    ObjectTableName: any;
 
     ngOnInit(): void {
         this.DashboardAnalyticsService = new DashboardAnalyticsService();
-        this._ShipmentPMService = new ShipmentPMService();
+        this.AnalyticsFactsMetaDataPMService = new AnalyticsFactsMetaDataPMService();
+        this.entityPMService = new EntityPMService();
     }
 
 
     Run(dataPointSelection: DataPointSelection) {
-        this.StartBusyIndicator();
         this.DataPointSelection = dataPointSelection;
-        this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(dataPointSelection))
+        this.GetObjectTableName();
+
+    }
+
+    GetObjectTableName() {
+        this.StartBusyIndicator();
+        this.AnalyticsFactsMetaDataPMService.get(this.DataPointSelection.Widget.EntityId).subscribe((response: ServiceResponse) => {
+            if (response.HasError) {
+                return;
+            }
+            this.ObjectTableName = response.Result.ObjectTableName;
+            this.GetList();
+        });
+    }
+
+    GetList(isRefresh : boolean = false) {
+        this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(this.DataPointSelection))
             .subscribe((res: any) => {
                 this.StopBusyIndicator();
                 var response: ServiceResponse = res;
                 if (!response || response.HasError) return;
-                this.BuildGrid(response.Result);
+                this.BuildGrid(response.Result, isRefresh);
             });
     }
 
-    private BuildGrid(result: any) {
+    private BuildGrid(result: any, isRefresh : boolean) {
         this.rowData = result.DataResult;
+        if(isRefresh) return;
         var fields = result.Fields as AnalyticsFactsFieldsMetaDataPM[];
         this.columns = [];
         fields.forEach(metaDataField => {
@@ -63,15 +85,21 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         column["field"] = metaDataField.FieldCode;
         column["headerName"] = metaDataField.DisplayName;
         column["sortable"] = true;
-        if (metaDataField.FieldCode == "ShipmentNumber"
-            || metaDataField.FieldCode == "QuoteNumber"
-            || metaDataField.FieldCode == "InvoiceNumber") {
-            column["cellRendererFramework"] = EditShipmentLinkRendererComponent;
-        }
+        this.SetClickColumn(metaDataField, column);
         if (metaDataField.DataTypeCode == "Date" || metaDataField.DataTypeCode == "DateTime") {
             column["cellRenderer"] = this.DateFormatter;
         }
         return column;
+    }
+
+    private SetClickColumn(metaDataField: AnalyticsFactsFieldsMetaDataPM, column: {}) {
+        if ((metaDataField.FieldCode == "ShipmentNumber" && this.ObjectTableName == "Shipment") ||
+            (metaDataField.FieldCode == "InvoiceNumber" && this.ObjectTableName == "APInvoice") ||
+            (metaDataField.FieldCode == "InvoiceNumber" && this.ObjectTableName == "ARInvoice") ||
+            (metaDataField.FieldCode == "QuoteNumber" && this.ObjectTableName == "Quote") ||
+            (metaDataField.FieldCode == "Subject" && this.ObjectTableName == "Opportunity")) {
+            column["cellRendererFramework"] = DashboardListLinkRendererComponent;
+        }
     }
 
     DateFormatter(params) {
@@ -100,7 +128,8 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     }
 
     RefreshBtnClick() {
-        this.Run(this.DataPointSelection);
+        this.StartBusyIndicator();
+        this.GetList(true);
     }
 
     onGridReady(event: any) {
@@ -112,19 +141,11 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     onColumnMoved(event: any) {
     }
 
-    public OnShipmentNumberClick(cell) {
-        this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
-            if (!myResult.HasError) {
-                var Id = myResult.Result;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "Dashboard" });
-                    });
-            }
-
-            this.StopBusyIndicator();
-        });
+    public OnDashboardListClick(id: any) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: id, ObjectTableName: this.ObjectTableName, BackButtonLabel: "Dashboard" });
+            });
     }
 }
