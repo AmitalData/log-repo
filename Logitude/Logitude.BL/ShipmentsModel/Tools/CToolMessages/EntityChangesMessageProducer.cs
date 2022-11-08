@@ -117,10 +117,9 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
         public static void ProduceSendEmailMessage(CommunicationLog communicationLog)
         {
-            Producer sendEmailProducer = null;
             try
             {
-                sendEmailProducer = new Producer();
+                Producer sendEmailProducer = new Producer();
                 var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented,
                     new JsonSerializerSettings
                     {
@@ -134,14 +133,14 @@ namespace Logitude.Server.Tools.CToolWorkflows
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, communicationLog.Tenant, null, "ProduceSendEmailMessage", null, null);
             }
-            finally
-            {
-                if (sendEmailProducer != null)
-                {
-                    sendEmailProducer.ProducerBuilder.Flush();
-                    sendEmailProducer.ProducerBuilder.Dispose();
-                }
-            }
+            //finally
+            //{
+            //    if (sendEmailProducer != null)
+            //    {
+            //        sendEmailProducer.ProducerBuilder.Flush();
+            //        sendEmailProducer.ProducerBuilder.Dispose();
+            //    }
+            //}
         }
 
         private static List<DocumentsFilingPM> GetShipmentDocumentsFilingPM(string shipmentNumber, int tenant)
