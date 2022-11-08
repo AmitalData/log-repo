@@ -1278,7 +1278,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
                 {
 
-                    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+                    SecondCargoID = !string.IsNullOrEmpty(consignmentPM.SecondCargoID) ? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID) : new SecondCargoIDType() { Value = "" }, // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
                     ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
                 }
             };
@@ -1345,7 +1345,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>(consignmentPM.ManifestNumber),
                 DMExtensions = new DeclarationGoodsShipmentImportConsignmentTransportContractDocumentDMExtensions
                 {
-                    SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID),
+                    SecondCargoID = !string.IsNullOrEmpty(consignmentPM.SecondCargoID) ? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID) : new SecondCargoIDType() { Value = "" },
                     ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID),
                 }
             };
