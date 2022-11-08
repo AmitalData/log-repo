@@ -926,7 +926,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                    set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
                                    from Customs.SupplierInvioceItemCertificats SIIC
                                    where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey + ' ' + SIIC.LineNumber + ' ' + SIIC.ItemCertificateCounterKey  in (" + res.certificateKeys + ") ";
-                    cmd +=  Environment.NewLine + "Update supplierInvoiceItems s set s.CertificatesStatusCode = '1' " +
+                    cmd +=  Environment.NewLine + "Update s set s.CertificatesStatusCode = '1' " +
+                        "from Customs.supplierInvoiceItems  s" +
                         "where s.DeclarationId = '" + declarationId + "' and s.CounterKey + ' ' + s.LineNumber in (" + res.InvoiceItemKeys + ")";
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
