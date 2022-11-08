@@ -153,7 +153,12 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 Logger.LogMe("after == 0!!!" + sbLocal.ToString(), false, "DcaFilterByEnvironment_Warning");
             }
+            if (after != before)
+            {
 
+                Logger.LogMe(sbLocal.ToString(), false, "DcaFilterByEnvironment");
+            }
+    
             return new FilterByEnvironmentOutGoingResult(outgoingMessage, sbLocal);
         }
 
@@ -193,6 +198,11 @@ namespace Logitude.CustomsMessaging.Dca
             if (after == 0)
             {
                 Logger.LogMe("after == 0!!!" + sbLocal.ToString(), false, "DcaFilterByEnvironment_Warning");
+            }
+            if (after != before)
+            {
+
+                Logger.LogMe(sbLocal.ToString(), false, "DcaFilterByEnvironment");
             }
             Debug.WriteLine(sbLocal.ToString());
             return new FilterByEnvironmentListOfDCAFileResult(listOfDCAFile, sbLocal);
