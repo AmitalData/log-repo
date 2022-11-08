@@ -839,7 +839,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
 
-            string cmd = @"Update (select i.DECLARATIONID , I.TENANT,AttachmentTypeCode, CertificateExemptionTypeCode, CertificateNumber from  SupplierInvioceItemCertificats SIIC 
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = @"Update (select i.DECLARATIONID , I.TENANT,AttachmentTypeCode, CertificateExemptionTypeCode, CertificateNumber from  SupplierInvioceItemCertificats SIIC 
                                inner join  SupplierInvoiceItems I
                                on SIIC.DECLARATIONID =i.DECLARATIONID  and SIIC.linenumber=i.linenumber and i.CounterKey  =SIIC.InvoiceCounterKey ) t
                                set t.AttachmentTypeCode = '4', t.CertificateExemptionTypeCode = '92'
@@ -847,14 +851,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                   ";
 
 
-            string cmd1 = @"
+                    string cmd1 = @"
                                 Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
                                 where s.DeclarationId =:p1 and tenant=:p2";
 
-            if (dbms == "oracle")
-            {
-                using (OracleConnection con = new OracleConnection(strConnString))
-                {
 
 
 
@@ -881,15 +881,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (SqlConnection con = new SqlConnection(strConnString))
                 {
+                    string cmd = @"Update   customs.SupplierInvioceItemCertificats   
+                               set  AttachmentTypeCode = '4',  CertificateExemptionTypeCode = '92'
+							   from   customs.SupplierInvioceItemCertificats   
+                               inner join  customs.SupplierInvoiceItems I
+                               on customs.SupplierInvioceItemCertificats.DECLARATIONID =i.DECLARATIONID  and customs.SupplierInvioceItemCertificats.linenumber=i.linenumber and i.CounterKey  =customs.SupplierInvioceItemCertificats.InvoiceCounterKey 
+                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and i.tenant =:p2 and  i.DECLARATIONID=:p1
+                                  ";
+
+
+                    string cmd1 = @"
+                                Update customs.supplierInvoiceItems  set CertificatesStatusCode = '1'
+                                where DeclarationId =:p1 and tenant=:p2";
+
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, con);
                     SqlCommand sqlCommand1 = new SqlCommand(cmd1, con);
 
-                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
-                    sqlCommand.Parameters.Add(new OracleParameter("p2", tenant));
+                    sqlCommand.Parameters.Add(new SqlParameter("p1", declarationId));
+                    sqlCommand.Parameters.Add(new SqlParameter("p2", tenant));
 
-                    sqlCommand1.Parameters.Add(new OracleParameter("p1", declarationId));
-                    sqlCommand1.Parameters.Add(new OracleParameter("p2", tenant));
+                    sqlCommand1.Parameters.Add(new SqlParameter("p1", declarationId));
+                    sqlCommand1.Parameters.Add(new SqlParameter("p2", tenant));
 
 
                     con.Open();
