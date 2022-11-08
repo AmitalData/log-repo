@@ -11,6 +11,7 @@ import { CustomChildObjectPM } from '../../../../../EntityPMs/CustomChildObjectP
 import { CustomChildEntity } from '../../../../../EntityPMs/CustomChildEntity';
 import { DateTool } from '../../../../../Tools';
 import { Validator } from '../../../../../Validators/Validator';
+import { Cloner } from '../../../../../Utilities/Cloner';
 declare var window;
 
 @Component({
@@ -83,6 +84,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.IsEditMode = args.IsEditMode;
         this.FatherComponent = args.FatherComponent;
         this.SetEntityPM();
+        this.Clone();
         this.LoadGeneratedArea();
     }
 
@@ -127,6 +129,26 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     }
 
     CancelButtonClicked() {
+        if (this.IsEditMode) {
+            this.RejectChanges();
+        }
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.EntityPM);
+        this.myCloner.AddField('CreatedBy');
+        this.myCloner.AddField('UpdatedBy');
+        this.myCloner.AddField('CreateDate');
+        this.myCloner.AddField('UpdateDate');
+        for (let i = 1; i < 51; i++) {
+            this.myCloner.AddField('Field' + i);
+        }
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 }
