@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
-    public class CustomChildEntityPM
+    public class CustomChildEntity
     {
         public string Name { get; set; }
         public List<CustomChildObjectPM> Values { get; set; }

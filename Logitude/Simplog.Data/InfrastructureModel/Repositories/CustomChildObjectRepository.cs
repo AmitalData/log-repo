@@ -27,6 +27,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
         }
 
+
+        public CustomChildObject GetById(string id, int tenant)
+        {
+            return context.CustomChildObjects.Where(d => d.Id == id && d.Tenant == tenant).FirstOrDefault();
+        }
+
+
+        public List<CustomChildObject> GetByParentEntityId(string parentEntityId , int tenant)
+        {
+            return (from a in context.CustomChildObjects
+                    where a.Tenant == tenant && a.ParentEntityId == parentEntityId
+                    select a).ToList();
+        }
+
+
+
+
+
         public CustomChildObjectRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
@@ -64,6 +82,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+
 
         public CustomChildObject GetSingle(EntityKeyFields entityKeys)
         {

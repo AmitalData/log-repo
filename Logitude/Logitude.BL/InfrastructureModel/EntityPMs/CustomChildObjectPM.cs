@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string UpdatedBy { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
+
 
     }
 
