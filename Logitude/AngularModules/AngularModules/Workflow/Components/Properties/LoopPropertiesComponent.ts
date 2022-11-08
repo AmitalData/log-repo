@@ -4,7 +4,6 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -68,12 +67,9 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateCollectionVariable(treeSelectItem: TreeSelectItem) {
-        let collectionVariable = treeSelectItem ? treeSelectItem.key : null;
-        let entity = treeSelectItem ? Formatter.getEntity(treeSelectItem.data["entity"]) : null;
-        this.Data["collectionVariable"] = collectionVariable;
-        this.Data["entity"] = entity;
-        this.CollectionVariable = collectionVariable;
+    updateCollectionVariable(collectionVariable: string) {
+        this.Data["collectionVariable"] = collectionVariable || null;
+        this.CollectionVariable = collectionVariable || null;
         this.setUIProperties();
     }
 

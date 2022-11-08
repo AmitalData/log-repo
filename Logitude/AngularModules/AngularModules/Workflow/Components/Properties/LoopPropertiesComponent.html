@@ -84,13 +84,12 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Collection Variable'" [ObjectFieldName]="'Collection_Variable'"
-                    [DataContext]="DataContext"></LogLabel>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection Variable'"
+                    [ObjectFieldName]="'Collection_Variable'" [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block collection-variables-list-container">
                 <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="CollectionVariable"
-                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateCollectionVariable($event)"
-                    [DataCy]="'collection-variables-list'">
+                    (ValueChanged)="updateCollectionVariable($event)" [DataCy]="'collection-variables-list'">
                 </TreeSelect>
             </div>
         </td>

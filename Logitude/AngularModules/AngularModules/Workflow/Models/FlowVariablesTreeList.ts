@@ -169,20 +169,26 @@ export class FlowVariablesTreeList {
             let returnedFields = getRecordNode.data["returnedFields"];
             let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : [];
             let treeSelectItemName = getRecordNode.data["name"];
-            let treeSelectItemKey = this.formatItemKey(treeSelectItemName);
+            let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
             let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, treeSelectItemChildren);
             recordsVariablesItemChildren.push(treeSelectItem);
         });
 
         this.getLoopNodes().forEach((loopNode: any) => {
-            let entity = loopNode.data["entity"];
-            let treeSelectItemName = loopNode.data["name"];
-            let treeSelectItemKey = this.formatItemKey(treeSelectItemName);
-            let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, null);
-            let treeSelectItemLoopName = "Current item from loop " + treeSelectItemName;
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, false, false, false, false, treeSelectItemChildren);
-            recordsVariablesItemChildren.push(treeSelectItem);
+            let collectionVariable = loopNode.data["collectionVariable"] || null;
+            let getRecordNode = this.getGetRecordNodes("AllRecords").find(n => this.formatFlowElementName(n.data["name"]) === collectionVariable);
+            if (getRecordNode) {
+                let entity = getRecordNode.data["entity"];
+                let returnedFields = getRecordNode.data["returnedFields"];
+                let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : [];
+                let treeSelectItemName = loopNode.data["name"];
+                let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
+                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
+                let treeSelectItemLoopName = "Current item from loop " + treeSelectItemName;
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, false, false, false, false, treeSelectItemChildren);
+                recordsVariablesItemChildren.push(treeSelectItem);
+            }
         });
 
         return recordsVariablesItemChildren;
@@ -193,11 +199,8 @@ export class FlowVariablesTreeList {
 
         this.getGetRecordNodes("AllRecords").forEach((getRecordNode: any) => {
             let treeSelectItemName = getRecordNode.data["name"];
-            let treeSelectItemKey = this.formatItemKey(treeSelectItemName);
-            let data = {
-                entity: (getRecordNode.data["entity"] || null)
-            };
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
+            let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
             recordsCollectionVariablesItemChildren.push(treeSelectItem);
         });
 
@@ -291,7 +294,7 @@ export class FlowVariablesTreeList {
         return items;
     }
 
-    private formatItemKey(treeSelectItemName: string) {
-        return treeSelectItemName ? treeSelectItemName.replace(/\ /gi, "").replace(new RegExp(this.ItemKeySplitter, "gi"), "").toLowerCase() : "";
+    private formatFlowElementName(name: string) {
+        return name ? name.replace(/\ /gi, "").replace(new RegExp(this.ItemKeySplitter, "gi"), "").toLowerCase() : "";
     }
 }

@@ -2,7 +2,7 @@ import { NodeType } from "./Types";
 
 export class FlowReader {
 
-    static getAllPreviousNodes(flowObject: any, nodeId: string, previousNodesType: string | null = null) {
+    static getAllPreviousNodes(flowObject: any, nodeId: string, previousNodesType: NodeType | null = null) {
         if (flowObject) {
             let node = flowObject.nodes.filter((n: any) => n.id === nodeId)[0];
             if (node) {

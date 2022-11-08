@@ -218,9 +218,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields) {
             this.setData();
-
             //console.log(this.Data);
-
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
