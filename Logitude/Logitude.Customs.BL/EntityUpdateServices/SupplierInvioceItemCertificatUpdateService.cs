@@ -833,108 +833,73 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public int UpdateAllCertificateWithoutResponse(string declarationId, int tenant)
         {
-            SupplierInvioceItemCertificatQueryService supplierInvoiceItemRepository = new SupplierInvioceItemCertificatQueryService(tenant);
-            var res = supplierInvoiceItemRepository.GetSupplierInvoiceItemsCertificateWithoutResponse(tenant, declarationId);
-
-            int count = 0;
-            if (string.IsNullOrWhiteSpace(res.certificateKeys)) return count;
-            string whereInCertificateKeys = "";
-            string whereInInvoiceItemKeys = "";
-            int i = 0;
-            if (res.certificateKeys.Split(',').Count() > 990)
-            {
-                var certificateKeysList = res.certificateKeys.Split(',');
-                var invoiceItemKeysList = res.InvoiceItemKeys.Split(',');
-                for (var j = 0; j < certificateKeysList.Length; j++)
-                {
-                    var certificateKeyItem = certificateKeysList[j];
-                    var invoiceItemKeyItem = invoiceItemKeysList[j];
-                    if (i < 990)
-                    {
-                        whereInCertificateKeys += certificateKeyItem + ',';
-                        whereInInvoiceItemKeys += invoiceItemKeyItem + ',';
-                        i++;
-                    }
-                    else
-                    {
-                        whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
-                        whereInCertificateKeys += ") OR  SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey IN (" + certificateKeyItem + ',';
-                        i = 0;
-
-                        whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
-                        whereInInvoiceItemKeys += ") OR  s.CounterKey || ' ' || s.LineNumber IN (" + invoiceItemKeyItem + ',';
-
-                    }
-                }
-                whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
-                whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
-            }
-            else
-            {
-                whereInCertificateKeys = res.certificateKeys;
-                whereInInvoiceItemKeys = res.InvoiceItemKeys;
-            }
-
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+    
             string strConnString = GetConnection(tenant);
+            int count = 0;
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+
+
+            string cmd = @"Update (select i.DECLARATIONID , I.TENANT,AttachmentTypeCode, CertificateExemptionTypeCode, CertificateNumber from  SupplierInvioceItemCertificats SIIC 
+                               inner join  SupplierInvoiceItems I
+                               on SIIC.DECLARATIONID =i.DECLARATIONID  and SIIC.linenumber=i.linenumber and i.CounterKey  =SIIC.InvoiceCounterKey ) t
+                               set t.AttachmentTypeCode = '4', t.CertificateExemptionTypeCode = '92'
+                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and tenant =:p2 and  DECLARATIONID=:p1
+                                  ";
+
+
+            string cmd1 = @"
+                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
+                                where s.DeclarationId =:p1 and tenant=:p2";
+
             if (dbms == "oracle")
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
-                    string resetOther = "";
-                    //if (!LogChangesService.IsLogEnable(SIICerExemptionHD379305))
-                    //{
-                    //    resetOther= " , SIIC.CertificateNumber = '', SIIC.CustomsAttachmentID = '' ";
-                    //}
-                    //                                  " + resetOther + @"    
 
 
 
-                    string cmd = @"Update SupplierInvioceItemCertificats SIIC 
-                                  set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' 
-                                  where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
+                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                    OracleCommand oracleCommand1 = new OracleCommand(cmd1, con);
 
-                    string cmd1 = @"
-                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
-                                where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
+                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    oracleCommand.Parameters.Add(new OracleParameter("p2", tenant));
 
-                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                    OracleCommand sqlCommand1 = new OracleCommand(cmd1, con);
+                    oracleCommand1.Parameters.Add(new OracleParameter("p1", declarationId));
+                    oracleCommand1.Parameters.Add(new OracleParameter("p2", tenant));
+
+
+                    con.Open();
+                    count = oracleCommand.ExecuteNonQuery();
+                    oracleCommand1.ExecuteNonQuery();
+                    con.Close();
+
+
+                }
+            }
+
+            else
+            {
+                using (SqlConnection con = new SqlConnection(strConnString))
+                {
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, con);
+                    SqlCommand sqlCommand1 = new SqlCommand(cmd1, con);
+
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    sqlCommand.Parameters.Add(new OracleParameter("p2", tenant));
+
+                    sqlCommand1.Parameters.Add(new OracleParameter("p1", declarationId));
+                    sqlCommand1.Parameters.Add(new OracleParameter("p2", tenant));
+
+
                     con.Open();
                     count = sqlCommand.ExecuteNonQuery();
                     sqlCommand1.ExecuteNonQuery();
                     con.Close();
 
-                    var stringBuilder = new StringBuilder();
-                    stringBuilder
-                        .AppendLine($"UpdateAllCertificateWithoutResponse(declarationId:{declarationId}")
-                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                        .AppendLine(cmd)
-                        .AppendLine($"CertificateExemptionTypeCode:cmd1.Contains(92)={cmd1.Contains("92")}")
-                    .AppendLine(cmd1);
-                    var logChangesService = new LogChangesService();
-                    logChangesService.SBLog(
-                        SIICerExemptionHD379305,
-                        stringBuilder);
                 }
             }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    string cmd = @"Update Customs.SupplierInvioceItemCertificats SIIC
-                                   set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
-                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey + ' ' + SIIC.LineNumber + ' ' + SIIC.ItemCertificateCounterKey  in (" + res.certificateKeys + ") ";
-                    cmd +=  Environment.NewLine + "Update supplierInvoiceItems s set s.CertificatesStatusCode = '1' " +
-                        "where s.DeclarationId = '" + declarationId + "' and s.CounterKey + ' ' + s.LineNumber in (" + res.InvoiceItemKeys + ")";
 
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-
-                    cn.Open();
-                    count = sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
             return count;
         }
 
