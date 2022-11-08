@@ -41,6 +41,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -5943,6 +5944,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPayable itemPoco = shipmentPayableRepository.GetSingleShipmentPayable(itemPM.Id);
             if (itemPoco != null)
             {
+                this.ValidatePayableConnectedInvoice(itemPM);
                 List<ShipmentPayable> childPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(itemPM.Id, tenant);
 
                 foreach (ShipmentPayable insideItem in childPayables)
@@ -5953,6 +5955,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
                 calculatePayables = true;
+            }
+        }
+        private void ValidatePayableConnectedInvoice(ShipmentPayablePM payablePM)
+        {
+            APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(tenant);
+            if(invoiceLineRepository.IsPayableConnectedToInvoiceLines(payablePM.Id, tenant))
+            {
+                throw new ApplicationException("Can't delete payable " + payablePM.ChargesTypeName + " since it is connected to invoice");
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
