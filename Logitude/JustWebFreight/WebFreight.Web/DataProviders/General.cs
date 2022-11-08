@@ -400,36 +400,70 @@ namespace WebFreight.Web.DataProviders
             return myUrl;
         }
 
-        public static double? ComputeWeightInSelectedUnit(double? grossWeight, string grossWeightUnitCode)
+        public static double? ComputeWeightInSelectedUnit(double? grossWeight, string srcUnitCode, string grossWeightUnitCode)
         {
-            if (grossWeight == null || string.IsNullOrEmpty(grossWeightUnitCode)) return null;
+            if (grossWeight == null) return null;
+            if (string.IsNullOrEmpty(grossWeightUnitCode) || string.IsNullOrEmpty(srcUnitCode)) return grossWeight;
+            if (srcUnitCode == grossWeightUnitCode) return grossWeight;
 
-            double factorOfConvert = 1;
-
-            switch (grossWeightUnitCode.ToUpper())
-            {
-                case "KG": { factorOfConvert = 1; break; }
-                case "LB": { factorOfConvert = 0.45359237; break; }
-                case "MT": { factorOfConvert = 1000; break; }
-            }
-
-            return grossWeight * factorOfConvert;
+            if (grossWeightUnitCode == "KG") return ConvertWeightToKG(grossWeight, srcUnitCode);
+            if (grossWeightUnitCode == "LB") return ConvertWeightToLB(grossWeight, srcUnitCode);
+            if (grossWeightUnitCode == "MT") return ConvertWeightToMT(grossWeight, srcUnitCode);
+            return grossWeight;
         }
 
-        public static double? ComputeVolumeInSelectedUnit(double? volume, string volumeUnitCode)
+        private static double? ConvertWeightToMT(double? weight, string srcUnitCode)
         {
-            if (volume == null || string.IsNullOrEmpty(volumeUnitCode)) return null;
+            if (srcUnitCode == "LB") return weight * 0.000453592;
+            if (srcUnitCode == "KG") return weight * 0.001;
+            return weight;
+        }
 
-            double factorOfConvert = 1;
+        private static double? ConvertWeightToLB(double? weight, string srcUnitCode)
+        {
+            if (srcUnitCode == "KG") return weight * 2.20462;
+            if (srcUnitCode == "MT") return weight * 2204.62;
+            return weight;
+        }
 
-            switch (volumeUnitCode.ToUpper())
-            {
-                case "CBM": { factorOfConvert = 1; break; }
-                case "CBI": { factorOfConvert = 61024; break; }
-                case "CBF": { factorOfConvert = 35.315; break; }
-            }
+        private static double? ConvertWeightToKG(double? weight, string srcUnitCode)
+        {
+            if (srcUnitCode == "LB") return weight * 0.45359237;
+            if (srcUnitCode == "MT") return weight * 1000;
+            return weight;
+        }
 
-            return volume * factorOfConvert;
-        }     
+        public static double? ComputeVolumeInSelectedUnit(double? volume, string srcUnitCode, string volumeUnitCode)
+        {
+            if (volume == null) return null;
+            if (string.IsNullOrEmpty(volumeUnitCode) || string.IsNullOrEmpty(srcUnitCode)) return volume;
+            if (srcUnitCode == volumeUnitCode) return volume;
+
+            if (volumeUnitCode == "CBM") return ConvertVolumeToCBM(volume, srcUnitCode);
+            if (volumeUnitCode == "CBI") return ConvertWeightToCBI(volume, srcUnitCode);
+            if (volumeUnitCode == "CBF") return ConvertWeightToCBF(volume, srcUnitCode);
+            return volume;
+        }
+
+        private static double? ConvertWeightToCBF(double? volume, string srcUnitCode)
+        {
+            if (srcUnitCode == "CBI") return volume * 0.000578704;
+            if (srcUnitCode == "CBM") return volume * 35.315;
+            return volume;
+        }
+
+        private static double? ConvertVolumeToCBM(double? volume, string srcUnitCode)
+        {
+            if (srcUnitCode == "CBI") return volume / 61024;
+            if (srcUnitCode == "CBF") return volume * 0.0283168;
+            return volume;
+        }
+
+        private static double? ConvertWeightToCBI(double? volume, string srcUnitCode)
+        {
+            if (srcUnitCode == "CBM") return volume * 61024;
+            if (srcUnitCode == "CBF") return volume * 0.000578704;
+            return volume;
+        }
     }
 }

@@ -176,10 +176,10 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
                 myDataProvider.TotalPrepaidReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmount);
 
-                myDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, "KG");
-                myDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, "LB");
-                myDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, "CBM");
-                myDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, "CBF");
+                myDataProvider.TotalWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, "KG");
+                myDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, "LB");
+                myDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, "CBM");
+                myDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, "CBF");
 
                 this.FillINTTRADocumentProperties(myDataProvider);
 
@@ -3125,10 +3125,10 @@ namespace WebFreight.Web.WebServices
                     packageline.ContainerStrippedDate = package.ContainerStrippedDate;
                     packageline.Ventilation = package.Ventilation;
 
-                    packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "KG");
-                    packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, "LB");
-                    packageline.PackageVolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBM");
-                    packageline.PackageVolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, "CBF");
+                    packageline.PackageGrossWeightInKG = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, shipment.GrossWeightUnitCode,"KG");
+                    packageline.PackageGrossWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(package.Weight, shipment.GrossWeightUnitCode, "LB");
+                    packageline.PackageVolumeInCBM = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, shipment.VolumeUnitCode, "CBM");
+                    packageline.PackageVolumeInCBF = DataProviders.General.ComputeVolumeInSelectedUnit(package.Volume, shipment.VolumeUnitCode, "CBF");
 
                     #region Car Details
                     packageline.Make = package.Make;
