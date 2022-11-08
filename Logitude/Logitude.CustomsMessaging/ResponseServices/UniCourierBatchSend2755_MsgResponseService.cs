@@ -11,17 +11,26 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
+//using Oracle.DataAccess.Client;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+//using System.Data.OracleClient;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
+using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -183,8 +192,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
                         mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
 
-                        string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID = '{itemPoco.DeclarationId}' ";
-                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+                        RealSetDeclarationCourierPaymentStatusCode(requestParams.Tenant, itemPoco.DeclarationId);
+
+
+                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID = '{itemPoco.DeclarationId}' ";
+                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
                         scopeNewCRS.Complete();
                     }
@@ -211,6 +223,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
     //});
         }
 
+        public static void RealSetDeclarationCourierPaymentStatusCode(int tenant, string declarationId)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            if (dbms == "oracle")
+            {
+
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
+                    cmd = cmd + "  where DECLARATIONID=:p1 ";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
+                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+ 
         private static List<CourierPendingReason> GetAllCourierPendingReason(GenericRequestParams requestParams)
         {
             var repoCourierPendingReasonRepository = new CourierPendingReasonRepository(requestParams.Tenant);

@@ -12,16 +12,24 @@ using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+//using System.Data.OracleClient;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
+using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -129,7 +137,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //                //LoggingEntityReference = declarationNumber,
             //                LoggingUserId = requestParams.LoggingUserId,
             //                RequestVIA = SendRequestVIA.WebServiceBatch,
- 
+
             //            };
 
             //            SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams8212, false);
@@ -151,15 +159,68 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    }
             //}
 
-            realUpdatedList.ChunkBy(100)
-    .ForEach(list100 =>
-    {
-        string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-        string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+            //        realUpdatedList.ChunkBy(100)
+            //.ForEach(list100 =>
+            //{
+            //    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+            //    string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-    });
+            //    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+            //});
+
+            RealSetDeclarationCourierPaymentStatusCode(requestParams.Tenant);
         }
 
-    }
+
+        public static void RealSetDeclarationCourierPaymentStatusCode(int tenant)
+        {
+            var realUpdatedList = new List<string>();
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            if (dbms == "oracle")
+            {
+                realUpdatedList.ChunkBy(100)
+                 .ForEach(list100 =>
+                 {
+                     using (OracleConnection con = new OracleConnection(strConnString))
+                     {
+
+                         string inList = String.Join(",", list100.Select(decId => $"'{decId}'").ToArray());
+                         //string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+                         //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+                         string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
+                         cmd = cmd + "  where DECLARATIONID in (:p1) ";
+
+                         OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                         sqlCommand.Parameters.Add(new OracleParameter("p1", inList));
+                         con.Open();
+                         sqlCommand.ExecuteNonQuery();
+                         con.Close();
+
+
+                     }
+                 });
+            }
+            else
+            {
+                realUpdatedList.ChunkBy(100)
+                 .ForEach(list100 =>
+                 {
+                     using (SqlConnection cn = new SqlConnection(strConnString))
+                     {
+                         string inList = String.Join(",", list100.Select(decId => $"'{decId}'").ToArray());
+                         string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
+                         cmd = cmd + "  where DECLARATIONID in ({inList}) ";
+
+                         SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                         cn.Open();
+                         sqlCommand.ExecuteNonQuery();
+                         cn.Close();
+                     }
+                 });
+            }
+        }
+     }
 }
