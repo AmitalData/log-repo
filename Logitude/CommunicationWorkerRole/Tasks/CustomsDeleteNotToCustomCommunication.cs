@@ -33,7 +33,7 @@ namespace CommunicationWorkerRole.Tasks
             LogMessagingUtil.Instance.Clear();
             try
             {
-                ICustomsDeleteNotToCustomCommunication  myICustomsDeleteNotToCustomCommunication = ContainerAccessor.Container.Resolve(typeof(ICustomsDeleteNotToCustomCommunication), "CustomsDeleteNotToCustomCommunication", new ParameterOverride("", this._SeedDefaultTenant)) as ICustomsDeleteNotToCustomCommunication;
+                ICustomsDeleteNotToCustomCommunication  myICustomsDeleteNotToCustomCommunication = ContainerAccessor.Container.Resolve(typeof(ICustomsDeleteNotToCustomCommunication), "DeleteNotToCustomCommunication", new ParameterOverride("", this._SeedDefaultTenant)) as ICustomsDeleteNotToCustomCommunication;
                 myICustomsDeleteNotToCustomCommunication.StartRun(_TaskId, _SeedDefaultTenant);
             }
             catch (Exception e)
