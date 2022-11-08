@@ -1690,7 +1690,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                     }
                 }
             };
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "תחילת שליחה למכס- הגשה", false, myShowProgressBarParams).then(res => {
             var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
             if (ResponseData && ResponseData.ContinueProcessInBackground) {
                 SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
