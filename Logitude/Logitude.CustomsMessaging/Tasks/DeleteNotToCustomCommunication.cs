@@ -66,10 +66,10 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 }
             }
             LogMessagingUtil.Instance.AppendLine(value: $"Days({days.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"From({From.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"To({To.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus.ToString()})");
+            LogMessagingUtil.Instance.AppendLine(value: $"From({From?.ToString()})");
+            LogMessagingUtil.Instance.AppendLine(value: $"To({To?.ToString()})");
+            LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject?.ToString()})");
+            LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus?.ToString()})");
 
             CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
         }
