@@ -11,7 +11,7 @@ import { CustomChildObjectPM } from '../../../../../EntityPMs/CustomChildObjectP
 import { CustomChildEntity } from '../../../../../EntityPMs/CustomChildEntity';
 import { DateTool } from '../../../../../Tools';
 import { Validator } from '../../../../../Validators/Validator';
-import { Cloner } from '../../../../../Utilities/Cloner';
+import { CustomFieldClass } from '../../../../../DataContracts/CustomFieldClass';
 declare var window;
 
 @Component({
@@ -29,6 +29,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     public ParentEntityPM: any;
     public ParentObjectTableName: string;
     public FatherComponent: any;
+    private numberOfCustomChildObjectCustomFields: number = 50; //FromTable: CustomFieldsCount
     @ViewChild('GeneratedArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     constructor(private entityArgs: EntityArgs) {
@@ -135,20 +136,28 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    private myCloner: Cloner;
+    private cloneCustomChildObjectPM: CustomChildObjectPM;
     private Clone() {
-        this.myCloner = new Cloner(this.EntityPM);
-        this.myCloner.AddField('CreatedBy');
-        this.myCloner.AddField('UpdatedBy');
-        this.myCloner.AddField('CreateDate');
-        this.myCloner.AddField('UpdateDate');
-        for (let i = 1; i < 51; i++) {
-            this.myCloner.AddField('Field' + i);
+        if (!this.IsEditMode) return;
+        this.cloneCustomChildObjectPM = new CustomChildObjectPM(this.EntityPM.ObjectTableName);
+        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields + 1; i++) {
+            this.cloneCustomChildObjectPM['Field' + i] = this.GetCustomChildObjectCustomFieldClass(this.EntityPM, i);
         }
-        this.myCloner.AddEntity(this.EntityPM);
     }
 
     private RejectChanges() {
-        this.myCloner.RejectChanges();
+        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields+1; i++) {
+            this.EntityPM['Field' + i] = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
+        }
+        this.FatherComponent.LoadData();
+    }
+
+    private GetCustomChildObjectCustomFieldClass(cloneEntityPM: CustomChildObjectPM, index: number) {
+        let customFieldClass = cloneEntityPM['Field' + index];
+        if (!customFieldClass) {
+            return null;
+        }
+
+        return new CustomFieldClass(customFieldClass.Value, customFieldClass.FieldName, customFieldClass.TableName);
     }
 }
