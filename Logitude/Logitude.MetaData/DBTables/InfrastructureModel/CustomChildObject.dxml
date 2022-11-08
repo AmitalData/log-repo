@@ -413,6 +413,16 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="CreatedBy"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedBy"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

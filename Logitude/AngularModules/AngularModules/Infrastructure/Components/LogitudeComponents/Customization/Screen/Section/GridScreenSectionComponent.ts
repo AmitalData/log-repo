@@ -10,6 +10,7 @@ import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindo
 import { UIProperties } from '../../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { Output, EventEmitter } from '@angular/core';
 import { PropertyChangedArgs } from '../../../../../EventEmitterArgs/PropertyChangedArgs';
+import { ObjectsLocator } from '../../../../../Locators/ObjectsLocator';
 declare var window;
 
 @Component({
@@ -25,27 +26,57 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     Screen: any;
     ParentEntityPM: any
     ParentObjectTableName: string;
+    ObjectTable: any;
+    public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+    public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
     public DataSource: ObservableCollection;
 
     constructor() {
         super();
-        this.LoadData();
     }
 
     LoadData() {
         let data = this.ParentEntityPM?.CustomChildEntities?.filter(x => x.Name == this.ScreenObjectTableName)[0]?.Values;
         if (!data) data = [];
+        data = this.SortDataBySortingField(data);
         this.DataSource = new ObservableCollection(data);
+    }
+
+    SortDataBySortingField(data) {
+        if (!this.Screen) return data;
+        let sortingFieldCode: string = 'CreateDate';
+        let SortedByField = window.ObjectFields.filter(field => field.FieldCode == this.Screen.SortedByFieldCode)[0];
+        if (SortedByField) { sortingFieldCode = SortedByField.IsCustom ? SortedByField.FieldName : SortedByField.Code; }
+        let descendingSortedType: boolean = this.Screen.SortedType == 'Descending';
+        return data.sort((customChildObject1, customChildObject2) => {
+            let value1 = SortedByField.IsCustom ? customChildObject1[sortingFieldCode].Value : customChildObject1[sortingFieldCode];
+            let value2 = SortedByField.IsCustom ? customChildObject2[sortingFieldCode].Value : customChildObject2[sortingFieldCode];
+            return this.GetSortIndexValue(value1, value2, descendingSortedType);
+        });
+    }
+
+    private GetSortIndexValue(value1: any, value2: any, descendingSortedType: boolean) {
+        if (value1 > value2) {
+            return descendingSortedType ? -1 : 1;
+        }
+
+        if (value1 < value2) {
+            return descendingSortedType ? 1 : -1;
+        }
+
+        return 0;
     }
 
     ngAfterViewInit(): void {
         this.SetScreen();
+        this.LoadData();
     }
 
     SetScreen() {
         if (!this.ScreenSection) return;
         this.OrderScreenSectionColumns();
         this.Screen = window.Screens.filter((screen: any) => screen.Code === this.ScreenSection.RelatedScreenCode)[0];
+        this.ObjectTable = window.ObjectTables.filter(table => table.Name == this.ScreenObjectTableName)[0];
     }
 
     OrderScreenSectionColumns() {

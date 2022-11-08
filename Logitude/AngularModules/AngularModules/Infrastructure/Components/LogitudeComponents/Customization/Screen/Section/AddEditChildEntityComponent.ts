@@ -11,6 +11,7 @@ import { CustomChildObjectPM } from '../../../../../EntityPMs/CustomChildObjectP
 import { CustomChildEntity } from '../../../../../EntityPMs/CustomChildEntity';
 import { DateTool } from '../../../../../Tools';
 import { Validator } from '../../../../../Validators/Validator';
+import { CustomFieldClass } from '../../../../../DataContracts/CustomFieldClass';
 declare var window;
 
 @Component({
@@ -28,6 +29,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     public ParentEntityPM: any;
     public ParentObjectTableName: string;
     public FatherComponent: any;
+    private numberOfCustomChildObjectCustomFields: number = 50; //FromTable: CustomFieldsCount
     @ViewChild('GeneratedArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     constructor(private entityArgs: EntityArgs) {
@@ -83,6 +85,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.IsEditMode = args.IsEditMode;
         this.FatherComponent = args.FatherComponent;
         this.SetEntityPM();
+        this.Clone();
         this.LoadGeneratedArea();
     }
 
@@ -92,8 +95,8 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.EntityPM = new CustomChildObjectPM(this.ObjectTableName);
         this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.EntityPM.CreatedBy = SessionLocator.LoggedUserPM?.EnglishName;
-        this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM?.EnglishName;
+        this.EntityPM.CreatedBy = SessionLocator.LoggedUserId;
+        this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
     }
 
     OkButtonClicked() {
@@ -127,6 +130,34 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     }
 
     CancelButtonClicked() {
+        if (this.IsEditMode) {
+            this.RejectChanges();
+        }
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    private cloneCustomChildObjectPM: CustomChildObjectPM;
+    private Clone() {
+        if (!this.IsEditMode) return;
+        this.cloneCustomChildObjectPM = new CustomChildObjectPM(this.EntityPM.ObjectTableName);
+        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields + 1; i++) {
+            this.cloneCustomChildObjectPM['Field' + i] = this.GetCustomChildObjectCustomFieldClass(this.EntityPM, i);
+        }
+    }
+
+    private RejectChanges() {
+        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields+1; i++) {
+            this.EntityPM['Field' + i] = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
+        }
+        this.FatherComponent.LoadData();
+    }
+
+    private GetCustomChildObjectCustomFieldClass(cloneEntityPM: CustomChildObjectPM, index: number) {
+        let customFieldClass = cloneEntityPM['Field' + index];
+        if (!customFieldClass) {
+            return null;
+        }
+
+        return new CustomFieldClass(customFieldClass.Value, customFieldClass.FieldName, customFieldClass.TableName);
     }
 }
