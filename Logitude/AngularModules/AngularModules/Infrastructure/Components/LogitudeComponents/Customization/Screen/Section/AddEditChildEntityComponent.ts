@@ -94,8 +94,8 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.EntityPM = new CustomChildObjectPM(this.ObjectTableName);
         this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.EntityPM.CreatedBy = SessionLocator.LoggedUserPM?.EnglishName;
-        this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM?.EnglishName;
+        this.EntityPM.CreatedBy = SessionLocator.LoggedUserId;
+        this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
     }
 
     OkButtonClicked() {

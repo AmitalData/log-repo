@@ -24,6 +24,7 @@ export class AddSubEntityComponent extends BaseComponent {
     ValidationErrorsList: any[];
     dataContext = this;
     private parentObjectTableId: string;
+    private parentObjectTable: any;
     private objectTablePM: ObjectTablePM;
     private objectTablePMService: ObjectTablePMService;
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
@@ -40,6 +41,7 @@ export class AddSubEntityComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.customizationSubEntitiesComponent = args['CustomizationSubEntitiesComponent'];
         this.parentObjectTableId = this.customizationSubEntitiesComponent.ObjectTableId;
+        this.parentObjectTable = window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0];;
     }
 
     private displayLabelSingular: string;
@@ -86,6 +88,7 @@ export class AddSubEntityComponent extends BaseComponent {
 
     private MapCustomObjectTableFields() {
         this.objectTablePM.ParentObjectTableId = this.parentObjectTableId;
+        this.objectTablePM.ClientModuleName = this.parentObjectTable?.ClientModuleName;
         this.objectTablePM.IsCustom = true;
         this.objectTablePM.Tenant = SessionLocator.Tenant;
 
