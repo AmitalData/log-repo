@@ -84,13 +84,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             if (eventType?.Code == pickedUpEventCode)
             {
-                var isPickUpExist = entityPM.ShipmentPickUps.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATD != null).Any();
-                return isPickUpExist ? false : true;
+                return entityPM.ShipmentPickUps.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATD != null).Any();
             }
             if (eventType?.Code == deliveryArrivedEventCode)
             {
-                var isDeliveryExist = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
-                return isDeliveryExist ? false : true;
+               return entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
             }
             return true;
         }
@@ -171,11 +169,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 return;
             }
-            entityPM.StatusId = partiallyEntityStatus?.Id;
-            entityPoco.StatusId = entityPM.StatusId;
-            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+
+            if (IsHigherStatusWeight(eventTypeCode, entityPoco.StatusId))
             {
-                entityMasterData.StatusId = entityPM.StatusId;
+                entityPM.StatusId = partiallyEntityStatus?.Id;
+                entityPoco.StatusId = entityPM.StatusId;
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                {
+                    entityMasterData.StatusId = entityPM.StatusId;
+                }
             }
         }
     }
