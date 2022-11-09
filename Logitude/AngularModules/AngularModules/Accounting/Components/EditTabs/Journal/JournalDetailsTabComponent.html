@@ -99,11 +99,19 @@
         <table>
           <tr class="TabTitleRow">
             <td>
-              {{'Accounting.General.O.Details' | TextCodeTranslationPipe}}
-              <div style="width: 60px; float: right;">
-              </div>
+              <table>
+                <tr>
+                    <td style="width:120px">{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}<div style="width: 60px; float: right;">
+                    </div></td>
+                    <td>
+                        <div class="MediaFill">
+                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                        </div>
+  
+                    </td>
+                </tr>
+            </table>
             </td>
-
           </tr>
 
           <!-- header -->
@@ -592,16 +600,6 @@
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                       <div [attr.id]="'tooltip-'+ item.SessionIndex + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                                           <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
-                                          <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-'+ item.SessionIndex  + item.Line" class="small-tooltip-body">
-                                              <div class="popup-arrow"></div>
-
-                                              <div *ngIf="!item.isRateManualy" class="tooltip-text">{{'Accounting.General.O.ExchangeRatesetbysystem' | TextCodeTranslationPipe}}: {{item.currencyRate}}</div>
-
-                                              <div *ngIf="item.isRateManualy && item.GetManualyRate()!=null" class="tooltip-text">
-                                                  {{'Accounting.General.O.ExchangeRatesetbyuser' | TextCodeTranslationPipe}}: {{item.GetManualyRate()}}
-                                              </div>
-
-                                          </div>
                                       </div>
 
 
@@ -616,6 +614,19 @@
                               </log-cell-template>
                           </ng-template>
                       </log-column>
+
+                    <!-- Exchange rate -->
+                    <log-column  *ngIf="!Approved" [header]="'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
+                      <ng-template let-item>
+                          <log-cell-template #logcelltemplate [IsEnabled]="false">
+                            <div style="text-align: center;display: inline-block;width: 30px;"  *ngIf="item.isRateMoreThanFivePerc()" title="{{'Journal.O.DifferenceExchangeRate' | TextCodeTranslationPipe}}">
+                                <img src="./Images/favicon.png" />
+                            </div>
+                            <span *ngIf="!item.isRateManualy" >{{item.currencyRate}}</span>
+                            <span *ngIf="item.isRateManualy" >{{item.GetManualyRate()}}</span>
+                          </log-cell-template>
+                      </ng-template>
+                    </log-column>
 
                       <!-- Reference1 -->
                       <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference1'" [header]="txt_Reference+' 1'">
