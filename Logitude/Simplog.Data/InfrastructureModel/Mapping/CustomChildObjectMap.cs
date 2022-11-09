@@ -70,7 +70,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Field49).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Field50).HasMaxLength(2000).IsUnicode(true);
 
-            this.ToTable("CustomChildObject");
+            this.ToTable("CustomChildObjects");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ParentEntityId).HasColumnName("ParentEntityId");

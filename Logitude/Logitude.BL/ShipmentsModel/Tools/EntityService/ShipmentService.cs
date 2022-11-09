@@ -7920,6 +7920,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void SaveChildEntitiesCustomFields()
         {
             new ShipmentChildEntitiesCustomFieldServices(entityPM, initializer).Save();
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Shipment", Tenant = tenant }).Update();
         }
         private void ComputeNumberOfTransshipments()
         {

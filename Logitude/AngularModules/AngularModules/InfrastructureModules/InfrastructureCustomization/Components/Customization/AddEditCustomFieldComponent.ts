@@ -582,6 +582,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 window.ObjectFields.splice(index, 1);
                             }
                             item.ObjectTable_LookUpTableName = this.LookUpTableName;
+                            item.ObjectTableName = this.ObjectTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();

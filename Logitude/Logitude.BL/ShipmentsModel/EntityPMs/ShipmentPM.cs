@@ -2842,6 +2842,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseLegEnglishName { get; set; }
         public bool IsHTSMissing { get; set; }
         public bool IsProductItemsUpdated { get; set; }
+        public List<CustomChildEntity> CustomChildEntities { get; set; }
 
         private List<ShipmentProductItemPM> shipmentProductItems;
         [Include]

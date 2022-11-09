@@ -35,6 +35,7 @@ using Logitude.BL.ShipmentsModel.DigitalModels;
 using System.Threading.Tasks;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using System.Web;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2362,6 +2363,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentUnassignedFieldQuery shipmentUnassignedFieldQuery = new ShipmentUnassignedFieldQuery(shipmentUnassignedFieldRepository);
                 shipmentPM.ShipmentUnassignedFields = shipmentUnassignedFieldQuery.GetShipmentUnassignedFields(shipment.Id, shipment.Tenant);
                 #endregion
+           
+
+                new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = shipmentPM, ParentEntityId = shipmentPM.Id, ParentObjectTableName = "Shipment", Tenant = tenant }).Set();
+
+
             }
 
             CheckDigitalPortalInvoicedFields(shipmentPM, cardId);
