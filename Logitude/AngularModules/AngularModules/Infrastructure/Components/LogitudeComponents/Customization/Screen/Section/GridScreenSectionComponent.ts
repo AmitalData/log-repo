@@ -107,9 +107,14 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
         return this.Screen.ObjectTableName;
     }
 
+    get ScreenSectionName() {
+        if (!this.ScreenSection) return "";
+        return this.ScreenSection.Name;
+    }
+
     AddChildEntityClicked() {
         let logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Add New " + this.ScreenObjectTableName;
+        logitudeWindow.Title = "Add " + this.ScreenSectionName;
         logitudeWindow.WindowArgs = this.GetWindowArgs();
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 530;
@@ -118,7 +123,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
 
     EditChildEntityClicked(childEntity) {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Edit " + this.ScreenObjectTableName;
+        logitudeWindow.Title = "Edit " + this.ScreenSectionName;
         logitudeWindow.WindowArgs = this.GetWindowArgs();
         logitudeWindow.WindowArgs.IsEditMode = true;
         logitudeWindow.WindowArgs.EntityPM = childEntity;
