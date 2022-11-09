@@ -51,10 +51,16 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
         if (SortedByField) { isCustomSortedByField = SortedByField.IsCustom; }
         let descendingSortedType: boolean = this.Screen.SortedType == 'Descending';
         return data.sort((customChildObject1, customChildObject2) => {
-            let value1 = isCustomSortedByField ? customChildObject1[sortingFieldCode].Value : customChildObject1[sortingFieldCode];
-            let value2 = isCustomSortedByField ? customChildObject2[sortingFieldCode].Value : customChildObject2[sortingFieldCode];
+            let value1 = isCustomSortedByField ? this.GetCustomFieldValue(customChildObject1, SortedByField, sortingFieldCode) : customChildObject1[sortingFieldCode];
+            let value2 = isCustomSortedByField ? this.GetCustomFieldValue(customChildObject2, SortedByField, sortingFieldCode) : customChildObject2[sortingFieldCode];
             return this.GetSortIndexValue(value1, value2, descendingSortedType);
         });
+    }
+
+    private GetCustomFieldValue(customChildObject: any, sortedByField: any, sortingFieldCode: string) {
+        let isNumberField: boolean = sortedByField ? sortedByField.DataTypeCode == "Decimal" : false;
+
+        return isNumberField ? +customChildObject[sortingFieldCode].Value : customChildObject[sortingFieldCode].Value;
     }
 
     private GetSortIndexValue(value1: any, value2: any, descendingSortedType: boolean) {
@@ -109,7 +115,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
 
     get ScreenSectionName() {
         if (!this.ScreenSection) return "";
-        return this.ScreenSection.Name;
+        return this.ScreenSection.Title;
     }
 
     AddChildEntityClicked() {
