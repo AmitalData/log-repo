@@ -16,6 +16,7 @@ namespace CommunicationWorkerRole.Services
 
         public bool HaveDocumentOutNeedBuild(AutomationSendEmailArgs automationSendEmailArgs)
         {
+            if (string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId)) return false;
             string documentOutId = GetDocumentOutId(automationSendEmailArgs);
             return string.IsNullOrEmpty(documentOutId) && (automationSendEmailArgs.ObjectTableName == "Shipment");
         }

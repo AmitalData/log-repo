@@ -287,7 +287,7 @@ namespace CommunicationWorkerRole
 
                                         AutomationDocumentOutBuildService automationDocumentOutBuildService = new AutomationDocumentOutBuildService();
 
-                                        if(automationSendDocument.SendVia == "EMAIL" && !cameFromCallBack && !string.IsNullOrEmpty(automatedBackup.ReportTemplateId) && automationDocumentOutBuildService.HaveDocumentOutNeedBuild(automationSendEmailArgs) )
+                                        if(automationSendDocument.SendVia == "EMAIL" && !cameFromCallBack && automationDocumentOutBuildService.HaveDocumentOutNeedBuild(automationSendEmailArgs) )
                                         {
                                             BuildDocumentOutWithCallBack(automationSendEmailArgs, automationDocumentOutBuildService);
                                             continue;
