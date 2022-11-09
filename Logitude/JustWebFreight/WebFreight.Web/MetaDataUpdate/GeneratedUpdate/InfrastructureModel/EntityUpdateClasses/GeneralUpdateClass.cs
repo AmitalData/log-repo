@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e4bcd59c71a02e9ee669265de5dd3414";
+		public const string HashString = "146480c51b22fda1b2a35455d720b1ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c069",
+			      				    Code =  "236b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2523,6 +2523,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMEqualLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.EqualLength", DefaultText = "%FieldName Field length must equal %Equallength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות שווה %Equallength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOReconcCancelWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconcCancelWarning", DefaultText = "The reconciliation will be canceled but the adjusted journal will not be voided.",LocalDefaultText = @"ההתאמה תבוטל אך פקודת ההפרש לא תבוטל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGStatusUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.StatusUpdated", DefaultText = "Status Updated",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGSearchPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchPartner", DefaultText = "Search partner",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGSearchFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchFrom", DefaultText = "Search From",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGSearchDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchDestination", DefaultText = "Search Destination",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGSearchPlaceholder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchPlaceholder", DefaultText = "Search ports/ references/ carrier",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGGeneralInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.GeneralInformation", DefaultText = "General information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGInvoiced = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Invoiced", DefaultText = "Invoiced",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGEquipmentInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.EquipmentInformation", DefaultText = "Equipments information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGTotalInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.TotalInformation", DefaultText = "Total information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGSealNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SealNumber", DefaultText = "Seal number",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGPackagesEmptyResultMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.PackagesEmptyResultMsg", DefaultText = "No packages items exist",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGTransitTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.TransitTime", DefaultText = "Transit time",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGFlightNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.FlightNumber", DefaultText = "Flight number",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Documents", DefaultText = "Documents",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGDocumentsFileName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.DocumentsFileName", DefaultText = "File name",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGInvoicesOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.InvoicesOpenAmount", DefaultText = "Open amount",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGEventDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.EventDate", DefaultText = "Date",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGEventTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.EventTime", DefaultText = "Event Time",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGMainRouteInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.MainRouteInformation", DefaultText = "Main route information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGPreCarrigeInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.PreCarrigeInformation", DefaultText = "Pre carriage information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGMainCarrigeInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.MainCarrigeInformation", DefaultText = "Main carriage information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGTransshipment1Information = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Transshipment1Information", DefaultText = "Transshipment 1 information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGTransshipment2Information = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Transshipment2Information", DefaultText = "Transshipment 2 information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGTransshipment3Information = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Transshipment3Information", DefaultText = "Transshipment 3 information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGOnCarrigeInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.OnCarrigeInformation", DefaultText = "On carriage information",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGArchive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Archive", DefaultText = "Archive",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGArchived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Archived", DefaultText = "Archived",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ShipmentGUnarchive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Unarchive", DefaultText = "Unarchive",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
