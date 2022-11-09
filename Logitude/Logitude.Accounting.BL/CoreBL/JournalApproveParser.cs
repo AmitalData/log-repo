@@ -397,6 +397,7 @@ namespace Logitude.Accounting.BL.CoreBL
                  ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
 
              });
+
             bool UnionreturnsDistinctvalues = true;
             if (UnionreturnsDistinctvalues)
             {
@@ -406,7 +407,30 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 GLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
             }
-                
+
+            foreach (var item in GLAccountTotalAccountingdate)
+            {
+                if (!GLAccountTotalDueDate.Any(x => x.Tenant == item.Tenant  && x.AccountId == item.AccountId && x.Month == item.Month && x.CurrencyId == item.CurrencyId))
+                {
+                    GLAccountTotalByMonths.Add(new GLAccountTotalByMonthPM()
+                    {
+                        Tenant = item.Tenant,
+                        AccountId = item.AccountId,
+                        DateTypeCode = GLAccountTotalDateTypeValues.DueDate,
+                        CurrencyId = item.CurrencyId,
+
+                        Year = item.Year,
+                        Month = item.Month,
+
+                        LocalAmountCredit = 0,
+                        LocalAmountDebit = 0,
+                        ForeignAmountCredit = 0,
+                        ForeignAmountDebit = 0,
+
+                    });
+                }
+            }
+
         }
 
 
@@ -504,7 +528,28 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ControlGLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
             }
-                
+            foreach (var item in GLAccountTotalAccountingdate)
+            {
+                if (!GLAccountTotalDueDate.Any(x => x.Tenant == item.Tenant && x.AccountId == item.AccountId && x.Month == item.Month && x.CurrencyId == item.CurrencyId))
+                {
+                    ControlGLAccountTotalByMonths.Add(new GLAccountTotalByMonthPM()
+                    {
+                        Tenant = item.Tenant,
+                        AccountId = item.AccountId,
+                        DateTypeCode = GLAccountTotalDateTypeValues.DueDate,
+                        CurrencyId = item.CurrencyId,
+
+                        Year = item.Year,
+                        Month = item.Month,
+
+                        LocalAmountCredit = 0,
+                        LocalAmountDebit = 0,
+                        ForeignAmountCredit = 0,
+                        ForeignAmountDebit = 0,
+
+                    });
+                }
+            }
         }
 
         void CheckControlGLAccountTotalByMonths()
