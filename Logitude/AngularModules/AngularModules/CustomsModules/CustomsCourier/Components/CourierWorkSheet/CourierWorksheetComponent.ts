@@ -2254,7 +2254,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2297,7 +2297,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;
@@ -2385,7 +2385,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי םתר פריקה";
+        logitudeWindow.Title = "שינוי אתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
         this.ChangedUnloadPortSite = true;
@@ -2409,7 +2409,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "נם םשר מחיקת קוד עיכוב";
+        let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -2462,7 +2462,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
+        let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(text);
@@ -2497,7 +2497,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            myMessageWindow.Show("קייא מסר זהה בתהליך");
             return;
         }
 
@@ -2507,7 +2507,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -2519,7 +2519,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -2604,7 +2604,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור PENDING ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2623,7 +2623,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םחסון/פריקה ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר אחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }

@@ -203,10 +203,10 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר פריקה' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
@@ -226,7 +226,7 @@
                                                         <button style="text-align:right" (click)="SendALLSVG(true)">בקרת
                                                             סיווגים</button>
                                                         <button style="text-align:right" (click)="Export2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'יצום לםקסל' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'יצוא לאקסל' }}<img
                                                                 class="CenterCenter" title="Export To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;"
@@ -261,7 +261,7 @@
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
                                                             {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null"
-                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתםימים
+                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימיא
                                                             לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
@@ -315,7 +315,7 @@
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
                                                                     dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}) {{item.Header}}/לם םושרו ({{this._NotApproved}})</span>  
+                                                                    ({{item.Total}}) {{item.Header}}/לא אושרו ({{this._NotApproved}})</span>  
                                                             </div>
                                                         </td>
 
@@ -1047,7 +1047,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()" 
                                                                                     [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
-                                                                                    [ButtonText]="'םישור PENDING'"
+                                                                                    [ButtonText]="'אישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
