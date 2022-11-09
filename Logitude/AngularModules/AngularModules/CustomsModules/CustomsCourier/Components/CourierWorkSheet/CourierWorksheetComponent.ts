@@ -1194,7 +1194,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         await this.getAllColumns(queryCode, userId, isUserAdd);
     }
     getBaseColumns() {
-        if (this.queryColumns.length==0) {
+        if (this.queryColumns.length == 0) {
             this.queryColumns.push({
                 FieldName: 'CourierPendingReasonList',
                 DataTypeCode: 'String',
@@ -1236,7 +1236,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     if (!isUserAdd)
                         this.columns = [];
 
-
+                   
                     this.columns.push({
                         FieldName: "MyDeclarationCheckBox",
                         DataTypeCode: 'String',
@@ -1252,17 +1252,35 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         var CurColumn = this.columns.filter(a => a.FieldName == this.QueryColumns[i].ObjectFieldName);
                         this.columnsObjectField = this.columnsObjectFields.find(f => f.FieldName == this.QueryColumns[i].ObjectFieldName)
                         if (this.columns != null && (CurColumn == null || CurColumn.length == 0)) {
+                            var CourierTemplate = false;
+                            debugger
+                            switch (this.columnsObjectField.FieldName) {
+                                case "CourierDeclarationStatusCode":
+                                case "CourierManifestStatusCode":
+                                case "IsCourierMissingClassification":
+                                case "DocumentStatusCode":
+                                case "IsClosedForFollowUp":
+                                case "StorageSiteStatusCode":
+                                case "CourierCustomStatusName":
+                                case "CourierPaymentStatusCode":
+                                case "HighLowValue":
+                                    CourierTemplate = true;
+                                    break;
 
+                                default:
+                                    break;
+                            }
                             this.columns.push({
                                 FieldName: this.columnsObjectField.FieldName,//this.columnsObjectFields[i].ListPropertyPath ? this.columnsObjectFields[i].ListPropertyPath : this.columnsObjectFields[i].FieldName,
                                 DataTypeCode: this.columnsObjectField.DataTypeCode,
                                 Display: TextCodeTranslator.Translate(this.columnsObjectField.ListTextCodeCode),
                                 IsCustomTemplate: true,
                                 Styles: { width: this.QueryColumns[i].ColumnWidth + 'px' },
-                                HtmlListComponentName: 'CourierWorksheetListTemplate',
-                                HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+
+                                HtmlListComponentName: CourierTemplate ? 'CourierWorksheetListTemplate' : this.columnsObjectFields[i].HtmlListComponentName,
+                                HtmlListComponentUrl: CourierTemplate ? './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate' : this.columnsObjectFields[i].HtmlListComponentUrl,
                                 ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
-                                
+
                             });
                         }
                     }
@@ -1275,7 +1293,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         })
 
     }
-    
+
     // BuildColumns() {
     //     this.columns = [];
 
@@ -2761,7 +2779,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
     onColumnsClick() {
-       
+
         var windowArgs: any = {};
         windowArgs.queryId = "1-16090"
         windowArgs.queryCode = "Customs.DeclarationCourierStatus.CourierWorkScreen";
