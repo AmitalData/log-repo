@@ -86,7 +86,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
 
     SortedByField(selectedSortByObjectField) {
         this.SelectedSortedByField = selectedSortByObjectField;
-        this.SelectedScreen.SortedByFieldCode = selectedSortByObjectField.FieldCode;
+        this.SelectedScreen.SortedByFieldCode = selectedSortByObjectField?.FieldCode;
         this.ScreenLayoutComponent.Modified = true;
     }
 
