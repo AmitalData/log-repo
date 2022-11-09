@@ -4,7 +4,7 @@
 
   <OracleScript>
     <![CDATA[
-  CREATE OR REPLACE PROCEDURE q_Deletecommlogs (
+ CREATE OR REPLACE PROCEDURE q_deletecommlogs (
     days                   IN INTEGER,
     from__                 IN STRING,
     to__                   IN STRING,
@@ -31,7 +31,7 @@ BEGIN
                 AND ( to__ IS NULL
                       OR to_ = to__ )
                 AND ( subject__ IS NULL
-                      OR subject_ =   )
+                      OR subject_ = subject__ )
                 AND ( commstatustypecodelist IS NULL
                       OR communicationstatustypecode IN (
                     SELECT
@@ -62,7 +62,6 @@ BEGIN
 
     COMMIT;
 END;
-/
 	
     ]]>
   </OracleScript>
