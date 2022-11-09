@@ -108,7 +108,7 @@
     }
 </style>
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
-<div class="MediaFillAbsolute" style="background:transparent;" *ngIf="!newStyle">
+<div class="MediaFillAbsolute" style="background:transparent;" *ngIf="!orianStyle">
     <table class="LogitudeWindow" *ngIf="ShowFinalMessage == false">
         <tr>
             <td>
@@ -341,7 +341,7 @@
 
 </table>
 
-<div class="root" *ngIf="newStyle && ShowFinalMessage == false">
+<div class="root" *ngIf="orianStyle && ShowFinalMessage == false">
     <div class="container personal-info">
   
       <div class="section-header">
@@ -354,7 +354,7 @@
         </div>
         <div class="section-header-left">
           <img
-            src="/images/mobile_payment/personal_info_mobile.png"
+            src="/Images/mobile_payment/personal_info_mobile.png"
             alt="">
         </div>
       </div>
@@ -376,7 +376,7 @@
           <h3>פרטי חבילה</h3>
           <p><span>ערך משלוח: {{ShipmentValueInNIS}}</span></p>
           <p><span>כמות אריזות: {{Quantity}}</span></p>
-          <p><span>משקל: {{Weight}}</span></p>
+          <p><span>משקל: {{Weight}} ק"ג</span></p>
         </section>
       </div>
   
@@ -388,15 +388,16 @@
       <div class="btn-payment">
         <button (click)="SendButtonClicked()">לתשלום מאובטח</button>
       </div>
+      <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
   
       <div class="footer">
         <div class="footer-right">
           <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
           <br>
-          <a  href="mailto:{{00}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
         </div>
         <div class="footer-left">
-          <img src="/images/mobile_payment/orian_logo_mobile.png" />
+          <img src="/Images/mobile_payment/orian_logo_mobile.png" />
         </div>
       </div>
     </div>

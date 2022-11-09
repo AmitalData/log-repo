@@ -1,5 +1,5 @@
 
-<style>
+<style *ngIf="!orianStyle">
     .BlueTitle {
         font-size: 20px;
         color: #1B90CB;
@@ -115,7 +115,7 @@
     }
 
 </style>
-<div class="MediaFillAbsolute" style="background:white;" *ngIf="!newStyle">
+<div class="MediaFillAbsolute" style="background:white;" *ngIf="!orianStyle">
     <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
         <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
             <td>
@@ -487,7 +487,7 @@
 </table>
 </div>
 
-<table class="LogitudeWindow" *ngIf="!newStyle && ShowPaymentDetailsScreen == true" style="direction:rtl;">
+<table class="LogitudeWindow" *ngIf="!orianStyle && ShowPaymentDetailsScreen == true" style="direction:rtl;">
     <tr>
         <td>
             <table style="direction:rtl;border: 1px solid black;">
@@ -568,7 +568,7 @@
 
 </table>
 
-<div *ngIf="newStyle && ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
+<div *ngIf="orianStyle && ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
     <div class="root">
         <div class="container">
       
@@ -581,7 +581,7 @@
               </div>
             </div>
             <div class="section-header-left">
-              <img src="/images/mobile_payment/illustration.png" alt="">
+              <img src="/Images/mobile_payment/illustration.png" alt="">
             </div>
           </div>
       
@@ -602,7 +602,7 @@
               <h3>פרטי חבילה</h3>
               <p><span>ערך משלוח: {{ForeignCurrencyValue}} {{ForeignCurrency}}</span></p>
               <p><span>כמות אריזות: {{Quantity}}</span></p>
-              <p><span>משקל: {{Weight}}</span></p>
+              <p><span>משקל: {{Weight}} ק"ג</span></p>
             </section>
           </div>
       
@@ -612,7 +612,7 @@
               <p class="checkbox">
                 <!-- <input type="checkbox">  -->
                 <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext"></LogCheckBox>
-                <span>אני מאשר את הסכם </span> <a href="#" (click)="$event.preventDefault();ViewAggreement()">השירות</a>
+                אני מאשר את הסכם <a href="#" (click)="$event.preventDefault();ViewAggreement()">השירות</a>
             </p>
             </div>
           </div>
@@ -628,27 +628,27 @@
               <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
             </div>
             <div class="footer-left">
-              <img src="/images/mobile_payment/orian_logo_mobile.png" />
+              <img src="/Images/mobile_payment/orian_logo_mobile.png" />
             </div>
           </div>
         </div>
       </div>
 </div>
 
-<div *ngIf="newStyle && ShowPaymentDetailsScreen == true">
+<div *ngIf="orianStyle && ShowPaymentDetailsScreen == true">
     <div class="root">
-        <div class="container personal-info">
+        <div class="container details">
     
             <div class="section-header">
                 <div class="section-header-right">
-                    <h1 class="header">Details</h1>
+                    <h1 class="header">DETAILS</h1>
                     <div>
                         <h3 class="subheader">פירוט חיובים</h3>
                         <h3 class="shipment">משלוח # {{Hawb}}</h3>
                     </div>
                 </div>
                 <div class="section-header-left">
-                    <img src="/images/mobile_payment/details_mobile.png" alt="">
+                    <img src="/Images/mobile_payment/details_mobile.png" alt="">
                 </div>
             </div>
     
@@ -666,13 +666,14 @@
                         <span>{{item.AmountInNIS}}</span>
                     </p>
                 </section>
-        
+            </div>
+
             <div class="section-3">
                 <h4 class="amount">סה"כ לתשלום: {{TotalAmount | CustomNumbersPipe:0}} ש"ח</h4>
             </div>
     
             <div class="btn-payment">
-                <button (click)="ClosePaymentDetailsButtonClicked()"><img src="/images/mobile_payment/back_arrow.png" alt=""> חזרה לתשלום מאובטח</button>
+                <button (click)="ClosePaymentDetailsButtonClicked()"><img src="/Images/mobile_payment/back_arrow.png" alt=""> חזרה לתשלום מאובטח</button>
             </div>
     
             <div class="footer">
@@ -682,7 +683,7 @@
                     <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
                 </div>
                 <div class="footer-left">
-                    <img src="/images/mobile_payment/orian_logo_mobile.png" />
+                    <img src="/Images/mobile_payment/orian_logo_mobile.png" />
                 </div>
             </div>
         </div>

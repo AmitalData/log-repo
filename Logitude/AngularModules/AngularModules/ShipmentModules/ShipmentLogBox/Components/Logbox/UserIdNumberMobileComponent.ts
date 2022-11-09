@@ -59,7 +59,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     private datePipe: DatePipe;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
-    newStyle: boolean = true;
+    orianStyle: boolean = false;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -107,6 +107,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
+
+                    this.orianStyle = +this.Tenant === 126;
+                    if(this.orianStyle)
+                        this.getEcommerceSupportEmail()
+
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
@@ -205,6 +210,10 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     private userIdNumber;
     public get UserIdNumber() { return this.userIdNumber }
     public set UserIdNumber(newValue: string) { this.userIdNumber = newValue; }
+
+    private ecommerceSupportEmail: string = "";
+    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
+    public set EcommerceSupportEmail(newValue: string) { this.ecommerceSupportEmail = newValue; }
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
@@ -307,4 +316,10 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         return userIdNumber;
     }
 
+    private getEcommerceSupportEmail() {
+        new CommonDomainService().GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
+            if (myTenant.Result)
+                this.EcommerceSupportEmail = myTenant.Result;            
+        });
+    }
 }
