@@ -17,6 +17,8 @@
   IsNewWizard="false"
   LookUp1="&quot;Code&quot;"
   LookUp2="&quot;LocalName&quot;"
+  CodeField="&quot;Code&quot;"
+  NameField="&quot;EnglishName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"

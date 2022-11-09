@@ -50,6 +50,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 var ClientModuleName = filters.ClinetName;
                 Object TableController;
                 Type magicType;
+                if (!string.IsNullOrWhiteSpace(filters.objectTableName)) filters.objectTableName.Replace(".Customs", "");
 
                 TableController = GetInstance("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL", Tenant);
                 if (TableController==null)
