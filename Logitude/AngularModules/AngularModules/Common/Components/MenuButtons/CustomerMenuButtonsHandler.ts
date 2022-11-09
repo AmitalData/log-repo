@@ -420,7 +420,7 @@ export class CustomerMenuButtonsHandler {
 
     private RedirctToDigital()
     {
-        window.open(`${SessionLocator.TenantManagementJS.CustomerURL}?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
+        window.open(`${SessionLocator.TenantManagementJS.CustomerURL}/online-visibility?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
     }
 
     private isCustomerConnectedToEntities: boolean = false;
