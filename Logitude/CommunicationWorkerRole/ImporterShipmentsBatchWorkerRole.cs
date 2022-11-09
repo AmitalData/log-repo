@@ -199,7 +199,7 @@ namespace CommunicationWorkerRole
                                             //    {
 
 
-                                            var GetURI = URI + "ImporterShipmentsBatch/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
+                                            var GetURI = URI + "ImporterShipments/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
                                             bool IsShipmentExist = false;
                                             using (var client = new HttpClient())
                                             {
@@ -226,7 +226,7 @@ namespace CommunicationWorkerRole
                                             LogPM.Tenant = Shipment.Tenant;
                                             using (var client = new HttpClient())
                                             {
-                                                string ImporterShipmentsURI = URI + "ImporterShipmentsBatch";
+                                                string ImporterShipmentsURI = URI + "ImporterShipments";
                                                 client.DefaultRequestHeaders.Add("Token", Token);
                                                 client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                                 ICommonDataContext commoncontext = CommonDataContext.GetContext(Shipment.Tenant);
