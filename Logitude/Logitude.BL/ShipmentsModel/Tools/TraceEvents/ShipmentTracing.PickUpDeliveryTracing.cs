@@ -14,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         private bool createEventAfterDeleteFirstPickup = false;
         private bool createEventAfterDeleteFirstDelivery = false;
 
-        public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems = false)
+        public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, Shipment shipmentPoco, bool ignoreDeletedItems = false)
         {
             string DepartedCode = "PICD";
             if (RoutingDate.IsDateAddedOrModified(itemPM.ATD, itemPOCO.ATD))
@@ -154,12 +154,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             this.TracePickUpArrangedEvent(itemPM, itemPOCO, shipmentPM, ignoreDeletedItems);
 
-            if (IsAllowingPartial(shipmentPM.StatusId))
+            if (IsAllowingPartial(shipmentPM.StatusId) && IsHigherStatusWeight(DepartedCode, shipmentPoco.StatusId))
             {
                 ComputePartialStatusAmount(DepartedCode);
             }
         }
-        public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, bool ignoreDeletedItems = false)
+        public void TraceDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, Shipment shipmentPoco, bool ignoreDeletedItems = false)
         {
             if (itemPM.PickUpDeliveryTypeCode == "DELV")
             {
@@ -287,13 +287,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 this.TraceDeliveryArrangedEvent(itemPM, itemPOCO, shipmentPM, ignoreDeletedItems);
 
-                if (IsAllowingPartial(shipmentPM.StatusId))
+                if (IsAllowingPartial(shipmentPM.StatusId) && IsHigherStatusWeight(ArrivedCode_New, shipmentPoco.StatusId))
                 {
                     ComputePartialStatusAmount(ArrivedCode_New);
                 }
             }
         }
-        public void TraceDeletedPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        public void TraceDeletedPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, Shipment shipmentPoco)
         {
             if (itemPOCO.PickUpDeliveryTypeCode == "PICK")
             {
@@ -317,16 +317,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 if (IsFirstPickup(itemPM, shipmentPM, false) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("PCAR");
-                    this.CreateEventForNextPickup(itemPM, shipmentPM);
+                    this.CreateEventForNextPickup(itemPM, shipmentPM, shipmentPoco);
                 }
 
-                if (IsAllowingPartial(shipmentPM.StatusId))
+                if (IsAllowingPartial(shipmentPM.StatusId) && IsHigherStatusWeight("PICD", shipmentPoco.StatusId))
                 {
                     ComputePartialStatusAmount("PICD");
                 }
             }
         }
-        public void TraceDeletedDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
+        public void TraceDeletedDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM, Shipment shipmentPoco)
         {
             if (itemPM.PickUpDeliveryTypeCode == "DELV")
             {
@@ -337,15 +337,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 if (itemPOCO.ATD != null)
                 {
-                    this.DeleteTraceEvent("DELD");
+                    this.DeleteTraceEvent("DELD", itemPM.PickUpDeliveryNumber, itemPOCO.ATD);
                 }
                 if (IsFirstDelivery(itemPM, shipmentPM, false) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("DLAR");
-                    this.CreateEventForNextDelivery(itemPM, shipmentPM);                    
+                    this.CreateEventForNextDelivery(itemPM, shipmentPM, entityPoco);                    
                 }
 
-                if (IsAllowingPartial(shipmentPM.StatusId))
+                if (IsAllowingPartial(shipmentPM.StatusId) && IsHigherStatusWeight("DEAR", shipmentPoco.StatusId))
                 {
                     ComputePartialStatusAmount("DEAR");
                 }
@@ -719,7 +719,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return false;
         }
-        private void CreateEventForNextDelivery(ShipmentDeliveryPM shipmentDeliveryPM, ShipmentPM shipmentPM)
+        private void CreateEventForNextDelivery(ShipmentDeliveryPM shipmentDeliveryPM, ShipmentPM shipmentPM, Shipment shipmentPoco)
         {
             ShipmentDeliveryPM nextDelivery =
                            (from d in shipmentPM.ShipmentDeliveries
@@ -732,9 +732,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (shipmentDelivery == null) return;
 
             this.createEventAfterDeleteFirstDelivery = true;
-            this.TraceDelivery(nextDelivery, shipmentDelivery, shipmentPM, true);
+            this.TraceDelivery(nextDelivery, shipmentDelivery, shipmentPM, shipmentPoco, true);
         }
-        private void CreateEventForNextPickup(ShipmentPickUpPM shipmentPickUpPM, ShipmentPM shipmentPM)
+        private void CreateEventForNextPickup(ShipmentPickUpPM shipmentPickUpPM, ShipmentPM shipmentPM, Shipment shipmentPoco)
         {
             ShipmentPickUpPM nextPickup =
                            (from d in shipmentPM.ShipmentPickUps
@@ -747,7 +747,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (shipmentPickup == null) return;
 
             this.createEventAfterDeleteFirstPickup = true;
-            this.TracePickUp(nextPickup, shipmentPickup, shipmentPM, true);
+            this.TracePickUp(nextPickup, shipmentPickup, shipmentPM, shipmentPoco, true);
         }
     }
 }

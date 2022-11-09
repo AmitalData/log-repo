@@ -946,7 +946,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             string notes = null;
 
-            if (eventTypeCode == "DEAR")
+            if (eventTypeCode == "DEAR" || eventTypeCode == "DELD")
             {
                 notes = myDelivery.PickUpDeliveryNumber;
             }
@@ -1173,7 +1173,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (!string.IsNullOrEmpty(childEntityIndex))
                     {
-                        if (eventTypeCode == "PIAR" || eventTypeCode == "DEAR" || eventTypeCode == "PICD")
+                        if (eventTypeCode == "PIAR" || eventTypeCode == "DEAR" || eventTypeCode == "PICD" || eventTypeCode == "DELD")
                         {
                             AllEventTraces = AllEventTraces.Where(d => d.Notes == childEntityIndex).ToList();
                         }
@@ -1358,7 +1358,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                            
                             if (IsHigherStatusWeight(previousEvent?.EventType?.Code, previousEvent?.EventType?.EntityStatusId) && (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus))
                             {
-
                                 HandlePickUpDeliveryPreviousEvent(eventType, currentEventEntityStatus);
                             }
                         }
@@ -1387,12 +1386,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 return false;
             }
 
-            if (eventTypeCode != "DLAR" && eventTypeCode != "PCAR" && eventTypeCode != "DEAR" && eventTypeCode != "PICD")
+            if (eventTypeCode != "DLAR" && eventTypeCode != "PCAR" && eventTypeCode != "DEAR" && eventTypeCode != "PICD" && eventTypeCode != "DELD")
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
