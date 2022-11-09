@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;236b&quot;"
+  Code="&quot;7c71&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5314,6 +5314,156 @@
     <TextCode
       Code="&quot;Shipment.G.Unarchive&quot;"
       DefaultText="&quot;Unarchive&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Invoicing&quot;"
+      DefaultText="&quot;Invoicing&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ClearFilter&quot;"
+      DefaultText="&quot;Clear filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.AllTime&quot;"
+      DefaultText="&quot;All time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SearchPlaceholder&quot;"
+      DefaultText="&quot;Search bill to / ref# / invoice#&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SortBy&quot;"
+      DefaultText="&quot;Sort by&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.TotalAmount&quot;"
+      DefaultText="&quot;Total amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.OpenAmount&quot;"
+      DefaultText="&quot;Open amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.DueDate&quot;"
+      DefaultText="&quot;Due date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceDetails&quot;"
+      DefaultText="&quot;Invoice Details&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Subtotal&quot;"
+      DefaultText="&quot;Subtotal&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PersonalInformation&quot;"
+      DefaultText="&quot;Personal information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.Password&quot;"
+      DefaultText="&quot;Password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ConfirmPassword&quot;"
+      DefaultText="&quot;Confirm your current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.O.CurrentPassword&quot;"
+      DefaultText="&quot;Current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.EnterNewPassword&quot;"
+      DefaultText="&quot;Set a new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.NewPassword&quot;"
+      DefaultText="&quot;New password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ReTypePassword&quot;"
+      DefaultText="&quot;Repeat new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.ShipmentsToArriveWithinOneWeek&quot;"
+      DefaultText="&quot;Excepted shipments to arrive within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.InvoiceDueDateWithinOneWeek&quot;"
+      DefaultText="&quot;Total number invoices due date is within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalShipmentByStatus&quot;"
+      DefaultText="&quot;Total shipments by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalInvoiceByStatus&quot;"
+      DefaultText="&quot;Total invoices by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.GeneralSearch&quot;"
+      DefaultText="&quot;Search by Invoice No/ Shipment No&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Reports&quot;"
+      DefaultText="&quot;Reports&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Quotes&quot;"
+      DefaultText="&quot;Quotes&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.HelpCenter&quot;"
+      DefaultText="&quot;Help center&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Inprogress&quot;"
+      DefaultText="&quot;In progress&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.All&quot;"
+      DefaultText="&quot;All&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
