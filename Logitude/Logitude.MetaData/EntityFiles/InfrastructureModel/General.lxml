@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c069&quot;"
+  Code="&quot;4ee1&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5174,6 +5174,312 @@
       DefaultText="&quot;The reconciliation will be canceled but the adjusted journal will not be voided.&quot;"
       LocalDefaultText="&quot;ההתאמה תבוטל אך פקודת ההפרש לא תבוטל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.StatusUpdated&quot;"
+      DefaultText="&quot;Status Updated&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchPartner&quot;"
+      DefaultText="&quot;Search partner&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchFrom&quot;"
+      DefaultText="&quot;Search From&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchDestination&quot;"
+      DefaultText="&quot;Search Destination&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchPlaceholder&quot;"
+      DefaultText="&quot;Search ports/ references/ carrier&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Invoiced&quot;"
+      DefaultText="&quot;Invoiced&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EquipmentInformation&quot;"
+      DefaultText="&quot;Equipments information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.TotalInformation&quot;"
+      DefaultText="&quot;Total information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SealNumber&quot;"
+      DefaultText="&quot;Seal number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PackagesEmptyResultMsg&quot;"
+      DefaultText="&quot;No packages items exist&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.TransitTime&quot;"
+      DefaultText="&quot;Transit time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.FlightNumber&quot;"
+      DefaultText="&quot;Flight number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Documents&quot;"
+      DefaultText="&quot;Documents&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DocumentsFileName&quot;"
+      DefaultText="&quot;File name&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.InvoicesOpenAmount&quot;"
+      DefaultText="&quot;Open amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EventDate&quot;"
+      DefaultText="&quot;Date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EventTime&quot;"
+      DefaultText="&quot;Event Time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.MainRouteInformation&quot;"
+      DefaultText="&quot;Main route information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PreCarrigeInformation&quot;"
+      DefaultText="&quot;Pre carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.MainCarrigeInformation&quot;"
+      DefaultText="&quot;Main carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment1Information&quot;"
+      DefaultText="&quot;Transshipment 1 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment2Information&quot;"
+      DefaultText="&quot;Transshipment 2 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment3Information&quot;"
+      DefaultText="&quot;Transshipment 3 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.OnCarrigeInformation&quot;"
+      DefaultText="&quot;On carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Archive&quot;"
+      DefaultText="&quot;Archive&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Archived&quot;"
+      DefaultText="&quot;Archived&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Unarchive&quot;"
+      DefaultText="&quot;Unarchive&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Invoicing&quot;"
+      DefaultText="&quot;Invoicing&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ClearFilter&quot;"
+      DefaultText="&quot;Clear filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.AllTime&quot;"
+      DefaultText="&quot;All time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SearchPlaceholder&quot;"
+      DefaultText="&quot;Search bill to / ref# / invoice#&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SortBy&quot;"
+      DefaultText="&quot;Sort by&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.TotalAmount&quot;"
+      DefaultText="&quot;Total amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.OpenAmount&quot;"
+      DefaultText="&quot;Open amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.DueDate&quot;"
+      DefaultText="&quot;Due date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceDetails&quot;"
+      DefaultText="&quot;Invoice Details&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Subtotal&quot;"
+      DefaultText="&quot;Subtotal&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PersonalInformation&quot;"
+      DefaultText="&quot;Personal information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.Password&quot;"
+      DefaultText="&quot;Password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ConfirmPassword&quot;"
+      DefaultText="&quot;Confirm your current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.O.CurrentPassword&quot;"
+      DefaultText="&quot;Current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.EnterNewPassword&quot;"
+      DefaultText="&quot;Set a new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.NewPassword&quot;"
+      DefaultText="&quot;New password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ReTypePassword&quot;"
+      DefaultText="&quot;Repeat new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.ShipmentsToArriveWithinOneWeek&quot;"
+      DefaultText="&quot;Excepted shipments to arrive within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.InvoiceDueDateWithinOneWeek&quot;"
+      DefaultText="&quot;Total number invoices due date is within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalShipmentByStatus&quot;"
+      DefaultText="&quot;Total shipments by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalInvoiceByStatus&quot;"
+      DefaultText="&quot;Total invoices by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.GeneralSearch&quot;"
+      DefaultText="&quot;Search by Invoice No/ Shipment No&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Reports&quot;"
+      DefaultText="&quot;Reports&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Quotes&quot;"
+      DefaultText="&quot;Quotes&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.HelpCenter&quot;"
+      DefaultText="&quot;Help center&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Inprogress&quot;"
+      DefaultText="&quot;In progress&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.All&quot;"
+      DefaultText="&quot;All&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Shipment&quot;"
+      DefaultText="&quot;Shipments&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Invoice&quot;"
+      DefaultText="&quot;Invoicing&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

@@ -77,8 +77,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                               select a).ToDictionary(d=>d.TextCode.Code,a=>a);
             return translations;
         }
+        
+        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang)
+        {
+            var translationCodes = context.Translations
+                                          .Where(a => a.Tenant == tenant
+                                                      && (a.TextCodeCode.StartsWith(objectTableName))
+                                                      && a.TranslationHeaderCode.Equals(lang, StringComparison.InvariantCultureIgnoreCase)
+                                                      && !string.IsNullOrEmpty(a.TranslatedText))
+                                          .ToDictionary(a => a.TextCodeCode, x => x.TranslatedText);
 
-		public Translation GetLastTranslationsByTenant(int tenant)
+            return translationCodes;
+        }
+
+        public Translation GetLastTranslationsByTenant(int tenant)
 		{
 			string entityName = "LastTranslationsByTenant" + tenant;
 			Translation lastTranslation = null;

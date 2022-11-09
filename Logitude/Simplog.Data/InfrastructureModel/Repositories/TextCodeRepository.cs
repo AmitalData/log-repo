@@ -75,6 +75,22 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return textcodes;
         }
 
+        public List<TextCode> GetDigitalTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
+        {
+            var allowedTextCodesTypes = new List<string> { "F", "QC", "CH", "TH", "G" , "O"};
+
+            List<TextCode> textcodes = context.TextCodes
+                                              .Where(a => (a.Tenant == tenant || a.Tenant == 0) 
+                                                           && (a.ObjectTable.Name.Equals(objectTableName) 
+                                                                || (a.ObjectTable
+                                                                    .Name
+                                                                    .Equals("general", StringComparison.InvariantCultureIgnoreCase)
+                                                                    && a.Code.StartsWith(objectTableName))) 
+                                                           && allowedTextCodesTypes.Contains(a.TextCodeTypeCode))
+                                              .ToList();
+            return textcodes;
+        }
+
    
         public static List<TextCode> GetTextCodesByTenantStep(int tenant,int skip,int take)
         {
