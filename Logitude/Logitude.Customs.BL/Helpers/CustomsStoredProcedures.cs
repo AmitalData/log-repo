@@ -466,7 +466,6 @@ AS */
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText =
                     cmd.CommandTimeout = 1000000;
                     DbContextBaseUtil.GetStoredProcedureName("q_Deletecommlogs", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
