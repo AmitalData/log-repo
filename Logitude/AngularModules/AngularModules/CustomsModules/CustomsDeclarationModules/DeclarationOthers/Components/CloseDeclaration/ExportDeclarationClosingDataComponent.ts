@@ -488,48 +488,37 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     operationalDataFromUnifreight(){
 
-        const myUnifreightController = new UnifreightController(
-            this.DecPM,
-            "Logitude.Customs.CustomExportCloseFile");
-        
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    alert("subscribe");
+                    var IsMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                        mess.LogitudeEntityNumber == "" &&
+                        mess.LogitudeViewModel == "ExportDeclarationClosingDataComponent.ts");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                        alert("sBool");
+                        alert(sBool);
+                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                    }
+                }
+            );
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         var unifreightMessageM =
-        AmitalGatewayUtil.Instance.
+            AmitalGatewayUtil.Instance.
             DeclarationMessaging.GetMessage(this.DecPM.CustomFileNo, this.DecPM.Id, "ExportDeclarationClosingDataComponent.ts", "BFIFILE"); 
 
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "AmitalGatewayUtil.CustomExportCloseFile",
-                "BFIHMAIN.LogitudeTask",
-                "CustomExportCloseFile",
-                unifreightMessageM,
-                "נתונים תפעולים בסגירת הצהרה");     
-                
-                
-                alert("SendRequestToUnifreightAsync");
-                myUnifreightController.GetPromise(). 
-                    then((e :UnifreightResponseEventArgs) => { 
-                        alert("GetPromise");
-
-                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        const UnifreightResponseStatus = e.UnifreightResponseStatus;
-                        const UnifreightMessage = e.UnifreightMessage;
-                        const LOV_RETURN_VALUE = UnifreightMessageM.GetStringValue(UnifreightMessage , "Response.LOV_RETURN_VALUE");
-                       
-                        console.log(LOV_RETURN_VALUE);
-                        if(AppTool.IsNullOrEmpty(LOV_RETURN_VALUE)) {
-                            
-                               //this.MainAWB = LOV_RETURN_VALUE..Mawb;
-                               //this.Smp = LOV_RETURN_VALUE.Response.LogitudeCustomsFile.Hawb;nmp
-                               //this.ChargingSite = LOV_RETURN_VALUE.Response.LogitudeCustomsFile.LoadPort;
-                               //this.FlightDate = LOV_RETURN_VALUE.Response.LogitudeCustomsFile.FlightDate;
-                        }
-                    });
-            
- 
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-       
+                    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                        "AmitalGatewayUtil.CustomExportCloseFile",
+                        "BFIHMAIN.LogitudeTask",
+                        "CustomExportCloseFile",
+                        unifreightMessageM,
+                        "נתונים תפעולים בסגירת הצהרה");      
             
     }
 
