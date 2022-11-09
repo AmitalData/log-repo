@@ -76,31 +76,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     select a);
         }
 
-        public IQueryable<APInvoiceLine> GetInvoiceLinesForPayableId(string payableid, int tenant)
+        public bool IsPayableConnectedToInvoiceLines(string payableid, int tenant)
         {
             return (from a in context.APInvoiceLines
                     where a.EntityPayableId == payableid && a.Tenant == tenant
-                    select a);
+                    select a).Any();
             
         }
-
-        //public double? GetPayableTotalAccountedAmount(string payableId, int tenant)
-        //{
-        //    double? myResult = 0;
-
-        //    IQueryable<APInvoiceLine> myInvoicelines =
-        //        (from a in context.APInvoiceLines
-        //         where a.EntityPayableId == payableId
-        //         && a.Tenant == tenant
-        //         select a);
-
-        //    if (myInvoicelines.Count() != 0)
-        //    {
-        //        myResult = myInvoicelines.Sum(s => s.ForiegnCurrencyAmount);
-        //    }
-
-        //    return myResult;
-        //}
 
         public List<APInvoiceLine> GetPayablesInvoicesLines(List<string> allPayablesIds, int tenant)
         {
