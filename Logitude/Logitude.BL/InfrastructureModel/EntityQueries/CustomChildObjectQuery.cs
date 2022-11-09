@@ -53,6 +53,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             customChildObjectPM.ObjectTableId = customChildObject.ObjectTableId;
             customChildObjectPM.ParentEntityId = customChildObject.ParentEntityId;
             customChildObjectPM.ParentObjectTableId = customChildObject.ParentObjectTableId;
+            customChildObjectPM.Tenant = customChildObject.Tenant;
             for (int i = 1; i <= numberOfCustomFields; i++)
             {
                 MapCustomFieldValue(("Field" + i.ToString()), customChildObject, customChildObjectPM);

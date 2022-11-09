@@ -46,11 +46,13 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
         if (!this.Screen) return data;
         let sortingFieldCode: string = 'CreateDate';
         let SortedByField = window.ObjectFields.filter(field => field.FieldCode == this.Screen.SortedByFieldCode)[0];
+        let isCustomSortedByField: boolean = false;
         if (SortedByField) { sortingFieldCode = SortedByField.IsCustom ? SortedByField.FieldName : SortedByField.Code; }
+        if (SortedByField) { isCustomSortedByField = SortedByField.IsCustom; }
         let descendingSortedType: boolean = this.Screen.SortedType == 'Descending';
         return data.sort((customChildObject1, customChildObject2) => {
-            let value1 = SortedByField.IsCustom ? customChildObject1[sortingFieldCode].Value : customChildObject1[sortingFieldCode];
-            let value2 = SortedByField.IsCustom ? customChildObject2[sortingFieldCode].Value : customChildObject2[sortingFieldCode];
+            let value1 = isCustomSortedByField ? customChildObject1[sortingFieldCode].Value : customChildObject1[sortingFieldCode];
+            let value2 = isCustomSortedByField ? customChildObject2[sortingFieldCode].Value : customChildObject2[sortingFieldCode];
             return this.GetSortIndexValue(value1, value2, descendingSortedType);
         });
     }

@@ -80,7 +80,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Delete(CustomChildObjectPM theEntityPm)
         {
-            this.Poco = entityRepository.GetById(theEntityPm.Id, entityPM.Tenant);
+            this.Poco = entityRepository.GetById(theEntityPm.Id, theEntityPm.Tenant);
             if (this.Poco == null) return;
             entityRepository.Remove(Poco);
             this.isChange = true;

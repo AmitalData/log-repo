@@ -212,6 +212,7 @@ export class CustomChildObjectPMService {
             var property = this.MapCustomChildObjectsKey(customChildObjectsKeysMapperArgs);
         }
 
+        itemPM.DisableMarkAsDirty = false;
         this.SetChangeSetOperationKey(mapParent, itemPM, itemJson);
         itemPM.IsDirty = false;
         customChildEntity.Values.push(itemPM);
@@ -254,9 +255,9 @@ export class CustomChildObjectPMService {
             this.SetNoneChangeSetOperationKey(itemPM, itemJson);
             return;
         }
-        /////Delete
+        
         if (itemPM.UniqueKey) {
-            itemPM.ChangeSetOp = itemPM.ChangeSetOp ? "Update" : itemPM.ChangeSetOp;
+            itemPM.ChangeSetOp = itemPM.IsDirty ? "Update" : itemPM.ChangeSetOp;
         }
         else {
             itemPM.ChangeSetOp = "Insert";

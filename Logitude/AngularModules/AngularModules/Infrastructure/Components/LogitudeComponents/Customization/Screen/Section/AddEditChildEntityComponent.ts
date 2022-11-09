@@ -97,6 +97,8 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.CreatedBy = SessionLocator.LoggedUserId;
         this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.ObjectTableId = this.FatherComponent?.ObjectTable?.Id;
     }
 
     OkButtonClicked() {

@@ -25,6 +25,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.CreatedBy = entityPM.CreatedBy;
             entityPOCO.UpdateDate = entityPM.UpdateDate;
             entityPOCO.UpdatedBy = entityPM.UpdatedBy;
+            entityPOCO.ObjectTableId = entityPM.ObjectTableId;
+            entityPOCO.ParentEntityId = entityPM.ParentEntityId;
+            entityPOCO.ParentObjectTableId = entityPM.ParentObjectTableId;
             MapCustomFields(entityPM , entityPOCO);
         }
 
