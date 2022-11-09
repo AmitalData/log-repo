@@ -71,6 +71,7 @@ namespace CommunicationWorkerRole
         string type = string.Empty;
         string ExtraDetails = string.Empty;
         bool executedImmediately = false;
+        bool cameFromCallBack = false;
 
         public AutomationWorkerRole(string tenant)
         {
@@ -119,6 +120,7 @@ namespace CommunicationWorkerRole
                                 entityReference = response.MessageValues.ContainsKey("EntityReference") ? response.MessageValues["EntityReference"]?.ToString() : null;
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false;
+                                cameFromCallBack = response.MessageValues["CameFromCallBack"] != null ? bool.Parse(response.MessageValues["CameFromCallBack"].ToString()) : false;
                                 ExtraDetails = response.MessageValues.ContainsKey("ExtraDetails") ? response.MessageValues["ExtraDetails"] : "";
                                 string tenant = response.MessageValues["Tenant"].ToString();
 
@@ -281,12 +283,23 @@ namespace CommunicationWorkerRole
                                     {
                                         AutomationSendDocument automationSendDocument = automatedBackup.AutomationSendDocument;
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
-                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference };
+                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityChangeId = entityChange.Id ,EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference };
+
+                                        AutomationDocumentOutBuildService automationDocumentOutBuildService = new AutomationDocumentOutBuildService();
+
+                                        if(automationSendDocument.SendVia == "EMAIL" && !cameFromCallBack && !string.IsNullOrEmpty(automatedBackup.ReportTemplateId) && automationDocumentOutBuildService.HaveDocumentOutNeedBuild(automationSendEmailArgs) )
+                                        {
+                                            BuildDocumentOutWithCallBack(automationSendEmailArgs, automationDocumentOutBuildService);
+                                            continue;
+                                        }
+
+
                                         if (automationSendDocument.SendVia == "EMAIL")
                                         {
                                             AutomationHelper automationHelper = new AutomationHelper();
                                             string comunicationLogId = automationHelper.ExecuteEmailAutomation(automationSendEmailArgs);
                                         }
+
                                         else if (automationSendDocument.SendVia == "FTP")
                                         {
                                             AutomationDocumentHelper automationDocumentHelper = new AutomationDocumentHelper(automationSendEmailArgs);
@@ -548,6 +561,13 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private void BuildDocumentOutWithCallBack(AutomationSendEmailArgs automationSendEmailArgs, AutomationDocumentOutBuildService automationDocumentBuildService)
+        {
+            automationDocumentBuildService.BuildDocumentWithCallBack(automationSendEmailArgs);
+            queueservice.Complete();
+            LogDoneItemInMemory();
         }
 
         private string GetAuthenticationUtilUserEmail(EntityChange entityChange)

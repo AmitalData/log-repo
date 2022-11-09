@@ -19,6 +19,7 @@ using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
+using WebFreight.Web.Helpers.CallBack;
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
@@ -28,6 +29,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private QueueResponse queueResponse = null;
         private int? tenant =null;
         private string documentsExecutionLogId = string.Empty;
+        private string callBackDetailsXml = string.Empty;
         private DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
         private DocumentsExecutionLog documentsExecutionLog = null;
         private DateTime startDate = DateTime.Now;
@@ -41,6 +43,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             {
                 documentsExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
+                callBackDetailsXml = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("CallBackDetailsXml") ? queueResponse.MessageValues["CallBackDetailsXml"].ToString() : "";
             }
         }
 
@@ -55,6 +58,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     {
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
+                        if (!string.IsNullOrEmpty(callBackDetailsXml)) CallBackService.Notifiy(callBackDetailsXml, null);
+                      
                     }
                     else
                     {
@@ -75,13 +80,13 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 }
                 try
                 {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = excep, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                    queueService.CompleteAsFailed();
+                    //UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = excep, DoneDate = DateTime.Now, StartDate = startDate });
+                    HandleDocumentsExecutionException(excep);
                 }
                 catch (Exception ex)
                 {
 
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running ", System.Environment.MachineName);
                 }
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
@@ -91,8 +96,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null,  System.Environment.MachineName);
                 try
                 {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                    queueService.CompleteAsFailed();
+                    //UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate });
+                    HandleDocumentsExecutionException(exception);
                 }
                 catch (Exception ex)
                 {
@@ -194,12 +199,14 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 }
                 documentsExecutionLogRepository.Update(documentsExecutionLog);
                 documentsExecutionLogRepository.SubmitChanges();
+
+                if (!string.IsNullOrEmpty(callBackDetailsXml) && documentsExecutionLog.StatusCode == "F") CallBackService.Notifiy(callBackDetailsXml, null);
             }
         }
 
         private void HandleDocumentsExecutionException(Exception exception)
         {
-            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
+            //ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
             if (queueResponse != null)
             {
                 if (queueResponse.RetryNumber <= 1)

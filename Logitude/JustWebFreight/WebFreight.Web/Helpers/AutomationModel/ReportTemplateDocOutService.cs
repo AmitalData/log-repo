@@ -70,7 +70,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         {
             string parentObjectTableId = string.Empty;
             ObjectTable objectTable = ObjectTableRepository.GetSingleObjectTableById(objectTableId, tenant);
-            if (objectTable != null && (objectTable.Name == "ARInvoice" || objectTable.Name == "APInvoice"))
+            if (objectTable != null && (objectTable.Name == "ARInvoice" || objectTable.Name == "APInvoice" || objectTable.Name == "Shipment"))
             {
                 parentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
             }
