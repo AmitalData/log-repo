@@ -2400,14 +2400,38 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(_tenant);
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
 
+            var firstSupplierInvoiceItemPM = new SupplierInvoiceItemPM();
+            if (this._MySupplierInvoicePM.SupplierInvoiceItems != null && this._MySupplierInvoicePM.SupplierInvoiceItems.Count() == 1 && invoice.INVOICEITEMS.Count() == 1)
+            {
+                firstSupplierInvoiceItemPM = this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault();
+            }
+            else if((invoice.INVOICEITEMS != null && invoice.INVOICEITEMS.Count() > 1) || (this._MySupplierInvoicePM.SupplierInvoiceItems != null && this._MySupplierInvoicePM.SupplierInvoiceItems.Count() > 1))
+            {
+                //Delete Supplier Invoice Items
+                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                this._MyDeclarationPM.MarkAsChanged = true;
+
+                DeclarationUpdateService.DeclarationSupplierInvoiceItemsFastDelete(_MyDeclarationPM, dbContext2);
+                dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                AppendLogLine("MarkToDeleteSupplierInvoiceItems:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                AppendLogLine("Update:MarkToDeleteSupplierInvoiceItems:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            }
+
             foreach (var invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
                 decimal decimal1 = 0;
                 var SupplierInvoiceItemPM = new SupplierInvoiceItemPM();
-                if (this._MySupplierInvoicePM.SupplierInvoiceItems != null && this._MySupplierInvoicePM.SupplierInvoiceItems.Count() == 1 && invoice.INVOICEITEMS.Count() == 1)
+                if(firstSupplierInvoiceItemPM != null && firstSupplierInvoiceItemPM.DeclarationId == this._MySupplierInvoicePM.DeclarationId)
                 {
-                    SupplierInvoiceItemPM = this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault();
+                    SupplierInvoiceItemPM = firstSupplierInvoiceItemPM;
                 }
                 SupplierInvoiceItemPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
                 SupplierInvoiceItemPM.CounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
