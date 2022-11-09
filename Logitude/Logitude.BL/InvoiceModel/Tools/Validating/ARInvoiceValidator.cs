@@ -1160,7 +1160,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     CheckCardConnectedGLAccount(invoice.Tenant, invoice.BillToId);
                 }
                 CheckInvoiceCurrency(invoice);
-                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant, invoice.ARInvoiceTypeCode);
+                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant, invoice.ARInvoiceTypeCode, invoice.IsExternalAPI);
 
                 if (errorsList.Count > 0)
                     throw new ApplicationException(string.Join(";", errorsList));
@@ -1214,15 +1214,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         }
 
-        private static void CheckClosedMonth(DateTime? accountingDate, int tenant ,string Type=null)
+        private static void CheckClosedMonth(DateTime? accountingDate, int tenant ,string Type=null, bool isExternalAPI = false)
         {
             AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year, Type);
 
             if (period != null && accountingDate != null)
             {
                 var month = accountingDate.Value.Month;
-                if (month > period.OpenMonth || month < period.ClosedMonth)
-                    errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                if (isExternalAPI)
+                {
+                    if (month < period.ClosedMonth)
+                        errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                }
+                else {
+                    if (month > period.OpenMonth || month < period.ClosedMonth)
+                        errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                }
+                
             }
             else
             {

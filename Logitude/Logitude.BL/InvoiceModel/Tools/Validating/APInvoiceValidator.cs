@@ -765,11 +765,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (accountingPeriodList != null && invoicePM.AccountingDate != null)
             {
                 var month = invoicePM.AccountingDate.Value.Month;
-                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
-                {
 
-                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
-                    errors += msg + ";";
+                if (invoicePM.IsExternalEntity)
+                {
+                    if (month <= accountingPeriodList.ClosedMonth)
+                    {
+
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                        errors += msg + ";";
+                    }
+                }
+                else
+                {
+                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    {
+
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                        errors += msg + ";";
+                    }
                 }
             }
             else
