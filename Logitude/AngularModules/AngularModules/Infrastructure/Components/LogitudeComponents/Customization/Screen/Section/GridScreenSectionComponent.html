@@ -25,10 +25,10 @@
 					<log-column [width]="'150'" *ngFor="let ScreenColumn of ScreenSection.ScreenColumns" [header]="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe" title="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe">
 						<ng-template let-item>
 							<log-cell-template #logcelltemplate [IsEnabled]="false">
-								<div *ngIf="ScreenColumn.ObjectFields[0].DataTypeCode == 'Date' || ScreenColumn.ObjectFields[0].DataTypeCode == 'DateTime'" style="width: 100%; text-align: right;" [style.textAlign]="TextAlign">
+								<div *ngIf="ScreenColumn.ObjectFields[0].HasTemplate && (ScreenColumn.ObjectFields[0].DataTypeCode == 'Date' || ScreenColumn.ObjectFields[0].DataTypeCode == 'DateTime')" style="width: 100%; text-align: right;" [style.textAlign]="TextAlign">
 									{{item[ScreenColumn.ObjectFields[0].Code] | DateTimePipe:'DT'}}
 								</div>
-								<ObjectFieldTemplate *ngIf="ScreenColumn.ObjectFields[0].DataTypeCode != 'Date' && ScreenColumn.ObjectFields[0].DataTypeCode != 'DateTime'" [ObjectTable]="ObjectTable" [ObjectField]="ScreenColumn.ObjectFields[0]" [Entity]="item" [IsHeaderScreenTemplate]="true"  style="width:100%;"></ObjectFieldTemplate>
+								<ObjectFieldTemplate *ngIf="(ScreenColumn.ObjectFields[0].DataTypeCode != 'Date' && ScreenColumn.ObjectFields[0].DataTypeCode != 'DateTime') || !ScreenColumn.ObjectFields[0].HasTemplate" [ObjectTable]="ObjectTable" [ObjectField]="ScreenColumn.ObjectFields[0]" [Entity]="item" [IsHeaderScreenTemplate]="true"  style="width:100%;"></ObjectFieldTemplate>
 							</log-cell-template>
 						</ng-template>
 					</log-column>

@@ -11,6 +11,7 @@ import { UIProperties } from '../../../../../../Infrastructure/Components/Logitu
 import { Output, EventEmitter } from '@angular/core';
 import { PropertyChangedArgs } from '../../../../../EventEmitterArgs/PropertyChangedArgs';
 import { ObjectsLocator } from '../../../../../Locators/ObjectsLocator';
+import { FieldValueResolver } from '../../../../../Utilities/FieldValueResolver';
 declare var window;
 
 @Component({
@@ -59,8 +60,16 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
 
     private GetCustomFieldValue(customChildObject: any, sortedByField: any, sortingFieldCode: string) {
         let isNumberField: boolean = sortedByField ? sortedByField.DataTypeCode == "Decimal" : false;
+        let isDateField: boolean = sortedByField ? sortedByField.DataTypeCode == "Date" || sortedByField.DataTypeCode == "DateTime" : false;
+        if (isNumberField) {
+            return +customChildObject[sortingFieldCode].Value;
+        } 
 
-        return isNumberField ? +customChildObject[sortingFieldCode].Value : customChildObject[sortingFieldCode].Value;
+        if (isDateField) {
+            return FieldValueResolver.ConvertToDate(customChildObject[sortingFieldCode].Value);
+        }
+
+        return customChildObject[sortingFieldCode].Value;
     }
 
     private GetSortIndexValue(value1: any, value2: any, descendingSortedType: boolean) {
