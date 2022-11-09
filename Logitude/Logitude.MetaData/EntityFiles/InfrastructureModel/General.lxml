@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;7c71&quot;"
+  Code="&quot;4ee1&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5464,6 +5464,21 @@
     <TextCode
       Code="&quot;Shipment.G.All&quot;"
       DefaultText="&quot;All&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Shipment&quot;"
+      DefaultText="&quot;Shipments&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Invoice&quot;"
+      DefaultText="&quot;Invoicing&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

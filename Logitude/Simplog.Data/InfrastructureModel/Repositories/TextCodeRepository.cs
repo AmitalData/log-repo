@@ -82,7 +82,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<TextCode> textcodes = context.TextCodes
                                               .Where(a => (a.Tenant == tenant || a.Tenant == 0) 
                                                            && (a.ObjectTable.Name.Equals(objectTableName) 
-                                                                || a.ObjectTable.Name.Equals("general", StringComparison.InvariantCultureIgnoreCase)) 
+                                                                || (a.ObjectTable
+                                                                    .Name
+                                                                    .Equals("general", StringComparison.InvariantCultureIgnoreCase)
+                                                                    && a.Code.StartsWith(objectTableName))) 
                                                            && allowedTextCodesTypes.Contains(a.TextCodeTypeCode))
                                               .ToList();
             return textcodes;
