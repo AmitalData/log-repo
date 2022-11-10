@@ -534,22 +534,22 @@ namespace CommunicationWorkerRole.Services
             bool isValid = false;
             switch (balanceInLocalCurrencyOperator) {
                 case "Equals":
-                    isValid = !(balanceInLocalCurrency== localclosedBalance);
+                    isValid = (balanceInLocalCurrency== localclosedBalance);
                     break;
                 case "NotEqual":
-                    isValid = !(balanceInLocalCurrency != localclosedBalance);
+                    isValid = (balanceInLocalCurrency != localclosedBalance);
                     break;
                 case "LargerThan":
-                    isValid = !(balanceInLocalCurrency > localclosedBalance);
+                    isValid = (balanceInLocalCurrency > localclosedBalance);
                     break;
                 case "LessThan":
-                    isValid = !(balanceInLocalCurrency < localclosedBalance);
+                    isValid = (balanceInLocalCurrency < localclosedBalance);
                     break;
                 case "LessThanOrEqual":
-                    isValid = !(balanceInLocalCurrency <= localclosedBalance);
+                    isValid = (balanceInLocalCurrency <= localclosedBalance);
                     break;
                 case "GreaterThanOrEqual":
-                    isValid = !(balanceInLocalCurrency >= localclosedBalance);
+                    isValid = (balanceInLocalCurrency >= localclosedBalance);
                     break;
             }
             return isValid;
