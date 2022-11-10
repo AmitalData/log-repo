@@ -7,9 +7,11 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
+const valdationMessageOfDuplicateTableName = 'Another sub object with same Display Label(Singular) is already exist';
 declare var window: any;
 
 @Component({
@@ -29,6 +31,7 @@ export class AddSubEntityComponent extends BaseComponent {
     private objectTablePMService: ObjectTablePMService;
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
+    private objectTableName: string;
     constructor() {
         super();
         this.objectTablePMService = new ObjectTablePMService();
@@ -49,6 +52,7 @@ export class AddSubEntityComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
+            this.objectTableName = this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
         }
     }
 
@@ -78,6 +82,10 @@ export class AddSubEntityComponent extends BaseComponent {
         if (!this.displayLabelPlural)
             errors.push(valdationMessageOfDisplayLabelPlural);
 
+        if (this.IsNotValidTableName()) {
+            errors.push(valdationMessageOfDuplicateTableName);
+        }
+
         if (errors.length > 0)
             return this.ValidationErrorsList = errors;
 
@@ -86,13 +94,18 @@ export class AddSubEntityComponent extends BaseComponent {
 
     }
 
+    private IsNotValidTableName() {
+        let objectTable = window.ObjectTables.filter(t => t.Name == this.objectTableName)[0];
+        return !AppTool.IsNullOrEmpty(objectTable);
+    }
+
     private MapCustomObjectTableFields() {
         this.objectTablePM.ParentObjectTableId = this.parentObjectTableId;
         this.objectTablePM.ClientModuleName = this.parentObjectTable?.ClientModuleName;
         this.objectTablePM.IsCustom = true;
         this.objectTablePM.Tenant = SessionLocator.Tenant;
 
-        this.objectTablePM.Name = this.DisplayLabelSingular.replace(/\s/g, "");
+        this.objectTablePM.Name = this.objectTableName;
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
