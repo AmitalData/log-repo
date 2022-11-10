@@ -121,9 +121,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                             string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM.MAWB);
 
-                            
-                            var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
-                            var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
+                            if (drityMessage != null)
+                            {
+                                var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                                var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
+                            }
 
                         }
                     }
