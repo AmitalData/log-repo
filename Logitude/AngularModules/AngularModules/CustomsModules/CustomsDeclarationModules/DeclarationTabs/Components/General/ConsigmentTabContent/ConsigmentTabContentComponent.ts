@@ -253,7 +253,7 @@ export class ConsigmentTabContentComponent
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages)) {
             for (let pkg of this.EntityPM.ConsignmentPackages) {
-                var item = new ConsigmentPackageModel(pkg);
+                var item = new ConsigmentPackageModel(pkg,this.Tab);
                 this.ConsimentPackages.Insert(item);
             }
         }
@@ -512,8 +512,12 @@ export class ConsigmentTabContentComponent
     public get ManifestNumber() { return this.EntityPM ? this.EntityPM.ManifestNumber : null; }
     public set ManifestNumber(newValue: string) {
         this.EntityPM.ManifestNumber = newValue;
-        this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
-
+            this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
+            var IsExport=this.declarationPM.Direction=='E'&&this.declarationPM.TransportModeId=='O'&& !AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages[0]?.MarksNumbers)
+            if(!IsExport) {
+               this.Tab.Title=null;
+            
+            }            
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
         }
@@ -802,7 +806,7 @@ export class ConsigmentTabContentComponent
     AddPackageButtonClicked() {
         var line = new ConsignmentPackagePM(this.EntityPM);
         this.EntityPM.AddConsignmentPackage(line);
-        var item = new ConsigmentPackageModel(line);
+        var item = new ConsigmentPackageModel(line,this.Tab);
         this.ConsimentPackages.Insert(item);
         //this.CurrentSession.ResetRowIndex();
     }
@@ -848,6 +852,15 @@ export class ConsigmentTabContentComponent
                 if (confirmWindow.Yes) { // YES
                     this.ConsimentPackages.Remove(item);
                     this.EntityPM.RemoveConsignmentPackage(item.EntityPM);
+                     if(this.declarationPM.Direction=='E'&&this.declarationPM.TransportModeId=='O'){
+                         if(this.ConsimentPackages.Length==0||AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages[0]?.MarksNumbers)){
+                             this.Tab.Title=null;
+                         }
+                         else{                          
+                            var val=this.EntityPM.ConsignmentPackages[0]?.MarksNumbers.replace("\n", "");
+                             this.Tab.Title = (this.EntityPM.ConsignmentPackages[0]?.MarksNumbers.replace("\n", "") + '-')  + this.EntityPM.SequenceNumeric;
+                         }
+                     }
                 }
             });
 
@@ -908,7 +921,7 @@ export class ConsigmentTabContentComponent
             else {
                 var line = new ConsignmentPackagePM(this.EntityPM);
                 this.EntityPM.AddConsignmentPackage(line);
-                var item = new ConsigmentPackageModel(line);
+                var item = new ConsigmentPackageModel(line,this.Tab);
                 item.PackageMeasureQualifierCode = "2"
                 item.PackageQuantity = arg.PacakgesQuantity;
                 item.GrossMassMeasure = arg.TotalWheight;
@@ -1168,9 +1181,12 @@ export class ConsignmentType {
 export class ConsigmentPackageModel extends BaseComponent {
     public EntityPM: ConsignmentPackagePM;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(line: ConsignmentPackagePM) {
+    public Tab: LogTab;
+
+    constructor(line: ConsignmentPackagePM ,Tab: LogTab) {
         super();
         this.EntityPM = line;
+        this.Tab=Tab;
     }
 
     //#region Properties
@@ -1187,7 +1203,14 @@ export class ConsigmentPackageModel extends BaseComponent {
     public set PackageTypeCode(newValue: string) { this.EntityPM.PackageTypeCode = newValue; }
 
     public get MarksNumbers() { return this.EntityPM.MarksNumbers; }
-    public set MarksNumbers(newValue: string) { this.EntityPM.MarksNumbers = newValue; }
+    public set MarksNumbers(newValue: string) { 
+        this.EntityPM.MarksNumbers = newValue; 
+        var IsExport=this.CurrentSession.CurrentEditComponent.EntityPM.Direction=='E'&&this.CurrentSession.CurrentEditComponent.EntityPM.TransportModeId=='O'
+        if(IsExport) {
+
+            this.Tab.Title =(this.Tab.EntityPM.consignmentPackages[0].MarksNumbers.replace("\n","") + '-')  + this.Tab.EntityPM.SequenceNumeric;
+        }
+    }
 
     public get GrossMassMeasure() { return this.EntityPM.GrossMassMeasure; }
     public set GrossMassMeasure(newValue: number) { this.EntityPM.GrossMassMeasure = newValue; }

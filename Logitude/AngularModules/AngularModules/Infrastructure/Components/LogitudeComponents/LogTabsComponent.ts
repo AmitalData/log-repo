@@ -158,6 +158,7 @@ export class LogTab {
     public Parent: any;
     public Code: string;
     public Header: string;
+    public Title: string;
     //public ComponentName: string;
     public ComponentPath: string;
     public Index: number;

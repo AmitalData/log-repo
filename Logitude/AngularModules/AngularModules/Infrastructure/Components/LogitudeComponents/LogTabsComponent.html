@@ -232,7 +232,7 @@
 
                                     <div style="position: relative; width: 100%;" class="InnerChild"
                                          [style.text-align]="IsRTL ? 'right' : 'left'"
-                                         [title]="tab.Header"
+                                         [title]="tab.Title?tab.Title:tab.Header"
                                          (mousedown)="onListMouseDown($event,tab)">
 
                                         <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
