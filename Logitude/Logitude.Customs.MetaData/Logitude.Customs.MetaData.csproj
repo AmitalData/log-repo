@@ -105,6 +105,7 @@
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
