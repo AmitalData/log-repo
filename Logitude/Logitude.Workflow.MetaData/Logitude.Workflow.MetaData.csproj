@@ -60,6 +60,8 @@
     </None>
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
+    <None Include="DBTables\Expression.dxml" />
+    <None Include="DBTables\ExpressionCategory.dxml" />
     <None Include="DBTables\WorkFlow.dxml" />
     <None Include="DBTables\WorkFlowInstance.dxml" />
     <None Include="DBTables\WorkFlowInstanceActivity.dxml" />
@@ -67,6 +69,8 @@
     <None Include="DBTables\WorkFlowInstanceStatus.dxml" />
     <None Include="DBTables\WorkFlowInstanceVariable.dxml" />
     <None Include="DBTables\WorkFlowStatus.dxml" />
+    <None Include="EntityFiles\Expression.lxml" />
+    <None Include="EntityFiles\ExpressionCategory.lxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
     <None Include="EntityFiles\WorkFlowInstance.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceActivity.lxml" />

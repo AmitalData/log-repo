@@ -1,0 +1,153 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 8px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .expression-label .Label {
+        color: black !important;
+        font-size: 12px !important;
+    }
+
+    .expression-container {
+        border: 1px solid black;
+        height: 252px;
+    }
+
+    .expression-container:focus {
+        border: 1px #1e88e5 solid;
+    }
+
+    .functions-header {
+        background: lightgray;
+        padding-bottom: 5px;
+    }
+
+    .functions-label {
+        margin-bottom: 5px;
+    }
+
+    .functions-container {
+        display: flex;
+        margin-left: 10px;
+    }
+
+    .expression-category-dropdown {
+        width: 100px;
+    }
+
+    .expression-dropdown {
+        width: 220px;
+    }
+
+    .resources-tree {
+        width: 220px;
+        margin-left: 10px;
+    }
+
+    .expression-textarea {
+        height: 200px;
+        border-radius: 0px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .check-Syntax-btn {
+        width: 120px;
+        background: white;
+        font-size: 14px;
+        border: 2px solid black;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="expression-label">
+                <LogLabel [NoObjectField]="true" [Text]="'Expression'" [ObjectFieldName]="'Expression'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="expression-container">
+                <div class="functions-header">
+                    <div class="functions-label">
+                        <LogLabel [NoObjectField]="true" [Text]="'Functions'" [ObjectFieldName]="'Expression'"
+                            [DataContext]="DataContext"></LogLabel>
+                    </div>
+                    <div class="functions-container">
+                        <div class="expression-category-dropdown">
+                            <ComboBox [ItemsSource]="ExpressionCategoryList" [Binding]="'Name'"
+                                [SelectedItem]="SelectedExpressionCategory"
+                                (SelectedItemChanged)="SelectedExpressionCategory = $event" [ListType]="''"
+                                [CyData]="'expression'">
+                            </ComboBox>
+                        </div>
+                        <div class="expression-dropdown">
+                            <ComboBox [ItemsSource]="ExpressionListByCategory" [Binding]="'Name'"
+                                (SelectedItemChanged)="SelectedExpression = $event"
+                                [ListType]="''" [CyData]="'expression'">
+                            </ComboBox>
+                        </div>
+                        <div class="resources-tree">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
+                                (ValueChanged)="updateResources($event)" [DisplayTitle]="true" [AllowClear]="false">
+                            </TreeSelect>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="expression-textarea" id="ETextArea" (click)="setCurserPoints($event)"
+                    [(ngModel)]='ExpressionTextArea' (ngChange)='updateExpressionTextArea($event.Value)'></textarea>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div>
+                <button class="check-Syntax-btn" (click)="checkSyntax()">check Syntax</button>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td>
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'expression-save-button'"
+                [CancelButtonDataCy]="'expression-cancel-button'">
+            </FooterButtons>
+        </td>
+    </tr>
+</table>
