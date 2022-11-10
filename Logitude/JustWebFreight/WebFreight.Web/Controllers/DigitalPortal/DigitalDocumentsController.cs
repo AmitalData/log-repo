@@ -97,5 +97,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        [HttpGet]
+        [Route("DigitalDocuments/GetDocumentDownloadToken")]
+        public HttpResponseMessage GetDocumentDownloadToken()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                DocumentDownloadTokenService documentDownloadTokenService = new DocumentDownloadTokenService(authToken);
+                string documentDownloadToken = documentDownloadTokenService.Get();
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentDownloadToken);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
