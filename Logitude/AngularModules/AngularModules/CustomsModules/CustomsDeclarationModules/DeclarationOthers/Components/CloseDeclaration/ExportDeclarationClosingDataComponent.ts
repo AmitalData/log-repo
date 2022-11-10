@@ -507,10 +507,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-                    alert("subscribe");
+                    alert("subscribe " + mess.LogitudeEntityNumber + ' ' + this.DecPM.Id + ' ' + mess.LogitudeViewModel);
+                    alert("response "+ mess.Response)
                     var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == "" &&
+                        // mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                        mess.LogitudeEntityNumber == this.DecPM.Id &&
                         mess.LogitudeViewModel == "ExportDeclarationClosingDataComponent.ts");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
