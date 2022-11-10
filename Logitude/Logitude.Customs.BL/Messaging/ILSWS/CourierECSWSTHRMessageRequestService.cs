@@ -113,8 +113,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, mawb);
                 if (myCourierMasterPM == null)
                 {
-                    //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                    throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+                    return null;
                 }
             }
 
