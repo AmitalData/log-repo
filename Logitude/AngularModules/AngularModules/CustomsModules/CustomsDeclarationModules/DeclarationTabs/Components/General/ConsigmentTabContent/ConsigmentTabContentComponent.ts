@@ -513,10 +513,10 @@ export class ConsigmentTabContentComponent
     public set ManifestNumber(newValue: string) {
         this.EntityPM.ManifestNumber = newValue;
             this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
-            var IsExport=this.declarationPM.Direction=='E'&&this.declarationPM.TransportModeId=='O'&& !AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages[0]?.MarksNumbers)
-            if(!IsExport) {
+            var IsMarksNumbers=this.declarationPM.Direction=='E'&&this.declarationPM.TransportModeId=='O'&& !AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages[0]?.MarksNumbers)
+            if(!IsMarksNumbers) {
                this.Tab.Title=null;
-            
+
             }            
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
@@ -1205,8 +1205,8 @@ export class ConsigmentPackageModel extends BaseComponent {
     public get MarksNumbers() { return this.EntityPM.MarksNumbers; }
     public set MarksNumbers(newValue: string) { 
         this.EntityPM.MarksNumbers = newValue; 
-        var IsExport=this.CurrentSession.CurrentEditComponent.EntityPM.Direction=='E'&&this.CurrentSession.CurrentEditComponent.EntityPM.TransportModeId=='O'
-        if(IsExport) {
+       
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.Direction=='E'&&this.CurrentSession.CurrentEditComponent.EntityPM.TransportModeId=='O') {
 
             this.Tab.Title =(this.Tab.EntityPM.consignmentPackages[0].MarksNumbers.replace("\n","") + '-')  + this.Tab.EntityPM.SequenceNumeric;
         }
