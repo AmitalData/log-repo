@@ -12,6 +12,7 @@ export class SetValueOperatorsList {
         this.Items = [
             new ListItem(SetValueOperators.Equals),
             new ListItem(SetValueOperators.EqualsField),
+            new ListItem(SetValueOperators.Expression),
         ]
     }
 }

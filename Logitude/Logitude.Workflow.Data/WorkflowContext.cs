@@ -68,6 +68,10 @@ namespace Logitude.Workflow.Data
             Database.SetInitializer<WorkflowContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
+            modelBuilder.Configurations.Add(new ExpressionMap());
+	
+            modelBuilder.Configurations.Add(new ExpressionCategoryMap());
+	
             modelBuilder.Configurations.Add(new WorkFlowMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowInstanceMap());
@@ -365,6 +369,18 @@ namespace Logitude.Workflow.Data
 		}
  
 
+	 public IDbSet<Expression> Expressions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExpressionCategory> ExpressionCategories 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<WorkFlow> WorkFlows 
 	 {
 	      get; set;

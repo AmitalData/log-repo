@@ -1280,6 +1280,8 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContainerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionCategoryViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceStatusViewsController.Generated.cs" />
@@ -3399,6 +3401,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DocumentTypeCustomsDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExporterRoleTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExpressionCategoryUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExpressionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalPageAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExceptionReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalReconciliationLineUpdateClass.cs" />

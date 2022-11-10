@@ -86,6 +86,18 @@
     .padding-top-22 {
         padding-top: 22px !important;
     }
+
+    .function-icon {
+        position: absolute;
+        top: 1px;
+        left: 4px;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .expression-input {
+        padding-left: 24px;
+    }
 </style>
 
 <ul class="set-value-container">
@@ -150,7 +162,8 @@
                     </TreeSelect>
 
                 </div>
-                <div *ngIf="!(setValue.operator | IsFieldOperatorPipe)" class="set-value-value-container">
+                <div *ngIf="!(setValue.operator | IsFieldOperatorPipe) && (setValue.operator != 'Expression')"
+                    class="set-value-value-container">
 
                     <FieldValue *ngIf="setValue.fieldChangedToggle"
                         [ObjectField]="(setValue.fieldCode | IsDeclaredVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
@@ -166,6 +179,11 @@
                         (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </FieldValue>
 
+                </div>
+                <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
+                    <Expression [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event, setValueIndex)"
+                        [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                    </Expression>
                 </div>
             </div>
         </div>

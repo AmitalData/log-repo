@@ -1,0 +1,29 @@
+<style>
+    .expression-element {
+        height: 22px;
+        width: 200px;
+        float: left;
+    }
+
+    .expression-input {
+        padding-left: 24px;
+    }
+
+    .function-icon {
+        position: absolute;
+        top: 1px;
+        left: 4px;
+        bottom: 0;
+        margin: auto;
+    }
+</style>
+
+<tr>
+    <td>
+        <div class="expression-element" (click)="expressionHandle()">
+            <input class="expression-input" type="text" placeholder="Expression..." [(ngModel)]="ExpressionValue"
+                readonly />
+            <img class="function-icon" src="./Images/function.png" />
+        </div>
+    </td>
+</tr>

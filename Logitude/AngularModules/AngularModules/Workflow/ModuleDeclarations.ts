@@ -31,6 +31,8 @@ import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItem
 import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
 import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
 import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
+import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
+import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -55,6 +57,8 @@ export const Components = [
     TreeSelectComponent,
     SetValuesComponent,
     DeleteNodeWarningComponent,
+    ExpressionComponent,
+    ExpressionLogicComponent
 ];
 
 export const Pipes = [
@@ -97,6 +101,8 @@ export class ModuleDeclarations {
             case "TreeSelectComponent": { result = TreeSelectComponent; break; }
             case "SetValuesComponent": { result = SetValuesComponent; break; }
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
+            case "ExpressionComponent": { result = ExpressionComponent; break; }
+            case "ExpressionLogicComponent": { result = ExpressionLogicComponent; break; }
         }
         return result;
     }

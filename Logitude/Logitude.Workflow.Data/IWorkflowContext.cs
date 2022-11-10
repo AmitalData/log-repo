@@ -17,7 +17,9 @@ namespace Logitude.Workflow.Data
     public interface IWorkflowContext : IContext
     {
    
-       	 IDbSet<WorkFlow> WorkFlows { get; }
+       	 IDbSet<Expression> Expressions { get; }
+		 IDbSet<ExpressionCategory> ExpressionCategories { get; }
+		 IDbSet<WorkFlow> WorkFlows { get; }
 		 IDbSet<WorkFlowInstance> WorkFlowInstances { get; }
 		 IDbSet<WorkFlowInstanceActivity> WorkFlowInstanceActivities { get; }
 		 IDbSet<WorkFlowInstanceActivityStatus> WorkFlowInstanceActivityStatuses { get; }
