@@ -36,14 +36,15 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 import { DatePipe } from '@angular/common';
 
 
-@Component({
-    
-    templateUrl: './ECommercePaymentRequestMobileComponent.html'
+@Component({    
+    templateUrl: './ECommercePaymentRequestMobileComponent.html',
+    styleUrls: ['./mobilePayments.scss', './detailsMobile.scss']
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
-  public DimDenyButton: boolean = false;
-  public DimApproveButton: boolean = false;
+    public DimDenyButton: boolean = false;
+    public DimApproveButton: boolean = false;
+    public orianStyle: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -114,6 +115,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
+
+                    this.orianStyle = +this.Tenant === 126;
+
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 

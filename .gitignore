@@ -430,6 +430,9 @@ __pycache__/
 /Logitude/Logitude.MetadataUpdate/performancelog.csv
 /Logitude/AngularModules/AngularModules/report.20200531.114949.5976.0.001.json
 
+
+
+
 /e2e/Cypress/IslamsTeam/ReleaseTestsQ4/Quotation/CreateEditQuote.ts
 /Logitude/AngularModules/.vscode/AngularModules
 /package-lock.json
@@ -437,7 +440,6 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages/*
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages
-*.png
 /Logitude/AngularModules/CypressTesting/Shipment/cypress/Reports
 /Logitude/AngularModules/CypressTesting/Shipment/mochawesome-report
  
