@@ -893,6 +893,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     try
                     {
+                        currentDeclarationCourierStatusPM.MAWB = _AmitalCustomsFile.MAWB;
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
 
@@ -1772,6 +1773,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                    currentDeclarationCourierStatusPM.MAWB = _AmitalCustomsFile.MAWB;
                     currentDeclarationCourierStatusPM.DistributionArea = _AmitalCustomsFile.DistributionArea;
                     AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
                     try

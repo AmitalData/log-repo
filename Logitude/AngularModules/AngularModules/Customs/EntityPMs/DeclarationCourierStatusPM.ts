@@ -329,7 +329,12 @@ export class DeclarationCourierStatusPM {
         }
     }
     //public DeclarationPendings: Array<DeclarationPendingPM>= [];
-     private lastMileStatusName: string;
+     private mAWB: string;
+    public get MAWB() { return this.mAWB; }
+    public set MAWB(newValue: string) { if (this.mAWB != newValue) { this.mAWB = newValue; this.MarkAsDirty("MAWB"); } }
+       
+	 
+    private lastMileStatusName: string;
     public get LastMileStatusName() { return this.lastMileStatusName; }
     public set LastMileStatusName(newValue: string) { if (this.lastMileStatusName != newValue) { this.lastMileStatusName = newValue; this.MarkAsDirty("LastMileStatusName"); } }
        

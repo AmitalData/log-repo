@@ -114,6 +114,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteErrorText, 
 	         StorageSiteStatusName, 
 	         CourierPendingReasonList, 
+	         MAWB, 
 	         LastMileStatusName, 
 	         SortedImporterCode, 
 	         SortedDocumentStatusCode, 

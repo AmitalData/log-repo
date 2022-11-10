@@ -86,47 +86,48 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     
                 }
-                //if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierCustomStatusCode== null )
-                //{
-                //    CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-                                      
-                //    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                //    bool SwissportSuspendedCodeIsUp = false;
+                if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierCustomStatusCode == null)
+                {
+                    CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
 
-                //    var ifSwiss = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant).Find(c => c.StorageSiteCode == "ILSWS");
-                //    if (ifSwiss != null) {
-                //        List<string> listReasonCode;
-                //        if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
-                //        {
-                //            listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
-                //        }
-                //        else
-                //        {
-                //            listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
-                //            || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
-                //        }
-                //        foreach (var item in listReasonCode)
-                //        {
-                //            if (courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
-                //            {
-                //                SwissportSuspendedCodeIsUp = true;
-                //                break;
-                //            }
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    bool SwissportSuspendedCodeIsUp = false;
 
-                //        }
+                    var ifSwiss = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant).Find(c => c.StorageSiteCode == "ILSWS");
+                    if (ifSwiss != null)
+                    {
+                        List<string> listReasonCode;
+                        if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
+                        {
+                            listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
+                        }
+                        else
+                        {
+                            listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
+                            || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
+                        }
+                        foreach (var item in listReasonCode)
+                        {
+                            if (courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
+                            {
+                                SwissportSuspendedCodeIsUp = true;
+                                break;
+                            }
 
-                //        if (SwissportSuspendedCodeIsUp)
-                //        {
-                //            var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                //            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null);
+                        }
 
-                //            var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
-                //            var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
+                        if (SwissportSuspendedCodeIsUp)
+                        {
+                            var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM.MAWB);
 
-                //        }
-                //    }
+                            var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                            var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
 
-                //}
+                        }
+                    }
+
+                }
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
             {
