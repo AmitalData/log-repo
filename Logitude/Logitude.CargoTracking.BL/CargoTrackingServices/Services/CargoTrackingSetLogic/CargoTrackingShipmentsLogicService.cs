@@ -72,6 +72,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetPaymentReceivedMilestone(args);
             SetGatepassDocumentsReadyMilestone(args);
             SetInvoicedMilestone(args);
+            SetBookingMilestone(args);
 
         }
         private static void SetCreatedMilstones(SetTableLogicArgs args)
@@ -839,5 +840,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         }
 
+        private static void SetBookingMilestone(SetTableLogicArgs args)
+        {
+            var tableRow = args.TableRow;
+            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingDate"));
+        }
+        
     }
 }
