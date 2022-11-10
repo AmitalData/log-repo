@@ -15,8 +15,6 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() AllowClear: boolean = true;
     @Input() IsDisabled: boolean = false;
     @Input() ShowExpand: boolean = true;
-    @Input() DisplayTitle: boolean = false;
-    @Input() SetSelectedValue: boolean = true;
 
     @Input() ShowItem: (treeSelectItem: TreeSelectItem) => boolean = (_treeSelectItem: TreeSelectItem) => { return true };
 
@@ -78,11 +76,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
 
         let nzTreeItem = value ? this.NzTreeSelect.getTreeNodeByKey(value) : null;
         this.Title = this.getDisplayTitle(nzTreeItem);
-        if (this.SetSelectedValue) {
-            this.Value = value;
-        }else{
-            this.NzTreeSelect.value = [];
-        }
+        this.Value = value;
         this.ValueChanged.emit(value);
 
         this.setFilteredTreeItems("");
@@ -147,9 +141,6 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     }
 
     getDisplayTitle = (nzTreeItem: any) => {
-        if (this.DisplayTitle) {
-            return null;
-        }
         if (nzTreeItem) {
             let itemParentNode = nzTreeItem.parentNode;
             if (itemParentNode) {
