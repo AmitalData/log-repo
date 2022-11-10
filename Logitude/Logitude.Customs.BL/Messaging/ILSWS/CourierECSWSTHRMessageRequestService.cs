@@ -29,7 +29,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         //private DeclarationPM _DeclarationPM;
         //private CourierMasterPM _CourierMasterPM;
 
-        public string BuildQueueSendWebAPI(string declarationId, int tenant,  DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
+        public string BuildQueueSendWebAPI(string declarationId, int tenant, DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
         {
             string messageToSWS = GetMessageUpdateHawbStatus(declarationId, tenant, declarationPM, courierMasterPM);
             List<string> requiredField = GetRequiredField(messageToSWS);
@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                       );
         }
 
-        public  string BuildUpdateHawbStatus(string declarationId, int tenant, XmlDocument messageToSWS)
+        public string BuildUpdateHawbStatus(string declarationId, int tenant, XmlDocument messageToSWS)
         {
             //using (var scop = TransactionFactory.GetTransaction())
             {
@@ -90,12 +90,12 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             return "המסר לסוויספורט נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        public string GetMessageUpdateHawbStatus(string declarationId, int tenant,  DeclarationPM declarationPM , CourierMasterPM courierMasterPM)
+        public string GetMessageUpdateHawbStatus(string declarationId, int tenant, DeclarationPM declarationPM, CourierMasterPM courierMasterPM, string mawb = "")
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var myDeclarationPM = declarationPM??myDeclarationQueryService.GetSingle(declarationId, true, false);
+            var myDeclarationPM = declarationPM ?? myDeclarationQueryService.GetSingle(declarationId, true, false);
             if (myDeclarationPM == null)
             {
                 throw new Exception($"Declaration not in DB declarationId={declarationId}");
@@ -110,8 +110,11 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
             if (myCourierMasterPM == null)
             {
-                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+                myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, mawb);
+                if (myCourierMasterPM == null)
+                {
+                    return null;
+                }
             }
 
             CourierSWSHAWBRequest myCourierSWSHAWBRequest = CreateCourierSWSHawbMessage(myDeclarationPM, myCourierMasterPM);
@@ -148,7 +151,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
-            if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber)) crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
             if (string.IsNullOrWhiteSpace(crateNumber))
             {
                 crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
@@ -159,10 +162,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
 
-                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
+                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true);
                 if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
             }
-            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
+            else if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
             {
                 importerVat = myDeclarationPM.ImporterCode;
             }
@@ -171,7 +174,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             var courierPendingListWithSwissportSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithSwissportSuspendedCode(myDeclarationPM.Tenant);
             if (!string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonList))
             {
-                var pendingCounted = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).Count();  
+                var pendingCounted = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).Count();
                 if (pendingCounted == 1)
                 {
                     SwissportSuspendedCode = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().SwissportSuspendedCode;
@@ -182,7 +185,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 }
             }
             string Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "";
-            Description= Description.Substring(0, Math.Min(Description.Length, 60));
+            Description = Description.Substring(0, Math.Min(Description.Length, 60));
             var courierHawbMamanModel = new CourierSWSHAWBRequest()
             {
 
@@ -194,28 +197,28 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 Mawb = myCourierMasterPM.MAWB,//Mawb = CInt(myCourierMasterPM.MAWB),
 
                 Hawb = myCourierMasterPM.HAWB ?? "",
-                
+
                 FlightNumber = CInt(myCourierMasterPM.FlightNumber),
-                DepartureDate= myCourierMasterPM.DepartureDate,// LandTime is not nullable ??
+                DepartureDate = myCourierMasterPM.DepartureDate,// LandTime is not nullable ??
                 EstimatedArrivalDate = myCourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 PackageQuantity = DecNoOfPackags,
                 Weight = DecWeight,
                 GoodValueInUSD = DolarValue,
 
-                
+
                 Description = Description,
                 ImporterName = myDeclarationPM.ImporterName ?? "",
                 ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
-                DistributionLine = string.IsNullOrEmpty( currentDeclarationCourierStatusPM.DistributionArea)?"כללי" : currentDeclarationCourierStatusPM.DistributionArea,
+                DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
 
 
 
                 DistributionCompanyVat = "",
 
 
-                DeclarationNumber = myDeclarationPM.DeclarationNumber??"",
-                CustomsSuspention = myDeclarationPM.CourierSuspentionCode != null ?myDeclarationPM.CourierSuspentionCode : SwissportSuspendedCode,
-                Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber ?? "",
+                CustomsSuspention = myDeclarationPM.CourierSuspentionCode != null ? myDeclarationPM.CourierSuspentionCode : SwissportSuspendedCode,
+                Preclearence = myDeclarationPM.CourierCustomStatusCode == "1"  /*released*/,
 
                 ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
@@ -278,7 +281,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
     {
 
         //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
-        
+
         public string CourierCompanyVat { get; set; }
         public string CourierHawbNumber { get; set; }
         public DateTime CourierHawbDate { get; set; }
@@ -286,10 +289,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
         public string Mawb { get; set; }
-        
+
 
         public string Hawb { get; set; }
-        
+
         public int FlightNumber { get; set; }
         public DateTime? DepartureDate { get; set; }
         public DateTime? EstimatedArrivalDate { get; set; }
