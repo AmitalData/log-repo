@@ -29,6 +29,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public DigitsAfterPoints: string = "n0";
   public IsAutoFormat: boolean = false;
   public IsLookUp: boolean = false;
+  public IsPickList: boolean = false;
   public LookUpFieldValue: string = null;
   public IsHeaderScreenTemplate: boolean = false;
   public IsListColumnCellTemplate: boolean = false;
@@ -123,9 +124,14 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                     break;
                 }
 
-                case "LookUp":
+                case "LookUp": {
+                    this.IsLookUp = true;
+                    break;
+                }
+
                 case "PickList": {
                     this.IsLookUp = true;
+                    this.IsPickList = true;
                     break;
                 }
             }
@@ -146,9 +152,14 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                         }
 
                         if (!AppTool.IsNullOrEmpty(this.FieldValue)) {
-                            if (this.ObjectField.LookUpTableId) {
+                            if (this.ObjectField.LookUpTableId || this.IsPickList) {
 
                                 var ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjectField.LookUpTableId)[0];
+
+                                if (this.IsPickList) {
+                                    ObjectTable = window.ObjectTables.filter(x => x.Name === "CustomPickList")[0];
+                                }
+
                                 if (ObjectTable) {
                                     var moduleName = ObjectTable.ClientModuleName;
                                     var objectTableName = ObjectTable.Name;
@@ -166,7 +177,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = myResponse.Result["Name"];
+                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];
@@ -181,7 +192,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = myResponse.Result["Name"];
+                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];
