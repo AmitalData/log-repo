@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -44,12 +45,16 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //ExportExcel();
                 //ExportExcel8330();
                 //ExportExcel8326();
-                var o = new CourierMasterWSheetExport();
-                var result = o.ExportReport("1-686", 1);
-                string ShowType = "attachment";
-                string documentName = Guid.NewGuid().ToString() + ".xls";
-                HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
-                HttpContext.Current.Response.BinaryWrite(result);
+                //var o = new CourierMasterWSheetExport();
+                //var result = o.ExportReport("1-686", 1);
+                //string ShowType = "attachment";
+                //string documentName = Guid.NewGuid().ToString() + ".xls";
+                //HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                //HttpContext.Current.Response.BinaryWrite(result);
+                AccountingIntegrityService accountingIntegrityService = new AccountingIntegrityService();
+                var res = new AccountingIntegrityResult();
+                accountingIntegrityService.GLAccountBalanceCheck(new AccountingIntegrityInParam() { Tenant = 29, FromMonthInclusive = new DateTime(2022, 09, 01), ToMonthInclusive = new DateTime(2022, 11, 9) }, res);
+
 
             }
             catch (Exception eee)
