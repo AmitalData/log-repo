@@ -36,7 +36,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() IsRootConditions: boolean = true;
     @Input() IsValidConditions: boolean = true;
     @Input() ConditionsCounter: number = 1;
-    @Input() AtLeastOneCondition: boolean;
+    @Input() AtLeastOneCondition: boolean = false;
     @Input() IsEntityField: boolean = false;
     @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;

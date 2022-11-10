@@ -3,6 +3,8 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
@@ -15,7 +17,6 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
-    public OnlyParentEntities: boolean = true;
     public Data: any;
     public Name: string = null;
     public RecordsLimit: string = null;
@@ -36,6 +37,8 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public CurrentSession = SessionLocator.SelectedSession;
 
+    public ExcludedEntities: string[] = ["Customer", "User", "Shipment.ARInvoice", "Shipment.APInvoice"];
+
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
@@ -46,7 +49,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList(this.OnlyParentEntities);
+        this.EntitiesTreeList = new EntitiesTreeList();
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -67,11 +70,32 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeSetValues(reset: boolean = false) {
-        if(reset){
+        if (reset) {
             this.SetValues = [];
         }
-        if (this.SetValues.length == 0) {
+        if (this.SetValues.length === 0) {
             let setValue = new SetValue();
+
+            let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
+            if (isChildEntity) {
+                let entities = this.Entity.split(".");
+                let parentEntity = entities[0];
+                let childEntity = entities[1];
+                let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
+                let fieldCode = childEntity + "." + childField;
+                let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
+                let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
+
+                setValue.field = childField;
+                setValue.fieldCode = fieldCode;
+                setValue.type = objectField ? objectField.DataTypeCode : null;
+                setValue.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+                setValue.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+                setValue.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
+                setValue.operator = SetValueOperators.EqualsField;
+                setValue.isDisabled = true;
+            }
+
             this.SetValues.push(setValue);
             this.IsValidSetValues = false;
         }
@@ -119,11 +143,8 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
-
             this.setValuesData();
-
             //console.log(this.Data);
-
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });

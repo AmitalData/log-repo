@@ -19,6 +19,7 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
+    @Input() IsDisabled: boolean = false;
     @Output() ValueChanged = new EventEmitter<string>();
 
     public DataContext: any = this;
@@ -36,10 +37,12 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
 
 
     expressionHandle() {
-        let propertiesComponentPath = "./Workflow/Components/Base/ExpressionLogicComponent";
-        let propertiesWindow = this.buildPropertiesWindow();
-        propertiesWindow.Show(propertiesComponentPath);
-        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data); });
+        if(!this.IsDisabled){
+            let propertiesComponentPath = "./Workflow/Components/Base/ExpressionLogicComponent";
+            let propertiesWindow = this.buildPropertiesWindow();
+            propertiesWindow.Show(propertiesComponentPath);
+            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data); });
+        }
     }
 
     handlePropertiesWindowClosed(data) {
