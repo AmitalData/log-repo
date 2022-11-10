@@ -27,6 +27,7 @@ export class AddEditScreenComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsEditMode: boolean = false;
     public IsSubEntity: boolean;
+    public IsCustomObjectTable: boolean;
     public ScreenTypes: ScreenTypeDetails[] = [];
 
     private selectedScreenType: ScreenTypeDetails;
@@ -71,7 +72,7 @@ export class AddEditScreenComponent extends BaseComponent {
     }
 
     SetScreenType() {
-        if (!this.IsSubEntity) {
+        if (!(this.IsSubEntity && this.IsCustomObjectTable)) {
             this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == "LIGHTENING")[0];
             return;
         }
@@ -85,6 +86,7 @@ export class AddEditScreenComponent extends BaseComponent {
         var objectTable = window.ObjectTables.filter(x => x.Id === this.screenLayoutComponent.ObjecttableId)[0];
         screen.ObjectTableId = objectTable.Id;
         screen.ObjectTableName = objectTable.Name;
+        this.IsCustomObjectTable = objectTable.IsCustom;
     }
 
     private name: string;
