@@ -704,7 +704,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
                 //var time = interfaceManagementQueryService.GetSingle("2715", false, true)?.SendTime;
                 var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(customContext);
-                var time = interfaceTenantDefinitionQueryService.GetSingle("2715", false, true)?.SendTime;
+                var time = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(entityPM.Tenant, "2715")?.SendTime;
 
                 var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
                 var courierSchedulerService = new CourierSchedulerService();
