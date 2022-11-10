@@ -76,7 +76,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     MyRequestSheetParam.RequestDescription = "התרה לתיק- מספר הצהרה: " + declarationNumber;
 
-                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant);
+                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant,true);
                     if (declarationPM == null || string.IsNullOrWhiteSpace(declarationPM.Id))
                     {
                         var errMess = "DeclarationPM not found: DeclarationNumber=" + declarationNumber;
