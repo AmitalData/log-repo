@@ -288,10 +288,21 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 throw new Exception("is ok - nothing done  !!!!");
             }
-            if (this.CompareReport.GLAccountTotalByMonthsList.Any( r=>r.CHANGE_TYPE == const_qNotinLedgerTransaction))
+            if (this.CompareReport.GLAccountTotalByMonthsList.Any(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction))
             {
-                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
-                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!!");
+                var res = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction).ToList();
+                /// OHAD 2022 11 10 - NEW FEATURE CREATE 170020
+                if (res.Any(r => r.ForeignAmountCredit != 0)
+                    || res.Any(r => r.ForeignAmountDebit != 0)
+                    || res.Any(r => r.LocalAmountCredit != 0)
+                    || res.Any(r => r.LocalAmountDebit != 0)
+                    )
+                {
+                    var row = res.First();
+                    string total = $"Example- GLAccountTotalByMonth DateType:{row.DateTypeValue}  Year:{row.Year} Month:{row.Month} AccountId:{row.AccountId} ";
+                    throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
+                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!! " + total);
+                }
             }
             using (var scope = TransactionFactory.GetNewSerializableTransaction())
             {

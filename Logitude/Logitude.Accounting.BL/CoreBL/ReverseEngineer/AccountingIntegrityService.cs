@@ -423,7 +423,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         }
 
-        private void GLAccountBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
+        public void GLAccountBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
         {
 
 

@@ -23,7 +23,7 @@
             }
              %>
         
-        <h1 >Oracle time <% = this.OracleTime.GetValueOrDefault() %> </h1>
+        
 
     </form>
 </body>
