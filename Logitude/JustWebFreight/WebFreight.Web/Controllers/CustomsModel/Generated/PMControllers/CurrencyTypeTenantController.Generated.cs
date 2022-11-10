@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.CurrencyTypeTenant", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CurrencyTypeTenantQueryService currencyTypeTenantQuery = new CurrencyTypeTenantQueryService(MyContext);
 				currencyTypeTenantQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("Customs.CurrencyTypeTenant", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CurrencyTypeTenant", entityPM.Tenant, authToken.Tenant);
+	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CurrencyTypeTenantUpdateService service = new CurrencyTypeTenantUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -106,6 +109,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CurrencyTypeTenant");
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -137,12 +141,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("Customs.CurrencyTypeTenant", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CurrencyTypeTenant", entityPM.Tenant, authToken.Tenant);
+	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CurrencyTypeTenantUpdateService service = new CurrencyTypeTenantUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CurrencyTypeTenant");
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CurrencyTypeTenant", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
