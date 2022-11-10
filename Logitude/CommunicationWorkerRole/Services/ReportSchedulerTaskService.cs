@@ -561,22 +561,22 @@ namespace CommunicationWorkerRole.Services
             switch (operatorCode)
             {
                 case "Equals":
-                    operatorName = "Equals";
+                    operatorName = "is not equal";
                     break;
                 case "NotEqual":
-                    operatorName = "not equal";
+                    operatorName = "is equal";
                     break;
                 case "LargerThan":
-                    operatorName = "larger than";
+                    operatorName = "is not larger than";
                     break;
                 case "LessThan":
-                    operatorName = "less than";
+                    operatorName = "is not less than";
                     break;
                 case "LessThanOrEqual":
-                    operatorName = "less than or equal";
+                    operatorName = "is not less than or equal";
                     break;
                 case "GreaterThanOrEqual":
-                    operatorName = "greater than or equal";
+                    operatorName = "is not greater than or equal";
                     break;
             }
             return operatorName;
