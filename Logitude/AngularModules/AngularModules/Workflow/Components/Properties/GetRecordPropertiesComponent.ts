@@ -51,6 +51,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public GetRecordsLimit = GetRecordsLimit;
     public SortDirections = SortDirections;
 
+    public ExcludedEntities: string[] = ["Opportunity"];
+
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
@@ -125,7 +127,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
     }
 
-
     initializeReturnedFields(reset: boolean = false) {
         if (reset) {
             this.ReturnedFields = [];
@@ -195,7 +196,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         return this.OrderBy && this.OrderBy != SortDirections.NotSorted;
     }
 
-    UpdateIsValidConditions(isValidConditions: boolean) {
+    updateIsValidConditions(isValidConditions: boolean) {
         this.IsValidConditions = isValidConditions;
     }
 
@@ -224,11 +225,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidConditions)
+            if (!this.IsValidConditions){
                 this.ValidationErrorsList.push("Invalid Conditions");
+            }
 
-            if (!this.IsValidReturnedFields)
+            if (!this.IsValidReturnedFields){
                 this.ValidationErrorsList.push("Invalid Selected Fields");
+            }
         }
     }
 

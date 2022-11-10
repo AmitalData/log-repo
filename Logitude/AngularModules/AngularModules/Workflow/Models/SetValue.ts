@@ -6,6 +6,7 @@ export class SetValue {
     public picklistType: string;
     public operator: string;
     public value: string;
+    public isDisabled: boolean;
     public fieldChangedToggle: boolean;
 
     constructor() {
@@ -16,6 +17,7 @@ export class SetValue {
         this.picklistType = null;
         this.operator = null;
         this.value = null;
+        this.isDisabled = false;
         this.fieldChangedToggle = false;
     }
 }

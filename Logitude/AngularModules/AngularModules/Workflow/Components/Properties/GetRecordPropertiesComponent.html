@@ -186,7 +186,7 @@
                             </div>
                             <div class="table-row-cell-block">
                                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                                    [ShowItem]="['Opportunity'] | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
+                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
                         </td>
@@ -214,7 +214,7 @@
 
                                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
                                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
-                                    (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                                    (IsValidConditionsChange)="updateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
                                     [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields"
                                     [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true">

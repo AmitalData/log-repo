@@ -199,7 +199,8 @@
                                 </div>
 
                                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
-                                    [AtLeastOneCondition]="false" [ShowChangedOperator]="Trigger !== CreateTrigger"
+                                    [ShowChangedOperator]="Trigger !== CreateTrigger"
+                                    (IsValidConditionsChange)="updateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
                                     [FlowObjectFields]="FlowObjectFields" [IsEntityField]="true"
                                     [IsEntityFieldValue]="true">

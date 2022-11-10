@@ -21,7 +21,7 @@
 <tr>
     <td>
         <div class="expression-element" (click)="expressionHandle()">
-            <input class="expression-input" type="text" placeholder="Expression..." [(ngModel)]="ExpressionValue"
+            <input [attr.disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression..." [(ngModel)]="ExpressionValue"
                 readonly />
             <img class="function-icon" src="./Images/function.png" />
         </div>

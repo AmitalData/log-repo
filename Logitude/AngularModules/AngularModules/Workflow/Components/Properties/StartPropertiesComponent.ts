@@ -26,6 +26,8 @@ export class StartPropertiesComponent extends BaseComponent {
 
     public FlowObjectFields: ObjectFieldList[];
 
+    public IsValidConditions: boolean = true;
+
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -60,17 +62,18 @@ export class StartPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0) {
-
+        if (notValidUIProperties.length === 0 && this.IsValidConditions) {
             this.setNameData();
             this.setConditionsData();
-
             //console.log(this.Data);
-
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
+
+            if (!this.IsValidConditions){
+                this.ValidationErrorsList.push("Invalid Conditions");
+            }
         }
     }
 
@@ -121,5 +124,9 @@ export class StartPropertiesComponent extends BaseComponent {
                 this.resetConditionsOperatorAndValue(condition.conditions);
             }
         }
+    }
+
+    updateIsValidConditions(isValidConditions: boolean) {
+        this.IsValidConditions = isValidConditions;
     }
 }

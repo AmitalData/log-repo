@@ -16,7 +16,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     @Input() ShowChangedOperator: boolean;
     @Input() ConditionsOperation: string;
     @Input() Conditions: Condition[];
-    @Input() AtLeastOneCondition: boolean;
+    @Input() AtLeastOneCondition: boolean = false;
     @Input() IsEntityField: boolean = false;
     @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;
