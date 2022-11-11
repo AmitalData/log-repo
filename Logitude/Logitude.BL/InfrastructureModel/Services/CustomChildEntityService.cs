@@ -16,10 +16,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     {
         private CustomChildEntityArgs customChildEntityArgs;
         private string parentObjectTableId = string.Empty;
+        private IWebFreightContext webFreightContext;
         public CustomChildEntityService(CustomChildEntityArgs customChildEntityArgs)
         {
             this.customChildEntityArgs = customChildEntityArgs;
             parentObjectTableId = new ObjectTableQuery(customChildEntityArgs.Tenant).GetObjectTableIdByName(customChildEntityArgs.ParentObjectTableName);
+            webFreightContext =  WebFreightContext.GetContext(customChildEntityArgs.Tenant); 
 
         }
         public void Update()
@@ -27,10 +29,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             if (string.IsNullOrEmpty(parentObjectTableId)) return;
             List<CustomChildEntity> customChildEntities = GetCustomChildEntities(this.customChildEntityArgs.ParentEntity);
             if (customChildEntities.Count() == 0) return;
-            Parallel.ForEach(customChildEntities, (customChildEntity) =>
+            foreach (CustomChildEntity customChildEntity in customChildEntities)
             {
                 UpdateCustomChildEntity(customChildEntity);
-            });
+            }
 
         }
 
@@ -49,7 +51,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             List<CustomChildEntity> customChildEntities = new List<CustomChildEntity>();
             var childObjectTables = new ObjectTableQuery(customChildEntityArgs.Tenant).GetObjectPMsByTenant(customChildEntityArgs.Tenant).Where(d=>d.IsCustom && d.ParentObjectTableId == parentObjectTableId).ToList();
-            List<CustomChildObjectPM> customChildObjects = new CustomChildObjectQuery(customChildEntityArgs.Tenant).GetByParentEntityId(customChildEntityArgs.ParentEntityId, customChildEntityArgs.Tenant);
+            List<CustomChildObjectPM> customChildObjects = new CustomChildObjectQuery(customChildEntityArgs.Tenant).GetByParentEntityIdAndParentObjectId(customChildEntityArgs.ParentEntityId, parentObjectTableId, customChildEntityArgs.Tenant);
 
             foreach (ObjectTablePM objectTablePM in childObjectTables)
             {
@@ -73,7 +75,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             if (customChildEntity.Values == null || customChildEntity.Values.Count() == 0) return;
 
-            CustomChildObjectService customChildObjectService = new CustomChildObjectService(WebFreightContext.GetContext(customChildEntityArgs.Tenant), customChildEntityArgs.Tenant);
+            CustomChildObjectService customChildObjectService = new CustomChildObjectService(webFreightContext, customChildEntityArgs.Tenant);
             customChildObjectService.Updates(customChildEntity.Values);
 
         }

@@ -26,10 +26,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-
-        public List<CustomChildObjectPM> GetByParentEntityId(string parentEntityId, int tenant)
+        public List<CustomChildObjectPM> GetByParentEntityIdAndParentObjectId(string parentEntityId, string parentObjectTableId,  int tenant)
         {
-            List<CustomChildObject> customChildObjects = repository.GetByParentEntityId(parentEntityId, tenant);
+            List<CustomChildObject> customChildObjects = repository.GetByParentEntityIdAndParentObjectId(parentEntityId, parentObjectTableId ,  tenant);
 
             List<CustomChildObjectPM> results = new List<CustomChildObjectPM>();
 
