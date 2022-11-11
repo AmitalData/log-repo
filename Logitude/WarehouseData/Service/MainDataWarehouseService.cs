@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseData.Service;
@@ -21,7 +22,7 @@ namespace WarehouseData.Helper
         WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         DWDataWarehouseService dWDataWarehouseService;
         public int RetryNumber = 0;
-        public int MaxRetriesNumber =5;
+        public int MaxRetriesNumber =10;
         public MainDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug") :base(applicationName, applicationMode)
         {
 
@@ -137,6 +138,8 @@ namespace WarehouseData.Helper
             catch (Exception exception)
             {
                 if(RetryNumber > MaxRetriesNumber) throw exception;
+
+                Thread.Sleep(new TimeSpan(0, 1, 0));
                 FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
             }
 
@@ -295,7 +298,7 @@ namespace WarehouseData.Helper
                 }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
-                Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
+                foreach (DataRow row in dWHSettingsTable.Rows.Cast<DataRow>().ToList())
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
@@ -320,7 +323,7 @@ namespace WarehouseData.Helper
                         }
                         else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
-                });
+                }
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");
    

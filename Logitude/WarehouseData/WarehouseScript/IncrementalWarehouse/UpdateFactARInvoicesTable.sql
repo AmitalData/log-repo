@@ -82,11 +82,11 @@
 	declare @PaymentReferences as varchar(1000)
 	declare @ProfitCurrency as int
 	declare @LineChargeType as int
-	declare @ConsolidationInvoiceTable TABLE(Id  varchar(15) NOT NULL  PRIMARY KEY NONCLUSTERED ,InvoiceNumber varchar(25) , InvoiceDate datetime , StatusCode varchar(2) , DraftNumber varchar(20));
 
-      INSERT INTO @ConsolidationInvoiceTable (Id, InvoiceNumber ,InvoiceDate , StatusCode , DraftNumber) SELECT Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber  FROM dw_ARInvoices where IsConsolidationInvoice = 1 or Id = '-1'
-
-
+ 	     Drop Table IF Exists #ConsolidationInvoiceTable
+	    select  Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber
+      into #ConsolidationInvoiceTable from dw_ARInvoices   where  IsConsolidationInvoice = 1 or Id = '-1'
+	  	  CREATE CLUSTERED INDEX Ix_ConsolidationInvoiceTable_Id ON #ConsolidationInvoiceTable (Id)  
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -123,7 +123,7 @@
     inner JOIN DIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id 
     inner JOIN DIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = DIM_VatTypes.Id 
 	inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
-	inner JOIN @ConsolidationInvoiceTable ConsolidationInvoice  ON ConsolidationInvoice.Id = dw_ARInvoices.ConsolidationInvoiceId
+	inner JOIN #ConsolidationInvoiceTable ConsolidationInvoice  ON ConsolidationInvoice.Id = dw_ARInvoices.ConsolidationInvoiceId
 	inner JOIN DIM_Partners Partner ON dw_ARInvoices.PartnerId = Partner.Id 
  	inner JOIN DIM_Currencies ProfitCurrency ON dw_ARInvoices.ProfitCurrencyId = ProfitCurrency.Id
 	inner JOIN DIM_ChargesTypes ON dw_ARInvoiceLines.ChargesTypeId = DIM_ChargesTypes.Id
