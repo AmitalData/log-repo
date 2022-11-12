@@ -1180,10 +1180,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
             }
-            else
-            {
-                dmExtensions.LastReleaseFromWarehousInd.Value = false;
-            }
+            //else
+            //{
+            //    dmExtensions.LastReleaseFromWarehousInd.Value = false;
+            //}
             var registeredFacilitylist = new List<DeclarationGoodsShipmentImportConsignmentDMExtensionsRegisteredFacility>();
             int seqnum = 0;
             if (!String.IsNullOrWhiteSpace(consignmentPM.StorageSiteCode))
