@@ -82,8 +82,8 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
                 {
 
-                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
-                    {
+                    //if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", myAmitalEventTracer.Tenant))
+                    //{
                         ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
 
                         string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
                     }
 
-                }
+               // }
             }
             finally
             {
