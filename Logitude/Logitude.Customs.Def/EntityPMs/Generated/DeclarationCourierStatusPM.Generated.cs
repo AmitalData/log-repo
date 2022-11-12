@@ -1297,7 +1297,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationPendings = value; }
 	    }
-	  	  private string lastMileStatusName ;
+	  	  private string mAWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MAWB  
+	   {
+	    
+	     get
+		{
+		   return mAWB;
+		 }
+		 set
+		 {
+		   if(mAWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MAWB",OldValue=mAWB,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mAWB=value;
+		   }
+			
+		 }
+	   }
+	  private string lastMileStatusName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]

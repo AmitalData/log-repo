@@ -164,8 +164,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         {
 
                             dbMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
-
-                            if (dbMessage != drityMessage)
+                            
+                            if (dbMessage != null && dbMessage != drityMessage)
                             {
                                 dataHaveChangeSendIt = true;
                             }

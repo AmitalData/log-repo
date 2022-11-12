@@ -647,6 +647,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                         currentDeclarationCourierStatusPM.MAWB = _LogitudeCommDecFile.MAWB;
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                         _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
                     }

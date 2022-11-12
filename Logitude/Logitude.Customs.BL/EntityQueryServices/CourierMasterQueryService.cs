@@ -472,6 +472,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return LastmileReportData;
         }
 
+        public CourierMasterPM GetCourierMasterByMawb(int tenant,string mawb)
+        {
+            CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
+            var entity= courierMasterRepository.GetCourierMasterByMawb(tenant, mawb);
+            var courierMasterPM = this.GetEntityPM(entity, false, null);
+            return courierMasterPM;
+        }
 
 
     }
