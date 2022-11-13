@@ -302,6 +302,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
+                            tenant.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                             tenant.IsTestTenant = ten.IsTestTenant;
                             tenant.IsHybrid = ten.IsHybrid;
                         }
@@ -509,6 +510,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
+                        tenant1.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                         tenant1.IsTestTenant = ten.IsTestTenant;
                         tenant1.IsHybrid = ten.IsHybrid;
                     }

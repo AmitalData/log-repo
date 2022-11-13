@@ -28,6 +28,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             
             this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId");
             this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
+            this.Property(t => t.AutoArchiveOnPODExport).HasColumnName("AutoArchiveOnPODExport");
 
             this.HasRequired(t => t.Tenant);
         }

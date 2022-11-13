@@ -1557,6 +1557,7 @@ namespace WebFreight.Web.InfrastructureModel
                 if (!string.IsNullOrEmpty(newTenant.PrivateLabelId))
                 {
                     newTenant.AutoArchiveOnInvoice = true;
+                    newTenant.AutoArchiveOnPODExport = true;
                     newTenant.DocumentShareAsDefault = true;
                 }
                 service.Update(newTenant);

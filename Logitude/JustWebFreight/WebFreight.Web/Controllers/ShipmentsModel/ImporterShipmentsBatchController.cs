@@ -695,10 +695,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
-            {
-                entityPM.IsOperationalClosed = true;
-            }
+            entityPM.IsOperationalClosed = GetIsOperationalClosed(entityAM, entityPM, currentTenant);
 
             if (entityPM.CustomsClearanceDate == null)
             {
@@ -1030,5 +1027,43 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             return null;
         }
 
+        private static bool GetIsOperationalClosed(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (entityPM.IsOperationalClosed) return true;
+
+            if (IsAutoCustomArchiveShipment(entityAM, entityPM, currentTenant))
+            {
+                return true;
+            }
+            if (IsAutoExportArchiveShipment(entityAM, entityPM, currentTenant))
+            {
+                return true;
+            }
+
+            return entityPM.IsOperationalClosed;
+        }
+
+        private static bool IsAutoCustomArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (currentTenant.AutoArchiveOnInvoice == false) return false;
+            if (entityAM.CustomsClearanceDate == null) return false;
+            const string inProgressStatusCode = "INPR";
+            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
+            const string customsDirectionId = "C";
+            if (entityPM.DirectionId != customsDirectionId) return false;
+
+            return true;
+        }
+
+        private static bool IsAutoExportArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (currentTenant.AutoArchiveOnPODExport == false) return false;
+            const string inProgressStatusCode = "PIOD";
+            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
+            const string exportDirectionId = "E";
+            if (entityPM.DirectionId != exportDirectionId) return false;
+
+            return true;
+        }
     }
 }
