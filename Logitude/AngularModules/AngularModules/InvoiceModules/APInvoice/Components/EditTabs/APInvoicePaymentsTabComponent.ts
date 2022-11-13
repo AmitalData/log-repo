@@ -17,11 +17,9 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { APPaymentInvoicePM } from '../../../../Invoice/EntityPMs/APPaymentInvoicePM';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 
-@Component({
-    
+@Component({    
     templateUrl: './APInvoicePaymentsTabComponent.html',
 })
 
@@ -73,8 +71,14 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "NewAPPaymentInvoiceTabCreated") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
@@ -101,6 +105,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public IsEditingEnabled: boolean = false;
@@ -315,96 +320,35 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         }
     }
 
-    private LastRatesList: LastRate[] = [];
-    private newApPaymentPM: APPaymentPM;
-    private vendorAddressId: string;
     private RunNewPayment() {
-        var myService: CurrencyRatesService = new CurrencyRatesService();
-        myService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, DateTool.GetCurrentDateAsUtc()).subscribe((resp: ServiceResponse) => {
-            if (resp != null) {
-                if (!resp.HasError) {
-                    this.LastRatesList = resp.Result;
-
-                    var partnersDomainService: PartnersDomainService = new PartnersDomainService();
-                    partnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp1: any) => {
-                        if (resp1 != null) {
-                            var address = resp1;
-                            if (address != null) {
-                                this.vendorAddressId = address.Id;
-                                this.CreatePaymentInstance();
-                                this.OpenPaymentWindow();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-    private CreatePaymentInstance() {
-        this.newApPaymentPM = new APPaymentPM();
-        this.newApPaymentPM.IsCreatedFromInvoiceSide = true;
-        this.newApPaymentPM.CreatedFromInvoiceId = this.EntityPM.Id;
-        this.newApPaymentPM.StatusCode = "DR";
-        this.newApPaymentPM.StatusName = "Draft";
-        this.newApPaymentPM.Tenant = this.EntityPM.Tenant;
-        this.newApPaymentPM.IsClosed = false;
-        this.newApPaymentPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.newApPaymentPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
-        this.newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
-        this.newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
-        this.newApPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
-        this.newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
-        this.newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
-        this.newApPaymentPM.VendorId = this.EntityPM.VendorId;
-        this.newApPaymentPM.VendorName = this.EntityPM.VendorName;
-        this.newApPaymentPM.VendorAddressId = this.vendorAddressId;
-        this.newApPaymentPM.VendorPartnerTypeId = this.EntityPM.VendorPartnerTypeId;
-        this.newApPaymentPM.PaymentCurrencyId = this.EntityPM.InvoiceCurrencyId;
-        this.newApPaymentPM.PaymentCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
-        this.newApPaymentPM.InvoiceAmountDue = this.EntityPM.AmountDue;
-        this.newApPaymentPM.InvoiceRate = this.EntityPM.InvoiceCurrencyExchangeRate;
-        this.newApPaymentPM.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
-        this.SetCurrencyRateData();
-    }
-    private SetCurrencyRateData() {
-        var rate = null;
-        var rateDate = null;
-
-        if (!AppTool.IsNullOrEmpty(this.newApPaymentPM.PaymentCurrencyId)) {
-            if (this.newApPaymentPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                rate = 1;
+        var vendorAddressId: string;
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetAddressByCardAndType(this.EntityPM.VendorId, "B").subscribe((resp: any) => {
+            var billingAddress = resp;
+            if (billingAddress != null) {
+                vendorAddressId = billingAddress.Id;
+                this.OpenNewPaymentWindow(vendorAddressId);
             }
 
             else {
-                if (this.LastRatesList != null) {
-                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.newApPaymentPM.PaymentCurrencyId)[0];
-                    if (lastRate != null) {
-                        rate = lastRate.Rate;
-                        rateDate = lastRate.ValueDate;
-                    }
-                }
-            }
-        }
-
-        this.newApPaymentPM.PaymentCurrencyExchangeRate = rate;
-        this.newApPaymentPM.PaymentCurrencyExchangeRateDate = rateDate;
-    }   
-    private OpenPaymentWindow() {
-        var backButtonLabel = TextCodeTranslator.Translate("General.MH.Accounting");
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.newApPaymentPM.Id, EntityPM: this.newApPaymentPM, BackButtonLabel: backButtonLabel, ObjectTableName: 'APPayment' });
-
-                let isEditComponentSaved = false;
-
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
+                myService.GetAddressByCardAndType(this.EntityPM.VendorId, "M").subscribe((resp: any) => {
+                    var mainAddress = resp;
+                    if (mainAddress != null) {
+                        vendorAddressId = mainAddress.Id;
+                        this.OpenNewPaymentWindow(vendorAddressId);
                     }
                 });
-            });
+            }
+        });
+    }
+    private OpenNewPaymentWindow(vendorAddressId: string) {
+        var str = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("APPayment"));
+
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { APInvoice: this.EntityPM, VendorAddressId: vendorAddressId };
+        logWindow.Title = str;
+        logWindow.Show("./InvoiceModules/APPayment/Components/NewEntity/NewAPPaymentComponent");
     }
 }
 
