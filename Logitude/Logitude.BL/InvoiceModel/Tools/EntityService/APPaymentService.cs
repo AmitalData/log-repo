@@ -149,7 +149,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TraceConnected();
             this.GetForeignFields();
         }
-
+        
         private void CreateAPPaymentMessage(bool setApproved)
         {
             if (setApproved && isTransferEnabled)
