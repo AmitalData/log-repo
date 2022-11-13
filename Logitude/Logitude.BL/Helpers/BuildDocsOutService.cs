@@ -27,7 +27,7 @@ namespace Logitude.BL.Helpers
             if (documentTypePM != null)
             {
                 ExportDocumentArgs exportDocumentArgs = GetExportDocumentArgs(buildDocsOutArgs, documentOutPM, documentTypePM);
-                SendQueueService(exportDocumentArgs);
+                SendQueueService(exportDocumentArgs, buildDocsOutArgs);
             }
         }
 
@@ -64,16 +64,25 @@ namespace Logitude.BL.Helpers
         private DocumentOutPM CreateDcoumentOutPM(BuildDocsOutArgs args)
         {
             DocumentHelper documentHelper = new DocumentHelper();
-            return documentHelper.CreateDocumentOut(args.DocumentTypeId, args.EntityId, args.ChildEntityId, args.ChildEntityReference, args.ObjectTableId, args.Tenant,args.LoggedUserId);
+            return documentHelper.CreateDocumentOut(args.DocumentTypeId, args.EntityId, args.ChildEntityId, args.ChildEntityReference, args.ObjectTableId, args.Tenant, args.LoggedUserId, args.DocumentTypeTemplateId);
+
         }
 
-        private void SendQueueService(ExportDocumentArgs args)
+        private void SendQueueService(ExportDocumentArgs args, BuildDocsOutArgs buildDocsOutArgs)
         {
-            
+            string callBackDetailsXml = !string.IsNullOrEmpty(buildDocsOutArgs.CallBackDetailsXml )? buildDocsOutArgs.CallBackDetailsXml: "";
             DocumentsExecutionLog documentsExecutionLog = GetNewInStanceFromDocumentsExecutionLog(args);
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, documentsExecutionLog.Tenant, null, null, null, null);
+            Dictionary<string, string> queueMessage = new Dictionary<string, string>() {
+                { "DocumentsExecutionLogId", documentsExecutionLog.Id },
+                { "Tenant", documentsExecutionLog.Tenant.ToString() }
+            };
+            if (!string.IsNullOrEmpty(callBackDetailsXml))
+            {
+                queueMessage.Add("CallBackDetailsXml", callBackDetailsXml);
+            }
+            queueservice.Send(queueMessage, documentsExecutionLog.Tenant, null, null, null, null);
         }
 
 
@@ -102,6 +111,8 @@ namespace Logitude.BL.Helpers
    
     public class BuildDocsOutArgs
     {
+        public string DocumentTypeTemplateId { get; set; }
+
         public string DocumentTypeId { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
@@ -110,7 +121,7 @@ namespace Logitude.BL.Helpers
         public int Tenant { get; set; }
         public string LoggedUserId { get; set; }
         public string ChildObjectTableId { get; set; }
-
+        public string CallBackDetailsXml { get; set; }
 
 
 
