@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.Repsitories
         public List<SchedulerParam> GetAllByProcedureCode(int tenant,string schedulerProcedureCode)
         {
             return  (from SchedulerParam in context.SchedulerParams
-                     where SchedulerParam.SchedulerProcedureCode == schedulerProcedureCode && SchedulerParam.Tenant==tenant
+                     where SchedulerParam.SchedulerProcedureCode.Contains(schedulerProcedureCode) && SchedulerParam.Tenant==tenant
                      select SchedulerParam).ToList();
         }
 
