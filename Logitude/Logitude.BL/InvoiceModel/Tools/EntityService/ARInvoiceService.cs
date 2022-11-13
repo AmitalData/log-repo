@@ -1453,7 +1453,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else if (entityPM.IsConsolidationInvoice)
                             {
-                                CounterDefinitionRepository counterDefinitionRepository = new CounterDefinitionRepository();
+                                CounterDefinitionRepository counterDefinitionRepository = new CounterDefinitionRepository(tenant);
                                  if (entityPM.ARInvoiceTypeCode == "CD" && counterDefinitionRepository.IsCounterDefinitionActive("COD"))
                                 {
                                     entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "COD", null);

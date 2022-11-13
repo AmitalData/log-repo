@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main"  Module="Infrastructure">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
  
   
@@ -35,7 +35,7 @@ BEGIN
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
 					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix, InActive)
-					values (@NewEntityId, @Tenant, 'COD', 1000, @ARInvoiceCounterId, '[MM]_[YY]_', 0, 1)
+					values (@NewEntityId, @Tenant, 'COD', 1000, @ARInvoiceCounterId, 'COD', 0, 1)
 				end
 
 			FETCH NEXT FROM TenantsCursor INTO @Tenant
