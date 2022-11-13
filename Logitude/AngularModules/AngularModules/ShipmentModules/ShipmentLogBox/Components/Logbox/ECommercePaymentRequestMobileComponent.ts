@@ -42,9 +42,9 @@ import { DatePipe } from '@angular/common';
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
-  public DimDenyButton: boolean = false;
-  public DimApproveButton: boolean = false;
-  public orianStyle: boolean = false;
+    public DimDenyButton: boolean = false;
+    public DimApproveButton: boolean = false;
+    public orianStyle: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -117,6 +117,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
 
                     this.orianStyle = +this.Tenant === 126;
+
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
@@ -142,7 +143,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    var myMessage = "משלוח זה כבר שולם בתאריך";
+                    var myMessage = "משלוח זה כבר שולם בתםריך";
                     if (this.AdditionalData.PaymentDateTime != null) {
                         var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                         myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -173,7 +174,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                this.FinalMessage = "התיק לם קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
                 this.ShowErrorMessage = true;
                 this.StopBusyIndicator();
@@ -229,7 +230,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        var myMessage = "משלוח זה כבר שולם בתאריך";
+                        var myMessage = "משלוח זה כבר שולם בתםריך";
                         if (this.AdditionalData.PaymentDateTime != null) {
                             var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                             myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -241,7 +242,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                     this.ShowErrorMessage = true;
                 }

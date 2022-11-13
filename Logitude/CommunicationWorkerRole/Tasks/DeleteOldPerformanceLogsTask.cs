@@ -15,7 +15,7 @@ namespace CommunicationWorkerRole.Tasks
 {
     public class DeleteOldPerformanceLogsTask : TaskManagerBase
     {
-        public DeleteOldPerformanceLogsTask(string Id, int tenant):base(Id,tenant)
+        public DeleteOldPerformanceLogsTask(string Id, int tenant) : base(Id, tenant)
         {
         }
 
@@ -37,6 +37,5 @@ namespace CommunicationWorkerRole.Tasks
             }
         }
 
-        
     }
 }

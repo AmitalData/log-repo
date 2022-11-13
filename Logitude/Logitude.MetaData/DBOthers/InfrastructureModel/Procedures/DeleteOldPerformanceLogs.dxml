@@ -4,8 +4,8 @@
   Name="DeleteOldPerformanceLogs"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript>
-    <![CDATA[
+	<SqlScript>
+		<![CDATA[
 CREATE procedure [dbo].[DeleteOldPerformanceLogs] as
 IF OBJECT_ID('tempdb..#tblOldPerformanceLogs') IS NOT NULL
 DROP TABLE #tblOldPerformanceLogs
@@ -42,7 +42,7 @@ END
 end
 DROP TABLE #tblOldPerformanceLogs
 ]]>
-  </SqlScript>
-  <OracleScript>
-  </OracleScript>
+	</SqlScript>
+	<OracleScript>
+	</OracleScript>
 </Procedure>

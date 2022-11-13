@@ -15,7 +15,7 @@ namespace CommunicationWorkerRole.Tasks
 {
     public class DeleteOldAnalyzeQueuesTask : TaskManagerBase
     {
-        public DeleteOldAnalyzeQueuesTask(string Id, int tenant):base(Id,tenant)
+        public DeleteOldAnalyzeQueuesTask(string Id, int tenant) : base(Id, tenant)
         {
         }
 

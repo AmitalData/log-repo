@@ -15,7 +15,7 @@ namespace CommunicationWorkerRole.Tasks
 {
     public class DeleteOldMobileNotificationLogsTask : TaskManagerBase
     {
-        public DeleteOldMobileNotificationLogsTask(string Id, int tenant):base(Id,tenant)
+        public DeleteOldMobileNotificationLogsTask(string Id, int tenant) : base(Id, tenant)
         {
         }
 

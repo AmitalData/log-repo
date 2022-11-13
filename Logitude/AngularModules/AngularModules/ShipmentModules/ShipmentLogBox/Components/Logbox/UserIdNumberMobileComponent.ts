@@ -60,6 +60,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
     orianStyle: boolean = false;
+
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -107,10 +108,12 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
-
+                    
                     this.orianStyle = +this.Tenant === 126;
                     if(this.orianStyle)
                         this.getEcommerceSupportEmail()
+
+
 
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
@@ -126,7 +129,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity && entity.IsUserIDNumberRequired == false) {
-                var myMessage = AppTool.IsNullOrEmpty(entity.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
+                var myMessage = AppTool.IsNullOrEmpty(entity.UserIdNumber) ? "לם נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
 
                     //var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
@@ -249,7 +252,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
-                var myMessage = AppTool.IsNullOrEmpty(this.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
+                var myMessage = AppTool.IsNullOrEmpty(this.UserIdNumber) ? "לם נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
                     var formatedUpdateDate = this.datePipe.transform(entity.UserIdNumberUpdateDate, 'dd/MM/yyyy');
                     myMessage = myMessage + " " + formatedUpdateDate;
@@ -277,11 +280,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         });
                     }
                     else {
-                        this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
+                        this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
                     }
                 }
                 else {
-                    this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
+                    this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
                 }
             }
 
