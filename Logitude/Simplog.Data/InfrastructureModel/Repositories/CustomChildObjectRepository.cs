@@ -34,10 +34,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public List<CustomChildObject> GetByParentEntityId(string parentEntityId , int tenant)
+        public List<CustomChildObject> GetByParentEntityIdAndParentObjectId(string parentEntityId , string parentObjectTableId , int tenant)
         {
             return (from a in context.CustomChildObjects
-                    where a.Tenant == tenant && a.ParentEntityId == parentEntityId
+                    where a.Tenant == tenant && a.ParentEntityId == parentEntityId && a.ParentObjectTableId == parentObjectTableId
                     select a).ToList();
         }
 

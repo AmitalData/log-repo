@@ -425,4 +425,10 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
+ <Index
+    Columns="Tenant,ParentEntityId,ParentObjectTableId" />
+
+
+
 </Table>
