@@ -524,7 +524,7 @@ namespace CommunicationWorkerRole.Services
                 var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
                 result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(balanceInLocalCurrency), ledgerTransactionsDataProvider.LocalClosedBalance, balanceInLocalCurrencyOperator);
                 if (!result.IsValid)
-                    result.ErrorMessage = "The E-mail was not sent, the closed balance in local currency " + getOperatorName(balanceInLocalCurrencyOperator) + " the GLaccount local closed balance";
+                    result.ErrorMessage = "The E-mail was not sent, the GLaccount local closed balance " + getOperatorName(balanceInLocalCurrencyOperator) + " the closed balance in local currency";
             }
             return result;
         }
@@ -534,22 +534,22 @@ namespace CommunicationWorkerRole.Services
             bool isValid = false;
             switch (balanceInLocalCurrencyOperator) {
                 case "Equals":
-                    isValid = (balanceInLocalCurrency== localclosedBalance);
+                    isValid = (localclosedBalance == balanceInLocalCurrency);
                     break;
                 case "NotEqual":
-                    isValid = (balanceInLocalCurrency != localclosedBalance);
+                    isValid = (localclosedBalance != balanceInLocalCurrency);
                     break;
                 case "LargerThan":
-                    isValid = (balanceInLocalCurrency > localclosedBalance);
+                    isValid = (localclosedBalance > balanceInLocalCurrency);
                     break;
                 case "LessThan":
-                    isValid = (balanceInLocalCurrency < localclosedBalance);
+                    isValid = (localclosedBalance < balanceInLocalCurrency);
                     break;
                 case "LessThanOrEqual":
-                    isValid = (balanceInLocalCurrency <= localclosedBalance);
+                    isValid = (localclosedBalance <= balanceInLocalCurrency);
                     break;
                 case "GreaterThanOrEqual":
-                    isValid = (balanceInLocalCurrency >= localclosedBalance);
+                    isValid = (localclosedBalance >= balanceInLocalCurrency);
                     break;
             }
             return isValid;
