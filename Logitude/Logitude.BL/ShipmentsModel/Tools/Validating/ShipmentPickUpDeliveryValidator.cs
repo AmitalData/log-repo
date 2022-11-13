@@ -55,48 +55,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             if (RoutingDatesValidator.IsDateSeriesBiggerNotEqual(pickUpPM.ETA, shipmentPM.WarehouseLegExpectedEntryDate))
             {
-                throw new ApplicationException("Expected arrival must be equal or less than Warehouse expected entry");
+                throw new ApplicationException("Pick up expected arrival must be equal or less than Warehouse expected entry");
             }
 
             if (RoutingDatesValidator.IsDateSeriesBiggerNotEqual(pickUpPM.ATA, shipmentPM.WarehouseLegActualEntryDate))
             {
-                throw new ApplicationException("Actual arrival must be equal or less than Warehouse actual entry");
+                throw new ApplicationException("Pick up actual arrival must be equal or less than Warehouse actual entry");
             }
         }
         private static void ValidatePickupRegardingPreForwardingLeg(ShipmentPickUpPM pickUpPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ETA, shipmentPM.PreForwardingETD))
             {
-                throw new ApplicationException("Expected arrival must be less than pre forwarding expected departure");
+                throw new ApplicationException("Pick up expected arrival must be less than pre forwarding expected departure");
             }
 
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ATA, shipmentPM.PreForwardingATD))
             {
-                throw new ApplicationException("Actual arrival must be less than pre forwarding actual departure");
+                throw new ApplicationException("Pick up actual arrival must be less than pre forwarding actual departure");
             }
         }
         private static void ValidatePickupRegardingPreCarriageLeg(ShipmentPickUpPM pickUpPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ETA, shipmentPM.PreCarriageETD))
             {
-                throw new ApplicationException("Expected arrival must be less than pre carriage expected departure");
+                throw new ApplicationException("Pick up expected arrival must be less than pre carriage expected departure");
             }
 
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ATA, shipmentPM.PreCarriageATD))
             {
-                throw new ApplicationException("Actual arrival must be less than pre carriage actual departure");
+                throw new ApplicationException("Pick up actual arrival must be less than pre carriage actual departure");
             }
         }
         private static void ValidatePickupRegardingMainCarriageLeg(ShipmentPickUpPM pickUpPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ETA, shipmentPM.MainCarriageETD))
             {
-                throw new ApplicationException("Expected arrival must be less than main carriage expected departure");
+                throw new ApplicationException("Pick up expected arrival must be less than main carriage expected departure");
             }
 
             if (RoutingDatesValidator.IsDateBigger(pickUpPM.ATA, shipmentPM.MainCarriageATD))
             {
-                throw new ApplicationException("Actual arrival must be less than main carriage actual departure");
+                throw new ApplicationException("Pick up actual arrival must be less than main carriage actual departure");
             }
         }
         private static bool IsFirstPickup(ShipmentPickUpPM itemPM, ShipmentPM shipmentPM)
@@ -168,84 +168,84 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.WarehouseLeg2ExpectedEntryDate))
             {
-                throw new ApplicationException("Expected departure must be bigger than Destination Warehouse expected entry");
+                throw new ApplicationException("Delivery expected departure must be bigger than Destination Warehouse expected entry");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.WarehouseLeg2ActualEntryDate))
             {
-                throw new ApplicationException("Actual departure must be bigger than Destination Warehouse actual entry");
+                throw new ApplicationException("Delivery actual departure must be bigger than Destination Warehouse actual entry");
             }
         }
         private static void ValidateDeliveryRegardingOnForwardingLeg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.OnForwardingETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than On-Forwarding expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than On-Forwarding expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.OnForwardingATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than On-Forwarding actual arrival");
+                throw new ApplicationException("Delivery actual departure must be bigger than On-Forwarding actual arrival");
             }
         }
         private static void ValidateDeliveryRegardingOnCarriageLeg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.OnCarriageETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than On-Carriage expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than On-Carriage expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.OnCarriageATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than On-Carriage actual arrival");
+                throw new ApplicationException(" Delivery actual departure must be bigger than On-Carriage actual arrival");
             }
         }
         private static void ValidateDeliveryRegardingTransshipment3Leg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.Transshipment3ETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than Transshipment3 expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than Transshipment3 expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.Transshipment3ATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than Transshipment3 actual arrival");
+                throw new ApplicationException("Delivery actual departure must be bigger than Transshipment3 actual arrival");
             }
         }
         private static void ValidateDeliveryRegardingTransshipment2Leg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.Transshipment2ETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than Transshipment2 expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than Transshipment2 expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.Transshipment2ATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than Transshipment2 actual arrival");
+                throw new ApplicationException("Delivery actual departure must be bigger than Transshipment2 actual arrival");
             }
         }
         private static void ValidateDeliveryRegardingTransshipment1Leg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.Transshipment1ETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than Transshipment1 expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than Transshipment1 expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.Transshipment1ATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than Transshipment1 actual arrival");
+                throw new ApplicationException("Delivery actual departure must be bigger than Transshipment1 actual arrival");
             }
         }
         private static void ValidateDeliveryRegardingMainCarriageLeg(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ETD, shipmentPM.MainCarriageETA))
             {
-                throw new ApplicationException("Expected departure must be bigger than Main-Carriage expected arrival");
+                throw new ApplicationException("Delivery expected departure must be bigger than Main-Carriage expected arrival");
             }
 
             if (RoutingDatesValidator.IsDateSmaller(deliveryPM.ATD, shipmentPM.MainCarriageATA))
             {
-                throw new ApplicationException("Actual departure must be bigger than Main-Carriage actual arrival");
+                throw new ApplicationException("Delivery actual departure must be bigger than Main-Carriage actual arrival");
             }
         }
 
