@@ -46,7 +46,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 														  StartNumber_Old = a.StartNumber,
 														  CounterSize = a.CounterSize,
 														  Suffix = a.Suffix,
-													  }
+                                                          InActive = a.InActive,
+                                                      }
        );
             //List<CounterDefinitionPM> defList = result.Where(
             //    c => c.Tenant == tenant &&
@@ -80,7 +81,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        StartNumber_Old = a.StartNumber,
 					   CounterSize = a.CounterSize,
 					   Suffix = a.Suffix,
-				   });
+                       InActive = a.InActive
+                   });
 
             return result;
         }

@@ -40,6 +40,11 @@
                                         <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="UniquePerPrefix" (Checked)="UniquePerPrefix = $event" [Text]="'Unique Per Prefix'"></CheckBox>
                                     </td>
                                 </tr>
+                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false">
+                                    <td>
+                                        <CheckBox [IsEnabled]="!IsCounterUsed"  [IsChecked]="ActivateConsolidationCreditNoteCounter" (Checked)="ActivateConsolidationCreditNoteCounter = $event" [Text]="'Activate Consolidation Credit Note Counter'"></CheckBox>
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -183,9 +188,9 @@
                                                     <ScrollViewer>
                                                         <ul>
                                                             <li style="height: 100px; margin-bottom: 5px;" *ngFor="let item of ItemsSource">
-                                                                <table>
+                                                                <table [style.opacity]="item.EntityPM.InActive ? '0.5':'1'" [style.pointer-events]="item.EntityPM.InActive ? 'none':'auto'">
                                                                     <tr>
-                                                                        <td style="width: 110px; border: 1px solid #D1D1D1; text-align: center; padding: 5px;" class="CounterItemBackground">
+                                                                        <td style="width: 130px; border: 1px solid #D1D1D1; text-align: center; padding: 5px;" class="CounterItemBackground">
                                                                             {{item.Name}}
                                                                         </td>
 
