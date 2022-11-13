@@ -80,8 +80,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 }
                 try
                 {
-                    //UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = excep, DoneDate = DateTime.Now, StartDate = startDate });
-                    HandleDocumentsExecutionException(excep);
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = excep, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    queueService.CompleteAsFailed();
                 }
                 catch (Exception ex)
                 {
@@ -93,19 +93,19 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             catch (Exception exception)
             {
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null,  System.Environment.MachineName);
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
                 try
                 {
-                    //UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate });
-                    HandleDocumentsExecutionException(exception);
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    queueService.CompleteAsFailed();
                 }
                 catch (Exception ex)
                 {
-                   
+
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
                 }
 
-                    Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
 

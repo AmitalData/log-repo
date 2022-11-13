@@ -64,7 +64,8 @@ namespace Logitude.BL.Helpers
         private DocumentOutPM CreateDcoumentOutPM(BuildDocsOutArgs args)
         {
             DocumentHelper documentHelper = new DocumentHelper();
-            return documentHelper.CreateDocumentOut(args.DocumentTypeId, args.EntityId, args.ChildEntityId, args.ChildEntityReference, args.ObjectTableId, args.Tenant,args.LoggedUserId);
+            return documentHelper.CreateDocumentOut(args.DocumentTypeId, args.EntityId, args.ChildEntityId, args.ChildEntityReference, args.ObjectTableId, args.Tenant, args.LoggedUserId, args.DocumentTypeTemplateId);
+
         }
 
         private void SendQueueService(ExportDocumentArgs args, BuildDocsOutArgs buildDocsOutArgs)
@@ -110,6 +111,8 @@ namespace Logitude.BL.Helpers
    
     public class BuildDocsOutArgs
     {
+        public string DocumentTypeTemplateId { get; set; }
+
         public string DocumentTypeId { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }

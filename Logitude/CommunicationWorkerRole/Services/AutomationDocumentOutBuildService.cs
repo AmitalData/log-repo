@@ -53,6 +53,7 @@ namespace CommunicationWorkerRole.Services
                 ObjectTableId = automationSendEmailArgs.ObjectTableId,
                 DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
                 CallBackDetailsXml = callBackDetailsXml,
+                DocumentTypeTemplateId = automationSendEmailArgs.ReportTemplateId,
                 ChildEntityId = null,
                 ChildEntityReference = null,
                 ChildObjectTableId = null,
