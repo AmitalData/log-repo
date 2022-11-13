@@ -10,6 +10,8 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
@@ -27,6 +29,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
@@ -52,28 +55,60 @@ namespace WebFreight.Web.Helpers
 
         #region private
 
+
+        private string GetLoggedUserEmail()
+        {
+            if (HttpContext.Current == null || HttpContext.Current.User == null || HttpContext.Current.User.Identity == null || string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) || string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name)) return null;
+            return HttpContext.Current.User.Identity.Name;
+
+
+        }
+
+
+        private User GetLoggedUserId(int tenant)
+        {
+            string loggedUserEmail = GetLoggedUserEmail();
+            string loggedSystemEmail = "system@tenant" + tenant + ".com";
+            User loggedUser = null;
+            UserRepository userRep = new UserRepository(tenant);
+
+            if (!string.IsNullOrEmpty(loggedUserEmail))
+            {
+                loggedUser = userRep.GetSingleUserByEmail(loggedUserEmail, tenant, true);
+            }
+
+            if (loggedUser == null)
+            {
+                loggedUser = userRep.GetSingleUserByEmail(loggedSystemEmail, tenant, true);
+            }
+
+            return loggedUser;
+
+        }
+
+
         private DigitalExportResult AddQueryExportExecutionLog(GeneralFilters queryFilters)
         {
             int tenant = (int)queryFilters.Tenant;
+
+            User loggedUser = GetLoggedUserId(tenant);
+
+            if (loggedUser == null)
+            {
+                throw new AutenticationException("Sorry! this user is not authorized!");
+            }
 
             var myTenantRepository = new TenantRepository(tenant);
             var tenantData = myTenantRepository.GetSingleTenantWithOutIncluded(tenant);
             
             var reportExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
             var logId = IdCounter.GetNumber("QueryExportExecutionLog", tenant);
-            var loggedEmail = SecurityUtility.GetAuthenticatedUser();
-
-            var userId = SecurityUtility.GetLoggedUserId(loggedEmail, tenant);
-            if(userId == null)
-            {
-                userId = GetSystemUser(tenant);
-            }
 
             var executionLog = new QueryExportExecutionLog
             {
                 Id = logId,
                 CreateDate = DateTime.Now,
-                CreatedByUserId = userId,
+                CreatedByUserId = loggedUser.Id,
                 QueryFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(queryFilters),
                 Tenant = tenant,
                 StatusCode = "W"
@@ -104,7 +139,7 @@ namespace WebFreight.Web.Helpers
                     { "LogId", executionLog.Id},
                     { "Tenant", executionLog.Tenant.ToString()},
                     { "FileName", fileName },
-                    { "LoggedUserEmail", loggedEmail},
+                    { "LoggedUserEmail", loggedUser.Contact.Email},
                 }, tenant, null, null, null, null);
 
             return new DigitalExportResult() { ExecutionLogId = logId, FileName = fileName, IsWorkerRole = true };
