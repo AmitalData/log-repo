@@ -862,7 +862,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //}
 
 
-            DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
+            if (declarationPM.IsExporterConfirmation) DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
 
 
             if (declarationPM.DeclarationExportRecipients != null && declarationPM.DeclarationExportRecipients.Count() > 0)
