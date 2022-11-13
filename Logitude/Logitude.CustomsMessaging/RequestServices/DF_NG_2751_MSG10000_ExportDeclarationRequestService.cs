@@ -2019,9 +2019,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     Value = consignmentPM.OriginCountryCode
                 },
             };
-            dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
             if (consignmentPM.IsLastReleaseFromWarehous == "T")
             {
+                dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
+           
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
             }
             //else
