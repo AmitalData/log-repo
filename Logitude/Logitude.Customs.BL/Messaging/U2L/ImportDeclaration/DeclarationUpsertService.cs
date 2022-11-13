@@ -1168,7 +1168,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team);
 
             this._DeclarationReferantDataPM.FileOpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.FileOpenDate, "AmitalCustomsFile.FileOpenDate");
-            this._DeclarationReferantDataPM.FclLcl = _AmitalCustomsFile.FclLcl;
+            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.FclLcl))
+            {
+                this._DeclarationReferantDataPM.FclLcl = _AmitalCustomsFile.FclLcl;
+            }
             this._DeclarationReferantDataPM.ForwarderId = TranslateForwarder(_AmitalCustomsFile.ForwarderId);
             
             int packageQuantity = 0;
